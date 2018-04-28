@@ -1,0 +1,4 @@
+message_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Message:index" }
+    methods:  GET

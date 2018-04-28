@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Rappel des objectifs assignés à l'agent</th>
+                    <th>Contexte et moyens mis en œuvre pour y parvenir</th>
+                    <th>Degré de réalisation de l'objectif</th>
+                    <th>Observations du supérieur hiérarchique direct</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectif in crep.objectifsEvalues %}
+                    <tr>
+                        <td>{{ objectif.libelle|nl2br }}</td>
+                        <td>{{ objectif.indicateurs|nl2br }}</td>
+                        <td>
+                        	{% if objectif.resultatObtenu == 0 %}
+								<i class="fa fa-square-o"></i> Atteint <br>
+								<i class="fa fa-square-o"></i> Partiellement atteint <br>
+								<i class="fa fa-square-o"></i> Non atteint <br>
+								<i class="fa fa-check-square-o"></i> Devenu sans Objet <br>
+							{% elseif objectif.resultatObtenu == 1 %}
+								<i class="fa fa-square-o"></i> Atteint <br>
+								<i class="fa fa-square-o"></i> Partiellement atteint <br>
+								<i class="fa fa-check-square-o"></i> Non atteint <br>
+								<i class="fa fa-square-o"></i> Devenu sans Objet <br>
+							{% elseif objectif.resultatObtenu == 2 %}
+								<i class="fa fa-square-o"></i> Atteint <br>
+								<i class="fa fa-check-square-o"></i> Partiellement atteint <br>
+								<i class="fa fa-square-o"></i> Non atteint <br>
+								<i class="fa fa-square-o"></i> Devenu sans Objet <br>
+							{% elseif objectif.resultatObtenu == 3 %}
+								<i class="fa fa-check-square-o"></i> Atteint <br>
+								<i class="fa fa-square-o"></i> Partiellement atteint <br>
+								<i class="fa fa-square-o"></i> Non atteint <br>
+								<i class="fa fa-square-o"></i> Devenu sans Objet <br>
+                        	{% endif %}
+                        
+                        </td>
+                        <td>{{ objectif.resultat|nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br/>

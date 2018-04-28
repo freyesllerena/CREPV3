@@ -1,0 +1,41 @@
+<h5><strong>4.1 Formation suivies : </strong></h5>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Libellé de la formation suivie au cours de l'année écoulée</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formationSuivie in crep.formationsSuivies %}
+                <tr>
+                    <td>{{ formationSuivie.libelle | nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h5><strong>4.2 Formation à envisager : </strong></h5>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th>Intitulé de la formation</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for formationDemandeeAgent in crep.formationsDemandeesAgent %}
+                <tr>
+                    <td>{{ formationDemandeeAgent.libelle | nl2br }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">Renvoi à un document annexe (lettre de mission ou d’objectifs) : </label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.docAnnexeBilan, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<div class="col-md-12 col-sm-12 col-xs-12">
+    		<label>Contexte de l’année écoulée (organisation et fonctionnement du service)</label>
+        </div>
+    	<div class="col-md-12 col-sm-12 col-xs-12">
+    		{{ form_widget(form.contexteObjectifsPasses,{'attr': {'maxlength': '4096'}}) }}
+    	</div>
+    </div>
+</div>
+
+<br/>

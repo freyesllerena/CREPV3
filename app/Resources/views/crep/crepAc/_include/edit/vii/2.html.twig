@@ -1,0 +1,74 @@
+{% set message = "En cliquant sur ce bouton, la valeur de ce tableau 
+					<i>(Proposition d’évolution du montant indemnitaire)</i> sera <strong>réinitialisé</strong>."  
+%}
+
+{% set message2 = "En cliquant sur ce bouton, la valeur de ce tableau 
+					<i>(Proposition d’inscription au prochain tableau d’avancement de grade)</i> sera <strong>réinitialisé</strong>."  
+%}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th colspan="3" class="text-center">Proposition d’évolution du montant indemnitaire lié à l’engagement professionnel et à la manière de servir</th>
+                	<th style="width: 5%" class="text-center">Réinitialiser</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+        			<td class="text-center" style="width: 33%">
+        			    {{ form_widget(form.evolutionIndemnitaire[0], {'label': 'Augmentation'}) }}
+        			</td>
+        			
+            		<td class="text-center" style="width: 33%">
+            			{{ form_widget(form.evolutionIndemnitaire[1], {'label': 'Maintien'}) }}
+            		</td>
+            		
+            		<td class="text-center" style="width: 33%">
+            			{{ form_widget(form.evolutionIndemnitaire[2], {'label': 'Diminution'}) }}
+            		</td>
+                    
+                    <td class="text-center">
+                    	<button class="btn btn-primary btn-xs" id="btn_reinitialiser" title="Réinitialiser la valeur du tableau" data-placement="auto" data-toggle="popover-primary" data-content="{{ message }}" data-trigger="hover"><i class="fa fa-refresh"></i></button>
+                    </td>
+            	</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th colspan="3" class="text-center">Proposition d’inscription au prochain tableau d’avancement de grade (ou à l’échelon spécial du grade d’administrateur général)</th>
+                	<th style="width: 5%" class="text-center">Réinitialiser</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+        			<td class="text-center" style="width: 33%">
+        			    {{ form_widget(form.propositionAvancement[0], {'label': 'Oui'}) }}
+        			</td>
+        			
+            		<td class="text-center" style="width: 33%">
+            			{{ form_widget(form.propositionAvancement[1], {'label': 'Non'}) }}
+            		</td>
+            		
+            		<td class="text-center" style="width: 33%">
+            			{{ form_widget(form.propositionAvancement[2], {'label': 'Sans objet'}) }}
+            		</td>
+                    
+                    <td class="text-center">
+                    	<button class="btn btn-primary btn-xs" id="btn_reinitialiser2" title="Réinitialiser la valeur du tableau" data-placement="auto" data-toggle="popover-primary" data-content="{{ message2 }}" data-trigger="hover"><i class="fa fa-refresh"></i></button>
+                    </td>
+            	</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

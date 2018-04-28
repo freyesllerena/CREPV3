@@ -1,0 +1,213 @@
+{% extends "index.base.html.twig" %}
+
+{% form_theme valider_form 'Form/App_bootstrap_3_layout.html.twig' %}
+
+{% block frameTitle %}{{ campagneShd.libelle }}{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}{{ campagneShd.libelle }}{% endblock pageTitle %}
+
+{% set  nbCrep = indicateurs["nbCrep"] %}
+{% set  nbCrepSignesShd = indicateurs["nbCrepSignesShd"] %}
+{% set  nbCrepVisesAgent = indicateurs["nbCrepVisesAgent"] %}
+{% set  nbCrepSignesAh = indicateurs["nbCrepSignesAh"] %}
+{% set  nbCrepNotifies = indicateurs["nbCrepNotifies"] %}
+{% set  nbRefusNotification = indicateurs["nbCrepRefusNotification"] %}
+{% set  nbCrepNonRenseignes = indicateurs["nbCrepNonRenseignes"] %}
+{% set  nbCrepModifieShd = indicateurs["nbCrepModifieShd"] %}
+{% set  nbCrepRefusVisas = indicateurs["nbCrepRefusVisas"] %}
+{% set  nbCrepCasAbsence = indicateurs["nbCrepCasAbsence"] %}
+{% set  nbTotalRecours = indicateurs["nbTotalRecours"] %}
+{% set  nbRecoursHierarchique = indicateurs["nbRecoursHierarchique"] %}
+{% set  nbRecoursEnCAP = indicateurs["nbRecoursEnCAP"] %}
+{% set  nbRecoursAuTA = indicateurs["nbRecoursAuTA"] %}
+{% set  nbRecoursTraites = nbTotalRecours - nbRecoursHierarchique - nbRecoursEnCAP - nbRecoursAuTA %}
+{% set  nbCrepEnRecours = indicateurs["nbCrepEnRecours"] %}
+
+{% block content %}
+
+	{% block indicateurs %}
+	    {% include 'Campagne/indicateurs.html.twig' %}
+	{% endblock indicateurs %}
+    
+    <div class="row">
+    	<div class="col-md-6 col-sm-12 col-xs-12">
+    	    {% block informationsCampagne %}
+    		    {% include 'campagneShd/blocsTableauDeBord/informationsCampagne.html.twig' %}
+    	    {% endblock informationsCampagne %}	
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+        	{% block graphiqueAvancement %}
+        		<div class="x_panel panel_green">
+				    <div class="x_title">
+				        <h2>Statuts d'avancement des CREP</h2>
+				        <ul class="nav navbar-right panel_toolbox">
+				            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+				        </ul>
+				        <div class="clearfix"></div>
+				    </div>
+    
+        			{% include 'Campagne/avancement.html.twig' %}
+        		</div>
+        	{% endblock graphiqueAvancement %}        
+    	</div>
+    </div>
+    
+    {% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::VALIDER_AGENT'), campagneShd) %}  
+        {% if valider_form.children.agents.children|length != 0 %}
+            {# Afficher la liste des agents en attente de validation dans la campagne #}
+        	{% block listeAgentsEnAttenteDeValidation %}
+                {% include 'campagneShd/blocsTableauDeBord/agentsEnCoursDeValidation.html.twig' %}
+            {% endblock listeAgentsEnAttenteDeValidation %}
+    	{% endif %}
+	{% endif %}
+
+    {######################## Onglets ########################}
+    {% block onglets %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title">
+                    <h2>Population<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+    			<div class="x_content">
+    			    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+    			    	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+    			        	<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">CREP</a></li>
+    			        	<li role="presentation" class=""><a href="#tab_content2" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">Mes agents non évaluables</a></li>
+    			        	<li role="presentation" class=""><a href="#tab_content3" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
+{#        			        	<li role="presentation" class=""><a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>#}
+    			        </ul>
+    			        <div id="myTabContent" class="tab-content">
+    			        	<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+    			                {{ block('agentsValides') }}
+    			            </div>
+    			            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                {{ block('agentsNonEvaluables') }}
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                {{ block('agentsSansShd') }}
+                            </div>
+{#     			            <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">#}
+{#                                 {{ block('block_agents_sans_perimetre') }}#}
+{#                             </div> #}
+    			         </div>
+    			    </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    {% endblock onglets %}
+    
+{% endblock content %}
+
+{############## onglets ##############}
+{# Afficher la liste des agents validés dans la campagne (ceux dont le crep est initialisé #}
+{% block agentsValides %}
+	{% include 'campagneShd/blocsTableauDeBord/onglets/agentsValides.html.twig' %}
+{% endblock agentsValides %}
+
+{# Afficher la liste des agents non évaluables du N+1 #}
+{% block agentsNonEvaluables %}
+	{% include 'campagneShd/blocsTableauDeBord/onglets/agentsNonEvaluables.html.twig' %}
+{% endblock agentsNonEvaluables %}
+
+{# Afficher la liste des agents sans N+1 #}
+{% block agentsSansShd %}
+	{% include 'campagneShd/blocsTableauDeBord/onglets/agentsSansShd.html.twig' %}
+{% endblock agentsSansShd %}
+
+{# {% block block_agents_sans_perimetre %}#}
+{# 	{% include 'campagneShd/blocsTableauDeBord/onglets/agentsSansPerimetre.html.twig' %}#}
+{# {% endblock block_agents_sans_perimetre %}#}
+
+
+{# ######## Partie JS pour l'affichage du graphique ######## #}
+{% block javascripts %}
+	{{ parent() }}
+	
+	{% javascripts 'gentelella-1.3.0/vendors/Chart.js/dist/2.7.1/Chart.min.js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+	<script type="text/javascript">
+		<!-- Doughnut Chart -->
+		{% if nbCrep==0 %}
+			{% set nbCrepNonRenseignes = 1 %}
+			{% set nbCrep = 1 %}
+		{% endif %}
+
+		$(document).ready(function () {
+	        {{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification, nbCrepCasAbsence) }}
+		
+		
+		var dtable = $('#shd_agents_sans_shd').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_shd_server_processing', { 'campagneShd': campagneShd.id, 'evaluable': 1, 'sansShd': 1, 'sansPerimetre': 2, 'onglet': 'shd_agents_sans_shd' }) }}",
+		        "sAjaxDataProp": "data",
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 0, "asc" ]],
+				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+					initPopover();},
+				"columnDefs": [ { orderable: false, targets: [4] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "email"}, 
+		                   {"data": "affectation"},
+		                   {"data": "ah"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+		setAjaxDataTable("#shd_agents_sans_shd", dtable);
+		});
+		
+	</script>
+	
+    {% if valider_form.children.agents.children|length != 0 %}
+	<script type="text/javascript">
+	 	$(document).ready(function() {
+			// Au chargement de la page //
+    		initErreurConstatee();
+	 	});
+	 	
+    	//Pour chaque bouton radio de la classe statut, on récupère l'id puis son index
+		$( ".statut input" ).on('ifChanged', function(){
+		     split = $(this).attr('id').split('_');
+		     activerDesactiverErreurConstatee(split[2]);
+		});
+
+    	// Fonction qui permet de rendre impossible une saisie d'une erreur constatée et d'un commentaire au chargement de la page
+		function initErreurConstatee(){
+    		{% for formView in valider_form.children.agents.children %}
+    			activerDesactiverErreurConstatee({{ formView.vars['name'] }});
+    		{% endfor %}
+		}
+    	   
+        // Fonction qui permet de rendre impossible une saisie d'une erreur constatée et d'un commentaire //
+    	function activerDesactiverErreurConstatee(i){
+			statutValidation = $("input[name='form[agents][" + i + "][validationShd]']:checked").val();
+    		erreurSignalee = $('#form_agents_' + i + '_erreurSignalee');
+    		commentaireValidation = $('#form_agents_' + i + '_commentaireValidation');
+
+			if(statutValidation == "1" || typeof statutValidation === "undefined" ){
+				erreurSignalee.val('').prop('disabled', true);
+				commentaireValidation.val('').prop('disabled', true);
+			} else {
+            	erreurSignalee.prop('disabled', false);
+            	commentaireValidation.prop('disabled', false);
+			}
+		} 
+ 	</script>
+ 	{% endif %}
+{% endblock javascripts %}

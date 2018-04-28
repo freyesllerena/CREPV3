@@ -1,0 +1,307 @@
+{% extends "index.base.html.twig" %} 
+
+{% block frameTitle %}{{ campagnePnc.libelle }}{% endblock frameTitle %} 
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %} 
+{% block pageTitle %}{{campagnePnc.libelle }}{% endblock pageTitle %} 
+
+{% set  nbCrep = indicateurs["nbCrep"] %}
+{% set  nbCrepSignesShd = indicateurs["nbCrepSignesShd"] %}
+{% set  nbCrepVisesAgent = indicateurs["nbCrepVisesAgent"] %}
+{% set  nbCrepSignesAh = indicateurs["nbCrepSignesAh"] %}
+{% set  nbCrepNotifies = indicateurs["nbCrepNotifies"] %}
+{% set  nbRefusNotification = indicateurs["nbCrepRefusNotification"] %}
+{% set  nbCrepNonRenseignes = indicateurs["nbCrepNonRenseignes"] %}
+{% set  nbCrepModifieShd = indicateurs["nbCrepModifieShd"] %}
+{% set  nbCrepRefusVisas = indicateurs["nbCrepRefusVisas"] %}
+{% set  nbCrepCasAbsence = indicateurs["nbCrepCasAbsence"] %}
+{% set  nbTotalRecours = indicateurs["nbTotalRecours"] %}
+{% set  nbRecoursHierarchique = indicateurs["nbRecoursHierarchique"] %}
+{% set  nbRecoursEnCAP = indicateurs["nbRecoursEnCAP"] %}
+{% set  nbRecoursAuTA = indicateurs["nbRecoursAuTA"] %}
+{% set  nbRecoursTraites = nbTotalRecours - nbRecoursHierarchique - nbRecoursEnCAP - nbRecoursAuTA %}
+{% set  nbCrepEnRecours = indicateurs["nbCrepEnRecours"] %}
+
+
+
+{% block content %}
+    <!-- Filtre périmètre -->
+    <div class="form-group col-md-12 col-sm-12 col-xs-12 well">
+        <form class="form-horizontal form-label-left">
+        	<label class="control-label col-md-4 col-sm-4 col-xs-12"><i class="fa fa-share-alt"></i> Sélectionner un périmètre</label>
+            <div class="col-md-4 col-sm-4 col-xs-12" id="perimetre_filter">
+          		<select class="form-control">
+            		<option value="0">Tous</option>
+                 	{% for perimetreRlc in campagnePnc.perimetresRlc %}
+        			<option value="{{ perimetreRlc.id }}">{{ perimetreRlc.libelle }}</option>
+             		{% endfor %}
+            	</select>
+            </div>
+        </form>
+    </div>
+
+	<div class="clearfix"></div>
+	
+	{% block indicateurs %}
+    	{% include 'Campagne/indicateurs.html.twig' %}
+    {% endblock indicateurs %}
+
+	<div class="row">
+    	<div class="col-md-6 col-sm-12 col-xs-12">
+    	    {% block informationsCampagne %}
+    		    {% include 'campagnePnc/blocsTableauDeBord/informationsCampagne.html.twig' %}
+    	    {% endblock informationsCampagne %}	
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+        	{% block graphiqueAvancement %}
+        		{% include 'Campagne/graphiqueAvancement.html.twig' %}
+        	{% endblock graphiqueAvancement %}        
+    	</div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title">
+                    <h2>Population<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+    
+                <div class="x_content">
+                	<div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#tab_content0" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Population globale</a></li>
+                            <li role="presentation" class="" onclick="chargerAgentsSansShd();"><a href="#tab_content1" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
+                            <li role="presentation" class="" onclick="chargerAgentsSansPerimetre();"><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                        	<div role="tabpanel" class="tab-pane fade active in" id="tab_content0" aria-labelledby="home-tab">
+                                {{ block('block_population_globale') }}
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content1" aria-labelledby="profile-tab">
+                                {{ block('block_agents_sans_shd') }}
+                            </div>
+							<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                {{ block('block_agents_sans_perimetre_rlc') }}
+                            </div> 
+                          </div>
+            		</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<table width="100%">
+                <tr>
+                    {% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::CLOTURER'), campagnePnc) %}
+        				<td align="left">
+                			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_cloturer"><i class="fa fa-flag"></i> Clôturer la campagne</button>
+        				</td>
+    				{% endif %}
+    				
+    				{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::FERMER'), campagnePnc) %}
+        				<td align="left">
+                			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_fermer"><i class="fa fa-lock"></i> Fermer la campagne</button>
+                		</td>
+    				{% endif %}
+    				
+    				{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::AJOUTER_AGENT'), campagnePnc) %}
+                     	<td align="center">
+                			<a href="{{ path('agent_new_pnc', { 'id': campagnePnc.id }) }}">
+                				<button class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un agent</button>
+                			</a>
+                    	</td>
+                	{% endif %}
+                	
+                	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::MODIFIER'), campagnePnc) %}
+                    	<td align="right">
+                			<a href="{{ path('campagne_pnc_edit', { 'id': campagnePnc.id }) }}">
+                				<button type="submit" class="btn btn-primary"><i class="fa fa-edit" aria-hidden="true"></i> Modifier la campagne</button>
+                			</a>
+                    	</td>
+                	{% endif %}
+                	
+                	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::ROUVRIR'), campagnePnc) %}
+                    	<td align="right">
+                			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_rouvrir"><i class="fa fa-unlock"></i> Rouvrir la campagne</button>
+                    	</td>
+                	{% endif %}
+                </tr>
+            </table>
+		</div>
+	</div>
+	
+	{############## Modals ##############}
+	
+	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::CLOTURER'), campagnePnc) %}
+		{{ macro.modal('danger', 'modal_cloturer', "Clôturer la campagne", "Voulez-vous vraiment <strong>clôturer</strong> cette campagne ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action bloquera la saisie de nouvelles informations à tous les utilisateurs pour cette campagne.", "fa-flag", cloturer_form)}} 
+	{% endif %}
+	
+	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::FERMER'), campagnePnc) %}
+		{{ macro.modal('danger', 'modal_fermer', "Fermeture la campagne", "Voulez-vous vraiment <strong>fermer</strong> cette campagne ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action est définitive et irrévocable : elle bloque la saisie de nouvelles informations à tous les utilisateurs pour cette campagne et il ne vous sera plus possible de la rouvrir.", "fa-lock", fermer_form)}} 
+	{% endif %}
+	
+	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::ROUVRIR'), campagnePnc) %}
+		{{ macro.modal('success', 'modal_rouvrir', "Rouvrir la campagne", "Voulez-vous vraiment <strong>rouvrir</strong> cette campagne ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action permettra aux acteurs de niveau local (RLC) d'avoir la possibilité de rouvrir la campagne sur leurs périmètres.", "fa-unlock", rouvrir_form)}} 
+	{% endif %}
+	
+
+{% endblock content %}
+
+{############## onglets ##############}
+
+{% block block_agents_sans_shd %}
+	{% include 'campagnePnc/blocsTableauDeBord/onglets/agentsSansShd.html.twig' %}
+{% endblock block_agents_sans_shd %}
+
+{% block block_agents_sans_perimetre_rlc %}
+	{% include 'campagnePnc/blocsTableauDeBord/onglets/agentsSansPerimetreRlc.html.twig' %}
+{% endblock block_agents_sans_perimetre_rlc %}
+
+
+{% block block_population_globale %}
+	{% include 'campagnePnc/blocsTableauDeBord/onglets/populationGlobale.html.twig' %}
+{% endblock block_population_globale %}
+
+{% block javascripts %} 
+
+    {{ parent() }}
+    
+    {% javascripts 'gentelella-1.3.0/vendors/Chart.js/dist/2.7.1/Chart.min.js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+
+	<script type="text/javascript">
+
+       <!-- Doughnut Chart -->
+
+       {% if nbCrep==0 %}
+           {% set nbCrepNonRenseignes = 1 %}
+	        {% set nbCrep = 1 %}
+       {% endif %}
+      
+        $(document).ready(function() {
+           {{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification, nbCrepCasAbsence) }}
+           
+           {{ macro.historiqueAvancement('canvasLine', historiqueIndicateurs) }}
+         });
+
+        //------------------------------------------------
+		//Function de filtre des indicateurs par périmètre
+		//------------------------------------------------
+       {% set perimetreRlc_id = 0 %}
+       {% if perimetre %}
+        	$('#perimetre_filter select').val("{{ perimetre.id }}");
+        	{% set perimetreRlc_id = perimetre.id %}
+        {% endif %}
+   	
+        //A chaque change du select on récupère la value du perimetre et on lance l'url
+        $('#perimetre_filter select').on('change', function(){
+            perimetre = $(this).val();
+                
+ 			if(perimetre > 0){
+            	var url = "{{ path('campagne_pnc_show', {'id':campagnePnc.id, 'id_perimetre': 'value'}) }}";
+             	url = url.replace("value", perimetre);
+ 			}else{
+            	var url = "{{ path('campagne_pnc_show', {'id':campagnePnc.id}) }}";
+            }
+             
+     		window.location.href = url;
+		})
+
+        var agentsSansShdCharges = false;
+        var agentsSansPerimetreCharges = false;
+		
+		
+		$(document).ready(function() {
+		    var dtable = $('#population_globale').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_pnc_server_processing', { 'campagnePnc': campagnePnc.id, 'perimetreRlc': perimetreRlc_id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre':0, 'onglet': 'population_globale' }) }}",
+		        "sAjaxDataProp": "data",
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 1, "asc" ]],
+				"columnDefs": [ { orderable: false, targets: [7] } ],
+				"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "perimetreRlc"},
+		                   {"data": "perimetreBrhp"},
+		                   {"data": "shd"}, 
+		                   {"data": "ah"},
+		                   {"data": "evaluable"},
+		                   {"data": "avancement"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+       		setAjaxDataTable("#population_globale", dtable);
+		});
+
+        function chargerAgentsSansShd(){
+            if(!agentsSansShdCharges){ // On vérifier si le dataTable a déjà été chargé
+		        var dtable = $('#agents_sans_shd').DataTable( {
+				    	"oLanguage": oLanguage_fr(),
+				        "processing": true,
+				        "serverSide": true,
+				        "ajax": "{{ path('agent_campagne_pnc_server_processing', { 'campagnePnc': campagnePnc.id, 'perimetreRlc': perimetreRlc_id, 'evaluable': 1, 'sansShd': 1, 'sansPerimetre':0, 'onglet': 'agents_sans_shd' }) }}",
+				        "sAjaxDataProp": "data",
+				        "pageLength": 10,
+				        "searchDelay": 500,
+						"order": [[ 0, "asc" ]],
+						"columnDefs": [ { orderable: false, targets: [5] } ],
+						"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+				        "columns":[ 
+				                   {"data": "agent"}, 
+				                   {"data": "email"},
+				                   {"data": "perimetreRlc"},
+				                   {"data": "perimetreBrhp"},
+				                   {"data": "ah"},
+				                   {"data": "actions"},
+				               ] 
+				    } );
+		        setAjaxDataTable("#agents_sans_shd", dtable);
+		        agentsSansShdCharges = true;
+            }
+        }
+
+        function chargerAgentsSansPerimetre(){
+            if(!agentsSansPerimetreCharges){ // On vérifier si le dataTable a déjà été chargé
+		        var dtable = $('#agents_sans_perimetre_rlc').DataTable( {
+				    	"oLanguage": oLanguage_fr(),
+				        "processing": true,
+				        "serverSide": true,
+				        "ajax": "{{ path('agent_campagne_pnc_sans_perimetre_server_processing', { 'campagnePnc': campagnePnc.id }) }}",
+				        "sAjaxDataProp": "data",
+				        "pageLength": 10,
+				        "searchDelay": 500,
+						"order": [[ 1, "asc" ]],
+						"columnDefs": [ { orderable: false, targets: [4] } ],
+						"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+				        "columns":[ 
+				                   {"data": "agent"}, 
+				                   {"data": "email"}, 
+				                   {"data": "shd"},
+				                   {"data": "ah"},
+				                   {"data": "actions"},
+				               ] 
+				    } );
+		        setAjaxDataTable("#agents_sans_perimetre_rlc", dtable);
+		        agentsSansPerimetreCharges = true;
+            }
+        }
+
+
+	</script>
+
+{% endblock javascripts %}

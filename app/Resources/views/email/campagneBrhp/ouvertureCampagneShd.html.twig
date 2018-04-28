@@ -1,0 +1,25 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+	<tr>
+        <td class="content-block">
+        	Bonjour,
+         </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nous vous informons que la campagne "{{ campagne.libelle }}" concernant l'évaluation professionnelle 
+	de l'année {{ campagne.anneeEvaluee }} est ouverte aux responsables N+1 pour le périmètre {{ perimetre.libelle }}.
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Nous vous invitons à vous connecter à l'application {{ appName }} en cliquant sur le lien suivant :
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('campagne_shd_show',{'id' : campagne.id}) }}">Accéder à la campagne</a>
+        </td>
+    </tr> 
+{% endblock %}

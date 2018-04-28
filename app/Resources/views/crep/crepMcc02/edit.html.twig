@@ -1,0 +1,97 @@
+{% extends "crep/crepMcc02/mcc02.base.html.twig" %}
+
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+{% if errors| length > 0 %}
+<div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <strong>Le formulaire de CREP n'est pas valide.</strong><br>
+	Veuillez rectifier votre saisie.
+</div>
+{% endif %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block i01 %}
+    {% include 'crep/crepMcc02/_include/edit/0/1.html.twig' %}
+{% endblock i01 %}
+
+{% block i02 %}
+	{% include 'crep/crepMcc02/_include/edit/0/2.html.twig' %}
+{% endblock i02 %}
+
+{% block i1 %}
+    {% include 'crep/crepMcc02/_include/edit/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+    {% include 'crep/crepMcc02/_include/edit/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block i3 %}
+    {% include 'crep/crepMcc02/_include/edit/i/3.html.twig' %}
+{% endblock i3 %}
+
+{% block ii1 %}
+	{% include 'crep/crepMcc02/_include/edit/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+    {% include 'crep/crepMcc02/_include/edit/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+    {% include 'crep/crepMcc02/_include/edit/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block ii4 %}
+    {% include 'crep/crepMcc02/_include/edit/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block iii1 %}
+    {% include 'crep/crepMcc02/_include/edit/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+    {% include 'crep/crepMcc02/_include/edit/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block iii3 %}
+    {% include 'crep/crepMcc02/_include/edit/iii/3.html.twig' %}
+{% endblock iii3 %}
+
+{% block iv1 %}
+    {% include 'crep/crepMcc02/_include/edit/iv/1.html.twig' %}
+{% endblock iv1 %}
+
+{% block iv2 %}
+    {% include 'crep/crepMcc02/_include/edit/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block v1 %}
+    {% include 'crep/crepMcc02/_include/edit/v/1.html.twig' %}
+{% endblock v1 %}
+
+{#{% block circuitDeValidation %}#}
+{#{% endblock circuitDeValidation %}#}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- chained -->
+    <script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
+            // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
+            var crepCollections = new Crep.Collections();
+        });
+
+    </script>
+{% endblock javascripts %}

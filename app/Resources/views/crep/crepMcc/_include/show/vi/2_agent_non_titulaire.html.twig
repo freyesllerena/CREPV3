@@ -1,0 +1,37 @@
+<div class="row form-group">
+	<div class="col-md-10 col-sm-10 col-xs-12">
+		<label>Dans l’hypothèse où l’agent-e serait susceptible de prétendre à un avancement à intervalle prédéterminé, souhaitez-vous qu’il en bénéficie au titre de l’année 2017 ?</label>
+	</div>
+	
+	<div class="col-md-1 col-sm-1 col-xs-6">
+		<strong>
+			{% if crep.agent and crep.agent.ah and crep.avancement %}
+				<i class="fa fa-check-square-o"></i> 
+			{% else %}
+				<i class="fa fa-square-o"></i> 
+			{% endif %} 
+			Oui
+		</strong>
+	</div>
+	<div class="col-md-1 col-sm-1 col-xs-6">
+		<strong>
+			{% if crep.agent and crep.agent.ah and not crep.avancement and crep.avancement is not null %}
+				<i class="fa fa-check-square-o"></i> 
+			{% else %}
+				<i class="fa fa-square-o"></i> 
+			{% endif %} 
+			Non
+		</strong>
+	</div>
+</div>
+
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class ="title"> Avis circonstancié </p>
+        <p class="well well-xs"> 
+        	{% if crep.agent and crep.agent.ah %}
+				{{ crep.explicationAvancement|nl2br }}
+			{% endif %}
+		</p>
+    </div>
+</div>

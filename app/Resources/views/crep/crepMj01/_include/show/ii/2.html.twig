@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Aptitudes professionnelles et efficacité dans l'emploi</th>
+                    <th class="text-center" width="100px">Excellent</th>
+                    <th class="text-center" width="100px">Très bon</th>
+                    <th class="text-center" width="100px">Bon</th>
+                    <th class="text-center" width="100px">Convenable</th>
+                    <th class="text-center" width="100px">Insuffisant</th>
+                    <th class="text-center" width="100px">Très insuffisant</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aptitude in crep.aptitudesProfessionnelles %}
+                    <tr>
+                        <td>{{ aptitude.libelle|nl2br }}</td>
+	                    {% for index in 0..5 %}
+	                    	<td class="text-center">{{ aptitude.niveau|iconCheck(loop.revindex0)|raw }}</td>
+	                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 hidden-sm hidden-xs">
+	</div>
+	
+	<div class="col-md-6 col-sm-12 col-xs-12">
+		<table class="table table-bordered">
+                <tr>
+                    <th rowspan="2" style="background: #efefef; vertical-align: middle">Marge d'évolution</th>
+                    <th class="text-center" style="background: #efefef" width="120px">En progrès</th>
+                    <th class="text-center" style="background: #efefef" width="120px">Constant</th>
+                    <th class="text-center" style="background: #efefef" width="120px">À améliorer</th>
+                </tr>
+				<tr>
+                    {% for index in 0..2 %}
+                    	<td class="text-center">{{ crep.margeEvolutionAptitudesProfessionnelles|iconCheck(loop.revindex0)|raw }}</td>
+                    {% endfor %}
+                </tr>
+        </table>
+	</div>
+</div>
+
+<br>

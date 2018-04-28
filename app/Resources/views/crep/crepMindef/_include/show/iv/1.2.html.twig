@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th colspan="4" class="text-center">Niveaux</th>
+            </tr>
+            <tr>
+                <th>Compétences</th>
+                <th style="width: 12%" class="text-center">Sensibilisation</th>
+                <th style="width: 12%" class="text-center">Application</th>
+                <th style="width: 12%" class="text-center">Maîtrise</th>
+                <th style="width: 12%" class="text-center">Expertise</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for competenceDeclaree in crep.competencesDeclarees %}
+                    <tr>
+                        <td>
+                            {{ competenceDeclaree.libelle }}
+                        </td>
+                        {% for index in 0..3 %}
+                        	<td class="text-center">{{ competenceDeclaree.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

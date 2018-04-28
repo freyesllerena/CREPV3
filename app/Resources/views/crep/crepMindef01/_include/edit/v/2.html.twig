@@ -1,0 +1,151 @@
+{% form_theme form with ['crep/crepMindef01/Form/App_form_crepMindef01_v_2.html.twig', _self] %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">L'agent souhaite-t-il évoluer sur son poste actuel ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.souhaitEvolutionProfessionnelle, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">L'agent souhaite-t-il une mobilité fonctionnelle ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.mobiliteFonctionnelle.choix, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.mobiliteFonctionnelle.familleProfessionnelle, {'label': 'Famille professionnelle'}) }}
+        {{ form_row(form.mobiliteFonctionnelle.anneeDepart, {'label': 'Année de départ envisagée'}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">L'agent souhaite-t-il une mobilité géographique ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.mobiliteGeographique.choix, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+         {{ form_row(form.mobiliteGeographique.anneeDepart, {'label': 'Année de départ envisagée'}) }}
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+    	<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Critére de choix</th>
+                    <th class="text-center">Priorité 1</th>
+                    <th class="text-center">Priorité 2</th>
+                    <th class="text-center">Priorité 3</th>
+                    <th class="text-center">Priorité 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+    				<td>Organisme ou employeur</td>
+    				<td>{{ form_row(form.mobiliteOrganisme1, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobiliteOrganisme2, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobiliteOrganisme3, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobiliteOrganisme4, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+                </tr>
+             	<tr>
+                    <td>Type de poste</td>
+    				<td>{{ form_row(form.mobilitePoste1, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobilitePoste2, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobilitePoste3, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobilitePoste4, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+                </tr>
+                <tr>
+                    <td>Zone géographique</td>
+    				<td>{{ form_row(form.mobiliteZoneGeo1, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobiliteZoneGeo2, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobiliteZoneGeo3, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+    				<td>{{ form_row(form.mobiliteZoneGeo4, { 'label': false , 'attr': {'maxlength': '4096'}}) }}</td>
+                </tr>
+    		</tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<h5><b>Motivations du souhait de mobilité</b> </h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">Projet professionnel ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.motivationsMobilite.projetProfessionnel, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">Réorganisation/restructuration de l'organisme de l'agent ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.motivationsMobilite.reorganisation, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">Rapprochement familial ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.motivationsMobilite.rapprochementFamilial, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div>
+            <label class=" control-label pull-left">&nbsp;&nbsp;Autres motivations :</label>
+            {{ form_row(form.motivationsMobilite.autre, {'label': false, 'attr': {'maxlength': '4096'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">L'agent souhaite-t-il bénéficier d'un entretien avec un conseiller de carrière ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.souhaitEntretienCarriere, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-4 col-sm-4 col-xs-12" style="text-align:left;">L'agent a-t-il demandé une formation liée à la mise en &oelig;uvre de son parcours professionnel ?</label>
+	    <div class="col-md-8 col-sm-8 col-xs-12">
+	        {{ form_row(form.demandeFormationProfessionnelle.choix, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+         {{ form_row(form.demandeFormationProfessionnelle.typeFormation, {'label': 'Type de formation demandée'}) }}
+    </div>
+</div>

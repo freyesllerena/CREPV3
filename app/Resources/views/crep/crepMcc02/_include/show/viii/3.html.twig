@@ -1,0 +1,42 @@
+<br>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Date :</label>
+        <span class="well well-xs">
+            {% if crep.dateRefusNotification %}
+                <span style="color: red">Refus de signature du CREP notifié acté le {{ crep.dateRefusNotification | date('d/m/Y à H:i') }} </span>
+            {% elseif crep.dateNotification %}
+                {{ crep.dateNotification | date('d/m/Y H:i') }}
+            {% endif %}
+        </span>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Signature :</label>
+    </div>
+</div>
+<br>
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        La signature de l’agent-e vaut notification du présent document (et non approbation de son contenu).
+        <br>
+        <u class="spelling">Destinataire</u> : dossier individuel de l’agent-e.
+        <br>
+        <u class="spelling">Copies</u> : agent-e, supérieur hiérarchique direct et chef de service.
+    </div>
+    <br>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h3>Recours éventuels de l’agent-e :</h3>
+        <div>
+            L’agent-e peut saisir l’autorité hiérarchique d’une demande de révision de tout ou partie du compte rendu de
+            l’entretien professionnel, dans un délai de 15 jours francs suivant la notification du présent document.
+
+            L’autorité hiérarchique dispose d’un délai de 15 jours à compter de la saisine pour lui répondre. L’exercice
+            de ce recours est un préalable obligatoire à la saisine de la CAP compétente, dans un délai d’un mois à compter
+            de la réponse de l’autorité hiérarchique. L’agent-e dispose également des voies et délais de recours de droit
+            commun pour contester le compte rendu de son entretien professionnel.
+        </div>
+    </div>
+</div>
+
+<br/>

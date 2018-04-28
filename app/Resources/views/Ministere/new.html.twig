@@ -1,0 +1,45 @@
+{% extends "index.base.html.twig" %} 
+
+{% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block pageIcon %}fa fa-bank{% endblock pageIcon %}
+{% block pageTitle %}Nouveau ministère{% endblock pageTitle %}
+
+{% block content %}
+
+
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel panel_green">
+			<div class="x_title">
+				<h2>{% block formTitle %}Création d'un nouveau ministère{% endblock formTitle %}<small></small></h2>
+
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal form-label-left'}})}}
+						{{ form_row(form.libelleCourt, { 'label': "Libellé court" }) }}
+					  	{{ form_row(form.libelleLong, { 'label': "Libellé long" }) }}
+					  	{{ form_row(form.libelleOfficiel, { 'label': "Libellé officiel" }) }}
+					  	{{ form_row(form.delaiVisa, { 'label': "Delai du visa agent ", 'info': 'Délai dont dispose l\'agent pour viser son CREP avant que le N+1 puisse reprendre la main.' }) }}
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                          <button type="submit" class="btn btn-primary pull-right">Valider</button>
+                        </div>
+                      </div>
+				{{form_end(form)}}
+				<span style="color:red"><b>*</b></span><small> : Champ obligatoire</small>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+
+
+
+
+
+

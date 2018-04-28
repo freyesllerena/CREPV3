@@ -1,0 +1,26 @@
+{% extends "crep/crepAc/edit.html.twig" %}
+
+{% block i4AvecTitre %}{% endblock i4AvecTitre %}
+
+{% block iv2AvecTitre %}{% endblock iv2AvecTitre %}
+
+{% block v2AvecTitre %}{% endblock v2AvecTitre %}
+
+{% block circuitDeValidation %}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel panel_green">
+            <div class="x_title collapse-link" style="cursor:pointer">
+                <h2>VIII - CIRCUIT DE VALIDATION</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content row">
+                {% include 'crep/crepAc/_include/edit/viii/1.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock circuitDeValidation %}

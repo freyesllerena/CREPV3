@@ -1,0 +1,28 @@
+{% form_theme form 'crep/crepMso3/_include/edit/i/2.form.html.twig' %}
+
+<div class="row" id="objectifsFutursCollection" data-prototype="{{ form_widget(form.objectifsFuturs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 45%">Définition de l'objectif <small>(si nécessaire, préciser les actions à conduire et les résultats attendus)</small></th>
+                    <th style="width: 18%">Échéance</th>
+                    <th style="width: 35%">Conditions de réussite <small>(liées à l'agent ou/est à des facteurs externes)</small></th>
+                	<th width="2%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectifFutur in form.objectifsFuturs %}
+                    {{ form_row(objectifFutur) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

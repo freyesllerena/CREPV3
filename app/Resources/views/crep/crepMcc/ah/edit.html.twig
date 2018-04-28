@@ -1,0 +1,39 @@
+{% extends "crep/crepMcc/show.html.twig" %}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block vi1_agent_titulaire %}
+	{% include 'crep/crepMcc/_include/edit/vi/1_agent_titulaire.html.twig' %}
+{% endblock vi1_agent_titulaire %}
+
+{% block vi2_agent_titulaire %}
+	{% include 'crep/crepMcc/_include/edit/vi/2_agent_titulaire.html.twig' %}
+{% endblock vi2_agent_titulaire %}
+
+{% block vi3_agent_titulaire %}
+	{% include 'crep/crepMcc/_include/edit/vi/3_agent_titulaire.html.twig' %}
+{% endblock vi3_agent_titulaire %}
+
+{% block vi1_agent_non_titulaire %}
+	{% include 'crep/crepMcc/_include/edit/vi/1_agent_non_titulaire.html.twig' %}
+{% endblock vi1_agent_non_titulaire %}
+
+{% block vi2_agent_non_titulaire %}
+	{% include 'crep/crepMcc/_include/edit/vi/2_agent_non_titulaire.html.twig' %}
+{% endblock vi2_agent_non_titulaire %}
+
+{% block viii4 %}
+	{% include 'crep/crepMcc/_include/edit/viii/4.html.twig' %}
+{% endblock viii4 %}
+
+{% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block alertRefusVisa %}{% endblock alertRefusVisa %}
+{% block alertRefusNotification %}{% endblock alertRefusNotification %}

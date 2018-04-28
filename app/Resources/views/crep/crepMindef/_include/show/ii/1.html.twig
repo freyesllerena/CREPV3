@@ -1,0 +1,29 @@
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<label>Votre fiche de poste a-t-elle fait l'objet d'une mise à jour lors du présent entretien ?</label>
+	</div>
+	<div class="col-md-1 col-sm-1 col-xs-12">
+		<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Oui</th>
+                    <th class="text-center">Non</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                {% if crep.fichePoseAJour is null %}
+                    <td class="text-center">&nbsp;</td>
+                    <td class="text-center">&nbsp;</td>
+               {% elseif crep.fichePoseAJour  %}
+                    <td class="text-center"><i class="fa fa-check"></i></td>
+                    <td class="text-center"></td>
+               {% else %}
+                    <td class="text-center"></td>
+                    <td class="text-center"><i class="fa fa-check"></i></td>
+               {% endif %}
+                </tr>
+            </tbody>
+        </table>
+	</div>
+</div>

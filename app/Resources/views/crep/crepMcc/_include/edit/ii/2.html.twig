@@ -1,0 +1,85 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Critères d'appréciation</th>
+                    <th style="width: 12%" class="text-center">Expert (1)</th>
+                    <th style="width: 12%" class="text-center">Maîtrise (2)</th>
+                    <th style="width: 12%" class="text-center">Pratique (3)</th>
+                    <th style="width: 12%" class="text-center">À développer (4)</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+	             {% for critere in form.criteresAppreciations %}
+	                    <tr>
+	                        <td>
+	                            {{ crep.criteresAppreciations[loop.index0].competenceTransverse.libelle }}
+	                        </td>
+	                        {{ form_widget(critere) }}
+	                    </tr>
+	            {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Responsabilité d'encadrement <small>(Pour les agents-es en situation d'encadrement)</small></th>
+                    <th style="width: 12%" class="text-center">Excellente maîtrise (5)</th>
+                    <th style="width: 12%" class="text-center">Maîtrise (6)</th>
+                    <th style="width: 12%" class="text-center">À développer (3)</th>
+                    <th style="width: 12%" class="text-center">À acquérir (4)</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+	             {% for resp in form.responsabilitesEncadrements %}
+	                    <tr>
+	                        <td>
+	                            {{ crep.responsabilitesEncadrements[loop.index0].competenceTransverse.libelle }}
+	                        </td>
+	                        {{ form_widget(resp) }}
+	                    </tr>
+	            {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Nombre d'agents encadrés <small>(Pour les agents-es en situation d'encadrement)</small></th>
+                    <th class="text-center">Nombre d'agents à évaluer</th>
+                    <th class="text-center">Nombre d'agents évalués en {{ crep.agent.campagnePnc.anneeEvaluee+1 }} (au titre de {{ crep.agent.campagnePnc.anneeEvaluee }})</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ form_row(form.nbAgentsEncadres) }}</td>
+                    <td>{{ form_row(form.nbAgentsAEvaluer) }}</td>
+                    <td>{{ form_row(form.nbAgentsEvaluesAnneePrec) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Avis circonstancié sur certains critères d'appréciation (le cas échéant)</label>
+        {{ form_row(form.avisCriteresAppreciations,{'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>

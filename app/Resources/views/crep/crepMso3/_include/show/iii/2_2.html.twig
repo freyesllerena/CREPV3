@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 30%">Savoir faire</th>
+                <th style="width: 8%" class="text-center">Expert</th>
+                <th style="width: 8%" class="text-center">Maîtrise</th>
+                <th style="width: 8%" class="text-center">Pratique</th>
+                <th style="width: 8%" class="text-center">Initié</th>
+                <th style="width: 8%" class="text-center">Non requis</th>
+                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for savoir in crep.savoirsFaireAgent %}
+                <tr>
+                    <td>{{ savoir.libelle|nl2br}}</td>
+                    
+            		{% for index in 0..4 %}
+                        	<td class="text-center">{{ savoir.niveau|iconCheckReverse(loop.index0, 4)|raw }}</td>
+                    {% endfor %}
+                    
+                    <td>{{ savoir.appreciation|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 30%">Autres savoirs faire <small>(à préciser en fonction du poste)</small></th>
+                <th style="width: 8%" class="text-center">Expert</th>
+                <th style="width: 8%" class="text-center">Maîtrise</th>
+                <th style="width: 8%" class="text-center">Pratique</th>
+                <th style="width: 8%" class="text-center">Initié</th>
+                <th style="width: 8%" class="text-center">Non requis</th>
+                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for savoir in crep.savoirsFaireAgentAutres %}
+                <tr>
+                    <td>{{ savoir.libelle|nl2br}}</td>
+                    
+            		{% for index in 0..4 %}
+                        	<td class="text-center">{{ savoir.niveau|iconCheckReverse(loop.index0, 4)|raw }}</td>
+                    {% endfor %}
+                    
+                    <td>{{ savoir.appreciation|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

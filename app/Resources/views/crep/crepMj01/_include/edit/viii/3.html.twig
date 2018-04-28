@@ -1,0 +1,31 @@
+{% form_theme form 'crep/crepMj01/Form/App_form_crepMj01_12.html.twig' %}
+
+<div class="row">
+	{{ form_row(form.observationsAh, { 'label': "Observations", 'attr': {'class':'champMisEnEvidence'}}) }}
+</div>
+
+
+{% if crep.agent and not crep.agent.sansAh %}
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Nom</dt>
+                <dd>
+                    {% if crep.ahSignataire %} 
+                        {{ crep.ahSignataire | identite }} 
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+    </div>
+   
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Date</dt>
+                <dd>{% if crep.dateVisaAh %}{{ crep.dateVisaAh|date('d/m/Y H:i') }}{% endif %}</dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

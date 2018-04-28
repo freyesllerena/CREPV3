@@ -1,0 +1,29 @@
+<br/>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th style="width: 85px">De</th>
+                    <th style="width: 85px">À</th>
+                    <th style="width: 100px">Durée</th>
+                    <th style="width: 285px">Affectation</th>
+                    <th>Libéllé long du poste</th>
+                    <th style="width: 285px">Famille professionnelle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emploi in crep.emplois %}
+                    <tr>
+                    	<td>{% if emploi.dateDebut %}{{ emploi.dateDebut|date('d/m/Y') }}{% endif %}</td>
+                        <td>{% if emploi.dateFin %}{{ emploi.dateFin|date('d/m/Y') }}{% endif %}&nbsp;</td>
+                        <td>{{ emploi.nombreAnneesDomaine }}</td>
+                        <td>{{ emploi.affectation }}</td>
+                        <td>{{ emploi.poste }}</td>
+                        <td>{{ emploi.familleMorgane }}</td>
+                    </tr>
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

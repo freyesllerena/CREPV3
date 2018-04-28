@@ -1,0 +1,57 @@
+{% extends "crep/crepMj01/show.html.twig" %}
+{# {% form_theme form 'crep/crepMj01/Form/App_form_crepMso3.html.twig' %}#}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block i3 %}
+	{% include 'crep/crepMj01/_include/edit/i/3.html.twig' %}
+{% endblock i3 %}
+
+{% block iii4 %}
+	{% include 'crep/crepMj01/_include/edit/iii/4.html.twig' %}
+{% endblock iii4 %}
+
+{% block viii2 %}
+	{% include 'crep/crepMj01/_include/edit/viii/2.html.twig' %}
+{% endblock viii2 %}
+
+{% block content %}
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+	    {{ parent() }}
+	    {{ block('bouton_enregistrer') }}
+	    {{ form_widget(form._token) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{# {% block javascripts %}#}
+{# 	{{ parent() }}#}
+{# 	<!-- chained -->#}
+{# 	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>#}
+{#     <script type="text/javascript">#}
+
+
+{#     $(document).ready(function() {#}
+    	
+{#     	// Gestion de l'affichage ou non du champ "Point à actualiser" au chargement de la page#}
+{#         if($('#crep_mso3_agent_fichePosteAdaptee_1').attr('checked')) {#}
+{#         	document.getElementById("crep_mso3_agent_pointsActualisesFichePoste").disabled = false;#}
+{#         } else {#}
+{#         	document.getElementById("crep_mso3_agent_pointsActualisesFichePoste").disabled = true;#}
+{#         }#}
+{#       });#}
+    
+{#  	// Gestion de l'affichage ou non du champ "Point à actualiser" au clic sur "Oui"#}
+{# 	$("#crep_mso3_agent_fichePosteAdaptee_0" ).on('ifChanged', function(){#}
+{#   		document.getElementById("crep_mso3_agent_pointsActualisesFichePoste").disabled = true;#}
+{#   		$('#crep_mso3_agent_pointsActualisesFichePoste').val('');#}
+{#     });#}
+
+{# 	// Gestion de l'affichage ou non du champ "Point à actualiser" au clic sur "Non"#}
+{#   	$("#crep_mso3_agent_fichePosteAdaptee_1" ).on('ifChanged', function(){#}
+{#   		document.getElementById("crep_mso3_agent_pointsActualisesFichePoste").disabled = false;#}
+{#   		$('#crep_mso3_agent_pointsActualisesFichePoste').val('');#}
+{#     });#}
+	
+{#     </script>#}
+{# {% endblock javascripts %}#}

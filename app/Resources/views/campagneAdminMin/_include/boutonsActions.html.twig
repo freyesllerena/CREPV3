@@ -1,0 +1,27 @@
+<br>
+<div class="row">
+	<div class="col-md-4">
+		{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::SUPPRIMER_POPULATION'), campagnePnc) %}
+			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_supprimer_population"><i class="fa fa-trash"></i> Supprimer la population</button>
+		{% endif %}
+    </div>
+    
+    <div class="col-md-4 text-center"></div>
+    
+    <div class="col-md-4">
+    	 {% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::DIFFUSER_POPULATION'), campagnePnc) %}
+			<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_diffuser_population"><i class="fa fa-paper-plane"></i> Diffuser la population</button>
+    	{% endif %}
+    </div>
+    
+    
+ </div>
+
+{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::SUPPRIMER_POPULATION'), campagnePnc) %}
+    {{ macro.modal('danger', 'modal_supprimer_population', "Supprimer la population", "Voulez-vous vraiment <strong>supprimer</strong> cette population ?", "fa-trash", supprimerPopulationForm)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::DIFFUSER_POPULATION'), campagnePnc) %}
+    {{ macro.modal('success', 'modal_diffuser_population', "Diffuser la population", "Voulez-vous vraiment <strong>diffuser</strong> cette population ? <br/><br/> <strong class='orange'><i class='fa fa-warning'></i> Attention :</strong><br/><br/> Cette action est <strong>définitive</strong>. Vous ne pourrez pas supprimer la population une fois diffusée.", "fa-paper-plane", diffuserPopulationForm)}} 
+{% endif %}
+

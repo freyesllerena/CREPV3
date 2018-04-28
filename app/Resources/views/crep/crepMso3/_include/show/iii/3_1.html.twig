@@ -1,0 +1,36 @@
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+		<p class="title">Nombre d’agents encadrés (préciser les effectifs par corps et catégorie)</p>
+		<p class="well well-xs">{{ crep.agentsEncadres|nl2br }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Aptitude</th>
+	                <th style="width: 8%" class="text-center">Excellente maîtrise</th>
+	                <th style="width: 8%" class="text-center">Maîtrise</th>
+	                <th style="width: 8%" class="text-center">À développer</th>
+	                <th style="width: 8%" class="text-center">À acquérir</th>
+	                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+				{% for aptitude in crep.aptitudesManagementAgent %}
+	                <tr>
+	                    <td>{{ aptitude.libelle|nl2br}}</td>
+	                    
+	            		{% for index in 0..3 %}
+	                        	<td class="text-center">{{ aptitude.niveau|iconCheckReverse(loop.index0, 3)|raw }}</td>
+	                    {% endfor %}
+	                    
+	                    <td>{{ aptitude.appreciation|nl2br }}</td>
+	                </tr>
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<div class="row" id="formationsPrepaConcoursExamensCollection" data-prototype="{{ form_widget(form.formationsPrepaConcoursExamens.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Libellé de la formation</th>
+                    <th style="width: 10%" class="text-center">Demande de l'agent-e</th>
+                    <th style="width: 15%" class="text-center">Avis du-de la responsable hiérarchique</th>
+                    <th style="width: 15%" class="text-center">Demande au regard des objectifs du service</th>
+                    <th style="width: 10%" class="text-center">Préciser l'objectif individuel visé</th>
+                    <th style="width: 10%" class="text-center">Recours au CPF</th>
+                    <th width="5%" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formationPrepaConcoursExamens in form.formationsPrepaConcoursExamens %}
+                    {{ form_widget(formationPrepaConcoursExamens) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsPrepaConcoursExamens pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

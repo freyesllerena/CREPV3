@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.fonctionsExercees, { 'label': "Fonctions exercées", 'attr': {'class':'champMisEnEvidence'}}) }}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.cotationPoste, { 'label': "Cotation du poste", 'attr': {'class':'champMisEnEvidence'}}) }}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.quotiteTravail, { 'label': "Quotité de travail", 'attr': {'class':'champMisEnEvidence'}}) }}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		{{ form_row(form.fichePosteAdaptee, { 'label': "Fiche de poste adaptée", 'label_attr': {'class' : 'radio-inline' }}) }}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.pointsActualisesFichePoste, { 'label': "Points à actualiser", 'attr': {'class':'champMisEnEvidence'}}) }}
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="pull-left">
+        	Votre appréciation sur votre poste (attraits et contraintes ; qualité de vie au travail, 
+        	notamment en termes de charge de travail, d’organisation du travail et d’horaires)
+        </label>
+        {{ form_row(form.appreciationPosteAgent, { 'attr': {'class':'champMisEnEvidence'}}) }}
+    </div>
+</div>

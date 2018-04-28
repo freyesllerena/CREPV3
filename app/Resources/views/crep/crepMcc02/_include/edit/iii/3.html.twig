@@ -1,0 +1,31 @@
+{% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
+
+<div class="row" id="objectifsFutursCollection" data-prototype="{{ form_widget(form.objectifsFuturs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Objectif</th>
+                <th class="text-center">Échéance</th>
+                <th class="text-center">Conditions de réussite</th>
+                <th class="text-center">Indicateurs</th>
+                <th width="2%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in form.objectifsFuturs %}
+                {{ form_row(objectif) }}
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br>

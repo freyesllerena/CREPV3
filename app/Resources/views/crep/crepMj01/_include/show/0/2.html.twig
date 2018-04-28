@@ -1,0 +1,39 @@
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de l'évaluateur</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomUsageShd|upper }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.prenomShd|title }}
+    	</div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Intitulé de la fonction</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.posteOccupeShd }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Service / Direction</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.serviceShd}}
+    	</div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Établissement / Juridiction / Bureau</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.affectationShd }}
+        </div>
+    </div>
+</div>
+<br>

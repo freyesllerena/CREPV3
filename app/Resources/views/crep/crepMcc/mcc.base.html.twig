@@ -1,0 +1,412 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block content %}
+
+
+<div class="crep">
+	<div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>I - IDENTIFICATION DE L'AGENT ÉVALUÉ </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Identification de l'agent évalué</h3>
+
+                        {% block i1 %}
+                        {% endblock i1 %}
+
+                        <h3>2. Poste occupé par l'agent </h3>
+
+                        {% block i2 %}
+                        {% endblock i2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>II - ÉVALUATION DE L'ANNEE ECOULEE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Résultats professionnels et développement de compétences </h3>
+                        
+                        {% block ii1 %}
+                        {% endblock ii1 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+							<i>Pour les corps de recherche uniquement, au regard du statut particulier (article 7 / décret du 14 mai 1991) : cette partie doit être remplacée par un compte-rendu 
+							d'activité scientifique rédigé par l'agent-e. Il doit se suffire à lui-même sans documents annexes. Il fait état et résume les réalisations personnelles 
+							de l'année concernée.</i>
+                        </p>
+
+                        <h3>2. Critères d'appréciation professionnelle</h3>
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+							<i class="fa fa-info-circle" aria-hidden="true"></i> <i>Tous les critères doivent être renseignés, mais peuvent, le cas échéant, comporter la mention « sans objet ».<br/>
+							- (1) Domine le sujet, voire est capable de le faire évoluer – Capacité à former et/ou à être tuteur;<br/>
+							- (2) Connaissances approfondies – Capacité à traiter de façon autonome les situations complexes ou inhabituelles ;<br/>
+							- (3) Connaissances générales – Capacité à traiter de façon autonome les situations courantes ;<br/>
+							- (4) Connaissances élémentaires, notions – Capacité à faire mais en étant tutoré ;<br/>
+							- (5) Domine le sujet, en maîtrise ses évolutions – forte capacité à traiter de façon autonome les situations complexes ou inhabituelles. Forte capacité d’initiatives ;<br/>
+							- (6) Connaissances approfondies – Capacité à traiter de façon autonome les situations complexes ou inhabituelles ;<br/>
+							- (7) Connaissances générales, théoriques – Approfondissement de formations et pratique complémentaire ;<br/>
+							- (8) Connaissances élémentaires, notions – Requiert une période d’observation ou de pratique.</i></i><br/>
+						</p>
+
+                        {% block ii2 %}
+                        {% endblock ii2 %}
+                        
+                        <h3>3. Appréciation sur la manière de servir </h3>
+
+                        {% block ii3 %}
+                        {% endblock ii3 %}
+                        
+                        <h3>4. Acquis de l'expérience professionnelle </h3>
+
+                        {% block ii4 %}
+                        {% endblock ii4 %}
+
+						 <h3>5. Action(s) de formation réalisée(s) en tant que formateur-trice interne (*) en 2017 (Domaines, publics cibles et nombre de jour d'animation) </h3>
+						<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+							<i class="fa fa-info-circle" aria-hidden="true"></i> <i>(*) Au sens de la circulaire du 2 juillet 2015 relative à l’activité de formateur interne au ministère de la culture et de la communication</i>
+						</p>
+                        {% block ii5 %}
+                        {% endblock ii5 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>III - OBJECTIFS DE L'AGENT-E POUR L'ANNEE {{ crep.agent.campagnePnc.anneeEvaluee+1 }}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            	
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Objectifs collectifs du service</h3>
+						<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+							<i class="fa fa-info-circle" aria-hidden="true"></i> <i>Rappel : ces objectifs ne concernent pas directement l'agent-e.</i> 
+						</p>
+                        {% block iii1 %}
+                        {% endblock iii1 %}
+
+                        <h3>2. Contexte prévisible de l'année <small style="font-size: 13px;">(réorganisation, environnement, moyens, objectifs du service, etc.)</small></h3>
+
+                        {% block iii2 %}
+                        {% endblock iii2 %}
+                        
+                        <h3>3. Objectifs individuels de l'agent-e</h3>
+
+                        {% block iii3 %}
+                        {% endblock iii3 %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>IV - LES PERSPECTIVES D'ÉVOLUTION PROFESSIONNELLE DE L'AGENT-E</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Souhaits et perspectives d'évolution professionnelle (préciser l'échéance): </h3>
+
+                        {% block iv1 %}
+                        {% endblock iv1 %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+	{% block CommentairesAgent %}
+	    <div class="row">
+	        <div class="col-md-12 col-sm-12 col-xs-12">
+	            <div class="x_panel panel_green" >
+	            	<div class="x_title collapse-link" style="cursor:pointer">
+	                    <h2>V - COMMENTAIRES DE L'AGENT-E SUR SON ÉVALUATION</h2>
+	                    <ul class="nav navbar-right panel_toolbox">
+	                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+	                    </ul>
+	                    <div class="clearfix"></div>
+	                </div>
+	                
+	                <div class="x_content row">
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+	                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+								<i class="fa fa-info-circle" aria-hidden="true"></i> <i>À remplir par l'agent-e.</i>
+							</p>
+	                        
+	                        <h3>1. Sur la conduite de l'entretien </h3>
+	
+	                        {% block v1 %}
+	                        {% endblock v1 %}
+	
+	                        <h3>2. Sur ses perspectives de carrière et de mobilité</h3>
+	
+	                        {% block v2 %}
+	                        {% endblock v2 %}
+	
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	{% endblock CommentairesAgent %}
+	
+	{% block avisAh %}
+	    <div class="row">
+	        <div class="col-md-12 col-sm-12 col-xs-12">
+	            <div class="x_panel panel_green">
+	            	<div class="x_title collapse-link" style="cursor:pointer">
+	                    <h2>VI - AVIS DE L'AUTORITÉ HIÉRARCHIQUE</h2>
+	                    <ul class="nav navbar-right panel_toolbox">
+	                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+	                    </ul>
+	                    <div class="clearfix"></div>
+	                </div>
+	            	
+	                <div class="x_content row">
+	                    <div class="col-md-12 col-sm-12 col-xs-12">
+							{% if crep.titulaire is not null and crep.titulaire  == false %}
+	                        	<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+									<i class="fa fa-info-circle" aria-hidden="true"></i> <i>Pour les agents-es non titulaires uniquement.</i>
+								</p>
+								
+	                        	<h3> <strong>1. Attribution de la part variable </strong> </h3>
+	                        	
+								{% block vi1_agent_non_titulaire %}
+		                        {% endblock vi1_agent_non_titulaire %}
+		                        
+		                        <h3> <strong>2. Évolution indiciaire </strong> </h3>
+		                        
+		                        {% block vi2_agent_non_titulaire %}
+	                        	{% endblock vi2_agent_non_titulaire %}
+	
+		                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+									<i class="fa fa-info-circle" aria-hidden="true"></i> <i>Le refus d’attribution d’une réduction d’ancienneté doit être motivé, conformément aux dispositions de l’arrêté du novembre 2011.</i>
+	 							</p>
+							{% else %}      
+	                        	<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+									<i class="fa fa-info-circle" aria-hidden="true"></i> <i>Pour les agents-es titulaires uniquement.</i>
+								</p>
+								
+	                        	<h3> <strong>1. Attribution CIA </strong> </h3>
+	                        	
+								{% block vi1_agent_titulaire %}
+		                        {% endblock vi1_agent_titulaire %}
+		                        
+		                        <h3> <strong>2. Avancement de grade </strong> </h3>
+		                        
+		                        {% block vi2_agent_titulaire %}
+	                        	{% endblock vi2_agent_titulaire %}
+	                        	
+	                        	<h3> <strong>3. Promotion de corps </strong> </h3>
+		                        
+		                        {% block vi3_agent_titulaire %}
+	                        	{% endblock vi3_agent_titulaire %}
+		                    {% endif %}
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    {% endblock avisAh %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VII - COMPTE RENDU D'ENTRETIEN DE FORMATION </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+							<i>Les besoins de formations exprimés par l’agent-e et le responsable hiérarchique seront repris par le-la responsable 
+							de la formation de proximité pour l’élaboration du plan de formation annuel, d’où la réédition de l’identification 
+							de l’agent-e. Celle-ci peut être faite par copier-coller du tableau identification en première page.
+							Un tableau récapitulatif des demandes par structure sera transmis au « bureau de la formation professionnelle et du 
+							développement des compétences ». Une copie de l’entretien de formation est conservée par le-la responsable de formation.</i>		
+						</p>
+                        
+                        
+                        <h3>1. Formations suivies (années N-1 et N-2) </h3>
+					
+                        {% block vii1 %}
+                        {% endblock vii1 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+							<i class="fa fa-info-circle" aria-hidden="true"></i>
+							<i>Texte applicable : décret 2007-1470 du 15 octobre 2007 relatif à la formation professionnelle tout au long de la vie des 
+							fonctionnaires de l’État.</i>
+						</p>
+						
+						<br/>
+						 <h3>2. Recueil des besoins de formation (année N et N+1) </h3>
+							
+						 <h3>2.1. Thèmes des formations liées à l'adaptation immédiate au poste de travail (T1)</h3>
+						
+                        {% block vii2_1 %}
+                        {% endblock vii2_1 %}
+                        <br/>
+                        <h3>2.2. Thèmes des formations liées à l'évolution des métiers (T2)</h3>
+						
+                        {% block vii2_2 %}
+                        {% endblock vii2_2 %}
+                        <br/>
+                        <h3>2.3. Thèmes des formations liées au développement des qualifications ou l'acquisition de nouvelles qualifications (T3)</h3>
+						
+                        {% block vii2_3 %}
+                        {% endblock vii2_3 %}
+                        <br/>
+                        <h3>2.4. Préparations aux concours et examens professionnels</h3>
+						
+                        {% block vii2_4 %}
+                        {% endblock vii2_4 %}
+                        <br/>
+                        <h3>2.5. Autres actions (VAE, bilan de compétence, congé de formation, période de professionnalisation) </h3>
+						
+                        {% block vii2_5 %}
+                        {% endblock vii2_5 %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block circuitDeValidation %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VIII - CIRCUIT DE VALIDATION</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Entretien professionnel </h3>
+
+                        {% block viii1 %}
+                        {% endblock viii1 %}
+
+                        <h3>2. Signature du-de la supérieur-e hiérarchique direct-e ayant conduit l'entretien</h3>
+
+                        {% block viii2 %}
+                        {% endblock viii2 %}
+
+                        <h3>3. Visa de l'agent</h3>
+
+                        {% block viii3 %}
+                        {% endblock viii3 %}
+
+                        <h3>4.Signature de l'autorité hiérarchique</h3>
+
+                        {% block viii4 %}
+                        {% endblock viii4 %}
+
+                        <h3>5. Observations et signature de l'agent-e</h3>
+
+                        {% block viii5 %}
+                        {% endblock viii5 %}
+                        
+						<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+            	           	<i>
+                	           	<span align="center"><b> Modalités de recours : </b></span>
+                	           	<br/>
+                	           	<span><b>Article 6 du décret n°2010-888 du 28 juillet 2010 :</b></span>
+                	           	<br/>
+                	           	<span>
+                				« L’autorité hiérarchique peut être saisie par le fonctionnaire d’une demande de révision du compte rendu de l'entretien professionnel.
+                				Ce recours hiérarchique est exercé dans un délai de quinze jours francs suivant la notification à l’agent-e du compte rendu de l’entretien. 
+                				L’autorité hiérarchique notifie sa réponse dans un délai de quinze jours après la demande de révision du compte rendu de l’entretien professionnel.
+                				Les commissions administratives paritaires peuvent, à la requête de l’intéressé, sous réserve qu’il ait au préalable exercé le recours mentionné 
+                				à l'alinéa précédent, demander à l’autorité hiérarchique la révision du compte rendu de l’entretien professionnel. Dans ce cas, communication doit 
+                				être faite aux commissions de tous éléments utiles d’information. Les commissions administratives paritaires doivent être saisies dans un délai d’un mois 
+                				suivant la réponse formulée par l’autorité hiérarchique dans le cadre du recours.
+                				L’autorité hiérarchique communique au fonctionnaire, qui en accuse réception, le compte rendu définitif de l’entretien professionnel. »
+                				</span><br/><br/>
+                				<span>
+                				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <strong>La signature de l’agent-e vaut notification du présent document (et non approbation de son contenu).</strong>
+                	            </span>
+            	           	</i>
+						</p>
+            
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                        	<i>
+                        		<span align="center"><b>Mention droits d'accès aux fichiers et libertés</b></span>
+                            	<br/>
+                              	<span>« Les informations ci-dessus font l’objet d’une saisie informatique et d’un traitement automatisé de données à 
+                                    caractère personnel. Conformément à la loi n° 78-17 du 6 janvier 1978 modifiée relative à l’informatique, 
+                                    aux fichiers et aux libertés, ce traitement a été déclaré à la commission nationale de l’informatique et des 
+                                    libertés. Les droits d’accès et de rectification prévus aux articles 39 et 40 de la loi précitée s’exercent 
+                                    auprès du directeur du centre ministériel de gestion ou du sous-directeur de la gestion des personnels relevant 
+                                    de l’administration centrale. »
+                              	</span>
+                          	</i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock circuitDeValidation %}
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+
+
+{% endblock javascripts %}

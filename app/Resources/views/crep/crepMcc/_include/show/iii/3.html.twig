@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Objectifs individuels <small>(préciser les actions à conduire, les résultats attendus et les indicateurs retenus)</small></th>
+                    <th>Moyens de réussite <small>(liées à l'agent-e ou/et à des facteurs externes, dont la formation)</small></th>
+                    <th>Échéance <small>(si nécessaire)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for objectifFutur in crep.objectifsFuturs %}
+                <tr>
+                    <td>{{ objectifFutur.libelle | nl2br }}</td>
+                    <td>{{ objectifFutur.observationsEventuelles | nl2br }}</td>
+                    <td>{{ objectifFutur.echeance| nl2br}}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+{% use "Form/App_bootstrap_3_horizontal_layout.html.twig" %}
+
+
+{% block _crep_mindef_objectifsEvalues_entry_widget %}
+    <tr>
+        <td>{{ form_widget(form.libelle) }}</td>
+        <td>{{ form_widget(form.resultat) }}</td>
+        <td>{{ form_widget(form.resultatObtenu) }}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mindef_competencesTransverses_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
+{% block _crep_mindef_competencesPostes_entry_widget %}
+    <tr>
+        <td>
+        	{{ form_errors(form.libelle) }}
+        	{{ form_errors(form.niveauRequis) }}
+        	{{ form_errors(form.niveauAcquis) }}
+        	<div class="form-group {% if not form.vars.valid -%} has-error{% endif %}" >
+            	{{ form_widget(form.libelle, {'attr': {'class': 'resizable_textarea form-control'}}) }}
+            </div>
+        </td>
+        {%  for child in form.niveauRequis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false , 'attr': {'class': 'iCheckCollection'}}) }}</td>
+        {% endfor %}
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false , 'attr': {'class': 'iCheckCollection'}}) }}</td>
+        {% endfor %}
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+
+{% block _crep_mindef_competencesManageriales_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
+{% block form_group_class -%}
+	col-md-9 col-sm-9 col-xs-12
+{%- endblock form_group_class %}
+
+{% block _crep_mindef_competencesDeclarees_entry_widget %}
+    <tr>
+        <td>
+        	{{ form_errors(form.libelle) }}
+        	{{ form_errors(form.niveauAcquis) }}
+        	<div class="form-group {% if not form.vars.valid -%} has-error{% endif %}" >
+            	{{ form_widget(form.libelle, {'attr': {'class': 'resizable_textarea form-control'}}) }}
+            </div>
+        </td>
+        
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false , 'attr': {'class': 'iCheckCollection'}}) }}</td>
+        {% endfor %}
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mindef_formationsSuivies_entry_widget %}
+    <tr>
+        <td>
+            {{ form_widget(form.libelle, {'attr': {'class': 'formation-autocomplete', 'style': 'width: 100%'}}) }}
+            <div class="autocomplete-container-formation" style="position: relative; float: left; width: 400px; margin: 10px;"></div>
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mindef_formationsAVenir_entry_widget %}
+    <tr>
+        <td>
+{#             {{ form_widget(form.formation, {'attr': {'class': 'select2_single', 'style': 'width: 100%'}}) }}#}
+            {{ form_widget(form.libelle, {'attr': {'class': 'formation-autocomplete', 'style': 'width: 100%'}}) }}
+            <div class="autocomplete-container-formation" style="position: relative; float: left; width: 400px; margin: 10px;"></div>
+        </td>
+		<td class="text-center">
+            {{ form_widget(form.besoinToujoursAvere, {'label':false, 'attr': {'class': 'iCheckCollection'}}) }}
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+
+{% block _crep_mindef_formationsDemandeesAdministration_entry_widget %}
+    <tr>
+        <td>
+{#             {{ form_widget(form.formation, {'attr': {'class': 'select2_single', 'style': 'width: 100%'}}) }}#}
+               {{ form_widget(form.libelle, {'attr': {'class': 'formation-autocomplete', 'style': 'width: 100%'}}) }}
+               <div class="autocomplete-container-formation" style="position: relative; float: left; width: 400px; margin: 10px;"></div>
+        </td>
+        <td>
+            {{ form_widget(form.priorite) }}
+        </td>
+		 <td class="text-center">
+            {{ form_widget(form.lienAvecObjectifs, {'label':false, 'attr': {'class': 'iCheckCollection'}}) }}
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+
+{% block _crep_mindef_formationsDemandeesAgent_entry_widget %}
+    <tr>
+        <td>
+{#             {{ form_widget(form.formation, {'attr': {'class': 'select2_single', 'style': 'width: 100%'}}) }}#}
+            {{ form_widget(form.libelle, {'attr': {'class': 'formation-autocomplete', 'style': 'width: 100%'}}) }}
+            <div class="autocomplete-container-formation" style="position: relative; float: left; width: 400px; margin: 10px;"></div>
+        </td>
+        <td>
+            {{ form_widget(form.priorite) }}
+        </td>
+		 <td class="text-center">
+            {{ form_widget(form.dif, {'label':false, 'attr': {'class': 'iCheckCollection'}}) }}
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+
+{% block _crep_mindef_formationsDemandeesEmployeur_entry_widget %}
+    <tr>
+        <td>
+{#             {{ form_widget(form.formation, {'attr': {'class': 'select2_single', 'style': 'width: 100%'}}) }}#}
+            {{ form_widget(form.libelle, {'attr': {'class': 'formation-autocomplete', 'style': 'width: 100%'}}) }}
+            <div class="autocomplete-container-formation" style="position: relative; float: left; width: 400px; margin: 10px;"></div>
+        </td>
+        <td>
+            {{ form_widget(form.priorite) }}
+        </td>
+		 <td class="text-center">
+            {{ form_widget(form.lienAvecObjectifs, {'label':false, 'attr': {'class': 'iCheckCollection'}}) }}
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mindef_objectifsFuturs_entry_widget %}
+    <tr>
+        <td>
+			<div class="form-group {% if not form.vars.valid -%} has-error{% endif %}" >
+            	{{ form_row(form.libelle, {'label':false}) }}
+            </div>
+        </td>
+        <td>
+            <div class="form-group">
+                {{ form_widget(form.resultat) }}
+            </div>
+        </td>
+		 <td>
+            {{ form_widget(form.echeance) }}
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mindef_evolutionProfessionnelle_widget %}
+    {{ form_widget(form.choix) }}
+{% endblock %}
+
+{% block _crep_mindef_evaluationGlobale_entry_widget %}
+    <td class="text-center">{{ form_widget(form, {'label': false}) }}</td>
+{% endblock %}

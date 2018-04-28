@@ -1,0 +1,127 @@
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomNaissance|upper }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom usuel </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomUsage|upper }}
+    	</div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.prenom|title }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Date de naissance </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %}
+        </div>
+	</div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Matricule </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+			{{ crep.matriculeAlliance }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Catégorie </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+			{{ crep.categorieAgent }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Corps </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.corps }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Date corps </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateEntreeCorps %}{{ crep.dateEntreeCorps | date('d/m/Y') }}{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Grade </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.grade }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Depuis le </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateEntreeGrade %}{{ crep.dateEntreeGrade | date('d/m/Y') }}{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Échelon </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.echelon }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Depuis le </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateEntreeEchelon %}{{ crep.dateEntreeEchelon | date('d/m/Y') }}{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Affectation (clair) </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.affectationClairAgent }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Affectation (sigle) </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.affectationSigleAgent }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Poste occupé </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.posteOccupeAgent }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Depuis le </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateEntreePosteOccupeAgent %}{{ crep.dateEntreePosteOccupeAgent | date('d/m/Y') }}{% endif %}
+        </div>
+    </div>
+</div>
+
+<br/>

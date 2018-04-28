@@ -1,0 +1,17 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-10 col-sm-10 col-xs-12" style="text-align:left;">Dans l’hypothèse où l’agent-e serait susceptible de prétendre à un avancement à intervalle prédéterminé, souhaitez-vous qu’il en bénéficie au titre de l’année 2017 ? </label>
+	    <div class="col-md-2 col-sm-2 col-xs-12">
+	        {{ form_row(form.avancement, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Avis circonstancié</label>
+        {{ form_row(form.explicationAvancement, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
+    </div>
+</div>

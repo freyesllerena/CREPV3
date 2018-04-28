@@ -1,0 +1,28 @@
+ministere:
+    path:     /
+    defaults: { _controller: "AppBundle:Ministere:index"}
+    methods:  GET
+      
+show_ministere:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Ministere:show" }
+    requirements:
+        id: '\d+'
+            
+new_ministere:
+    path:     /new
+    defaults: { _controller: "AppBundle:Ministere:new" }
+    methods:  [GET, POST]
+
+edit_ministere:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Ministere:edit" }
+    requirements:
+        id: '\d+'
+        
+delete_ministere:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Ministere:delete" }
+    methods:  DELETE
+    requirements:
+        id:  \d+

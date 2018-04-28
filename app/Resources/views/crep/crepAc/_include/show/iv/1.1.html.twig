@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Connaissances professionnelles requises sur le poste</th>
+                    <th style="width: 10%" class="text-center">Exceptionnelle*</th>
+                    <th style="width: 10%" class="text-center">Forte</th>
+                    <th style="width: 10%" class="text-center">Assez forte</th>
+                    <th style="width: 10%" class="text-center">A développer</th>
+                    <th style="width: 10%" class="text-center">Non pertinent</th>
+                    <th style="width: 20%">Observations</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competenceRequise in crep.competencesTransversesRequises %}
+                    <tr>
+                        <td>
+                            {{ competenceRequise.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+                        	<td class="text-center">{{ competenceRequise.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                        <td>
+                            {{ competenceRequise.observations|nl2br }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+                {% if crep.techniques is not empty %}
+                	<tr>
+                		<td colspan="7" style="background-color: #EFEFEF"><strong>Techniques</strong></td>
+                    </tr>
+                    {% for technique in crep.techniques %}
+                        <tr>
+                            <td>
+                                {{ technique.libelle }}
+                            </td>
+                            {% for index in 0..4 %}
+                            	<td class="text-center">{{ technique.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                            {% endfor %}
+                            <td>
+                            	{{ technique.observations|nl2br }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if crep.autresCompetencesTransversesRequises is not empty %}
+                	<tr>
+                		<td colspan="7" style="background-color: #EFEFEF"><strong>Autres connaissances éventuellement démontrées par l’agent</strong></td>
+                    </tr>
+                    {% for autreCompetenceRequise in crep.autresCompetencesTransversesRequises %}
+                        <tr>
+                            <td>
+                                {{ autreCompetenceRequise.libelle }}
+                            </td>
+                            {% for index in 0..4 %}
+                            	<td class="text-center">{{ autreCompetenceRequise.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                            {% endfor %}
+                            <td>
+                            	{{ autreCompetenceRequise.observations|nl2br }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,181 @@
+{% extends "crep/crepMcc/mcc.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+
+    {{ block('alertErreurValidationFormulaireCrep') }}
+ 	{{ block('alertAhNonIdentifie') }}
+	{{ block('alertDebutEntretien') }}
+    {{ block('alertRefusVisa') }}
+    {{ block('alertRecours') }}
+    {{ block('alertRefusNotification') }}
+    {{ block('renvoyerAh') }}
+    {{ block('renvoyerAgent') }}
+    
+	<div class="form-horizontal">
+        {{ parent() }}
+	</div>
+	{{ block('boutons_actions') }}
+{% endblock content %}
+
+{% block i1 %}
+	{% include 'crep/crepMcc/_include/show/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepMcc/_include/show/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block ii1 %}
+	{% include 'crep/crepMcc/_include/show/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+	{% include 'crep/crepMcc/_include/show/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+	{% include 'crep/crepMcc/_include/show/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block ii4 %}
+	{% include 'crep/crepMcc/_include/show/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block ii5 %}
+	{% include 'crep/crepMcc/_include/show/ii/5.html.twig' %}
+{% endblock ii5 %}
+
+{% block iii1 %}
+	{% include 'crep/crepMcc/_include/show/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+	{% include 'crep/crepMcc/_include/show/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block iii3 %}
+	{% include 'crep/crepMcc/_include/show/iii/3.html.twig' %}
+{% endblock iii3 %}
+
+{% block iv1 %}
+	{% include 'crep/crepMcc/_include/show/iv/1.html.twig' %}
+{% endblock iv1 %}
+
+{% block v1 %}
+	{% include 'crep/crepMcc/_include/show/v/1.html.twig' %}
+{% endblock v1 %}
+
+{% block v2 %}
+	{% include 'crep/crepMcc/_include/show/v/2.html.twig' %}
+{% endblock v2 %}
+
+{% block vi1_agent_titulaire %}
+	{% include 'crep/crepMcc/_include/show/vi/1_agent_titulaire.html.twig' %}
+{% endblock vi1_agent_titulaire %}
+
+{% block vi2_agent_titulaire %}
+	{% include 'crep/crepMcc/_include/show/vi/2_agent_titulaire.html.twig' %}
+{% endblock vi2_agent_titulaire %}
+
+{% block vi3_agent_titulaire %}
+	{% include 'crep/crepMcc/_include/show/vi/3_agent_titulaire.html.twig' %}
+{% endblock vi3_agent_titulaire %}
+
+{% block vi1_agent_non_titulaire %}
+	{% include 'crep/crepMcc/_include/show/vi/1_agent_non_titulaire.html.twig' %}
+{% endblock vi1_agent_non_titulaire %}
+
+{% block vi2_agent_non_titulaire %}
+	{% include 'crep/crepMcc/_include/show/vi/2_agent_non_titulaire.html.twig' %}
+{% endblock vi2_agent_non_titulaire %}
+
+{% block vii1 %}
+	{% include 'crep/crepMcc/_include/show/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2_1 %}
+	{% include 'crep/crepMcc/_include/show/vii/2_1.html.twig' %}
+{% endblock vii2_1 %}
+
+{% block vii2_2 %}
+	{% include 'crep/crepMcc/_include/show/vii/2_2.html.twig' %}
+{% endblock vii2_2 %}
+
+{% block vii2_3 %}
+	{% include 'crep/crepMcc/_include/show/vii/2_3.html.twig' %}
+{% endblock vii2_3 %}
+
+{% block vii2_4 %}
+	{% include 'crep/crepMcc/_include/show/vii/2_4.html.twig' %}
+{% endblock vii2_4 %}
+
+{% block vii2_5 %}
+	{% include 'crep/crepMcc/_include/show/vii/2_5.html.twig' %}
+{% endblock vii2_5 %} 
+
+{% block viii1 %}
+	{% include 'crep/crepMcc/_include/show/viii/1.html.twig' %}
+{% endblock viii1 %} 
+
+{% block viii2 %}
+	{% include 'crep/crepMcc/_include/show/viii/2.html.twig' %}
+{% endblock viii2 %} 
+
+{% block viii3 %}
+	{% include 'crep/crepMcc/_include/show/viii/3.html.twig' %}
+{% endblock viii3 %} 
+
+{% block viii4 %}
+	{% include 'crep/crepMcc/_include/show/viii/4.html.twig' %}
+{% endblock viii4 %} 
+
+{% block viii5 %}
+	{% include 'crep/crepMcc/_include/show/viii/5.html.twig' %}
+{% endblock viii5 %} 
+
+{% block alertRefusVisa %}
+    {% if (crep.dateRefusVisa) and (crep.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::VISE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::NOTIFIE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::REFUS_NOTIFICATION_AGENT')]) %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <strong>Refus de visa</strong> du CREP par l'agent acté le <strong>{{ crep.dateRefusVisa|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusVisa %}
+
+{% block alertRefusNotification %}
+    {% if crep.dateRefusNotification %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <strong>Refus de l'agent de signer</strong> le CREP notifié acté le <strong>{{ crep.dateRefusNotification|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusNotification %}
+
+{% block renvoyerAgent %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AGENT')) and crep.dateRenvoiAgent  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            {% set debutMessageRenvoiAgent = "L'agent a" %}
+            {% if is_granted('ROLE_AGENT') %}
+                {% set debutMessageRenvoiAgent = "Vous avez" %}
+            {% endif %}
+            {{ debutMessageRenvoiAgent }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAgent|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAgent|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAgent %}
+
+{% block renvoyerAh %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AH')) and crep.dateRenvoiAh  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            {% set debutMessageRenvoiAh = "Le N+2 a" %}
+            {% if is_granted('ROLE_AH') %}
+                {% set debutMessageRenvoiAh = "Vous avez" %}
+            {% endif %}
+            {{ debutMessageRenvoiAh }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAh|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAh|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAh %}

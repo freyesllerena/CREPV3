@@ -1,0 +1,47 @@
+unite_organisationnelle_index:
+    path:     /
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:index" }
+    methods:  GET
+
+unite_organisationnelle_show:
+    path:     /{id}
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:show"}
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+unite_organisationnelle_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:new" }
+    methods:  [GET, POST]
+    
+unite_organisationnelle_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+unite_organisationnelle_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:delete" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'
+        
+unite_organisationnelle_upload:
+    path:     /upload
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:upload" }
+    methods:  [GET, POST]
+   
+unite_organisationnelle_server_processing:
+    path:     /server_processing
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:serverProcessing" }
+        
+unite_organisationnelle_delete_all:
+    path:     /{id}/delete-all
+    defaults: { _controller: "AppBundle:UniteOrganisationnelle:deleteAll" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'
+        

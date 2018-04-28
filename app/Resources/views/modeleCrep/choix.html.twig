@@ -1,0 +1,61 @@
+    {% extends "index.base.html.twig" %} 
+
+{% block frameTitle %}Choisir un CREP pour {% endblock frameTitle %}
+{% block pageTitle %}Choisir un CREP {% endblock pageTitle %}
+
+{% block content %}
+    {% block body %}
+    	<div role="main">
+    		<div class="">
+    			<div class="row">
+    				<div class="col-md-12">
+    					<div class="x_panel panel_green">
+    						<div class="x_title">
+    							<h2>Je choisis un modèle de CREP pour évaluer {{ agent | identite }}</h2>
+    							<div class="clearfix"></div>
+    						</div>
+    						
+    						<div class="x_content">
+        	                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                					<div class="row">
+                						{% for formView in form.children.choixCrep.children %}
+                						    
+                						    {% set splitTypeEntity = modelesCrep[loop.index0].typeEntity | split('\\') %}
+                						    {% set typeEntity = splitTypeEntity[splitTypeEntity | length - 1] %}
+                						    
+                    						<div class="col-sm-6 col-md-3">
+                                            	<div class="thumbnail thumbnail_crep">
+                          	    					<a href="{{ path('exporter_crep_vierge', { 'id': modelesCrep[loop.index0].id , 'campagnePnc' : agent.campagnePnc.id }) }}" title="Visualiser le formulaire">
+                                                  		<div class="image view view-first" style="cursor: pointer;">
+                                                    		<img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Captures_modele_CREP/'~typeEntity~'.PNG') }}" alt="Visualiser le modèle" />
+                                            				<div class="mask mask_crep">
+                                              					<p>Télécharger</p>
+                                                            	<div class="tools tools-bottom">
+                                                                	<i class="fa fa-download"></i>
+                                                                </div>
+                                            				</div>
+                                        				</div>
+                                        			</a>	
+                                        			
+                                    			</div>
+                                    			
+                                    			<div style="text-align: center;" class="caption">
+            	          	    					<a href="{{ path('exporter_crep_vierge', { 'id': modelesCrep[loop.index0].id , 'campagnePnc' : agent.campagnePnc.id }) }}" title="Visualiser le formulaire">{{ formView.vars.value }}</a><br/>
+                                    				<div align="center" >{{ form_widget(form.children.choixCrep.children[loop.index0], { 'attr': { 'class': 'flat'} }) }}</div>
+                                      			</div>
+                                          			
+                                        	</div>
+                                    	{% endfor %}
+                					</div>
+                                    {% set messageModalSubmit = "Voulez-vous vraiment <strong>confirmer</strong> le choix de ce modèle de CREP pour évaluer <strong>" ~ agent | identite | escape ~ " </strong>?" %}
+        	                        {{ macro.modalSubmit('primary', 'modal_valider', "Confirmer le choix d'un CREP", messageModalSubmit, "fa-check")}} 
+    	                        {{ form_end(form) }} 
+                  			</div>
+    						<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal_valider"><i class="fa fa-check"></i> Valider</button>
+                		</div>
+              		</div>
+            	</div>
+          	</div>
+    	</div>
+    {% endblock body %}
+{% endblock content  %}

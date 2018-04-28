@@ -1,0 +1,27 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+
+    <tr>
+        <td class="content-block">
+            Bonjour,
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nous vous informons que la campagne "{{ campagneRlc.libelle }}" concernant l'évaluation professionnelle 
+	de l'année {{ campagneRlc.anneeEvaluee }} est ouverte aux acteurs de niveau proximité (BRHP), pour le périmètre {{ perimetre.libelle }}.
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Nous vous invitons à vous connecter à l'application {{ appName }} en cliquant sur le lien suivant :
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('campagne_brhp_show',{'id' : campagne.id}) }}">Accéder à la campagne</a>
+        </td>
+    </tr>
+                                
+{% endblock %}

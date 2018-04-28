@@ -1,0 +1,212 @@
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th class="text-center">Sur demande de l’agent-e &sup1;</th>
+                <th class="text-center">Avis favorable du responsable hiérarchique &sup1;</th>
+                <th class="text-center">Sur demande du responsable hiérarchique &sup1;</th>
+                <th class="text-center">Recours au CPF &sup2;</th>
+                <th class="text-center">Echéance</th>
+            </tr>
+            <tr>
+                <th>Formations liées à l’adaptation immédiate au poste de travail (T1)</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr align="left" bgcolor="#FFFFFF">
+                    <td><br></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+            <thead>
+                <tr>
+                    <th>Formations liées à l’évolution des métiers (T2)</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr align="left" bgcolor="#FFFFFF">
+                    <td><br></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+            <thead>
+                <tr>
+                    <th>Formations liées au développement des qualifications ou à l’acquisition de nouvelles qualifications (T3)</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr align="left" bgcolor="#FFFFFF">
+                    <td><br></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+
+
+        {#<table cellpadding="3" style="font-size:9.5pt; border:1px #000000 solid;">#}
+            {#<tr bgcolor="#E6E6E6" style="font-size:7.0pt;" align="center">#}
+                {#<td width="50%" bgcolor="#FFFFFF"></td>#}
+                {#<td width="10%">Demande de l’agent-e (*)</td>#}
+                {#<td width="10%">Avis du-de la responsable hiérarchique (*)</td>#}
+                {#<td width="10%">Demande au regard des objectifs du service</td>#}
+                {#<td width="10%">Préciser l'objectif individuel visé</td>#}
+                {#<td width="10%">Recours au CPF</td>#}
+            {#</tr>#}
+            {#<tr bgcolor="#E6E6E6">#}
+                {#<td colspan="6"><strong>Thèmes des formations liées à l’adaptation immédiate au poste de travail (T1)</strong></td>#}
+            {#</tr>#}
+
+            {# Afficher les formations renseignées dans l'appli#}
+            {#{% if crep.formationsAdaptationPosteTravail|length > 0  %}#}
+                {#{% for formationAdaptationPosteTravail in crep.formationsAdaptationPosteTravail %}#}
+                    {#<tr bgcolor="#FFFFFF" align="center">#}
+                        {#<td style="border:1px #000000 solid;" align="left">{{ formationAdaptationPosteTravail.libelle }}</td>#}
+                        {#{% for i in 0..2 %}#}
+                            {#<td style="border:1px #000000 solid;">{% if formationAdaptationPosteTravail.origine is not null and formationAdaptationPosteTravail.origine == i %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+                        {#{% endfor %}#}
+
+                        {#<td style="border:1px #000000 solid;">{% if formationAdaptationPosteTravail.besoinAvere is not null and formationAdaptationPosteTravail.besoinAvere == 1 %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+                        {#<td style="border:1px #000000 solid;" bgcolor="#E6E6E6"></td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+            {# Compléter avec des lignes vides si le nombre de formations est < 4 et afficher 4 lignes vides si aucune formation n'est renseigné.   #}
+            {#{% if crep.formationsAdaptationPosteTravail|length < 3 or crep.formationsAdaptationPosteTravail|length == 0  %}#}
+                {#{% for i in 1..3-crep.formationsAdaptationPosteTravail|length %}#}
+                    {#<tr bgcolor="#FFFFFF" align="center">#}
+                        {#<td style="border:1px #000000 solid;" align="left"></td>#}
+                        {#{% for i in 0..2 %}#}
+                            {#<td style="border:1px #000000 solid;"></td>#}
+                        {#{% endfor %}#}
+
+                        {#<td style="border:1px #000000 solid;"></td>#}
+                        {#<td style="border:1px #000000 solid;" bgcolor="#E6E6E6"></td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+            {#<tr bgcolor="#E6E6E6">#}
+                {#<td colspan="6"><strong>Thèmes des formations liées à l’évolution des métiers (T2)</strong></td>#}
+            {#</tr>#}
+
+            {# Afficher les formations renseignées dans l'appli#}
+            {#{% if crep.formationsEvolutionMetiers|length > 0  %}#}
+                {#{% for formationEvolutionMetiers in crep.formationsEvolutionMetiers %}#}
+                    {#<tr bgcolor="#FFFFFF" align="center">#}
+                        {#<td style="border:1px #000000 solid;" align="left">{{ formationEvolutionMetiers.libelle }}</td>#}
+                        {#{% for i in 0..2 %}#}
+                            {#<td style="border:1px #000000 solid;">{% if formationEvolutionMetiers.origine is not null and formationEvolutionMetiers.origine == i %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+                        {#{% endfor %}#}
+
+                        {#<td style="border:1px #000000 solid;">{% if formationEvolutionMetiers.besoinAvere is not null and formationEvolutionMetiers.besoinAvere == 1 %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+                        {#<td style="border:1px #000000 solid;">{% if formationEvolutionMetiers.cpf is not null and formationEvolutionMetiers.cpf == 1 %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+            {# Compléter avec des lignes vides si le nombre de formations est < 4 et afficher 4 lignes vides si aucune formation n'est renseigné.   #}
+            {#{% if crep.formationsEvolutionMetiers|length < 3 or crep.formationsEvolutionMetiers|length == 0  %}#}
+                {#{% for i in 1..3-crep.formationsEvolutionMetiers|length %}#}
+                    {#<tr bgcolor="#FFFFFF" align="center">#}
+                        {#<td style="border:1px #000000 solid;" align="left"></td>#}
+                        {#{% for i in 0..2 %}#}
+                            {#<td style="border:1px #000000 solid;"></td>#}
+                        {#{% endfor %}#}
+
+                        {#<td style="border:1px #000000 solid;"></td>#}
+                        {#<td style="border:1px #000000 solid;"></td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+            {#<tr bgcolor="#E6E6E6">#}
+                {#<td colspan="6"><strong>Thèmes des formations liées au développement des qualifications ou l’acquisition de nouvelles qualifications (T3)</strong></td>#}
+            {#</tr>#}
+
+            {# Afficher les formations renseignées dans l'appli#}
+            {#{% if crep.formationsDevQualifs|length > 0  %}#}
+                {#{% for formationDevQualifs in crep.formationsDevQualifs %}#}
+                    {#<tr bgcolor="#FFFFFF" align="center">#}
+                        {#<td style="border:1px #000000 solid;" align="left">{{ formationDevQualifs.libelle }}</td>#}
+                        {#{% for i in 0..2 %}#}
+                            {#<td style="border:1px #000000 solid;">{% if formationDevQualifs.origine is not null and formationDevQualifs.origine == i %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+                        {#{% endfor %}#}
+
+                        {#<td style="border:1px #000000 solid;">{% if formationDevQualifs.besoinAvere is not null and formationDevQualifs.besoinAvere == 1 %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+                        {#<td style="border:1px #000000 solid;">{% if formationDevQualifs.cpf is not null and formationDevQualifs.cpf == 1 %}&#9745;{% else %}&#9744;{% endif %}</td>#}
+
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+            {# Compléter avec des lignes vides si le nombre de formations est < 4 et afficher 4 lignes vides si aucune formation n'est renseigné.   #}
+            {#{% if crep.formationsDevQualifs|length < 3 or crep.formationsDevQualifs|length == 0  %}#}
+                {#{% for i in 1..3-crep.formationsDevQualifs|length %}#}
+                    {#<tr bgcolor="#FFFFFF" align="center">#}
+                        {#<td style="border:1px #000000 solid;" align="left"></td>#}
+                        {#{% for i in 0..2 %}#}
+                            {#<td style="border:1px #000000 solid;"></td>#}
+                        {#{% endfor %}#}
+
+                        {#<td style="border:1px #000000 solid;"></td>#}
+                        {#<td style="border:1px #000000 solid;"></td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+
+        {#</table>#}
+
+
+
+    </div>
+</div>
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div>
+            1  Porter une croix en cas de réponse positive.
+        </div>
+        <div>
+            2  L’agent peut indiquer s’il souhaite utiliser son compte personnel de formation (CPF) pour la formation envisagée.
+            Les formations liées à une adaptation au poste de travail (T1) ne peuvent être imputées sur le CPF.
+        </div>
+    </div>
+</div>
+
+<br/>

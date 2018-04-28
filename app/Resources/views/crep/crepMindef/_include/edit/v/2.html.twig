@@ -1,0 +1,28 @@
+{% form_theme form 'crep/crepMindef/Form/App_form_crepMindef.html.twig' %}
+<div class="row" id="formationsAVenirCollection" data-prototype="{{ form_widget(form.formationsAVenir.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Libellé de la formation</th>
+                    <th nowrap width="1px" class="text-center">Besoin toujours avéré</th>
+                    <th width="85px" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+                {% for formationAVenir in form.formationsAVenir %}
+                    {{ form_widget(formationAVenir) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsAVenir pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

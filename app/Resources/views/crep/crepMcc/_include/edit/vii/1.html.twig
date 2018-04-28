@@ -1,0 +1,29 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<div class="row" id="formationsSuiviesCollection" data-prototype="{{ form_widget(form.formationsSuivies.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            	<tr>
+	            	<th width="8%">Année</th>
+	                <th width="45%">Libellé de la formation suivie</th>
+	                <th>Commentaires <small>(appréciation, bilan, suites...)</small></th>
+	                <th width="5%"></th>
+	            </tr>
+            </thead>
+            <tbody>
+                {% for formationSuivie in form.formationsSuivies %}
+                    {{ form_widget(formationSuivie, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsSuivies pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

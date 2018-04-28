@@ -1,0 +1,27 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+	
+	<tr>
+        <td class="content-block">
+        	Bonjour,
+         </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nous vous informons que la population de la campagne "{{ campagne.libelle }}" concernant l'évaluation professionnelle 
+	de l'année {{ campagne.anneeEvaluee }} a été chargée.
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Nous vous invitons à en prendre connaissance en vous connectant à l'application {{ appName }} à partir du lien suivant :
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('accueil') }}">Accéder à l'application</a>
+        </td>
+    </tr> 
+    
+{% endblock %}

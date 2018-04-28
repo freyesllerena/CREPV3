@@ -1,0 +1,37 @@
+{% extends 'Personne/new.html.twig' %}
+
+{% block frameTitle %}RLC{% endblock frameTitle %}
+{% block pageTitle %}RLC{% endblock pageTitle %}
+{% block formTitle %}Création d'un responsable local de campagne (RLC){% endblock formTitle %}
+
+
+{% block otherRows %}
+	{{ form_row(form.perimetresRlc, { 'label': "Périmètres RLC", 'attr': {'class': 'select2_multiple'}}) }}
+{% endblock otherRows %}
+
+
+    
+    
+    
+    
+    
+ {% block javascripts %}
+ 	{{ parent() }}
+
+     <!-- Select2 -->
+    <script>
+      $(document).ready(function() {
+        $(".select2_multiple").select2({
+          //maximumSelectionLength: 1,
+          placeholder: "Périmètres RLC",
+          allowClear: true
+        });
+      });
+    </script>
+    <!-- /Select2 -->
+     
+ {% endblock javascripts %}
+ 
+ 
+
+    

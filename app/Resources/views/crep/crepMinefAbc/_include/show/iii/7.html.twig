@@ -1,0 +1,43 @@
+{% set itemsNbMois = ['1 mois', '2 mois', '3 mois'] %}
+ 
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th></th>
+                    <th style="width: 14%" class="text-center">Accélération</th>
+                    <th style="width: 14%" class="text-center">Cadence moyenne</th>
+                    <th style="width: 14%" class="text-center">Mention d'alerte</th>
+                    <th style="width: 14%" class="text-center">Ralentissement</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+                    <td>
+                    	<strong>Cadence d’avancement pour accéder à l’échelon supérieur</strong>
+                	</td>
+                    
+                    <td class="text-center">
+                        {% for index in 0..2 %}
+                            {% if crep.typeCadenceAvancement is not null and crep.typeCadenceAvancement == index %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} {{ itemsNbMois[index] }} <br/>
+                        {% endfor %}
+                    </td>
+                    
+                    <td class="text-center">
+                        {% if crep.typeCadenceAvancement == 3 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}
+                    </td>
+                    
+                    <td class="text-center">
+                        {% if crep.typeCadenceAvancement == 4 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}
+                    </td>
+                    
+                    <td class="text-center">
+                        {% for index in 5..7 %}
+                            {% if crep.typeCadenceAvancement == index %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} {{ itemsNbMois[index-5] }} <br/>
+                        {% endfor %}
+                    </td>
+            </tbody>
+        </table>
+    </div>
+</div>

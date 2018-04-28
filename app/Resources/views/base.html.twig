@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable='no'">
+
+    <title>{% block title %}{{ appName }} | {% block frameTitle %}Accueil{% endblock frameTitle %}{% endblock title%}</title>
+
+        {% block stylesheets %}
+        
+        	{% stylesheets 
+        		'gentelella-1.3.0/vendors/bootstrap/dist/css/bootstrap.min.css'
+        		'gentelella-1.3.0/vendors/font-awesome/css/font-awesome.min.css'
+				'gentelella-1.3.0/build/css/custom.min.css'
+        		filter='cssrewrite' %} {# le fichier crep.css doit être chargé en dernier #}
+    				<link rel="stylesheet" href="{{ asset_url }}" />
+			{% endstylesheets %}
+    	
+        {% endblock stylesheets %}
+    
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    
+        <!-- favicon multi-format -->
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+		<link rel="manifest" href="{{ asset('manifest.json') }}">
+		<link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
+		<meta name="theme-color" content="#ffffff">
+		<!-- fin favicon multi-format -->
+		
+</head>
+<body>
+	{% block body %}
+	{% endblock body %}
+</body>
+</html>

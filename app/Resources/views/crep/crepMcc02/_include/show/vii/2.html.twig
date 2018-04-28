@@ -1,0 +1,24 @@
+<br>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Nom</dt>
+            <dd>
+                {% if crep.shdSignataire %}
+                    {{ crep.shdSignataire | identite }}
+                {% endif %}
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Date</dt>
+            <dd>{% if crep.dateVisaShd %}{{ crep.dateVisaShd|date('d/m/Y H:i') }}{% endif %}</dd>
+        </dl>
+    </div>
+</div>
+
+<br/>

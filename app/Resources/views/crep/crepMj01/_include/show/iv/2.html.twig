@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Descriptif des objectifs</th>
+                    <th>Condition de mise en œuvre <br><small>(délais et moyens nécessaires)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectif in crep.objectifsFuturs %}
+                    <tr>
+                        <td>{{ objectif.libelle|nl2br }}</td>
+                        <td>{{ objectif.indicateurs|nl2br  }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

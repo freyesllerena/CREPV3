@@ -1,0 +1,22 @@
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+    
+                <div class="x_content">
+                	<div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    	<ul id="tab_graphiques_id" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#tab_graphiques_0" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true"><i class="fa fa-pie-chart"></i> Situation actuelle</a></li>
+                        	<li role="presentation" class=""><a href="#tab_graphiques_1" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false"><i class="fa fa-line-chart"></i> Historique</a></li>                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                        	<div role="tabpanel" class="tab-pane fade active in" id="tab_graphiques_0" aria-labelledby="home-tab">
+								{% include 'Campagne/avancement.html.twig' %}
+                            </div>
+                             <div role="tabpanel" class="tab-pane fade" id="tab_graphiques_1" aria-labelledby="profile-tab">
+								{% include 'Campagne/historiqueAvancement.html.twig' %}
+                            </div>  
+                          </div>
+            		</div>
+                </div>
+            </div>
+        </div>
+    </div>

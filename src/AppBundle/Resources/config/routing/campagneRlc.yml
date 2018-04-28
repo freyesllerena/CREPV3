@@ -1,0 +1,40 @@
+campagne_rlc_index:
+    path:     /
+    defaults: { _controller: "AppBundle:CampagneRlc:index" }
+    methods:  GET
+
+campagne_rlc_show:
+    path:     /{id}/show/{id_perimetre}
+    defaults: { _controller: "AppBundle:CampagneRlc:show", id_perimetre: 0 }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+campagne_rlc_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CampagneRlc:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+            
+campagne_rlc_ouvrir:
+    path:     /{id}/ouvrir
+    defaults: { _controller: "AppBundle:CampagneRlc:ouvrir" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+            
+campagne_rlc_delete_document:
+    path:     /{id}/deleteDocument/{id_document}
+    defaults: { _controller: "AppBundle:CampagneRlc:deleteDocument", id_document: 0 }
+    methods:  [DELETE]
+    requirements:
+        id: '\d+'
+        id_document: '\d+'
+            
+campagne_rlc_rouvrir :
+    path:     /{id}/rouvrir
+    defaults: { _controller: "AppBundle:CampagneRlc:rouvrir" }
+    methods:  PUT
+    requirements:
+        id: '\d+'    

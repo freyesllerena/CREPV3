@@ -1,0 +1,101 @@
+{% extends 'index.base.html.twig' %}
+
+{% block frameTitle %}Périmètre BRHP{% endblock frameTitle %}
+{% block pageIcon %}fa fa-share-alt{% endblock pageIcon %}
+{% block pageTitle %}Périmètres{% endblock pageTitle %}
+
+
+{% block content %}
+
+        <!-- page content -->
+
+			  <div class="row">
+			    <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                  <div class="x_title">
+                    <h2>Liste des périmètres<small></small></h2>
+                    
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <table id="table_utilisateurs" class="table table-striped table-bordered app_datatable dt-responsive" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>Libellé</th>
+                          <th>Unités organisationnelles</th>
+                          {% if is_granted('ROLE_ADMIN') %}
+                          <th>Ministère</th>
+                          {% endif %}
+                          <th>Prérimètre RLC</th>
+                          <th width="85px" style="text-align: center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for perimetreBrhp in perimetreBrhps %}
+                        <tr>
+                          <td>
+                          	<a href="{{ path('perimetre_brhp_show', { 'id': perimetreBrhp.id }) }}" title="Details" >
+                           	 {{ perimetreBrhp.libelle }}
+                          	</a>
+                          </td>
+                          <td>
+                          	
+	                        {% for uo in perimetreBrhp.unitesOrganisationnelles %}
+                                {{ uo.code }} : {{ uo.libelle }}
+                                  {% if not loop.last %}<br>{% endif %}
+                            {% endfor %}
+                          </td>
+                          {% if is_granted('ROLE_ADMIN') %}
+                          <td>{{ perimetreBrhp.perimetreRlc.ministere.libelleLong }}</td>
+                          {% endif %}
+                           <td>{{ perimetreBrhp.perimetreRlc.libelle }}</td>
+                          <td style="text-align: center">
+                          	
+                          	{% if is_granted('ROLE_RLC') %}
+	                            <a href="{{ path('perimetre_brhp_edit', { 'id': perimetreBrhp.id }) }}" title="Modifier">
+	                              <i class="fa fa-edit"></i>
+	                            </a>&nbsp; &nbsp;
+                            {% endif %}
+                            
+                            <a href="{{ path('perimetre_brhp_show', { 'id': perimetreBrhp.id }) }}" title="Details">
+                              <i class="fa fa-search"></i>
+                            </a>&nbsp; &nbsp;
+                            
+                          	{% if is_granted('ROLE_RLC') %}
+	                            <a href="" data-toggle="modal" data-target="#modal_delete_{{ perimetreBrhp.id }}" title="Supprimer">
+	                              <i class="fa fa-trash"></i>
+	                            </a>
+                            {% endif %}
+						  </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+			</div>
+        
+        {% if is_granted('ROLE_RLC') %}
+      		<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<a href="{{ path('perimetre_brhp_new') }}"><button class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Nouveau périmètre</button></a>
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+		{% endif %}
+				
+        <!-- /page content -->
+        
+    
+	{# Modal: supprimer un périmètre brhp#}
+	{% if is_granted('ROLE_RLC') %}
+		{% for perimetreBrhp in perimetreBrhps %}
+		    {{ macro.modal('danger', 'modal_delete_' ~ perimetreBrhp.id, "Supprimer le périmètre", "Voulez-vous vraiment <strong>supprimer</strong> le périmètre <strong>" ~ perimetreBrhp.libelle | escape  ~ "</strong> ?", "fa-trash", deleteForms[loop.index0])}} 
+	    {% endfor %}
+	{% endif %}     
+    
+{% endblock content %}
+

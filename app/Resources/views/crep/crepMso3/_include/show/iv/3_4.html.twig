@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Libellé de la formation</th>
+                    <th style="width: 10%" class="text-center">Demande de l'agent <strong>(*)</strong></th>
+                    <th style="width: 15%" class="text-center">Avis du responsable hiérarchique <strong>(*)</strong></th>
+                    <th style="width: 15%" class="text-center">Proposition du responsable hiérarchique</th>
+                    <th style="width: 10%" class="text-center">Recours au CPF<strong>(*)</strong></th>
+                    <th style="width: 10%" class="text-center">Échéance <small>(Année N, N+1)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formation in crep.formationsPreparationConcours %}
+                    <tr>
+                        <td>
+                            {{ formation.libelle }}
+                        </td>
+                       	<td class="text-center">
+                       		{{ formation.demandeeAgent|ouiNon }}
+                       	</td>
+                       	<td class="text-center">
+                       		{{ formation.avisShd|ouiNon }}
+                       	</td>
+                       	<td class="text-center">
+                       		{{ formation.propositionAh|ouiNon }}
+                       	</td>
+                       	<td class="text-center">
+                       		{{ formation.cpf|ouiNon }}
+                       	</td>
+                       	<td class="text-center">
+                            {{ formation.echeance }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

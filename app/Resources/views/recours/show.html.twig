@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Recour</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ recour.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ recour.type }}</td>
+            </tr>
+            <tr>
+                <th>Datedemande</th>
+                <td>{% if recour.dateDemande %}{{ recour.dateDemande|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Reponse</th>
+                <td>{{ recour.reponse }}</td>
+            </tr>
+            <tr>
+                <th>Datereponse</th>
+                <td>{% if recour.dateReponse %}{{ recour.dateReponse|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('recours_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('recours_edit', { 'id': recour.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

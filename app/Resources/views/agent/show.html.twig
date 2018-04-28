@@ -1,0 +1,295 @@
+{% extends "index.base.html.twig" %} 
+
+{% block pageTitle %}Fiche agent{% endblock pageTitle %}
+{% block frameTitle %}Agent{% endblock frameTitle %}
+
+{% block content %}
+
+{% block body %}
+
+	<div class="form-horizontal">
+		<div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+	            <div class="x_panel panel_green">
+	                <div class="x_title collapse-link" style="cursor:pointer">
+	                    <h2>Données agent</h2>
+	                    <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-down"></i></a></li>
+                        </ul>
+	                    <div class="clearfix"></div>
+	                </div>
+	                
+	                <div class="x_content">
+		       			
+		       			<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Matricule </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.matricule }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Civilité </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.civilite|title }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de naissance </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.nomNaissance|upper }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom d'usage </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.nom|upper }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom marital </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.nomMarital|upper }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.prenom|title }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Date de naissance </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+								{% if agent.dateNaissance %}{{ agent.dateNaissance|date('d/m/Y') }}{% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Adresse mail </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.email }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Adresse mail N+1 </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+								{% if agent.shd %}{{ agent.shd.email }} {% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Adresse mail N+2 </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{% if agent.ah %}
+	       							{{ agent.ah.email }} 
+	       						{% elseif agent.sansAh %}
+	       							Agent sans N+2
+	       						{% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Agent évaluable </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.evaluable|ouiNon }}
+       						</div>
+       					</div>
+       					{% if not agent.evaluable %}
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Motif de non évaluation </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.motifNonEvaluation | nl2br }}
+       						</div>
+       					</div>
+       					{% endif %}
+
+
+                        {% if(agent.campagnePnc.ministere.id == 3) %} {# champs à afficher uniquement pour le ministère MCC #}
+							<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">Agent titulaire </label>
+								<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+									{{ agent.titulaire|ouiNon }}
+								</div>
+							</div>
+							{% if not agent.titulaire %}
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Date d'entrée au ministère </label>
+									<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+										{% if agent.dateEntreeMinistere %}{{ agent.dateEntreeMinistere|date('d/m/Y') }}{% endif %}
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Type du contrat </label>
+									<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+										{{ agent.contrat }}
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12">Début du contrat </label>
+									<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+										{% if agent.dateDebutContrat %}{{ agent.dateDebutContrat|date('d/m/Y') }}{% endif %}
+									</div>
+								</div>
+							{% endif %}
+                        {% endif %}
+
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+	            <div class="x_panel panel_green">
+	            	<div class="x_title collapse-link" style="cursor:pointer">
+	                    <h2>Données de carrière</h2>
+	                    <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-down"></i></a></li>
+                        </ul>
+	                    <div class="clearfix"></div>
+	                </div>
+	                
+	                <div class="x_content">
+	                
+	                	<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Unité organisationnelle</label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.uniteOrganisationnelle }}
+       						</div>
+       					</div>
+		       			<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Catégorie </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.categorieAgent }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Corps </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.corps }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Date d'entrée dans le corps </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+								{% if agent.dateEntreeCorps %}{{ agent.dateEntreeCorps|date('d/m/Y') }}{% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Grade </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.grade }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Date d'entrée dans le grade </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{% if agent.dateEntreeGrade %}{{ agent.dateEntreeGrade|date('d/m/Y') }}{% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Echelon </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.echelon }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Date d'entrée dans l'échelon </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{% if agent.dateEntreeEchelon %}{{ agent.dateEntreeEchelon|date('d/m/Y') }}{% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Grade d'emploi </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.gradeEmploi }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Date d'entrée dans le grade d'emploi </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{% if agent.dateEntreeGradeEmploi %}{{ agent.dateEntreeGradeEmploi|date('d/m/Y') }}{% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Etablissement </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.etablissement }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Département </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.departement }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Affectation SIGLE </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.affectation }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Affectation CLAIR </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.affectationClairAgent }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Poste occupé </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.posteOccupe }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Date d'entrée dans le poste occupé </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{% if agent.dateEntreePosteOccupe %}{{ agent.dateEntreePosteOccupe|date('d/m/Y') }}{% endif %}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Code poste ALLIANCE </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.codeSirh1 }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Code poste CREDO </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.codeSirh2 }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Capital CPF </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.capitalDif }}
+       						</div>
+       					</div>
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Capital CPF mobilisable </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{{ agent.capitalDifMobilisable }}
+       						</div>
+       					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="row">
+{#     		<div class="col-md-6 col-sm-6 col-xs-6 text-center">#}
+{#     			<button type="button" class="btn btn-danger pull-left" data-toggle="modal" data-target="#modal_supprimer_agent"><i class="fa fa-trash"></i> Supprimer</button>#}
+{#     		</div>#}
+    		<div class="col-md-6 col-sm-6 col-xs-6">
+    		    {% if is_granted(constant('AppBundle\\Security\\AgentVoter::MODIFIER'), agent) %}
+            		<a href="{{ path('agent_edit', { 'id': agent.id }) }}">
+						<button class="btn btn-primary pull-right" title="Modifier"><i class="fa fa-edit" aria-hidden="true"></i> Modifier</button>
+					</a>
+        		{% endif %}
+        	</div>
+    	</div>
+    	
+</div>
+{% endblock body %}
+
+{% endblock content  %}

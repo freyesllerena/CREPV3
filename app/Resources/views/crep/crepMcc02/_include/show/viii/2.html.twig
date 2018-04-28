@@ -1,0 +1,47 @@
+<br/>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Nom :</label>
+        <span class="well well-xs">
+            {% if crep.dateVisaAh and crep.agent and crep.agent.ah %}
+                {{ crep.ahSignataire | identite }}
+            {% endif %}
+        </span>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Observations éventuelles :</label>
+        <span class="well well-xs">
+            {% if crep.agent and crep.agent.sansAh %}
+                {{ crep.observationsAh|nl2br }}
+            {% endif %}
+        </span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Fonction exercée :</label>
+        <span class="well well-xs">
+            {% if crep.ahSignataire and crep.agent and crep.agent.ah %}
+                {{ crep.ahSignataire.posteOccupe | capitalize }}
+            {% endif %}
+        </span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Date :</label>
+        <span class="well well-xs">
+            {% if crep.dateVisaAh and crep.agent and crep.agent.ah %}
+                {{ crep.dateVisaAh | date('d/m/Y H:i') }}
+            {% endif %}
+        </span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Visa :</label>
+    </div>
+</div>
+
+<br>

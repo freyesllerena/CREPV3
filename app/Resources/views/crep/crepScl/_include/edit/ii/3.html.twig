@@ -1,0 +1,56 @@
+{% set message = "En cliquant sur ce bouton, <strong>l’ensemble des champs</strong> concernant ce tableau 
+					<i>(Cadence d’avancement pour accéder à l’échelon supérieur)</i> sera <strong>réinitialisé</strong>."  
+%}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th></th>
+                    <th style="width: 14%" class="text-center">Accélération</th>
+                    <th style="width: 14%" class="text-center">Cadence moyenne</th>
+                    <th style="width: 14%" class="text-center">Ralentissement</th>
+                    <th style="width: 5%" class="text-center">Réinitialiser</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+            		<td>
+            			<strong>Cadence d’avancement pour accéder à l’échelon supérieur</strong>
+        			</td>
+        			
+        			<td class="text-center">
+        			    {{ form_widget(form.typeCadenceAvancement[0], {'label': '1 mois'}) }}
+        			    {{ form_widget(form.typeCadenceAvancement[1], {'label': '2 mois'}) }}
+        			    {{ form_widget(form.typeCadenceAvancement[2], {'label': '3 mois'}) }}
+        			</td>
+        			
+            		<td class="text-center">
+            			{{ form_widget(form.typeCadenceAvancement[3], {'label': false}) }}
+            		</td>
+            		
+            		<td class="text-center">
+        			    {{ form_widget(form.typeCadenceAvancement[4], {'label': '1 mois'}) }}
+        			    {{ form_widget(form.typeCadenceAvancement[5], {'label': '2 mois'}) }}
+        			    {{ form_widget(form.typeCadenceAvancement[6], {'label': '3 mois'}) }}
+        			</td>
+                    
+                    <td class="text-center">
+                    	<button class="btn btn-primary btn-xs" id="btn_reinitialiser" title="Réinitialiser les valeurs du tableau" data-placement="auto" data-toggle="popover-primary" data-content="{{ message }}" data-trigger="hover"><i class="fa fa-refresh"></i></button>
+                    </td>
+            	</tr>
+            	<tr>
+            		<td colspan="5">
+            			
+            			<strong>Mention d'alerte :</strong>
+            			<br/>
+            			{{ form_row(form.mentionAlerte, {'label':false, 'attr': {'maxlength': '4096'}}) }}
+            		</td>
+            	</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br/>

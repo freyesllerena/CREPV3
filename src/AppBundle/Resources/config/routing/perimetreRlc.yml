@@ -1,0 +1,30 @@
+perimetre_rlc_index:
+    path:     /
+    defaults: { _controller: "AppBundle:PerimetreRlc:index" }
+    methods:  GET
+
+perimetre_rlc_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:PerimetreRlc:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+perimetre_rlc_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:PerimetreRlc:new" }
+    methods:  [GET, POST]
+
+perimetre_rlc_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:PerimetreRlc:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+perimetre_rlc_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:PerimetreRlc:delete" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'

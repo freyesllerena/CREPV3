@@ -1,0 +1,27 @@
+{% form_theme form 'crep/crepMj01/Form/collections.form.html.twig' %}
+
+<div class="row" id="formationsEnvisageesCollection" data-prototype="{{ form_widget(form.formationsEnvisagees.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Intitulé de la formation</th>
+                    <th>Origine de la demande</th>
+                    <th width="2%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formation in form.formationsEnvisagees %}
+                    {{ form_row(formation) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+{% extends "Campagne/campagnesRecentes.html.twig" %}
+
+{% block KPI %}
+
+<!-- Block Indicateurs -->
+<div class="col-md-12 col-sm-12 col-xs-12">
+
+	<div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="tile-stats">
+			<div class="icon">
+				<i class="fa fa-unlock-alt"></i>
+			</div>
+			<div class="count"> {{ indicateurs["nbCampagnesOuvertes"] }}</div>
+			<h3>Campagne{% if indicateurs["nbCampagnesOuvertes"] > 1 %}s{% endif %} ouverte{% if indicateurs["nbCampagnesOuvertes"] > 1 %}s{% endif %} </h3>
+		</div>
+	</div>
+
+	<div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="tile-stats">
+			<div class="icon">
+				<i class="fa fa-lock"></i>
+			</div>
+			<div class="count"> {{ indicateurs["nbCampagnesCloturees"] }}</div>
+			<h3>Campagne{% if indicateurs["nbCampagnesCloturees"] > 1 %}s{% endif %} clôturée{% if indicateurs["nbCampagnesCloturees"] > 1 %}s{% endif %}</h3>
+		</div>
+	</div>
+
+	<div class="animated flipInY col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="tile-stats">
+			<div class="icon">
+				<i class="fa fa-check-square-o"></i>
+			</div>
+			<div class="count"> {{ indicateurs["nbCampagnesTerminees"] }}</div>
+			<h3>Campagne{% if indicateurs["nbCampagnesTerminees"] > 1 %}s{% endif %} fermée{% if indicateurs["nbCampagnesTerminees"] > 1 %}s{% endif %}</h3>
+		</div>
+	</div>
+</div>
+<!-- End Block Indicateurs -->
+
+
+{% endblock KPI %}
+
+{% block route_show %}
+	"{{ path('campagne_ah_show', { 'id': campagne.id }) }}"
+{% endblock route_show %}

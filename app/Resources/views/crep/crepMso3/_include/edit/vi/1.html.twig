@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+	                <th>Compétence</th>
+	                <th style="width: 8%" class="text-center">Excellent</th>
+	                <th style="width: 8%" class="text-center">Très bon</th>
+	                <th style="width: 8%" class="text-center">Satisfaisant</th>
+	                <th style="width: 8%" class="text-center">À développer</th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for competence in form.competencesManiereServir %}
+            	<tr>
+            		 <td>
+  						{{ crep.competencesManiereServir[loop.index0].libelle }}
+        			 </td>
+	                 
+  					{{ form_widget(competence) }}
+            	</tr>
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

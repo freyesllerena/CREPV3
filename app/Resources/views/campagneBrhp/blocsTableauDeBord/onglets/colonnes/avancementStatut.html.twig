@@ -1,0 +1,18 @@
+{% set avancementPourcentage = 0 %}
+{% set statut = ''  %}
+
+{% if agent.crep %}
+   	{% set avancementPourcentage = agent.crep.statut | statutCrepAvancementPourcentage %}
+   	{% set statut = agent.crep.statut %}
+{% endif %}
+
+
+<td class="project_progress">
+	<div class="progress progress_sm">
+	    <div class="progress-bar {{ statut | statutCrepCouleur }}" role="progressbar" data-transitiongoal="{{ avancementPourcentage }}" style="width: {{ avancementPourcentage }}%"></div>
+	</div>
+	<small>Etape {{ statut | statutCrepEtapeAvancement }} : <b>{{ statut | statutCrepImpression }}</b></small>
+	{% if agent.crep and agent.crep.contientRecoursEnCours() %}
+    	<i class="fa fa-balance-scale red" data-placement="auto" data-toggle="popover-danger" title="Recours en cours" data-content="Ce CREP fait l'objet de recours" data-trigger="hover"></i>
+    {% endif %}
+</td>

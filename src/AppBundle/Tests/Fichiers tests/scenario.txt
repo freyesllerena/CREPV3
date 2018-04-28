@@ -1,0 +1,47 @@
+- Chargement des fixtures
+
+- Connexion avec pnc@yopmail.com
+
+- Créer les périmètres :
+			- IDF
+			- PACA
+
+- Créer RLC :
+			- rlc1@yopmail.com (IDF)
+			- rlc2@yopmail.com (PACA)
+			
+- Créer la campagne PNC sur les deux périmètres
+
+- Ouvrir la campagne PNC
+
+- Connexion avec admin.min@yopmail.com
+
+- Charger l'oganisation : Organisation_IDF_PACA.csv
+
+- Se connecter avec rlc1@yopmail.com
+
+- Créer les périmètres BRHP : 
+			- CISIRH
+			- BERCY
+
+- Créer les BRHP :
+			- brhp1@yopmail.com (CISIRH)
+			- brhp2@yopmail.com (BERCY)
+			
+- Modifier la campagne : ajouter les périmètres BERCY et CISIRH
+
+- Ouvrir la campagne RLC
+
+... (Export de la base de données : crepv2 avant diffusion population.sql)
+
+- Se connecter avec admin.min@yopmail.com
+
+- Charger la population d'agents : PopulationGlobale_IDF_PACA.csv
+
+- Diffuser la population
+
+... (Export de la base de données : crepv2 après diffusion population.sql)
+
+- Se connecter avec brhp1@yopmail.com
+
+

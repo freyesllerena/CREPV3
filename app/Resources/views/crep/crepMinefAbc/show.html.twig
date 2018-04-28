@@ -1,0 +1,237 @@
+{% extends "crep/crepMinefAbc/minef.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+    {{ block('alertErreurValidationFormulaireCrep') }}
+ 	{{ block('alertAhNonIdentifie') }}
+	{{ block('alertDebutEntretien') }}
+    {{ block('alertRefusVisa') }}
+    {{ block('alertRecours') }}
+    {{ block('alertRefusNotification') }}
+    {{ block('renvoyerAh') }}
+    {{ block('renvoyerAgent') }}
+    
+	<div class="form-horizontal">
+        {{ parent() }}
+	</div>
+	{{ block('boutons_actions') }}
+{% endblock content %}
+
+{% block i01 %}
+	{% include 'crep/crepMinefAbc/_include/show/0/1.html.twig' %}
+{% endblock i01 %}
+
+{% block i02 %}
+	{% include 'crep/crepMinefAbc/_include/show/0/2.html.twig' %}
+{% endblock i02 %}
+
+{% block i03 %}
+	{% include 'crep/crepMinefAbc/_include/show/0/3.html.twig' %}
+{% endblock i03 %}
+
+{% block i1 %}
+	{% include 'crep/crepMinefAbc/_include/show/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepMinefAbc/_include/show/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block i3 %}
+	{% include 'crep/crepMinefAbc/_include/show/i/3.html.twig' %}
+{% endblock i3 %}
+
+{% block ii1 %}
+	{% include 'crep/crepMinefAbc/_include/show/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block iii1 %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii1_commentaireAgent %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/1_commentaireAgent.html.twig' %}
+{% endblock iii1_commentaireAgent %}
+
+{% block iii2 %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block iii3 %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/3.html.twig' %}
+{% endblock iii3 %}
+
+{% block iii4 %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/4.html.twig' %}
+{% endblock iii4 %}
+
+{% block iii5 %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/5.html.twig' %}
+{% endblock iii5 %}
+
+{% block iii6 %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/6.html.twig' %}
+{% endblock iii6 %}
+
+{% block iii7 %}
+    {% include 'crep/crepMinefAbc/_include/show/iii/7.html.twig' %}
+{% endblock iii7 %}
+
+{% block iv1 %}
+    {% include 'crep/crepMinefAbc/_include/show/iv/1.html.twig' %}
+{% endblock iv1 %}
+
+{% block iv2 %}
+    {% include 'crep/crepMinefAbc/_include/show/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block iv3 %}
+    {% include 'crep/crepMinefAbc/_include/show/iv/3.html.twig' %}
+{% endblock iv3 %}
+
+{% block iv4 %}
+    {% include 'crep/crepMinefAbc/_include/show/iv/4.html.twig' %}
+{% endblock iv4 %}
+
+
+{% block alertRefusVisa %}
+    {% if (crep.dateRefusVisa) and (crep.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::VISE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::NOTIFIE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::REFUS_NOTIFICATION_AGENT')]) %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Refus de visa</strong> du CREP par l'agent acté le <strong>{{ crep.dateRefusVisa|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusVisa %}
+
+{% block alertRefusNotification %}
+    {% if crep.dateRefusNotification %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Refus de l'agent de signer</strong> le CREP notifié acté le <strong>{{ crep.dateRefusNotification|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusNotification %}
+
+{% block renvoyerAgent %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AGENT')) and crep.dateRenvoiAgent  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            {% set debutMessageRenvoiAgent = "L'agent a" %}
+            {% if is_granted('ROLE_AGENT') %}
+                {% set debutMessageRenvoiAgent = "Vous avez" %}
+            {% endif %}
+            {{ debutMessageRenvoiAgent }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAgent|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAgent|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAgent %}
+
+{% block renvoyerAh %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AH')) and crep.dateRenvoiAh  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            {% set debutMessageRenvoiAh = "Le N+2 a" %}
+            {% if is_granted('ROLE_AH') %}
+                {% set debutMessageRenvoiAh = "Vous avez" %}
+            {% endif %}
+            {{ debutMessageRenvoiAh }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAh|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAh|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAh %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+
+        if($('#crep_minef_abc_agent_precisionsFonctionsAgent_0').attr('checked')) {
+        	$("#commentaire_fonction_agent").parent().parent().show();
+        } else {
+        	$("#commentaire_fonction_agent").parent().parent().hide();
+        }
+
+        if($('#crep_minef_abc_agent_fonctionLienAptitudeAgent_1').attr('checked')) {
+        	$("#comm_aptitudes_agent").parent().parent().show();
+        } else {
+        	$("#comm_aptitudes_agent").parent().parent().hide();
+        }
+
+        if($('#crep_minef_abc_agent_appreciationResultatsAgent_1').attr('checked')) {
+        	$("#commentaire_resultats_agent").parent().parent().show();
+        } else {
+        	$("#commentaire_resultats_agent").parent().parent().hide();
+        }
+
+        if($('#crep_minef_abc_agent_alaiseDansServiceAgent_1').attr('checked')) {
+        	$("#comm_service_agent").parent().parent().show();
+        } else {
+        	$("#comm_service_agent").parent().parent().hide();
+        }
+
+        if($('#crep_minef_abc_agent_souhaitAutreFonctionAgent_0').attr('checked')) {
+        	$("#comm_souhait_fonction_agent").parent().parent().show();
+        } else {
+        	$("#comm_souhait_fonction_agent").parent().parent().hide();
+        }
+	});
+
+  	$("#crep_minef_abc_agent_precisionsFonctionsAgent_0" ).on('ifChanged', function(){
+		$("#commentaire_fonction_agent").parent().parent().show();
+	});
+	
+	$("#crep_minef_abc_agent_precisionsFonctionsAgent_1" ).on('ifChanged', function(){
+		$("#commentaire_fonction_agent").parent().parent().hide();
+	});	
+
+	$("#crep_minef_abc_agent_fonctionLienAptitudeAgent_0" ).on('ifChanged', function(){
+		$("#comm_aptitudes_agent").parent().parent().hide();
+	});
+	
+	$("#crep_minef_abc_agent_fonctionLienAptitudeAgent_1" ).on('ifChanged', function(){
+		$("#comm_aptitudes_agent").parent().parent().show();
+	});	
+
+	$("#crep_minef_abc_agent_appreciationResultatsAgent_0" ).on('ifChanged', function(){
+		$("#commentaire_resultats_agent").parent().parent().hide();
+	});
+	
+	$("#crep_minef_abc_agent_appreciationResultatsAgent_1" ).on('ifChanged', function(){
+		$("#commentaire_resultats_agent").parent().parent().show();
+	});	
+
+	$("#crep_minef_abc_agent_alaiseDansServiceAgent_0" ).on('ifChanged', function(){
+		$("#comm_service_agent").parent().parent().hide();
+	});
+	
+	$("#crep_minef_abc_agent_alaiseDansServiceAgent_1" ).on('ifChanged', function(){
+		$("#comm_service_agent").parent().parent().show();
+	});	
+
+	$("#crep_minef_abc_agent_souhaitAutreFonctionAgent_0" ).on('ifChanged', function(){
+		$("#comm_souhait_fonction_agent").parent().parent().show();
+	});
+	
+	$("#crep_minef_abc_agent_souhaitAutreFonctionAgent_1" ).on('ifChanged', function(){
+		$("#comm_souhait_fonction_agent").parent().parent().hide();
+	});	
+    	
+    
+    </script>
+{% endblock javascripts %}

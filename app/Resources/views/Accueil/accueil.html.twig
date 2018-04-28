@@ -1,0 +1,18 @@
+{% extends "index.base.html.twig" %}
+ 
+{% block pageIcon %}fa fa-home{% endblock pageIcon %}
+{% block pageTitle %}Accueil{% endblock pageTitle %}
+
+{% block accueil %} active  {% endblock %}
+{% block campagne %}  {% endblock %}
+
+{% block content %}
+{# TODO: gérer le cas du rôle admin#}
+{# {%  if not is_granted('ROLE_ADMIN') %}#}
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+			{{ render(controller('AppBundle:Campagne:campagnesRecentes', { 'max': 100 })) }}
+   	</div>
+</div>
+{# {% endif %}	#}
+{% endblock content %}

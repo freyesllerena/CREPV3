@@ -1,0 +1,62 @@
+{% form_theme form 'crep/crepMso3/Form/collections.form.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Qualité relationnelle</th>
+	                <th style="width: 8%" class="text-center">Expert</th>
+	                <th style="width: 8%" class="text-center">Maîtrise</th>
+	                <th style="width: 8%" class="text-center">Pratique</th>
+	                <th style="width: 8%" class="text-center">Initié</th>
+	                <th style="width: 8%" class="text-center">Non requis</th>
+	                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for qualite in form.qualitesRelationnellesPoste %}
+            	<tr>
+            		 <td>
+  						{{ crep.qualitesRelationnellesPoste[loop.index0].libelle }}
+        			 </td>
+	                 
+  					{{ form_widget(qualite) }}
+            	</tr>
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" id="qualitesRelationnellesPosteAutresCollection" data-prototype="{{ form_widget(form.qualitesRelationnellesPosteAutres.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                   	<th style="width: 30%">Autres qualités relationnelles</th>
+	                <th style="width: 8%" class="text-center">Expert</th>
+	                <th style="width: 8%" class="text-center">Maîtrise</th>
+	                <th style="width: 8%" class="text-center">Pratique</th>
+	                <th style="width: 8%" class="text-center">Initié</th>
+	                <th style="width: 8%" class="text-center">Non requis</th>
+	                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+	                <th width="20px"></th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for qualite in form.qualitesRelationnellesPosteAutres %}
+	            	{{ form_widget(qualite) }}
+	        	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

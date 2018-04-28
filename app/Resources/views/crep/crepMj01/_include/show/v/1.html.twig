@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Intitulé de la formation</th>
+                    <th>Durée de la formation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formationSuivie in crep.crepMj01FormationsSuivies %}
+                    <tr>
+                        <td>{{ formationSuivie.libelle }}</td>
+                        <td>{{ formationSuivie.duree }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

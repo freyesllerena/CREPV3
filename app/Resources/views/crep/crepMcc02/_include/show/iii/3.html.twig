@@ -1,0 +1,39 @@
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Objectif</th>
+                <th class="text-center">Échéance</th>
+                <th class="text-center">Conditions de réussite</th>
+                <th class="text-center">Indicateurs</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.objectifsFuturs is empty %}
+                {% for index in 0..2 %}
+                    <tr align="left" bgcolor="#FFFFFF">
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for objectif in crep.objectifsFuturs %}
+                    <tr>
+                        <td>{{ objectif.libelle | nl2br }}</td>
+                        <td>{{ objectif.echeance | nl2br  }}</td>
+                        <td>{{ objectif.observationsEventuelles | nl2br }}</td>
+                        <td>{{ objectif.indicateurs | nl2br  }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br>

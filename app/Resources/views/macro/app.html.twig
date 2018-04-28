@@ -1,0 +1,375 @@
+{% macro modal(class, idModal, title, message, icon, form) %}
+<!-- Modal -->
+<div class="modal fade" id="{{ idModal }}" tabindex="-1" role="dialog" aria-hidden="true" style="white-space: normal;">
+    {% if class=="success" %}
+        {% set iconColor = "rgba(38,185,154,0.88)" %}
+    {% elseif class=="info" %}
+        {% set iconColor = "rgba(52,152,219,0.88)" %}
+    {% elseif class=="warning" %}
+        {% set iconColor = "rgba(243,156,18,0.88)" %}
+    {% elseif class=="danger" %}
+        {% set iconColor = "rgba(231,76,60,0.88)" %}
+    {% elseif class=="primary" %}
+        {% set iconColor = "rgba(40, 96, 144, 0.88)" %}
+    {% else %}
+        {% set iconColor = "rgba(0,0,0,0.88)" %}
+    {% endif %}
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header alert-{{ class }}">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">{{ title }}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="vrow">
+    				<div class="col-md-2">
+    					<h1><p class="text-center"><i style="color: {{ iconColor }}" class="fa {{ icon }} fa-2x"></i></p></h1>
+                    </div>
+    				<div class="col-md-10">
+						   <h5>{{ message | raw}}</h5>
+                    </div>
+                </div>
+            </div>
+			<div class="modal-footer">
+				{{ form_start(form) }}
+				<button type="button" class="btn btn-default pull-left col-md-2" data-dismiss="modal">Annuler</button>
+				<button type="submit" id="{{ idModal }}_submit" class="btn btn-{{ class }} pull-right col-md-2"  onclick="this.disabled=true;submit();">Oui</button>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Modal -->
+{% endmacro %} 
+
+{% macro modalMotif(class, idModal, title, message,form)%}
+
+
+<!-- Modal -->
+<div class="modal fade" id="{{ idModal }}">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content modal-{{ class }}">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">{{ title }}</h4>
+			</div>
+			{{ form_start(form) }}
+			<div class="modal-body">
+				<p>{{ message | raw }}</p>
+				{{ form_errors(form)}}
+				<div class="modal-body">{{ form_row(form.motifRejetShd,
+					{'attr':{'placeholder': 'Motif de rejet', 'class':'form-control'}})
+					}}</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-default pull-left"
+					onclick="this.disabled=true;">Oui</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+
+			</div>
+			{{ form_end(form) }}
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+{% endmacro %} 
+
+{% macro modalShowMotif(class, idModal, title, message)%}
+
+<!-- Modal -->
+<div class="modal fade" id="{{ idModal }}">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content modal-{{ class }}">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">{{ title }}</h4>
+			</div>
+			<div class="modal-body">
+				<p>{{ message | raw }}</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+{% endmacro %}
+
+
+{% macro modalSubmit(class, idModal, title, message, icon) %}
+<!-- Modal -->
+<div class="modal fade" id="{{ idModal }}" tabindex="-1" role="dialog" aria-hidden="true">
+    {% if class=="success" %}
+        {% set iconColor = "rgba(38,185,154,0.88)" %}
+    {% elseif class=="info" %}
+        {% set iconColor = "rgba(52,152,219,0.88)" %}
+    {% elseif class=="warning" %}
+        {% set iconColor = "rgba(243,156,18,0.88)" %}
+    {% elseif class=="danger" %}
+        {% set iconColor = "rgba(231,76,60,0.88)" %}
+    {% elseif class=="primary" %}
+        {% set iconColor = "rgba(40, 96, 144, 0.88)" %}
+    {% else %}
+        {% set iconColor = "rgba(0,0,0,0.88)" %}
+    {% endif %}
+
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header alert-{{ class }}">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">{{ title }}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="vrow">
+    				<div class="col-md-2">
+    				<h1><p class="text-center"><i style="color: {{ iconColor }}" class="fa {{ icon }} fa-2x"></i></p></h1>
+                       
+                    </div>
+    				<div class="col-md-10">
+                        <h5>{{ message | raw }}</h5>
+                    </div>
+                </div>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default pull-left col-md-2" data-dismiss="modal">Annuler</button>
+				<button type="submit" class="btn btn-{{ class }} pull-right col-md-2" onclick="this.disabled=true;submit();">Oui</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endmacro %} 
+
+{% macro graphiqueAvancement(id_canvas, nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification,  nbCrepCasAbsence) %}
+    		
+	var config = {
+        			type: 'doughnut',
+        			data: {
+            				datasets: [{
+										data: [ '{{ nbCrepNonRenseignes }}',
+				                        		'{{ nbCrepModifieShd }}',
+				                        		'{{ nbCrepSignesShd }}',
+				                        		'{{ nbCrepVisesAgent }}',
+				                        		'{{ nbCrepRefusVisas }}',
+				                        		'{{ nbCrepSignesAh }}',
+				                        		'{{ nbCrepNotifies }}',
+				                        		'{{ nbRefusNotification }}',
+				                        		'{{ nbCrepCasAbsence }}'
+                        				],
+				                        backgroundColor: [
+				                            "#50C1CF",
+				                            "#B0C4DE",
+				                            "#3498DB",
+				                            "#9B59B6",
+				                            "#F08080",
+				                            "#F39C12",
+				                            "#1ABB9C",
+				                            "#d9534f",
+				                            "#777"
+				                        ],
+            				}],
+				           	labels: [
+				            	'Nombre de CREP "Non renseigné" ',
+				                'Nombre de CREP "En cours de rédaction" ',
+				                'Nombre de CREP "Signé par le N+1" ',
+				                'Nombre de CREP "Visé par l\'agent" ',
+				                'Nombre de CREP "Refus de visa" ',
+				                'Nombre de CREP "Signé par le N+2" ',
+				                'Nombre de CREP "Signé définitivement par l\'agent" ',
+				                'Nombre de CREP "Refus de signature définitive" ',
+				                'Nombre de CREP "Cas d\'absence de l\'agent" '
+				              ],
+        			},
+			        options: {
+			            responsive: true,
+			            legend: {
+			                display: false,
+			            },
+			            title: {
+			                display: true,
+			                text: 'Répartition des CREP par statut d\'avancement'
+			            },
+			            animation: {
+			                animateScale: true,
+			                animateRotate: true
+			            }
+			        }
+    };
+
+    window.onload = function() {
+        var ctx = document.getElementById("{{ id_canvas }}").getContext("2d");
+        window.myDoughnut = new Chart(ctx, config);
+    };
+{% endmacro %} 
+
+
+
+
+{% macro historiqueAvancement(id_canvas, historiqueIndicateurs) %}
+
+function isInteger(num) {
+  return (num ^ 0) === num;
+}
+
+	<!-- /Line Chart -->			
+	var labels = [
+					'Non renseignés',
+					'En cours de rédaction',
+					'Signés N+1',
+					'Visés agent',
+					'Refus de visa',
+					'Signés N+2',
+					'Signés définitivement',
+					'Refus de signature définitive',
+					'Absence agent'
+    ];
+    
+    var backgroundColors = ["#50C1CF",
+                            "#B0C4DE",
+                            "#3498DB",
+                            "#9B59B6",
+                            "#F08080",
+                            "#F39C12",
+                            "#1ABB9C",
+                            "#d9534f",
+                            "#777"];
+                            
+    var borderColors = [	"#50C1CF",
+                            "#B0C4DE",
+                            "#3498DB",
+                            "#9B59B6",
+                            "#F08080",
+                            "#F39C12",
+                            "#1ABB9C",
+                            "#d9534f",
+                            "#777"];
+    
+    
+    var labelsX = [];
+    var dataList = [[],[],[],[],[],[],[],[],[]];
+    var nbCreps = 0;
+    
+	{% for stat in historiqueIndicateurs %}
+		labelsX.push("{{ stat.dateStat | date("d/m/Y") }}");
+		dataList[0].push({{ stat.nbCrepNonRenseignes }});
+		dataList[1].push({{ stat.nbCrepModifiesShd }});
+		dataList[2].push({{ stat.nbCrepSignesShd }});
+		dataList[3].push({{ stat.nbCrepVisesAgent }});
+		dataList[4].push({{ stat.nbCrepRefusVisaAgent }});
+		dataList[5].push({{ stat.nbCrepSignesAh }});
+		dataList[6].push({{ stat.nbCrepNotifiesAgent }});
+		dataList[7].push({{ stat.nbCrepRefusNotifAgent }});
+		dataList[8].push({{ stat.nbCrepCasAbsence }});
+		
+		{% if loop.last %}
+			nbCreps = {{ stat.nbCrep }}
+		{% endif %}
+	{% endfor %}
+
+
+	var ctx = document.getElementById("{{ id_canvas }}");
+	
+	var datasets = [];
+	
+	for(i=0; i<labels.length ; i++){
+		var courbe = {
+						label: labels[i],
+            			backgroundColor: backgroundColors[i],
+            			borderColor: borderColors[i],
+            			fill: false,
+            			pointRadius: 0,
+            			pointHitRadius: 5,
+						lineTension: 0,
+            			data: dataList[i],
+            			pointStyle: 'rectRounded',
+		};
+		
+		datasets.push(courbe);
+	}
+	
+	var data = {
+		labels: labelsX,
+		datasets: datasets,
+		
+	};
+	
+
+var options = {
+				responsive: true,
+				title: {
+                		display: true,
+                		text: 'Historique des statuts d\'avancement'
+            	},
+        		legend: {
+						display: 	true,
+						position: 	'bottom',
+						labels : {
+									usePointStyle: true,
+						}
+        		},
+        		tooltips: {
+                    		mode: 'index',
+                    		intersect: false,
+                    		position: 'nearest',
+                    		callbacks: {
+                						label:function(tooltipItem, data){
+                    											return data['datasets'][tooltipItem.datasetIndex].label+' : '+ tooltipItem.yLabel + ' ('+ Math.round(tooltipItem.yLabel/nbCreps*100)+' %)';
+                												}
+            				}
+                },
+                scales: {
+            				yAxes: [{
+                				ticks: {
+                				        beginAtZero: true,
+                   						min: 0,
+                   						callback: function (value) { if (isInteger(value)) { return value; } }
+                				},  
+            				}]
+        		}
+};
+
+
+    		
+                var lineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options : options
+                });
+    		<!-- /Line Chart -->
+
+{% endmacro %} 
+
+{% macro modalBloquante(id) %}
+<!-- Modal -->
+	  <div class="modal fade" id="{{ id }}" role="dialog">
+	    <div class="modal-dialog modal-sm" style="top: 30%">
+	      <div class="modal-content" >
+	        <div class="modal-body" align="center" >
+	          <p>Traitement en cours</p>
+	          <img src="{{ asset('bundles/framework/cisirh/images/ajax-loader-bar2.gif') }}"/>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+{% endmacro %}

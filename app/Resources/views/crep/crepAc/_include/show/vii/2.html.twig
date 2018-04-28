@@ -1,0 +1,44 @@
+{% set propositionsEvolution = ['Augmentation', 'Maintien', 'Diminution'] %}
+{% set propositionsAvancement = ['Oui', 'Non', 'Sans objet'] %}
+ 
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th colspan="3" class="text-center">Proposition d’évolution du montant indemnitaire lié à l’engagement professionnel et à la manière de servir</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+            		{% for index in 0..2 %}
+                        <td class="text-center" style="width: 33%">
+	                        {% if crep.evolutionIndemnitaire is not null and crep.evolutionIndemnitaire == index %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} {{ propositionsEvolution[index] }} <br/>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+ 
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th colspan="3" class="text-center">Proposition d’inscription au prochain tableau d’avancement de grade (ou à l’échelon spécial du grade d’administrateur général)</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+            		{% for index2 in 0..2 %}
+                        <td class="text-center" style="width: 33%">
+	                        {% if crep.propositionAvancement is not null and crep.propositionAvancement == index2 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} {{ propositionsAvancement[index2] }} <br/>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+    	<strong>{% if crep.souhaitEvolutionProfessionnelle == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Évolution professionnelle envisagée</strong><br>	
+    	
+    	<br>
+    	
+    	<strong>{% if crep.mobiliteFonctionnelle.choix == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Mobilité fonctionnelle</strong><br>	
+    	{% if crep.mobiliteFonctionnelle.choix == 1 %}
+    	<div class="row">
+            <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+            	Famille professionnelle : {{ crep.mobiliteFonctionnelle.familleProfessionnelle }}<br>
+            	Année de départ envisagée : {{ crep.mobiliteFonctionnelle.anneeDepart }}<br>
+            </div>
+        </div>
+    	{% endif %}
+    	
+    	<br>
+
+    	<strong>{% if crep.mobiliteGeographique.choix == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Mobilité géographique</strong><br>	
+    	{% if crep.mobiliteGeographique.choix == 1 %}
+    	<div class="row">
+            <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+				Année de départ envisagée : {{ crep.mobiliteGeographique.anneeDepart }}<br>
+            </div>
+        </div>
+    	{% endif %}
+    	
+    	<br>
+	</div>
+</div>
+    	
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+    	<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Critére de choix</th>
+                    <th class="text-center">Priorité 1</th>
+                    <th class="text-center">Priorité 2</th>
+                    <th class="text-center">Priorité 3</th>
+                    <th class="text-center">Priorité 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+    				<td>Organisme ou employeur</td>
+    				<td>{{ crep.mobiliteOrganisme1 | nl2br }}</td>
+    				<td>{{ crep.mobiliteOrganisme2 | nl2br }}</td>
+    				<td>{{ crep.mobiliteOrganisme3 | nl2br }}</td>
+    				<td>{{ crep.mobiliteOrganisme4 | nl2br }}</td>
+                </tr>
+             	<tr>
+                    <td>Type de poste</td>
+    				<td>{{ crep.mobilitePoste1 | nl2br }}</td>
+    				<td>{{ crep.mobilitePoste2 | nl2br }}</td>
+    				<td>{{ crep.mobilitePoste3 | nl2br }}</td>
+    				<td>{{ crep.mobilitePoste4 | nl2br }}</td>
+                </tr>
+                <tr>
+                    <td>Zone géographique</td>
+    				<td>{{ crep.mobiliteZoneGeo1 | nl2br }}</td>
+    				<td>{{ crep.mobiliteZoneGeo2 | nl2br }}</td>
+    				<td>{{ crep.mobiliteZoneGeo3 | nl2br }}</td>
+    				<td>{{ crep.mobiliteZoneGeo4 | nl2br }}</td>
+                </tr>
+    		</tbody>
+        </table>
+    </div>
+</div>
+   	
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<h5><b>Motivations du souhait de mobilité</b> </h5>
+{# 		<strong>{% if crep.motivationsMobilite.choix %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Motivations du souhait de mobilité</strong><br>	    		#}
+    	
+{#     	{% if crep.motivationsMobilite.choix %}#}
+    	<div class="row">
+            <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+             <ul>
+	        {% if  crep.motivationsMobilite.projetProfessionnel == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}  projet professionnel <br/>
+	        {% if  crep.motivationsMobilite.reorganisation == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Réorganisation/restructuration de l'organisme de l'agent <br/>
+	        {% if  crep.motivationsMobilite.rapprochementFamilial == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}  Rapprochement familial <br/>
+	        {% if  crep.motivationsMobilite.autre %}Autre motivations : <p class="well well-xs">{{ crep.motivationsMobilite.autre | nl2br }}</p>{% endif %}
+             </ul>
+            </div>
+        </div>
+    	
+{#     	{% endif %}#}
+    	<br>
+    	<strong>{% if crep.souhaitEntretienCarriere == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Souhait d'entretien avec un conseiller de carrière</strong><br>	
+    	<br>
+    	
+    	<strong>{% if crep.demandeFormationProfessionnelle.choix == 1 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Demande de formation liée à la mise en &oelig;uvre du parcours professionnel de l'agent</strong>	
+    	{% if crep.demandeFormationProfessionnelle.choix == 1 %}
+    	<div class="row">
+            <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+				Type de formation demandée : {{ crep.demandeFormationProfessionnelle.typeFormation }}<br>
+            </div>
+        </div>
+    	{% endif %}
+    	
+    	<br>
+    		
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                
+                <th>Libellé de la formation</th>
+                <th class="text-center">Priorité</th>
+                <th class="text-center">Niveau SAME</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formationReglementaire in crep.formationsReglementaires %}
+                <tr>
+                    <td>{{ formationReglementaire.libelle }} </td>
+                    <td class="text-center">{{ formationReglementaire.priorite }}</td>
+                    <td class="text-center">{{ formationReglementaire.niveauSame|echelleNiveauSameCrepMindef01 }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

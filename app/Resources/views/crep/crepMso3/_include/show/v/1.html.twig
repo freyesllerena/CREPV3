@@ -1,0 +1,36 @@
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-5 col-sm-12 col-xs-12" style="text-align:left;">L'agent souhaite-t-il bénéficier d'un entretien avec un conseiller mobilité-carrière ? </label>
+		<input type="checkbox" class="flat" disabled="disabled" {% if crep.souhaitEntretienCarriere %}checked="checked"{% endif %}> Oui<label class="control-label">&nbsp;</label>   
+        <input type="checkbox" class="flat" disabled="disabled" {% if crep.souhaitEntretienCarriere is not null and not crep.souhaitEntretienCarriere %}checked="checked"{% endif %}> Non
+    </div>
+</div>
+<br>    
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+		<p class="title">Évolution sur le poste actuel</p>
+		<p class="well well-xs">{{ crep.evolutionPosteActuel|nl2br }}</p>
+    </div>
+</div>
+<br>
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+		<p class="title">Modification éventuelle de la fiche de poste</p>
+		<p class="well well-xs">{{ crep.modificationFicheDePoste|nl2br }}</p>
+    </div>
+</div>
+<br>
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+		<p class="title">Prise de responsabilités plus importantes</p>
+		<p class="well well-xs">{{ crep.priseDeResponsabilites|nl2br }}</p>
+    </div>
+</div>
+<br>
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+		<p class="title">Projet professionnel</p>
+		<p class="well well-xs">{{ crep.projetProfessionnel|nl2br }}</p>
+    </div>
+</div>
+<br>

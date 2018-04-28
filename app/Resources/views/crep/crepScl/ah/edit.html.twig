@@ -1,0 +1,20 @@
+{% extends "crep/crepScl/show.html.twig" %}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block iii3 %}
+	{% include 'crep/crepScl/_include/edit/iii/3.html.twig' %}
+{% endblock iii3 %}
+
+
+{% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block alertRefusVisa %}{% endblock alertRefusVisa %}
+{% block alertRefusNotification %}{% endblock alertRefusNotification %}

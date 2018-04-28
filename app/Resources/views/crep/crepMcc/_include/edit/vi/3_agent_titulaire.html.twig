@@ -1,0 +1,57 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-8 col-sm-8 col-xs-12" style="text-align:left;">Dans l’hypothèse où l’agent-e remplit les conditions pour une promotion de corps au choix, souhaitez-vous qu’il en bénéficie ?</label>
+	    <div class="col-md-4 col-sm-4 col-xs-12">
+	        {{ form_row(form.avancementCorps, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Préciser le corps concerné</label>
+        {{ form_row(form.corpsConcerne, {'label': false,'attr': {'maxlength': '100', 'class':'champMisEnEvidence'}}) }}
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th colspan="4" class="text-center">L'avis pour cet avancement est</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+        			<td class="text-center" style="width: 25%">
+        			    {{ form_widget(form.avisSurAvancementCorps.0, {'label': 'Trés favorable'}) }}
+        			</td>
+        			
+            		<td class="text-center" style="width: 25%">
+            			{{ form_widget(form.avisSurAvancementCorps[1], {'label': 'Favorable'}) }}
+            		</td>
+            		
+            		<td class="text-center" style="width: 25%">
+            			{{ form_widget(form.avisSurAvancementCorps[2], {'label': 'Réservé'}) }}
+            		</td>
+            		
+            		<td class="text-center" style="width: 25%">
+            			{{ form_widget(form.avisSurAvancementCorps[3], {'label': 'Défavorable'}) }}
+            		</td>
+            	</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Avis circonstancié (cet avis constitue le support de l’examen éventuel de la promotion de corps par la CAP compétente) :</label>
+        {{ form_row(form.explicationAvancementCorps, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
+    </div>
+</div>

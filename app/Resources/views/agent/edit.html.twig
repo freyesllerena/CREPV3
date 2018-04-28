@@ -1,0 +1,22 @@
+{% extends 'agent/new.html.twig' %}
+
+{% block pageIcon %}fa fa-edit{% endblock pageIcon %}
+{% block pageTitle %}Modification de l'agent{% endblock pageTitle %}
+
+{% block information %}
+	{% if not is_granted('ROLE_ADMIN')  %}
+	    {% if not agent.ajouteManuellement %}
+	    	<div class="row">
+	        	<div class="col-md-12 col-sm-12 col-xs-12">
+	    			<div class="alert alert-info alert-dismissible fade in" role="alert">
+	    				<strong>Information : </strong> Les informations de cet agent sont <strong>issues du SIRH</strong>, elles ne sont donc <strong>pas modifiables</strong>. Le N+1, N+2 et le caractère évaluable ou non de l'agent sont toutefois modifiables.
+	    			</div>
+	    		</div>
+	    	</div>
+	    {% endif %}
+    {% endif %}
+{% endblock information %}
+
+{% block bouton_submit %}
+	<button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-floppy-o"></i> Enregistrer</button>
+{% endblock bouton_submit %}

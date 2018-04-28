@@ -1,0 +1,80 @@
+{% extends 'index.base.html.twig' %}
+
+{% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block frameTitle %}Campagnes{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}Campagnes{% endblock pageTitle %}
+
+
+{% block content %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal form-label-left'}})}}
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+        		<div class="x_panel panel_green">
+					<div class="x_title">
+                    	<h2>{% block formTitle %}Chargement de la population d'agents{% endblock formTitle %}<small></small></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    	</ul>
+                    	<div class="clearfix"></div>
+                  	</div>
+                  
+              		<div class="x_content">
+                    	<h5><strong>Description de la procédure à suivre :</strong></h5>
+                    	<br>
+                    	<ol>
+	                		<li><strong>Télécharger</strong> et <strong>enregistrer</strong> la maquette "Population" ci-dessous :</li>
+	                		<br><br>
+	                		<div class="col-sm-6 col-sm-offset-3">
+								<table class="table table-striped table-bordered">
+									<thead >
+										<tr>
+											<th rowspan="2" style="text-align:center;"> FICHIER </th>
+										</tr>
+										<tr>
+											<th style="text-align:center;"> CSV</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="text-align:center;">
+												Maquette "Population"
+											</td>
+											<td style="text-align:center;">
+												<a href="{{ asset('Maquettes/PopulationGlobale/PopulationGlobale.csv') }}" title="Visualiser le modèle"> <i class="fa fa-file-text" aria-hidden="true"></i></a> 
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div> 
+	                	 	<div class="clearfix"></div>
+	                   	 	<li><strong>Renseigner</strong> la maquette</li>
+	                    	<br>
+	                    	<li><strong>Charger</strong> le fichier dans l'application : </li>
+                    	</ol>
+                      	<br>
+
+						<div class="col-sm-6 col-sm-offset-3">
+							<div style="margin-right: -270px;margin-left: -280px;">
+								{{ form_errors(form) }}
+                      			{{ form_row(form.file, { 'label': "Fichier", 'attr': { 'class': "file-loading" } }) }}                   		
+								<div id="errorBlock" class="help-block"></div>
+							</div>                   
+						</div><!-- /.col-sm-6 col-sm-offset-3 -->
+												
+					</div>
+				</div><!--/. x_panel panel_green -->
+   			</div>
+		</div>
+
+        <div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+        		{% block bouton_submit %}
+        			<button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-check"></i> Valider</button>
+        		{% endblock bouton_submit %}	
+           </div>
+        </div>	
+    {{form_end(form)}}
+{% endblock content%}

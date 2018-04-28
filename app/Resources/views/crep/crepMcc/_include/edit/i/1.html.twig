@@ -1,0 +1,95 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+<br/>
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+            {{ form_row(form.nomPatronymique, { 'label': "Nom patronymique" }) }}
+		</div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	       {{ form_row(form.affectation, { 'label': "Affectation"}) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+            {{ form_row(form.nomUsage, { 'label': "Nom d'usage" }) }}
+		</div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	       {{ form_row(form.direction, { 'label': "Direction (ou établissement)"}) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+            {{ form_row(form.prenom, { 'label': "Prénom" }) }}
+		</div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	       {{ form_row(form.service, { 'label': "Service"}) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12"></div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	       {{ form_row(form.bureau, { 'label': "Bureau"}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-1 col-sm-1 col-xs-1" style="text-align:left;">Agent titulaire </label>
+	    <div class="col-md-10 col-sm-10 col-xs-11">
+	        {{ form_row(form.titulaire, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+<br/>
+
+<div id = "blocPosteTitulaire">
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+	            {{ form_row(form.corps, { 'label': "Corps" }) }}
+			</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+		       {{ form_row(form.dateEntreeCorps, { 'label': "Depuis le"}) }}
+	    </div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+	            {{ form_row(form.grade, { 'label': "Grade" }) }}
+			</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+		       {{ form_row(form.dateEntreeGrade, { 'label': "Depuis le"}) }}
+	    </div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+	            {{ form_row(form.echelon, { 'label': "Échelon" }) }}
+			</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+		       {{ form_row(form.dateEntreeEchelon, { 'label': "Depuis le"}) }}
+	    </div>
+	</div>
+</div>
+
+<div id = "blocPosteNonTitulaire">
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+	            {{ form_row(form.dateEntreeMinistere, { 'label': "Entrée au ministère le" }) }}
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+	            {{ form_row(form.contrat, { 'label': "Contrat" }) }}
+			</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+		       {{ form_row(form.dateDebutContrat, { 'label': "Depuis le"}) }}
+	    </div>
+	</div>
+</div>
+
+<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+	<i class="fa fa-info-circle" aria-hidden="true"></i> <i>La partie identification ci-dessus peut être recopiée telle qu'au début du compte rendu d'entretien de formation</i>
+</p>

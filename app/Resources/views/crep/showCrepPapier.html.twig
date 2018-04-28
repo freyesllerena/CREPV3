@@ -1,0 +1,45 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block export_pdf %} {% endblock export_pdf %}
+
+{% block content %}
+	{{ block('alertRecours') }}
+
+
+					{% set crepPath = path('crep_show_crep_papier', {'id': crep.id, 'filename':crep.getPdfFileName() }) %}
+					
+{# 					<object data="{{ crepPath }}" type="application/pdf" height="100%" width="100%">#}
+					       <iframe src="{{ crepPath }}" class="auto-resize-iframe" style="border: none;" height="100%" width="100%" >
+					             Votre navigateur ne supporte pas la lecture des fichiers PDF. Veuiller télécharger le document pour le consulter :
+					             <a href="{{ crepPath }}"> télécharger</a>
+					       </iframe>
+{# 					</object>#}
+ 
+
+ 
+	{{ block('boutons_actions') }}
+{% endblock content %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+	
+	<script>
+		// Redimentionne la iframe au chargement de la page
+		$(document).ready(function() {
+			redimensionnerIframe();
+		});
+
+		// Redimentionne la iframe au redimentionnement de la fenêtre
+	    $(window).smartresize(function(){  
+	    	redimensionnerIframe();
+	    });
+    </script>
+	
+	
+{% endblock javascripts %}

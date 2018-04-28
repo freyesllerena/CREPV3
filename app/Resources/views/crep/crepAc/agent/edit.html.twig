@@ -1,0 +1,46 @@
+{% extends "crep/crepAc/show.html.twig" %}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block i4 %}
+	{% include 'crep/crepAc/_include/edit/i/4.html.twig' %}
+{% endblock i4 %}
+
+{% block iv2 %}
+    {% include 'crep/crepAc/_include/edit/iv/2.html.twig' %}                        
+{% endblock iv2 %}
+
+{% block v2 %}
+    {% include 'crep/crepAc/_include/edit/v/2.html.twig' %}                         
+{% endblock v2 %}
+
+{% block viii3 %}
+	{% include 'crep/crepAc/_include/edit/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+{% block content %}
+	{{ block('alertErreurValidationFormulaireCrep') }}
+    
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+        {{ parent() }}
+        {{ block('bouton_enregistrer') }}
+        {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block alertRefusVisa %}{% endblock alertRefusVisa %}
+{% block alertRefusNotification %}{% endblock alertRefusNotification %}
+
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript">
+
+	$(function() {
+		
+       var crepCollections = new Crep.Collections();
+
+    });
+    
+    </script>
+{% endblock javascripts %}

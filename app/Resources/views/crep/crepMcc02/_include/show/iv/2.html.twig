@@ -1,0 +1,83 @@
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Compétences</th>
+                <th class="text-center">Exceptionnelle*</th>
+                <th class="text-center">Forte</th>
+                <th class="text-center">Assez forte</th>
+                <th class="text-center">À développer</th>
+                <th class="text-center">Non observée</th>
+                <th class="text-center">Observations</th>
+            </tr>
+            <tr>
+                <th colspan="7" class="text-center">Requises dans les fonctions (à compléter à partir de la fiche de poste)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.competencesRequises.toArray() is empty %}
+                {% for index in 0..2 %}
+                <tr>
+                    <td><br></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                {% for competence in crep.competencesRequises.toArray() %}
+                    <tr>
+                        <td>{{ competence.libelle | nl2br }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+            <thead>
+            <tr>
+                <th colspan="7" class="text-center">Autres compétences démontrées par l’agent-e</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.competencesDemontrees.toArray() is empty %}
+                {% for index in 0..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for competence in crep.competencesDemontrees.toArray() %}
+                    <tr>
+                        <td>{{ competence.libelle | nl2br }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br>

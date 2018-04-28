@@ -1,0 +1,107 @@
+{% extends "index.base.html.twig" %} 
+
+{% import "macro/app.html.twig" as macro %}
+ 
+{% block pageIcon %}fa fa-balance-scale{% endblock pageIcon %}
+{% block pageTitle %}Recours{% endblock pageTitle %}
+{% block frameTitle %}Recours  {% endblock frameTitle %}
+
+
+{% block content %}
+ <!-- page content -->
+			  <div class="clearfix"></div>
+			  
+			  <div class="row">
+			    <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                  <div class="x_title">
+                    <h2>Liste des recours du CREP de {{ crep.agent | identite }} <small></small></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+					    <table id="table_modeles_crep" class="table table-striped table-bordered app_datatable">
+					        <thead>
+					            <tr>
+					            	<th width="25%">Type</th>
+					                <th width="13%">Date de la demande</th>
+					                <th width="25%">Décision</th>
+					                <th width="13%">Date de la décision </th>
+					                <th width="14%">Décision traitée</th>
+					                {% if app.session.get('selectedRole') == 'ROLE_BRHP' or app.session.get('selectedRole') == 'ROLE_RLC'  %}
+					                	<th width="5%">Actions</th>
+					                {% endif %}
+					            </tr>
+					        </thead>
+					        <tbody>
+					        {% for recours in listeRecours %}
+					            <tr>
+					            	<td> {{ recours.type | typeRecoursFilter }}</td>
+					            	<td> {% if recours.dateDemande %} {{ recours.dateDemande |date('d/m/Y')  }} {% endif %}</td>
+					            	<td> {{ recours.decision | typeDecisionRecoursFilter }}</td>
+					            	<td> {% if recours.dateDecision %} {{ recours.dateDecision |date('d/m/Y') }} {% endif %}</td>
+					                <td>
+					                	{% if(recours.decisionPriseEnCompte == true) %}
+											<span class="label label-success">Oui</span>
+										{% else %}	
+											<span class="label label-danger">Non</span>
+										{% endif %}
+					                </td>
+					                
+					                {% if app.session.get('selectedRole') == 'ROLE_BRHP' or app.session.get('selectedRole') == 'ROLE_RLC' %}
+						                <td>
+						                	{% if is_granted(constant('AppBundle\\Security\\RecoursVoter::MODIFIER'), recours) %}
+						                    	<a href="{{ path('recours_edit', { 'id': recours.id }) }}" title="Modfier un recours"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+											{% endif %}	
+												
+						                	{% if is_granted(constant('AppBundle\\Security\\RecoursVoter::SUPPRIMER'), recours) %}
+							                    <a href="" data-toggle="modal" data-target="#modal_supprimer_{{ recours.id }}" title="Supprimer"><i class="fa fa-trash"></i></a>
+												{{ macro.modal('danger', 'modal_supprimer_'~ recours.id, "Supprimer un recours", "Voulez-vous vraiment <strong>supprimer</strong> ce recours ?", "fa-trash", deleteForms[recours.id])}} 
+						                    {% endif %}	
+						                </td>
+						            {% endif %}	
+					            </tr>
+					        {% endfor %}
+					        </tbody>
+					    </table>
+					    
+				</div>
+                </div>
+              </div>
+			</div>
+		
+			{# On affiche un bouton 'retour au CREP' pour un BRHP, Agent, N+1, N+2  #}
+			{% set rolesGranted = ['ROLE_BRHP', 'ROLE_AGENT', 'ROLE_SHD', 'ROLE_AH'] %}
+			
+			{# On affiche un bouton supprimer le CREP pour un RLC  #}
+			{% if app.session.get('selectedRole') == 'ROLE_RLC'  %}
+				{% if is_granted(constant('AppBundle\\Security\\CrepVoter::SUPPRIMER'), crep) %}
+					<a href="#" data-toggle="modal" data-target="#supprimer_crep" title="Supprimer le CREP">
+						<button class="btn btn-danger bouton-160 pull-left"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer le CREP</button>
+					</a>
+					
+					{% set message = "Voulez-vous vraiment <strong>supprimer</strong> ce CREP ?<br/> <br/>
+					  <strong class='orange'><i class='fa fa-warning'></i> Attention :</strong><br/><br/>
+					  Cette action supprimera définitevement le CREP de l'application, il ne sera plus possible de le récupérer. " %}
+					{{ macro.modal('danger', 'supprimer_crep', "Supprimer le CREP", message, "fa-trash", supprimer_crep_form)}} 
+				
+					{% endif %}
+					
+			{% elseif app.session.get('selectedRole') in rolesGranted   %}
+				<div class="row">
+					<a href="{{ path('crep_show', { 'id': crep.id }) }}">
+			    		<button type="submit" class="btn btn-primary pull-left" title="Retour au CREP"><i class="fa fa-reply" aria-hidden="true"></i> Retour au CREP</button>
+			    	</a>
+			{% endif %}
+			
+			{% if is_granted(constant('AppBundle\\Security\\CrepVoter::DECLARER_RECOURS'), crep) %}		
+				<a href="{{ path('recours_new', { 'id': crep.id }) }}">
+			    	<button class="btn btn-primary pull-right" title="ajouter un recours"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un recours</button>
+			    </a>
+		    {% endif %}	
+	    	</div>
+			
+{% endblock content %}

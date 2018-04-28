@@ -1,0 +1,75 @@
+<div class="row form-group">
+	<div class="col-md-8 col-sm-8 col-xs-12">
+		<label>Dans l’hypothèse où l’agent-e remplit les conditions pour une promotion de corps au choix, souhaitez-vous qu’il en bénéficie ?</label>
+	</div>
+	
+	<div class="col-md-1 col-sm-1 col-xs-6">
+		<strong>
+			{% if crep.agent and crep.agent.ah and crep.avancementCorps %}
+				<i class="fa fa-check-square-o"></i> 
+			{% else %}
+				<i class="fa fa-square-o"></i>
+			{% endif %}
+			Oui
+		</strong>
+	</div>
+	<div class="col-md-1 col-sm-1 col-xs-6">
+		<strong>
+			{% if crep.agent and crep.agent.ah and not crep.avancementCorps and crep.avancementCorps is not null %}
+				<i class="fa fa-check-square-o"></i>
+			{% else %}
+				<i class="fa fa-square-o"></i>
+			{% endif %}
+			Non
+		</strong>
+	</div>
+</div>
+
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class ="title"> Préciser le corps concerné  </p>
+        <p class="well well-xs"> 
+        	{% if crep.agent and crep.agent.ah %}
+				{{ crep.corpsConcerne}}
+			{% endif %}
+		</p>
+    </div>
+</div>
+
+{% set avisAvancement = ['Très favorable', 'Favorable', 'Réservé', 'Défavorable'] %}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="4" class="text-center">L'avis pour cet avancement est</th>
+                </tr>
+            </thead>
+            <tbody>
+	            <tr>
+	            	{% for index in 0..3 %}
+	                	<td class="text-center" style="width: 25%">
+		                    {% if  crep.agent and crep.agent.ah and crep.avisSurAvancementCorps is not null and crep.avisSurAvancementCorps == index %}
+		                    	<i class="fa fa-check-square-o"></i>
+		                    {% else %}
+		                    	<i class="fa fa-square-o"></i>
+		                    {% endif %} 
+		                    {{ avisAvancement[index] }} <br/>
+	                    </td>
+	                {% endfor %}
+	            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class ="title"> Avis circonstancié : (cet avis constitue le support de l’examen éventuel de la promotion de corps par la CAP compétente) : </p>
+        <p class="well well-xs"> 
+        	{% if crep.agent and crep.agent.ah %}
+	    		{{ crep.explicationAvancementCorps|nl2br}}
+	    	{% endif %}
+	    </p>
+    </div>
+</div>

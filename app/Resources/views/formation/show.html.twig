@@ -1,0 +1,72 @@
+{% extends 'index.base.html.twig' %}
+
+{% block frameTitle %}Formation{% endblock frameTitle %}
+{% block pageIcon %}fa fa-graduation-cap{% endblock pageIcon %}
+{% block pageTitle %}Formation{% endblock pageTitle %}
+
+
+{% block content %}
+
+    
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel panel_green">
+			<div class="x_title">
+				<h2>Détail de la formation<small></small></h2>
+				    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="form-group">
+					<div class="row">
+    					<div class="col-md-3 col-sm-3 col-xs-12 ">
+    						<label class="control-label pull-right label-xs">Code </label>
+    					</div>
+    					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+    	                    {{ formation.code }}
+    					</div>
+					</div>
+					<div class="row">
+    					<div class="col-md-3 col-sm-3 col-xs-12">
+    						<label class="control-label pull-right label-xs">Libellé</label>
+    					</div>
+    					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+    	                    {{ formation.libelle }}
+    					</div>	
+    				</div>	
+					<div class="row">
+    					<div class="col-md-3 col-sm-3 col-xs-12">
+    						<label class="control-label pull-right label-xs">Durée en jour</label>
+    					</div>
+    					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+							{{ formation.duree }}
+    					</div>	
+    				</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+{# 		{% if is_granted(constant('AppBundle\\Security\\FormationVoter::SUPPRIMER'), formation) %}#}
+			<button type="button" class="btn btn-danger pull-left" data-toggle="modal" data-target="#modal_supprimer"><i class="fa fa-trash"></i> Supprimer</button>
+{# 		{% endif %}     #}
+	</div>
+		
+	<div class="col-md-6 col-xs-12">
+		<a class="btn btn-primary pull-right" href="{{ path('formation_edit', { 'id': formation.id }) }}"><i class="fa fa-edit"></i> Modifier</a>
+	</div>
+</div>
+
+{#     {% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::SUPPRIMER'), campagnePnc) %}#}
+        {{ macro.modal('danger', 'modal_supprimer', "Supprimer la formation", "Voulez-vous vraiment <strong>supprimer</strong> cette formation ?", "fa-trash", delete_form)}} 
+{# 	{% endif %}#}
+	
+
+{% endblock content %}
+
+

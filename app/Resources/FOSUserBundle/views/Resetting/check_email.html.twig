@@ -1,0 +1,56 @@
+{# Message de confirmation de l'envoi du mail pour la réinitialisation du mot de passe #}
+
+{% extends "FOSUserBundle:Security:login.html.twig" %}
+
+{% block title %}{{ appName }} | Réinitialisation{% endblock %}
+
+{% block titreFormulaire %}
+    <h3>
+    	<font color="#428bca">
+    		<i class="glyphicon glyphicon-envelope"> </i> 
+    		Information: 
+    	</font>
+    </h3>
+{% endblock titreFormulaire %}
+
+{% block form %}
+    <form>
+    	<h1>Réinitialisation</h1>
+    	
+        <p> 
+        	Un e-mail vous a été envoyé. Il contient un lien sur lequel il vous faudra cliquer afin de réinitialiser votre mot de passe. 
+        </p>
+        
+        <div class="row">
+        	<div class="col-xs-7"> </div>
+        	<div class="col-xs-5">
+        		<a href="{{ path('fos_user_security_login') }}" class="btn btn-default">
+        			<span class="glyphicon glyphicon-chevron-left"></span> 
+        			Retour 
+        		</a>
+        	</div>
+        </div>
+        
+        <div class="row">
+        	<div class="separator">
+            	<div class="clearfix"></div>
+            	<br/>
+            	<div class="header_logo_login">
+                	<img src="{{ asset('bundles/framework/cisirh/images/Logo ESTEVE 2017_COULEUR1.svg') }}" alt="{{ appName }}">
+                    <h1>
+                        {% if environnement | lower starts with 'for' %}
+                        	<span style="color: #FF0000"> Formation</span>
+                        {% endif %}	
+                    </h1>
+                    <p>Copyright © {{ "now"|date("Y") }} {{ companyName }}. Tous droits réservés.</p>
+                    <p><small>Version : {{ appVersion }}</small></p>
+                </div>
+        	</div>
+        </div>
+    </form>
+{% endblock form %}
+
+{% block pwd_oublie %}
+{% endblock pwd_oublie %}
+
+

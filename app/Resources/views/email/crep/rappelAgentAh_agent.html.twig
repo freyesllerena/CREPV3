@@ -1,0 +1,28 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+
+	<tr>
+        <td class="content-block">
+        	Bonjour,
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nous vous informons que dans le cadre de la campagne "{{ campagne.libelle }}" concernant l'évaluation professionnelle 
+	de l'année {{ campagne.anneeEvaluee }}, votre N+2 {{ ah | identite }} a rappelé votre compte rendu d'évaluation professionnelle pour le compléter.
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	En attendant, vous pouvez toujours le consulter en cliquant sur le lien suivant :
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('crep_show',{'id' : crep.id}) }}">Consulter mon CREP</a>
+        </td>
+    </tr> 
+    
+
+{% endblock %}

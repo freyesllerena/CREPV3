@@ -1,0 +1,182 @@
+agent_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Agent:index" }
+    methods:  GET
+
+agent_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Agent:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+
+# id = id de la campagne
+agent_new_brhp:
+    path:     /{id}/new_agent_brhp
+    defaults: { _controller: "AppBundle:Agent:newAgentBrhp" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+agent_new_rlc:
+    path:     /{id}/new_agent_rlc
+    defaults: { _controller: "AppBundle:Agent:newAgentRlc" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+agent_new_pnc:
+    path:     /{id}/new_agent_pnc
+    defaults: { _controller: "AppBundle:Agent:newAgentPnc" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+# id = id de l'agent
+agent_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Agent:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+agent_detacher_shd:
+    path:     /{id}/detacher
+    defaults: { _controller: "AppBundle:Agent:detacherShd" }
+    methods:  [PUT, POST]
+    requirements:
+        id: '\d+'
+        
+agent_rattacher_shd:
+    path:     /{id}/rattacher-shd/{campagneBrhp}
+    defaults: { _controller: "AppBundle:Agent:rattacherShd" }
+    methods:  [PUT, POST]
+    requirements:
+        id: '\d+'
+        campagneBrhp: '\d+'
+        
+agent_detacher_perimetre_rlc:
+    path:     /{id}/detacher-perimetre-rlc
+    defaults: { _controller: "AppBundle:Agent:detacherPerimetreRlc" }
+    methods:  [PUT, POST]
+    requirements:
+        id: '\d+'
+            
+agent_detacher_perimetre_brhp:
+    path:     /{id}/detacher-perimetre-brhp
+    defaults: { _controller: "AppBundle:Agent:detacherPerimetreBrhp" }
+    methods:  [PUT, POST]    
+    requirements:
+        id: '\d+'
+            
+agent_rattacher_perimetre_brhp:
+    path:     /{id}/rattacher-perimetre-brhp/{campagneBrhp}
+    defaults: { _controller: "AppBundle:Agent:rattacherPerimetreBrhp" }
+    methods:  [PUT, POST]      
+    requirements:
+        id: '\d+'
+        campagneBrhp: '\d+'
+        
+agent_rattacher_perimetre_rlc:
+    path:     /{id}/rattacher-perimetre-rlc/{campagneRlc}
+    defaults: { _controller: "AppBundle:Agent:rattacherPerimetreRlc" }
+    methods:  [PUT, POST]   
+    requirements:
+        id: '\d+'
+        campagneRlc: '\d+'
+            
+#agent_delete:
+#    path:     /{id}/delete
+#    defaults: { _controller: "AppBundle:Agent:delete" }
+#    methods:  DELETE
+
+agent_campagne_pnc_server_processing:
+    path:     /server_processing_campagne_pnc/{campagnePnc}/{perimetreRlc}/{evaluable}/{sansShd}/{sansPerimetre}/{onglet}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingCampagnePnc", perimetreRlc: 0 }
+    requirements:
+        campagnePnc: '\d+'
+        perimetreRlc: '\d+'
+        evaluable: '\d+'
+        sansShd: '\d+'
+        sansPerimetre: '\d+'
+                
+agent_campagne_pnc_sans_perimetre_server_processing:
+    path:     /server_processing_campagne_pnc_sans_perimetre/{campagnePnc}/{campagneRlc}/{campagneBrhp}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingCampagnePncSansPerimetre", campagneRlc: null, campagneBrhp: null }
+    requirements:
+        campagnePnc: '\d+'
+        perimetreRlc: '\d+'
+        campagneBrhp: '\d+'
+
+agent_sans_perimetre_rlc_server_processing:
+    path:     /server_processing_agents_sans_perimetre_rlc/{campagnePnc}/{campagneRlc}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingAgentsSansPerimetreRlc"}
+    requirements:
+        campagnePnc: '\d+'
+        campagneRlc: '\d+'
+
+
+agent_sans_perimetre_brhp_server_processing:
+    path:     /server_processing_agents_sans_perimetre_brhp/{campagnePnc}/{campagneBrhp}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingAgentsSansPerimetreBrhp"}
+    requirements:
+        campagnePnc: '\d+'
+        campagneBrhp: '\d+'    
+        
+agent_campagne_rlc_server_processing:
+    path:     /server_processing_campagne_rlc/{campagneRlc}/{perimetreBrhp}/{evaluable}/{sansShd}/{sansPerimetre}/{onglet}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingCampagneRlc" }
+    requirements:
+        campagneRlc: '\d+'
+        perimetreBrhp: '\d+'
+        evaluable: '\d+'
+        sansShd: '\d+'
+        sansPerimetre: '\d+'
+                
+agent_campagne_brhp_server_processing:
+    path:     /server_processing_campagne_brhp/{campagneBrhp}/{evaluable}/{sansShd}/{sansPerimetre}/{onglet}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingCampagneBrhp" }
+    requirements:
+        campagneBrhp: '\d+'
+        evaluable: '\d+'
+        sansShd: '\d+'
+        sansPerimetre: '\d+'
+
+
+agent_campagne_shd_server_processing: 
+    path:     /server_processing_campagne_shd/{campagneShd}/{evaluable}/{sansShd}/{sansPerimetre}/{onglet}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingCampagneShd" } 
+    requirements:
+        campagneShd: '\d+'
+        evaluable: '\d+'
+        sansShd: '\d+'
+        sansPerimetre: '\d+'
+            
+
+# id de l'agent    
+check_crep_agent:
+    path:     /{id}/check-crep
+    defaults: { _controller: "AppBundle:Agent:checkCrepAgent" } 
+    requirements:
+        id: '\d+'
+    
+agent_import_crep_papier:
+    path:     /{id}/import-crep-papier
+    defaults: { _controller: "AppBundle:Agent:importCrepPapier" }
+    methods:   [GET, POST]
+    requirements:
+        id: '\d+'
+            
+agent_delete_crep_papier:
+    path:     /{id}/delete-crep-papier
+    defaults: { _controller: "AppBundle:Agent:deleteCrepPapier" }
+    methods:   [DELETE]
+    requirements:
+        id: '\d+'
+            
+agent_new_server_processing_pnc:
+    path:     /new_server_processing_pnc/{campagnePnc}/{agent_id}
+    defaults: { _controller: "AppBundle:Agent:newServerProcessingPnc", agent_id: 0 }
+    requirements:
+        campagnePnc: '\d+'
+        agent_id: '\d+'

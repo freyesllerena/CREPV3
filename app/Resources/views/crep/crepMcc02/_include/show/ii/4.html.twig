@@ -1,0 +1,36 @@
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Nature des dossiers ou travaux</th>
+                <th class="text-center">Résultats obtenus par l’agent-e</th>
+                <th class="text-center">Commentaires</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.autresObjectifs is empty %}
+                {% for index in 0..2 %}
+                    <tr align="left" bgcolor="#FFFFFF">
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for object in crep.autresObjectifs %}
+                    <tr>
+                        <td>{{ object.libelle | nl2br }}</td>
+                        <td>{{ object.resultat | nl2br  }}</td>
+                        <td>{{ object.indicateurs | nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br>

@@ -1,0 +1,17 @@
+{% form_theme form 'crep/crepScl/Form/App_form_crepScl.html.twig' %}
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <p class="title">Du supérieur hiérarchique direct : </p>
+            {{ form_row(form.autresPointsAbordesShd,{'label':false,'attr': {'maxlength': '4096'}}) }}
+        </dl>
+        
+        <dl class="dl-horizontal m-t-md">
+            <p class="title">De l’agent : </p>
+            {{ form_row(form.autresPointsAbordesAgent,{'label':false,'attr': {'maxlength': '4096'}}) }}
+        </dl>
+    </div>
+</div>
+
+<br/>

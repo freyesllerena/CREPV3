@@ -1,0 +1,30 @@
+{% extends 'Personne/new.html.twig' %}
+
+{% block frameTitle %}BRHP{% endblock frameTitle %}
+{% block pageTitle %}BRHP{% endblock pageTitle %}
+{% block formTitle %}Création d'un acteur RH de proximité (BRHP){% endblock formTitle %}
+
+
+
+{% block otherRows %}
+	{{ form_row(form.perimetresBrhp, { 'label': "Périmètres BRHP", 'attr': {'class': 'select2_multiple'}}) }}
+{% endblock otherRows %}
+
+
+    
+ {% block javascripts %}
+ 	{{ parent() }}
+
+     <!-- Select2 -->
+    <script>
+      $(document).ready(function() {
+        $(".select2_multiple").select2({
+          //maximumSelectionLength: 1,
+          placeholder: "Périmètres BRHP",
+          allowClear: true
+        });
+      });
+    </script>
+    <!-- /Select2 -->
+     
+ {% endblock javascripts %}

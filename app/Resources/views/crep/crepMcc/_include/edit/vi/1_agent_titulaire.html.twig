@@ -1,0 +1,17 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-7 col-sm-7 col-xs-12" style="text-align:left;">Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</label>
+	    <div class="col-md-5 col-sm-5 col-xs-12">
+	        {{ form_row(form.attributionCia, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Avis circonstancié</label>
+        {{ form_row(form.explicationAttributionCia, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
+    </div>
+</div>

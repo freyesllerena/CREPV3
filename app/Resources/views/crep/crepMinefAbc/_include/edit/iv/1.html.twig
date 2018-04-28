@@ -1,0 +1,39 @@
+{% form_theme form 'crep/crepMinefAbc/Form/App_form_crepMinefAbc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Qualité (N+1)</dt>
+            <dd>{{ form_widget(form.qualiteShd, {'label': false,'attr': {'maxlength': '4096'}}) }}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-7 col-sm-7 col-xs-12" style="text-align:left;">Le compte-rendu d’entretien professionnel a-t-il fait l’objet d’une demande facultative de révision gracieuse<sup>1</sup> ?</label>
+	    <div class="col-md-5 col-sm-5 col-xs-12">
+	        {{ form_row(form.revisionGracieuse, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:right;">Communication de la réponse le :</label>
+	    <div class="col-md-4 col-sm-4 col-xs-12">
+	        {{ form_row(form.dateCommunicationReponse, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+	<strong><sup>1</sup></strong> : En cas de désaccord sur le contenu du compte-rendu, il est préférable d’effectuer 
+	sans attendre une demande facultative de révision gracieuse du compte-rendu auprès du supérieur hiérarchique qui 
+	a réalisé l’entretien d’évaluation. L’agent dispose de quinze jours après communication par l’évaluateur du 
+	compte-rendu pour demander cette révision gracieuse. Sous réserve de laisser une trace écrite, les modalités de 
+	cette demande sont libres. Il ne s’agit en aucun cas d’un préalable indispensable à l’exercice des voies de recours 
+	mentionnées ci-après.
+</p>

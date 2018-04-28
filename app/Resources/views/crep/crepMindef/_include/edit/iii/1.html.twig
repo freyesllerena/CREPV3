@@ -1,0 +1,43 @@
+{% form_theme form 'crep/crepMindef/_include/edit/iii/1.form.html.twig' %}
+<br/>
+<div class="row competences-postes collections" id="competencesPostesCollection"
+     data-prototype="{{ form_widget(form.competencesPostes.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" rowspan="2">Compétences du poste</th>
+                    <th class="text-center" colspan=4>Niveau requis du poste</th>
+                    <th class="text-center" colspan=4>Compétences évaluées</th>
+                    <th style="border-bottom: 0"></th>
+                </tr>
+                <tr>
+                    <th style="width: 8%" class="text-center">Sensibilisation</th>
+                    <th style="width: 8%" class="text-center">Application</th>
+                    <th style="width: 8%" class="text-center">Maîtrise</th>
+                    <th style="width: 8%" class="text-center">Expert</th>
+
+                    <th style="width: 8%" class="text-center">Sensibilisation</th>
+                    <th style="width: 8%" class="text-center">Application</th>
+                    <th style="width: 8%" class="text-center">Maîtrise</th>
+                    <th style="width: 8%" class="text-center">Expert</th>
+                    <th style="border-top: 0"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competencePoste in form.competencesPostes %}
+                    {{ form_row(competencePoste) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link competencesPostes pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+<br/>

@@ -1,0 +1,174 @@
+{% extends "crep/crepMcc/mcc.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+
+{% block content %}
+	{{ block('alertErreurValidationFormulaireCrep') }}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+
+{% block i1 %}
+	{% include 'crep/crepMcc/_include/edit/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepMcc/_include/edit/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block ii1 %}
+	{% include 'crep/crepMcc/_include/edit/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+	{% include 'crep/crepMcc/_include/edit/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+	{% include 'crep/crepMcc/_include/edit/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block ii4 %}
+	{% include 'crep/crepMcc/_include/edit/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block ii5 %}
+	{% include 'crep/crepMcc/_include/edit/ii/5.html.twig' %}
+{% endblock ii5 %}
+
+{% block iii1 %}
+	{% include 'crep/crepMcc/_include/edit/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+	{% include 'crep/crepMcc/_include/edit/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block iii3 %}
+	{% include 'crep/crepMcc/_include/edit/iii/3.html.twig' %}
+{% endblock iii3 %}
+
+{% block iv1 %}
+	{% include 'crep/crepMcc/_include/edit/iv/1.html.twig' %}
+{% endblock iv1 %}
+
+{% block vii1 %}
+	{% include 'crep/crepMcc/_include/edit/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2_1 %}
+	{% include 'crep/crepMcc/_include/edit/vii/2_1.html.twig' %}
+{% endblock vii2_1 %}
+
+{% block vii2_2 %}
+	{% include 'crep/crepMcc/_include/edit/vii/2_2.html.twig' %}
+{% endblock vii2_2 %}
+
+{% block vii2_3 %}
+	{% include 'crep/crepMcc/_include/edit/vii/2_3.html.twig' %}
+{% endblock vii2_3 %}
+
+{% block vii2_4 %}
+	{% include 'crep/crepMcc/_include/edit/vii/2_4.html.twig' %}
+{% endblock vii2_4 %}
+
+{% block vii2_5 %}
+	{% include 'crep/crepMcc/_include/edit/vii/2_5.html.twig' %}
+{% endblock vii2_5 %} 
+
+{% block circuitDeValidation %}
+{% endblock circuitDeValidation %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+
+	    $(document).ready(function() {
+	
+	        if($('#crep_mcc_titulaire_1').attr('checked')) {
+	        	$("#blocPosteNonTitulaire").show();
+	        } else {
+	        	$("#blocPosteNonTitulaire").hide();
+	        }
+	
+	        if($('#crep_mcc_titulaire_0').attr('checked')) {
+	        	$("#blocPosteTitulaire").show();
+	        } else {
+	        	$("#blocPosteTitulaire").hide();
+	        }
+
+	        if($('#crep_mcc_refusEntretienProfessionnel').attr('checked')) {
+	      		document.getElementById("crep_mcc_dateEntretien").disabled = true;
+	      		document.getElementById("crep_mcc_dureeEntretien").disabled = true;
+	        } else {
+	      		document.getElementById("crep_mcc_dateEntretien").disabled = false;
+	      		document.getElementById("crep_mcc_dureeEntretien").disabled = false;
+	        }
+		});
+
+	    $("#crep_mcc_titulaire_0" ).on('ifChanged', function(){
+    		$("#blocPosteTitulaire").show();
+    		$("#blocPosteNonTitulaire").hide();
+	    });
+
+		$("#crep_mcc_titulaire_1" ).on('ifChanged', function(){
+				$("#blocPosteNonTitulaire").show();
+				$("#blocPosteTitulaire").hide();
+		});
+
+	  	$("#crep_mcc_refusEntretienProfessionnel" ).on('ifChanged', function(){
+	  		if($('#crep_mcc_refusEntretienProfessionnel').attr('checked')) {
+	  			$('#crep_mcc_refusEntretienProfessionnel').removeAttr("checked");
+	      		document.getElementById("crep_mcc_dateEntretien").disabled = false;
+	      		document.getElementById("crep_mcc_dureeEntretien").disabled = false;
+	        } else {
+	            $('#crep_mcc_refusEntretienProfessionnel').attr("checked", "checked");
+	            $('#crep_mcc_dateEntretien').val('');
+	            $('#crep_mcc_dureeEntretien').val('');
+	      		document.getElementById("crep_mcc_dateEntretien").disabled = true;
+	      		document.getElementById("crep_mcc_dureeEntretien").disabled = true;
+	        }
+		});
+
+		var crepCollections = new Crep.Collections();
+		calculateNumberAgent();
+		
+	    function calculateNumberAgent() {
+	        var nbAgentsEncadres = $("#crep_mcc_nbAgentsEncadres");
+	        var nbAgentsAEvaluer = $("#crep_mcc_nbAgentsAEvaluer");
+	        var nbAgentsEvaluesAnneePrec = $("#crep_mcc_nbAgentsEvaluesAnneePrec");
+
+	        nbAgentsEncadres.on('change paste keyup', calculate);
+	        nbAgentsAEvaluer.on('change paste keyup', calculate);
+	        nbAgentsEvaluesAnneePrec.on('change paste keyup', calculate);
+
+	        function isPositiveNumber(val) {
+	            var value = parseInt(val) || 0;
+	            value = Math.trunc(Math.abs(value));
+
+	            return value
+	        }
+
+	        // private function permet de calculer la somme des agents de chaque catégorie
+	        function calculate() {
+	            var _nbAgentsEncadres = isPositiveNumber(nbAgentsEncadres.val());
+	            var _nbAgentsAEvaluer = isPositiveNumber(nbAgentsAEvaluer.val());
+	            var _nbAgentsEvaluesAnneePrec = isPositiveNumber(nbAgentsEvaluesAnneePrec.val());
+
+	            nbAgentsEncadres.val(_nbAgentsEncadres);
+	            nbAgentsAEvaluer.val(_nbAgentsAEvaluer);
+	            nbAgentsEvaluesAnneePrec.val(_nbAgentsEvaluesAnneePrec);
+	        }
+	    }
+		
+    </script>
+{% endblock javascripts %}

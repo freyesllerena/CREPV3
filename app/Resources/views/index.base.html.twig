@@ -1,0 +1,371 @@
+{% import "macro/app.html.twig" as macro %}
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+        
+        <title>{% block title %}{{ appName }} | {% block frameTitle %}Accueil{% endblock frameTitle %}{% endblock title%}</title>
+        
+        
+        {% block stylesheets %}
+        
+        	{% stylesheets 
+        		'gentelella-1.3.0/vendors/bootstrap/dist/css/bootstrap.min.css'
+        		'gentelella-1.3.0/vendors/font-awesome/css/font-awesome.min.css'
+				'gentelella-1.3.0/vendors/iCheck/skins/flat/green.css'
+				'gentelella-1.3.0/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'
+				'gentelella-1.3.0/build/css/custom.min.css'
+				'gentelella-1.3.0/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css'
+				'gentelella-1.3.0/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css'
+				'gentelella-1.3.0/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css'
+				'gentelella-1.3.0/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css'
+				'gentelella-1.3.0/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css'     
+				'gentelella-1.3.0/vendors/bootstrap/dist/css/fileinput.min.css'
+				'gentelella-1.3.0/vendors/bootstrap-daterangepicker/daterangepicker.css'
+				'gentelella-1.3.0/vendors/pnotify/dist/pnotify.css'
+				'gentelella-1.3.0/vendors/pnotify/dist/pnotify.buttons.css'
+				'gentelella-1.3.0/vendors/pnotify/dist/pnotify.nonblock.css'
+				'gentelella-1.3.0/vendors/bootstrap/dist/css/fileinput.min.css'
+				'gentelella-1.3.0/vendors/select2/dist/css/select2.min.css'
+        		filter='cssrewrite' %} {# le fichier crep.css doit être chargé en dernier #}
+    				<link rel="stylesheet" href="{{ asset_url }}" />
+			{% endstylesheets %}
+			
+			<link href="{{ asset('bundles/framework/cisirh/css/crep.css') }}" rel="stylesheet" type="text/css" />
+
+        {% if environnement | lower starts with 'for' %}
+        	<link href="{{ asset('bundles/framework/cisirh/css/crep_for.css') }}" rel="stylesheet" type="text/css" />
+        {% endif %}
+        
+    	
+        {% endblock stylesheets %}
+        
+        <!-- favicon multi-format -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+		<link rel="manifest" href="{{ asset('manifest.json') }}">
+		<link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="msapplication-TileImage" content="{{ asset('mstile-150x150.png') }}">
+		<meta name="theme-color" content="#ffffff">
+		<!-- fin favicon multi-format -->
+    </head>
+    <body class="nav-md ">
+    
+      <div class="container body">
+        <div class="main_container">
+          <div class="col-md-3 left_col menu_fixed">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title">
+				<a href="{{ path('accueil') }}" class="site_title">
+					<i class="header_logo_menu_sm"><img src="{{ asset('bundles/framework/cisirh/images/Logo ESTEVE 2017_E-couleur2.svg') }}" alt="{{ appName }}"></i>
+					
+					<span class="header_logo_menu_md">
+						<img src="{{ asset('bundles/framework/cisirh/images/Logo ESTEVE 2017_COULEUR2.svg') }}" alt="{{ appName }}">
+					</span>
+				</a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile">
+              <div class="profile_pic">
+              	  {% if app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MONSIEUR')%}
+                  	 <img src="{{ asset('bundles/framework/cisirh/images/homme.png') }}" alt="" class="img-circle profile_img">
+                  {% elseif app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MADAME') %}
+                  	 <img src="{{ asset('bundles/framework/cisirh/images/femme.png') }}" alt="" class="img-circle profile_img">
+                  {% else %}
+                  	 <img src="{{ asset('bundles/framework/cisirh/images/user.png') }}" alt="" class="img-circle profile_img">
+                  {% endif %}
+              </div>
+              <div class="profile_info">
+                <span>Bienvenue</span>
+                <h2>{{ app.user.prenom[0:1] | title}}. {{app.user.nom | upper}}</h2>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
+
+            <br />
+        
+        
+	       	{% block leftMenu %}
+              <!-- sidebar menu -->
+              <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                <div class="menu_section">
+                  <h3> 
+                  	{% if app.user.roles | length > 2 or app.user.roles[0] == "ROLE_ADMIN" %} 
+                  		{{ app.session.get('selectedRole') | role }}
+                  	{% else %}
+                  		{{ app.user.roles[0] | role }}
+                  	{% endif %}
+                  </h3>
+{#                   <h3>{{ app.session.get('selectedRole') | role }}</h3>#}
+                  <ul class="nav side-menu">
+                	{{ _self.menu_links(app.session.get('menu')) }}
+                  </ul>
+                </div>
+              </div>
+              <!-- /sidebar menu -->
+			 {% endblock leftMenu %}
+ 
+		    </div>
+        </div>
+        
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav class="" role="navigation">
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  {% if app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MONSIEUR')%}
+                  	 <img src="{{ asset('bundles/framework/cisirh/images/homme.png') }}" alt="">{{ app.user.prenom | title}} {{app.user.nom | upper}}
+                  {% elseif app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MADAME') %}
+                  	 <img src="{{ asset('bundles/framework/cisirh/images/femme.png') }}" alt="">{{ app.user.prenom | title}} {{app.user.nom | upper}}
+                  {% else %}
+                  	 <img src="{{ asset('bundles/framework/cisirh/images/user.png') }}" alt="">{{ app.user.prenom | title}} {{app.user.nom | upper}}
+                  {% endif %}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="{{ path('utilisateur_show', { 'id': app.user.id }) }}" title="Détail"> Profil</a></li>
+                    {% if app.user.roles | length > 2 or is_granted('ROLE_ADMIN') %}
+                  		<li><a href="{{ path('utilisateur_choix_role') }}"><i class="fa fa-user pull-right"></i> Changer de rôle</a></li>
+                  	{% endif %}
+                  	<li><a href="{{ path('message_index') }}"><i class="fa fa-envelope pull-right"></i> Messages</a></li>
+                  	<li><a href="{{ path('app_aide') }}">Aide</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out pull-right"></i> Déconnexion</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+{#           {% dump app.session.get('menu') %}#}
+        <div class="right_col" role="main">
+{#           <div class="">#}
+          	<div class="page-title">
+				<div class="title_left">
+					<h1>
+						<i class="{% block pageIcon %}...{% endblock pageIcon %}"></i> {% block pageTitle %}...{% endblock pageTitle %} <small></small>
+					</h1>
+				</div>
+                {% block export_pdf %}{% endblock export_pdf %}
+			</div>
+
+        <div class="clearfix"></div>  
+        {% block content %}
+        <!-- page content -->
+        		
+		
+		
+        <!-- /page content -->
+        {% endblock content %}
+{#           </div>#}
+        </div>
+        
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            {{ "now"|date("d/m/Y H:i", "Europe/Paris") }}
+          </div>
+		  Copyright &copy; {{ "now"|date("Y") }} <a href="#">{{ companyName }}</a>. Tous droits réservés. <small>Version : {{ appVersion }}</small>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+         </div>
+       </div>
+       
+        {% block javascripts %}
+        
+        {% javascripts 
+        	'gentelella-1.3.0/vendors/jquery/dist/jquery.min.js'
+			'gentelella-1.3.0/vendors/bootstrap/dist/js/bootstrap.min.js'
+			'gentelella-1.3.0/vendors/iCheck/icheck.min.js'
+			'gentelella-1.3.0/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js'
+			'gentelella-1.3.0/build/js/custom.js'
+			'gentelella-1.3.0/vendors/datatables.net/js/jquery.dataTables.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-buttons/js/dataTables.buttons.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-buttons/js/buttons.flash.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-buttons/js/buttons.html5.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-buttons/js/buttons.print.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-responsive/js/dataTables.responsive.min.js'
+			'gentelella-1.3.0/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js'
+			'gentelella-1.3.0/vendors/datatables.net-scroller/js/dataTables.scroller.min.js'
+			'gentelella-1.3.0/vendors/bootstrap/js/fileinput.min.js'
+			'gentelella-1.3.0/vendors/bootstrap/js/fileinput_locale_fr.js'
+			'gentelella-1.3.0/vendors/fastclick/lib/fastclick.js'
+			'gentelella-1.3.0/production/js/moment/moment.min.js'
+			'gentelella-1.3.0/production/js/datepicker/daterangepicker.js'
+			'gentelella-1.3.0/vendors/autosize/dist/autosize.min.js'
+			'gentelella-1.3.0/vendors/pnotify/dist/pnotify.js'
+			'gentelella-1.3.0/vendors/pnotify/dist/pnotify.buttons.js'
+			'gentelella-1.3.0/vendors/pnotify/dist/pnotify.nonblock.js'
+			'gentelella-1.3.0/vendors/bootstrap/js/fileinput.min.js'
+			'gentelella-1.3.0/vendors/bootstrap/js/fileinput_locale_fr.js'
+			'gentelella-1.3.0/vendors/select2/dist/js/select2.full.min.js'
+			'gentelella-1.3.0/vendors/select2/dist/js/i18n/fr.js' 
+			'gentelella-1.3.0/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js'
+        	'gentelella-1.3.0/vendors/bootstrap/js/popover.js' %}
+    		<script src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+        
+        
+        <!-- jQuery -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/jquery/dist/jquery.min.js') }}" type="text/javascript"></script>#}
+        <!-- Bootstrap -->  
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>#}
+        
+         <script src="{{ asset('bundles/framework/js/promise.js') }}" type="text/javascript"></script>
+        <!-- iCheck -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/iCheck/icheck.min.js') }}" type="text/javascript"></script>#}
+        
+        <!-- bootstrap-progressbar -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}" type="text/javascript"></script> #}
+        
+        <!-- Custom Theme Scripts -->
+{#         <script src="{{ asset('gentelella-1.3.0/build/js/custom.js') }}" type="text/javascript"></script>#}
+        <!-- Datatables -->
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-buttons/js/buttons.flash.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-buttons/js/buttons.html5.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-buttons/js/buttons.print.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}" type="text/javascript"></script>#}
+{# 	    <script src="{{ asset('gentelella-1.3.0/vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}" type="text/javascript"></script>#}
+
+        
+        <!-- Fileinput -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/bootstrap/js/fileinput.min.js') }}" type="text/javascript"></script>#}
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/bootstrap/js/fileinput_locale_fr.js') }}" type="text/javascript"></script>#}
+        <!-- FastClick -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/fastclick/lib/fastclick.js') }}" type="text/javascript"></script>#}
+        <!-- bootstrap-daterangepicker -->
+{#         <script src="{{ asset('gentelella-1.3.0/production/js/moment/moment.min.js') }}" type="text/javascript"></script>#}
+{#         <script src="{{ asset('gentelella-1.3.0/production/js/datepicker/daterangepicker.js') }}" type="text/javascript"></script>#}
+{#         <!-- pace -->#}
+{#         <script src="{{ asset('bundles/framework/cisirh/js/pace.min.js') }}" type="text/javascript"></script>#}
+        <!-- Chart.js -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/Chart.js/dist/Chart.min.js') }}" type="text/javascript"></script>#}
+        <!-- Autosize -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/autosize/dist/autosize.min.js') }}" type="text/javascript"></script>#}
+        <!-- PNotify -->
+{#     	<script src="{{ asset('gentelella-1.3.0/vendors/pnotify/dist/pnotify.js') }}"></script>#}
+{#     	<script src="{{ asset('gentelella-1.3.0/vendors/pnotify/dist/pnotify.buttons.js') }}"></script>#}
+{#     	<script src="{{ asset('gentelella-1.3.0/vendors/pnotify/dist/pnotify.nonblock.js') }}"></script>#}
+    	<!-- fileinput.js -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/bootstrap/js/fileinput.min.js') }}" type="text/javascript"></script>#}
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/bootstrap/js/fileinput_locale_fr.js') }}" type="text/javascript"></script>#}
+     	<!-- Select2 -->
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/select2/dist/js/select2.full.min.js') }}"></script>#}
+{#         <script src="{{ asset('gentelella-1.3.0/vendors/select2/dist/js/i18n/fr.js') }}" type="text/javascript"></script> #}
+
+            <!-- jQuery autocomplete -->
+{#     	<script src="{{ asset('gentelella-1.3.0/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>#}
+    
+    	    <!-- jQuery autocomplete -->
+        
+        <!-- il faut toujours charger ce fichier en dernier merci !!!!!!!! -->
+        <!-- cisirh.js -->
+        <script src="{{ asset('bundles/framework/cisirh/js/index.base.js') }}" type="text/javascript"></script>
+         
+         
+        <!-- bootstrap-daterangepicker -->
+        <!-- /bootstrap-daterangepicker -->
+    
+        <!-- Autosize -->
+	    <script>
+	      $(document).ready(function() {
+	        autosize($('.resizable_textarea'));
+	        initPopover();
+	      });
+	
+		{% for flashMessage in app.session.flashbag.get('notice') %}
+			notification("{{ flashMessage | escape }}");		
+		{% endfor %}
+	
+		{% for flashMessage in app.session.flashbag.get('danger') %}
+			alert("{{ flashMessage | escape }}");		
+		{% endfor %}
+	
+		// Fonction pour afficher les dataTables
+		App_dataTable();
+		App_dataTable_disable_feature();
+		
+	    // Fonction pour afficher les calendriers
+	    App_calendrier();
+	    App_calendrier_campagne();
+	
+	    // Fonction pour le file upload de bootstrap
+	    App_file_upload({{ maxFileSize }});
+
+	    // Fonction pour faire clignoter l'enveloppe
+	    App_flash_enveloppe();
+		
+		// Fonction pour afficher les dataTables sont aucun tri par défaut
+	    app_datatable_without_defaultSort();
+
+	    $(".select2_single").select2();
+	  </script>
+	    <!-- /Autosize -->
+
+
+	    
+      {% endblock javascripts %}
+        
+        
+        	<!-- macros de génération du menu -->
+	{% macro menu_links(items) %}
+    	{% for item in items %}
+    		{% if(item['href'] is defined) %}
+    			{% set href = path(item['href']) %}
+    		{% else %}
+    			{% set href = "javascript:void(0)" %}
+    		{% endif %}
+    		
+    		{% if item['active'] %}
+    			{% if item['sousMenu'] is not null %}
+    				{% set classe = "class='active'"%}
+    			{% else %}
+    				{% set classe = "class='current-page'"%}
+    			{% endif %}
+    		{% else %}
+    			{% set classe = ""%}
+    		{% endif %}
+    		
+
+            <li {{ classe | raw }}><a id=  "menu_{{item['libelle']}}"  href="{{ href }}"><i class='fa {{ item['icone'] }}'></i> {{ item['libelle'] }}{% if item['sousMenu'] is not null %}<span class="fa fa-chevron-down"></span>{% endif %}</a>
+            {% if item['sousMenu'] is not null %}
+                <ul class="nav child_menu">
+					 {{ _self.menu_links(item['sousMenu']) }}
+			 	</ul>
+            {% endif %}
+	        </li>
+	    {% endfor %}
+	{% endmacro %}
+	
+	
+    </body>
+</html>

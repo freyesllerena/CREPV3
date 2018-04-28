@@ -1,0 +1,34 @@
+{% extends "crep/crepMindef/edit.html.twig" %}
+
+{% block ii4 %}
+    {% include 'crep/crepMindef/_include/show/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block iv3 %}
+    {% include 'crep/crepMindef/_include/show/iv/3.html.twig' %}
+{% endblock iv3 %}
+
+{% block iv3AvecTitre %}{% endblock iv3AvecTitre %}
+
+{# {% block v3AvecTitre %}{% endblock v3AvecTitre %}#}
+  
+{% block v4AvecTitre %}{% endblock v4AvecTitre %}
+
+{% block circuitDeValidation %}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel panel_green">
+            <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VIII - CIRCUIT DE VALIDATION</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+            </div>
+            <div class="x_content row" {% if errors| length == 0 %} style="display: none;" {% endif %}>
+                {% include 'crep/crepMindef/_include/edit/vii/1.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock circuitDeValidation %}

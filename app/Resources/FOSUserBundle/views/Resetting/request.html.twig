@@ -1,0 +1,47 @@
+{% extends "FOSUserBundle:Security:login.html.twig" %}
+
+{% block titreFormulaire %}Veuillez saisir votre email{% endblock titreFormulaire %}
+
+
+{% block form %}
+
+	<form action="{{ path("fos_user_resetting_send_email") }}" method="post" >
+		<h1>Mot de passe oublié</h1>
+		<div>
+			{% if invalid_username is defined %}
+				<div class="has-error">
+					<label class="control-label has-error" for="inputError"><i class="fa fa-times-circle"></i> Aucun compte ne correspond à cet email </label>
+				</div>
+			{% endif %}
+			<input type="email" id="username" name="username" class="form-control" placeholder='Email' required="required" {% if invalid_username is defined %}value="{{ invalid_username }}"{% endif %} />
+		</div>
+              
+		<div>
+			<button type="submit" class="btn btn-default submit" id="_submit" name="_submit">Valider</button>
+		</div>
+		
+          <div class="clearfix"></div>
+    
+          <div class="separator">
+            <div class="clearfix"></div>
+            <br />
+            
+            <div class="header_logo_login">
+            	<img src="{{ asset('bundles/framework/cisirh/images/Logo ESTEVE 2017_COULEUR1.svg') }}" alt="{{ appName }}">
+                <h1>
+                    {% if environnement | lower starts with 'for' %}
+                    	<span style="color: #FF0000"> Formation</span>
+                    {% endif %}	
+                </h1>
+              
+                <p>Copyright © {{ "now"|date("Y") }} {{ companyName }}. Tous droits réservés.</p>
+                <p><small>Version : {{ appVersion }}</small></p>
+            </div>
+          </div>
+
+	</form>
+{% endblock form %}
+
+
+{% block pwd_oublie %}
+{% endblock pwd_oublie %}

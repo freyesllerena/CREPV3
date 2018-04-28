@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.nomNaissanceShd, { 'label': "Nom de famille" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.nomUsageShd, { 'label': "Nom usuel"}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.prenomShd, { 'label': "Prénom" }) }}
+    </div>
+</div>
+
+{# Corps et Grade #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.corpsShd, { 'label': "Corps" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.gradeShd, { 'label': "Grade"}) }}
+    </div>
+</div>
+
+{# Etablissement #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.etablissementShd, { 'label': "Etablissement" }) }}
+    </div>
+</div>
+
+{#  Affectation SHD #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.affectationShd, { 'label': "Affectation (sigle)" }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.posteOccupeShd, { 'label': "Poste occupé" }) }}
+    </div>
+</div>

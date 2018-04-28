@@ -1,0 +1,23 @@
+{% if app.session.get('selectedRole') == "ROLE_BRHP" or app.session.get('selectedRole') == "ROLE_SHD" %}
+
+	{% set message = "Veuillez compléter cette information :<br/>
+					 - soit en renseignant un N+2<br/>
+					 - soit en déclarant l’agent en <strong>«Sans N+2»</strong><br/>
+					 <br/>
+					 Pour cela, rendez-vous à la fiche de l’agent accessible depuis le bouton <strong><i class=\"fa fa-edit\"></i></strong>." %}
+		
+	
+	{% if agent.sansAh %}
+	    <td>
+	    	<div align="center">
+	    		<span class="label label-purple"  style="text-align: center; display: inline-table ;">Sans N+2</span>
+	    	</div>
+	    </td>
+	{% else %}
+		<td>
+	    	<div align="center">
+	    		<i class="fa fa-exclamation-triangle orange" data-placement="auto" data-toggle="popover-warning" title="N+2 non renseigné" data-content="{{ message }}" data-trigger="hover"></i>
+	    	</div>
+	    </td>
+	{% endif %}
+{% endif %}

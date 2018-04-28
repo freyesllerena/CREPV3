@@ -1,0 +1,27 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+	
+	<tr>
+        <td class="content-block">
+        	Bonjour,
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nous vous informons que dans le cadre de la campagne "{{ campagne.libelle }}" concernant l'évaluation professionnelle 
+	de l'année {{ campagne.anneeEvaluee }}, {{ ah | identite }} a signé le compte rendu d'évaluation professionnelle de {{ agent | identite }}, le {{ crep.dateVisaAh | date ('d/m/Y') }} à {{ crep.dateVisaAh | date ('H:i') }}.
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Vous pouvez dès à présent le consulter. Pour cela, nous vous invitons à vous connecter à l'application {{ appName }} en cliquant sur le lien suivant :
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('crep_show',{'id' : crep.id}) }}">Consulter le CREP</a>
+        </td>
+    </tr> 
+
+{% endblock %}

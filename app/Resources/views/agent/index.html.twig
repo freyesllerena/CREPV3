@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Agents list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Matricule</th>
+                <th>Nomnaissance</th>
+                <th>Nommarital</th>
+                <th>Datenaissance</th>
+                <th>Corps</th>
+                <th>Dateentreecorps</th>
+                <th>Grade</th>
+                <th>Dateentreegrade</th>
+                <th>Echelon</th>
+                <th>Dateentreeechelon</th>
+                <th>Gradeemploi</th>
+                <th>Dateentreegradeemploi</th>
+                <th>Etablissement</th>
+                <th>Departement</th>
+                <th>Affectation</th>
+                <th>Affectationclairagent</th>
+                <th>Posteoccupe</th>
+                <th>Dateentreeposteoccupe</th>
+                <th>Codesirh1</th>
+                <th>Codesirh2</th>
+                <th>Capitaldif</th>
+                <th>Capitaldifmobilisable</th>
+{#                 <th>Emailshd</th>#}
+{#                 <th>Emailah</th>#}
+                <th>Evaluable</th>
+                <th>Categorieagent</th>
+                <th>Civilite</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Id</th>
+                <th>Datecreation</th>
+                <th>Datemodification</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for agent in agents %}
+            <tr>
+                <td><a href="{{ path('agent_show', { 'id': agent.id }) }}">{{ agent.matricule }}</a></td>
+                <td>{{ agent.nomNaissance }}</td>
+                <td>{{ agent.nomMarital }}</td>
+                <td>{% if agent.dateNaissance %}{{ agent.dateNaissance|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ agent.corps }}</td>
+                <td>{% if agent.dateEntreeCorps %}{{ agent.dateEntreeCorps|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ agent.grade }}</td>
+                <td>{% if agent.dateEntreeGrade %}{{ agent.dateEntreeGrade|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ agent.echelon }}</td>
+                <td>{% if agent.dateEntreeEchelon %}{{ agent.dateEntreeEchelon|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ agent.gradeEmploi }}</td>
+                <td>{% if agent.dateEntreeGradeEmploi %}{{ agent.dateEntreeGradeEmploi|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ agent.etablissement }}</td>
+                <td>{{ agent.departement }}</td>
+                <td>{{ agent.affectation }}</td>
+                <td>{{ agent.affectationClairAgent }}</td>
+                <td>{{ agent.posteOccupe }}</td>
+                <td>{% if agent.dateEntreePosteOccupe %}{{ agent.dateEntreePosteOccupe|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ agent.codeSirh1 }}</td>
+                <td>{{ agent.codeSirh2 }}</td>
+                <td>{{ agent.capitalDif }}</td>
+                <td>{{ agent.capitalDifMobilisable }}</td>
+{#                 <td>{{ agent.emailShd }}</td>#}
+{#                 <td>{{ agent.emailAh }}</td>#}
+                <td>{% if agent.evaluable %}Yes{% else %}No{% endif %}</td>
+                <td>{{ agent.categorieAgent }}</td>
+                <td>{{ agent.civilite }}</td>
+                <td>{{ agent.nom }}</td>
+                <td>{{ agent.prenom }}</td>
+                <td>{{ agent.email }}</td>
+                <td>{{ agent.id }}</td>
+                <td>{% if agent.dateCreation %}{{ agent.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if agent.dateModification %}{{ agent.dateModification|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('agent_show', { 'id': agent.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('agent_edit', { 'id': agent.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('agent_new') }}">Create a new agent</a>
+        </li>
+    </ul>
+{% endblock %}

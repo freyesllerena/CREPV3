@@ -1,0 +1,120 @@
+{% extends "crep/crepScl/scl.base.html.twig" %}
+
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+	{{ block('alertErreurValidationFormulaireCrep') }}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block i01 %}
+	{% include 'crep/crepScl/_include/edit/0/1.html.twig' %}
+{% endblock i01 %}
+
+{% block i02 %}
+	{% include 'crep/crepScl/_include/edit/0/2.html.twig' %}
+{% endblock i02 %}
+
+{% block i03 %}
+	{% include 'crep/crepScl/_include/edit/0/3.html.twig' %}
+{% endblock i03 %}
+
+{% block i1 %}
+	{% include 'crep/crepScl/_include/edit/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepScl/_include/edit/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block i3 %}
+	{% include 'crep/crepScl/_include/edit/i/3.html.twig' %}
+{% endblock i3 %}
+
+{% block i4 %}
+	{% include 'crep/crepScl/_include/edit/i/4.html.twig' %}
+{% endblock i4 %}
+
+{% block i5 %}
+	{% include 'crep/crepScl/_include/edit/i/5.html.twig' %}
+{% endblock i5 %}
+
+{% block i6 %}
+	{% include 'crep/crepScl/_include/edit/i/6.html.twig' %}
+{% endblock i6 %}
+
+{% block ii1 %}
+	{% include 'crep/crepScl/_include/edit/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+	{% include 'crep/crepScl/_include/edit/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+	{% include 'crep/crepScl/_include/edit/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block circuitDeValidation %}
+{% endblock circuitDeValidation %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        if($('#crep_scl_refusEntretienProfessionnel').attr('checked')) {
+      		document.getElementById("crep_scl_dateEntretien").disabled = true;
+        } else {
+      		document.getElementById("crep_scl_dateEntretien").disabled = false;
+        }
+    });
+
+  	$("#crep_scl_refusEntretienProfessionnel" ).on('ifChanged', function(){
+  		if($('#crep_scl_refusEntretienProfessionnel').attr('checked')) {
+  			$('#crep_scl_refusEntretienProfessionnel').removeAttr("checked");
+      		document.getElementById("crep_scl_dateEntretien").disabled = false;
+      		$('#crep_scl_motifRefusEntretien').val('');
+        } else {
+            $('#crep_scl_refusEntretienProfessionnel').attr("checked", "checked");
+            $('#crep_scl_dateEntretien').val('');
+      		document.getElementById("crep_scl_dateEntretien").disabled = true;
+        }
+	});
+
+	$(function() {
+
+       var crepCollections = new Crep.Collections();
+
+       var refusEntretienRadio = $("input[name*='refusEntretienProfessionnel']");
+       
+       // Cacher les freres du div row avec la methode slideUp de jquery
+       $("input[name*='refusEntretienProfessionnel']:not(:checked)").closest("div.row:not('.x_content')").next().slideUp();
+       
+       refusEntretienRadio.on('ifToggled', function(event){
+           var target = $(event.target);
+           if (target.prop('checked')) {
+               target.closest("div.row:not('.x_content')").next().slideDown();
+           } else {
+               target.closest("div.row:not('.x_content')").next().slideUp();
+           }
+       });
+    });
+
+	//Fonction qui permet de réinitialiser les valeurs du tableau concernant la cadence d'avancement d'un agent
+	$('#btn_reinitialiser').on('click', function(e) {
+		 e.preventDefault();
+		$("input[name*='typeCadenceAvancement']").parent().attr('class','iradio_flat-green');
+		$("input[name*='typeCadenceAvancement']").attr("checked", false);
+    });
+    
+    </script>
+{% endblock javascripts %}

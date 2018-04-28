@@ -1,0 +1,79 @@
+{% extends 'index.base.html.twig' %}
+{% form_theme import_crep_form with ['Form/App_bootstrap_3_horizontal_layout.html.twig', _self] %}
+{% block frameTitle %}Import{% endblock frameTitle %}
+{% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
+{% block pageTitle %}CREP{% endblock pageTitle %}
+
+{% block content %}
+    {{ form_start(import_crep_form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal form-label-left'} }) }}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title">
+                    <h2>Import du CREP finalisé de {{ agent | identite }}<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                	{{ form_row(import_crep_form.crepPapier, {'label': 'Fichier CREP', 'attr': {'class': 'file-loading'} }) }}
+                	{{ form_row(import_crep_form.statut, {'label': 'Statut', 'attr': { 'class': "select2" } }) }}
+                	{{ form_row(import_crep_form.modeleCrep, {'label': 'Modèle'}) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+				<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal_importer_crep"><i class="fa fa-upload"></i> Importer</button>
+         </div>
+    </div>   
+       
+    {{ macro.modal('primary', 'modal_importer_crep', "Importer le CREP en version papier", "<strong>Attention !</strong><br/><br/> Vous êtes sur le point d'importer une version papier pour ce CREP. Cet import étant définitif, veuillez vérifier sa validité.<br/><br/> Voulez-vous vraiment <strong>importer</strong> ce CREP ?", "fa-upload", import_crep_form)}} 
+
+    {{ form_end(import_crep_form) }}
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('#import_crep_papier_crepPapier_file').fileinput({
+            allowedFileExtensions: ["pdf"],
+            language: 'fr',
+            showPreview: false,
+            maxFileSize: {{ maxFileSize }} * 1000,
+            elErrorContainer: "#errorBlock",
+            showUpload: false
+        })
+    </script>
+{% endblock %}
+
+
+
+
+{% block form_row -%}
+{% spaceless %}
+    {{ form_errors(form) }}
+        
+	{% if label != false %}
+		<div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+		{{ form_label(form) }}
+		<div class="{{ block('form_group_class') }}">
+	{% endif %}
+	
+        {{ form_widget(form) }}
+        	
+        {% if icone is defined %}
+        	<span class="{{ icone }} form-control-feedback left" aria-hidden="true"></span>
+		{% endif %}
+ 	
+	{% if label != false %}  
+		</div>      
+    </div>
+	{% endif %}
+{% endspaceless %}
+{%- endblock form_row %}

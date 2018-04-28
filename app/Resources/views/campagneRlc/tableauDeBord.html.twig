@@ -1,0 +1,281 @@
+{% extends "index.base.html.twig" %}
+
+{% block frameTitle %}{{ campagneRlc.libelle }}{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}{{ campagneRlc.libelle }}{% endblock pageTitle %}
+
+{% set  nbCrep = indicateurs["nbCrep"] %}
+{% set  nbCrepSignesShd = indicateurs["nbCrepSignesShd"] %}
+{% set  nbCrepVisesAgent = indicateurs["nbCrepVisesAgent"] %}
+{% set  nbCrepSignesAh = indicateurs["nbCrepSignesAh"] %}
+{% set  nbCrepNotifies = indicateurs["nbCrepNotifies"] %}
+{% set  nbRefusNotification = indicateurs["nbCrepRefusNotification"] %}
+{% set  nbCrepNonRenseignes = indicateurs["nbCrepNonRenseignes"] %}
+{% set  nbCrepModifieShd = indicateurs["nbCrepModifieShd"] %}
+{% set  nbCrepRefusVisas = indicateurs["nbCrepRefusVisas"] %}
+{% set  nbCrepCasAbsence = indicateurs["nbCrepCasAbsence"] %}
+{% set  nbTotalRecours = indicateurs["nbTotalRecours"] %}
+{% set  nbRecoursHierarchique = indicateurs["nbRecoursHierarchique"] %}
+{% set  nbRecoursEnCAP = indicateurs["nbRecoursEnCAP"] %}
+{% set  nbRecoursAuTA = indicateurs["nbRecoursAuTA"] %}
+{% set  nbRecoursTraites = nbTotalRecours - nbRecoursHierarchique - nbRecoursEnCAP - nbRecoursAuTA %}
+{% set  nbCrepEnRecours = indicateurs["nbCrepEnRecours"] %}
+
+
+{% block content %}
+<!-- page content -->
+	
+	{% if campagneRlc.perimetresBrhp | length == 0 %}
+		<div class="row">
+	    	<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="alert alert-info alert-dismissible fade in" role="alert">
+					<strong>Information : </strong> Les périmètres ne sont pas renseignés. Veuillez les compléter, en cliquant sur le bouton  <strong>&laquo; Modifier la campagne &raquo;</strong>, pour ouvrir la campagne.
+				</div>
+			</div>
+		</div>
+    {%  endif %} 
+
+    <!-- Filtre périmètre -->
+    <div class="form-group col-md-12 col-sm-12 col-xs-12 well">
+        <form class="form-horizontal form-label-left">
+        	<label class="control-label col-md-4 col-sm-4 col-xs-12"><i class="fa fa-share-alt"></i> Sélectionner un périmètre</label>
+            <div class="col-md-4 col-sm-4 col-xs-12" id="perimetre_filter">
+          		<select class="form-control">
+            		<option value="0">Tous</option>
+                 	{% for perimetreBrhp in campagneRlc.perimetresBrhp %}
+        			<option value="{{ perimetreBrhp.id }}">{{ perimetreBrhp.libelle }}</option>
+             		{% endfor %}
+            	</select>
+            </div>
+        </form>
+    </div>
+
+	<div class="clearfix"></div>
+
+    {% block indicateurs %}
+    	{% include 'Campagne/indicateurs.html.twig' %}
+    {% endblock indicateurs %}
+
+	<div class="row">
+    	<div class="col-md-6 col-sm-12 col-xs-12">
+    	    {% block informationsCampagne %}
+    		    {% include 'campagneRlc/blocsTableauDeBord/informationsCampagne.html.twig' %}
+    	    {% endblock informationsCampagne %}	
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+        	{% block graphiqueAvancement %}
+        		{% include 'Campagne/graphiqueAvancement.html.twig' %}
+        	{% endblock graphiqueAvancement %}        
+    	</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title">
+                    <h2>Population<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+    
+                <div class="x_content">
+                	<div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        	<li role="presentation" class="active"><a href="#tab_content0" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Ma population</a></li>
+                            <li role="presentation" class=""><a href="#tab_content1" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
+                            <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                        	<div role="tabpanel" class="tab-pane fade active in" id="tab_content0" aria-labelledby="home-tab">
+                                {{ block('block_ma_population') }}
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content1" aria-labelledby="profile-tab">
+                                {{ block('block_agents_sans_shd') }}
+                            </div>
+							<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                {{ block('block_agents_sans_perimetre_rlc') }}
+                            </div>                            
+                          </div>
+            		</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <div class="row">
+    	
+	  	<div class="col-xs-4">
+    	    {% if is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::AJOUTER_AGENT'), campagneRlc) %}
+    			<a href="{{ path('agent_new_rlc', { 'id': campagneRlc.id }) }}">
+    				<button class="btn btn-primary pull-left"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un agent</button>
+    			</a>
+		    {% endif %}	
+		</div>
+	
+        <div class="col-xs-4 text-center">
+    		{% if is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::MODIFIER'), campagneRlc) %}   
+        		<a href="{{ path('campagne_rlc_edit', { 'id': campagneRlc.id }) }}">
+        			<button type="submit" class="btn btn-primary"><i class="fa fa-edit" aria-hidden="true"></i> Modifier la campagne</button>
+        		</a>
+        	{% endif %}
+    	</div>
+          
+  
+		
+		<div class="col-xs-4">
+	        {% if is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::OUVRIR'), campagneRlc) %}   	
+                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_ouvrir"><i class="fa fa-unlock"></i> Ouvrir la campagne</button>
+                {{ macro.modal('success', 'modal_ouvrir', "Ouvrir la campagne", "Voulez-vous vraiment <strong>ouvrir</strong> cette campagne aux acteurs de niveau de proximité ?", "fa-unlock", ouvrir_form)}}
+			{% elseif is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::ROUVRIR'), campagneRlc) %}
+				<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_rouvrir"><i class="fa fa-unlock"></i> Rouvrir la campagne</button>
+    			{{ macro.modal('success', 'modal_rouvrir', "Rouvrir la campagne", "Voulez-vous vraiment <strong>rouvrir</strong> cette campagne aux acteurs de niveau de proximité ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action permettra aux acteurs de niveau de proximité (BRHP) d'avoir la possibilité de rouvrir la campagne sur leurs périmètres.", "fa-unlock", rouvrir_form)}} 
+            {% endif %}
+        </div>
+    		
+    </div>
+
+<!-- /page content -->
+{% endblock content %}
+
+{############## onglets ##############}
+
+{% block block_agents_sans_shd %}
+	{% include 'campagneRlc/blocsTableauDeBord/onglets/agentsSansShd.html.twig' %}
+{% endblock block_agents_sans_shd %}
+
+{% block block_ma_population %}
+	{% include 'campagneRlc/blocsTableauDeBord/onglets/maPopulation.html.twig' %}
+{% endblock block_ma_population %}
+
+{% block block_agents_sans_perimetre_rlc %}
+	{% include 'campagneRlc/blocsTableauDeBord/onglets/agentsSansPerimetreRlc.html.twig' %}
+{% endblock block_agents_sans_perimetre_rlc %}
+
+
+
+{% block javascripts %}
+    
+    {{ parent() }}
+    
+    {% javascripts 'gentelella-1.3.0/vendors/Chart.js/dist/2.7.1/Chart.min.js' %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+    <script type="text/javascript">
+        <!-- Doughnut Chart -->
+        {% if nbCrep==0 %}
+            {% set nbCrepNonRenseignes = 1 %}
+            {% set nbCrep = 1 %}
+        {% endif %}
+        
+        $(document).ready(function() {
+            {{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification, nbCrepCasAbsence) }}
+
+            {{ macro.historiqueAvancement('canvasLine', historiqueIndicateurs) }}
+         });
+        //------------------------------------------------
+        //Function de filtre des indicateurs par périmètre
+        //------------------------------------------------
+        
+        {% set perimetreBrhp_id = 0 %}
+        {% if perimetre %}
+        	$('#perimetre_filter select').val("{{ perimetre.id }}");
+        	{% set perimetreBrhp_id = perimetre.id %}
+        {% endif %}
+        
+        //A chaque change du select on récupère la value du perimetre et on lance l'url
+        $('#perimetre_filter select').on('change', function(){
+           perimetre = $(this).val();
+               
+        	if(perimetre > 0){
+           	var url = "{{ path('campagne_rlc_show', {'id':campagneRlc.id, 'id_perimetre': 'value'}) }}";
+            	url = url.replace("value", perimetre);
+        	}else{
+           	var url = "{{ path('campagne_rlc_show', {'id':campagneRlc.id}) }}";
+           }
+            
+        	window.location.href = url;
+        });
+
+        $(document).ready(function() {
+            
+        var dtable = $('#ma_population').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'perimetreBrhp': perimetreBrhp_id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre':0, 'onglet': 'ma_population' }) }}",
+		        "sAjaxDataProp": "data",
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 0, "asc" ]],
+				"columnDefs": [ { orderable: false, targets: [7] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "perimetreBrhp"},
+		                   {"data": "shd"}, 
+		                   {"data": "ah"},
+		                   {"data": "affectation"},
+		                   {"data": "evaluable"},
+		                   {"data": "avancement"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+        setAjaxDataTable("#ma_population", dtable);
+      
+
+        var dtable = $('#agents_sans_shd').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'perimetreBrhp': perimetreBrhp_id, 'evaluable': 2, 'sansShd': 1, 'sansPerimetre':0, 'onglet': 'agents_sans_shd' }) }}",
+		        "sAjaxDataProp": "data",
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 0, "asc" ]],
+				"columnDefs": [ { orderable: false, targets: [5] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "perimetreBrhp"},
+		                   {"data": "affectation"},
+		                   {"data": "ah"},
+		                   {"data": "evaluable"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+        setAjaxDataTable("#agents_sans_shd", dtable);
+
+        
+        var dtable = $('#agents_sans_perimetre_rlc').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_sans_perimetre_rlc_server_processing', { 'campagnePnc': campagneRlc.campagnePnc.id, 'campagneRlc': campagneRlc.id }) }}",
+		        "sAjaxDataProp": "data",
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 0, "asc" ]],
+				"columnDefs": [ { orderable: false, targets: [5] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "uniteOrganisationnelle"},
+		                   {"data": "affectation"},
+		                   {"data": "shd"}, 
+		                   {"data": "ah"},
+		                   {"data": "evaluable"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+        setAjaxDataTable("#agents_sans_perimetre_rlc", dtable);
+        });
+		
+    </script>
+        
+{% endblock javascripts %}

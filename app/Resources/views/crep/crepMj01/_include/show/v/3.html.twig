@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-4 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Formation proposée par l'administration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formationEnvisagee in crep.formationsEnvisagees %}
+                    {% if formationEnvisagee.origine is not null and formationEnvisagee.origine==0 %}
+                    	<tr>
+	                        <td>{{ formationEnvisagee.libelle }}</td>
+                        </tr>
+                    {% endif %}
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col-md-4 col-sm-12 col-xs-12">
+    	<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Formation demandée par l'agent</th>
+                </tr>
+            </thead>
+             <tbody>
+                {% for formationEnvisagee in crep.formationsEnvisagees %}
+                    {% if formationEnvisagee.origine==1 %}
+                    	<tr>
+                        	<td>{{ formationEnvisagee.libelle }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>           
+    	</table>
+    </div>
+    
+    <div class="col-md-4 col-sm-12 col-xs-12">
+    	<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Formation demandée par les deux parties</th>
+                </tr>
+            </thead>
+             <tbody>
+                {% for formationEnvisagee in crep.formationsEnvisagees %}
+                    {% if formationEnvisagee.origine==2 %}
+                    	<tr>
+                        	<td>{{ formationEnvisagee.libelle }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>           
+    	</table>
+    </div>    
+</div>

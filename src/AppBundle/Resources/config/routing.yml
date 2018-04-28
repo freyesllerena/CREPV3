@@ -1,0 +1,123 @@
+crep_accueil:
+    resource: "@AppBundle/Resources/config/routing/accueil.yml"
+    prefix:   /
+    
+crep_campagne:
+    resource: "@AppBundle/Resources/config/routing/campagne.yml"
+    prefix:   /campagne
+    
+app_agent:
+    resource: "@AppBundle/Resources/config/routing/agent.yml"
+    prefix:   /agent
+    
+app_utilisateur:
+    resource: "@AppBundle/Resources/config/routing/utilisateur.yml"
+    prefix:   /utilisateur
+
+app_perimetre_rlc:
+    resource: "@AppBundle/Resources/config/routing/perimetreRlc.yml"
+    prefix:   /perimetre-rlc
+
+app_perimetre_brhp:
+    resource: "@AppBundle/Resources/config/routing/perimetreBrhp.yml"
+    prefix:   /perimetre-brhp
+    
+app_ministere:
+    resource: "@AppBundle/Resources/config/routing/ministere.yml"
+    prefix:   /ministere
+
+app_rlc:
+    resource: "@AppBundle/Resources/config/routing/rlc.yml"
+    prefix:   /rlc 
+    
+app_brhp:
+    resource: "@AppBundle/Resources/config/routing/brhp.yml"
+    prefix:   /brhp
+
+app_campagne_pnc:
+    resource: "@AppBundle/Resources/config/routing/campagnePnc.yml"
+    prefix: /campagne-pnc
+
+app_campagne_admin_min:
+    resource: "@AppBundle/Resources/config/routing/campagneAdminMin.yml"
+    prefix: /campagne-admin-min
+    
+app_campagne_brhp:
+    resource: "@AppBundle/Resources/config/routing/campagneBrhp.yml"
+    prefix:   /campagne-brhp
+
+app_campagne_rlc:
+    resource: "@AppBundle/Resources/config/routing/campagneRlc.yml"
+    prefix:   /campagne-rlc
+
+app_campagne_shd:
+    resource: "@AppBundle/Resources/config/routing/campagneShd.yml"
+    prefix:   /campagne-shd
+
+app_campagne_agent:
+    resource: "@AppBundle/Resources/config/routing/campagneAgent.yml"
+    prefix:   /campagne-agent
+        
+app_campagne_ah:
+    resource: "@AppBundle/Resources/config/routing/campagneAh.yml"
+    prefix:   /campagne-ah
+    
+app_document:
+    resource: "@AppBundle/Resources/config/routing/document.yml"
+    prefix:   /document
+    
+app_modele_crep:
+    resource: "@AppBundle/Resources/config/routing/modeleCrep.yml"
+    prefix:   /crepModele
+        
+# Le paramètre id concerne la campagne Brhp
+app_crep:
+    resource: "@AppBundle/Resources/config/routing/crep.yml"
+    prefix:   /crep
+
+app_unite_organisationnelle:
+    resource: "@AppBundle/Resources/config/routing/uniteOrganisationnelle.yml"
+    prefix:   /unite-organisationnelle
+
+app_formation:
+    resource: "@AppBundle/Resources/config/routing/formation.yml"
+    prefix:   /formation
+
+app_message:
+    resource: "@AppBundle/Resources/config/routing/message.yml"
+    prefix:   /message    
+    
+app_recours:
+    resource: "@AppBundle/Resources/config/routing/recours.yml"
+    prefix:   /recours  
+        
+test:
+    path:     /test/{id}
+    defaults: { _controller: "AppBundle:Default:testCertificat", id: 1 }
+    methods:  GET
+    
+test2:
+    path:     /test2
+    defaults: { _controller: "AppBundle:Default:test2" }
+    methods:  GET
+    
+testcrepmodel:
+    path:     /testcrepmodel
+    defaults: { _controller: "AppBundle:Default:test" }
+    methods:  GET
+    
+sandbox_homepage:
+    path:     modele
+    defaults: { _controller: "AppBundle:Default:index" }
+    
+sandbox_pdfexample:
+    path:     /pdf-example
+    defaults: { _controller: "AppBundle:Default:pdf" }
+    
+    
+    
+app_aide:
+    path:     /aide/
+    defaults: { _controller: "AppBundle:Aide:aide" }
+    methods:  GET
+    

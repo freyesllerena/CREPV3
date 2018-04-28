@@ -1,0 +1,107 @@
+{% form_theme form 'crep/crepMindef/Form/App_form_crepMindef.html.twig' %}
+
+{# matricule de l'agent #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.matriculeAlliance, { 'label': "Matricule Alliance" }) }}
+    </div>
+</div>
+
+{# nom de naissance et date d'usage #}
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.nomNaissance, { 'label': "Nom de famille" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.nomUsage, { 'label': "Nom usuel" }) }}
+    </div>
+</div>
+
+
+{# Prénom et date de naissance #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.prenom, { 'label': "Prénom" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateNaissance, { 'label': "Date de naissance"}) }}
+    </div>
+</div>
+
+{# Corps et date d'entrée Corps #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.corps, { 'label': "Corps" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateEntreeCorps, { 'label': "Depuis le"} ) }}
+    </div>
+</div>
+
+{# grade et date d'entrée Grade #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.grade, { 'label': "Grade" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateEntreeGrade, { 'label': "Depuis le"}) }}
+    </div>
+</div>
+
+{#  échelon et date d'entrée echelon #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.echelon, { 'label': "Echelon" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateEntreeEchelon, { 'label': "Depuis le"}) }}
+    </div>
+</div>
+
+{#  Grade d'emploi et date d'entrée grade emploi #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.gradeEmploi, { 'label': "Grade fonctionnel" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateEntreeGradeEmploi, { 'label': "Depuis le"}) }}
+    </div>
+</div>
+
+{#  etablissement et département #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.etablissement, { 'label': "Etablissement" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.departement, { 'label': "Département"}) }}
+    </div>
+</div>
+
+{#  Affectation Agent #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.affectationAgent, { 'label': "Affectation (sigle)" }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.posteOccupeAgent, { 'label': "Poste occupé" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateEntreePosteOccupeAgent, { 'label': "Depuis le"}) }}
+    </div>
+</div>
+
+{#  poste occupé et département #}
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.codePosteAlliance, { 'label': "Code poste Alliance" }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.codePosteCredo, { 'label': "Code poste CREDO"}) }}
+    </div>
+</div>

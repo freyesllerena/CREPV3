@@ -1,0 +1,23 @@
+{% extends "crep/crepMindef01/show.html.twig" %}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block ii4 %}
+	{% include 'crep/crepMindef01/_include/edit/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block viii3 %}
+	{% include 'crep/crepMindef01/_include/edit/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+{% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block alertRefusVisa %}{% endblock alertRefusVisa %}
+{% block alertRefusNotification %}{% endblock alertRefusNotification %}

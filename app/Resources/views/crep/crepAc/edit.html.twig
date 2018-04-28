@@ -1,0 +1,226 @@
+{% extends "crep/crepAc/ac.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block organisation %} {%endblock %}
+
+{% block frameTitle %}CREP{% endblock frameTitle %}
+
+{% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
+{% block pageTitle %}CREP de {{crep.agent.civilite | title}} {{crep.prenom | title}} {{crep.nomUsage | upper}}{% endblock pageTitle %}
+
+
+{% block content %}
+	{{ block('alertErreurValidationFormulaireCrep') }}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block i01 %}
+	{% include 'crep/crepAc/_include/edit/0/1.html.twig' %}
+{% endblock i01 %}
+
+{% block i02 %}
+	{% include 'crep/crepAc/_include/edit/0/2.html.twig' %}
+{% endblock i02 %}
+
+{% block i1 %}
+	{% include 'crep/crepAc/_include/edit/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepAc/_include/edit/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block i3 %}
+	{% include 'crep/crepAc/_include/edit/i/3.html.twig' %}
+{% endblock i3 %}
+
+{% block i4 %}
+	{% include 'crep/crepAc/_include/edit/i/4.html.twig' %}
+{% endblock i4 %}
+
+{% block ii1 %}
+	{% include 'crep/crepAc/_include/edit/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+	{% include 'crep/crepAc/_include/edit/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+	{% include 'crep/crepAc/_include/edit/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block iii1 %}
+    {% include 'crep/crepAc/_include/edit/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+    {% include 'crep/crepAc/_include/edit/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block ivError %}
+    {% for errorIndex, error in errors %}
+          {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbCompetenceNiveauExceptionnelle" ) %}
+          		<div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+				</div>
+          {% endif %}
+    {% endfor %}
+{% endblock ivError %}
+
+{% block iv1_1 %}
+    {% include 'crep/crepAc/_include/edit/iv/1.1.html.twig' %}
+{% endblock iv1_1 %}
+
+{% block iv1_2 %}
+    {% include 'crep/crepAc/_include/edit/iv/1.2.html.twig' %}
+{% endblock iv1_2 %}
+
+{% block iv1_3 %}
+    {% include 'crep/crepAc/_include/edit/iv/1.3.html.twig' %}
+{% endblock iv1_3 %}
+
+{% block iv2 %}
+    {% include 'crep/crepAc/_include/edit/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block v1 %}
+    {% include 'crep/crepAc/_include/edit/v/1.html.twig' %}
+{% endblock v1 %}
+
+{% block v2 %}
+    {% include 'crep/crepAc/_include/edit/v/2.html.twig' %}
+{% endblock v2 %}
+
+{% block vi1 %}
+    {% include 'crep/crepAc/_include/edit/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+    {% include 'crep/crepAc/_include/edit/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vii1 %}
+    {% include 'crep/crepAc/_include/edit/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2 %}
+    {% include 'crep/crepAc/_include/edit/vii/2.html.twig' %}
+{% endblock vii2 %}
+
+{% block circuitDeValidation %}
+{% endblock circuitDeValidation %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        if($('#crep_ac_refusEntretienProfessionnel').attr('checked')) {
+      		document.getElementById("crep_ac_dateEntretien").disabled = true;
+        } else {
+      		document.getElementById("crep_ac_dateEntretien").disabled = false;
+        }
+        
+      });
+
+  	$("#crep_ac_refusEntretienProfessionnel" ).on('ifChanged', function(){
+  		if($('#crep_ac_refusEntretienProfessionnel').attr('checked')) {
+  			$('#crep_ac_refusEntretienProfessionnel').removeAttr("checked");
+      		document.getElementById("crep_ac_dateEntretien").disabled = false;
+        } else {
+            $('#crep_ac_refusEntretienProfessionnel').attr("checked", "checked");
+            $('#crep_ac_dateEntretien').val('');
+      		document.getElementById("crep_ac_dateEntretien").disabled = true;
+        }
+	});
+	
+	$(function() {
+        calculateNumberAgent();
+       var crepCollections = new Crep.Collections();
+
+       //Eligible DIF formation
+	   eligibleDifFormation('crep_ac_formationsDemandeesAgent_');
+
+       var souhaitEvolutionCarriereRadio = $("input[name*='souhaitEvolutionCarriere']");
+
+       var souhaitMobiliteRadio = $("input[name*='souhaitMobilite']");
+
+       // Cacher les freres du div row avec la methode slideUp de jquery
+       $("input[name*='souhaitEvolutionCarriere']:not(:checked)").closest("div.row:not('.x_content')").next().slideUp();
+
+       $("input[name*='souhaitMobilite']:not(:checked)").closest("div.row:not('.x_content')").next().slideUp();
+
+       souhaitEvolutionCarriereRadio.on('ifToggled', function(event){
+           var target = $(event.target);
+           if (target.prop('checked')) {
+               target.closest("div.row:not('.x_content')").next().slideDown();
+           } else {
+               target.closest("div.row:not('.x_content')").next().slideUp();
+           }
+       });
+
+       souhaitMobiliteRadio.on('ifToggled', function(event){
+           var target = $(event.target);
+           if (target.prop('checked')) {
+               target.closest("div.row:not('.x_content')").next().slideDown();
+           } else {
+               target.closest("div.row:not('.x_content')").next().slideUp();
+           }
+       });
+    });
+    
+    function calculateNumberAgent() {
+        var nbBureauxDirection = $("#crep_ac_nbBureauxDirection");
+        var nbCadresEncadresA = $("#crep_ac_nbCadresEncadresA");
+        var nbTotalAgentsEncadres = $("#crep_ac_nbTotalAgentsEncadres");
+        var result = $("#result_nb_agents");
+
+        nbBureauxDirection.on('change paste keyup', calculate);
+        nbCadresEncadresA.on('change paste keyup', calculate);
+        nbTotalAgentsEncadres.on('change paste keyup', calculate);
+
+        function isPositiveNumber(val) {
+            var value = parseInt(val) || 0;
+            value = Math.trunc(Math.abs(value));
+
+            return value
+        }
+
+        // private function permet de calculer la somme des agents de chaque catégorie
+        function calculate() {
+            var _nbBureauxDirection = isPositiveNumber(nbBureauxDirection.val());
+            var _nbCadresEncadresA = isPositiveNumber(nbCadresEncadresA.val());
+            var _nbTotalAgentsEncadres = isPositiveNumber(nbTotalAgentsEncadres.val());
+
+            nbBureauxDirection.val(_nbBureauxDirection);
+            nbCadresEncadresA.val(_nbCadresEncadresA);
+            nbTotalAgentsEncadres.val(_nbTotalAgentsEncadres);
+        }
+    }
+
+	//Fonction qui permet de réinitialiser les valeurs du tableau "Proposition d’évolution du montant indemnitaire"
+	$('#btn_reinitialiser').on('click', function(e) {
+		 e.preventDefault();
+		$("input[name*='evolutionIndemnitaire']").parent().attr('class','iradio_flat-green');
+		$("input[name*='evolutionIndemnitaire']").attr("checked", false);
+    });
+
+	//Fonction qui permet de réinitialiser les valeurs du tableau "Proposition d’inscription au prochain tableau d’avancement de grade"
+	$('#btn_reinitialiser2').on('click', function(e) {
+		 e.preventDefault();
+		$("input[name*='propositionAvancement']").parent().attr('class','iradio_flat-green');
+		$("input[name*='propositionAvancement']").attr("checked", false);
+    });
+    
+    </script>
+{% endblock javascripts %}

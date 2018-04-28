@@ -1,0 +1,32 @@
+<br/>
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Intitulé de l'objectif</th>
+                <th>Rappel des indicateurs</th>
+                <th>Analyse des résultats</th>
+                <th width="12%">Évaluation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in crep.objectifsEvalues %}
+                <tr>
+                    <td>{{ objectif.libelle|nl2br}}</td>
+                    <td>{{ objectif.indicateurs|nl2br}}</td>
+                    <td>{{ objectif.resultat|nl2br }}</td>
+                    <td>{{ objectif.resultatObtenu|echelleObjectifEvalueCrepMindef }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class ="title"> Observations générales ou autres   </p>
+        <p class="well well-xs"> {{ crep.observationsObjectifsPasses|nl2br }}</p>
+    </div>
+</div>

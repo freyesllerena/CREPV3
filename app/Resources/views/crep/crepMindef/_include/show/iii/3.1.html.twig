@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td></td>
+                    <th style="width: 12%" class="text-center">A / N1</th>
+                    <th style="width: 12%" class="text-center">B / N2</th>
+                    <th style="width: 12%" class="text-center">C / N3</th>
+                    <th style="width: 12%" class="text-center">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nombre de collaborateurs hiérarchiquement encadrés par catégorie/niveau</td>
+                    <td class="text-center">{{ crep.nbAgentsEncadresA }}</td>
+                    <td class="text-center">{{ crep.nbAgentsEncadresB }}</td>
+                    <td class="text-center">{{ crep.nbAgentsEncadresC }}</td>
+                    <td class="text-center">{{ crep.nbAgentsEncadresA + crep.nbAgentsEncadresB + crep.nbAgentsEncadresC }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

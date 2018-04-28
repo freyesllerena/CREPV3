@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th >La fiche de poste de l'agent est-elle adaptée ?</th>
+                    <th >Si non, sur quels points doit-elle être actualisée ?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                {% if crep.fichePoseAJour is null %}
+                    <td class="text-center">&nbsp;</td>
+                    <td class="text-center">&nbsp;</td>
+               {% elseif crep.fichePoseAJour  %}
+                    <td class="text-center">Oui</td>
+                    <td>{{ crep.pointsActualisesFichePoste | nl2br }}</td>
+               {% else %}
+                    <td class="text-center">Non</td>
+                    <td>{{ crep.pointsActualisesFichePoste | nl2br }}</td>
+               {% endif %}
+                </tr>
+            </tbody>
+        </table>
+	</div>	
+</div>

@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Observations</dt>
+            <dd class="well well-xs">
+            	{% if crep.agent.sansAh %}
+					<span style="color: red">L'agent est déclaré comme étant <strong>"sans N+2"</strong>. L'étape de la signature du N+2 est donc <strong>supprimée</strong>.</span>
+            	{% else %}
+            	    {{ crep.observationsAh|nl2br }}
+            	{% endif %}
+            
+            </dd>
+        </dl>
+    </div>
+</div>
+
+{% if not crep.agent.sansAh %}
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Nom</dt>
+                <dd>
+                    {% if crep.ahSignataire %} 
+                        {{ crep.ahSignataire | identite }} 
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Corps</dt>
+                <dd>{% if crep.ahSignataire %} {{ crep.ahSignataire.corps|capitalize }} {% endif %}</dd>
+            </dl>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Poste occupé</dt>
+                <dd>{% if crep.ahSignataire %} {{ crep.ahSignataire.posteOccupe|capitalize }} {% endif %}</dd>
+            </dl>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <dl class="dl-horizontal m-t-md">
+                <dt>grade</dt>
+                <dd>{% if crep.ahSignataire %} {{ crep.ahSignataire.grade|capitalize }} {% endif %}</dd>
+            </dl>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Date</dt>
+                <dd>{% if crep.dateVisaAh %}{{ crep.dateVisaAh|date('d/m/Y H:i') }}{% endif %}</dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

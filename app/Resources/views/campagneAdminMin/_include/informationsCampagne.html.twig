@@ -1,0 +1,110 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel panel_green">
+        <div class="x_title">
+            <h2>{% block formTitle %}Détails de la campagne{% endblock formTitle %}</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </li>
+            </ul>                
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="x_content" style="display: none;">
+    		<table class="table table-striped">
+    			<tbody>
+                    <tr>
+                      <th scope="row">Libellé</th>
+                      <td>{{ campagnePnc.libelle }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Périmètres RLC</th>
+                      <td>
+                      	<ul class="list-unstyled project_files">
+                          {% for perimetreRlc in campagnePnc.perimetresRlc %}
+                        	<li>{{ perimetreRlc.libelle }}</li>
+                          {% endfor  %}
+                      	</ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Année d'évaluation</th>
+                      <td>{{ campagnePnc.anneeEvaluee }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Date d'ouverture de campagne</th>
+                      <td>{{ campagnePnc.dateDebut | date('d/m/Y') }}</td>
+                    </tr>
+                    {% if campagnePnc.dateDebutEntretien %}
+                    <tr>
+                      <th scope="row">Date de début des entretiens</th>
+                      <td>{{ campagnePnc.dateDebutEntretien | date('d/m/Y') }}</td>
+                    </tr>
+                    {% endif %}
+                    
+                    <tr>
+                      <th scope="row">Date de clôture</th>
+                      <td>{{ campagnePnc.dateCloture ? campagnePnc.dateCloture | date('d/m/Y') }}</td>
+                    </tr>
+                    
+                    {% if campagnePnc.dateFermeture %}
+                        <tr>
+                          <th scope="row">Date de fermeture</th>
+                          <td>{{ campagnePnc.dateFermeture | date('d/m/Y') }}</td>
+                        </tr>
+                    {% endif %}
+                    
+	                {% if campagnePnc.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CLOTUREE'), constant('AppBundle\\EnumTypes\\EnumStatutCampagne::FERMEE')] %}
+                        <tr>
+                      		<th scope="row">Compte à rebours</th>
+                           	{# Compte à rebours : Pour calculer le nombre de jours qu'il y a entre deux dates, on convertie ces deux dates au format "timestamp", on calcule la différence puis on la convertie en jours et ce en la divisant sur 86400 #}
+                            {% if campagnePnc.dateCloture | date('Ymd') >= "now" | date('Ymd') %}
+                            <td><span class="label label-danger">J-{{ ((campagnePnc.dateCloture | date('U') - "now" | date('U')) / 86400) | round(0, 'ceil') | abs }}</span></td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+                    	</tr>
+                	{% endif %}
+                	<tr>
+                		<th>Statut</th>
+                        <td>
+                        	{% if campagnePnc.docPopulation is null %}
+                        		<span class="label label-warning">En attente de chargement</span>
+                        	{% elseif not campagnePnc.diffusee %}
+                        		<span class="label label-primary">En attente de diffusion</span>
+                        	{% else %}
+                        		<span class="label {{ campagnePnc.statut | campagne_status_label }}">{{ campagnePnc.statut }}</span>
+                        	{% endif %}
+                        </td>
+            		</tr>
+                    <tr>
+                      <th scope="row">Fichier population </th>
+                      <td>
+                      	{% if campagnePnc.docPopulation %}
+	                        <a href="{{ path('campagne_admin_fichier_population', {'id': campagnePnc.id}) }}"><i class="{{ campagnePnc.docPopulation.nom | fileIcon }}"></i> {{ campagnePnc.docPopulation.nom }}</a>
+                      	{% endif %}
+        			  </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Extraction des données agents</th>
+                      <td>
+	                  	<a href="{{ path('campagne_admin_extraction_fichier_agents_depuis_agent', {'id': campagnePnc.id}) }}"><i class="fa fa-file-excel-o"></i> Extraction_donnees_agents.csv</a>
+        			  </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Documents </th>
+                      <td>
+                        <ul class="list-unstyled project_files">
+                          {% for document in campagnePnc.documents %}
+                        	<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+                          {% endfor  %}
+                      </ul>
+        			  </td>
+                    </tr>							
+    			</tbody>
+    		</table>
+        </div>
+    </div>
+</div>

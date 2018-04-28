@@ -1,0 +1,28 @@
+{% form_theme form 'crep/crepMindef01/_include/edit/iii/1.form.html.twig' %}
+
+<div class="row" id="objectifsFutursCollection" data-prototype="{{ form_widget(form.objectifsFuturs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered" id="tableObjectifsFuturs">
+            <thead>
+                <tr>
+                    <th>Définition de l'objectif</th>
+                    <th>Echéance</th>
+                    <th>Observations éventuelles</th>
+                    <th width="85px" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectifFutur in form.objectifsFuturs %}
+                    {{ form_widget(objectifFutur) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link objectifsFuturs pull-right" id="btnAddObjectifsFuturs" onclick="verifierNbObjectifs('tableObjectifsFuturs','btnAddObjectifsFuturs',true)">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

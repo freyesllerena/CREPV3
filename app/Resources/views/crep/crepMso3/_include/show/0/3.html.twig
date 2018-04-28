@@ -1,0 +1,60 @@
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Fonctions exercées </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+			{{ crep.fonctionsExercees | nl2br }}
+    	</div>
+    </div>
+</div>
+
+
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Cotation du poste </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.cotationPoste | nl2br }}
+    	</div>
+    </div>
+</div>
+<div class="row form-group">    
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Quotité de travail </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.quotiteTravail | nl2br  }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<label class="control-label col-md-4 col-sm-4 col-xs-12">Fiche de poste adaptée</label>
+        <div class="col-md-8 col-sm-8 col-xs-12">
+            <input type="checkbox" class="flat" disabled="disabled" {% if crep.fichePosteAdaptee %}checked="checked"{% endif %}> Oui<label class="control-label">&nbsp;</label>   
+            <input type="checkbox" class="flat" disabled="disabled" {% if crep.fichePosteAdaptee is not null and not crep.fichePosteAdaptee %}checked="checked"{% endif %}> Non
+    	</div>
+    </div>
+    
+</div>
+
+
+{% if crep.fichePosteAdaptee is not null and not crep.fichePosteAdaptee %}
+	<div class="row form-group">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+	    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Points à actualiser </label>
+	        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+				{{ crep.pointsActualisesFichePoste | nl2br }}
+	    	</div>
+	    </div>
+	</div>
+{% endif %}
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+		<p class="title">
+			Votre appréciation sur votre poste (attraits et contraintes ; qualité de vie au travail, 
+			notamment en termes de charge de travail, d’organisation du travail et d’horaires)
+		</p>
+		<p class="well well-xs">{{ crep.appreciationPosteAgent | nl2br }}</p>
+    </div>
+</div>

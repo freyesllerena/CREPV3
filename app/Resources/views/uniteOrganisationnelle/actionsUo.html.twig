@@ -1,0 +1,8 @@
+{% import "macro/app.html.twig" as macro %}
+
+<a href="{{ path('unite_organisationnelle_show', { 'id': uo.id }) }}" title="Détail"><i class="fa fa-search"></i></a>&nbsp; &nbsp;
+
+<a href="{{ path('unite_organisationnelle_edit', { 'id': uo.id }) }}" title="Modifier"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+
+<a href="" data-toggle="modal" data-target="#modal_supprimer_{{ uo.id }}" title="Supprimer"><i class="fa fa-trash"></i></a>
+{{ macro.modal('danger', 'modal_supprimer_'~ uo.id, "Supprimer l'unité organisationnelle", "Voulez-vous vraiment <strong>supprimer</strong> l\'unité organisationnelle <strong>\"" ~ uo.libelle | escape ~ "\"</strong> ?", "fa-trash", deleteForm)}} 

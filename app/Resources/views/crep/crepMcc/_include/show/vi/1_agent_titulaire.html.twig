@@ -1,0 +1,38 @@
+<div class="row form-group">
+	<div class="col-md-7 col-sm-7 col-xs-12">
+		<label>Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</label>
+	</div>
+	
+	<div class="col-md-1 col-sm-1 col-xs-6">
+		<strong>
+			{% if crep.agent and crep.agent.ah and crep.attributionCia %}
+				<i class="fa fa-check-square-o"></i> 
+			{% else %}
+				<i class="fa fa-square-o"></i> 
+			{% endif %} 
+			Oui
+		</strong>
+	</div>
+	<div class="col-md-1 col-sm-1 col-xs-6">
+		<strong>
+			{% if crep.agent and crep.agent.ah and not crep.attributionCia and crep.attributionCia is not null %}
+				<i class="fa fa-check-square-o"></i>
+			{% else %}
+				<i class="fa fa-square-o"></i> 
+			{% endif %} 
+			Non
+		</strong>
+	</div>
+</div>
+
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class ="title"> Avis circonstancié </p>
+        <p class="well well-xs"> 
+        	{% if crep.agent and crep.agent.ah %}
+				{{ crep.explicationAttributionCia|nl2br}}
+			{% endif %}	
+		</p>
+    </div>
+</div>
+<br/>

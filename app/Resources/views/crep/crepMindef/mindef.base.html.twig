@@ -1,0 +1,384 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block content %}
+
+<div class="crep">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <div class="x_panel panel_green" >
+                 <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>I - IDENTIFICATION DES PARTIES PRENANTES</h2>
+
+                        <ul class="nav navbar-right panel_toolbox">
+                        	<li><a><i class="fa fa-chevron-down"></i></a></li>
+                    	</ul>
+                    	 <div class="clearfix"></div>
+                    </div>
+
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. IDENTIFICATION DE L'AGENT ÉVALUÉ</h3>
+
+                        {% block i1 %}
+                        {% endblock i1 %}
+
+                        <h3>2. IDENTIFICATION DE L'ÉVALUATEUR (SUPÉRIEUR HIÉRARCHIQUE DIRECT DE L'AGENT)</h3>
+
+                        {% block i2 %}
+                        {% endblock i2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>II - ÉVALUATION ET FIXATION DES OBJECTIFS</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                       	<li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content row" {% if errors| length == 0 %} style="display: none;" {% endif %}>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. CADRE DE LA MISE EN OEUVRE DES OBJECTIFS : LE POSTE (à remplir avec l'agent)</h3>
+
+                        {% block ii1 %}
+                        {% endblock ii1 %}
+
+                        <h3>2. ÉVALUATION DES OBJECTIFS DE L'ANNÉE N (4 objectifs maximum)</h3>
+
+                        {% block ii2 %}
+                        {% endblock ii2 %}
+
+                        <h3>Autres objectifs définis en cours d'année - ou - dossiers majeurs sur lesquels l'agent s'est investi en dehors des objectifs fixés</h3>
+
+                        {% block ii2_2 %}
+                        {% endblock ii2_2 %}
+                        
+                        <h3>3. FIXATION DES OBJECTIFS DE L'ANNÉE N+1 (4 objectifs maximum)</h3>
+                        
+                        {% block ii3 %}
+                        {% endblock ii3 %}
+                        
+                        {% block ii4 %}
+                        {% endblock ii4 %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>III - ÉVALUATION DES COMPÉTENCES</h2>
+
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                      </ul>
+                      <div class="clearfix"></div>
+                </div>
+                <div class="x_content row" {% if errors| length == 0 %} style="display: none;" {% endif %}>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1.ÉVALUATION DES COMPÉTENCES MISES EN OEUVRE DANS LE CADRE DU POSTE OCCUPÉ</h3>
+
+
+
+                        {% block iii1 %}
+                        {% endblock iii1 %}
+
+						 <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            <b>S - Sensibilisation</b> : connaissances élémentaires, notions – capacité à faire<br>
+                            <b>A - Application</b> : connaissances générales – capacité à traiter de façon autonome les situations courantes;<br>
+                            <b>M - Maîtrise</b> : connaissances approfondies – capacité à traiter de façon autonome les situations complexes ou inhabituelles ;<br>
+                            <b>E - Expert</b> : domine le sujet – capacité à le faire évoluer, à innover.
+                        </p>
+							
+                        <h3>2. Évaluation des compétences transverses</h3>
+
+                        {% block iii2 %}
+                        {% endblock iii2 %}
+
+                        <h3>3. ÉVALUATION DES CAPACITÉS MANAGÉRIALES DE L'AGENT</h3>
+
+                        <h4>3.1. PRÉSENTATION DU CADRE MANAGÉRIAL DU POSTE</h4>
+
+                        {% block iii3_1 %}
+                        {% endblock iii3_1 %}
+                        
+                        <h4>3.2. AUTRES FONCTIONS MANAGÉRIALES</h4>
+
+                        {% block iii3_2 %}
+                        {% endblock iii3_2 %}
+
+        				<h4>3.3. ÉVALUATION DES COMPÉTENCES MANAGÉRIALES</h4>
+
+                        {% block iii3_3 %}
+                        {% endblock iii3_3 %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>IV - LES PERSPECTIVES D'ÉVOLUTION PROFESSIONNELLE DE L'AGENT </h2>
+
+                      <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                   	  </ul>
+                      <div class="clearfix"></div>
+                </div>
+                <div class="x_content row" {% if errors| length == 0 %} style="display: none;" {% endif %}>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. PROFIL DE L'AGENT</h3>
+
+                        <h4>1.1. Cursus professionnel (3 précédents emplois tenus par l'agent)</h4>
+
+                        {% block iv1_1 %}
+                        {% endblock iv1_1 %}
+
+                        <h4>1.2. Compétences déclarées par l'agent dans le cadre de son projet professionnel</h4>
+
+                        {% block iv1_2 %}
+                        {% endblock iv1_2 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            <b>Sensibilisation</b> : connaissances élémentaires, notions – capacité à faire<br>
+                            <b>Application</b> : connaissances générales – capacité à traiter de façon autonome les situations courantes;<br>
+                            <b>Maîtrise</b> : connaissances approfondies – capacité à traiter de façon autonome les situations complexes ou inhabituelles ;<br>
+                            <b>Expert</b> : domine le sujet – capacité à le faire évoluer, à innover.
+                        </p>
+
+                        <h3>2. SOUHAITS D'ÉVOLUTION PROFESSIONNELLE EXPRIMÉS PAR L'AGENT</h3>
+
+                        {% block iv2 %}
+                        {% endblock iv2 %}
+
+{#                         {% block iv3AvecTitre %}#}
+                        <h3>Observations complémentaires de l'agent</h3>
+
+                        {% block iv3 %}
+                        {% endblock iv3 %}
+{#                         {% endblock iv3AvecTitre %}#}
+
+{#                         {% block iv4AvecTitre %}#}
+                            <h3>Observations du supérieur hiérarchique direct</h3>
+
+                            {% block iv4 %}
+                            {% endblock iv4 %}
+{#                         {% endblock iv4AvecTitre %}#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>V - VOLET FORMATION DU COMPTE RENDU DE L'ENTRETIEN PROFESSIONNEL ANNÉE N</h2>
+
+                        <ul class="nav navbar-right panel_toolbox">
+                        	<li><a><i class="fa fa-chevron-down"></i></a></li>
+                   		</ul>
+                    	<div class="clearfix"></div>
+                </div>
+                <div class="x_content row" {% if errors| length == 0 %} style="display: none;" {% endif %}>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Bilan des formations suivies dans l'année</h3>
+
+                        {% block v1 %}
+                        {% endblock v1 %}
+
+                        <h3>2. Formations validées lors du précédent entretien non encore mise en oeuvre</h3>
+
+                        {% block v2 %}
+                        {% endblock v2 %}
+
+                        <h3>3. Nouveaux besoins en formation à l'iniative de l'administration (pas de CPF possible)</h3>
+
+                        {% block v3 %}
+                        {% endblock v3 %}
+
+                        <h3>4. Nouveaux besoins en formation à l'iniative de l'agent (CPF obligatoire)</h3>
+
+                        {% block v4 %}
+                        {% endblock v4 %}
+
+                        <h3>5. Formations employeurs (réglementaires et métier)</h3>
+
+                        {% block v5 %}
+                        {% endblock v5 %}
+
+                        <h3>6. Suivi du droit individuel à la formation CPF</h3>
+
+                        {% block v6 %}
+                        {% endblock v6 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            * Les formations réglementaires ne sont pas à prioriser, elles sont obligatoires. Les formation métiers sont 
+                            priorisées par les employeurs en fonction de leur besoin. Cette priorisation n'interfère pas avec les formations
+                            à l'initiative de l'agent et les formations à l'initiative de l'administration.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>VI - APPRÉCIATIONS GÉNÉRALES SUR LA VALEUR PROFESSIONNELLE DE L'AGENT</h2>
+
+                        <ul class="nav navbar-right panel_toolbox">
+                        	<li><a><i class="fa fa-chevron-down"></i></a></li>
+                    	</ul>
+                    	<div class="clearfix"></div>
+                </div>
+                <div class="x_content row" {% if errors| length == 0 %} style="display: none;" {% endif %}>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. ÉVALUATION GLOBALE DE L'AGENT AU REGARD DES RÉSULTATS OBTENUS</h3>
+
+                        {% block vi1 %}
+                        {% endblock vi1 %}
+
+                        <h3>2. APTITUDES À EXCERCER DES FONCTIONS SUPÉRIEURES - le cas échéant - </h3>
+                         <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;"><i class="fa fa-warning"></i> <strong><u>ATTENTION:</u></strong> à compléter obligatoirement pour les agents ayant atteint le dernier échelon de leur grade depuis au moins trois 
+                        ans au 31/12 de l'année au titre de la présente évaluation, et lorsque la nomination à ce grade ne résulte pas d'un avancement de grade ou d'un
+                        accès à celui-ci par concours ou promotion internes (Décret n° 2017-722 du 02/05/2017 relatif aux modalités d'appréciation de la valeur
+                        et de l'expérience professionnelles de certains fonctionnaires éligibles à un avancement de grade).</p>
+
+                        {% block vi2 %}
+                        {% endblock vi2 %}
+
+                        <h3>3. APPRÉCIATION LITTÉRALE DU SUPÉRIEUR HIÉRARCHIQUE DIRECT</h3>
+
+                        {% block vi3 %}
+                        {% endblock vi3 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block circuitDeValidation %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                 <div class="x_title collapse-link" style="cursor:pointer">
+                 	<h2>VII - CIRCUIT DE VALIDATION</h2>
+
+                    <ul class="nav navbar-right panel_toolbox">
+                     	<li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content row" {% if errors| length == 0 %} style="display: none;" {% endif %}>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Date de l'entertien</h3>
+
+                        {% block vii1 %}
+                        {% endblock vii1 %}
+
+                        <h3>2. Signature du supérieur hiérarchique directe</h3>
+
+                        {% block vii2 %}
+                        {% endblock vii2 %}
+
+                        <h3>3. Visa de l'agent</h3>
+
+                        {% block vii3 %}
+                        {% endblock vii3 %}
+
+                        <h3>4.Visa de l'autorité hiérarchique (N+2)</h3>
+
+                        {% block vii4 %}
+                        {% endblock vii4 %}
+
+                        <h3>5. Signature de l'agent</h3>
+
+                        {% block vii5 %}
+                        {% endblock vii5 %}
+                        
+                        
+              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+             <span align="center"><b>Délais et voies de recours</b></span>
+           		<br/>
+			<span>
+			Le compte-rendu d'entretien professionnel peut faire l'objet des recours suivants :
+			<br/>
+			</span>
+			<span>
+			- Recours hiérarchique auprès de l'autorité hiérarchique dans <b>un délai de 15 jours francs</b> à compter de la notification du compte-rendu d'entretien professionnel ;</span><br/>
+			<span>
+                - Recours auprès de la commission administrative paritaire compétente, <u>sous réserve d'avoir formulé au préalable un recours administratif</u>, <b>dans un délai d'un mois</b> à compter de la notification de la réponse de l'autorité hiérarchique au recours hiérarchique ;<br/>
+            </span>
+  			<span>
+            - Recours contentieux devant le tribunal administratif territorialement compétent dans <b>un délai de deux mois</b> à compter de la notification du compte-rendu. En cas de recours administratif préalable, le délai court à compter de la date de réponse, expresse ou implicite de l'administration.  
+           </span>   
+            </p>
+                    </div>
+                    
+                    
+                </div>
+ 
+            </div>
+        </div>
+    </div>
+    {% endblock circuitDeValidation %}
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+
+{#     <script type="text/javascript">#}
+{#       $(document).ready(function() {#}
+{#         var countries = { AD:"Andorra",A2:"Andorra Test",AE:"United Arab Emirates",AF:"Afghanistan",AG:"Antigua and Barbuda",AI:"Anguilla",AL:"Albania",AM:"Armenia",AN:"Netherlands Antilles",AO:"Angola",AQ:"Antarctica",AR:"Argentina",AS:"American Samoa",AT:"Austria",AU:"Australia",AW:"Aruba",AX:"Åland Islands",AZ:"Azerbaijan",BA:"Bosnia and Herzegovina",BB:"Barbados",BD:"Bangladesh",BE:"Belgium",BF:"Burkina Faso",BG:"Bulgaria",BH:"Bahrain",BI:"Burundi",BJ:"Benin",BL:"Saint Barthélemy",BM:"Bermuda",BN:"Brunei",BO:"Bolivia",BQ:"British Antarctic Territory",BR:"Brazil",BS:"Bahamas",BT:"Bhutan",BV:"Bouvet Island",BW:"Botswana",BY:"Belarus",BZ:"Belize",CA:"Canada",CC:"Cocos [Keeling] Islands",CD:"Congo - Kinshasa",CF:"Central African Republic",CG:"Congo - Brazzaville",CH:"Switzerland",CI:"Côte d’Ivoire",CK:"Cook Islands",CL:"Chile",CM:"Cameroon",CN:"China",CO:"Colombia",CR:"Costa Rica",CS:"Serbia and Montenegro",CT:"Canton and Enderbury Islands",CU:"Cuba",CV:"Cape Verde",CX:"Christmas Island",CY:"Cyprus",CZ:"Czech Republic",DD:"East Germany",DE:"Germany",DJ:"Djibouti",DK:"Denmark",DM:"Dominica",DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",EE:"Estonia",EG:"Egypt",EH:"Western Sahara",ER:"Eritrea",ES:"Spain",ET:"Ethiopia",FI:"Finland",FJ:"Fiji",FK:"Falkland Islands",FM:"Micronesia",FO:"Faroe Islands",FQ:"French Southern and Antarctic Territories",FR:"France",FX:"Metropolitan France",GA:"Gabon",GB:"United Kingdom",GD:"Grenada",GE:"Georgia",GF:"French Guiana",GG:"Guernsey",GH:"Ghana",GI:"Gibraltar",GL:"Greenland",GM:"Gambia",GN:"Guinea",GP:"Guadeloupe",GQ:"Equatorial Guinea",GR:"Greece",GS:"South Georgia and the South Sandwich Islands",GT:"Guatemala",GU:"Guam",GW:"Guinea-Bissau",GY:"Guyana",HK:"Hong Kong SAR China",HM:"Heard Island and McDonald Islands",HN:"Honduras",HR:"Croatia",HT:"Haiti",HU:"Hungary",ID:"Indonesia",IE:"Ireland",IL:"Israel",IM:"Isle of Man",IN:"India",IO:"British Indian Ocean Territory",IQ:"Iraq",IR:"Iran",IS:"Iceland",IT:"Italy",JE:"Jersey",JM:"Jamaica",JO:"Jordan",JP:"Japan",JT:"Johnston Island",KE:"Kenya",KG:"Kyrgyzstan",KH:"Cambodia",KI:"Kiribati",KM:"Comoros",KN:"Saint Kitts and Nevis",KP:"North Korea",KR:"South Korea",KW:"Kuwait",KY:"Cayman Islands",KZ:"Kazakhstan",LA:"Laos",LB:"Lebanon",LC:"Saint Lucia",LI:"Liechtenstein",LK:"Sri Lanka",LR:"Liberia",LS:"Lesotho",LT:"Lithuania",LU:"Luxembourg",LV:"Latvia",LY:"Libya",MA:"Morocco",MC:"Monaco",MD:"Moldova",ME:"Montenegro",MF:"Saint Martin",MG:"Madagascar",MH:"Marshall Islands",MI:"Midway Islands",MK:"Macedonia",ML:"Mali",MM:"Myanmar [Burma]",MN:"Mongolia",MO:"Macau SAR China",MP:"Northern Mariana Islands",MQ:"Martinique",MR:"Mauritania",MS:"Montserrat",MT:"Malta",MU:"Mauritius",MV:"Maldives",MW:"Malawi",MX:"Mexico",MY:"Malaysia",MZ:"Mozambique",NA:"Namibia",NC:"New Caledonia",NE:"Niger",NF:"Norfolk Island",NG:"Nigeria",NI:"Nicaragua",NL:"Netherlands",NO:"Norway",NP:"Nepal",NQ:"Dronning Maud Land",NR:"Nauru",NT:"Neutral Zone",NU:"Niue",NZ:"New Zealand",OM:"Oman",PA:"Panama",PC:"Pacific Islands Trust Territory",PE:"Peru",PF:"French Polynesia",PG:"Papua New Guinea",PH:"Philippines",PK:"Pakistan",PL:"Poland",PM:"Saint Pierre and Miquelon",PN:"Pitcairn Islands",PR:"Puerto Rico",PS:"Palestinian Territories",PT:"Portugal",PU:"U.S. Miscellaneous Pacific Islands",PW:"Palau",PY:"Paraguay",PZ:"Panama Canal Zone",QA:"Qatar",RE:"Réunion",RO:"Romania",RS:"Serbia",RU:"Russia",RW:"Rwanda",SA:"Saudi Arabia",SB:"Solomon Islands",SC:"Seychelles",SD:"Sudan",SE:"Sweden",SG:"Singapore",SH:"Saint Helena",SI:"Slovenia",SJ:"Svalbard and Jan Mayen",SK:"Slovakia",SL:"Sierra Leone",SM:"San Marino",SN:"Senegal",SO:"Somalia",SR:"Suriname",ST:"São Tomé and Príncipe",SU:"Union of Soviet Socialist Republics",SV:"El Salvador",SY:"Syria",SZ:"Swaziland",TC:"Turks and Caicos Islands",TD:"Chad",TF:"French Southern Territories",TG:"Togo",TH:"Thailand",TJ:"Tajikistan",TK:"Tokelau",TL:"Timor-Leste",TM:"Turkmenistan",TN:"Tunisia",TO:"Tonga",TR:"Turkey",TT:"Trinidad and Tobago",TV:"Tuvalu",TW:"Taiwan",TZ:"Tanzania",UA:"Ukraine",UG:"Uganda",UM:"U.S. Minor Outlying Islands",US:"United States",UY:"Uruguay",UZ:"Uzbekistan",VA:"Vatican City",VC:"Saint Vincent and the Grenadines",VD:"North Vietnam",VE:"Venezuela",VG:"British Virgin Islands",VI:"U.S. Virgin Islands",VN:"Vietnam",VU:"Vanuatu",WF:"Wallis and Futuna",WK:"Wake Island",WS:"Samoa",YD:"People's Democratic Republic of Yemen",YE:"Yemen",YT:"Mayotte",ZA:"South Africa",ZM:"Zambia",ZW:"Zimbabwe",ZZ:"Unknown or Invalid Region" };#}
+
+{#         var countriesArray = $.map(countries, function(value, key) {#}
+{#           return {#}
+{#             value: value,#}
+{#             data: key#}
+{#           };#}
+{#         });#}
+
+{#         // initialize autocomplete with custom appendTo#}
+{#         $('#crep_mindef_formationsSuivies_1_formation').autocomplete({#}
+{#           source: "{{ path('formation_autocomplete') }}",#}
+{#           appendTo: '#autocomplete-container'#}
+{#         });#}
+{#       });#}
+{#     </script>#}
+
+    <!-- /jQuery autocomplete -->
+
+    <!-- chained -->
+{#     <script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"#}
+{#             type="text/javascript"></script>#}
+
+{#     <script type="text/javascript" charset="utf-8">#}
+{#         $(function () {#}
+{#             $("#departement").chained("#region");#}
+{#         });#}
+{#     </script>#}
+
+{% endblock javascripts %}

@@ -1,0 +1,69 @@
+{% extends "index.base.html.twig" %}
+
+{% block frameTitle %}Campagne PNC{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}Campagnes{% endblock pageTitle %}
+
+{% block content %}
+ 
+    <div class="row">
+        {% block block_population_globale %}
+        	{% include 'campagneAdminMin/_include/populationGlobale.html.twig' %}
+        {% endblock block_population_globale %}
+    </div>
+    
+	<div class="row">
+	    {% block informationsCampagne %}
+	        {% include 'campagneAdminMin/_include/informationsCampagne.html.twig' %}
+    	{% endblock informationsCampagne %}  
+	</div>
+
+    {% block boutons_actions %}
+    	{% include 'campagneAdminMin/_include/boutonsActions.html.twig' %}   
+    {% endblock boutons_actions %}
+
+{% endblock content %}
+
+
+
+{% block javascripts %}
+	{{ parent() }}
+
+		<script>
+
+		$(document).ready(function() {
+		var dtable = $('#table_agents').DataTable( {
+			    	"oLanguage": oLanguage_fr(),
+			        "processing": true,
+			        "serverSide": true,
+			        "ajax": "{{ path('agent_campagne_pnc_server_processing', { 'campagnePnc': campagnePnc.id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre':0, 'onglet': 'population_globale' }) }}",
+			        "sAjaxDataProp": "data",
+			        "pageLength": 10,
+			        "searchDelay": 500,
+					"order": [[ 1, "asc" ]],
+					"columnDefs": [ { orderable: false, targets: [7] } ],
+					"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+			        "columns":[ 
+			                   {"data": "agent"}, 
+			                   {"data": "email"},
+			                   {"data": "uniteOrganisationnelle"},
+			                   {"data": "perimetreRlc"},
+			                   {"data": "perimetreBrhp"},
+			                   {"data": "shd"}, 
+			                   {"data": "ah"},
+			                   {"data": 
+				                   function ( row, type, val, meta ) { 
+				                   		// On utilise la route agent_index pour générer "/crepv2/web/app_dev.php/agent/", ensuite on lui ajoute l'id et 'show' pour avoir "/11505/show"
+				                   		// On ne peut pas passer directement par agent_show car row est une variable js
+										actions = " <a href=\"{{ path('agent_index') }}"  +row.id+"/show"   +   "\" title=\"Détail\"><i class=\"fa fa-search\"></i></a>";
+										return actions;
+									}
+			                   },
+			               ] 
+			    } );
+
+		setAjaxDataTable("#table_agents", dtable);
+		});
+		
+		</script>
+{% endblock javascripts %}

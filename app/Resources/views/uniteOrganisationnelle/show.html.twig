@@ -1,0 +1,63 @@
+{% extends 'index.base.html.twig' %}
+
+{% block frameTitle %}Organisation{% endblock frameTitle %}
+{% block pageIcon %}fa fa-sitemap{% endblock pageIcon %}
+{% block pageTitle %}Organisation{% endblock pageTitle %}
+
+
+{% block content %}
+
+    
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel panel_green">
+			<div class="x_title">
+				<h2>Détail de l'unité organisationnelle<small></small></h2>
+				    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="form-group">
+					<div class="row">
+    					<div class="col-md-3 col-sm-3 col-xs-12 ">
+    						<label class="control-label pull-right label-xs">Code </label>
+    					</div>
+    					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+    	                    {{ uo.code }}
+    					</div>
+					</div>
+					<div class="row">
+    					<div class="col-md-3 col-sm-3 col-xs-12">
+    						<label class="control-label pull-right label-xs">Libellé</label>
+    					</div>
+    					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+    	                    {{ uo.libelle }}
+    					</div>	
+    				</div>	
+{# 					<div class="row">#}
+{#     					<div class="col-md-3 col-sm-3 col-xs-12">#}
+{#     						<label class="control-label pull-right label-xs">UO mère</label>#}
+{#     					</div>#}
+{#     					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">#}
+{#                             {% if uo.uniteOrganisationnelleMere %}{{ uo.uniteOrganisationnelleMere.libelle }}{% endif %}#}
+{#     					</div>	#}
+{#     				</div>	#}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# <div class="row">#}
+{# 	<div class="col-md-12 col-sm-12 col-xs-12">#}
+{# 		<a class="btn btn-primary pull-right" href="{{ path('perimetre_brhp_edit', { 'id': perimetreBrhp.id }) }}"><i class="fa fa-edit"></i> Modifier</a>#}
+{# 	</div>#}
+{# </div>#}
+
+
+
+{% endblock content %}
+
+

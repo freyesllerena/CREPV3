@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td style="width:20%">Sur la conduite de l’entretien et les thèmes abordés</td>
+                    <td>{{ crep.observationsVisaAgent|nl2br }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Sur les appréciations portées</td>
+                    <td>{{ crep.observationsAppreciationsPorteesAgent|nl2br }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if crep.agent.sansAh %}
+	<div class="row">
+	    <div class="col-md-11 col-md-offset-1 col-sm-11 col-xs-12 ">
+			<span style="color: red">L'agent est déclaré comme étant <strong>"sans N+2"</strong>. L'étape de visa de l'agent est donc <strong>supprimée</strong>.</span>
+	    </div>
+	</div>
+	<br/>
+{% else %}
+	<div class="row">
+	    <div class="col-md-12 col-sm-12 col-xs-12">
+	        <dl class="dl-horizontal m-t-md">
+	            <dt>Nom</dt>
+	            <dd>
+	            	{% if crep.dateRefusVisa or crep.dateVisaAgent %}
+	                    {{ crep.agent.civilite|capitalize }} {{ crep.prenom|title }} {{ crep.nomUsage|upper }}
+	                {% endif %}
+	            </dd>
+	        </dl>
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="col-md-12 col-sm-12 col-xs-12">
+	        <dl class="dl-horizontal m-t-md">
+	            <dt>Date</dt>
+	            <dd>
+	                {% if crep.dateRefusVisa %}
+						Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
+	                {% elseif crep.dateVisaAgent %}
+	                	{{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+	                {% endif %}
+	            </dd>
+	        </dl>
+	    </div>
+	</div>
+{% endif %}

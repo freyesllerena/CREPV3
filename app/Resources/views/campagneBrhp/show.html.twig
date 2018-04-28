@@ -1,0 +1,352 @@
+{% extends "index.base.html.twig" %}
+
+{% block frameTitle %}{{ campagneBrhp.libelle }}{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}{{ campagneBrhp.libelle }}{% endblock pageTitle %}
+
+{% set  nbCrep = indicateurs["nbCrep"] %}
+{% set  nbCrepSignesShd = indicateurs["nbCrepSignesShd"] %}
+{% set  nbCrepVisesAgent = indicateurs["nbCrepVisesAgent"] %}
+{% set  nbCrepSignesAh = indicateurs["nbCrepSignesAh"] %}
+{% set  nbCrepNotifies = indicateurs["nbCrepNotifies"] %}
+{% set  nbRefusNotification = indicateurs["nbCrepRefusNotification"] %}
+{% set  nbCrepNonRenseignes = indicateurs["nbCrepNonRenseignes"] %}
+{% set  nbCrepModifieShd = indicateurs["nbCrepModifieShd"] %}
+{% set  nbCrepRefusVisas = indicateurs["nbCrepRefusVisas"] %}
+{% set  nbCrepCasAbsence = indicateurs["nbCrepCasAbsence"] %}
+{% set  nbTotalRecours = indicateurs["nbTotalRecours"] %}
+{% set  nbRecoursHierarchique = indicateurs["nbRecoursHierarchique"] %}
+{% set  nbRecoursEnCAP = indicateurs["nbRecoursEnCAP"] %}
+{% set  nbRecoursAuTA = indicateurs["nbRecoursAuTA"] %}
+{% set  nbRecoursTraites = nbTotalRecours - nbRecoursHierarchique - nbRecoursEnCAP - nbRecoursAuTA %}
+{% set  nbCrepEnRecours = indicateurs["nbCrepEnRecours"] %}
+
+
+{% block content %}
+	
+    {# 	Si la population d'agents n'a pas été diffusée par l'administrateur ministériel, on affiche pas les blocs statistiques et population pour le BRHP #}
+    {% if not campagneBrhp.campagneRlc.campagnePnc.diffusee %}
+    	<div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+    			<div class="alert alert-info alert-dismissible fade in" role="alert">
+    				<strong>Information : </strong> La population d'agents à évaluer n'est pas encore renseignée. Vous serez informé dès son chargement.
+    			</div>
+    		</div>
+    	</div>
+	
+    	<div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+        	    {% block informationsCampagneNonDiffusee %}
+        		    {% include 'campagneBrhp/blocsTableauDeBord/informationsCampagne.html.twig' %}
+        	    {% endblock informationsCampagneNonDiffusee %}	
+            </div> 
+        </div>
+    {%  else %}
+        {% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::OUVRIR_SHD'), campagneBrhp) %}
+        	<div class="row">
+            	<div class="col-md-12 col-sm-12 col-xs-12">
+        			<div class="alert alert-info alert-dismissible fade in" role="alert">
+        				<strong>Information : </strong> La population d'agents à évaluer a été renseignée. Veuillez la transmettre aux N+1 pour validation.
+        			</div>
+        		</div>
+        	</div>
+        {%  endif %}    
+    
+        {% block indicateurs %}
+        	{% include 'Campagne/indicateurs.html.twig' %}
+        {% endblock indicateurs %}
+    
+        <div class="row">
+        	<div class="col-md-6 col-sm-12 col-xs-12">
+        	    {% block informationsCampagne %}
+        		    {% include 'campagneBrhp/blocsTableauDeBord/informationsCampagne.html.twig' %}
+        	    {% endblock informationsCampagne %}	
+            </div> 
+            <div class="col-md-6 col-sm-12 col-xs-12">
+            	{% block graphiqueAvancement %}
+        		    {% include 'Campagne/graphiqueAvancement.html.twig' %}
+            	{% endblock graphiqueAvancement %}        
+        	</div>
+        </div>
+	
+        <div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title">
+                        <h2>Population<small></small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+        
+                    <div class="x_content">
+                    	<div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            	<li role="presentation" class="active"><a href="#tab_content0" role="tab" data-toggle="tab" aria-expanded="true">Ma population</a></li>
+                            	<li role="presentation" class=""><a href="#tab_content1" role="tab" data-toggle="tab" aria-expanded="false">Agents évaluables par N+1</a></li>
+                                <li role="presentation" class=""><a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
+                                <li role="presentation" class=""><a href="#tab_content3" role="tab" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>
+                                <li role="presentation" class=""><a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">CREP</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content0" aria-labelledby="home-tab">
+                                    {{ block('block_ma_population') }}
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content1" aria-labelledby="profile-tab">
+                                    {{ block('block_shd') }}
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                    {{ block('block_agents_sans_shd') }}
+                                </div>   
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                    {{ block('block_agents_sans_perimetre') }}
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                                    {{ block('block_creps') }}
+                                </div>
+        					</div>
+                		</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	{%  endif %} 
+
+	<div class="row">
+    	<div class="col-md-12 col-sm-12 col-xs-12">
+    		<div class="col-xs-4">
+    		
+				{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::MODIFIER'), campagneBrhp) %}   
+					<a href="{{ path('campagne_brhp_edit', { 'id': campagneBrhp.id }) }}">
+						<button type="submit" class="btn btn-primary pull-left"><i class="fa fa-edit" aria-hidden="true"></i> Modifier la campagne</button>
+					</a>
+				{% endif %}
+			</div>
+			
+			<div class="col-xs-4 text-center">
+        	    {% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::AJOUTER_AGENT'), campagneBrhp) %}
+					<a href="{{ path('agent_new_brhp', { 'id': campagneBrhp.id }) }}">
+						<button class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un agent</button>
+					</a>
+    		    {% endif %}	
+    		</div>
+    		
+			<div class="col-xs-4">
+				{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::ROUVRIR') , campagneBrhp) %}
+					<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_rouvrir"><i class="fa fa-unlock"></i> Rouvrir la campagne</button>
+					{{ macro.modal('success', 'modal_rouvrir', "Rouvrir la campagne", "Voulez-vous vraiment <strong>rouvrir</strong> cette campagne aux acteurs de niveau de proximité ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action permettra aux agents et aux évaluateurs de ce périmètre d'avoir à nouveau accès en saisie à la campagne.", "fa-unlock", rouvrir_form)}} 
+				{% endif %}
+				
+				{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::OUVRIR_SHD'), campagneBrhp) %}
+    	    		<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_ouvrir_shd"><i class="fa fa-send"></i> Ouvrir aux N+1</button>
+    	    	{% endif %}
+			</div>
+    	</div>
+    </div>
+
+	{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::OUVRIR_SHD'), campagneBrhp) %}
+		{{ macro.modal('success', 'modal_ouvrir_shd', "Ouvrir aux N+1", "Voulez-vous vraiment <strong>ouvrir</strong> la campagne aux N+1 ?", "fa-send", envoyer_form)}}
+	{% endif %}
+	 
+{% endblock content %}
+
+{############## onglets ##############}
+{% block block_shd %} 
+	{% include 'campagneBrhp/blocsTableauDeBord/onglets/shd.html.twig' %}
+{% endblock block_shd %}
+
+{% block block_agents_sans_shd %}
+	{% include 'campagneBrhp/blocsTableauDeBord/onglets/agentsSansShd.html.twig' %}
+{% endblock block_agents_sans_shd %}
+
+{% block block_agents_sans_perimetre %}
+	{% include 'campagneBrhp/blocsTableauDeBord/onglets/agentsSansPerimetreBrhp.html.twig' %}
+{% endblock block_agents_sans_perimetre %}
+
+{% block block_ma_population %}
+	{% include 'campagneBrhp/blocsTableauDeBord/onglets/maPopulation.html.twig' %}
+{% endblock block_ma_population %}
+
+{% block block_creps %}
+    {% include 'campagneBrhp/blocsTableauDeBord/onglets/listeCreps.html.twig' %}
+{% endblock block_creps %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    {% javascripts 
+    	'gentelella-1.3.0/vendors/Chart.js/dist/2.7.1/Chart.min.js'
+    	'bundles/framework/cisirh/js/jquery-ui.min.js'
+	    'bundles/framework/cisirh/js/jquery.fileDownload.js' 
+    %}
+    	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+    <script type="text/javascript">
+        <!-- Doughnut Chart -->
+        {% if nbCrep==0 %}
+            {% set nbCrepNonRenseignes = 1 %}
+            {% set nbCrep = 1 %}
+        {% endif %}
+        
+		$(document).ready(function() {
+			// rend le crep non cliquable
+            $('.disabled').on('click', function(e) {
+                e.preventDefault();
+            });
+
+        	{{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification, nbCrepCasAbsence) }}
+
+        	{{ macro.historiqueAvancement('canvasLine', historiqueIndicateurs) }}
+
+
+		var dtable = $('#ma_population').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre': 0, 'onglet': 'ma_population' }) }}",
+		        "sAjaxDataProp": "data",
+		        "pageLength": 10,
+		        "searchDelay": 500,
+		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
+				"order": [[ 0, "asc" ]],
+				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+					initPopover();},
+				"columnDefs": [ { orderable: false, targets: [5, 6] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "affectation"},
+		                   {"data": "shd"}, 
+		                   {"data": "ah"},
+		                   {"data": "evaluable"},
+		                   {"data": "statutValidation"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+
+		
+		setAjaxDataTable("#ma_population", dtable);
+		
+
+	    
+		var dtable = $('#agents_sans_shd').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 1, 'sansShd': 1, 'sansPerimetre': 0, 'onglet': 'agents_sans_shd' }) }}",
+		        "sAjaxDataProp": "data",
+		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 0, "asc" ]],
+				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+					initPopover();},
+				"columnDefs": [ { orderable: false, targets: [3] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "affectation"},
+		                   {"data": "ah"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+		    
+		setAjaxDataTable("#agents_sans_shd", dtable);
+		
+
+		var dtable = $('#agents_sans_perimetre_brhp').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre': 1, 'onglet': 'agents_sans_perimetre_brhp' }) }}",
+		        "sAjaxDataProp": "data",
+		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 0, "asc" ]],
+				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+					initPopover();},
+				"columnDefs": [ { orderable: false, targets: [5] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "affectation"},
+		                   {"data": "uniteOrganisationnelle"}, 
+		                   {"data": "shd"},
+		                   {"data": "ah"},
+		                   {"data": "actions"},
+		               ] 
+		    } );
+		    
+		setAjaxDataTable("#agents_sans_perimetre_brhp", dtable);
+
+		var dtable = $('#liste_creps').DataTable( {
+		    	"oLanguage": oLanguage_fr(),
+		        "processing": true,
+		        "serverSide": true,
+		        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 1, 'sansShd': 0, 'sansPerimetre': 0, 'onglet': 'liste_creps' }) }}",
+		        "sAjaxDataProp": "data",
+		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
+		        "pageLength": 10,
+		        "searchDelay": 500,
+				"order": [[ 0, "asc" ]],
+				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+					initPopover();},
+				"columnDefs": [ { orderable: false, targets: [5, 6] } ],
+		        "columns":[ 
+		                   {"data": "agent"}, 
+		                   {"data": "affectation"},
+		                   {"data": "shd"}, 
+		                   {"data": "ah"},
+		                   {"data": "avancement"},
+		                   {"data": "actionImportCrepPapier"},
+		                   {"data": "actionShowCrep"},
+		               ] 
+		    } );
+		setAjaxDataTable("#liste_creps", dtable);
+
+		});
+		
+		function afficherPlusOuMoins(panelHeadingId, boutonPlusOuMoinsId ) {
+		    
+			boutonsPlusOuMoins = $('.panel').children('a').children('i'); 
+
+			boutonsPlusOuMoins.each(function( index ) {
+
+      			if ($(this).attr('id') != boutonPlusOuMoinsId) {
+    				$(this).attr('class','fa fa-plus');
+      	  	  	}else{
+					
+      	  	  	nouvelleClasse = ($(this).attr('class') == 'fa fa-plus') ?  'fa fa-minus' : 'fa fa-plus' ;
+          	  	  	
+      	  	  	$(this).attr('class',nouvelleClasse);
+
+      	  	  	}
+			});
+		}
+
+
+		//Afficher une modal "traitement en cours" au clique sur "exporter les creps"
+		$(function () {
+		    $("#download_link").on("click", function () {
+		   
+		        $("#downloadingModal").modal({backdrop: 'static', keyboard: false});
+		        
+		        $.fileDownload($(this).prop('href'), {
+		            successCallback: function (url) {
+		                $("#downloadingModal").modal('hide');
+		            },
+		           failCallback: function (responseHtml, url) {
+		                $("#downloadingModal").modal('hide');
+		            }
+		        });
+		        return false; //this is critical to stop the click event which will trigger a normal file download!
+		    });
+		});
+		
+	</script>
+{% endblock javascripts %}

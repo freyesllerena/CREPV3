@@ -1,0 +1,354 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block content %}
+
+<div class="crep">
+
+	<div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>IDENTIFICATION DES PARTIES PRENANTES</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Identification de l'agent évalué</h3>
+
+                        {% block i01 %}
+                        {% endblock i01 %}
+
+                        <h3>2. Identification de l'évaluateur (supérieur hiérarchique direct de l'agent, N+1)</h3>
+
+                        {% block i02 %}
+                        {% endblock i02 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>I - FONCTIONS EXERCEES</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Description du poste et des fonction exercées</h3>
+
+                        {% block i1 %}
+                        {% endblock i1 %}
+
+                        <h3>2. Environnement hiérarchique et effectifs encadrés</h3>
+
+                        {% block i2 %}
+                        {% endblock i2 %}
+                        
+                        <h3>3. Contraintes et difficultés particulières du poste</h3>
+
+                        {% block i3 %}
+                        {% endblock i3 %}
+                        
+                        {% block i4AvecTitre %}
+                            <h3>4. Commentaires éventuels de l’agent</h3>
+
+                            {% block i4 %}
+                            {% endblock i4 %}
+                            
+                        {% endblock i4AvecTitre %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>II - BILAN DE L'ANNEE ECOULEE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Contexte de l’année écoulée</h3>
+
+                        {% block ii1 %}
+                        {% endblock ii1 %}
+
+                        <h3>2. Bilan et réalisation des objectifs de l'année écoulée</h3>
+
+                        {% block ii2 %}
+                        {% endblock ii2 %}
+                        
+                        <h3>3. Autres dossiers ou travaux sur lesquels l’agent s’est investi en cours d’année</h3>
+
+                        {% block ii3 %}
+                        {% endblock ii3 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>III - OBJECTIFS DE L'AGENT POUR L'ANNEE A VENIR</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            	
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Contexte de l'année à venir</h3>
+
+                        {% block iii1 %}
+                        {% endblock iii1 %}
+
+                        <h3>2. Objectifs assignés à l’agent</h3>
+
+                        {% block iii2 %}
+                        {% endblock iii2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>IV - EXPERIENCE PROFESSIONNELLE : EVALUATION DES ACQUIS</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                {% block ivError %}{% endblock ivError %}
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Connaissances et compétences détenues requises sur le poste actuellement occupé (à remplir par l’évaluateur)</h3>
+
+						<h4>1.1. Connaissances professionnelles requises sur le poste</h4>
+						
+                        {% block iv1_1 %}
+                        {% endblock iv1_1 %}
+                        
+						<h4>1.2. Compétences professionnelles</h4>
+						
+                        {% block iv1_2 %}
+                        {% endblock iv1_2 %}
+                        
+						<h4>1.3. Compétences professionnelles exclusivement managériales</h4>
+						
+                        {% block iv1_3 %}
+                        {% endblock iv1_3 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+              				<strong><sup>*</sup></strong> : Au total, le nombre de croix figurant dans la colonne « exceptionnelle » de ces 3 tableaux 
+              				ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit être motivée dans la colonne « observations».
+
+            			</p>
+                        
+                        <br/>
+                        
+                        {% block iv2AvecTitre %}
+                            <h3>2. Compétences détenues non requises sur le poste actuellement occupé (à remplir par l’agent)<sup>1</sup></h3>
+    
+                            {% block iv2 %}
+                            {% endblock iv2 %}
+                            
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+              				<strong><sup>1</sup></strong> : L’identification de ces compétences pourra s’appuyer sur celles recensées par le 
+              				dictionnaire interministériel des compétences des métiers de l’Etat.
+            			</p>
+            			
+                        {% endblock iv2AvecTitre %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>V - PERSPECTIVES D'EVOLUTION PROFESSIONNELLE DE L'AGENT</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Perspectives d’évolution professionnelle</h3>
+
+                        {% block v1 %}
+                        {% endblock v1 %}
+                        
+                        {% block v2AvecTitre %}
+                            <h3>2. Commentaires éventuels de l’agent</h3>
+    
+                            {% block v2 %}
+                            {% endblock v2 %}
+                        
+                        {% endblock v2AvecTitre %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VI - BESOINS DE FORMATION</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            	
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Formations suivies (années N-1 et N-2)</h3>
+
+                        {% block vi1 %}
+                        {% endblock vi1 %}
+
+                        <h3>2. Recueil des besoins de formation (année N et N+1)</h3>
+
+                        {% block vi2 %}
+                        {% endblock vi2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VII - APPRECIATIONS GENERALES</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Appréciation générale sur la valeur professionnelle et la manière de servir de l’agent</h3>
+
+                        {% block vii1 %}
+                        {% endblock vii1 %}
+
+                        <h3>2. Proposition d'évolution</h3>
+
+                        {% block vii2 %}
+                        {% endblock vii2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block circuitDeValidation %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VIII - CIRCUIT DE VALIDATION</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Date de l'entretien</h3>
+
+                        {% block viii1 %}
+                        {% endblock viii1 %}
+
+                        <h3>2. Signature du supérieur hiérarchique direct ayant conduit l'entretien</h3>
+
+                        {% block viii2 %}
+                        {% endblock viii2 %}
+
+                        <h3>3. Visa et observations éventuelles de l'agent</h3>
+
+                        {% block viii3 %}
+                        {% endblock viii3 %}
+
+                        <h3>4.Visa et observations éventuelles de l'autorité hiérarchique (N+2)</h3>
+
+                        {% block viii4 %}
+                        {% endblock viii4 %}
+
+                        <h3>5. Signature de l'agent</h3>
+
+                        {% block viii5 %}
+                        {% endblock viii5 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                        	La signature de l’agent vaut notification du présent document (et non approbation de son contenu).
+                        	<br/>
+							<u>Destinataire</u> : dossier individuel de l’agent.
+							<br/>
+							<u>Copies</u> : agent, supérieur hiérarchique direct et chef de service.
+                        </p>
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+            				<b>RECOURS EVENTUELS DE L’AGENT :</b>
+       						<br/>
+              				<i>
+              					L’agent peut saisir l’autorité hiérarchique d’une demande de révision de tout ou partie du compte-rendu de l’entretien professionnel, dans un délai de 15 jours francs à compter de la date de notification du présent document.
+              					<br/>
+								L’autorité hiérarchique dispose d’un délai de 15 jours francs à compter de la date de réception de la demande de révision pour notifier sa réponse. L’exercice de ce recours est un préalable obligatoire à la saisine de la CAP compétente, qui doit avoir lieu dans le délai d’un mois à compter de la date de notification de la réponse formulée par l’autorité hiérarchique dans le cadre du recours.
+								<br/> 
+								L’agent dispose également des voies et délais de recours de droit commun pour contester le compte-rendu de son entretien professionnel.
+							</i>
+            			</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock circuitDeValidation %}
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}

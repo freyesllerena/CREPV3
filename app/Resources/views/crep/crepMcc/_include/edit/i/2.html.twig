@@ -1,0 +1,22 @@
+<br/>
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+            {{ form_row(form.intitulePoste, { 'label': "Intitulé du poste" }) }}
+		</div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+	       {{ form_row(form.dateEntreePoste, { 'label': "Depuis le"}) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+            {{ form_row(form.groupeRifseep, { 'label': "Groupe RIFSEEP" }) }}
+	</div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Description du poste occupé et des missions confiées</label>
+        {{ form_row(form.descriptionPosteMission,{'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>

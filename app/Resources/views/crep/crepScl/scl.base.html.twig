@@ -1,0 +1,179 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block content %}
+
+<div class="crep">
+
+	<div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>IDENTIFICATION DE L'AGENT</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Situation de l’agent </h3>
+
+                        {% block i01 %}
+                        {% endblock i01 %}
+
+                        <h3>2. Tenue de l’entretien professionnel</h3>
+
+                        {% block i02 %}
+                        {% endblock i02 %}
+                        
+                        <h3>3. Fonctions exercées</h3>
+
+                        {% block i03 %}
+                        {% endblock i03 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>I - THÈMES ABORDÉS AU COURS DE L'ENTRETIEN PROFESSIONNEL</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Résultats professionnels obtenus au regard des objectifs assignés et des conditions d’organisation et de fonctionnement du service</h3>
+
+                        {% block i1 %}
+                        {% endblock i1 %}
+
+						<h3>2. Objectifs assignés pour l'année à venir et perspectives d'amélioration des résultats professionnels</h3>
+
+                        {% block i2 %}
+                        {% endblock i2 %}
+                        
+                        
+                        <h3>3. Acquis de l’expérience professionnelle</h3>
+
+                        {% block i3 %}
+                        {% endblock i3 %}
+                        
+                        <h3>4. Besoins de formation : <small style="font-size: 13px"> (se reporter au CREFAC)</small></h3>
+
+                        {% block i4 %}
+                        {% endblock i4 %}
+
+						<h3>5. Perspectives d'évolution en terme de carrière et de mobilité </h3>
+
+                        {% block i5 %}
+                        {% endblock i5 %}
+                        
+
+						<h3>6. Autres points abordés à l'initiative : </h3>
+
+                        {% block i6 %}
+                        {% endblock i6 %}
+                                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>II - APPRÉCIATION DE LA VALEUR PROFESSIONNELLE ET DE LA MANIÈRE DE SERVIR DE L'AGENT </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            	
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Appréciation des compétences professionnelles de l'agent</h3>
+
+                        {% block ii1 %}
+                        {% endblock ii1 %}
+                        
+                        <h3>2. Appréciation générale </h3>
+
+                        {% block ii2 %}
+                        {% endblock ii2 %}
+                        
+                        <h3>3. Proposition d’attribution de réductions - majorations d’ancienneté <small style="font-size: 13px">(hors échelons terminaux)</small></h3>
+
+                        {% block ii3 %}
+                        {% endblock ii3 %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block circuitDeValidation %}
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                	<div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>III - CIRCUIT DE VALIDATION</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Signature du supérieur hiérarchique direct (N+1)</h3>
+    
+                            {% block iii1 %}
+                            {% endblock iii1 %}
+    
+                            <h3>2. Expression et visa de l'agent</h3>
+    
+    	                    {% block iii2 %}
+                            {% endblock iii2 %}
+    
+                            <h3>3. Observations et visa de l'autorité hiérarchique (N+2)</h3>
+    
+                            {% block iii3 %}
+                            {% endblock iii3 %}
+    
+                            <h3>4. Signature de l'agent</h3>
+    
+                            {% block iii4 %}
+                            {% endblock iii4 %}
+    
+                  			<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                  				La signature atteste que l'agent a pris connaissance du compte rendu  et de la décision d’attribution de réductions-majorations 
+                  				d’ancienneté (hors échelons terminaux) mais ne vaut pas approbation.
+                  				<br/><br/>
+                  				L'agent dispose d'un délai de 15 jours pour exercer <strong><u>un recours hiérarchique auprès de l'autorité hiérarchique</u></strong>.
+                  				La décision de l'autorité hiérarchique doit intervenir dans le délai de 15 jours.
+                  				<br/><br/>
+								L'agent dispose d'un délai de 30 jours à compter de la réponse de l'autorité hiérarchique <strong><u>pour saisir la CAP</u></strong>.
+                			</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock circuitDeValidation %}
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}

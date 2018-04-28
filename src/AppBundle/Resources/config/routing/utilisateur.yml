@@ -1,0 +1,76 @@
+utilisateur_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Utilisateur:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+utilisateur_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Utilisateur:new" }
+    methods:  [GET, POST]
+
+utilisateur_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Utilisateur:edit" }
+    requirements:
+        id: '\d+'
+        
+utilisateur_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Utilisateur:delete" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'
+            
+utilisateur_disable:
+    path:     /{id}/disable
+    defaults: { _controller: "AppBundle:Utilisateur:disable" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+        
+utilisateur_unlock: 
+    path:     /{id}/unlock
+    defaults: { _controller: "AppBundle:Utilisateur:unlock" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+        
+utilisateur_choix_role:
+    path:     /choix_role
+    defaults: { _controller: "AppBundle:Utilisateur:choixRole" }
+    methods:  [GET, POST]
+
+utilisateur_choix_utilisateur :
+    path:     /choix_utilisateur
+    defaults: { _controller: "AppBundle:Utilisateur:choixUtilisateur" }
+    methods:  [GET, POST]       
+    
+utilisateur_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Utilisateur:index"}
+    methods:  GET
+    
+# Le cas ou un utilisateur ne reçoit pas ou perd le premier mail de confirmation de création de compte 
+utilisateur_activerEtRedefinirPassword: 
+    path:     /{id}/activerEtRedefinirPassword
+    defaults: { _controller: "AppBundle:Utilisateur:activerEtRedefinirPassword" }
+    requirements:
+        id: '\d+'    
+    
+utilisateur_server_processing:
+    path:     /server_processing
+    defaults: { _controller: "AppBundle:Utilisateur:serverProcessing" }
+
+utilisateur_ajax_search:
+    path:     /utilisateur_ajax_search
+    defaults: { _controller: "AppBundle:Utilisateur:ajaxSearch" }
+    
+    
+utilisateur_renvoi_mail_creation_compte: 
+    path:     /{id}/renvoi_mail_creation_compte
+    defaults: { _controller: "AppBundle:Utilisateur:renvoiMailCreationCompte" }
+    requirements:
+        id: '\d+'    
+    

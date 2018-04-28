@@ -1,0 +1,74 @@
+campagne_pnc_index:
+    path:     /
+    defaults: { _controller: "AppBundle:CampagnePnc:index" }
+    methods:  GET
+
+campagne_pnc_show:
+    path:     /{id}/show/{id_perimetre}
+    defaults: { _controller: "AppBundle:CampagnePnc:show", id_perimetre: 0 }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+campagne_pnc_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CampagnePnc:new" }
+    methods:  [GET, POST]
+
+campagne_pnc_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CampagnePnc:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+campagne_pnc_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CampagnePnc:delete" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'
+        
+campagne_pnc_ouvrir:
+    path:     /{id}/ouvrir
+    defaults: { _controller: "AppBundle:CampagnePnc:ouvrir" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+
+#campagne_pnc_get_document:
+#    path:     /{id}/getDocument/{index_document}
+#    defaults: { _controller: "AppBundle:CampagnePnc:getDocument", index_document: 0 }
+#    methods:  GET
+#    requirements:
+#        id: '\d+'
+#        id_document: '\d+'
+                    
+campagne_pnc_delete_document:
+    path:     /{id}/deleteDocument/{id_document}
+    defaults: { _controller: "AppBundle:CampagnePnc:deleteDocument", id_document: 0 }
+    methods:  [DELETE]
+    requirements:
+        id: '\d+'
+        id_document: '\d+'
+         
+campagne_pnc_cloturer :
+    path:     /{id}/cloturer
+    defaults: { _controller: "AppBundle:CampagnePnc:cloturer" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+        
+campagne_pnc_rouvrir :
+    path:     /{id}/rouvrir
+    defaults: { _controller: "AppBundle:CampagnePnc:rouvrir" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+            
+campagne_pnc_fermer :
+    path:     /{id}/fermer
+    defaults: { _controller: "AppBundle:CampagnePnc:fermer" }
+    methods:  PUT
+    requirements:
+        id: '\d+'    

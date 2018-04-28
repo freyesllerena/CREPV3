@@ -1,0 +1,220 @@
+{% extends "index.base.html.twig" %} 
+
+{# {% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}#}
+{% form_theme form with ['Form/App_bootstrap_3_horizontal_layout.html.twig',  _self] %}
+
+{% block pageIcon %}fa fa-plus{% endblock pageIcon %}
+{% block pageTitle %}Nouvel agent{% endblock pageTitle %}
+{% block frameTitle %}Agent{% endblock frameTitle %}
+
+{% block sans_ah %}
+	En cochant ce champ à <strong>"Oui"</strong>, vous déclarez que cet agent est <strong>sans N+2</strong>.<br/>
+	<br/>
+	Ceci va <strong>modifier</strong> le processus des signatures du CREP dans l'application : <br/>
+	<strong>&#8680;</strong> le N+1 rédige et signe le CREP, puis l'agent le signe définitivement (l'étape de signature du N+2 étant <strong>supprimée</strong>)
+{% endblock sans_ah %}
+
+{% block content %}
+
+    {% block information %}
+
+    {% endblock information %}
+
+    {% block body %}
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel panel_green">
+					<div class="x_title">
+						<h2>Données agent</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+                        {{ form_errors(form) }}
+                        {{ form_row(form.matricule, { 'label': "Matricule" }) }}
+                        {{ form_row(form.civilite, { 'label': "Civilité" }) }}
+                        {{ form_row(form.nomNaissance, { 'label': "Nom de naissance" }) }}
+                        {{ form_row(form.nom, { 'label': "Nom d'usage" }) }}
+                        {{ form_row(form.nomMarital, { 'label': "Nom marital" }) }}
+                        {{ form_row(form.prenom, { 'label': "Prénom" }) }}
+                        {{ form_row(form.dateNaissance, { 'label': "Date de naissance"}) }}
+                        {{ form_row(form.email, { 'label': "Adresse mail" }) }}
+                        {{ form_row(form.shd, { 'label': "Adresse mail N+1", 'attr': {'class': 'select_shd'} }) }}
+                        {{ form_row(form.ah, { 'label': "Adresse mail N+2", 'id' : "ah",'attr': {'class': 'select_ah'} }) }}
+                        {{ form_row(form.sansAh, { 'label': "Agent sans N+2", 'label_attr': {'class' : 'radio-inline'}, 'info': block('sans_ah') }) }}
+                        
+                        {% if is_granted('ROLE_PNC') or is_granted('ROLE_ADMIN') %}
+                            {{ form_row(form.perimetreRlc, { 'label': "Périmètre RLC" ,  'attr': { 'class': "select2_perimetre_rlc" }}) }}
+                        {% endif %}
+                        
+						{% if is_granted('ROLE_RLC') or is_granted('ROLE_ADMIN') %}
+                            {{ form_row(form.perimetreBrhp, { 'label': "Périmètre BRHP" ,  'attr': { 'class': "select2_perimetre_brhp" }}) }}
+                        {% endif %}
+                        
+                        {% if is_granted('ROLE_BRHP') or is_granted('ROLE_SHD') or is_granted('ROLE_ADMIN') %}
+                            {{ form_row(form.uniteOrganisationnelle, { 'label': "Unité organisationnelle" ,  'attr': { 'class': "select2_unite_organisationnelle" }}) }}
+                        {% endif %}
+                        
+                        {{ form_row(form.evaluable, { 'label': "Agent évaluable", 'label_attr': {'class' : 'radio-inline'} }) }}
+                        {{ form_row(form.motifNonEvaluation, { 'label': "Motif de non évaluation", 'id' : "motif_non_evaluation" }) }}
+
+                        {# TODO: à déplacer dans une vue agentMcc/new en V3 #}
+                        {% if agent.campagnePnc.ministere.id == 3 %} {# champs à afficher uniquement pour le ministère MCC #}
+                            {{ form_row(form.titulaire, { 'label': "Agent titulaire", 'label_attr': {'class' : 'radio-inline'} }) }}
+                            {{ form_row(form.dateEntreeMinistere, { 'label': "Date d'entrée au ministère" , 'id' : "date_entree_ministere"}) }}
+                            {{ form_row(form.contrat, { 'label': "Type du contrat" , 'id' : "type_contrat"}) }}
+                            {{ form_row(form.dateDebutContrat, { 'label': "Début du contrat" , 'id' : "debut_contrat"}) }}
+                        {% endif %}
+
+						<span style="color:red"><b>*</b></span><small>Champ obligatoire</small>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel panel_green">
+					<div class="x_title">
+						<h2>Données de carrière</h2>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+                        {{ form_row(form.categorieAgent, { 'label': "Catégorie" }) }}
+                        {{ form_row(form.corps, { 'label': "Corps" }) }}
+                        {{ form_row(form.dateEntreeCorps, { 'label': "Date d'entrée dans le corps" }) }}
+                        {{ form_row(form.grade, { 'label': "Grade" }) }}
+                        {{ form_row(form.dateEntreeGrade, { 'label': "Date d'entrée dans le grade" }) }}
+                        {{ form_row(form.echelon, { 'label': "Echelon" }) }}
+                        {{ form_row(form.dateEntreeEchelon, { 'label': "Date d'entrée dans l'échelon" }) }}
+                        {{ form_row(form.gradeEmploi, { 'label': "Grade d'emploi" }) }}
+                        {{ form_row(form.dateEntreeGradeEmploi, { 'label': "Date d'entrée dans le grade d'emploi" }) }}
+                        {{ form_row(form.etablissement, { 'label': "Etablissement" }) }}
+                        {{ form_row(form.departement, { 'label': "Département" }) }}
+                        {{ form_row(form.affectation, { 'label': "Affectation SIGLE" }) }}
+                        {{ form_row(form.affectationClairAgent, { 'label': "Affectation CLAIR" }) }}
+                        {{ form_row(form.posteOccupe, { 'label': "Poste occupé" }) }}
+                        {{ form_row(form.dateEntreePosteOccupe, { 'label': "Date d'entrée dans le poste occupé" }) }}
+                        {{ form_row(form.codeSirh1, { 'label': "Code poste ALLIANCE" }) }}
+                        {{ form_row(form.codeSirh2, { 'label': "Code poste CREDO" }) }}
+                        {{ form_row(form.capitalDif, { 'label': "Capital CPF" }) }}
+                        {{ form_row(form.capitalDifMobilisable, { 'label': "Capital CPF mobilisable" }) }}
+
+					</div>
+				</div>
+			</div>
+
+		</div><!-- row -->
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+                {% block bouton_submit %}
+					<button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Créer</button>
+                {% endblock bouton_submit %}
+			</div>
+		</div>
+
+        {{ form_end(form) }}
+
+    {% endblock %}
+
+{% endblock content %}
+
+ {% block javascripts %}
+     {{ parent() }}
+
+	 <!-- Select2 -->
+	 <script>
+         $(document).ready(function() {
+             $('.select_shd').select2({});
+
+             $(".select_ah").select2({});
+
+             $(".select2_unite_organisationnelle").select2({
+                 placeholder: "Unité organisationnelle",
+                 allowClear: true
+             });
+
+             $(".select2_perimetre_rlc").select2({
+                 placeholder: "Périmètre RLC",
+                 allowClear: true
+             });
+
+             $(".select2_perimetre_brhp").select2({
+                 placeholder: "Périmètre BRHP",
+                 allowClear: true
+             });
+
+             if($('#appbundle_agent_evaluable_0').attr('checked')) {
+                 $("#motif_non_evaluation").parent().parent().hide();
+             } else {
+                 $("#motif_non_evaluation").parent().parent().show();
+             }
+
+             if($('#appbundle_agent_sansAh_0').attr('checked')) {
+                 document.getElementById("ah").disabled = true;
+             } else {
+                 document.getElementById("ah").disabled = false;
+             }
+
+         });
+
+         {# TODO: à déplacer dans une vue agentMcc/new en V3 #}
+         {% if(app.user.ministere.id == 3) %} {# champs à afficher uniquement pour le ministère MCC #}
+
+         $(document).ready(function() {
+             if($('#appbundle_agent_titulaire_0').attr('checked')) {
+                 hideChampsMcc();
+             } else {
+                 showChampsMcc();}
+         });
+
+         $("#appbundle_agent_titulaire_0" ).on('ifChanged', function(){
+             hideChampsMcc();
+         })
+
+         $("#appbundle_agent_titulaire_1" ).on('ifChanged', function(){
+             showChampsMcc();
+         });
+
+         function showChampsMcc() {
+             $("#date_entree_ministere").parent().parent().parent().show();
+             $("#type_contrat").parent().parent().show();
+             $("#debut_contrat").parent().parent().parent().show();
+         }
+
+         function hideChampsMcc(){
+             $("#date_entree_ministere").parent().parent().parent().hide();
+             $("#type_contrat").parent().parent().hide();
+             $("#debut_contrat").parent().parent().parent().hide();
+         }
+
+         {% endif %}
+         {# fin TODO #}
+
+         $("#appbundle_agent_evaluable_0" ).on('ifChanged', function(){
+             $("#motif_non_evaluation").parent().parent().hide();
+         });
+
+         $("#appbundle_agent_evaluable_1" ).on('ifChanged', function(){
+             $("#motif_non_evaluation").parent().parent().show();
+         });
+
+         $("#appbundle_agent_sansAh_0" ).on('ifChanged', function(){
+             $("#ah").val('').trigger('change')
+             document.getElementById("ah").disabled = true;
+
+         });
+
+
+         $("#appbundle_agent_sansAh_1" ).on('ifChanged', function(){
+             document.getElementById("ah").disabled = false;
+         });
+	 </script>
+	 <!-- /Select2 -->
+
+ {% endblock javascripts %}
+
+ 

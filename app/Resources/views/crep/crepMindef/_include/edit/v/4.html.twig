@@ -1,0 +1,30 @@
+{% form_theme form 'crep/crepMindef/Form/App_form_crepMindef.html.twig' %}
+
+<div class="row" id="formationsDemandeesAgentCollection" data-prototype="{{ form_widget(form.formationsDemandeesAgent.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="75%">Libellé de la formation</th>
+                <th nowrap width="85px">Priorité</th>
+                <th class="text-center">CPF</th>
+                <th width="85px" class="text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr></tr>
+            {% for formation in form.formationsDemandeesAgent %}
+                {{ form_widget(formation) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsDemandeesAgent pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

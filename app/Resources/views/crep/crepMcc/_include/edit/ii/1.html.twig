@@ -1,0 +1,46 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+	<i class="fa fa-info-circle" aria-hidden="true"></i> <i>Bilan et réalisation des objectifs fixés de l'année écoulée. Il n'est pas obligatoire de fixer 4 objectifs
+	, ni à l'inverse de s'y limiter.</i><br/>
+</p>
+
+<div class="row" id="objectifsEvaluesCollection" data-prototype="{{ form_widget(form.objectifsEvalues.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Intitulé de l'objectif</th>
+                <th>Rappel des indicateurs</th>
+                <th>Analyse des résultats</th>
+                <th width="16%">Évaluation</th>
+                <th width="5%"></th>
+            </tr>
+            </thead>
+            
+            <tbody>
+            {% for objectif in form.objectifsEvalues %}
+                 {{ form_widget(objectif) }}
+            {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link objectifsEvalues pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Observations générales ou autres </label>
+        {{ form_row(form.observationsObjectifsPasses,{'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>

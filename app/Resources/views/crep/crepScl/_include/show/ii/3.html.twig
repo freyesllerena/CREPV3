@@ -1,0 +1,46 @@
+{% set itemsNbMois = ['1 mois', '2 mois', '3 mois'] %}
+ 
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th></th>
+                    <th style="width: 20%" class="text-center">Accélération</th>
+                    <th style="width: 20%" class="text-center">Cadence moyenne</th>
+                    <th style="width: 20%" class="text-center">Ralentissement</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+                    <td>
+                    	<strong>Cadence d’avancement pour accéder à l’échelon supérieur</strong>
+                	</td>
+                    
+                    <td class="text-center">
+                        {% for index in 0..2 %}
+                            {% if crep.typeCadenceAvancement is not null and crep.typeCadenceAvancement == index %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} {{ itemsNbMois[index] }} <br/>
+                        {% endfor %}
+                    </td>
+                    
+                    <td class="text-center">
+                        {% if crep.typeCadenceAvancement == 3 %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}
+                    </td>
+                    
+                    <td class="text-center">
+                        {% for index in 4..6 %}
+                            {% if crep.typeCadenceAvancement == index %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} {{ itemsNbMois[index-4] }} <br/>
+                        {% endfor %}
+                    </td>
+            	</tr>
+            	<tr>
+            		<td colspan="5">
+            			<strong>Mention d'alerte :</strong> 
+            			<br/>
+            			{{ crep.mentionAlerte | nl2br }}
+            		</td>
+            	</tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+    <tr>
+        <td class="content-block">
+        	Bonjour,
+         </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nous vous informons que votre compte vous permettant d'accéder à l'application {{ appName }} vient d'être créé.
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Pour initialiser votre mot de passe, cliquez sur le lien suivant : 
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ confirmationUrl }}">Initialiser mon mot de passe</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Quand votre mot de passe aura été initialisé, vous aurez accès à l'application  {{ appName }} via ce compte à l'adresse suivante : 
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('accueil') }}">Accéder à l'application</a>
+        </td>
+    </tr> 
+{% endblock %}

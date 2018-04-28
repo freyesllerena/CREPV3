@@ -1,0 +1,98 @@
+{% extends "index.base.html.twig" %}
+
+{% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
+{% block pageTitle %}Modèle CREP{% endblock pageTitle %}
+
+{% block content %}
+
+  <!-- page content -->
+        <div class="" role="main">
+          <div class="">
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                  <div class="x_title">
+                   <h2> Modèle de CREP</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <div id="myTabContent" class="tab-content">
+                      	<!-- Informations générales -->
+                      	<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+	                      <div class="table-responsive">
+
+						    <table class="table table-striped table-borderles">
+						        <tbody>
+						        	<tr>
+						                <th>Ministère</th>
+						                <td>{{ modeleCrep.ministere }}</td>
+						            </tr>
+						        	<tr>
+						                <th>Entité</th>
+						                <td>{{ modeleCrep.typeEntity }}</td>
+						            </tr>
+						            
+						            <tr>
+						                <th>Libelle</th>
+						                <td>{{ modeleCrep.libelle }}</td>
+						            </tr>
+						            <tr>
+						                <th>Date de création</th>
+						                <td>{% if modeleCrep.dateCreation %}{{ modeleCrep.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+						            </tr>
+						            <tr>
+						                <th>Date de modification</th>
+						                <td>{% if modeleCrep.dateModification %}{{ modeleCrep.dateModification|date('Y-m-d H:i:s') }}{% endif %}</td>
+						            </tr>
+						            <tr>
+						                <th>Actif</th>
+						                <td>
+						                	{% if modeleCrep.actif %}
+					                			<span class="label label-success">Actif</span>
+					                		{% else %}
+					                			<span class="label label-danger">Inactif</span>
+					                		{% endif %}
+						                </td>
+						            </tr>
+						        </tbody>
+						    </table>
+						 </div>
+                      </div>
+                      
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          	<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<a class="btn btn-primary pull-right" href="{{ path('modelecrep_edit', { 'id': modeleCrep.id }) }}" title="Modifier"><i class="fa fa-edit"></i> Modifier</a>
+					{% if modeleCrep.actif %}
+						<a class="btn btn-danger pull-left" href="" data-toggle="modal" data-target="#modal_activer_desactiver_{{ modeleCrep.id }}" title="Désactiver"><i class="fa fa-trash"></i> Désactiver </a>
+						{% set class = 'danger' %}
+						{% set title = 'Désactiver le modèle' %}
+						{% set message = 'Voulez-vous vraiment <strong>désactiver</strong> ce modèle ?'  %}
+						{% set icone = 'fa-trash' %}
+					{% else %}
+						<a class="btn btn-primary pull-left" href="" data-toggle="modal" data-target="#modal_activer_desactiver_{{ modeleCrep.id }}" title="Activer"><i class="fa fa-recycle "></i> Activer </a>
+						{% set class = 'primary' %}
+						{% set title = 'Activer le modèle' %}
+						{% set message = 'Voulez-vous vraiment <strong>activer</strong> ce modèle ?'  %}
+						{% set icone = 'fa-recycle' %}
+					{% endif %}
+				</div>
+			</div>
+		  
+		  	{{ macro.modal(class, 'modal_activer_desactiver_'~ modeleCrep.id, title, message, icone, enable_disable_form)}} 
+		  				
+{% endblock %}

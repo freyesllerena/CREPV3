@@ -1,0 +1,30 @@
+perimetre_brhp_index:
+    path:     /
+    defaults: { _controller: "AppBundle:PerimetreBrhp:index" }
+    methods:  GET
+
+perimetre_brhp_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:PerimetreBrhp:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+perimetre_brhp_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:PerimetreBrhp:new" }
+    methods:  [GET, POST]
+
+perimetre_brhp_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:PerimetreBrhp:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+perimetre_brhp_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:PerimetreBrhp:delete" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'

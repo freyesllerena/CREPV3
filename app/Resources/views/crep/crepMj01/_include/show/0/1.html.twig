@@ -1,0 +1,87 @@
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom d'usage</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomUsage|upper }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de naissance</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomNaissance|upper }}
+    	</div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.prenom|title }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Date de naissance</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %}
+    	</div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Intitulé de la fonction</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.posteOccupe }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Service / Direction</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.service }}
+    	</div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Établissement / Juridiction / Bureau</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.affectation }}
+        </div>
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Ancienneté dans le poste</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateEntreePoste %}{{ crep.dateEntreePoste | date('d/m/Y') }}{% endif %}
+    	</div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Corps</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.corps }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Grade</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.grade }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Échelon</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.echelon }}
+        </div>
+    </div>
+</div>
+<br>

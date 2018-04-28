@@ -1,0 +1,20 @@
+{% extends "crep/crepMj01/show.html.twig" %}
+
+{# Comme on hérite de la vue show il faut redéfinir le bloc des boutons actions à vide #}
+{% block boutons_actions %}{% endblock boutons_actions %}
+
+{% block viii3 %}
+	{% include 'crep/crepMj01/_include/edit/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+
+{% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block alertRefusVisa %}{% endblock alertRefusVisa %}
+{% block alertRefusNotification %}{% endblock alertRefusNotification %}

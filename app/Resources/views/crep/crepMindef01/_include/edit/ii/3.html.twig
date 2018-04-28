@@ -1,0 +1,12 @@
+{% form_theme form 'crep/crepMindef01/_include/edit/ii/3.form.html.twig' %}
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Nature des dossiers ou travaux</label>
+        {{ form_row(form.autresActivites,{'attr': {'maxlength': '4096'}}) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label for="crep_mindef_resultatAutresActivites" class="pull-left">Analyse des résultats</label>
+        {{ form_row(form.resultatAutresActivites,{'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>

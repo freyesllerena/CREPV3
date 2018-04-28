@@ -1,0 +1,146 @@
+<br>
+{#{{ dump(form.competencesActions) }}#}
+
+
+
+{% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
+
+<div class="row" id="objectifsFutursCollection" data-prototype="{{ form_widget(form.objectifsFuturs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Compétences liées à l’action</th>
+                <th class="text-center">Exceptionnelle*</th>
+                <th class="text-center">Forte</th>
+                <th class="text-center">Assez forte</th>
+                <th class="text-center">À développer</th>
+                <th class="text-center">Non observée</th>
+                <th class="text-center">Observations</th>
+                <th width="2%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in form.competencesActions %}
+                {{ form_row(objectif) }}
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br>
+
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Compétences liées à l’action</th>
+                <th class="text-center">Exceptionnelle*</th>
+                <th class="text-center">Forte</th>
+                <th class="text-center">Assez forte</th>
+                <th class="text-center">À développer</th>
+                <th class="text-center">Non observée</th>
+                <th class="text-center">Observations</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#{% for competence in crep.competencesActions.toArray() %}#}
+                {#<tr>#}
+                    {#<td>{{ competence.libelle | nl2br }}</td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                {#</tr>#}
+            {#{% endfor %}#}
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Compétences liées à la relation</th>
+                <th class="text-center">Exceptionnelle*</th>
+                <th class="text-center">Forte</th>
+                <th class="text-center">Assez forte</th>
+                <th class="text-center">À développer</th>
+                <th class="text-center">Non observée</th>
+                <th class="text-center">Observations</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#{% for competence in crep.competencesRelations.toArray() %}#}
+                {#<tr>#}
+                    {#<td>{{ competence.libelle | nl2br }}</td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                {#</tr>#}
+            {#{% endfor %}#}
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Compétences liées à l’intelligence des situations</th>
+                <th class="text-center">Exceptionnelle*</th>
+                <th class="text-center">Forte</th>
+                <th class="text-center">Assez forte</th>
+                <th class="text-center">À développer</th>
+                <th class="text-center">Non observée</th>
+                <th class="text-center">Observations</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#{% for competence in crep.competencesSituations.toArray() %}#}
+                {#<tr>#}
+                    {#<td>{{ competence.libelle | nl2br }}</td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                    {#<td></td>#}
+                {#</tr>#}
+            {#{% endfor %}#}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <span>
+            * Au total, le nombre de croix figurant dans la colonne « exceptionnelle » de ces 3 tableaux des compétences managériales ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit être motivée dans la colonne « observations».
+        </span>
+    </div>
+</div>
+<br>
+<br>
+
+<br>

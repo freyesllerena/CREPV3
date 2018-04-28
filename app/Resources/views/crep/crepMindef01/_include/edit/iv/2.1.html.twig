@@ -1,0 +1,30 @@
+{% form_theme form 'crep/crepMindef01/Form/App_form_crepMindef01.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td></td>
+                    <th style="width: 13%" class="text-center">I</th>
+                    <th style="width: 13%" class="text-center">II</th>
+                    <th style="width: 13%" class="text-center">III</th>
+                    <th style="width: 13%" class="text-center">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nombre d'agents encadrés par niveau</td>
+                    <td>{{ form_row(form.nbAgentsEncadresA) }}</td>
+                    <td>{{ form_row(form.nbAgentsEncadresB) }}</td>
+                    <td>{{ form_row(form.nbAgentsEncadresC) }}</td>
+                    <td>
+                        <div id="result_nb_agents" class="text-center">
+                            {{ form.nbAgentsEncadresA.vars.data + form.nbAgentsEncadresB.vars.data + form.nbAgentsEncadresC.vars.data }}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

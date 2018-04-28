@@ -1,0 +1,34 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+	
+	<tr>
+        <td class="content-block">
+        	Bonjour,
+         </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+			Nous vous informons que dans le cadre de la campagne "{{ campagne.libelle }}" concernant l'évaluation professionnelle 
+	de l'année {{ campagne.anneeEvaluee }}, {{ agent | identite }} a pris connaissance de son compte rendu d'évaluation professionnelle, le {{ crep.dateRefusNotification | date ('d/m/Y') }} à {{ crep.dateRefusNotification | date ('H:i') }} et souhaite le réviser
+	pour le motif suivant : 
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	<i>{{ crep.motifRenvoiAgent }}</i>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="content-block">
+        	Vous pouvez dès à présent le consulter et le modifier. Pour cela, nous vous invitons à vous connecter à l'application {{ appName }} en cliquant sur le lien suivant :
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('crep_show',{'id' : crep.id}) }}">Accéder au CREP</a>
+        </td>
+    </tr> 
+
+{% endblock %}

@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.souhaitEvolutionCarriere, {'label': "Souhait d'évolution de carrière (projet professionnel...)", 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.typeEvolutionCarriere, {'label': false, 'attr':{'placeholder': 'Détails'} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.souhaitMobilite, {'label': "Souhait de mobilité (souhait de mobilité statutaire, fonctionnelle et/ou géographique)", 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.typeMobilite, {'label': false, 'attr':{'placeholder': 'Détails'} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-6 col-sm-6 col-xs-12" style="text-align:left;">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;L’agent souhaite-il bénéficier d’un entretien avec un conseiller mobilité – carrière ?</label>
+	    <div class="col-md-6 col-sm-6 col-xs-12">
+	        {{ form_row(form.souhaitEntretienCarriere, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-6 col-sm-6 col-xs-12" style="text-align:left;">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;Aptitude à exercer des fonctions de niveau supérieur</label>
+	    <div class="col-md-6 col-sm-6 col-xs-12">
+	        {{ form_row(form.apptitudeNiveauSup, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<div class="col-md-12 col-sm-12 col-xs-12">
+    		<label>Observations éventuelles du supérieur hiérarchique direct sur ces perspectives d’évolution professionnelle</label>
+        </div>
+    	<div class="col-md-12 col-sm-12 col-xs-12">
+    		{{ form_widget(form.observationShdEvolution,{'attr': {'maxlength': '4096'}}) }}
+    	</div>
+    </div>
+</div>

@@ -1,0 +1,387 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block content %}
+
+<div class="crep">
+
+	<div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>I - IDENTIFICATION DES PARTIES PRENANTES</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Identification de l'agent évalué</h3>
+
+                        {% block i1 %}
+                        {% endblock i1 %}
+
+                        <h3>2. Identification de l'évaluateur (supérieur hiérarchique direct de l'agent, N+1)</h3>
+
+                        {% block i2 %}
+                        {% endblock i2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>II - BILAN DE L'ANNEE ECOULEE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Fiche de poste de l'agent</h3>
+
+                        {% block ii1 %}
+                        {% endblock ii1 %}
+
+                        <h3>2. Bilan et réalisation des objectifs de l'année écoulée</h3>
+
+                        {% block ii2 %}
+                        {% endblock ii2 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            <b>(*)</b> : Ne concerne qu'un objectif quantitatif. Un objectif quantitatif ne peut être dépassé qu'à titre très exceptionnel.<br>
+                            <b>(**)</b> : A justifier systématiquement.<br>
+                        </p>
+                        
+                        <h3>3. Autres dossiers ou travaux majeurs sur lesquels l'agent s'est investi le cas échéant en cours d'année en dehors des objectifs fixés</h3>
+
+                        {% block ii3 %}
+                        {% endblock ii3 %}
+
+                        {% block ii4AvecTitre %}
+                            <h3>4. Observations éventuelles de l'agent sur son activité et la réalisation des objectifs (à compléter par l'agent)</h3>
+
+                            {% block ii4 %}
+                            {% endblock ii4 %}
+                            
+                        {% endblock ii4AvecTitre %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>III - OBJECTIFS DE L'AGENT POUR L'ANNEE A VENIR</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            	
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Contexte prévisible de l'année (réorganisation, environnement, moyens, objectifs du service, etc)</h3>
+
+                        {% block iii1 %}
+                        {% endblock iii1 %}
+
+                        <h3>2. Fixation des objectifs (maximum 4)</h3>
+
+                        {% block iii2 %}
+                        {% endblock iii2 %}
+
+{#                         {% block iv3AvecTitre %}#}
+{#                             <h3>3. Observations et commentaires de l'agent</h3>#}
+
+{#                             {% block iv3 %}#}
+{#                             {% endblock iv3 %}#}
+{#                         {% endblock iv3AvecTitre %}#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>IV - LES COMPÉTENCES MISES EN OEUVRE PAR L'AGENT SUR LE POSTE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Compétences générales de l'agent sur le poste</h3>
+
+                        {% block iv1 %}
+                        {% endblock iv1 %}
+                        
+                        <h3>2. Qualités managériales sur le poste</h3>
+
+                        <h4>2.1. Présentation du cadre managérial</h4>
+
+                        {% block iv2_1 %}
+                        {% endblock iv2_1 %}
+
+        				<h4>2.2. Évaluation des compétences managériales pour les agents en situation de management</h4>
+
+                        {% block iv2_2 %}
+                        {% endblock iv2_2 %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>V - LES PERSPECTIVES D'EVOLUTION PROFESSIONNELLE DE L'AGENT</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Domaines dans lesquels l'agent a exercé ses compétences (à compléter avec l'agent)</h3>
+
+                        {% block v1 %}
+                        {% endblock v1 %}
+
+                        <h3>2. Souhaits d'évolution professionnelle exprimés par l'agent</h3>
+
+                        {% block v2 %}
+                        {% endblock v2 %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VI - LES BESOINS DE FORMATION</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            	
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Bilan des formations effectuées en année N</h3>
+
+                        {% block vi1 %}
+                        {% endblock vi1 %}
+
+                        <h3>2. Formations demandées pour l'année à venir (N+1)</h3>
+
+                        {% block vi2 %}
+                        {% endblock vi2 %}
+
+                        <h3>3. Demandes de formation continue à l'initiative de l'administration (pas de CPF possible)</h3>
+
+                        {% block vi3 %}
+                        {% endblock vi3 %}
+                        
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                           <b>(*)</b> : A cocher uniquement si la formation est nécessaire à l'atteinte d'objectifs
+						</p>
+                        
+                        <h3>4. Formations réglementaires (santé, sécurité au travail)</h3>
+
+                        {% block vi4 %}
+                        {% endblock vi4 %}
+                        
+                        <h3>5. Demandes de formation à l'initiative de l'agent (CPF obligatoire)</h3>
+
+                        {% block vi5 %}
+                        {% endblock vi5 %}
+                        
+                        <h3>6. Suivi du compte personnel de formation</h3>
+
+                        {% block vi6 %}
+                        {% endblock vi6 %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VII - APPRECIATIONS GENERALES SUR LA VALEUR PROFESSIONNELLE DE L'AGENT</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Evaluation globale des résultats obtenus par l'agent au regard des objectifs fixes initialement ou révisés, le cas échéant, en cours d'année</h3>
+
+                        {% block vii1 %}
+                        {% endblock vii1 %}
+
+                        <h3>2. Aptitudes à exercer des fonctions supérieures, le cas échéant</h3>
+
+                        {% block vii2 %}
+                        {% endblock vii2 %}
+
+                        <h3>3. Appréciation littérale du supérieur hiérarchique direct</h3>
+
+                        {% block vii3 %}
+                        {% endblock vii3 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block circuitDeValidation %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VIII - CIRCUIT DE VALIDATION</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Date de l'entretien</h3>
+
+                        {% block viii1 %}
+                        {% endblock viii1 %}
+
+                        <h3>2. Signature du supérieur hiérarchique direct ayant conduit l'entretien</h3>
+
+                        {% block viii2 %}
+                        {% endblock viii2 %}
+
+                        <h3>3. Visa et observations éventuelles de l'agent (à compléter par l'agent)</h3>
+
+                        {% block viii3 %}
+                        {% endblock viii3 %}
+
+                        <h3>4.Visa et observations éventuelles de l'autorité hiérarchique (à compléter par le N+2)</h3>
+
+                        {% block viii4 %}
+                        {% endblock viii4 %}
+
+                        <h3>5. Signature de l'agent</h3>
+
+                        {% block viii5 %}
+                        {% endblock viii5 %}
+                        
+                        
+                        
+                        
+              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+             <span align="center"><b>Délais et voies de recours</b></span>
+           		<br/>
+			<span>
+			Le compte-rendu d'entretien professionnel peut faire l'objet des recours suivants :
+			<br/>
+			</span>
+			<span>
+			- Recours hiérarchique auprès de l'autorité hiérarchique dans <b>un délai de 15 jours francs</b> à compter de la notification du compte-rendu d'entretien professionnel ;</span><br/>
+			<span>
+                - Recours auprès de la commission administrative paritaire compétente, <u>sous réserve d'avoir formulé au préalable un recours administratif</u>, <b>dans un délai d'un mois</b> à compter de la notification de la réponse de l'autorité hiérarchique au recours hiérarchique ;<br/>
+            </span>
+  			<span>
+            - Recours contentieux devant le tribunal administratif territorialement compétent dans <b>un délai de deux mois</b> à compter de la notification du compte-rendu. En cas de recours administratif préalable, le délai court à compter de la date de réponse, expresse ou implicite de l'administration.  
+           </span>   
+            </p>
+            
+            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+            <span align="center"><b>Mention droits d'accès aux fichiers et libertés</b></span>
+            	<br/>
+              <span>« Les informations ci-dessus font l’objet d’une saisie informatique et d’un traitement automatisé de données à 
+            caractère personnel. Conformément à la loi n° 78-17 du 6 janvier 1978 modifiée relative à l’informatique, 
+            aux fichiers et aux libertés, ce traitement a été déclaré à la commission nationale de l’informatique et des 
+            libertés. Les droits d’accès et de rectification prévus aux articles 39 et 40 de la loi précitée s’exercent 
+            auprès du directeur du centre ministériel de gestion ou du sous-directeur de la gestion des personnels relevant 
+            de l’administration centrale. »</span>
+            </p>
+                    </div>
+                    
+                    
+                </div>
+ 
+            </div>
+        </div>
+    </div>
+    {% endblock circuitDeValidation %}
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+
+{#     <script type="text/javascript">#}
+{#       $(document).ready(function() {#}
+{#         var countries = { AD:"Andorra",A2:"Andorra Test",AE:"United Arab Emirates",AF:"Afghanistan",AG:"Antigua and Barbuda",AI:"Anguilla",AL:"Albania",AM:"Armenia",AN:"Netherlands Antilles",AO:"Angola",AQ:"Antarctica",AR:"Argentina",AS:"American Samoa",AT:"Austria",AU:"Australia",AW:"Aruba",AX:"Åland Islands",AZ:"Azerbaijan",BA:"Bosnia and Herzegovina",BB:"Barbados",BD:"Bangladesh",BE:"Belgium",BF:"Burkina Faso",BG:"Bulgaria",BH:"Bahrain",BI:"Burundi",BJ:"Benin",BL:"Saint Barthélemy",BM:"Bermuda",BN:"Brunei",BO:"Bolivia",BQ:"British Antarctic Territory",BR:"Brazil",BS:"Bahamas",BT:"Bhutan",BV:"Bouvet Island",BW:"Botswana",BY:"Belarus",BZ:"Belize",CA:"Canada",CC:"Cocos [Keeling] Islands",CD:"Congo - Kinshasa",CF:"Central African Republic",CG:"Congo - Brazzaville",CH:"Switzerland",CI:"Côte d’Ivoire",CK:"Cook Islands",CL:"Chile",CM:"Cameroon",CN:"China",CO:"Colombia",CR:"Costa Rica",CS:"Serbia and Montenegro",CT:"Canton and Enderbury Islands",CU:"Cuba",CV:"Cape Verde",CX:"Christmas Island",CY:"Cyprus",CZ:"Czech Republic",DD:"East Germany",DE:"Germany",DJ:"Djibouti",DK:"Denmark",DM:"Dominica",DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",EE:"Estonia",EG:"Egypt",EH:"Western Sahara",ER:"Eritrea",ES:"Spain",ET:"Ethiopia",FI:"Finland",FJ:"Fiji",FK:"Falkland Islands",FM:"Micronesia",FO:"Faroe Islands",FQ:"French Southern and Antarctic Territories",FR:"France",FX:"Metropolitan France",GA:"Gabon",GB:"United Kingdom",GD:"Grenada",GE:"Georgia",GF:"French Guiana",GG:"Guernsey",GH:"Ghana",GI:"Gibraltar",GL:"Greenland",GM:"Gambia",GN:"Guinea",GP:"Guadeloupe",GQ:"Equatorial Guinea",GR:"Greece",GS:"South Georgia and the South Sandwich Islands",GT:"Guatemala",GU:"Guam",GW:"Guinea-Bissau",GY:"Guyana",HK:"Hong Kong SAR China",HM:"Heard Island and McDonald Islands",HN:"Honduras",HR:"Croatia",HT:"Haiti",HU:"Hungary",ID:"Indonesia",IE:"Ireland",IL:"Israel",IM:"Isle of Man",IN:"India",IO:"British Indian Ocean Territory",IQ:"Iraq",IR:"Iran",IS:"Iceland",IT:"Italy",JE:"Jersey",JM:"Jamaica",JO:"Jordan",JP:"Japan",JT:"Johnston Island",KE:"Kenya",KG:"Kyrgyzstan",KH:"Cambodia",KI:"Kiribati",KM:"Comoros",KN:"Saint Kitts and Nevis",KP:"North Korea",KR:"South Korea",KW:"Kuwait",KY:"Cayman Islands",KZ:"Kazakhstan",LA:"Laos",LB:"Lebanon",LC:"Saint Lucia",LI:"Liechtenstein",LK:"Sri Lanka",LR:"Liberia",LS:"Lesotho",LT:"Lithuania",LU:"Luxembourg",LV:"Latvia",LY:"Libya",MA:"Morocco",MC:"Monaco",MD:"Moldova",ME:"Montenegro",MF:"Saint Martin",MG:"Madagascar",MH:"Marshall Islands",MI:"Midway Islands",MK:"Macedonia",ML:"Mali",MM:"Myanmar [Burma]",MN:"Mongolia",MO:"Macau SAR China",MP:"Northern Mariana Islands",MQ:"Martinique",MR:"Mauritania",MS:"Montserrat",MT:"Malta",MU:"Mauritius",MV:"Maldives",MW:"Malawi",MX:"Mexico",MY:"Malaysia",MZ:"Mozambique",NA:"Namibia",NC:"New Caledonia",NE:"Niger",NF:"Norfolk Island",NG:"Nigeria",NI:"Nicaragua",NL:"Netherlands",NO:"Norway",NP:"Nepal",NQ:"Dronning Maud Land",NR:"Nauru",NT:"Neutral Zone",NU:"Niue",NZ:"New Zealand",OM:"Oman",PA:"Panama",PC:"Pacific Islands Trust Territory",PE:"Peru",PF:"French Polynesia",PG:"Papua New Guinea",PH:"Philippines",PK:"Pakistan",PL:"Poland",PM:"Saint Pierre and Miquelon",PN:"Pitcairn Islands",PR:"Puerto Rico",PS:"Palestinian Territories",PT:"Portugal",PU:"U.S. Miscellaneous Pacific Islands",PW:"Palau",PY:"Paraguay",PZ:"Panama Canal Zone",QA:"Qatar",RE:"Réunion",RO:"Romania",RS:"Serbia",RU:"Russia",RW:"Rwanda",SA:"Saudi Arabia",SB:"Solomon Islands",SC:"Seychelles",SD:"Sudan",SE:"Sweden",SG:"Singapore",SH:"Saint Helena",SI:"Slovenia",SJ:"Svalbard and Jan Mayen",SK:"Slovakia",SL:"Sierra Leone",SM:"San Marino",SN:"Senegal",SO:"Somalia",SR:"Suriname",ST:"São Tomé and Príncipe",SU:"Union of Soviet Socialist Republics",SV:"El Salvador",SY:"Syria",SZ:"Swaziland",TC:"Turks and Caicos Islands",TD:"Chad",TF:"French Southern Territories",TG:"Togo",TH:"Thailand",TJ:"Tajikistan",TK:"Tokelau",TL:"Timor-Leste",TM:"Turkmenistan",TN:"Tunisia",TO:"Tonga",TR:"Turkey",TT:"Trinidad and Tobago",TV:"Tuvalu",TW:"Taiwan",TZ:"Tanzania",UA:"Ukraine",UG:"Uganda",UM:"U.S. Minor Outlying Islands",US:"United States",UY:"Uruguay",UZ:"Uzbekistan",VA:"Vatican City",VC:"Saint Vincent and the Grenadines",VD:"North Vietnam",VE:"Venezuela",VG:"British Virgin Islands",VI:"U.S. Virgin Islands",VN:"Vietnam",VU:"Vanuatu",WF:"Wallis and Futuna",WK:"Wake Island",WS:"Samoa",YD:"People's Democratic Republic of Yemen",YE:"Yemen",YT:"Mayotte",ZA:"South Africa",ZM:"Zambia",ZW:"Zimbabwe",ZZ:"Unknown or Invalid Region" };#}
+
+{#         var countriesArray = $.map(countries, function(value, key) {#}
+{#           return {#}
+{#             value: value,#}
+{#             data: key#}
+{#           };#}
+{#         });#}
+
+{#         // initialize autocomplete with custom appendTo#}
+{#         $('#crep_mindef_formationsSuivies_1_formation').autocomplete({#}
+{#           source: "{{ path('formation_autocomplete') }}",#}
+{#           appendTo: '#autocomplete-container'#}
+{#         });#}
+{#       });#}
+{#     </script>#}
+
+    <!-- /jQuery autocomplete -->
+
+    <!-- chained -->
+{#     <script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"#}
+{#             type="text/javascript"></script>#}
+
+{#     <script type="text/javascript" charset="utf-8">#}
+{#         $(function () {#}
+{#             $("#departement").chained("#region");#}
+{#         });#}
+{#     </script>#}
+
+{% endblock javascripts %}

@@ -1,0 +1,18 @@
+{% form_theme form with ['crep/crepScl/Form/App_form_crepScl_v_2.html.twig', _self] %}
+
+{% if crep.statut == constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD') %}
+	{% set class = 'champMisEnEvidence' %}
+{% else %}
+	{% set class = '' %}
+{% endif %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Observations</dt>
+            <dd>{{ form_row(form.observationsVisaAgent, {'label':false, 'attr': {'maxlength': '4096', 'class':class}}) }}</dd>
+        </dl>
+    </div>
+</div>
+
+<br/>

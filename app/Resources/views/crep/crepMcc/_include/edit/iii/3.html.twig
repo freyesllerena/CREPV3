@@ -1,0 +1,31 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+	<i class="fa fa-info-circle" aria-hidden="true"></i> <i>Il n'est pas obligatoire de fixer 5 objectifs, ni à l'inverse de s'y limiter.</i>
+</p>
+						
+<div class="row" id="objectifsFutursCollection" data-prototype="{{ form_widget(form.objectifsFuturs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Objectifs individuels <small>(préciser les actions à conduire, les résultats attendus et les indicateurs retenus)</small></th>
+                    <th>Moyens de réussite <small>(liées à l'agent-e ou/et à des facteurs externes, dont la formation)</small></th>
+                    <th>Échéance <small>(si nécessaire)</small></th>
+                    <th width="5%"></th>
+                </tr>
+            <tbody>
+                {% for objectifFutur in form.objectifsFuturs %}
+                    {{ form_widget(objectifFutur) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link objectifsFuturs pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

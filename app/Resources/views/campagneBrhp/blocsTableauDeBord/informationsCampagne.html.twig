@@ -1,0 +1,129 @@
+<div class="x_panel panel_green">
+  <div class="x_title">
+	<h2>Détails de la campagne<small></small></h2>
+	<ul class="nav navbar-right panel_toolbox">
+	  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+	  </li>
+	</ul>
+	<div class="clearfix"></div>
+  </div>
+  <div class="x_content">
+	<table class="table table-striped">
+	  <tbody>
+		<tr>
+		  <th scope="row">Libellé</th>
+		  <td>{{ campagneBrhp.libelle }}</td>
+		</tr>
+		<tr>
+		  <th scope="row">Périmètre BRHP</th>
+		  {% set message = "Consulter la liste des unités organisationnelles qui vous sont affectées sur ce périmètre." %}
+		  <td><a href="{{ path('perimetre_brhp_show', {'id': campagneBrhp.perimetreBrhp.id}) }}" data-placement="auto" data-toggle="popover-info" title="Périmètre BRHP" data-content="{{ message }}" data-trigger="hover">{{ campagneBrhp.perimetreBrhp.libelle }}</a></td>
+		</tr>
+		<tr>
+		  <th scope="row">Année d'évaluation</th>
+		  <td>{{ campagneBrhp.anneeEvaluee }}</td>
+		</tr>
+		<tr>
+		  <th scope="row">Date d'ouverture de campagne</th>
+		  <td>{{ campagneBrhp.dateDebut | date('d/m/Y') }}</td>
+		</tr>
+		{% if campagneBrhp.dateDebutEntretien %}
+		<tr>
+		  <th scope="row">Date de début des entretiens</th>
+		  <td>{{ campagneBrhp.dateDebutEntretien | date('d/m/Y') }}</td>
+		</tr>
+		{% endif %}
+		
+		<tr>
+		  <th scope="row">Date de clôture</th>
+		  <td>{{ campagneBrhp.dateCloture ? campagneBrhp.dateCloture | date('d/m/Y') }}</td>
+		</tr>
+		
+        {% if campagneBrhp.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CLOTUREE'), constant('AppBundle\\EnumTypes\\EnumStatutCampagne::FERMEE')] %}
+    		<tr>
+    			<th scope="row">Compte à rebours</th>
+    			{# Compte à rebours : Pour calculer le nombre de jours qu'il y a entre deux dates, on convertie ces deux dates au format "timestamp", on calcule la différence puis on la convertie en jours et ce en la divisant sur 86400 #}
+    			{% if campagneBrhp.dateCloture | date('Ymd') >= "now" | date('Ymd') %}
+    			<td><span class="label label-danger">J-{{ ((campagneBrhp.dateCloture | date('U') - "now" | date('U')) / 86400) | round(0, 'ceil') | abs }}</span></td>
+    			{% else %}
+    			<td></td>
+    			{% endif %}
+    		</tr>
+		{% endif %}
+		
+		{% if campagneBrhp.dateFermeture %}
+		<tr>
+		  <th scope="row">Date de fermeture</th>
+		  <td>{{ campagneBrhp.dateFermeture | date('d/m/Y') }}</td>
+		</tr>
+		{% endif %}
+		
+		<tr>
+			<th>Statut</th>
+			<td>
+				<span class="label {{ campagneBrhp.statut | campagne_status_label }}">{{ campagneBrhp.statut }}</span>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Formulaire CREP vierge</th>
+			<td>
+				<ul class="list-unstyled project_files">
+                    {% for modeleCrep in modelesCrep %}
+    					<li><a href="{{ path('exporter_crep_vierge', { 'id': modeleCrep.id , 'campagnePnc' : campagneBrhp.campagnePnc.id }) }}" title="Visualiser le formulaire"> <i class="fa fa-file-pdf-o"></i> {{ modeleCrep.libelle }}</a> </li>
+    				{% endfor %}
+				</ul>
+			</td>
+		</tr>
+		
+		{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::EXPORTER_CREPS_FINALISES'), campagneBrhp) %}
+    		<tr>
+				<th scope="row">CREP finalisés </th>
+                <td>
+                	<a href="{{ path('campagne_brhp_exporter_creps_finalises', { 'campagneBrhp': campagneBrhp.id }) }}" id="download_link" >
+                        <span class="text-primary" style="font-size: 14px"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;&nbsp;Exporter les CREP finalisés</span>
+                    </a>
+                </td>
+    		</tr>
+		{% endif %}
+		{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::EXPORTER_FORMATIONS'), campagneBrhp) %}
+		    <tr>
+				<th scope="row">Export des formations </th>
+                <td>
+                	<a href="{{ path('campagne_brhp_exporter_formations', { 'id': campagneBrhp.id }) }}">
+                        <span class="text-primary" style="font-size: 14px"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;&nbsp;Exporter les formations</span>
+                    </a>
+                </td>
+    		</tr>
+		{% endif %}
+		<tr>
+		  <th scope="row">Documents </th>
+		  <td>
+			<ul class="list-unstyled project_files">
+				{% for document in campagneBrhp.campagneRlc.campagnePnc.documents %}
+					<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+				{% endfor  %}
+				
+				{% for document in campagneBrhp.campagneRlc.documents %}
+					<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+				{% endfor  %}
+				  
+				{% for document in campagneBrhp.documents %}
+					<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+				{% endfor  %}
+				
+				{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::MODIFIER'), campagneBrhp) %}
+					<a href="{{ path('campagne_brhp_edit', { 'id': campagneBrhp.id }) }}">
+						<h5><span class="text-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter des documents</span></h5>
+					</a>
+				{% endif %}
+		  </ul>
+		  </td>
+		</tr>							
+	  </tbody>
+	</table>
+	
+	<!-- Modal traitement en cours -->
+	{{ macro.modalBloquante('downloadingModal') }}
+	
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Connaissances professionnelles</th>
+                    <th style="width: 10%" class="text-center">Exceptionnelle*</th>
+                    <th style="width: 10%" class="text-center">Forte</th>
+                    <th style="width: 10%" class="text-center">Assez forte</th>
+                    <th style="width: 10%" class="text-center">A développer</th>
+                    <th style="width: 10%" class="text-center">Non pertinent</th>
+                    <th style="width: 20%">Observations</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competenceProfessionnelle in crep.competencesTransversesProfessionnelles %}
+                    <tr>
+                        <td>
+                            {{ competenceProfessionnelle.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+                        	<td class="text-center">{{ competenceProfessionnelle.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                        <td>
+                            {{ competenceProfessionnelle.observations|nl2br }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                
+                {% if crep.autresCompetencesTransversesProfessionnelles is not empty %}
+                	<tr>
+                		<td colspan="7" style="background-color: #EFEFEF"><strong>Autres compétences éventuellement  démontrées par l’agent</strong></td>
+                    </tr>
+                    {% for autreCompetenceProfessionnelle in crep.autresCompetencesTransversesProfessionnelles %}
+                        <tr>
+                            <td>
+                                {{ autreCompetenceProfessionnelle.libelle }}
+                            </td>
+                            {% for index in 0..4 %}
+                            	<td class="text-center">{{ autreCompetenceProfessionnelle.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                            {% endfor %}
+                            <td>
+                            	{{ autreCompetenceProfessionnelle.observations|nl2br }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

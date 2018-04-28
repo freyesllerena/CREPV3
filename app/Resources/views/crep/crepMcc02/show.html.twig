@@ -1,0 +1,129 @@
+{% extends "crep/crepMcc02/mcc02.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+    
+ 	{{ block('alertAhNonIdentifie') }}
+	{{ block('alertDebutEntretien') }}
+    {{ block('alertRefusVisa') }}
+    {{ block('alertRecours') }}
+    {#{{ block('alertRefusNotification') }}#}
+    {#{{ block('renvoyerAh') }}#}
+    {#{{ block('renvoyerAgent') }}#}
+    
+	<div class="form-horizontal">
+        {{ parent() }}
+	</div>
+	{{ block('boutons_actions') }}
+{% endblock content %}
+
+{% block i01 %}
+	{% include 'crep/crepMcc02/_include/show/0/1.html.twig' %}
+{% endblock i01 %}
+
+{% block i02 %}
+    {% include 'crep/crepMcc02/_include/show/0/2.html.twig' %}
+{% endblock i02 %}
+
+{% block i1 %}
+    {% include 'crep/crepMcc02/_include/show/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block ii1 %}
+    {% include 'crep/crepMcc02/_include/show/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+    {% include 'crep/crepMcc02/_include/show/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+    {% include 'crep/crepMcc02/_include/show/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block ii4 %}
+    {% include 'crep/crepMcc02/_include/show/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block iii1 %}
+    {% include 'crep/crepMcc02/_include/show/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+    {% include 'crep/crepMcc02/_include/show/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block iii3 %}
+    {% include 'crep/crepMcc02/_include/show/iii/3.html.twig' %}
+{% endblock iii3 %}
+
+{% block iv1 %}
+    {% include 'crep/crepMcc02/_include/show/iv/1.html.twig' %}
+{% endblock iv1 %}
+
+{% block iv2 %}
+    {% include 'crep/crepMcc02/_include/show/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block iv3 %}
+    {% include 'crep/crepMcc02/_include/show/iv/3.html.twig' %}
+{% endblock iv3 %}
+
+{% block v1 %}
+    {% include 'crep/crepMcc02/_include/show/v/1.html.twig' %}
+{% endblock v1 %}
+
+{#{% block v2 %}#}
+    {#{% include 'crep/crepMcc02/_include/show/v/2.html.twig' %}#}
+{#{% endblock v2 %}#}
+
+{% block vi1 %}
+    {% include 'crep/crepMcc02/_include/show/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+    {% include 'crep/crepMcc02/_include/show/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vi3 %}
+    {% include 'crep/crepMcc02/_include/show/vi/3.html.twig' %}
+{% endblock vi3 %}
+
+{% block vii1 %}
+    {% include 'crep/crepMcc02/_include/show/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2 %}
+    {% include 'crep/crepMcc02/_include/show/vii/2.html.twig' %}
+{% endblock vii2 %}
+
+{% block viii1 %}
+    {% include 'crep/crepMcc02/_include/show/viii/1.html.twig' %}
+{% endblock viii1 %}
+
+{% block viii2 %}
+    {% include 'crep/crepMcc02/_include/show/viii/2.html.twig' %}
+{% endblock viii2 %}
+
+{% block viii3 %}
+    {% include 'crep/crepMcc02/_include/show/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+
+
+{% block alertRefusVisa %}
+
+{% endblock alertRefusVisa %}
+
+{% block alertRefusNotification %}
+
+{% endblock alertRefusNotification %}
+
+{% block renvoyerAgent %}
+
+{% endblock renvoyerAgent %}
+
+{% block renvoyerAh %}
+
+{% endblock renvoyerAh %}

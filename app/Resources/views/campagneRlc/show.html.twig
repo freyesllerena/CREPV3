@@ -1,0 +1,49 @@
+{% extends "index.base.html.twig" %}
+
+{% block frameTitle %}Campagne RLC{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}Campagnes{% endblock pageTitle %}
+
+{% block content %}
+<!-- page content -->
+    {% if campagneRlc.perimetresBrhp | length == 0 %}
+	<div class="row">
+    	<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="alert alert-info alert-dismissible fade in" role="alert">
+				<strong>Information : </strong> Les périmètres ne sont pas renseignés. Veuillez les compléter, en cliquant sur le bouton  <strong>&laquo; Modifier la campagne &raquo;</strong>, pour ouvrir la campagne.
+			</div>
+		</div>
+	</div>
+    {%  endif %}  
+
+	<div class="row">
+    	<div class="col-md-12 col-sm-12 col-xs-12">
+        	{% block informationsCampagne %}
+        		{% include 'campagneRlc/blocsTableauDeBord/informationsCampagne.html.twig' %}
+        	{% endblock informationsCampagne %}			  
+    	</div>
+    </div> 
+    
+    <div class="row">
+		<div class="col-xs-4">
+			{% if is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::MODIFIER'), campagneRlc) %}
+				<a href="{{ path('campagne_rlc_edit', { 'id': campagneRlc.id }) }}">
+	            	<button class="btn btn-primary"><i class="fa fa-edit" aria-hidden="true"></i> Modifier la campagne</button>
+	            </a>
+            {% endif %}
+		</div>
+        
+        <div class="col-xs-4 text-center"></div>
+
+        <div class="col-xs-4">
+			{% if is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::OUVRIR'), campagneRlc) %}   	
+                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_ouvrir"><i class="fa fa-unlock"></i> Ouvrir la campagne</button>
+                {{ macro.modal('success', 'modal_ouvrir', "Ouvrir la campagne", "Voulez-vous vraiment <strong>ouvrir</strong> cette campagne aux acteurs de niveau de proximité ?", "fa-unlock", ouvrir_form)}}
+			{% elseif is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::ROUVRIR'), campagneRlc) %}
+				<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_rouvrir"><i class="fa fa-unlock"></i> Rouvrir la campagne</button>
+    			{{ macro.modal('success', 'modal_rouvrir', "Rouvrir la campagne", "Voulez-vous vraiment <strong>rouvrir</strong> cette campagne aux acteurs de niveau de proximité ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action permettra aux acteurs de niveau de proximité (BRHP) d'avoir la possibilité de rouvrir la campagne sur leurs périmètres.", "fa-unlock", rouvrir_form)}} 
+            {% endif %}
+		</div>
+    </div><!-- /.row -->
+
+{% endblock content%}

@@ -1,0 +1,14 @@
+{% import "macro/app.html.twig" as macro %}
+
+{% if is_granted(constant('AppBundle\\Security\\FormationVoter::MODIFIER'), formation) %}
+	<a href="{{ path('formation_edit', { 'id': formation.id }) }}" title="Modifier"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\FormationVoter::VOIR'), formation) %}
+	<a href="{{ path('formation_show', { 'id': formation.id }) }}" title="Voir"><i class="fa fa-search"></i></a>&nbsp; &nbsp;
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\FormationVoter::SUPPRIMER'), formation) %}
+	<a href="#" data-toggle="modal" data-target="#supprimer_formation_{{ formation.id }}" title="Supprimer"><i class="fa fa-trash"></i></a>
+	{{ macro.modal('danger', 'supprimer_formation_'~ formation.id, "Supprimer la formation", 'Voulez-vous vraiment <strong>supprimer</strong> la formation \"<strong>'~ formation.libelle | escape ~'</strong>\" ?', "fa-trash", deleteForm)}} 
+{% endif %}

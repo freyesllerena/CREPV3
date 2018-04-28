@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    {% set items = [
+                        'Insuffisants',
+                        'Partiels',
+                        'Conformes',
+                        'Dépassés',
+                    ] %}
+                    {% for item in items %}
+                        <th class="text-center">{{ item }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>&Eacute;valuation des résultats par rapport aux objectifs</th>
+                    {% for item in items %}
+                        <td class="text-center" style="width: 12%;">{{ crep.evaluationGlobale|iconCheck(loop.index0)|raw }}</td>
+                    {%  endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

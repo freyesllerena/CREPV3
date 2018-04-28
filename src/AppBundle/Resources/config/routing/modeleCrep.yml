@@ -1,0 +1,47 @@
+modelecrep_index:
+    path:     /
+    defaults: { _controller: "AppBundle:ModeleCrep:index" }
+    methods:  GET
+
+modelecrep_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:ModeleCrep:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+
+modelecrep_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:ModeleCrep:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+modelecrep_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:ModeleCrep:new" }
+    methods:  [GET, POST]
+
+modelecrep_enable_disable:
+    path:     /{id}/enable_disable
+    defaults: { _controller: "AppBundle:ModeleCrep:enableDisable" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+    
+# id : id de l'agent
+crep_modele_choix:
+    path:     /{id}/choix
+    defaults: { _controller: "AppBundle:ModeleCrep:choixCrep" }
+    methods:  [POST,GET]
+    requirements:
+        id: '\d+'
+        
+modelecrep_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:ModeleCrep:delete" }
+    methods:  DELETE
+    requirements:
+       id: '\d+'
+       
+       

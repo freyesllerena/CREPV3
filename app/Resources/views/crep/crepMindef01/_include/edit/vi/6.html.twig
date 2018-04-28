@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>Capital CPF au 1<sup>er</sup> janvier de l'année de l'entretien (en heures)</th>
+                <td>{{ form_row(form.capitalDif) }}</td>
+            </tr>
+            <tr>
+                <th>Capital CPF monopolisable (anticipation) (en heures)</th>
+                <td>{{ form_row(form.capitalDifMobilisable) }}</td>
+            </tr>
+            <tr>
+                <th>Estimation de la durée des formations pour lesquelles le CPF sera utilisé (en heures)</th>
+                <td>{{ form_row(form.capitalDifEstimation) }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

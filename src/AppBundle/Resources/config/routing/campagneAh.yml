@@ -1,0 +1,12 @@
+campagne_ah_index:
+    path:     /
+    defaults: { _controller: "AppBundle:CampagneAh:index" }
+    methods:  GET
+    
+campagne_ah_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CampagneAh:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+   

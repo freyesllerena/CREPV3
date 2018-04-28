@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel panel_green">
+            <div class="x_title">
+                <h2>CREP<small></small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                </ul>
+            	<div class="clearfix"></div>
+        	</div>
+        	
+            <div class="x_content">
+                <table id="table_campagne_ah" class="table table-striped table-bordered app_datatable dt-responsive" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Email</th>
+                            <th>Affectation</th>
+                            <th>N+1</th>
+                            <th style="width: 300px">Etat d'avancement</th>
+                            <th class="text-center" style="width: 100px">Import CREP papier</th>
+                            {% if is_granted('ROLE_ADMIN') %}
+    						<th class="text-center" style="width: 60px">Supprimer</th>
+    	                    {% endif %}
+    		                <th class="text-center" style="width: 60px">CREP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for agent in listeAgentsAvecCrep %}
+                            <tr>
+                                <td>
+                                    {% if ( is_granted(constant('AppBundle\\Security\\AgentVoter::VOIR_CREP_PAPIER'), agent) )
+                                    		or ( is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR'), agent.crep) ) %}
+                                    	<a href="{{ path('check_crep_agent', {'id': agent.id}) }}">
+                                    {% endif %}
+                           			
+                           				{{ agent | identite }}
+                        			
+									{% if ( is_granted(constant('AppBundle\\Security\\AgentVoter::VOIR_CREP_PAPIER'), agent) )
+                                    		or ( is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR'), agent.crep) ) %}
+                        				</a>
+                        			{% endif %}      
+                                </td>
+                                <td>{{ agent.email }}</td>
+                                <td >{% if agent.affectation is not null %}{{ agent.affectation }}{% endif %}</td>
+                                <td>
+                                    {% if agent.shd is not null %}
+                                        {{ agent.shd | identite }}
+                                    {% endif %}
+                                </td>
+                                
+                                {% set avancementPourcentage = 0 %}
+								{% set statut = ''  %}
+								
+								{% if agent.crep %}
+								   	{% set avancementPourcentage = agent.crep.statut | statutCrepAvancementPourcentage %}
+								   	{% set statut = agent.crep.statut %}
+								{% endif %}
+				
+				
+								<td class="project_progress">
+									<div class="progress progress_sm">
+								    	<div class="progress-bar {{ statut | statutCrepCouleur }}" role="progressbar" data-transitiongoal="{{ avancementPourcentage }}" style="width: {{ avancementPourcentage }}%"></div>
+									</div>
+									<small>Etape {{ statut | statutCrepEtapeAvancement }} : <b>{{ statut | statutCrepImpression }}</b></small>
+								</td>
+                                
+                                
+                                <td class="text-center">
+									{% if is_granted(constant('AppBundle\\Security\\AgentVoter::IMPORTER_CREP_PAPIER'), agent) %}
+										<a href="{{ path('agent_import_crep_papier', { 'id': agent.id }) }}" title="Importer le CREP en version papier"><i class="glyphicon glyphicon-save"></i></a>
+									{% endif %}
+                                </td>
+                               	<td class="text-center">
+                                    	{% if ( is_granted(constant('AppBundle\\Security\\AgentVoter::VOIR_CREP_PAPIER'), agent) )
+                                    			or (agent.crep and is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR'),agent.crep)) %}
+											{% if agent.crep.crepPapier %} 
+												{% set iconeCrep = "fa-file-pdf-o"  %}
+											{% else %}
+												{% set iconeCrep = "fa-file-text-o"  %}
+											{% endif %}
+											
+											<a href="{{ path('crep_show', { 'id': agent.crep.id }) }}" title="Consulter le CREP" style="text-align: center; display: block;"><i class="fa {{ iconeCrep }}"></i></a>
+
+										{% endif %}
+                               	</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+		</div>
+	</div>
+</div>

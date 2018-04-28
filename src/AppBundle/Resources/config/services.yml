@@ -1,0 +1,403 @@
+services:
+    # Extension twig pour utiliser la fonction instanceOf
+    app.twig_extension_fos: 
+        class: AppBundle\Twig\instanceOfExtension
+        tags:
+            - { name : twig.extension }
+
+    app.twig_statut_campagne_label_extension: 
+        class: AppBundle\Twig\CampagneStatutLabelExtension
+        public: false
+        tags:
+            - { name : twig.extension }
+            
+    # Extensions twig pour les besoins de l'application
+    app.twig_extension:
+        class: AppBundle\Twig\AppExtension
+        public: false
+        tags:
+            - { name: twig.extension }  
+
+    # Service pour logger les connexions utilisateurs
+    login_listener:
+        class: 'AppBundle\EventListener\LoginListener'
+        arguments: ['@security.authorization_checker', '@doctrine', '@fos_user.user_manager', '%app.connexion.nb_connexions_avant_blocage%']
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login', method: onAuthenticationSuccess }
+            - { name: 'kernel.event_listener', event: 'fos_user.resetting.reset.completed', method: onInitPasswordSuccess }
+            - { name: 'kernel.event_listener', event: 'security.authentication.failure', method: onAuthenticationFailure }
+ 
+    # Permet de rafraichir le menu de gauche sur l'application
+    menu_listener:
+        class: 'AppBundle\EventListener\MenuListener'
+        arguments: ['@security.token_storage', '@security.authorization_checker', '@router']
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', method: refreshMenu }
+            
+    # Permet de rediriger vers la page principale apres un reset du mot de passe
+    fos_user.password_resetting:
+        class: 'AppBundle\EventListener\PasswordResettingListener'
+        arguments: [ '@router' ]
+        tags:
+            - { name: kernel.event_subscriber }
+ 
+    # Service de gestion principal
+    app.base_manager:
+        abstract:  true
+        arguments: 
+          - '@doctrine'
+          - '@security.authorization_checker'
+          - '@security.token_storage'
+          - '@logger'
+          - '@validator'
+          - '@session'
+          - '@router'
+          - '@app.mailer'
+          - '%kernel.root_dir%'   
+         
+    # Service d'envoi des notifications par mail
+    app.mailer:
+        class: 'AppBundle\Service\AppMailer'
+        arguments:
+          - '@mailer'
+          - '@templating'
+          - '@router'
+          - '@doctrine.orm.entity_manager'
+          - '%app.company_name%'
+          - '%mailer.from_address%'
+          - '%mailer.reply_address%'
+          - '%kernel.root_dir%'
+          - '%app.app_name%'
+        tags:
+            - { name: 'app.mailer', method: __construct }
+            
+    # Service de gestion des utilisateurs
+    utilisateur_manager:
+        class: 'AppBundle\Service\UtilisateurManager'
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@fos_user.util.token_generator'
+          - '@fos_user.user_manager'
+          - '%app.default_password%'
+          - '@app.mailer'
+        tags:
+            - { name: 'utilisateur_manager', method: __construct }
+
+    # Service de gestion des personnes
+    personne_manager:
+        class: 'AppBundle\Service\PersonneManager'
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@fos_user.util.token_generator'
+          - '@security.token_storage'
+          - '@app.mailer'
+          - '%app.default_password%'
+        tags:
+            - { name: 'personne_manager', method: __construct }
+    
+    # Service pour logger les traces sur les entités
+    generic_entity_listener:
+        class: 'AppBundle\EventListener\GenericEntityListener'
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist}
+            - { name: doctrine.event_listener, event: preUpdate}
+ 
+    # Formulaire du choix du rôle de connexion
+    app.form.type.choix_role:
+        class: 'AppBundle\Form\ChoixRoleType'
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: form.type }
+            
+    # Service pour vérifier les rôles après l'authentification et rediriger l'utilisateur
+    app.request_listener:
+        class: AppBundle\EventListener\RequestListener
+        arguments: ['@security.token_storage', '@security.authorization_checker', '@router']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: checkRole }
+
+    # Service pour vérifier la session est toujours valide
+    app.session_listener:
+        class: AppBundle\EventListener\SessionListener
+        arguments: ['@router', '%app.session_timeout%']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: checkSession, priority: 9 }
+            
+    # Service pour retirer "ROLE_FORCEPASSWORDCHANGE" après la modification du mot de passe attribué par l'admin
+    app.passwordchange:
+        class: AppBundle\EventListener\PasswordChangeListener
+        arguments: ['@router', '@security.token_storage', '@fos_user.user_manager']
+        tags:
+            - { name: kernel.event_subscriber }    
+
+    # Service de gestion de RLC
+    app.rlc_manager:
+        class: 'AppBundle\Service\RlcManager'
+        parent: app.base_manager
+        calls:
+            - [init, ['@utilisateur_manager', '@fos_user.user_manager','@personne_manager']]
+
+    # Service de gestion des campagnes
+    app.campagne_manager:
+        class: 'AppBundle\Service\CampagneManager'
+        parent: app.base_manager
+                
+    # Service de gestion des campagnes PNC
+    app.campagne_pnc_manager:
+        class: 'AppBundle\Service\CampagnePncManager'
+        parent:  app.campagne_manager
+        calls:
+            - [init, ['@personne_manager', '@app.campagne_rlc_manager', '@security.token_storage', '@app.mailer', '@templating']]
+
+    # Service de gestion des campagnes RLC
+    app.campagne_rlc_manager:
+        class: 'AppBundle\Service\CampagneRlcManager'
+        parent:  app.campagne_manager
+        calls:
+            - [init, ['@personne_manager', '@app.campagne_brhp_manager', '@security.token_storage', '@app.mailer', '@templating']]
+
+    # Service de gestion des campagnes BRHP
+    app.campagne_brhp_manager:
+        class: 'AppBundle\Service\CampagneBrhpManager'
+        parent:  app.campagne_manager
+        calls:
+            - [init, ['@personne_manager', '@security.token_storage', '@app.mailer', '@templating', '@app.crep_manager']]
+
+    # Service de gestion de périmètre RLC
+    app.perimetre_rlc_manager:
+        class: 'AppBundle\Service\PerimetreRlcManager'
+        parent: app.base_manager
+        calls:
+            - [init, ['@utilisateur_manager', '@fos_user.user_manager', ]]
+
+    # Service de gestion de périmètre BRHP
+    app.perimetre_brhp_manager:
+        class: 'AppBundle\Service\PerimetreBrhpManager'
+        parent: app.base_manager
+        calls:
+            - [init, ['@app.agent_manager', ]]
+            
+    # Service de gestion de Agents
+    app.agent_manager:
+        class: 'AppBundle\Service\AgentManager'
+        parent: app.base_manager
+        calls:
+            - [init, ['@personne_manager', '@app.mailer', '@utilisateur_manager', '@app.crep_manager', '%app.rep_scripts%']]
+
+
+    # Service de gestion des unités organisationnelles
+    unite_organisationnelle_manager:
+        class: 'AppBundle\Service\UniteOrganisationnelleManager'
+        parent: app.base_manager
+      
+    # Service de gestion des formations
+    formation_manager:
+        class: 'AppBundle\Service\FormationManager'
+        parent: app.base_manager
+            
+            
+    # Voter Rlc
+    app.rlc_voter:
+        class: AppBundle\Security\RlcVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    # Voter Campagne Pnc
+    app.campagne_pnc_voter:
+        class: AppBundle\Security\CampagnePncVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager', '@session']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    # Voter Campagne Rlc
+    app.campagne_rlc_voter:
+        class: AppBundle\Security\CampagneRlcVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager', '@session']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    # Voter Campagne BRHP
+    app.campagne_brhp_voter:
+        class: AppBundle\Security\CampagneBrhpVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager', '@security.token_storage', '@session' ]
+        public: false
+        tags:
+            - { name: security.voter }
+            
+    # Voter Agent
+    app.agent_voter:
+        class: AppBundle\Security\AgentVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager', '@session']
+        public: false
+        tags:
+            - { name: security.voter }        
+            
+    # Voter Crep
+    app.crep_voter:
+        class: AppBundle\Security\CrepVoter
+        arguments: ['@security.access.decision_manager','@doctrine.orm.entity_manager', '@session']
+        public: false
+        tags:
+            - { name: security.voter }
+                        
+    # Service de gestion de BRHP
+    app.brhp_manager:
+        class: 'AppBundle\Service\BrhpManager'
+        parent: app.base_manager
+        calls:
+            - [init, ['@utilisateur_manager','@personne_manager']]
+
+    # Voter BRHP
+    app.brhp_voter:
+        class: AppBundle\Security\BrhpVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    # Voter PerimetreBrhp
+    app.perimetre_brhp_voter:
+        class: AppBundle\Security\PerimetreBrhpVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager', '@session']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    # Voter PerimetreRlc
+    app.perimetre_rlc_voter:
+        class: AppBundle\Security\PerimetreRlcVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }  
+
+    # Voter Formation
+    app.formation_voter:
+        class: AppBundle\Security\FormationVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+
+    # Voter Utilisateur
+    app.utilisateur_voter:
+        class: AppBundle\Security\UtilisateurVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager', '@session']
+        public: false
+        tags:
+            - { name: security.voter } 
+
+    # Voter Unite organisationnelle
+    app.unite_organisationnelle_voter:
+        class: AppBundle\Security\UniteOrganisationnelleVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager']
+        public: false
+        tags:
+            - { name: security.voter } 
+            
+    # Voter ModeleCrep
+    app.modele_crep_voter:
+        class: AppBundle\Security\ModeleCrepVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager']
+        public: false
+        tags:
+            - { name: security.voter } 
+            
+    # Voter Recours
+    app.recours_voter:
+        class: AppBundle\Security\RecoursVoter
+        arguments: ['@security.access.decision_manager', '@session','@doctrine.orm.entity_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+            
+                                                
+    # Import csv        
+    app.import_csv:
+        class: AppBundle\Service\ImportCsv  
+        parent: app.base_manager
+        
+    # Service de gestion des documents
+    app.document_manager:
+        class: 'AppBundle\Service\DocumentManager'   
+        parent: app.base_manager  
+               
+    # Service de gestion des CREP
+    app.crep_manager:
+        class: 'AppBundle\Service\CrepManager'
+        parent: app.base_manager
+        calls:
+            - method: init
+              arguments:
+                  - '@white_october.tcpdf'
+                  - '@app.crep_confidentialisation_manager'
+                  - '@templating'
+                  - '%fichier.certificat%'
+                  - '@app.crep_mindef01_manager'
+                  - '@app.crep_ac_manager'
+                  - '@app.crep_mcc_manager'
+                  - '@app.crep_minef_abc_manager'
+                  - '@app.crep_scl_manager'
+                  - '@app.crep_mso3_manager'
+                  - '@app.crep_mj01_manager'
+  
+        
+    # Service de gestion de confidentialisation des CREP
+    app.crep_confidentialisation_manager:
+        class: 'AppBundle\Service\CrepConfidentialisationManager'
+        parent: app.base_manager
+
+    # Service de gestion de Agents
+    app.statistiques_manager:
+        class: 'AppBundle\Service\StatistiquesManager'
+        parent: app.base_manager
+        calls:
+            - [init, ['@app.crep_manager']]
+
+
+    # Service export des formations CrepMindef01
+    app.crep_mindef01_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepMindef01Manager'
+        parent: app.base_manager
+
+
+    # Service export des formations CrepAc
+    app.crep_ac_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepAcManager'
+        parent: app.base_manager
+        
+
+    # Service export des formations CrepMcc
+    app.crep_mcc_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepMccManager'
+        parent: app.base_manager
+                
+    # Service export des formations CrepMinefAbc
+    app.crep_minef_abc_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepMinefAbcManager'
+        parent: app.base_manager
+
+    # Service export des formations CrepScl
+    app.crep_scl_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepSclManager'
+        parent: app.base_manager
+        
+    # Service export des formations Mso3
+    app.crep_mso3_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepMso3Manager'
+        parent: app.base_manager                
+
+    # Service export des formations Mj01
+    app.crep_mj01_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepMj01Manager'
+        parent: app.base_manager 
+                            
+    app.oracle.session.listener:
+        class: 'AppBundle\EventListener\AppOracleSessionInit'
+        tags:
+            - { name: doctrine.event_listener, event: postConnect }

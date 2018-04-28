@@ -1,0 +1,47 @@
+campagne_admin_min_index:
+    path:     /
+    defaults: { _controller: "AppBundle:CampagneAdminMin:index" }
+    methods:  GET
+
+campagne_admin_min_show:
+    path:     /{id}/show/{id_perimetre}
+    defaults: { _controller: "AppBundle:CampagneAdminMin:show", id_perimetre: 0 }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        id_perimetre: '\d+'
+         
+campagne_admin_min_charger_population:
+    path:     /{id}/charger-population
+    defaults: { _controller: "AppBundle:CampagneAdminMin:chargerPopulation" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+         
+campagne_admin_min_supprimer_population:
+    path:     /{id}/supprimer-population
+    defaults: { _controller: "AppBundle:CampagneAdminMin:supprimerPopulation" }
+    methods:  [DELETE]
+    requirements:
+        id: '\d+'
+            
+campagne_admin_min_diffuser_population:
+    path:     /{id}/diffuser-population
+    defaults: { _controller: "AppBundle:CampagneAdminMin:diffuserPopulation" }
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+        
+campagne_admin_fichier_population:
+    path:     /{id}/fichier-population
+    defaults: { _controller: "AppBundle:CampagneAdminMin:getFichierPopulation" }
+    methods:  [GET]
+    requirements:
+        id: '\d+'
+        
+campagne_admin_extraction_fichier_agents_depuis_agent:
+    path:     /{id}/fichier-agents-depuis-agent
+    defaults: { _controller: "AppBundle:CampagneAdminMin:getFichierAgentsDepuisAgent" }
+    methods:  [GET]
+    requirements:
+        id: '\d+'

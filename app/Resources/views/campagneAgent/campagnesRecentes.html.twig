@@ -1,0 +1,88 @@
+{% extends "Campagne/campagnesRecentes.html.twig" %}
+
+{% block KPI %}
+
+<!-- Block Indicateurs -->
+<div class="col-md-12 col-sm-12 col-xs-12">
+	
+	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="tile-stats">
+			<div class="icon">
+				<i class="fa fa-pencil-square-o"></i>
+			</div>
+			<div class="count"> {{ indicateurs["nbCrepsVises"] }}</div>
+			<h3>CREP{% if indicateurs["nbCrepsVises"] > 1 %}s{% endif %} visé{% if indicateurs["nbCrepsVises"] > 1 %}s{% endif %} </h3>
+		</div>
+	</div>
+
+	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="tile-stats">
+			<div class="icon">
+				<i class="fa fa-ban"></i>
+			</div>
+			<div class="count"> {{ indicateurs["nbCrepsRefusVisa"] }}</div>
+			<h3>CREP{% if indicateurs["nbCrepsRefusVisa"] > 1 %}s{% endif %} en refus de visa</h3>
+		</div>
+	</div>
+	
+{# 	<div class="clearfix"></div>#}
+
+	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="tile-stats">
+			<div class="icon">
+				<i class="fa fa-check-square-o"></i>
+			</div>
+			<div class="count"> {{ indicateurs["nbCrepsNotifies"] }}</div>
+			<h3>CREP{% if indicateurs["nbCrepsNotifies"] > 1 %}s{% endif %} signé{% if indicateurs["nbCrepsNotifies"] > 1 %}s{% endif %} définitivement </h3>
+		</div>
+	</div>
+
+	<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="tile-stats">
+			<div class="icon">
+				<i class="fa fa-times"></i>
+			</div>
+			<div class="count"> {{ indicateurs["nbCrepsRefusNotification"] }}</div>
+			<h3>CREP{% if indicateurs["nbCrepsRefusNotification"] > 1 %}s{% endif %} en refus de signature définitive</h3>
+		</div>
+	</div>
+
+</div>
+<!-- End Block Indicateurs -->
+
+<!-- Start to do list -->
+{# <div class="col-md-6 col-sm-6 col-xs-12">#}
+
+{# 	<div class="x_panel panel_green">#}
+
+{# 		<!-- Block Title -->#}
+{# 		<div class="x_title">#}
+{# 			<h2>Tâches à faire</h2>#}
+{# 			<ul class="nav navbar-right panel_toolbox">#}
+{# 				<li><a class="collapse-link"> <i class="fa fa-chevron-up"></i></a></li>#}
+{# 			</ul>#}
+{# 			<div class="clearfix"></div>#}
+{# 		</div>#}
+
+{# 		<div class="x_content">#}
+{# 			<div class="">#}
+{# 				<ul class="to_do"">#}
+{# 					<li>#}
+{# 						<p>#}
+{# 							<i class="fa fa-circle-o"></i> CREP à viser#}
+{# 						</p>#}
+{# 					</li>#}
+{# 				</ul>#}
+{# 			</div>#}
+{# 		</div>#}
+
+{# 	</div>#}
+
+{# </div>#}
+<!-- End to do list -->
+
+{% endblock KPI %}
+
+{% block route_show %}
+	"{{ path('campagne_agent_show', { 'id': campagne.id }) }}"
+{% endblock route_show %}

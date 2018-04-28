@@ -1,0 +1,47 @@
+{% form_theme form 'crep/crepScl/Form/App_form_crepScl.html.twig' %}
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.nomUsage, { 'label': "Nom" }) }}
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.prenom, { 'label': "Prénom" }) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateNaissance, { 'label': "Date de naissance"}) }}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.grade, { 'label': "Grade" }) }}
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.echelon, { 'label': "Echelon" }) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.rang, { 'label': "Rang" }) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.directionAffectation, { 'label': "Direction ou service d'affectation" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+        	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_scl_echelon">Echelon terminal</label>
+    		<div class="col-md-9 col-sm-9 col-xs-12">
+    			{{ form_widget(form.echelonTerminal, {'label': false }) }}
+			</div>
+		</div>
+    </div>
+</div>
+
+<br/>

@@ -1,0 +1,68 @@
+{% set message = "Veuillez compléter cette information :<br/>
+				 - soit en renseignant un N+2<br/>
+				 - soit en déclarant l’agent en <strong>«Sans N+2»</strong><br/>
+				 <br/>
+				 Pour cela, rendez-vous à la fiche de l’agent accessible depuis le bouton <strong><i class=\"fa fa-edit\"></i></strong>." %}
+
+<table id="table_agents_non_evaluabes" class="table table-striped table-bordered app_datatable dt-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th >Agent</th>
+            <th>Email</th>
+            <th>N+2</th>
+            <th style="width:50%">Motif de non évaluation</th>
+            <th style="width:10%; text-align: center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for agent in agentsNonEvaluables %}
+            <tr>
+            	<td>
+                   {% if agent.civilite and agent.nom and agent.prenom  %}
+                        {{ agent | identite }}
+                   {% endif %}
+                </td>
+                <td>{{ agent.email }}</td>
+                {% if agent.ah is not null %}
+                	<td>
+                        {% if agent.ah.civilite and agent.ah.nom and agent.ah.prenom  %}
+                        	{{ agent.ah | identite }}
+                        {% else %}
+                        	{{ agent.ah.email }}
+                        {% endif %}                                        	
+                	</td>
+                {% else %}
+                    {% if agent.sansAh %}
+                    	<td>
+                    		<center>
+                    			<span class="label label-purple">Sans N+2</span>
+                    		</center>
+                     	</td>   	
+                    {% else %}
+                    	<td>
+							<div align="center">
+								<i class="fa fa-exclamation-triangle orange" data-placement="auto" data-toggle="popover-warning" title="N+2 non renseigné" data-content="{{ message }}" data-trigger="hover"></i>
+							</div>                                        	
+						</td>
+                    {% endif %}
+                {% endif %}
+                <td>{{ agent.motifNonEvaluation }}</td>
+                <td class="text-center">
+                	{% if is_granted(constant('AppBundle\\Security\\AgentVoter::MODIFIER'), agent) %}
+    					<a href="{{ path('agent_edit', { 'id': agent.id }) }}" title="Modifier"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+    				{% endif %}
+    				{% if is_granted(constant('AppBundle\\Security\\AgentVoter::DETACHER_SHD'), agent) %}
+    					<a href="#" data-toggle="modal" data-target="#detacher_agent_non_evaluable_{{ agent.id }}" title="Libérer l'agent de mon périmètre"><i class="fa fa fa-unlink"></i></a>&nbsp; &nbsp;
+    			    {% endif %}
+					<a href="{{ path('agent_show', { 'id': agent.id }) }}" title="Voir"><i class="fa fa-search"></i></a>
+                </td>
+            </tr>
+            
+            {% if is_granted(constant('AppBundle\\Security\\AgentVoter::DETACHER_SHD'), agent) %}
+				{% set message = "Êtes-vous sûr de bien vouloir <strong>libérer</strong> cet agent de votre pèrimètre d'agents ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> L'agent deviendra de ce fait orphelin de N+1." %}
+            	{{ macro.modal('warning', "detacher_agent_non_evaluable_"~agent.id , "Libérer l'agent de mon périmètre d'agents", message, 'fa fa-unlink', detacherShdForms[agent.id])}} 
+            {% endif %}
+            
+        {% endfor %}
+    </tbody>
+</table>

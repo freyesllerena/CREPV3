@@ -1,0 +1,17 @@
+<div class="row form-group">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<label>Renvoi à un document annexe (lettre de mission ou d’objectifs) : </label> {{ crep.docAnnexeBilan|ouiNon }}
+    </div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<label>Contexte de l’année écoulée (organisation et fonctionnement du service)</label>
+    
+    	<div class="col-md-12 col-sm-12 col-xs-12 well well-xs">
+    		{{ crep.contexteObjectifsPasses|nl2br }}
+    	</div>
+    </div>
+</div>
+
+<br/>

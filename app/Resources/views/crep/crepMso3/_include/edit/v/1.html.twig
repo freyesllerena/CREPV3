@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-5 col-sm-5 col-xs-12" style="text-align:left;">L'agent souhaite-t-il bénéficier d'un entretien avec un conseiller mobilité-carrière ?</label>
+	    <div class="col-md-6 col-sm-6 col-xs-12">
+	        {{ form_row(form.souhaitEntretienCarriere, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="pull-left">Évolution sur le poste actuel</label>
+        {{ form_row(form.evolutionPosteActuel) }}
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="pull-left">Modification éventuelle de la fiche de poste</label>
+        {{ form_row(form.modificationFicheDePoste) }}
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="pull-left">Prise de responsabilités plus importantes</label>
+        {{ form_row(form.priseDeResponsabilites) }}
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="pull-left">Projet professionnel</label>
+        {{ form_row(form.projetProfessionnel) }}
+    </div>
+</div>
+
+<br>

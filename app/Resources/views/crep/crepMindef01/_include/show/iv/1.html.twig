@@ -1,0 +1,165 @@
+{# {% form_theme form 'crep/crepMindef01/_include/edit/ii/2.form.html.twig' %}#}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Domaine</th>
+                    <th style="width: 12%" class="text-center">Excellent</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Sans objet</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competenceTransverse in crep.competencesTransverses %}
+            		{% if competenceTransverse.competenceTransverse.typeCompetence == 'Domaine' %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverse.competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..5 %}
+                        	<td class="text-center">{{ competenceTransverse.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class="text-center">Technique(2)</td>
+                    <th style="width: 12%" class="text-center">Excellent</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Sans objet</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for technique in crep.techniques %}
+                    <tr>
+                        <td>
+                            {{ technique.libelle | nl2br }}
+                        </td>
+                        {% for index in 0..5 %}
+                        	<td class="text-center">{{ technique.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>               
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" id="autresDomaineCollection">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class="text-center">Autres</td>
+                    <th style="width: 12%" class="text-center">Excellent</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Sans objet</th>
+                </tr>
+            </thead>
+            <tbody>
+              
+                {% for autreDomaine in crep.autresDomaines %}
+                    <tr>
+                        <td>
+                            {{ autreDomaine.libelle | nl2br }}
+                        </td>
+                        {% for index in 0..5 %}
+                        	<td class="text-center">{{ autreDomaine.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>                
+                {%  endfor %}
+                
+            </tbody>
+            
+        </table>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Savoir faire</th>
+                    <th style="width: 12%" class="text-center">Excellent</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Sans objet</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competenceTransverse in crep.competencesTransverses %}
+            		{% if competenceTransverse.competenceTransverse.typeCompetence == 'Savoir Faire' %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverse.competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..5 %}
+                        	<td class="text-center">{{ competenceTransverse.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Savoir être</th>
+                    <th style="width: 12%" class="text-center">Excellent</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Sans objet</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competenceTransverse in crep.competencesTransverses %}
+            		{% if competenceTransverse.competenceTransverse.typeCompetence == 'Savoir Etre' %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverse.competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..5 %}
+                        	<td class="text-center">{{ competenceTransverse.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+    <b>(1)</b> : Organisation des organisations<br>
+    <b>(2)</b> : Aéronautique, génie civil, HCST, informatique, communication, qualité, contrôle de gestion, etc.<br>
+</p>

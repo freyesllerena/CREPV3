@@ -1,0 +1,54 @@
+{% form_theme form 'crep/crepAc/Form/App_form_crepAc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.nomUsage, { 'label': "Nom" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.prenom, { 'label': "Prénom" }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateNaissance, { 'label': "Date de naissance"}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.grade, { 'label': "Grade dans le corps des administrateurs civils" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.echelon, { 'label': "Échelon"}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.corps, { 'label': "Corps" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.cadreEmploi, { 'label': "Cadre d’emplois"}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.gradeEmploi, { 'label': "Grade d’origine" }) }}
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:left;">Nommé sur un emploi fonctionnel</label>
+	    <div class="col-md-9 col-sm-9 col-xs-12">
+	        {{ form_row(form.emploiFonctionnel, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.affectationSigle, { 'label': "Direction/Service/Bureau"}) }}
+    </div>
+</div>
+
+<br/>

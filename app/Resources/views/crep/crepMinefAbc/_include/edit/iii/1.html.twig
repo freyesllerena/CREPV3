@@ -1,0 +1,42 @@
+{% form_theme form with ['crep/crepMinefAbc/Form/App_form_crepMinefAbc_v_2.html.twig', _self] %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.souhaitEvolutionCarriere, {'label': "Souhait d'évolution de carrière (projet professionnel, promotion envisagée, souhait d’accéder à un poste de chef de secteur, d’adjoint, de chef de mission ...)", 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.typeEvolutionCarriere, {'label': false, 'attr':{'placeholder': 'Détails'} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.souhaitMobilite, {'label': "Souhait de mobilité (souhait de mobilité fonctionnelle, géographique ...)", 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.typeMobilite, {'label': false, 'attr':{'placeholder': 'Détails'} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.souhaitEntretienCarriere, {'label': "Souhait de l’agent de bénéficier d'un entretien pour évoquer ses perspectives de carrière et de mobilité", 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.typeEntretienCarriere) }}
+        {{ form_row(form.coordonneesEntretien, {'label': false, 'attr':{'placeholder': 'Si demande d’entretien, merci d’indiquer vos coordonnées (mail, tel ...)'} }) }}
+    </div>
+</div>
+
+<br/>

@@ -1,0 +1,25 @@
+<div class="row  form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateEntretien, { 'label': "Date de l'entretien professionnel" }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.refusEntretienProfessionnel, {'label': 'L\'entretien professionnel avec l\'agent n\'a pas eu lieu', 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Motif</dt>
+            <dd>
+                {{ form_row(form.motifRefusEntretien,{'attr': {'maxlength': '4096'}}) }}
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<br/>

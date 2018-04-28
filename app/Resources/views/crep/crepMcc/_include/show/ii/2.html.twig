@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Critères d'appréciation</th>
+                    <th style="width: 12%" class="text-center">Expert (1)</th>
+                    <th style="width: 12%" class="text-center">Maîtrise (2)</th>
+                    <th style="width: 12%" class="text-center">Pratique (3)</th>
+                    <th style="width: 12%" class="text-center">À développer (4)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for critere in crep.criteresAppreciations %}
+                    <tr>
+                        <td>
+                            {{ critere.competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..3 %}
+                        	<td class="text-center">{{ critere.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Responsabilité d'encadrement <small>(Pour les agents-es en situation d'encadrement)</small></th>
+                    <th style="width: 12%" class="text-center">Excellente maîtrise (5)</th>
+                    <th style="width: 12%" class="text-center">Maîtrise (6)</th>
+                    <th style="width: 12%" class="text-center">À développer (3)</th>
+                    <th style="width: 12%" class="text-center">À acquérir (4)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resp in crep.responsabilitesEncadrements %}
+                    <tr>
+                        <td>
+                            {{ resp.competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..3 %}
+                        	<td class="text-center">{{ resp.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Nombre d'agents encadrés <small>(Pour les agents-es en situation d'encadrement)</small></th>
+                    <th class="text-center">Nombre d'agents à évaluer</th>
+                    <th class="text-center">Nombre d'agents évalués en {{ crep.agent.campagnePnc.anneeEvaluee+1 }} (au titre de {{ crep.agent.campagnePnc.anneeEvaluee }})</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">{{ crep.nbAgentsEncadres }}</td>
+                    <td class="text-center">{{ crep.nbAgentsAEvaluer }}</td>
+                    <td class="text-center">{{ crep.nbAgentsEvaluesAnneePrec }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br/>
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class ="title"> Avis circonstancié sur certains critères d'appréciation (le cas échéant)</p>
+        <p class="well well-xs"> {{ crep.avisCriteresAppreciations|nl2br }}</p>
+    </div>
+</div>

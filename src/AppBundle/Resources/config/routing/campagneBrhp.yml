@@ -1,0 +1,53 @@
+campagne_brhp_index:
+    path:     /
+    defaults: { _controller: "AppBundle:CampagneBrhp:index" }
+    methods:  GET
+
+campagne_brhp_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CampagneBrhp:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+campagne_brhp_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CampagneBrhp:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+        
+campagne_brhp_ouvrir_shd:
+    path:     /{id}/ouvrirShd
+    defaults: { _controller: "AppBundle:CampagneBrhp:ouvrirShd" }  
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+            
+campagne_brhp_delete_document:
+    path:     /{id}/deleteDocument/{id_document}
+    defaults: { _controller: "AppBundle:CampagneBrhp:deleteDocument", id_document: 0 }
+    methods:  [DELETE]
+    requirements:
+        id: '\d+'
+        id_document: '\d+'
+            
+campagne_brhp_rouvrir :
+    path:     /{id}/rouvrir
+    defaults: { _controller: "AppBundle:CampagneBrhp:rouvrir" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+        
+campagne_brhp_exporter_formations :
+    path:     /{id}/exporter_formations
+    defaults: { _controller: "AppBundle:CampagneBrhp:exporterFormations" }
+    methods:  [GET]
+    requirements:
+        id: '\d+'
+        
+campagne_brhp_exporter_creps_finalises:
+    path:     /exporter-creps-finalises/{campagneBrhp}
+    defaults: { _controller: "AppBundle:CampagneBrhp:exporterCrepsFinalises" }
+    requirements:
+        campagne: '\d+'

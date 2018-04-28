@@ -1,0 +1,61 @@
+{% form_theme form 'crep/crepAc/Form/App_form_crepAc.html.twig' %}
+
+<div class="row" id="objectifsFutursCollectifsCollection" data-prototype="{{ form_widget(form.objectifsFutursCollectifs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th style="width: 30%">Objectifs d’ordre collectif</th>
+                    <th style="width: 16%" class="text-center">Échéance</th>
+                    <th style="width: 24%">Indicateurs</th>
+                    <th style="width: 24%">Observations éventuelles</th>
+                    <th style="width: 6%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectif in form.objectifsFutursCollectifs %}
+                    {{ form_widget(objectif) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link objectifsFutursCollectifs pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br/>
+
+<div class="row" id="objectifsFutursIndividuelsCollection" data-prototype="{{ form_widget(form.objectifsFutursIndividuels.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th style="width: 30%">Objectifs d’ordre individuel</th>
+                    <th style="width: 16%" class="text-center">Échéance</th>
+                    <th style="width: 24%">Indicateurs</th>
+                    <th style="width: 24%">Observations éventuelles</th>
+                    <th style="width: 6%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectif in form.objectifsFutursIndividuels %}
+                    {{ form_widget(objectif) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link objectifsFutursIndividuels pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

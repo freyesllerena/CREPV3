@@ -1,0 +1,26 @@
+{% form_theme form with ['Form/App_bootstrap_3_layout.html.twig', _self] %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Domaine</th>
+                    <th>Nombre d'années dans le domaine</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emploi in form.children.emplois.children %}
+                    <tr>
+                        <td>{{ form_row(emploi.poste, { 'label': false}) }}</td>
+                        <td>{{ form_row(emploi.nombreAnneesDomaine, { 'label': false}) }}</td>
+                    </tr>
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% block form_error_div1 -%}
+{% endblock form_error_div1 -%}

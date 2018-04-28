@@ -1,0 +1,9 @@
+AppBundle\Entity\Utilisateur:
+    properties:
+        email:
+            - NotBlank:
+                message: "Adresse email obligatoire"
+            - Email:
+                message: "{{ value }} n'est pas un email valide."
+                checkMX: false
+                

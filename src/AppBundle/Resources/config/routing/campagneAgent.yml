@@ -1,0 +1,11 @@
+campagne_agent_index:
+    path:     /
+    defaults: { _controller: "AppBundle:CampagneAgent:index" }
+    methods:  GET
+    
+campagne_agent_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CampagneAgent:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'    

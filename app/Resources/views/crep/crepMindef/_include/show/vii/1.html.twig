@@ -1,0 +1,17 @@
+{% if crep.refusEntretienProfessionnel %}
+    <div class="row">
+        <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+    	    <i class="fa fa-check-square-o"></i> L'agent <strong>a refusé</strong> de participer à l'entretien professionnel.	
+        	<br/><br/>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Date de l'entretien</dt>
+                <dd>{% if crep.dateEntretien %}{{ crep.dateEntretien|date('d/m/Y') }}{% endif %}</dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

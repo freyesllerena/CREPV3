@@ -1,0 +1,241 @@
+{% extends "crep/crepMindef/mindef.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+	{{ block('alertErreurValidationFormulaireCrep') }}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block i1 %}
+    <!-- debut i1 -->
+	{% include 'crep/crepMindef/_include/edit/i/1.html.twig' %}
+    <!-- fin i1 -->
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepMindef/_include/edit/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block ii1 %}
+	{% include 'crep/crepMindef/_include/edit/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+	{% include 'crep/crepMindef/_include/edit/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii2_2 %}
+	{% include 'crep/crepMindef/_include/edit/ii/2.2.html.twig' %}
+{% endblock ii2_2 %}
+
+{% block ii3 %}
+	{% include 'crep/crepMindef/_include/edit/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block ii4 %}
+    {% include 'crep/crepMindef/_include/edit/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block iii1 %}
+    {% include 'crep/crepMindef/_include/edit/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+    {% include 'crep/crepMindef/_include/edit/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block iii3_1 %}
+    {% include 'crep/crepMindef/_include/edit/iii/3.1.html.twig' %}
+{% endblock iii3_1 %}
+
+{% block iii3_2 %}
+    {% include 'crep/crepMindef/_include/edit/iii/3.2.html.twig' %}
+{% endblock iii3_2 %}
+
+{% block iii3_3 %}
+    {% include 'crep/crepMindef/_include/edit/iii/3.3.html.twig' %}
+{% endblock iii3_3 %}
+
+{% block iv1_1 %}
+    {% include 'crep/crepMindef/_include/edit/iv/1.1.html.twig' %}
+{% endblock iv1_1 %}
+
+{% block iv1_2 %}
+    {% include 'crep/crepMindef/_include/edit/iv/1.2.html.twig' %}
+{% endblock iv1_2 %}
+
+{% block iv2 %}
+    {% include 'crep/crepMindef/_include/edit/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block iv3 %}
+    {% include 'crep/crepMindef/_include/edit/iv/3.html.twig' %}
+{% endblock iv3 %}
+
+{% block iv4 %}
+    {% include 'crep/crepMindef/_include/edit/iv/4.html.twig' %}
+{% endblock iv4 %}
+
+{% block v1 %}
+	{% include 'crep/crepMindef/_include/edit/v/1.html.twig' %}
+{% endblock v1 %}
+
+{% block v2 %}
+    {% include 'crep/crepMindef/_include/edit/v/2.html.twig' %}
+{% endblock v2 %}
+
+{% block v3 %}
+	{% include 'crep/crepMindef/_include/edit/v/3.html.twig' %}
+{% endblock v3 %}
+
+{% block v4 %}
+	{% include 'crep/crepMindef/_include/edit/v/4.html.twig' %}
+{% endblock v4 %}
+
+{% block v5 %}
+	{% include 'crep/crepMindef/_include/edit/v/5.html.twig' %}
+{% endblock v5 %}
+
+{% block v6 %}
+	{% include 'crep/crepMindef/_include/edit/v/6.html.twig' %}
+{% endblock v6 %}
+
+{% block vi1 %}
+	{% include 'crep/crepMindef/_include/edit/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+	{% include 'crep/crepMindef/_include/edit/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vi3 %}
+	{% include 'crep/crepMindef/_include/edit/vi/3.html.twig' %}
+{% endblock vi3 %}
+
+{% block vii1 %}
+    {% include 'crep/crepMindef/_include/edit/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2 %}
+    {% include 'crep/crepMindef/_include/edit/vii/2.html.twig' %}
+{% endblock vii2 %}
+
+{% block vii3 %}
+    {% include 'crep/crepMindef/_include/edit/vii/3.html.twig' %}
+{% endblock vii3 %}
+
+{% block vii4 %}
+    {% include 'crep/crepMindef/_include/edit/vii/3.html.twig' %}
+{% endblock vii4 %}
+
+{% block vii5 %}
+    {% include 'crep/crepMindef/_include/edit/vii/5.html.twig' %}
+{% endblock vii5 %}
+
+
+{% block circuitDeValidation %}
+{% endblock circuitDeValidation %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+    	$( document ).ready(function() {
+        	// Si les collections des objectifs possèdent 4 objectifs, on n'affiche pas le bouton ajouter du prototype(le modèle CrepMindef se limite à 4 objectifs)
+    		verifierNbObjectifs('tableObjectifsPasses','btnAddObjectifsPasses');
+    		verifierNbObjectifs('tableObjectifsFuturs','btnAddObjectifsFuturs');
+
+    		if($('#crep_mindef_refusEntretienProfessionnel').attr('checked')) {
+    	    	document.getElementById("crep_mindef_dateEntretien").disabled = true;
+    	    } else {
+    	    	document.getElementById("crep_mindef_dateEntretien").disabled = false;
+    	 	}
+
+    		verifierNbObjectifs('tableObjectifsPasses','btnAddObjectifsPasses');
+    		verifierNbObjectifs('tableObjectifsFuturs','btnAddObjectifsFuturs');
+    	});
+
+    	$("#crep_mindef_refusEntretienProfessionnel" ).on('ifChanged', function(){
+      		if($('#crep_mindef_refusEntretienProfessionnel').attr('checked')) {
+      			$('#crep_mindef_refusEntretienProfessionnel').removeAttr("checked");
+          		document.getElementById("crep_mindef_dateEntretien").disabled = false;
+            } else {
+                $('#crep_mindef_refusEntretienProfessionnel').attr("checked", "checked");
+                $('#crep_mindef_dateEntretien').val('');
+          		document.getElementById("crep_mindef_dateEntretien").disabled = true;
+            }
+    	});
+    	
+        $(function() {
+            calculateNumberAgent();
+           var crepCollections = new Crep.Collections();
+           var souhaitsEvolutionsRadios = $("input[name*='choix']");
+           $(".select2_single").select2({'placeholder': ''});
+           App_calendrier();
+           // Cacher les freres du div row avec la methode slideUp de jquery
+           $("input[name*='choix']:not(:checked)").closest("div.row:not('.x_content')").next().slideUp();
+           souhaitsEvolutionsRadios.on('ifToggled', function(event){
+               var target = $(event.target);
+               if (target.prop('checked')) {
+                   target.closest("div.row:not('.x_content')").next().slideDown();
+               } else {
+                   target.closest("div.row:not('.x_content')").next().slideUp();
+               }
+           });
+        });
+        function calculateNumberAgent() {
+            var catA = $("#crep_mindef_nbAgentsEncadresA");
+            var catB = $("#crep_mindef_nbAgentsEncadresB");
+            var catC = $("#crep_mindef_nbAgentsEncadresC");
+            var result = $("#result_nb_agents");
+
+            catA.on('change paste keyup', calculate);
+            catB.on('change paste keyup', calculate);
+            catC.on('change paste keyup', calculate);
+
+            function isPositiveNumber(val) {
+                var value = parseInt(val) || 0;
+                value = Math.trunc(Math.abs(value));
+
+                return value
+            }
+
+            // private function permet de calculer la somme des agents de chaque catégorie
+            function calculate() {
+                var _catA = isPositiveNumber(catA.val());
+                var _catB = isPositiveNumber(catB.val());
+                var _catC = isPositiveNumber(catC.val());
+
+                catA.val(_catA);
+                catB.val(_catB);
+                catC.val(_catC);
+                result.html(_catA + _catB + _catC);
+            }
+        }
+
+        // Vérifier le nombre de TR que contient la table passée en paramètre (ça correspond au nombre d'objectifs contenus dans la table)
+        // Si on a 4 objectifs, on cache le bouton passé en paramètre 
+        // Le paramètre addOneTR = true, si l'action a été appelée depuis le bouton d'ajout (parce que cette fonction est appelée avant l'ajout de la nouvelle ligne)
+        function verifierNbObjectifs(tableID,boutonID,addOneTR = false) {
+			nbTR = $('#'+tableID).children('tbody').children('tr').length;
+
+			if (addOneTR) {
+				nbTR++;//+1 Pour compter la ligne qui s'est ajoutée en cliquant sur le bouton
+			}
+			
+			if (nbTR >= 4) {
+				$('#'+boutonID).hide();
+			} else {
+				$('#'+boutonID).show();
+			}
+	    }
+    </script>
+{% endblock javascripts %}

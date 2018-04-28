@@ -1,0 +1,38 @@
+{% extends 'index.base.html.twig' %}
+
+{% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block frameTitle %}Formation{% endblock frameTitle %}
+{% block pageIcon %}fa fa-graduation-cap{% endblock pageIcon %}
+{% block pageTitle %}Formation{% endblock pageTitle %}
+
+
+{% block content %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal form-label-left'}})}}
+        <div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+        		<div class="x_panel panel_green">
+        			<div class="x_title">
+        				<h2>{% block formTitle %}Création d'une nouvelle formation {% endblock formTitle %}<small></small></h2>
+        				<div class="clearfix"></div>
+        			</div>
+        			<div class="x_content">
+        					{{ form_row(form.code, { 'label': "Code" }) }}
+        					{{ form_row(form.libelle, { 'label': "Libellé" }) }}
+        					{{ form_row(form.duree, { 'label': "Durée en jour" }) }}
+        				<span style="color:red"><b>*</b></span><small> : Champ obligatoire</small>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        
+        <div class="row">
+        	<div class="col-md-12 col-sm-12 col-xs-12">
+        	    {% block bouton_submit %}
+        			<button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-check"></i> Valider</button>
+        	    {% endblock bouton_submit %}	
+        	</div>
+        </div>
+    {{form_end(form)}}
+{% endblock content %}
+

@@ -1,0 +1,18 @@
+<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">	
+	<i class="fa fa-info-circle" aria-hidden="true"></i> <i>À remplir par le supérieur hiérarchique.</i>
+</p>
+						
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Évolution sur le poste actuel </label>
+        {{ form_row(form.evolutionPosteActuel,{'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Mobilité fonctionnelle interne ou externe ou mobilité géographique</label>
+        {{ form_row(form.mobilite,{'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>
+

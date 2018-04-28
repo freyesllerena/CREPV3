@@ -1,0 +1,13 @@
+crep_scl_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CrepScl:show" }
+    methods:  GET
+
+crep_scl_edit: 
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CrepScl:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+
+    

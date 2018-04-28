@@ -1,0 +1,109 @@
+<div class="x_panel panel_green">
+    <div class="x_title">
+        <h2>Détails de la campagne<small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th scope="row">Libellé</th>
+                    <td>{{ campagneAh.libelle }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Périmètre BRHP</th>
+                    <td>{{ campagneAh.perimetreBrhp }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Année d'évaluation</th>
+                    <td>{{ campagneAh.anneeEvaluee }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Date d'ouverture de campagne</th>
+                  <td>{{ campagneAh.dateDebut | date('d/m/Y') }}</td>
+                </tr>
+                {% if campagneAh.dateDebutEntretien %}
+                <tr>
+                  <th scope="row">Date de début des entretiens</th>
+                  <td>{{ campagneAh.dateDebutEntretien | date('d/m/Y') }}</td>
+                </tr>
+                {% endif %}
+                
+                <tr>
+                  <th scope="row">Date de clôture</th>
+                  <td>{{ campagneAh.dateCloture ? campagneAh.dateCloture | date('d/m/Y') }}</td>
+                </tr>
+                
+   		        {% if campagneAh.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CLOTUREE'), constant('AppBundle\\EnumTypes\\EnumStatutCampagne::FERMEE')] %}
+                    <tr>
+                  		<th scope="row">Compte à rebours</th>
+                       	{# Compte à rebours : Pour calculer le nombre de jours qu'il y a entre deux dates, on convertie ces deux dates au format "timestamp", on calcule la différence puis on la convertie en jours et ce en la divisant sur 86400 #}
+                        {% if campagneAh.dateCloture | date('Ymd') >= "now" | date('Ymd') %}
+                        <td><span class="label label-danger">J-{{ ((campagneAh.dateCloture | date('U') - "now" | date('U')) / 86400) | round(0, 'ceil') | abs }}</span></td>
+                        {% else %}
+                        <td></td>
+                        {% endif %}
+                	</tr>
+            	{% endif %}
+                
+                {% if campagneAh.dateFermeture %}
+                    <tr>
+                      <th scope="row">Date de fermeture</th>
+                      <td>{{ campagneAh.dateFermeture | date('d/m/Y') }}</td>
+                    </tr>
+                {% endif %}
+                
+                <tr>
+                    <th>Statut</th>
+                    <td>
+                        <span class="label {{ campagneAh.statut | campagne_status_label }}">{{ campagneAh.statut }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Formulaire CREP vierge</th>
+                    <td>
+                        <ul class="list-unstyled project_files">
+                            {% for modeleCrep in modelesCrep %}
+								<li><a href="{{ path('exporter_crep_vierge', { 'id': modeleCrep.id , 'campagnePnc' : campagneAh.campagnePnc.id }) }}" title="Visualiser le formulaire"> <i class="fa fa-file-pdf-o"></i> {{ modeleCrep.libelle }}</a> </li>
+            				{% endfor %}
+        				</ul>
+					</td>
+                </tr>
+                
+        		{% if is_granted(constant('AppBundle\\Security\\CampagneBrhpVoter::EXPORTER_CREPS_FINALISES'), campagneAh) %}
+            		<tr>
+        				<th scope="row">CREP finalisés </th>
+                        <td>
+                        	<a href="{{ path('campagne_brhp_exporter_creps_finalises', { 'campagneBrhp': campagneAh.id }) }}">
+                                <span class="text-primary" style="font-size: 14px"><i class="fa fa-file-archive-o" aria-hidden="true"></i> &nbsp;&nbsp;Exporter les CREP finalisés</span>
+                            </a>
+                        </td>
+            		<tr>
+        		{% endif %}
+                
+                <tr>
+                    <th scope="row">Documents </th>
+                    <td>
+                        <ul class="list-unstyled project_files">
+                            {% for document in campagneAh.campagneRlc.campagnePnc.documents %}
+                                <li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+                                {% endfor  %}
+
+                            {% for document in campagneAh.campagneRlc.documents %}
+                                <li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+                                {% endfor  %}
+
+                            {% for document in campagneAh.documents %}
+                                <li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+                                {% endfor  %}
+                        </ul>
+                    </td>
+                </tr>							
+            </tbody>
+        </table>
+    </div>
+</div>

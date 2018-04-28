@@ -1,0 +1,32 @@
+{% form_theme form 'crep/crepMindef01/Form/App_form_crepMindef01.html.twig' %}
+
+<div class="row" id="formationsDemandeesAdministrationCollection" data-prototype="{{ form_widget(form.formationsDemandeesAdministration.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Typologie</th>
+                	<th>Libellé de la formation</th>
+                	<th>Code de la formation</th>
+                    <th nowrap width="85px" class="text-center">Priorité</th>
+                    <th nowrap width="160px" class="text-center">Niveau SAME</th>
+                    <th class="text-center">Objectifs(*)</th>
+                    <th width="85px" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formation in form.formationsDemandeesAdministration %}
+                    {{ form_widget(formation, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsDemandeesAdministration pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

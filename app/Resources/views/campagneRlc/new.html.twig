@@ -1,0 +1,193 @@
+{% extends 'index.base.html.twig' %}
+
+{% form_theme form with [ _self, 'Form/App_bootstrap_3_horizontal_layout.html.twig'] %}
+{% block frameTitle %}Campagne RLC{% endblock frameTitle %}
+{% block pageIcon %}fa fa-share-alt{% endblock pageIcon %}
+{% block pageTitle %}Campagnes{% endblock pageTitle %}
+
+{% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal form-label-left'}})}}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title">
+                    <h2>{% block formTitle %}Création .....{% endblock formTitle %}</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                        {{ form_row(form.libelle, { 'label': "Libellé" }) }}
+                        {{ form_row(form.perimetreRlc, { 'label': "Périmètre RLC" }) }}
+                        {{ form_row(form.perimetresBrhp, { 'label': "Périmètres BRHP",  'attr': { 'class': "select2_multiple" }}) }}
+                          	<div class="form-group">
+                          		<div class="control-label col-md-3 col-sm-3 col-xs-12"></div>
+                          		<div class="col-md-6 col-sm-6 col-xs-12">
+                              		<input type="checkbox" id="checkbox_select_all" class="flat"/> Tous les périmètres 
+                           
+                               </div>
+                            </div>                        
+                        {{ form_row(form.anneeEvaluee, { 'label': "Année d'évaluation" }) }}
+                        {{ form_row(form.dateDebut, { 'label': "Date de début de campagne", 'attr': { 'class': "date-picker-campagne" }}) }}
+                        {% if campagneRlc.dateDebutEntretien %}
+                            {{ form_row(form.dateDebutEntretien, { 'label': "Date de début des entretiens", 'attr': { 'class': "date-picker-campagne" }}) }}
+						{% endif %}
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="campagne_rlc_dateCloture">Date de clôture </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i></div>
+                                    <input id="campagne_rlc_dateCloture" name="campagne_rlc[dateCloture]" disabled="disabled" required="required" class="date-picker-campagne form-control" placeholder="JJ/MM/AAAA" value="{{ campagneRlc.dateCloture | date('d/m/Y') }}" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Pièce(s) jointe(s) <span style="color:red;">**</span></label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+    							   <ul class="list-unstyled project_files">   
+    					              {% for document in campagneRlc.campagnePnc.documents %}
+                                    	<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+                                      {% endfor  %}
+                                      {% for document in campagneRlc.documents %}
+                                       {% if(document.id) %}
+                                       	
+	                                    <li class="row">
+											<div class="col-md-6 text-overflow">
+												<a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}">
+													<i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}
+												</a>
+											</div>
+											<div class="col-md-6">
+												<a href="#" data-toggle="modal" data-target="#modal_delete_{{ document.id }}" title="Supprimer">
+													<i class="fa fa-trash"></i>
+												</a>
+											</div>
+										</li>
+                                       {% endif  %}
+                                       {% endfor  %}
+                                    </ul>
+                          
+                                <div class="documents col-md-8 col-sm-8 col-xs-12" data-prototype="{{ form_widget(form.documents.vars.prototype)|e('html_attr') }}">
+                                    {% for document in form.documents %}
+                                        {{ form_row(document.file, {'attr': { 'type': "file", 'class': 'hide'}}) }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    <span style="color:red"><b>*</b></span><small>Champ obligatoire</small><br>
+                    <span style="color:red"><b>**</b></span><small>Les pièces jointes ne doivent pas dépasser {{ maxFileSize }} Mo</small>
+                </div>
+            </div>
+        </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">    
+            {% block bouton_submit %}
+                <button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-check"></i> Valider</button>
+            {% endblock bouton_submit %}
+        </div>
+    </div>  
+    
+    {{ form_widget(form._token) }}
+
+{{ form_end(form, {'render_rest': false}) }}
+
+         
+{% endblock content%}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <!-- /Select2 -->
+    <script>
+        $(document).ready(function() {
+            $(".select2_multiple").select2({
+                allowClear: true
+            });
+        });
+    </script>
+
+    <!-- Prototype: les fichiers des campagnes -->
+
+    <script type="text/javascript">
+
+        var $collectionHolder;
+
+        // ajoute un tag <a>
+        var $addTagLink = $('<a href="#" class="btn btn-primary add_tag_link"><i class="fa fa-plus"></i> Ajouter</a>');
+        var $newLinkLi = $('<div></div>').append($addTagLink);
+
+        // récupére la div où on ajoute la valeur du data-prototype
+        $collectionHolder = $('div.documents');
+
+        // ajoute la valeur du data-prototype dans la div
+        $collectionHolder.append($newLinkLi);
+
+        // compte le nombre de inputs
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+        $addTagLink.on('click', function(e) {
+            e.preventDefault();
+
+            // ajoute le tag form
+            addTagForm($collectionHolder, $newLinkLi);
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // récupère le data-prototype
+            var prototype = $collectionHolder.data('prototype');
+
+            // recupère l'index
+            var index = $collectionHolder.data('index');
+
+            // remplace '__name__' dans le prototype
+            // par le nombre d'items
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // incrémente l'index avec le nouvel item
+            $collectionHolder.data('index', index + 1);
+
+            // affiche la vue de l'item
+            var $newFormLi = $('<div></div>').append(newForm);
+            $newLinkLi.before($newFormLi);
+
+            //ajoute le lien supprimer
+            addTagFormDeleteLink($newFormLi);
+        }
+
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<div class="input-group-btn"><button class="btn btn-danger"><i class="fa fa-trash"></i></button></div>');
+
+            App_file_upload_campagne({{ maxFileSize }});
+
+            $tagFormLi.find('.input-group').append($removeFormA);
+
+            $removeFormA.on('click', function(e) {
+                e.preventDefault();
+
+                $tagFormLi.remove();
+            });
+        }
+
+          // select ALL Perimétre BRHP  //
+        $("#campagne_rlc_perimetresRlc").select2();
+
+        $('#checkbox_select_all').on('ifToggled', function() {
+        	if($("#checkbox_select_all").is(':checked') ){
+                $("#campagne_rlc_perimetresBrhp > option").prop("selected","selected");
+                $("#campagne_rlc_perimetresBrhp").trigger("change");
+            }else{
+                $("#campagne_rlc_perimetresBrhp > option").removeAttr("selected");
+                 $("#campagne_rlc_perimetresBrhp").trigger("change");
+             }
+        });
+    </script>
+{% endblock javascripts %}
+
+
+{% block _campagne_rlc_documents_entry_widget %}
+    {{ form_widget(form.file) }}
+{% endblock %}

@@ -1,0 +1,99 @@
+{% form_theme form 'crep/crepAc/Form/App_form_crepAc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Connaissances professionnelles requises sur le poste</th>
+                    <th style="width: 10%" class="text-center">Exceptionnelle*</th>
+                    <th style="width: 10%" class="text-center">Forte</th>
+                    <th style="width: 10%" class="text-center">Assez forte</th>
+                    <th style="width: 10%" class="text-center">A développer</th>
+                    <th style="width: 10%" class="text-center">Non pertinent</th>
+                    <th style="width: 20%">Observations</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competenceRequise in form.competencesTransversesRequises %}
+                	<tr>
+                    	<td>
+                            {{ crep.competencesTransversesRequises[loop.index0].libelle }}
+                        </td>
+                        
+                        {{ form_widget(competenceRequise) }}
+                    </tr>
+    	        {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<br/>
+
+<div class="row" id="techniquesCollection" data-prototype="{{ form_widget(form.techniques.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Techniques</th>
+                    <th style="width: 10%" class="text-center">Exceptionnelle*</th>
+                    <th style="width: 10%" class="text-center">Forte</th>
+                    <th style="width: 10%" class="text-center">Assez forte</th>
+                    <th style="width: 10%" class="text-center">A développer</th>
+                    <th style="width: 10%" class="text-center">Non pertinent</th>
+                    <th>Observations</th>
+                    <th width="85px" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for technique in form.techniques %}
+                    {{ form_widget(technique) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link techniques pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br/>
+
+<div class="row" id="autresCompetencesTransversesRequisesCollection" data-prototype="{{ form_widget(form.autresCompetencesTransversesRequises.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Autres connaissances éventuellement démontrées par l’agent</th>
+                    <th style="width: 10%" class="text-center">Exceptionnelle*</th>
+                    <th style="width: 10%" class="text-center">Forte</th>
+                    <th style="width: 10%" class="text-center">Assez forte</th>
+                    <th style="width: 10%" class="text-center">A développer</th>
+                    <th style="width: 10%" class="text-center">Non pertinent</th>
+                    <th>Observations</th>
+                    <th width="85px" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for autreCompetenceRequise in form.autresCompetencesTransversesRequises %}
+                    {{ form_widget(autreCompetenceRequise) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link autresCompetencesTransversesRequises pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

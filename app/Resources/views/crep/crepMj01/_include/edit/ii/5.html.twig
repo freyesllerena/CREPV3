@@ -1,0 +1,46 @@
+<h3>Marge d'évolution globale</h3>
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+	<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" width="100px">En progrès</th>
+                    <th class="text-center" width="100px">Constant</th>
+                    <th class="text-center" width="100px">À améliorer</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+						{%  for child in form.margeEvolutionGlobale.children %}
+							<td class="text-center">{{ form_row(child, {'label': false}) }}</td>
+						{% endfor %}
+                    </tr>
+            </tbody>
+        </table>
+	</div>
+</div>
+
+<h3>Niveau global de performance</h3>
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+	<table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" width="100px">Excellent</th>
+                    <th class="text-center" width="100px">Très bon</th>
+                    <th class="text-center" width="100px">Bon</th>
+                    <th class="text-center" width="100px">Convenable</th>
+                    <th class="text-center" width="100px">Insuffisant</th>
+                    <th class="text-center" width="100px">Très insuffisant</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+						{%  for child in form.niveauPerformanceGlobale.children %}
+							<td class="text-center">{{ form_row(child, {'label': false}) }}</td>
+						{% endfor %}
+                    </tr>
+            </tbody>
+        </table>
+	</div>
+</div>

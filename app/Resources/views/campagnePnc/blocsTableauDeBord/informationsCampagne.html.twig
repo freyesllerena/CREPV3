@@ -1,0 +1,99 @@
+<div class="x_panel panel_green">
+  <div class="x_title">
+    <h2>Détails de la campagne<small></small></h2>
+    <ul class="nav navbar-right panel_toolbox">
+      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content">
+     <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th scope="row">Libellé</th>
+          <td>{{ campagnePnc.libelle }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Périmètre RLC</th>
+          <td>
+              {% for perimetreRlc in campagnePnc.perimetresRlc %}
+            	<a href="{{ path('perimetre_rlc_show', {'id': perimetreRlc.id}) }}">{{ perimetreRlc.libelle }}</a>
+            	{% if not loop.last %}, {% endif %}
+              {% endfor  %}
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Année d'évaluation</th>
+          <td>{{ campagnePnc.anneeEvaluee }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Date d'ouverture de campagne</th>
+          <td>{{ campagnePnc.dateDebut | date('d/m/Y') }}</td>
+        </tr>
+        {% if campagnePnc.dateDebutEntretien %}
+        <tr>
+          <th scope="row">Date de début des entretiens</th>
+          <td>{{ campagnePnc.dateDebutEntretien | date('d/m/Y') }}</td>
+        </tr>
+        {% endif %}
+        
+        <tr>
+          <th scope="row">Date de clôture prévisionnelle</th>
+          <td>{{ campagnePnc.dateCloture ? campagnePnc.dateCloture | date('d/m/Y') }}</td>
+        </tr>
+        
+        {% if campagnePnc.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CLOTUREE'), constant('AppBundle\\EnumTypes\\EnumStatutCampagne::FERMEE')] %}
+            <tr>
+          		<th scope="row">Compte à rebours</th>
+               	{# Compte à rebours : Pour calculer le nombre de jours qu'il y a entre deux dates, on convertie ces deux dates au format "timestamp", on calcule la différence puis on la convertie en jours et ce en la divisant sur 86400 #}
+                {% if campagnePnc.dateCloture | date('Ymd') >= "now" | date('Ymd') %}
+                <td><span class="label label-danger">J-{{ ((campagnePnc.dateCloture | date('U') - "now" | date('U')) / 86400) | round(0, 'ceil') | abs }}</span></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+        	</tr>
+    	{% endif %}
+        
+        {% if campagnePnc.dateFermeture %}
+            <tr>
+              <th scope="row">Date de fermeture</th>
+              <td>{{ campagnePnc.dateFermeture | date('d/m/Y') }}</td>
+            </tr>
+        {% endif %}
+
+    	<tr>
+    		<th>Statut</th>
+    		<td>
+    			<span class="label {{ campagnePnc.statut | campagne_status_label }}">{{ campagnePnc.statut }}</span>
+			</td>
+		</tr>
+    	<tr>
+			<th scope="row">Formulaire CREP vierge</th>
+			<td>
+				<ul class="list-unstyled project_files">
+	                {% for modeleCrep in modelesCrep %}
+						<li><a href="{{ path('exporter_crep_vierge', { 'id': modeleCrep.id , 'campagnePnc' : campagnePnc.id }) }}" title="Visualiser le formulaire"> <i class="fa fa-file-pdf-o"></i> {{ modeleCrep.libelle }}</a> </li>
+					{% endfor %}
+				</ul>
+			</td>
+		</tr>
+        <tr>
+          <th scope="row">Documents </th>
+          <td>
+            <ul class="list-unstyled project_files">
+              {% for document in campagnePnc.documents %}
+            	<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+              {% endfor  %}
+              {% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::MODIFIER'), campagnePnc) %} 
+               	  <a href="{{ path('campagne_pnc_edit', { 'id': campagnePnc.id }) }}">
+               	  	<h5><span class="text-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter des documents</span></h5>
+               	  </a>
+           	  {% endif %}
+          </ul>
+		  </td>
+        </tr>							
+      </tbody>
+    </table>
+  </div>
+</div>

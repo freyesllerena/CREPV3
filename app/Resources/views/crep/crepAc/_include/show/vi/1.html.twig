@@ -1,0 +1,30 @@
+<div class="row form-group">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<label>Renvoi à un document annexe (lettre de mission ou d’objectifs) : </label> {{ crep.docAnnexeBesoinsFormation|ouiNon }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 10%" class="text-center">Année</th>
+                <th style="width: 50%">Intitulé de la formation</th>
+                <th style="width: 10%" class="text-center">Durée</th>
+                <th style="width: 30%">Commentaires (appréciation, bilan, suites)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formationAcSuivie in crep.formationsAcSuivies %}
+                <tr>
+                	<td>{{ formationAcSuivie.annee }}</td>
+                    <td>{{ formationAcSuivie.libelle|nl2br }}</td>
+                    <td>{{ formationAcSuivie.duree }}</td>
+                    <td>{{ formationAcSuivie.commentaires|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

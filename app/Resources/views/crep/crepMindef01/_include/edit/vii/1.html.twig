@@ -1,0 +1,23 @@
+{% form_theme form 'crep/crepMindef01/Form/App_form_crepMindef01.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td></td>
+                    <th class="text-center" style="width: 12%">Insuffisant</th>
+                    <th class="text-center" style="width: 12%">Partiel</th>
+                    <th class="text-center" style="width: 12%">Conforme</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Évaluation des résultats par rapport aux objectifs</th>
+                    {{ form_widget(form.evaluationGlobale) }}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

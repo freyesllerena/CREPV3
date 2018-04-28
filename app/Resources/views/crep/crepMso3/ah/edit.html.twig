@@ -1,0 +1,47 @@
+{% extends "crep/crepMso3/show.html.twig" %}
+{% form_theme form 'crep/crepMso3/Form/App_form_crepMso3.html.twig' %}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block vii4 %}
+	{% include 'crep/crepMso3/_include/edit/vii/4.html.twig' %}
+{% endblock vii4 %}
+
+
+{% block content %}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block alertRefusVisa %}{% endblock alertRefusVisa %}
+{% block alertRefusNotification %}{% endblock alertRefusNotification %}
+
+{# {% extends "crep/crepMso3/show.html.twig" %}#}
+{# {% form_theme form 'crep/crepMso3/Form/App_form_crepMso3.html.twig' %}#}
+
+{# {% block boutons_actions %}#}
+{# {% endblock boutons_actions %}#}
+
+{# {% block i4_2 %}#}
+{# 	{% include 'crep/crepMso3/_include/edit/i/4.2.html.twig' %}#}
+{# {% endblock i4_2 %}#}
+
+{# {% block v4 %}#}
+{# 	{% include 'crep/crepMso3/_include/edit/v/4.html.twig' %}#}
+{# {% endblock v4 %}#}
+
+{# {% block vii3 %}#}
+{# 	{% include 'crep/crepMso3/_include/edit/vii/3.html.twig' %}#}
+{# {% endblock vii3 %}#}
+
+{# {% block content %}#}
+{# 	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}#}
+{# 	    {{ parent() }}#}
+{# 	    {{ block('bouton_enregistrer') }}#}
+{# 	    {{ form_widget(form._token) }}#}
+{# 	{{ form_end(form, {'render_rest': false}) }}#}
+{# {% endblock content %}#}

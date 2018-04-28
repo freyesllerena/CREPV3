@@ -1,0 +1,6 @@
+{% extends "Campagne/campagnesRecentes.html.twig" %} 
+
+
+{% block route_show %} 
+	"{{ path('campagne_admin_min_show',{ 'id': campagne.id }) }}" 
+{% endblock route_show %}

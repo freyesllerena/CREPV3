@@ -1,0 +1,28 @@
+{% form_theme form 'crep/crepMindef/Form/App_form_crepMindef.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" rowspan="2">Compétences managériales</th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Non applicable</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competence in form.competencesManageriales %}
+                    <tr>
+                        <td>
+                            {{ crep.competencesManageriales[loop.index0].competenceManageriale.libelle }}
+                        </td>
+                        {{ form_widget(competence) }}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+{% set message = "Veuillez compléter cette information :<br/>
+				 - soit en renseignant un N+2<br/>
+				 - soit en déclarant l’agent en <strong>«Sans N+2»</strong><br/>
+				 <br/>
+				 Pour cela, rendez-vous à la fiche de l’agent accessible depuis le bouton <strong><i class=\"fa fa-edit\"></i></strong>." %}
+				 
+<!-- start accordion -->
+<div class="accordion" id="accordionShd" role="tablist" aria-multiselectable="true">
+	
+	{% set debutPanel = true %}
+	{% set finPanel = false %}
+	
+    {% for agent in agentsEvaluables %} 
+
+    	{% if loop.last or (agent['shd_id'] != agentsEvaluables[loop.index0 + 1]['shd_id'] ) %}
+    		{% set finPanel = true %}
+    	{% endif %}
+    
+    	{% if(debutPanel) %}
+			{% set debutPanel = false %}
+			<div class="panel">
+	            <a class="panel-heading collapsed" onclick="afficherPlusOuMoins('heading_{{ agent['shd_id']}}','afficheAgentsShd_{{ agent['shd_id']}}');" role="tab" id="heading_{{ agent['shd_id'] }}" data-toggle="collapse" data-parent="#accordionShd" href="#collapse_{{ agent['shd_id'] }}" aria-expanded="false" aria-controls="collapse_{{ agent['shd_id'] }}">
+	                    <i class="fa fa-{% if loop.index0 == 0 %}minus{% else %}plus{% endif %}"  id="afficheAgentsShd_{{ agent['shd_id'] }}"></i>
+	                    {{ agent['shd_civilite'] | title }}
+	                    {{ agent['shd_nom'] }}
+	                    {{ agent['shd_prenom'] }}
+	                    ({{ agent['shd_email'] }})
+	            </a>
+	            
+			<div id="collapse_{{ agent['shd_id']}}" class="panel-collapse collapse {% if(loop.index0 ==0) %} in {% endif %}" role="tabpanel" aria-labelledby="heading_{{ agent['shd_id']}}">
+				<div class="panel-body">
+                 	<table id="table-campagne_brhp" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Agent</th>
+                                <th>Email</th>
+                                <th>Affectation</th>
+                                <th>N+2</th>
+                                {% if campagneBrhp.statut != constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CREEE') %}
+                                    <th>Statut</th>
+                                    <th style="width: 200px">Erreurs constatées</th>
+                                {% endif %}
+                                <th style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+    
+                        <tbody>	            
+		{% endif %}
+		
+                                <tr>
+                                    <td>{{ agent['a_civilite'] | capitalize }} {{ agent['a_prenom'] | capitalize }} {{ agent['a_nom'] | upper }}</td>
+                                    <td>{{ agent['a_email'] }}</td>
+                                    <td>{% if agent['a_affectation'] is not null %}{{ agent['a_affectation'] }}{% endif %}</td>
+                                        {% if agent['ah_id'] is not null %}
+                                        	<td>
+                                                {{ agent['ah_civilite'] | capitalize }} {{ agent['ah_prenom'] | capitalize }} {{ agent['ah_nom'] | upper }}
+                                        	</td>
+                                        {% else %}
+                                            {% if agent['a_sansAh'] %}
+                                            	<td align="center">
+                                            		<span class="label label-purple">Sans N+2</span>
+                                             	</td>   	
+                                            {% else %}
+                                            	<td align="center">
+    												<i class="fa fa-exclamation-triangle orange" data-placement="auto" data-toggle="popover-warning" title="N+2 non renseigné" data-content="{{ message }}" data-trigger="hover"></i>
+                                            	</td>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% if campagneBrhp.statut != constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CREEE')  %}
+                                        <td align="center">
+                                        	{% if(agent['a_statutValidation'])  %}
+                                        	    {% set statutValidation = agent['a_statutValidation'] %}
+                                    	    {% else %}
+                                    	    	{% set statutValidation = constant('AppBundle\\EnumTypes\\EnumStatutValidationAgent::EN_COURS') %}
+                                	    	{% endif %}
+                                    		<i class="fa {{ statutValidation | statutAgentFilter('icone') }}" title="{{ statutValidation | statutAgentFilter('message') }}"></i>
+                                        </td>
+                                        <td>
+                                      		<b>{{ agent['a_erreurSignalee'] }}</b> 
+                                      		{% if agent['a_commentaireValidation'] %}
+                                       			: <br/><i>{{ agent['a_commentaireValidation'] | nl2br }}</i>
+                                       		{% endif %}
+                                        </td>
+                                    {% endif %}
+                                    
+                                    <td align="center">
+                                    	<a href="{{ path('agent_edit', { 'id': agent['a_id'] }) }}" title="Modifier"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+                    					<a href="{{ path('agent_show', { 'id': agent['a_id'] }) }}" title="voir"><i class="fa fa-search"></i></a>
+                        			</td>
+                                </tr>
+			{% if(finPanel) %}
+								</tbody>
+	            			</table>
+	          			</div>
+	        		</div>
+				</div>
+				{% set debutPanel = true %}
+				{% set finPanel = false %}
+			{% endif %}
+            
+    {% endfor %}
+</div>
+<!-- end of accordion -->

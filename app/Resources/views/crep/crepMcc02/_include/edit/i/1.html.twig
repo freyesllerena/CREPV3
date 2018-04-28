@@ -1,0 +1,42 @@
+{% form_theme form 'crep/crepMcc02/Form/App_form_crepMcc02_6.html.twig' %}
+<br/>
+
+<div class="row">
+    {{ form_row(form.affectation, { 'label': "Affectation"}) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.posteOccupe, { 'label': "Poste occupé "}) }}
+    {{ form_row(form.dateEntreePoste, { 'label': "Depuis le "}) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.groupeRifseep, { 'label': "Groupe rifseep"}) }}
+</div>
+
+{#<div class="row">#}
+    {#{{ form_row(form.fonctionsExercees, { 'label': "Fonctions exercées"}) }}#}
+{#</div>#}
+
+{#<div class="row">#}
+    {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#{{ form_row(form.groupeFonctions, { 'label': "Environnement professionnel dans lequel s’exercent les fonctions"}) }}#}
+    {#</div>#}
+    {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+    {#</div>#}
+{#</div>#}
+
+{#<div class="row">#}
+    {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#<label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:right;">La fiche de poste est-elle adaptée ?</label>#}
+        {#<div class="col-md-9 col-sm-9 col-xs-12">#}
+            {#{{ form_row(form.fichePosteAdaptee, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}#}
+        {#</div>#}
+    {#</div>#}
+
+    {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#<span>{{ form_row(form.pointsActualisesFichePoste, { 'label': "Si non, sur quels points doit-elle être actualisée ?" } ) }}</span>#}
+    {#</div>#}
+{#</div>#}
+
+<br>

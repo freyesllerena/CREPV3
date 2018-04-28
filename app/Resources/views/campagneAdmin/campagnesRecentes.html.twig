@@ -1,0 +1,10 @@
+{% extends "Campagne/campagnesRecentes.html.twig" %}
+
+
+{% block route_show %}
+	"{{ path('campagne_pnc_show', { 'id': campagne.id }) }}"
+{% endblock route_show %}
+
+
+
+

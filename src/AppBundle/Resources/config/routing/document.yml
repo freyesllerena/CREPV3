@@ -1,0 +1,5 @@
+get_file:
+    path:     /get-file/{id}/{checksum}
+    defaults: { _controller: "AppBundle:Document:getFile"}
+    requirements:
+        id: '\d+'

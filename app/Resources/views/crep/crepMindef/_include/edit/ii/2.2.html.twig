@@ -1,0 +1,17 @@
+{% form_theme form 'Form/App_bootstrap_3_layout.html.twig' %}
+
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Nature des travaux</label>
+        {{ form_widget(form.autresActivites) }}
+    </div>
+</div>
+<br/>
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_resultatAutresActivites" class="pull-left">Analyse des résultats</label>
+        {{ form_widget(form.resultatAutresActivites) }}
+    </div>
+</div>
+<br/>

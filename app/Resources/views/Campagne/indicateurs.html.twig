@@ -1,0 +1,87 @@
+<div class="row tile_count">
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-group"></i> Nombre d'agents évaluables</span>
+        <div class="count">{{ nbCrep }}</div>
+        <span class="count_bottom"><i class="green">&nbsp;</i></span>
+        
+    </div>
+    {# Pour éviter la division par 0 #}
+    {% if nbCrep == 0 %} {% set nbCrep = 0.001 %} {% endif %}
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> CREP signés N+1</span>
+        <div class="count">{{ nbCrepSignesShd }}</div>
+        <span class="count_bottom"><i class="green">~ {{ ((nbCrepSignesShd / nbCrep) * 100) | round }} % </i></span>
+    </div>			
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> CREP visés agent</span>
+        <div class="count">{{ nbCrepVisesAgent }}</div>
+        <span class="count_bottom"><i class="green">~ {{ ((nbCrepVisesAgent / nbCrep) * 100) | round }} %  </i></span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> CREP signés N+2</span>
+        <div class="count">{{ nbCrepSignesAh }}</div>
+        <span class="count_bottom"><i class="green">~ {{ ((nbCrepSignesAh / nbCrep) * 100) | round }} %  </i></span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-check-circle"></i> CREP signés définitivement</span>
+        <div class="count">{{ nbCrepNotifies }}</div>
+        <span class="count_bottom"><i class="green">~ {{ ((nbCrepNotifies / nbCrep) * 100) | round }} %  </i></span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-ban"></i> Refus de signature définitive</span>
+        <div class="count">{{ nbRefusNotification }}</div>
+        <span class="count_bottom"><i class="green">~ {{ ((nbRefusNotification / nbCrep) * 100) | round }} %  </i></span>
+    </div>
+</div>
+
+{# On n'affiche pas le bloc si les indicateurs sont à zéro #}
+{% if nbTotalRecours != 0  %}
+
+<div class="x_panel panel_green">
+    <div class="x_title">
+        <h2>Indicateurs sur les recours<small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content" style="display: none;">
+
+		<div class="row tile_count">
+	
+		    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count recours_couleur">
+		        <span class="count_top"><i class="fa fa-balance-scale"></i> CREP en mention de recours </span>
+		        <div class="count">{{ nbCrepEnRecours }}</div>
+		    </div>
+		     
+		    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count recours_couleur">
+		        <span class="count_top"><i class="fa fa-balance-scale"></i> Nombre total de recours </span>
+		        <div class="count">{{ nbTotalRecours }}</div>
+		    </div>
+		    
+		    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count recours_couleur">
+		        <span class="count_top"><i class="fa fa-check"></i> Recours traités </span>
+		        <div class="count">{{ nbRecoursTraites }}</div>
+		    </div>
+		    
+		    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count recours_couleur">
+		        <span class="count_top"><i class="fa fa-clock-o"></i> Recours hiérarchique </span>
+		        <div class="count">{{ nbRecoursHierarchique }}</div>
+		    </div>
+		    			
+		    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count recours_couleur">
+		        <span class="count_top"><i class="fa fa-clock-o"></i> Recours en CAP </span>
+		        <div class="count">{{ nbRecoursEnCAP }}</div>
+		    </div>
+		    
+		    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count recours_couleur">
+		        <span class="count_top"><i class="fa fa-clock-o"></i> Recours au tribunal administratif </span>
+		        <div class="count">{{ nbRecoursAuTA }}</div>
+		    </div>
+		    
+		</div>
+	
+	</div>
+</div>
+{% endif %}

@@ -1,0 +1,32 @@
+{% form_theme form 'crep/crepMso3/Form/collections.form.html.twig' %}
+
+<div class="row" id="formationsPreparationConcoursCollection" data-prototype="{{ form_widget(form.formationsPreparationConcours.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Libellé de la formation</th>
+                    <th style="width: 10%" class="text-center">Demande de l'agent <strong>(*)</strong></th>
+                    <th style="width: 15%" class="text-center">Avis du responsable hiérarchique <strong>(*)</strong></th>
+                    <th style="width: 15%" class="text-center">Proposition du responsable hiérarchique</th>
+                    <th style="width: 10%" class="text-center">Recours au CPF<strong>(*)</strong></th>
+                    <th style="width: 10%" class="text-center">Échéance <small>(Année N, N+1)</small></th>
+                    <th width="5%" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formation in form.formationsPreparationConcours %}
+                    {{ form_widget(formation) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsPreparationConcours pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

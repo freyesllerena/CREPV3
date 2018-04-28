@@ -1,0 +1,64 @@
+{% form_theme form 'crep/crepAc/Form/App_form_crepAc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%"></th>
+                    <th style="width: 8%" class="text-center">Faibles</th>
+                    <th style="width: 8%" class="text-center">Moyennes</th>
+                    <th style="width: 8%" class="text-center">Fortes</th>
+                    <th style="width: 8%" class="text-center">Très fortes</th>
+                    <th style="width: 8%" class="text-center">Non pertinent</th>
+                    <th style="width: 30%" class="text-center">Expliciter</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contraintePoste in form.contraintesPoste %}
+                	<tr>
+                    	<td>
+                            {{ crep.contraintesPoste[loop.index0].libelle }}
+                        </td>
+                        {{ form_widget(contraintePoste) }}
+                    </tr>
+    	        {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+<br/>
+
+<div class="row" id="autresContraintesPosteCollection" data-prototype="{{ form_widget(form.autresContraintesPoste.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Autres contraintes et difficultés</th>
+                    <th style="width: 8%" class="text-center">Faibles</th>
+                    <th style="width: 8%" class="text-center">Moyennes</th>
+                    <th style="width: 8%" class="text-center">Fortes</th>
+                    <th style="width: 8%" class="text-center">Très fortes</th>
+                    <th style="width: 8%" class="text-center">Non pertinent</th>
+                    <th style="width: 24%" class="text-center">Expliciter</th>
+                    <th style="width: 6%" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for autreContraintePoste in form.autresContraintesPoste %}
+                    {{ form_widget(autreContraintePoste) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link autresContraintesPoste pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

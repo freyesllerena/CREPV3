@@ -1,0 +1,37 @@
+{% form_theme form 'crep/crepMcc/Form/App_form_crepMcc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th colspan="3" class="text-center">Proposition d’attribution de la part variable</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+        			<td class="text-center" style="width: 33%">
+        			    {{ form_widget(form.attributionPartVariable.0, {'label': 'Augmentation'}) }}
+        			</td>
+        			
+            		<td class="text-center" style="width: 33%">
+            			{{ form_widget(form.attributionPartVariable[1], {'label': 'Maintien'}) }}
+            		</td>
+            		
+            		<td class="text-center" style="width: 33%">
+            			{{ form_widget(form.attributionPartVariable[2], {'label': 'Diminution'}) }}
+            		</td>
+            	</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Avis circonstancié (en lien avec l'évaluation de l'année écoulée)</label>
+        {{ form_row(form.avisAttributionPartVariable, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
+    </div>
+</div>
+
+<br/>

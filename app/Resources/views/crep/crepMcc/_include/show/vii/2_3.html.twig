@@ -1,0 +1,29 @@
+<br/>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Libellé de la formation</th>
+                    <th style="width: 10%" class="text-center">Demande de l'agent-e</th>
+                    <th style="width: 15%" class="text-center">Avis du-de la responsable hiérarchique</th>
+                    <th style="width: 15%" class="text-center">Demande au regard des objectifs du service</th>
+                    <th style="width: 10%" class="text-center">Préciser l'objectif individuel visé</th>
+                    <th style="width: 10%" class="text-center">Recours au CPF</th>
+                </tr>
+            </thead>
+            <tbody>
+				{% for formationDevQualifs in crep.formationsDevQualifs %}
+                    <tr>
+                        <td>{{ formationDevQualifs.libelle }}</td>
+                        {% for index in 0..2 %}
+                        	<td class="text-center">{{ formationDevQualifs.origine|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                       	<td class="text-center">{{ formationDevQualifs.besoinAvere|ouiNon }}</td>
+                        <td class="text-center">{{ formationDevQualifs.cpf|ouiNon }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

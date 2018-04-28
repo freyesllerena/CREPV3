@@ -1,0 +1,79 @@
+{% form_theme form with ['crep/crepMindef/Form/App_form_crepMindef.html.twig', _self] %}
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.motivationsMobilite.choix, {'label': 'Démarche mobilité', 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row (form.motivationsMobilite.echeance, {'label': 'Échéance'}) }}
+    </div>
+</div>
+
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.mobiliteFonctionnelle.choix, {'label': 'Mobilité fonctionnelle', 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row (form.mobiliteFonctionnelle.familleProfessionnelle, {'label': 'Famille professionnelle'}) }}
+        {{ form_row(form.mobiliteFonctionnelle.filiere, {'label': 'Filière'}) }}
+        {{ form_row(form.mobiliteFonctionnelle.anneeDepart, {'label': 'Échéance'}) }}
+        {{ form_row(form.mobiliteFonctionnelle.priorite, {'label': 'Priorité'}) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.mobiliteGeographique.choix, {'label': 'Mobilité géographique', 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.mobiliteGeographique.region, {'label': 'Région'}) }}
+        {{ form_row(form.mobiliteGeographique.departement, {'label': 'Département'}) }}
+        {{ form_row(form.mobiliteGeographique.ville, {'label': 'Ville'}) }}
+        {{ form_row(form.mobiliteGeographique.anneeDepart, {'label': 'Échéance'}) }}
+        {{ form_row(form.mobiliteGeographique.priorite, {'label': 'Priorité'}) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.mobiliteExterne.choix, {'label': 'Mobilité externe', 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.mobiliteExterne.ministere, {'label': 'Ministère'}) }}
+        {{ form_row(form.mobiliteExterne.horsMinistere, {'label': 'Hors ministère'}) }}
+        {{ form_row(form.mobiliteExterne.anneeDepart, {'label': 'Échéance'}) }}
+        {{ form_row(form.mobiliteExterne.priorite, {'label': 'Priorité'}) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.mobiliteGeographique.choix, {'label': 'Mobilité géographique', 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.mobiliteExterne.choix, {'label': 'Mobilité externe', 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.souhaitEntretienCarriere, {'label': "Souhait d'entretien carrière", 'label_attr':{'class': 'checkbox-inline', 'style':'font-weight: bold;'} }) }}
+    </div>
+</div>
+<br/>

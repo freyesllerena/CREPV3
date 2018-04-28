@@ -1,0 +1,60 @@
+{% form_theme form 'crep/crepMinefAbc/Form/App_form_crepMinefAbc.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Excellent</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+            		<td colspan="6"><strong>Valeur professionnelle</strong></td>
+            	</tr>
+            	
+                 {% for competence in form.competencesTransverses %}
+            		{% if crep.competencesTransverses[loop.index0].competenceTransverse.typeCompetence == 'Valeur professionnelle' %}
+                    <tr>
+                        <td>
+                            {{ crep.competencesTransverses[loop.index0].competenceTransverse.libelle }}
+                        </td>
+                        {{ form_widget(competence) }}
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                
+                <tr>
+            		<td colspan="6"><strong>Maniere de servir</strong></td>
+            	</tr>
+            	
+            	{% for competence in form.competencesTransverses %}
+            		{% if crep.competencesTransverses[loop.index0].competenceTransverse.typeCompetence == 'Manière de servir' %}
+                    <tr>
+                        <td>
+                            {{ crep.competencesTransverses[loop.index0].competenceTransverse.libelle }}
+                        </td>
+                        {{ form_widget(competence) }}
+                    </tr>
+                    {% endif %}
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <p class="title">Appréciation littérale du supérieur hiérarchique : </p>
+            {{ form_row(form.appreciationLitteraleShd,{'label':false,'attr': {'maxlength': '4096'}}) }}
+        </dl>
+    </div>
+</div>
+
+<br/>

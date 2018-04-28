@@ -1,0 +1,126 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	
+    	<strong>{% if crep.motivationsMobilite.choix %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Démarche de mobilité </strong><br>	
+    	{% if crep.motivationsMobilite.choix %}
+	        <div class="row">
+	    		 <div class="col-md-1 col-sm-1 col-xs-1"></div>
+	    		
+	    		 <div class="col-md-4 col-sm-4 col-xs-4">
+		    		 <table class="table table-bordered">
+			    		 <tr>
+			    		 	<th width="40%">Échéance </th>
+			    		 	<td>{{ crep.motivationsMobilite.echeance }} </td>
+			    		 </tr>
+		    		 </table>
+		    	</div>
+	        </div>
+    	{% endif %}
+    	
+    	
+    	
+    	<strong>{% if crep.mobiliteFonctionnelle.choix %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Mobilité fonctionnelle</strong><br>	
+    	{% if crep.mobiliteFonctionnelle.choix %}
+	        <div class="row">
+	    		 <div class="col-md-1 col-sm-1 col-xs-1"></div>
+	    		
+	    		 <div class="col-md-4 col-sm-4 col-xs-4">
+		    		 <table class="table table-bordered">
+			    		 <tr>
+			    		 	<th width="40%">Famille professionnelle </th>
+			    		 	<td>{{ crep.mobiliteFonctionnelle.familleProfessionnelle }} </td>
+			    		 </tr>
+			    		 
+			    		 <tr>
+			    		 	<th width="40%">Filière </th>
+			    		 	<td> {{ crep.mobiliteFonctionnelle.filiere }}</td>
+			    		 </tr>
+			    		 
+			    		 <tr>
+			    		 	<th width="40%">Échéance </th>
+			    		 	<td> {{ crep.mobiliteFonctionnelle.anneeDepart }}</td>
+			    		 </tr>
+			    		 
+			    		 <tr>
+			    		 	<th width="40%">Priorité </th>
+			    		 	<td>{{ crep.mobiliteFonctionnelle.priorite }} </td>
+			    		 </tr>
+		    		 </table>
+		    	</div>
+	        </div>
+    	{% endif %}
+    	
+    	<strong>{% if crep.mobiliteGeographique.choix %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Mobilité géographique</strong><br/>	
+    	{% if crep.mobiliteGeographique.choix %}
+    	<div class="row">
+    		 <div class="col-md-1 col-sm-1 col-xs-1"></div>
+    		
+    		 <div class="col-md-4 col-sm-4 col-xs-4">
+	    		 <table class="table table-bordered">
+		    		 <tr>
+		    		 	<th width="40%">Région </th>
+		    		 	<td>{{ crep.mobiliteGeographique.region }} </td>
+		    		 </tr>
+		    		 
+		    		 <tr>
+		    		 	<th width="40%">Département </th>
+		    		 	<td> {{ crep.mobiliteGeographique.departement }}</td>
+		    		 </tr>
+		    		 
+		    		 <tr>
+		    		 	<th width="40%">Ville </th>
+		    		 	<td>{{ crep.mobiliteGeographique.ville }} </td>
+		    		 </tr>
+		    		 
+		    		 <tr>
+			    		<th width="40%">Échéance </th>
+			    	 	<td> {{ crep.mobiliteGeographique.anneeDepart }}</td>
+			    	</tr>
+		    		 
+		    		 <tr>
+		    		 	<th width="40%">Priorité </th>
+		    		 	<td> {{ crep.mobiliteGeographique.priorite }}</td>
+		    		 </tr>
+	    		 
+	    		 </table>
+	    	</div>
+        </div>
+    	{% endif %}
+    	
+    	<strong>{% if crep.mobiliteExterne.choix %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Mobilité externe</strong><br>	
+    	{% if crep.mobiliteExterne.choix %}
+	        <div class="row">
+	    		 <div class="col-md-1 col-sm-1 col-xs-1"></div>
+	    		
+	    		 <div class="col-md-4 col-sm-4 col-xs-4">
+		    		 <table class="table table-bordered">
+		    		 <tr>
+		    		 	<th width="40%">Ministere</th>
+		    		 	<td>{% if crep.mobiliteExterne.ministere %}{{ crep.mobiliteExterne.ministere.libelleLong }} {% endif %} </td>
+		    		 </tr>
+		    		 
+		    		 <tr>
+		    		 	<th width="40%">Hors ministère </th>
+		    		 	<td> {{ crep.mobiliteExterne.horsMinistere }}</td>
+		    		 </tr>
+		    		 
+		    		 <tr>
+		    			<th width="40%">Échéance </th>
+		    	 		<td> {{ crep.mobiliteExterne.anneeDepart }}</td>
+		    		 </tr>
+		    		 
+		    		 <tr>
+		    		 	<th width="40%">Priorité </th>
+		    		 	<td>{{ crep.mobiliteExterne.priorite }} </td>
+		    		 </tr>
+		    		 </table>
+		    	</div>
+	        </div>
+    	{% endif %}
+    	
+    	<strong>{% if crep.souhaitEntretienCarriere %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} Souhait d'entretien carrière</strong><br>	
+    	
+    	<br>
+    	
+    </div>
+</div>

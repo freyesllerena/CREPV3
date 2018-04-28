@@ -1,0 +1,361 @@
+{% extends "index.base.html.twig" %}
+
+{% block frameTitle %}CREP{% endblock frameTitle %}
+
+{% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
+{% block pageTitle %}CREP de {{crep.agent.civilite | title}} {{crep.prenom | title}} {{crep.nomUsage | upper}}{% endblock pageTitle %}
+
+{% block alertErreurValidationFormulaireCrep %}
+	{% if errors| length > 0 %}
+		<div class="alert alert-danger alert-dismissible fade in" role="alert">
+		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		        <span aria-hidden="true">×</span>
+		    </button>
+		    <strong>Le formulaire de CREP n'est pas valide.</strong><br>
+			Veuillez rectifier votre saisie.
+		</div>
+	{% endif %}
+{% endblock alertErreurValidationFormulaireCrep %}
+
+{% block alertAhNonIdentifie %}
+    {% if app.session.get('selectedRole') == "ROLE_SHD" %}
+        {% if crep.agent.ah is null and not crep.agent.sansAh  %}
+    		<div class="row">
+        		<div class="col-md-12 col-sm-12 col-xs-12">
+    				<div class="alert alert-warning alert-dismissible fade in" role="alert">
+    					<i class='fa fa-warning'></i> <strong>Attention : </strong> Vous ne pouvez pas signer ce CREP tant que le N+2 de cet agent n'a pas été identifié. Veuillez contacter votre Bureau RH de Proximité.
+    				</div>
+    			</div>
+    		</div>
+        {% endif %}
+    {% endif %}
+{% endblock alertAhNonIdentifie %}
+
+{% block alertRecours %}
+	{% if crep.contientRecoursEnCours %}
+    		<div class="row">
+        		<div class="col-md-12 col-sm-12 col-xs-12">
+    				<div class="alert alert-danger alert-dismissible fade in" role="alert">
+    					<button type="button" class="close" data-dismiss="alert" aria-label="Fermer">
+    						<span aria-hidden="true">×</span>
+    					</button>
+    					<i class='fa fa-balance-scale'></i> <strong>Recours : </strong> ce CREP fait l'objet de recours.
+    				</div>
+    			</div>
+    		</div>
+	{% endif %}
+{% endblock alertRecours %}
+
+{% block alertDebutEntretien %}
+    {% if ("now" | date('Ymd') < crep.agent.campagneBrhp.dateDebutEntretien | date('Ymd')) %}
+        <div class="alert alert-info alert-dismissible fade in" role="alert">
+            La date de début des entretiens est prévue pour le <strong>{{ crep.agent.campagneBrhp.dateDebutEntretien|date('d/m/Y') }}</strong>. Vous ne pouvez que <strong>consulter</strong> le formulaire de <strong>CREP vièrge</strong> pour le moment.
+        </div>
+    {% endif %}
+{% endblock alertDebutEntretien %}
+
+
+{% block boutons_actions %}
+
+	{% if is_granted(constant('AppBundle\\Security\\CrepVoter::REINITIALISER'), crep) %}
+		{% set message = 'Êtes-vous sûr de bien vouloir réinitialiser le CREP de <strong>'~ crep.agent | identite | escape ~ ' ' ~ "</strong>?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action annulera toutes saisies enregistrées, et vous permettra de recommencer le processus à nouveau."%}
+		{{ macro.modal('danger', 'reinitialiser_crep_'~crep.agent.id, 'Réinitialiser le CREP', message, 'fa fa-refresh', reinitialiser_crep_form)}} 
+	{% endif %}
+	
+<br>
+<div class="row flottant flottant-md">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+	   
+	{# 	 Bloc des boutons du BRHP #}
+	{% if(app.session.get('selectedRole') == "ROLE_BRHP") %} 
+		
+		<div class="col-xs-4">
+	    	{% if is_granted(constant('AppBundle\\Security\\CrepVoter::SUPPRIMER'), crep) %}
+				<a href="#" data-toggle="modal" data-target="#supprimer_crep" title="Supprimer le CREP">
+					<button class="btn btn-danger bouton-160 pull-left"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer le CREP</button>
+				</a>
+			{% endif %}
+		</div>
+		
+		<div class="col-xs-4 text-center">
+	    	{% if is_granted(constant('AppBundle\\Security\\CrepVoter::REFAIRE_CREP'), crep) %}
+				<a href="#" data-toggle="modal" data-target="#refaire_crep" title="Refaire le CREP">
+					<button class="btn btn-primary bouton-160"><i class="fa fa-refresh" aria-hidden="true"></i> Refaire le CREP</button>
+				</a>
+			{% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::LAISSER_CREP_EN_ETAT'), crep) %}
+				<a href="#" data-toggle="modal" data-target="#laisser_crep_en_etat" title="Laisser le crep en l'état">
+					<button class="btn btn-primary bouton-160"><i class="fa fa-check" aria-hidden="true"></i> Laisser le CREP en l'état</button>
+				</a>
+			{% endif %}
+		</div>
+		
+		<div class="col-xs-4 text-center">
+			{% if is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR_RECOURS'), crep) %}
+				<a href="{{ path('recours_index', { 'id': crep.id } ) }}">
+		    		<button class="btn btn-danger pull-right bouton-160" title="liste recours"><i class="fa fa-balance-scale" aria-hidden="true"></i> Recours</button>
+		    	</a>
+		    {% endif %}
+		</div>
+	{% endif %}
+	{# Fin des boutons action du BRHP #}
+	
+	
+	 {# 	 Bloc des boutons du N+1 #}
+	 {% if(app.session.get('selectedRole') == "ROLE_SHD") %}
+	 
+    <div class="col-xs-4">
+    	{% if is_granted(constant('AppBundle\\Security\\CrepVoter::REINITIALISER'), crep) %}
+			<a href="#" data-toggle="modal" data-target="#reinitialiser_crep_{{ crep.agent.id }}" title="Réinitialiser le CREP de l'agent">
+				<button class="btn btn-danger bouton-160 pull-left"><i class="fa fa-refresh" aria-hidden="true"></i> Réinitialiser le CREP</button>
+			</a>
+		{% endif %}
+	</div>
+	
+	<div class="col-xs-4 text-center">
+	    {% if is_granted(constant('AppBundle\\Security\\CrepVoter::MODIFIER_SHD'), crep) %}
+			<a href="{{ path('crep_edit', { 'id': crep.id }) }}">
+				<button type="submit" class="btn btn-primary bouton-160"><i class="fa fa-edit" aria-hidden="true"></i> Modifier le CREP</button>
+			</a>
+	    {% endif %}
+	</div>
+	<div class="col-xs-4 text-center">
+	    {% if is_granted(constant('AppBundle\\Security\\CrepVoter::SIGNER_SHD'), crep) %}
+			<button type="button" class="btn btn-success pull-right bouton-160" data-toggle="modal" data-target="#modal_signer_shd"><i class="fa fa-pencil"></i> Signer</button>
+	    
+	    {% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::REFUSER_VISA_AGENT'), crep) %}
+			<button type="button" class="btn btn-danger pull-right bouton-160" data-toggle="modal" data-target="#modal_refuser_visa"><i class="fa fa-ban"></i> Refus de visa de l'agent</button>
+    	
+    	{% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::REFUSER_NOTIFICATION_AGENT'), crep) %}
+			<button type="button" class="btn btn-danger pull-right bouton-160" data-toggle="modal" data-target="#modal_refuser_notification"><i class="fa fa-ban"></i> Refus de signature de l'agent</button>
+    	
+    	{% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR_RECOURS'), crep) %}
+			<a href="{{ path('recours_index', { 'id': crep.id } ) }}">
+		   		<button  class="btn btn-danger pull-right bouton-160" title="liste recours"><i class="fa fa-balance-scale" aria-hidden="true"></i> Recours</button>
+		   	</a>
+		{% endif %}
+    	
+    </div>
+    {% endif %}
+    {# 	 Fin bloc des boutons du N+1 #}
+
+    {# 	 Bloc des boutons de l'Agent #} 
+    {% if(app.session.get('selectedRole') == "ROLE_AGENT") %}   	
+    	<table width="100%">
+    		<tr>
+            	<td style="width: 33%">
+                    {% if is_granted(constant('AppBundle\\Security\\CrepVoter::COMPLETER_AGENT'), crep) %}
+        				<a href="{{ path('crep_edit', { 'id': crep.id }) }}">
+        					<button type="submit" class="btn btn-primary bouton-160"><i class="fa fa-edit" aria-hidden="true"></i> Compléter</button>
+        				</a>
+        			{% endif %}
+        		</td>
+            	<td align="center">	
+        	        {% if is_granted(constant('AppBundle\\Security\\CrepVoter::RENVOYER_AGENT_SHD'), crep) %}    	
+                		<a href="{{ path('renvoyer_agent_shd', {'id': crep.id }) }}" title="Renvoyer au N+1" >
+        					<button id="renvoyer_agent_shd" type="button" class="btn btn-warning bouton-160"><i class="fa fa-mail-reply"></i> Renvoyer au N+1</button>
+        				</a>
+        			{% endif %}
+        		</td>    				
+    			<td style="width: 33%">
+    				{% if is_granted(constant('AppBundle\\Security\\CrepVoter::VISER_AGENT'), crep) %}
+    					<button type="button" class="btn btn-info pull-right bouton-160" data-toggle="modal" data-target="#modal_viser_agent"><i class="fa fa-pencil"></i> Viser</button>
+    				
+    				{% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::NOTIFIER_AGENT'), crep) %}
+						<button type="button" class="btn btn-info pull-right bouton-160" data-toggle="modal" data-target="#modal_notifier_agent"><i class="fa fa-pencil"></i> Signer</button>
+                    
+    				{% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR_RECOURS'), crep) %}
+						<a href="{{ path('recours_index', { 'id': crep.id } ) }}">
+					   		<button  class="btn btn-danger pull-right bouton-160" title="liste recours"><i class="fa fa-balance-scale" aria-hidden="true"></i> Recours</button>
+					   	</a>
+    				{% endif %}
+    			</td>
+        	</tr>
+		</table>
+		{% endif %}
+    {# 	 Fin bloc des boutons de l'Agent #}
+	    
+    {# 	 Bloc des boutons du N+2 #}
+    {% if(app.session.get('selectedRole') == "ROLE_AH") %}   	
+    	<table width="100%">
+    		<tr>
+    			<td style="width: 33%">
+    		        {% if is_granted(constant('AppBundle\\Security\\CrepVoter::COMPLETER_AH'), crep) %}
+            			<a href="{{ path('crep_edit', { 'id': crep.id }) }}">
+            				<button type="submit" class="btn btn-primary bouton-160"><i class="fa fa-edit" aria-hidden="true"></i> Compléter le CREP</button>
+            			</a>
+            		{% endif %}	
+        	    </td>
+            	<td align="center">
+            		{% if is_granted(constant('AppBundle\\Security\\CrepVoter::RENVOYER_AH_SHD'), crep) %}    	
+                		<a href="{{ path('renvoyer_ah_shd', {'id': crep.id }) }}" title="Renvoyer au N+1" >
+        					<button id="renvoyer_ah_shd" type="button" class="btn btn-warning bouton-160"><i class="fa fa-mail-reply"></i> Renvoyer au N+1</button>
+        				</a>
+        		    {% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::RAPPELER_AGENT_AH'), crep) %}
+    						<button type="button" class="btn btn-warning bouton-160" data-toggle="modal" data-target="#modal_rappler_agent_ah"><i class="fa fa-mail-reply"></i> Rappeler le CREP</button>
+        			{% endif %}
+    			</td>    				
+        	    <td style="width: 33%">
+            	    {% if is_granted(constant('AppBundle\\Security\\CrepVoter::SIGNER_AH'), crep) %}
+            				<button type="button" class="btn btn-success pull-right bouton-160" data-toggle="modal" data-target="#modal_signer_ah"><i class="fa fa-pencil"></i> Signer</button>
+					
+            	    {% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR_RECOURS'), crep) %}
+						<a href="{{ path('recours_index', { 'id': crep.id } ) }}">
+					   		<button  class="btn btn-danger pull-right bouton-160" title="liste recours"><i class="fa fa-balance-scale" aria-hidden="true"></i> Recours</button>
+					   	</a>
+    				{% endif %}
+            	</td>
+    		</tr>
+    	</table>	    
+	{% endif %}
+    	
+    {# 	 Fin bloc des boutons du N+2 #}
+    
+    </div>
+ </div>
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::SIGNER_SHD'), crep) %}
+	{% if crep.agent.sansAh %}
+		{% set messageSignatureShd = "Voulez-vous vraiment <strong>signer</strong> ce CREP et le <strong>transmettre</strong> à l'agent ?
+									  <br/><br/>
+									  <strong class='orange'><i class='fa fa-warning'></i> Attention :</strong>
+									  <br/><br/>
+									  Cet agent est déclaré comme étant <strong>sans N+2</strong>, ceci va <strong>modifier</strong> le processus 
+									  des signatures du CREP dans l'application, l'étape de signature du N+2 étant <strong>supprimée</strong>." %}
+	{% else %}
+		{% set messageSignatureShd = "Voulez-vous vraiment <strong>signer</strong> ce CREP et le <strong>transmettre</strong> à l'agent ?" %}
+	{% endif %}
+
+    {{ macro.modal('success', 'modal_signer_shd', "Signer le CREP", messageSignatureShd, "fa-pencil", signer_shd_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::REFUSER_VISA_AGENT'), crep) %}
+    {{ macro.modal('danger', 'modal_refuser_visa', "Refus de visa de l'agent", "Voulez-vous vraiment acter le <strong>refus de visa</strong> de l'agent et <strong>transmettre</strong> le CREP au N+2 ?", "fa-ban", refuser_visa_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::REFUSER_NOTIFICATION_AGENT'), crep) %}
+    {{ macro.modal('danger', 'modal_refuser_notification', "Refus de signature de l'agent", "Voulez-vous vraiment acter le <strong>refus de signature</strong> de l'agent et <strong>finaliser</strong> le CREP ?", "fa-ban", refuser_notification_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::VISER_AGENT'), crep) %}
+    {{ macro.modal('info', 'modal_viser_agent', "Viser le CREP", "Voulez-vous vraiment <strong>viser</strong> ce CREP et le <strong>transmettre</strong> au N+2 ?", "fa-pencil", viser_agent_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::SIGNER_AH'), crep) %}
+    {{ macro.modal('success', 'modal_signer_ah', "Signer le CREP", "Voulez-vous vraiment <strong>signer</strong> ce CREP et le <strong>transmettre</strong> à l'agent ?", "fa-pencil", signer_ah_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::NOTIFIER_AGENT'), crep) %}
+
+    {% if crep.agent.sansAh %}
+		{% set messageSignatureAgent = "Voulez-vous vraiment <strong>signer</strong> ce CREP pour le <strong>finaliser</strong> ?
+									  <br/><br/>
+									  <strong class='orange'><i class='fa fa-warning'></i> Attention :</strong>
+									  <br/><br/>
+									  Vous êtes déclaré comme étant <strong>sans N+2</strong>, ceci <strong>a modifié</strong> le processus 
+									  des signatures du CREP dans l'application, l'étape de signature du N+2 étant <strong>supprimée</strong>." %}
+	{% else %}
+		{% set messageSignatureAgent = "Voulez-vous vraiment <strong>signer</strong> ce CREP pour le <strong>finaliser</strong> ?" %}
+	{% endif %}
+
+
+
+
+    {{ macro.modal('info', 'modal_notifier_agent', "Signer le CREP", messageSignatureAgent, "fa-pencil", notifier_agent_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::RAPPELER_AGENT_AH'), crep) %}
+    {{ macro.modal('warning', 'modal_rappler_agent_ah', "Rappeler le CREP", "Voulez-vous vraiment <strong>rappeler</strong> ce CREP ?", "fa-mail-reply", rappeler_agent_ah_form)}} 
+{% endif %}
+
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::SUPPRIMER'), crep) %}
+	{% set message = "Voulez-vous vraiment <strong>supprimer</strong> ce CREP ?<br/> <br/>
+					  <strong class='orange'><i class='fa fa-warning'></i> Attention :</strong><br/><br/>
+					  Cette action supprimera définitevement le CREP de l'application, il ne sera plus possible de le récupérer. " %}
+	{{ macro.modal('danger', 'supprimer_crep', "Supprimer le CREP", message, "fa-trash", supprimer_crep_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::REFAIRE_CREP'), crep) %}
+	{% set message = "Voulez-vous vraiment <strong>refaire</strong> ce CREP ?<br/> <br/>
+					  <strong class='orange'><i class='fa fa-warning'></i> Attention :</strong><br/><br/>
+					  Cette action annulera toutes les signatures sans perdre le contenu du CREP. " %}
+	{{ macro.modal('primary', 'refaire_crep', "Refaire le CREP", message, "fa-refresh", refaire_crep_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::LAISSER_CREP_EN_ETAT'), crep) %}
+	{% set message = "Voulez-vous vraiment <strong>laisser ce CREP en l'état</strong> ?<br/> <br/>
+					  <strong class='orange'><i class='fa fa-warning'></i> Attention :</strong><br/><br/>
+					  Cette action validera la décision du recours en cours sur ce CREP. " %}
+	{{ macro.modal('primary', 'laisser_crep_en_etat', "Laisser le CREP en l'état", message, "fa-check", laisser_crep_en_etat)}} 
+{% endif %}
+
+{% endblock boutons_actions %}
+
+
+{% block bouton_enregistrer %}
+<br>
+<div class="row flottant flottant-md">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+{# 	    {% if is_granted('enregistrer', crep) %}#}
+			<button type="submit" class="btn btn-primary pull-right bouton-160"><i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button>
+{# 	    {% endif %}#}
+    </div>
+</div>
+{% endblock bouton_enregistrer %}
+
+
+{% block export_pdf %}
+	<div class="title_right">
+        {% if is_granted(constant('AppBundle\\Security\\CrepVoter::EXPORTER_PDF'), crep) %}
+            <a href="{{ path('crep_export_pdf', { 'id': crep.id }) }}">
+            	<img src="{{ asset('bundles/framework/cisirh/images/pdf.png') }}" alt="Export PDF" title="Export PDF" height="32" width="32" >
+            </a>
+        {% endif %}
+    </div>	
+{% endblock export_pdf %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	
+	
+	<script>
+		/* décallage des boutons flottants en fonction de la taille du menu de gauche */
+	    var $MENU_TOGGLE = $('#menu_toggle');
+	    var $BODY = $('body');
+	    
+	    // toggle small or large menu
+	    $MENU_TOGGLE.on('click', function() {
+	        if ($BODY.hasClass('nav-md')) {
+	        	$('.flottant').addClass('flottant-sm').removeClass('flottant-md');
+	           
+	        } else {
+	        	$('.flottant').addClass('flottant-md').removeClass('flottant-sm');
+	        }
+	    });
+
+	    urlAjax = "{{ path('formation_ajax_search', {'ministere': crep.agent.campagnePnc.ministere.id}) }}";
+        // AutoComplete
+	    autoCompleteFormation();
+		
+		$('#supprimer_crep').on('hidden.bs.modal', function (e) {
+			$('iframe').show();
+		});
+	    $('#supprimer_crep').on('show.bs.modal', function (e) {
+	    	$('iframe').hide();
+		});
+
+		$('#refaire_crep').on('hidden.bs.modal', function (e) {
+			$('iframe').show();
+		});
+	    $('#refaire_crep').on('show.bs.modal', function (e) {
+	    	$('iframe').hide();
+		});
+
+	    $('#laisser_crep_en_etat').on('hidden.bs.modal', function (e) {
+			$('iframe').show();
+		});
+	    $('#laisser_crep_en_etat').on('show.bs.modal', function (e) {
+	    	$('iframe').hide();
+		});
+	</script>
+{% endblock javascripts %}

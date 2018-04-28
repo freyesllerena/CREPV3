@@ -1,0 +1,115 @@
+<br>
+<div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
+            <input type="checkbox" class="flat pull-right" disabled="disabled" {% if crep.souhaitEvolutionCarriere %}checked="checked"{% endif %}>
+            <label class="control-label">Évolution des fonctions dans le poste actuel </label>
+        </div>
+
+        <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
+            <input type="checkbox" class="flat pull-right" disabled="disabled"
+                   {% if crep.mobilitePoste and (crep.mobilitePoste.memeService
+                       or crep.mobilitePoste.memeMinistere
+                       or crep.mobilitePoste.autreMinistere
+                       or crep.mobilitePoste.autreFonctionPublique
+                       or crep.mobilitePoste.autreProjet) %}
+                        checked="checked"
+                    {% endif %}>
+            <label class="control-label">Changement de poste</label>
+        </div>
+        <div class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
+            <input type="checkbox" class="flat pull-right" disabled="disabled" {% if crep.mobilitePoste and crep.mobilitePoste.memeService %}checked="checked"{% endif %}>
+            <label class="control-label">Au sein du même service</label>
+        </div>
+        <div class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
+            <input type="checkbox" class="flat pull-right" disabled="disabled" {% if crep.mobilitePoste and crep.mobilitePoste.memeMinistere %}checked="checked"{% endif %}>
+            <label class="control-label">Au sein du ministère</label>
+        </div>
+        <div class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
+            <input type="checkbox" class="flat pull-right" disabled="disabled" {% if crep.mobilitePoste and crep.mobilitePoste.autreMinistere %}checked="checked"{% endif %}>
+            <label class="control-label">Dans un autre ministère</label>
+        </div>
+        <div class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
+            <input type="checkbox" class="flat pull-right" disabled="disabled" {% if crep.mobilitePoste and crep.mobilitePoste.autreFonctionPublique %}checked="checked"{% endif %}>
+            <label class="control-label">Dans une autre fonction publique</label>
+        </div>
+        <div class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
+            <input type="checkbox" class="flat pull-right" disabled="disabled" {% if crep.mobilitePoste and crep.mobilitePoste.autreProjet %}checked="checked"{% endif %}>
+            <label class="control-label">Autre projet</label>
+        </div>
+        <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
+            <input type="checkbox" class="flat pull-right" disabled="disabled" {% if crep.mobiliteGeographique and crep.mobiliteGeographique.choix %}checked="checked"{% endif %}>
+            <label class="control-label">Mobilité géographique </label>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <label>Description du projet (préciser les échéances) : </label>
+        <div class="well well-xs">
+            <span>{{ crep.evolutionProfessionnelleEnvisagee }}</span>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <label class="control-label">L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilité – carrière ?</label>&nbsp;&nbsp;
+
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled" {% if crep.souhaitEntretienCarriere %}checked="checked"{% endif %}>
+        </label>
+        Oui
+        &nbsp;&nbsp;
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled" {% if crep.souhaitEntretienCarriere is not null and not crep.souhaitEntretienCarriere %}checked="checked"{% endif %}>
+        </label>
+        Non
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th colspan="7">Observations éventuelles du-de la supérieur hiérarchique direct
+                    sur ces perspectives d’évolution professionnelle</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% if crep.observationsShdProjetProfessionnel  %}
+                    <td>{{ crep.observationsShdProjetProfessionnel }}</td>
+                    {% else %}
+                        <td><br><br><br></td>
+                    {% endif %}
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th colspan="7">Commentaires éventuels de l’agent-e</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><br><br><br></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<br>
+

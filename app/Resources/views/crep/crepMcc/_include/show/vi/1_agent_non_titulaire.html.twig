@@ -1,0 +1,39 @@
+{% set propositionsEvolution = ['Augmentation (+)', 'Maintien (0)', 'Diminution (-)'] %}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="3" class="text-center">Proposition d’attribution de la part variable</th>
+                </tr>
+            </thead>
+            <tbody>
+	            <tr>
+	            	{% for index in 0..2 %}
+	                	<td class="text-center" style="width: 33%">
+		                    {% if crep.agent and crep.agent.ah and crep.attributionPartVariable is not null and crep.attributionPartVariable == index %}
+		                    	<i class="fa fa-check-square-o"></i>
+		                    {% else %}
+		                    	<i class="fa fa-square-o"></i>
+		                    {% endif %} 
+		                    {{ propositionsEvolution[index] }} <br/>
+	                    </td>
+	                {% endfor %}
+	            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class ="title"> Avis circonstancié (en lien avec l'évaluation de l'année écoulée)      </p>
+        <p class="well well-xs"> 
+        	{% if crep.agent and crep.agent.ah %}
+	    		{{ crep.avisAttributionPartVariable|nl2br }}
+	    	{% endif %}	
+	    </p>
+    </div>
+</div>
+
+<br/>

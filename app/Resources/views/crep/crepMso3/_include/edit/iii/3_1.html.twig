@@ -1,0 +1,38 @@
+{% form_theme form 'crep/crepMso3/Form/collections.form.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="pull-left">Nombre d’agents encadrés (préciser les effectifs par corps et catégorie)</label>
+        {{ form_row(form.agentsEncadres) }}
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+	                <th style="width: 30%">Aptitude</th>
+	                <th style="width: 8%" class="text-center">Excellente maîtrise</th>
+	                <th style="width: 8%" class="text-center">Maîtrise</th>
+	                <th style="width: 8%" class="text-center">À développer</th>
+	                <th style="width: 8%" class="text-center">À acquérir</th>
+	                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for aptitude in form.aptitudesManagementAgent %}
+            	<tr>
+            		 <td>
+  						{{ crep.aptitudesManagementAgent[loop.index0].libelle }}
+        			 </td>
+	                 
+  					{{ form_widget(aptitude) }}
+            	</tr>
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

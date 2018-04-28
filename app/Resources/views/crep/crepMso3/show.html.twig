@@ -1,0 +1,231 @@
+{% extends "crep/crepMso3/crepMso3.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+	{{ block('alertErreurValidationFormulaireCrep') }}
+ 	{{ block('alertAhNonIdentifie') }}
+	{{ block('alertDebutEntretien') }}
+    {{ block('alertRefusVisa') }}
+    {{ block('alertRecours') }}
+    {{ block('alertRefusNotification') }}
+    {{ block('renvoyerAh') }}
+    {{ block('renvoyerAgent') }}
+    
+	<div class="form-horizontal">
+        {{ parent() }}
+	</div>
+	{{ block('boutons_actions') }}
+{% endblock content %}
+
+{% block i01 %}
+	{% include 'crep/crepMso3/_include/show/0/1.html.twig' %}
+{% endblock i01 %}
+
+{% block i02 %}
+	{% include 'crep/crepMso3/_include/show/0/2.html.twig' %}
+{% endblock i02 %}
+
+{% block i03 %}
+	{% include 'crep/crepMso3/_include/show/0/3.html.twig' %}
+{% endblock i03 %}
+
+{% block i1 %}
+	{% include 'crep/crepMso3/_include/show/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepMso3/_include/show/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block i3 %}
+	{% include 'crep/crepMso3/_include/show/i/3.html.twig' %}
+{% endblock i3 %}
+
+{% block i4_1 %}
+	{% include 'crep/crepMso3/_include/show/i/4.1.html.twig' %}
+{% endblock i4_1 %}
+
+{% block i4_2 %}
+	{% include 'crep/crepMso3/_include/show/i/4.2.html.twig' %}
+{% endblock i4_2 %}
+
+{% block ii1 %}
+	{% include 'crep/crepMso3/_include/show/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+	{% include 'crep/crepMso3/_include/show/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+	{% include 'crep/crepMso3/_include/show/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block iii1_1 %}
+	{% include 'crep/crepMso3/_include/show/iii/1_1.html.twig' %}
+{% endblock iii1_1 %}
+
+{% block iii1_2 %}
+	{% include 'crep/crepMso3/_include/show/iii/1_2.html.twig' %}
+{% endblock iii1_2 %}
+
+{% block iii1_3 %}
+	{% include 'crep/crepMso3/_include/show/iii/1_3.html.twig' %}
+{% endblock iii1_3 %}
+
+{% block iii2_1 %}
+	{% include 'crep/crepMso3/_include/show/iii/2_1.html.twig' %}
+{% endblock iii2_1 %}
+
+{% block iii2_2 %}
+	{% include 'crep/crepMso3/_include/show/iii/2_2.html.twig' %}
+{% endblock iii2_2 %}
+
+{% block iii2_3 %}
+	{% include 'crep/crepMso3/_include/show/iii/2_3.html.twig' %}
+{% endblock iii2_3 %}
+
+{% block iii3_1 %}
+	{% include 'crep/crepMso3/_include/show/iii/3_1.html.twig' %}
+{% endblock iii3_1 %}
+
+{% block iv1 %}
+	{% include 'crep/crepMso3/_include/show/iv/1.html.twig' %}
+{% endblock iv1 %}
+                        
+{% block iv2 %}
+	{% include 'crep/crepMso3/_include/show/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block iv3_1 %}
+	{% include 'crep/crepMso3/_include/show/iv/3_1.html.twig' %}
+{% endblock iv3_1 %}
+
+{% block iv3_2 %}
+	{% include 'crep/crepMso3/_include/show/iv/3_2.html.twig' %}
+{% endblock iv3_2 %}
+
+{% block iv3_3 %}
+	{% include 'crep/crepMso3/_include/show/iv/3_3.html.twig' %}
+{% endblock iv3_3 %}
+
+{% block iv3_4 %}
+	{% include 'crep/crepMso3/_include/show/iv/3_4.html.twig' %}
+{% endblock iv3_4 %}
+
+{% block iv3_5 %}
+	{% include 'crep/crepMso3/_include/show/iv/3_5.html.twig' %}
+{% endblock iv3_5 %}
+
+{% block v1 %}
+	{% include 'crep/crepMso3/_include/show/v/1.html.twig' %}
+{% endblock v1 %}
+
+{% block v2 %}
+	{% include 'crep/crepMso3/_include/show/v/2.html.twig' %}
+{% endblock v2 %}
+
+{% block v3 %}
+	{% include 'crep/crepMso3/_include/show/v/3.html.twig' %}
+{% endblock v3 %}
+
+{% block v4 %}
+	{% include 'crep/crepMso3/_include/show/v/4.html.twig' %}
+{% endblock v4 %}
+
+{% block vi1 %}
+	{% include 'crep/crepMso3/_include/show/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+	{% include 'crep/crepMso3/_include/show/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vi3 %}
+	{% include 'crep/crepMso3/_include/show/vi/3.html.twig' %}
+{% endblock vi3 %}
+
+{% block vii1 %}
+	{% include 'crep/crepMso3/_include/show/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2 %}
+	{% include 'crep/crepMso3/_include/show/vii/2.html.twig' %}
+{% endblock vii2 %}
+
+{% block vii3 %}
+	{% include 'crep/crepMso3/_include/show/vii/3.html.twig' %}
+{% endblock vii3 %}
+
+{% block vii4 %}
+	{% include 'crep/crepMso3/_include/show/vii/4.html.twig' %}
+{% endblock vii4 %}
+
+{% block vii5 %}
+	{% include 'crep/crepMso3/_include/show/vii/5.html.twig' %}
+{% endblock vii5 %}
+
+
+{% block alertRefusVisa %}
+    {% if (crep.dateRefusVisa) and (crep.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::VISE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::NOTIFIE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::REFUS_NOTIFICATION_AGENT')]) %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Refus de visa</strong> du CREP par l'agent acté le <strong>{{ crep.dateRefusVisa|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusVisa %}
+
+{% block alertRefusNotification %}
+    {% if crep.dateRefusNotification %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Refus de l'agent de signer</strong> le CREP notifié acté le <strong>{{ crep.dateRefusNotification|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusNotification %}
+
+{% block renvoyerAgent %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AGENT')) and crep.dateRenvoiAgent  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            {% set debutMessageRenvoiAgent = "L'agent a" %}
+            {% if is_granted('ROLE_AGENT') %}
+                {% set debutMessageRenvoiAgent = "Vous avez" %}
+            {% endif %}
+            {{ debutMessageRenvoiAgent }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAgent|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAgent|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAgent %}
+
+{% block renvoyerAh %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AH')) and crep.dateRenvoiAh  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            {% set debutMessageRenvoiAh = "Le N+2 a" %}
+            {% if is_granted('ROLE_AH') %}
+                {% set debutMessageRenvoiAh = "Vous avez" %}
+            {% endif %}
+            {{ debutMessageRenvoiAh }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAh|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAh|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAh %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+{% endblock javascripts %}

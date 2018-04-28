@@ -1,0 +1,50 @@
+formation_index:
+    path:     /
+    defaults: { _controller: "AppBundle:Formation:index" }
+    methods:  GET
+
+formation_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Formation:show"}
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+formation_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:Formation:new" }
+    methods:  [GET, POST]
+    
+formation_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Formation:edit" }
+    methods:  [GET, POST]
+
+formation_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Formation:delete" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'
+
+formation_delete_all:
+    path:     /{id}/delete-all
+    defaults: { _controller: "AppBundle:Formation:deleteAll" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'
+                
+formation_upload:
+    path:     /upload
+    defaults: { _controller: "AppBundle:Formation:upload" }
+    methods:  [GET, POST]
+    
+formation_server_processing:
+    path:     /server_processing
+    defaults: { _controller: "AppBundle:Formation:serverProcessing" }
+    
+formation_ajax_search:
+    path:     /ajax_search/{ministere}
+    defaults: { _controller: "AppBundle:Formation:ajaxSearch" }
+    requirements:
+        ministere: '\d+'

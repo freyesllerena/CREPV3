@@ -1,0 +1,30 @@
+{% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
+
+<div class="row" id="autresObjectifsCollection" data-prototype="{{ form_widget(form.autresObjectifs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Nature des dossiers ou travaux</th>
+                <th>Résultats obtenus par l’agent-e</th>
+                <th>Commentaires</th>
+                <th width="2%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in form.autresObjectifs %}
+                {{ form_row(objectif) }}
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br>

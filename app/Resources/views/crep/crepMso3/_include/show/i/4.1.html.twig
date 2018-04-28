@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+	            <th colspan="2">Évaluateur</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width:20%">Appréciation de l'évaluateur</td>
+                    <td>{{ crep.appreciationEvaluateur | nl2br }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Éléments particuliers à prendre en compte</td>
+                    <td>{{ crep.elementsParticuliers  | nl2br  }}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>

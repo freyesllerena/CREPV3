@@ -1,0 +1,47 @@
+{% form_theme form 'crep/crepScl/Form/App_form_crepScl.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Excellent</th>
+                    <th style="width: 12%" class="text-center">Sans objet</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                 {% for competence in form.competencesTransverses %}
+            		{% if crep.competencesTransverses[loop.index0].typeCompetence == 'Générale' %}
+                    <tr>
+                        <td>
+                            {{ crep.competencesTransverses[loop.index0].libelle }}
+                        </td>
+                        {{ form_widget(competence) }}
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                
+                <tr>
+            		<td colspan="7"><strong>Pour les agents exerçant des fonctions d'encadrement :</strong></td>
+            	</tr>
+            	
+            	{% for competence in form.competencesTransverses %}
+            		{% if crep.competencesTransverses[loop.index0].typeCompetence == 'Encadrement' %}
+                    <tr>
+                        <td>
+                            {{ crep.competencesTransverses[loop.index0].libelle }}
+                        </td>
+                        {{ form_widget(competence) }}
+                    </tr>
+                    {% endif %}
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

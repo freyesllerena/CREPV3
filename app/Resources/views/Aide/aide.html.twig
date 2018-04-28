@@ -1,0 +1,175 @@
+{% extends "index.base.html.twig" %}
+
+{% block frameTitle %}Aide{% endblock frameTitle %}
+{% block pageIcon %}fa fa-question-circle{% endblock pageIcon %}
+{% block pageTitle %}Aide{% endblock pageTitle %}
+{% block listTitle %}Documents d'aide{% endblock listTitle %}
+
+
+{% block content %}
+
+	<div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title">
+                    <h2>Documents d'aide<small></small></h2>
+
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+					<div class="row">
+						<div class="col-md-55">
+                        	<div class="thumbnail">
+                          		<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur Agent VF.pdf') }}" download>
+                              		<div class="image view view-first" style="cursor: pointer;">
+                                		<img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Guide Agent.PNG') }}" alt="guideAgent" />
+                        				<div class="mask">
+                          					<p>Télécharger</p>
+                                        	<div class="tools tools-bottom">
+                                            	<i class="fa fa-download"></i>
+                                            </div>
+                        				</div>
+                    				</div>
+                    			</a>	
+                    			<div style="text-align: center;" class="caption">
+                    				<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur Agent VF.pdf') }}" download>ESTEVE V2 - Guide utilisateur Agent</a>
+                      			</div>
+                			</div>
+                    	</div>
+                    
+                    	{% if app.user.hasRole('ROLE_PNC') or app.user.hasRole('ROLE_ADMIN_MIN') or app.user.hasRole('ROLE_RLC') or app.user.hasRole('ROLE_BRHP') or app.user.hasRole('ROLE_SHD') or app.user.hasRole('ROLE_AH') %}
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                                	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur N+1 VF.pdf') }}" download>
+        								<div class="image view view-first" style="cursor: pointer;">
+                                            <img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Guide SHD.PNG') }}" alt="guideShd" />
+                                            <div class="mask">
+                                                <p>Télécharger</p>
+                                            	<div class="tools tools-bottom">
+                                                	<i class="fa fa-download"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                            		<div style="text-align: center;" class="caption">
+                                		<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur N+1 VF.pdf') }}" download>ESTEVE V2 - Guide utilisateur N+1</a>
+    								</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    
+                    	{% if app.user.hasRole('ROLE_PNC') or app.user.hasRole('ROLE_ADMIN_MIN') or app.user.hasRole('ROLE_RLC') or app.user.hasRole('ROLE_BRHP') or app.user.hasRole('ROLE_AH') %}
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                                	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur N+2 VF.pdf') }}" download>
+        								<div class="image view view-first" style="cursor: pointer;">
+                                        	<img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Guide AH.PNG') }}" alt="guideAh" />
+                                    		<div class="mask">
+                                          		<p>Télécharger</p>
+                                                <div class="tools tools-bottom">
+                                                	<i class="fa fa-download"></i>
+                                                </div>
+                                        	</div>
+                                    	</div>
+                                	</a>
+                                    <div style="text-align: center;" class="caption">
+                                    	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur N+2 VF.pdf') }}" download>ESTEVE V2 - Guide utilisateur N+2</a>
+                                  	</div>
+                            	</div>
+                            </div>
+                        {% endif %}
+                        
+                    	{% if app.user.hasRole('ROLE_PNC') or app.user.hasRole('ROLE_ADMIN_MIN') or app.user.hasRole('ROLE_RLC') or app.user.hasRole('ROLE_BRHP') %}
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                            		<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur BRHP VF.pdf') }}" download>
+                                        <div class="image view view-first" style="cursor: pointer;">
+                                        	<img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Guide BRHP.PNG') }}" alt="guideBrhp" />
+                                            <div class="mask">
+        										<p>Télécharger</p>
+                                              	<div class="tools tools-bottom">
+                                                	<i class="fa fa-download"></i>
+                                              	</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div style="text-align: center;" class="caption">
+                                    	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur BRHP VF.pdf') }}" download>ESTEVE V2 - Guide utilisateur BRHP</a>
+                                  	</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    
+                    	{% if app.user.hasRole('ROLE_PNC') or app.user.hasRole('ROLE_ADMIN_MIN') or app.user.hasRole('ROLE_RLC') %}
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                                	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur RLC VF.pdf') }}" download>
+                                  		<div class="image view view-first" style="cursor: pointer;">
+                                            <img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Guide RLC.PNG') }}" alt="guideRlc" />
+                                            <div class="mask">
+                                              	<p>Télécharger</p>
+                                                <div class="tools tools-bottom">
+                                                	<i class="fa fa-download"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div style="text-align: center;" class="caption">
+                                    	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur RLC VF.pdf') }}" download>ESTEVE V2 - Guide utilisateur RLC</a>
+                                  	</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    
+                    	{% if app.user.hasRole('ROLE_PNC') or app.user.hasRole('ROLE_ADMIN_MIN') %}
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                                	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur PNC VF.pdf') }}" download>
+            							<div class="image view view-first" style="cursor: pointer;">
+                                        	<img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Guide PNC.PNG') }}" alt="guidePnc" />
+                                			<div class="mask">
+                                            	<p>Télécharger</p>
+                                              	<div class="tools tools-bottom">
+                                                	<i class="fa fa-download"></i>
+                                              	</div>
+                                    		</div>
+                                    	</div>
+                                	</a>
+                                	<div style="text-align: center;" class="caption">
+                                		<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur PNC VF.pdf') }}" download>ESTEVE V2 - Guide utilisateur PNC</a>
+                                  	</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                    	{% if app.user.hasRole('ROLE_ADMIN_MIN') or app.user.hasRole('ROLE_PNC') %}
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                                	<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur AM VF.pdf') }}" download>
+                                  		<div class="image view view-first" style="cursor: pointer;">
+                                    		<img style="width: 100%; display: block;" src="{{ asset('bundles/framework/cisirh/images/Guide AM.PNG') }}" alt="guideAm" />
+                                            <div class="mask">
+                                            	<p>Télécharger</p>
+                                              	<div class="tools tools-bottom">
+                                                	<i class="fa fa-download"></i>
+                                              	</div>
+                                            </div>
+                                    	</div>
+                                	</a>
+                                	<div style="text-align: center;" class="caption">
+                                		<a href="{{ asset('documents_aide/ESTEVE V2 - Guide utilisateur AM VF.pdf') }}" download>ESTEVE V2 - Guide utilisateur AM</a>
+                                  	</div>
+                                </div>
+                          	</div>
+                      	{% endif %}
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+
+{% endblock content %}

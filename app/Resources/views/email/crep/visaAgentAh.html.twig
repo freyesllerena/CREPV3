@@ -1,0 +1,27 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+
+	<tr>
+        <td class="content-block">
+        	Bonjour,
+         </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nous vous informons que dans le cadre de la campagne "{{ campagne.libelle }}" concernant l'évaluation professionnelle 
+	de l'année {{ campagne.anneeEvaluee }}, {{ agent | identite }} a visé son compte rendu d'évaluation professionnelle{% if crep.observationsVisaAgent  %} avec observations{% endif %}, le {{ crep.dateVisaAgent | date ('d/m/Y') }} à {{ crep.dateVisaAgent | date ('H:i') }}.
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Vous pouvez dès à présent le consulter et y ajouter vos observations. Pour cela, nous vous invitons à vous connecter à l'application {{ appName }} en cliquant sur le lien suivant :
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('crep_show',{'id' : crep.id}) }}">Accéder au CREP</a>
+        </td>
+    </tr> 
+
+{% endblock %}

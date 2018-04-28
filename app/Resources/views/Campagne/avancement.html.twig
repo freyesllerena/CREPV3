@@ -1,0 +1,59 @@
+{% if nbCrep==0 %}
+    {% set nbCrepNonRenseignes = 1 %}
+    {% set nbCrep = 1 %}
+{% endif %}
+   
+
+    
+    <div class="x_content">
+        <canvas id="canvasDoughnut"></canvas>
+
+    <div class="col-md-12">
+		<div class="col-md-6 col-xs-12" style="min-width: 280px;">
+			<table class="tile_info" style="min-width: 280px;">
+				<tr>
+					<td><i class="fa fa-square blue-sky"></i>Non renseigné</td>
+					<td>{{ ((nbCrepNonRenseignes / nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-square crepModifieShd"></i>En cours de rédaction</td>
+					<td>{{ ((nbCrepModifieShd /	nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-square blue"></i>Signé par le N+1</td>
+					<td>{{ ((nbCrepSignesShd / nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-square purple"></i>Visé par l'agent</td>
+					<td>{{ ((nbCrepVisesAgent / nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-square crepRefusVisa"></i>Refus de visa</td>
+					<td>{{ ((nbCrepRefusVisas /	nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-6 col-xs-12" style="min-width: 280px;">
+			<table class="tile_info" style="min-width: 280px;">
+				<tr>
+					<td><i class="fa fa-square orange"></i>Signé par le N+2</td>
+					<td>{{ ((nbCrepSignesAh / nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-square green"></i>Signé définitivement par l'agent</td>
+					<td>{{ ((nbCrepNotifies / nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-square crepRefusNotification"></i>Refus de signature définitive</td>
+					<td>{{ ((nbRefusNotification / nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-square crepCasAbsence"></i>Cas d'absence de l'agent</td>
+					<td>{{ ((nbCrepCasAbsence / nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+    </div>
+    
+

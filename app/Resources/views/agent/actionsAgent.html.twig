@@ -1,0 +1,43 @@
+{% import "macro/app.html.twig" as macro %}
+
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::MODIFIER'), agent) %}
+	<a href="{{ path('agent_edit', { 'id': agent.id }) }}" title="Modifier"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+{% endif %}
+	        		
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::DETACHER_PERIMETRE_BRHP'), agent) %}
+	<a href="#" data-toggle="modal" data-target="#detacher_perimetre_brhp_{{ uniqid }}_{{ agent.id }}" title="Libérer de mon périmètre BRHP"><i class="fa fa-unlink"></i></a>&nbsp; &nbsp;
+	{% set message = "Êtes-vous sûr de bien vouloir <strong>libérer</strong> l'agent <strong>"~ agent | identite | escape ~"</strong> du périmètre <strong>"~ agent.perimetreBrhp.libelle | escape ~"</strong> ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action retirera l'agent de votre périmètre, il deviendra de ce fait orphelin de périmètre." %}
+	{{ macro.modal('warning', "detacher_perimetre_brhp_"~uniqid~"_"~agent.id,"Libérer l'agent du périmètre BRHP", message, 'fa fa-unlink', detacherBrhpForm)}}
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::DETACHER_PERIMETRE_RLC'), agent) %}
+	<a href="#" data-toggle="modal" data-target="#detacher_perimetre_rlc_{{ uniqid }}_{{ agent.id }}" title="Libérer de mon périmètre RLC"><i class="fa fa-unlink"></i></a>&nbsp; &nbsp;
+	{% set message = "Êtes-vous sûr de bien vouloir <strong>sortir</strong> l'agent <strong>"~ agent | identite | escape ~"</strong> du périmètre <strong>" ~ agent.perimetreRlc.libelle | escape ~ "</strong> ?<br/><br/> <strong><i class='fa fa-warning'></i> Attention :</strong> Cette action retirera l'agent de votre périmètre, il deviendra de ce fait orphelin de périmètre."  %}
+	{{ macro.modal('warning', "detacher_perimetre_rlc_"~uniqid~"_"~agent.id, "Libérer l'agent du périmètre RLC", message, 'fa fa-unlink', detacherRlcForm)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::RATTACHER_PERIMETRE_RLC'), agent) %}
+	<a href="#" data-toggle="modal" data-target="#rattacher_perimetre_rlc_{{ uniqid }}_{{ agent.id }}" title="Rattacher à mon périmètre RLC"><i class="fa fa-link"></i></a>&nbsp; &nbsp;
+	{% set message = "Êtes-vous sûr de bien vouloir <strong>rattacher</strong> l'agent <strong>"~ agent | identite | escape ~"</strong> à votre périmètre ?"  %}
+	{{ macro.modal('warning', "rattacher_perimetre_rlc_"~uniqid~"_"~agent.id, "Rattacher l'agent à mon périmètre RLC", message, 'fa fa-link', rattacherRlcForm)}} 
+{% endif %}
+	        	
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::RATTACHER_PERIMETRE_BRHP'), {'agent': agent, 'campagneBrhp': campagneBrhpPourRattachement}) %}
+    <a href="#" data-toggle="modal" data-target="#rattacher_perimetre_brhp_{{ uniqid }}_{{ agent.id }}" title="Rattacher à mon périmètre"><i class="fa fa-link"></i></a>&nbsp; &nbsp;
+	{% set message = 'Êtes-vous sûr de bien vouloir <strong>rattacher</strong> l\'agent <strong>'~ agent | identite | escape ~'</strong> au pèrimètre <b>'~ campagneBrhpPourRattachement.perimetreBrhp.libelle | escape ~'</b> ?' %}
+	{{ macro.modal('warning', "rattacher_perimetre_brhp_"~uniqid~"_"~agent.id, "Rattacher l'agent à mon périmètre BRHP", message, 'fa fa-link', rattacherBrhpForm)}} 
+{% endif %}	
+
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::RATTACHER_SHD'), {'agent': agent, 'campagneBrhp': campagneBrhpPourRattachement}) %}
+	<a href="#" data-toggle="modal" data-target="#rattacher_shd_{{ uniqid }}_{{ agent.id }}" title="Rattacher à mon périmètre"><i class="fa fa-link"></i></a>&nbsp; &nbsp;
+	{% set message =  "Êtes-vous sûr de bien vouloir <strong>rattacher</strong> l'agent <strong>"~ agent | identite | escape ~"</strong> à votre liste d'agents à évaluer ?" %}
+	{{ macro.modal('warning', "rattacher_shd_"~uniqid~"_"~agent.id, "Rattacher l'agent à mon périmètre",message, 'fa fa-link', rattacherShdForm)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::VOIR'), agent) %}
+	<a href="{{ path('agent_show', { 'id': agent.id }) }}" title="voir"><i class="fa fa-search"></i></a>&nbsp; &nbsp;
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR_RECOURS'), agent.crep) %}
+	<a href="{{ path('recours_index', { 'id': agent.crep.id } ) }}" title="Voir les recours sur le CREP"><i class="fa fa-balance-scale"></i></a>
+{% endif %}

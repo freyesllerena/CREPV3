@@ -1,0 +1,29 @@
+{% form_theme form 'crep/crepMso3/Form/collections.form.html.twig' %}
+
+<div class="row" id="formationsN1Collection" data-prototype="{{ form_widget(form.formationsN1.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            	<tr>
+	                <th width="45%">Libellé de la formation suivie</th>
+                	<th width="10%">Formation suivie</th>
+                	<th>Commentaires <small>(appréciation, bilan, suites...)</small></th>
+	                <th width="5%"></th>
+	            </tr>
+            </thead>
+            <tbody>
+                {% for formation in form.formationsN1 %}
+                    {{ form_widget(formation) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsSuivies pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

@@ -1,0 +1,1169 @@
+<style>
+	.text-center {
+		text-align: center;
+	}
+	
+	.bordered {
+		border:1px #000000 solid;
+	}
+	
+	.bg-full {
+		background-color: #E9E9E9;
+	}
+	
+	ul.demo {
+    	list-style-type: none;
+    	margin: 0;
+    	padding: 0;
+}
+
+    
+</style>
+  <!-- page 1 -->
+
+<p class="text-center">
+	<strong>ANNEXE 3<br/>COMPTE RENDU DE L’ENTRETIEN PROFESSIONNEL (tout agent</strong>
+	hors personnels des ARS, inspecteurs et contrôleurs du travail, administrateurs civils et emplois fonctionnels, 
+	inspecteurs de la jeunesse et des sports et conseillers techniques et pédagogiques supérieurs)<br>-<br>
+	<strong>Exercice {{ crep.agent.campagnePnc.anneeEvaluee + 1 }}</strong><br>
+	Ministère des solidarités et de la santé <br>
+	Ministère du travail <br>
+	Ministère des sports <br>
+	Ministère de l’éducation nationale
+	<h4>COMPTE RENDU  DE L’ENTRETIEN PROFESSIONNEL</h4>
+	réalisé le : {% if crep.dateEntretien   %} {{ crep.dateEntretien | date('d/m/Y') }} {% endif %} <br><br>
+	au titre de l'année {{ crep.agent.campagnePnc.anneeEvaluee }} <br><br>
+	<i>(Document à remettre à l’agent au moins huit jours avant la date de l’entretien, accompagné de la fiche de poste)</i>
+</p>
+
+<u>entre l'agent</u> : <br>
+
+<table>
+	<tr>
+		<td colspan="2">
+			Prénom – Nom : {{ crep.prenom | title | nl2br }} {{ crep.nomUsage | upper | nl2br }} <br>
+			Date de naissance : {% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %} <br>
+			Catégorie - Corps - Grade / agent non titulaire : {{ crep.categorie | nl2br }} - 
+															  {{ crep.corps | nl2br  }} - 
+															  {{ crep.grade | nl2br }}<br>
+			Échelon : {{ crep.echelon | nl2br }}<br>
+			Direction/Service/Bureau : {{ crep.affectation | nl2br }}
+		</td>
+	</tr>
+	<tr>
+		<td width="70%">Poste occupé : {{ crep.posteOccupe | nl2br }}</td>
+		<td>depuis le : {% if crep.dateEntreePoste %}{{ crep.dateEntreePoste | date('d/m/Y') }}{% endif %}</td>
+	</tr>
+</table>
+
+<br><br>
+
+<u>et son supérieur hiérarchique direct</u> : <br>
+
+Prénom - Nom : {{ crep.prenomShd | title | nl2br }} {{ crep.nomUsageShd | upper | nl2br }} <br>
+Catégorie - Corps - Grade / agent non titulaire : {{ crep.categorieShd | nl2br }} -
+												  {{ crep.corpsShd | nl2br }} - 
+												  {{ crep.gradeShd | nl2br }} <br>
+Fonction exercée : {{ crep.fonctionExerceeShd | nl2br }}
+
+<br/>
+
+<div style="border:1px #000000 solid;" align="center"><strong>LE POSTE OCCUPE </strong><i>(à remplir par l'agent)</i></div>
+
+<br/>
+<strong>Fonctions exercées : </strong>{{ crep.fonctionsExercees | nl2br }}<br>
+<br>
+<strong>Cotation du poste : </strong> {{ crep.cotationPoste | nl2br }}<br>
+<br>
+<strong>Quotité de travail :</strong> {{ crep.quotiteTravail | nl2br }}<br>
+<br>
+<strong>Votre fiche de poste : </strong> <br>
+
+{% set oui, non = '&#9744;', '&#9744;' %}
+{% if crep.fichePosteAdaptee is not null and not crep.fichePosteAdaptee %}
+	{% set non = '&#9745;' %}
+{% elseif crep.fichePosteAdaptee %}
+	{% set oui = '&#9745;' %}
+{% endif %}
+
+- Est-elle adaptée ? {{ oui | raw }} Oui {{ non | raw }} Non <br>
+- Si non, sur quels points doit-elle être actualisée ? <br>
+{% if crep.fichePosteAdaptee is not null and not crep.fichePosteAdaptee %}
+	{{ crep.pointsActualisesFichePoste | nl2br }}
+{% endif %}	
+<br>
+<br>
+
+<strong>Le cas échéant, votre appréciation sur votre poste (attraits et contraintes ; qualité de vie au travail, notamment en termes de charge de travail, d’organisation du travail et d’horaires) : </strong><br>
+{{ crep.appreciationPosteAgent | nl2br }}
+
+<!-- page 2 -->
+<div style="page-break-before:always;"></div>	
+
+<div class="bordered text-center"><strong>I - BILAN DE L'ANNÉE ÉCOULÉE</strong></div>
+
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered"><strong>CONTEXTE DE L'ANNÉE ÉCOULÉE</strong> (environnement de travail de l'agent) </th>
+	</tr>
+	<tr>
+		<td class="bordered">
+				{{ crep.contexteAnneeEcoulee | nl2br }}
+		</td>
+	</tr>
+</table>
+
+<p class="text-center">
+	<strong>Bilan et réalisation des objectifs de l’année écoulée</strong>
+</p>
+
+<table cellpadding="5">
+	<tr class="text-center">
+		<th class="bordered" width="38%">Rappel de l'objectif</th>
+		<th class="bordered" width="25%">Réalisation</th>
+		<th class="bordered" width="37%">Analyse des résultats et enseignements tirés</th>
+	</tr>
+	
+	{# Afficher des lignes vides si la collection d'objectifs est vide (pour l'export d'un crep vierge) #}
+	{% if crep.objectifsEvalues | length > 0 %}
+		
+		{% for objectif in crep.objectifsEvalues %}
+			{% set echelleEvaluation = ['&#9744;', '&#9744;', '&#9744;', '&#9744;'] %}
+			{% set echelleEvaluation = setElementArray(echelleEvaluation, objectif.resultatObtenu, '&#9745;')  %} {# <==> echelleEvaluation[objectif.resultatObtenu] = '&#9745;' #}
+			<tr>
+				<td class="bordered">
+					{{ objectif.libelle | nl2br}} 
+				</td>
+				<td class="bordered">
+					{{ echelleEvaluation[3] | raw }} Atteint <br>
+					{{ echelleEvaluation[2] | raw }} Partiellement atteint <br>
+					{{ echelleEvaluation[1] | raw }} Non atteint <br>
+					{{ echelleEvaluation[0] | raw }} Devenu sans objet
+				</td>
+				<td class="bordered">
+					{{ objectif.resultat | nl2br }}
+				</td>
+			</tr>
+		{% endfor %}
+	
+	{% else %}
+	
+		{% for i in 0..2 %}
+			<tr>
+				<td class="bordered">
+					<br><br>
+				</td>
+				<td class="bordered">
+					&#9744; Atteint <br>
+					&#9744; Partiellement atteint <br>
+					&#9744; Non atteint <br>
+					&#9744; Devenu sans objet
+				</td>
+				<td class="bordered">
+					<br><br>
+				</td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+<p>
+	<strong>Autres dossiers ou travaux sur lesquels l'agent s'est investi en cours d'année :</strong>
+</p>
+
+<strong> - nature des dossiers ou travaux : </strong><br>{{ crep.natureDossiersTravaux | nl2br }}
+<br>
+<strong> - les résultats obtenus par l’agent : </strong><br>{{ crep.resultatsObtenusParAgent | nl2br }}
+<br>
+<strong> - ce qui a facilité ou freiné les résultats : </strong><br>{{ crep.contexteResultats | nl2br }}
+
+<p>
+	<strong>Appréciation globale sur l’activité et la réalisation des objectifs de l’année écoulée</strong>
+</p>
+
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered bg-full" colspan="2" width="100%">ÉVALUATEUR</th>
+	</tr>
+	<tr>
+		<td class="bordered" width="40%">Appréciation de l’évaluateur</td>
+		<td class="bordered" width="60%">{{ crep.appreciationEvaluateur | nl2br }}</td>
+	</tr>
+	<tr>
+		<td class="bordered" width="40%">Éléments particuliers à prendre en compte </td>
+		<td class="bordered" width="60%">{{ crep.elementsParticuliers | nl2br }}</td>
+	</tr>
+	<tr>
+		<th class="bordered bg-full" colspan="2" width="100%">ÉVALUÉ</th>
+	</tr>
+	<tr>
+		<td class="bordered" width="40%">Observations éventuelles de l'agent sur son activité et la  réalisation des objectifs</td>
+		<td class="bordered" width="60%">{{ crep.observationsAgentSurSonActivite | nl2br }}</td>
+	</tr>
+</table>
+
+
+
+
+
+<!-- page 3 -->
+<div style="page-break-before:always;"></div>	
+
+<div class="bordered text-center"><strong>II - OBJECTIFS DE L'AGENT POUR L'ANNÉE 2018</strong></div>
+
+<br>
+
+<table style="border:1px #000000 solid;">
+	<tr>
+		<th style="border:1px #000000 solid;"><strong>OBJECTIFS DU SERVICE</strong></th>
+	</tr>
+	<tr>
+		<td>
+			{{ crep.objectifsService | nl2br }}<br>
+		</td>
+	</tr>
+</table>
+
+<br>
+<br>
+
+<table style="border:1px #000000 solid;">
+	<tr>
+		<th style="border:1px #000000 solid;"><strong>CONTEXTE PRÉVISIBLE DE L'ANNÉE</strong></th>
+	</tr>
+	<tr>
+		<td>
+			{{ crep.contextePrevisibleAnnee | nl2br }}<br>
+		</td>
+	</tr>
+</table>
+
+<br>
+<br>
+
+<table cellpadding="5">
+	<tr class="text-center">
+		<th class="bordered" width="40%"><strong>OBJECTIFS de l’agent </strong><br><small>(si nécessaire, préciser les actions à conduire et les résultats attendus)</small></th>
+		<th class="bordered" width="25%"><strong>ÉCHÉANCE</strong></th>
+		<th class="bordered" width="35%"><strong>CONDITIONS DE REUSSITE </strong><br><small>(liées à l’agent ou/et à des facteurs externes)</small></th>
+	</tr>
+	
+	{% if crep.objectifsEvalues | length > 0 %}
+		
+		{% for objectif in crep.objectifsFuturs %}
+			<tr>
+				<td class="bordered">
+					{{ objectif.libelle | nl2br }}
+				</td>
+				<td class="bordered">
+					{{ objectif.echeance| nl2br}}
+				</td>
+				<td class="bordered">
+					{{ objectif.observationsEventuelles | nl2br }}
+				</td>
+			</tr>
+		
+		{% endfor %}
+		
+	{% else %}	
+		{% for i in 0..2 %}
+			<tr>
+				<td class="bordered">
+					<br/>
+				</td>
+				<td class="bordered">
+					<br/>
+				</td>
+				<td class="bordered">
+					<br/>
+				</td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+
+
+<!-- page 4 -->
+<div style="page-break-before:always;"></div>	
+
+<div class="bordered text-center"><strong>III - EXPÉRIENCE PROFESSIONNELLE : ÉVALUATION DES ACQUIS</strong></div>
+
+<p class="text-center">
+	<u>Les compétences <strong>REQUISES</strong> sur le poste</u>
+</p>
+
+
+<table cellpadding="2">
+	<tr class="text-center">
+		<th class="bordered" width="33%">COMPÉTENCES<br><small>(à compléter à partir de la fiche de poste)</small></th>
+		<th class="bordered" width="9%">expert</th>
+		<th class="bordered" width="10%">Maîtrise</th>
+		<th class="bordered" width="10%">pratique</th>
+		<th class="bordered" width="9%">initié</th>
+		<th class="bordered" width="9%">non requis</th>
+		<th class="bordered" width="20%">APPRÉCIATION<br><small>(le cas échéant)</small></th>
+	</tr>
+	
+	{% if crep.competencesRequises | length > 0 %}
+		{% for competence in crep.competencesRequises %}
+			{% set echelleEvaluation = ['', '', '', '', ''] %}
+			{% set echelleEvaluation = setElementArray(echelleEvaluation, competence.niveau, 'X')  %} {# <==> echelleEvaluation[competence.niveau] = 'X' #}
+			<tr>
+				<td class="bordered">{{ competence.libelle | nl2br}}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[4]  }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[3]  }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[2]  }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[1]  }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[0]  }}</td>
+				<td class="bordered">{{ competence.appreciation | nl2br }}</td>
+			</tr>
+		{% endfor %}
+	
+	{% else %}
+		{% for i in 0..2 %}
+		<tr>
+			<td class="bordered"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered"></td>
+		</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+<br><br>
+
+<table cellpadding="2">
+	<tr class="text-center">
+		<th class="bordered" width="33%">SAVOIR FAIRE</th>
+		<th class="bordered" width="9%">expert</th>
+		<th class="bordered" width="10%">Maîtrise</th>
+		<th class="bordered" width="10%">pratique</th>
+		<th class="bordered" width="9%">initié</th>
+		<th class="bordered" width="9%">non requis</th>
+		<th class="bordered" width="20%">APPRÉCIATION<br><small>(le cas échéant)</small></th>
+	</tr>
+	
+	{% for savoir in crep.savoirsFairePoste %}
+		{% set echelleEvaluation = ['', '', '', '', '', ''] %}
+		{% set echelleEvaluation = setElementArray(echelleEvaluation, savoir.niveau, 'X')  %} {# <==> echelleEvaluation[savoir.niveau] = 'X' #}
+			
+		<tr>
+			<td class="bordered">{{ savoir.libelle | nl2br}}</td>
+			<td class="bordered text-center">{{ echelleEvaluation[4] }}</td>
+			<td class="bordered text-center">{{ echelleEvaluation[3] }}</td>
+			<td class="bordered text-center">{{ echelleEvaluation[2] }}</td>
+			<td class="bordered text-center">{{ echelleEvaluation[1] }}</td>
+			<td class="bordered text-center">{{ echelleEvaluation[0] }}</td>		
+			<td class="bordered">{{ savoir.appreciation | nl2br }}</td>
+		</tr>
+	{%  endfor %}
+	
+	{% if crep.savoirsFairePosteAutres | length > 0 %}
+		{% for savoir in crep.savoirsFairePosteAutres %}
+			{% set echelleEvaluation = ['', '', '', '', '', ''] %}
+			{% set echelleEvaluation = setElementArray(echelleEvaluation, savoir.niveau, 'X')  %} {# <==> echelleEvaluation[savoir.niveau] = 'X' #}
+		
+			<tr>
+				<td class="bordered">{{ savoir.libelle|nl2br}}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[4] }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[3] }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[2] }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[1] }}</td>
+				<td class="bordered text-center">{{ echelleEvaluation[0] }}</td>
+				<td class="bordered">{{ savoir.appreciation|nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+		<tr>
+			<td class="bordered"><br></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered"></td>
+		</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+<small>
+	<br>
+	Expert : domine le sujet, voire est capable de le faire évoluer – Capacité à former et/ou à d’être tuteur. La notion d’expert est ici distincte des certifications ou agréments attribués par les ministères dans l’exercice de certaines fonctions spécifiques.<br>
+	Maîtrise : connaissances approfondies – Capacité à traiter de façon autonome les situations complexes ou inhabituelles<br>
+	Pratique : connaissances générales – Capacité à traiter de façon autonome les situations courantes ;<br>
+	Initié : connaissances élémentaires, notions – capacité à faire mais en étant tutoré ;<br>
+</small>
+
+
+<br>
+
+<table cellpadding="2">
+	<tr class="text-center">
+		<th class="bordered" width="33%">QUALITÉS RELATIONNELLES</th>
+		<th class="bordered" width="9%">expert</th>
+		<th class="bordered" width="10%">Maîtrise</th>
+		<th class="bordered" width="10%">pratique</th>
+		<th class="bordered" width="9%">initié</th>
+		<th class="bordered" width="9%">non requis</th>
+		<th class="bordered" width="20%">APPRÉCIATION<br><small>(le cas échéant)</small></th>
+	</tr>
+	
+	{% for qualite in crep.qualitesRelationnellesPoste %}
+		<tr>
+			<td class="bordered">{{ qualite.libelle | nl2br}}</td>
+			{% for i in 4..0 %}
+				<td class="bordered text-center">{% if qualite.niveau == i  %}X{% endif %}</td>
+			{% endfor %}
+			<td class="bordered">{{ qualite.appreciation|nl2br }}</td>
+		</tr>
+	{% endfor %}
+	
+	{% if crep.qualitesRelationnellesPosteAutres | length > 0 %}
+		{% for qualite in crep.qualitesRelationnellesPosteAutres %}
+			<tr>
+				<td class="bordered">{{ qualite.libelle|nl2br}}</td>
+				{% for i in 4..0 %}
+					<td class="bordered text-center">{% if qualite.niveau == i  %}X{% endif %}</td>
+				{% endfor %}
+				<td class="bordered">{{ qualite.appreciation|nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+			<tr>
+				<td class="bordered"></td>
+				{% for i in 4..0 %}
+					<td class="bordered text-center"></td>
+				{% endfor %}
+				<td class="bordered"></td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+<!-- page 5 -->
+<div style="page-break-before:always;"></div>	
+
+<p class="text-center">
+	<u>Les compétences <strong>MISES EN ŒUVRE</strong> par l’agent sur le poste</u>
+</p>
+
+<table cellpadding="2">
+	<tr class="text-center">
+		<th class="bordered" width="33%">COMPÉTENCES<br><small>(à compléter à partir de la fiche de poste)</small></th>
+		<th class="bordered" width="9%">expert</th>
+		<th class="bordered" width="10%">Maîtrise</th>
+		<th class="bordered" width="10%">pratique</th>
+		<th class="bordered" width="9%">initié</th>
+		<th class="bordered" width="9%">non requis</th>
+		<th class="bordered" width="20%">APPRÉCIATION<br><small>(le cas échéant)</small></th>
+	</tr>
+	
+	{% if crep.competencesMisesEnOeuvre | length > 0 %}
+		{% for competence in crep.competencesMisesEnOeuvre %}
+			<tr>
+				<td class="bordered">{{ competence.libelle|nl2br}}</td>
+				{% for i in 4..0 %}
+					<td class="bordered text-center">{% if competence.niveau == i  %}X{% endif %}</td>
+				{% endfor %}
+				<td class="bordered">{{ competence.appreciation|nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+		<tr>
+			<td class="bordered"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered"></td>
+		</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+<br><br>
+
+<table cellpadding="2">
+	<tr class="text-center">
+		<th class="bordered" width="33%">SAVOIR FAIRE</th>
+		<th class="bordered" width="9%">expert</th>
+		<th class="bordered" width="10%">Maîtrise</th>
+		<th class="bordered" width="10%">pratique</th>
+		<th class="bordered" width="9%">initié</th>
+		<th class="bordered" width="9%">non requis</th>
+		<th class="bordered" width="20%">APPRÉCIATION<br><small>(le cas échéant)</small></th>
+	</tr>
+	
+	{% for savoir in crep.savoirsFaireAgent %}
+		<tr>
+			<td class="bordered">{{ savoir.libelle|nl2br}}</td>
+			
+			{% for i in 4..0 %}
+				<td class="bordered text-center">{% if savoir.niveau == i  %}X{% endif %}</td>
+			{% endfor %}
+
+			<td class="bordered">{{ savoir.appreciation|nl2br }}</td>
+		</tr>
+	{% endfor %}
+	
+	{% if crep.savoirsFaireAgentAutres | length > 0 %}
+		{% for savoir in crep.savoirsFaireAgentAutres %}
+			<tr>
+				<td class="bordered">{{ savoir.libelle|nl2br}}</td>
+				{% for i in 4..0 %}
+					<td class="bordered text-center">{% if savoir.niveau == i  %}X{% endif %}</td>
+				{% endfor %}
+				<td class="bordered">{{ savoir.appreciation|nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+		<tr>
+			<td class="bordered"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered"></td>
+		</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+<br><br>
+
+<table cellpadding="2">
+	<tr class="text-center">
+		<th class="bordered" width="33%">QUALITÉS RELATIONNELLES</th>
+		<th class="bordered" width="9%">expert</th>
+		<th class="bordered" width="10%">Maîtrise</th>
+		<th class="bordered" width="10%">pratique</th>
+		<th class="bordered" width="9%">initié</th>
+		<th class="bordered" width="9%">non requis</th>
+		<th class="bordered" width="20%">APPRÉCIATION<br><small>(le cas échéant)</small></th>
+	</tr>
+
+	{% for qualite in crep.qualitesRelationnellesAgent %}	
+		<tr>
+			<td class="bordered">{{ qualite.libelle|nl2br}}</td>
+			 {% for i in 4..0 %}
+				<td class="bordered text-center">{% if qualite.niveau == i  %}X{% endif %}</td>
+			 {% endfor %}		
+			<td class="bordered">{{ qualite.appreciation|nl2br }}</td>
+		</tr>
+	{% endfor %}
+	
+	{% if crep.qualitesRelationnellesAgentAutres | length > 0 %}
+		{% for qualite in crep.qualitesRelationnellesAgentAutres %}
+			<tr>
+				<td class="bordered">{{ qualite.libelle|nl2br}}</td>
+				{% for i in 4..0 %}
+					<td class="bordered text-center">{% if qualite.niveau == i  %}X{% endif %}</td>
+				{% endfor %}
+				<td class="bordered">{{ qualite.appreciation|nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+		<tr>
+			<td class="bordered"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered text-center"></td>
+			<td class="bordered"></td>
+		</tr>
+		{% endfor %}
+	{% endif %}
+		
+</table>
+
+<p class="text-center">
+	<u>Les aptitudes au <strong>MANAGEMENT</strong> (pour les agents en situation d’encadrement)</u>
+</p>
+
+Nombre d’agents encadrés (préciser les effectifs par corps et catégorie) : {{ crep.agentsEncadres|nl2br }} <br>
+
+<br>
+
+<table cellpadding="1">
+	<tr class="text-center">
+		<th class="bordered" width="40%">APTITUDES</th>
+		<th class="bordered" width="11%">Excellente maîtrise</th>
+		<th class="bordered" width="9%">Maîtrise</th>
+		<th class="bordered" width="11%">À développer</th>
+		<th class="bordered" width="9%">À acquérir</th>
+		<th class="bordered" width="20%">APPRÉCIATION<br><small>(le cas échéant)</small></th>
+	</tr>
+	
+	{% for aptitude in crep.aptitudesManagementAgent %}
+		<tr>
+			<td class="bordered">{{ aptitude.libelle|nl2br}}</td>
+			{% for i in 3..0 %}
+				<td class="bordered text-center">{% if aptitude.niveau == i and aptitude.niveau is not null %}X{% endif %}</td>
+			{% endfor %}
+			<td class="bordered">{{ aptitude.appreciation|nl2br }}</td>
+		</tr>
+	{% endfor %}
+
+</table>
+
+
+<!-- page 7 -->
+<div style="page-break-before:always;"></div>	
+
+<div class="bordered text-center"><strong>IV - LES BESOINS DE FORMATION</strong></div>
+
+<br>
+<table>
+	<tr>
+		<td colspan="2">
+			Prénom – Nom : {{ crep.prenom | title | nl2br }} {{ crep.nomUsage | upper | nl2br }} <br>
+			Date de naissance : {% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %} <br>
+			Catégorie - Corps - Grade / agent non titulaire : {{ crep.categorie | nl2br }} - 
+															  {{ crep.corps | nl2br  }} - 
+															  {{ crep.grade | nl2br }}<br>
+			Échelon : {{ crep.echelon | nl2br }}<br>
+			Direction/Service/Bureau : {{ crep.affectation | nl2br }}
+		</td>
+	</tr>
+	<tr>
+		<td width="70%">Poste occupé : {{ crep.posteOccupe | nl2br }}</td>
+		<td>depuis le : {% if crep.dateEntreePoste %}{{ crep.dateEntreePoste | date('d/m/Y') }}{% endif %}</td>
+	</tr>
+	
+</table>
+
+<p class="text-center">
+	<strong>Formations suivies (année N-1 et N-2)</strong>
+</p>
+
+<br><br>
+
+<table cellpadding="2">
+	<tr class="text-center">
+		<th class="bordered bg-full" width="10%">Année</th>
+		<th class="bordered bg-full" width="30%">Formation demandée</th>
+		<th class="bordered bg-full" width="30%">Formation suivie</th>
+		<th class="bordered bg-full" width="30%">Commentaires (appréciation, bilan, suites)</th>
+	</tr>
+	
+	{% for formation in crep.formationsN1 %}
+		<tr>
+			<td class="bordered">{{ crep.agent.campagnePnc.anneeEvaluee }}</td>
+			<td class="bordered">{{ formation.libelle |nl2br }}</td>
+			<td class="bordered">{{ formation.formationSuivie | ouiNon }}</td>
+			<td class="bordered">{{ formation.commentaires|nl2br }}</td>
+		</tr>
+	{% endfor %}
+	
+	{% for formation in crep.formationsN2 %}
+		<tr>
+			<td class="bordered">{{ crep.agent.campagnePnc.anneeEvaluee-1 }}</td>
+			<td class="bordered">{{ formation.libelle | nl2br }}</td>
+			<td class="bordered">{{ formation.formationSuivie | ouiNon }}</td>
+			<td class="bordered">{{ formation.commentaires|nl2br }}</td>
+		</tr>
+	{% endfor %}
+	
+	{% if crep.formationsN1 | length == 0 and crep.formationsN2 | length == 0  %}
+		{% for i in 0..2 %}
+			<tr>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+</table>
+
+
+<!-- page 7 -->
+<div style="page-break-before:always;"></div>
+
+<p class="text-center">
+	<strong>Recueil des besoins de formation (année 2018 et 2019)</strong>
+</p>
+
+<table cellpadding="5">
+	<tr class="text-center" style="font-size:7.0pt;">
+		<td width="48%"></td>
+		<td class="bordered bg-full" width="10%">Demande de l’agent (*)</td>
+		<td class="bordered bg-full" width="12%">Avis du responsable hiérarchique (*)</td>
+		<td class="bordered bg-full" width="12%">Proposition du responsable hiérarchique</td>
+		<td class="bordered bg-full" width="8%">Recours au CPF</td>
+		<td class="bordered bg-full" width="10%">Echéance (année 2017, 2018)</td>
+	</tr>
+	<tr>
+		<td class="bordered bg-full" colspan="6"><strong>Formations liées à l’adaptation immédiate au poste de travail (T1)</strong></td>
+	</tr>
+	
+	{% if crep.formationsT1 | length > 0 %}
+		{% for formation in crep.formationsT1 %}
+			<tr class="text-center">
+				<td class="bordered" align="left">{{ formation.libelle | nl2br }}</td>
+				<td class="bordered">{% if formation.demandeeAgent  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.avisShd  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.propositionAh  %}X{% endif %}</td>
+				<td class="bordered bg-full"></td>
+				<td class="bordered">{{ formation.echeance | nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+			<tr class="text-center">
+				<td class="bordered" align="left"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered bg-full"></td>
+				<td class="bordered"></td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+	
+	<tr>
+		<td class="bordered bg-full" colspan="6"><strong>Formations liées à l’évolution des métiers (T2)</strong></td>
+	</tr>
+	
+	{% if crep.formationsT2 | length > 0 %}
+		{% for formation in crep.formationsT2 %}
+			<tr class="text-center">
+				<td class="bordered" align="left">{{ formation.libelle | nl2br }}</td>
+				<td class="bordered">{% if formation.demandeeAgent  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.avisShd  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.propositionAh  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.cpf  %}X{% endif %}</td>
+				<td class="bordered">{{ formation.echeance | nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+			<tr class="text-center">
+				<td class="bordered" align="left"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+	<tr>
+		<td class="bordered bg-full" colspan="6"><strong>Formations liées au développement des qualifications ou l’acquisition de nouvelles qualifications (T3)</strong></td>
+	</tr>
+	{% if crep.formationsT3 | length > 0 %}
+		{% for formation in crep.formationsT3 %}
+			<tr class="text-center">
+				<td class="bordered" align="left">{{ formation.libelle | nl2br }}</td>
+				<td class="bordered">{% if formation.demandeeAgent  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.avisShd  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.propositionAh  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.cpf  %}X{% endif %}</td>
+				<td class="bordered">{{ formation.echeance | nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+			<tr class="text-center">
+				<td class="bordered" align="left"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+	<tr>
+		<td class="bordered bg-full" colspan="6"><strong>Préparations aux concours</strong></td>
+	</tr>
+	
+	{% if crep.formationsPreparationConcours | length > 0 %}
+		{% for formation in crep.formationsPreparationConcours %}
+			<tr class="text-center">
+				<td class="bordered" align="left">{{ formation.libelle | nl2br }}</td>
+				<td class="bordered">{% if formation.demandeeAgent  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.avisShd  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.propositionAh  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.cpf  %}X{% endif %}</td>
+				<td class="bordered">{{ formation.echeance | nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+			<tr class="text-center">
+				<td class="bordered" align="left"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+			</tr>
+		{% endfor %}
+	{% endif %}
+	<tr>
+		<td class="bordered bg-full" colspan="6"><strong>Autres actions (VAE, bilan de compétences, congé de formation)</strong></td>
+	</tr>
+	{% if crep.formationsAutres | length > 0 %}
+		{% for formation in crep.formationsAutres %}
+			<tr class="text-center">
+				<td class="bordered" align="left">{{ formation.libelle | nl2br }}</td>
+				<td class="bordered">{% if formation.demandeeAgent  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.avisShd  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.propositionAh  %}X{% endif %}</td>
+				<td class="bordered">{% if formation.cpf  %}X{% endif %}</td>
+				<td class="bordered">{{ formation.echeance | nl2br }}</td>
+			</tr>
+		{% endfor %}
+	{% else %}
+		{% for i in 0..2 %}
+			<tr class="text-center">
+				<td class="bordered" align="left"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+				<td class="bordered"></td>
+			</tr>
+		{% endfor %}
+	{% endif %}	
+</table>
+
+<i><small>(*) Porter une croix en cas de réponse positive. L’agent peut indiquer s’il souhaite utiliser son CPF pour la formation envisagée.  Les formations liées à une adaptation immédiate au poste de travail ne peuvent être imputées sur le CPF.</small></i>
+
+<!-- page 8 -->
+<div style="page-break-before:always;"></div>	
+
+<div class="bordered text-center"><strong>V - LES PERSPECTIVES D'ÉVOLUTION PROFESSIONNELLE DE L'AGENT</strong></div>
+
+<br>
+<table>
+	<tr>
+		<td colspan="2">
+			Prénom – Nom : {{ crep.prenom | title | nl2br }} {{ crep.nomUsage | upper | nl2br }} <br>
+			Date de naissance : {% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %} <br>
+			Catégorie - Corps - Grade / agent non titulaire : {{ crep.categorie | nl2br }} - 
+															  {{ crep.corps | nl2br  }} - 
+															  {{ crep.grade | nl2br }}<br>
+			Échelon : {{ crep.echelon | nl2br }}<br>
+			Direction/Service/Bureau : {{ crep.affectation | nl2br }}
+		</td>
+	</tr>
+	<tr>
+		<td width="70%">Poste occupé : {{ crep.posteOccupe | nl2br }}</td>
+		<td>depuis le : {% if crep.dateEntreePoste %}{{ crep.dateEntreePoste | date('d/m/Y') }}{% endif %}</td>
+	</tr>
+</table>
+
+<p>
+	<strong>SOUHAITS D’EVOLUTION PROFESSIONNELLE DE L’AGENT</strong> (préciser l’échéance)
+</p>
+
+<strong> - Evolution sur le poste actuel  : </strong><br>{{ crep.evolutionPosteActuel|nl2br }}
+<br/>
+<br>
+<strong> - Modification éventuelle de la fiche de poste : </strong><br>{{ crep.modificationFicheDePoste|nl2br }}
+<br/>
+<br>
+<strong> - Prise de responsabilités plus importantes : </strong><br>{{ crep.priseDeResponsabilites|nl2br }}
+<br/>
+<br/>
+<strong> - Projet professionnel : </strong><br>{{ crep.projetProfessionnel|nl2br }}
+<br>
+<br>
+
+{% set oui, non = '&#9744;', '&#9744;' %}
+{% if crep.souhaitEntretienCarriere is not null and not crep.souhaitEntretienCarriere %}
+	{% set non = '&#9745;' %}
+{% elseif crep.souhaitEntretienCarriere %}
+	{% set oui = '&#9745;' %}
+{% endif %}
+Souhaitez-vous bénéficier d’un entretien  avec un  conseiller mobilité-carrière ? {{ oui | raw }} Oui {{ non | raw }} Non <br>
+
+
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered text-center"><strong>OBSERVATIONS ÉVENTUELLES DU SUPÉRIEUR HIÉRARCHIQUE DIRECT SUR CES PERSPECTIVES D'ÉVOLUTION PROFESSIONNELLE</strong></th>
+	</tr>
+	<tr>
+		<td class="bordered">
+				{{ crep.observationsShdPerspectivesProfessionnelles | nl2br }}
+		</td>
+	</tr>
+</table>
+
+<br>
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered text-center">
+			<strong>AVIS CIRCONSTANCIE POUR CERTAINS FONCTIONNAIRES ÉLIGIBLES À UN AVANCEMENT DE GRADE</strong><br>
+			(appréciation particulière sur les perspectives d’accès au grade supérieur des agents concernés par le décret n°2017-722 du 2 mai 2017)
+		</th>
+	</tr>
+	<tr>
+		<td class="bordered">
+				{{ crep.avisShdAvancementGrade | nl2br }}
+		</td>
+	</tr>
+</table>
+
+<br>
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered text-center">
+			<strong>COMMENTAIRES EVENTUELS DE L’AGENT</strong>
+		</th>
+	</tr>
+	<tr>
+		<td class="bordered">
+				{{ crep.observationsAgentPerspectivesProfessionnelles | nl2br }}
+		</td>
+	</tr>
+</table>
+
+<!-- page 9 -->
+<div style="page-break-before:always;"></div>	
+
+<div class="bordered text-center"><strong>VI – APPRÉCIATIONS GÉNÉRALES SUR LA VALEUR PROFESSIONNELLE DE L'AGENT</strong></div>
+
+
+<p class="text-center">
+	<strong>ÉVALUATION GLOBALE DES RÉSULTATS OBTENUS PAR L'AGENT AU REGARD DES OBJECTIFS FIXÉS INITIALEMENT OU REVISÉS, LE CAS ÉCHEANT, EN COURS D'ANNÉE</strong>
+</p>
+
+<p class="text-center">
+	<strong>ÉVALUATION DE LA MANIÈRE DE SERVIR DE L'AGENT</strong>
+</p>
+
+<table cellpadding="5">
+	<tr class="text-center">
+		<th class="bordered" width="36%"></th>
+		<th class="bordered" width="15%">EXCELLENT</th>
+		<th class="bordered" width="15%">TRÉS BON</th>
+		<th class="bordered" width="17%">SATISFAISANT </th>
+		<th class="bordered" width="17%">À DEVELOPPER </th>
+	</tr>
+	
+	{% for competence in crep.competencesManiereServir %}
+		<tr>
+			<td class="bordered">{{ competence.libelle | nl2br}}</td>
+			
+			{% for i in 3..0 %}
+				<td class="bordered text-center">{% if competence.niveau == i and competence.niveau is not null %}X{% endif %}</td>
+			{% endfor %}
+		</tr>
+	{% endfor %}
+</table>
+
+<br>
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered text-center">
+			<strong>APTITUDE À EXERCER DES FONCTIONS SUPÉRIEURES</strong><br>
+			(à remplir par le supérieur hiérarchique direct)
+		</th>
+	</tr>
+	<tr>
+		<td class="bordered">
+				{{ crep.aptitudesExercerFonctionsSupperieures | nl2br }}
+		</td>
+	</tr>
+</table>
+
+<br>
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered text-center">
+			<strong>APPRÉCIATION LITTÉRALE DU SUPÉRIEUR HIÉRARCHIQUE DIRECT</strong>
+		</th>
+	</tr>
+	<tr>
+		<td class="bordered">
+			{{ crep.appreciationLitteraleShd | nl2br }}
+		</td>
+	</tr>
+</table>
+
+<br>
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered text-center">
+			<strong>SIGNATURE DU SUPÉRIEUR HIÉRARCHIQUE DIRECT AYANT CONDUIT L'ENTRETIEN</strong>
+		</th>
+	</tr>
+	<tr>
+		<td class="bordered">
+			<strong>Nom :</strong> {% if crep.dateVisaShd %}{{ crep.shdSignataire | identite }}{% endif %} <br>
+			<strong>Date :</strong> {% if crep.dateVisaShd %}{{ crep.dateVisaShd|date('d/m/Y H:i') }}{% endif %} <br>
+			<strong>Signature :</strong> {% if crep.dateVisaShd %}CREP signé de manière dématérialisée via ESTEVE{% endif %}
+		</td>
+	</tr>
+</table>
+
+
+<!-- page 10 -->
+<div style="page-break-before:always;"></div>	
+
+<div class="bordered text-center"><strong>VII – NOTIFICATION A L'AGENT DU COMPTE RENDU DE L'ENTRETIEN PROFESSIONNEL</strong></div>
+
+
+<p>
+	<strong>OBSERVATIONS ÉVENTUELLES DE L'AGENT</strong>
+</p>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered"><strong>Sur la conduite de l’entretien et les thèmes abordés</strong></th>
+		<th class="bordered"><strong>Sur les appréciations portées</strong></th>
+	</tr>
+	<tr>
+		<td class="bordered">
+			{{ crep.observationsVisaAgent|nl2br }}
+		</td>
+		<td class="bordered">
+			{{ crep.observationsAppreciationsPorteesAgent|nl2br }}
+		</td>
+	</tr>
+</table>
+
+<br><br>
+<table cellpadding="5">
+	<tr>
+		<td>
+			Nom : {% if (crep.dateVisaAgent or crep.dateRefusVisa) and (crep.agent and not crep.agent.sansAh) %}{{ crep.agent.civilite|capitalize }} {{ crep.prenom|title }} {{ crep.nomUsage|capitalize }}{% endif %}
+		</td>
+		<td>
+			Date : {% if crep.dateVisaAgent and crep.agent and not crep.agent.sansAh %}{{ crep.dateVisaAgent|date('d/m/Y H:i') }}{% elseif crep.dateRefusVisa %}{{ crep.dateRefusVisa|date('d/m/Y H:i') }}{% endif %}
+		</td>
+	</tr>
+</table>
+
+<br>
+
+<p>
+	<strong>VISA ET OBSERVATIONS ÉVENTUELLES DE L'AUTORITE HIÉRARCHIQUE</strong>
+</p>
+
+<table cellpadding="5">
+	<tr>
+		<th class="bordered">Sur la conduite de l’entretien et les thèmes abordés</th>
+		<th class="bordered">Sur les appréciations portées</th>
+	</tr>
+	<tr>
+		<td class="bordered">
+			{% if not crep.agent.sansAh %} {{ crep.observationsConduiteEntretienAh|nl2br }} {% endif %}
+		</td>
+		<td class="bordered">
+			{% if not crep.agent.sansAh %} {{ crep.observationsAppreciationsPorteesAh|nl2br }} {% endif %}
+		</td>
+	</tr>
+</table>
+
+<br>
+<br>
+
+<table cellpadding="5">
+	<tr>
+		<td class="bordered">
+			<strong>Nom : </strong>{% if crep.dateVisaAh and crep.agent and not crep.agent.sansAh  %}{{ crep.ahSignataire | identite }}{% endif %}<br/>
+			<strong>Fonction exercée : </strong>{% if crep.dateVisaAh and crep.agent and not crep.agent.sansAh  %}{{ crep.fonctionAh | nl2br }}{% endif %}<br>
+			<strong>Date : </strong>{% if crep.dateVisaAh and crep.agent and not crep.agent.sansAh  %} {{ crep.dateVisaAh|date('d/m/Y H:i') }} {% endif %}<br>
+			<strong>Visa : </strong>
+					{% if crep.dateVisaAh and crep.agent and not crep.agent.sansAh  %}
+						Signature dématérialisée dans ESTEVE
+					{% elseif crep.agent and crep.agent.sansAh %}
+						<span style="color: red">
+							L'agent est déclaré comme étant <strong>"sans N+2"</strong>. 
+							L'étape de la signature du N+2 est donc <strong>supprimée</strong>.</span>
+					{% endif %}
+		</td>
+		<td class="bordered">
+			<strong>Observations éventuelles</strong><br/>
+			{% if not crep.agent.sansAh %} {{ crep.observationsEventuellesAh|nl2br }} {% endif %}
+		</td>
+	</tr>
+</table>
+
+<br>
+
+<p>
+	<strong>SIGNATURE DE L'AGENT</strong>
+</p>
+
+<table cellpadding="5">
+	<tr>
+		<td>
+			Date : 
+				{% if crep.dateNotification %}
+				    {{ crep.dateNotification|date('d/m/Y H:i') }}
+			    {% elseif crep.dateRefusNotification %}
+			    	{{ crep.dateRefusNotification|date('d/m/Y H:i') }}
+			    {% endif %}
+		</td>
+		<td>
+			Signature :
+				{% if crep.dateRefusNotification is not null %}
+    				<span style="color: red">Refus de signature du CREP notifié</span>
+    			{% elseif crep.dateNotification %}
+    				CREP signé de manière dématérialisée via ESTEVE
+    			{% endif %}
+		</td>
+	</tr>
+</table>
+
+
+<p>
+	La signature de l’agent vaut notification du présent document (et non approbation de son contenu)<br>
+	<br>
+	<u>Destinataire</u> : dossier individuel de l'agent <br>
+	<u>Copies</u> : agent, supérieur hiérarchique direct et chef de service	
+</p>
+
+<p>
+	<strong>RECOURS EVENTUELS DE L’AGENT</strong>
+</p>
+
+<p>
+	<i>
+		L’agent peut saisir l’autorité hiérarchique d’une demande de révision de tout ou partie du compte rendu de l’entretien professionnel, dans un délai de {{ crep.agent.campagnePnc.ministere.delaiVisa }} jours francs suivant la notification du présent document.<br> 
+	</i> 
+</p>
+<p>
+	<i>
+		L’autorité hiérarchique dispose d’un délai de {{ crep.agent.campagnePnc.ministere.delaiVisa }} jours à compter de la saisine pour lui répondre. <br>
+	</i> 
+</p>
+<p>
+	<i>
+		L’exercice de ce recours hiérarchique est un préalable obligatoire à la saisine de la CAP compétente, dans un délai d’un mois à compter de la réponse de l’autorité hiérarchique. L’agent dispose également des voies et délais de recours de droit commun pour contester son compte rendu de l’entretien professionnel.
+	</i> 
+</p>

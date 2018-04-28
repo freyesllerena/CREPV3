@@ -1,0 +1,11 @@
+campagne_shd_index:
+    path:     /
+    defaults: { _controller: "AppBundle:CampagneShd:index" }
+    methods:  GET
+    
+campagne_shd_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CampagneShd:show" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'    

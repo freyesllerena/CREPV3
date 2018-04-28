@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Compétences transverses</th>
+                    <th style="width: 12%" class="text-center">Insuffisant</th>
+                    <th style="width: 12%" class="text-center">Moyen</th>
+                    <th style="width: 12%" class="text-center">Bon</th>
+                    <th style="width: 12%" class="text-center">Très bon</th>
+                    <th style="width: 12%" class="text-center">Non applicable</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for competenceTransverse in crep.competencesTransverses %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverse.competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+                        	<td class="text-center">{{ competenceTransverse.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

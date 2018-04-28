@@ -1,0 +1,109 @@
+<div class="x_panel panel_green">
+  <div class="x_title">
+    <h2>Détails de la campagne<small></small></h2>
+    <ul class="nav navbar-right panel_toolbox">
+      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content">
+     <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th scope="row">Libellé</th>
+          <td>{{ campagneRlc.libelle }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Périmètre RLC</th>
+          <td>{{ campagneRlc.perimetreRlc }}</td>
+        </tr>
+        <tr>
+        <th scope="row">Périmètres BRHP</th>
+          <td>
+          	<ul class="list-unstyled project_files">
+              {% for perimetreBrhp in campagneRlc.perimetresBrhp %}
+                 <li><a href="{{ path('perimetre_brhp_show', {'id': perimetreBrhp.id}) }}">{{ perimetreBrhp.libelle }}</a></li>
+              {% endfor %}
+          	</ul>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Année d'évaluation</th>
+          <td>{{ campagneRlc.anneeEvaluee }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Date d'ouverture de campagne</th>
+          <td>{{ campagneRlc.dateDebut | date('d/m/Y') }}</td>
+        </tr>
+        
+        {% if campagneRlc.dateDebutEntretien %}
+        <tr>
+          <th scope="row">Date de début des entretiens</th>
+          <td>{{ campagneRlc.dateDebutEntretien | date('d/m/Y') }}</td>
+        </tr>
+        {% endif %}
+        
+        <tr>
+          <th scope="row">Date de clôture</th>
+          <td>{{ campagneRlc.dateCloture ? campagneRlc.dateCloture | date('d/m/Y') }}</td>
+        </tr>
+        
+        {% if campagneRlc.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CLOTUREE'), constant('AppBundle\\EnumTypes\\EnumStatutCampagne::FERMEE')] %}
+            <tr>
+          		<th scope="row">Compte à rebours</th>
+               	{# Compte à rebours : Pour calculer le nombre de jours qu'il y a entre deux dates, on convertie ces deux dates au format "timestamp", on calcule la différence puis on la convertie en jours et ce en la divisant sur 86400 #}
+                {% if campagneRlc.dateCloture | date('Ymd') >= "now" | date('Ymd') %}
+                <td><span class="label label-danger">J-{{ ((campagneRlc.dateCloture | date('U') - "now" | date('U')) / 86400) | round(0, 'ceil') | abs }}</span></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+        	</tr>
+    	{% endif %}
+        
+        {% if campagneRlc.dateFermeture %}
+            <tr>
+              <th scope="row">Date de fermeture</th>
+              <td>{{ campagneRlc.dateFermeture | date('d/m/Y') }}</td>
+            </tr>
+        {% endif %}
+        
+    	<tr>
+    		<th>Statut</th>
+    		<td>
+    			<span class="label {{ campagneRlc.statut | campagne_status_label }}">{{ campagneRlc.statut }}</span>
+			</td>
+		</tr>
+    	<tr>
+			<th scope="row">Formulaire CREP vierge</th>
+			<td>
+                <ul class="list-unstyled project_files">
+                    {% for modeleCrep in modelesCrep %}
+						<li><a href="{{ path('exporter_crep_vierge', { 'id': modeleCrep.id , 'campagnePnc' : campagneRlc.campagnePnc.id }) }}" title="Visualiser le formulaire"> <i class="fa fa-file-pdf-o"></i> {{ modeleCrep.libelle }}</a> </li>
+    				{% endfor %}
+				</ul>
+			</td>
+		</tr>
+        <tr>
+          <th scope="row">Documents </th>
+          <td>
+            <ul class="list-unstyled project_files">
+              {% for document in campagneRlc.campagnePnc.documents %}
+            	<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+              {% endfor  %}
+              
+              {% for document in campagneRlc.documents %}
+            	<li><a href="{{ path('get_file', {'id': document.id, 'checksum': document.checksum}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+              {% endfor  %}
+              {% if is_granted(constant('AppBundle\\Security\\CampagneRlcVoter::MODIFIER'), campagneRlc) %} 
+               	  <a href="{{ path('campagne_rlc_edit', { 'id': campagneRlc.id }) }}">
+               	  	<h5><span class="text-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter des documents</span></h5>
+               	  </a>
+           	  {% endif %}
+          </ul>
+		  </td>
+        </tr>							
+      </tbody>
+    </table>
+  </div>
+</div>

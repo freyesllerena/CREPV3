@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block frameTitle%}Erreur {{ status_code }}{% endblock frameTitle %}
+
+{% block body %}
+<div class="container body">
+    <div class="main_container">
+        <!-- page content -->
+        <div class="col-md-12">
+            <div class="col-middle">
+                <div class="text-center text-center">
+                    <h1 class="error-number">{{ status_code }}</h1>
+                    <h2>Ressource non trouvée !</h2>
+                    <p>
+                    	L'administrateur de l'application a été notifié de cette erreur.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+    </div>
+</div>
+{% endblock body %}

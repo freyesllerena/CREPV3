@@ -1,0 +1,198 @@
+{% use "Form/App_bootstrap_3_horizontal_layout.html.twig" %}
+
+{% block form_group_class -%}
+	{% if label == false %}
+            col-md-12 col-sm-12 col-xs-12    		
+    {% else %}
+    		col-md-9 col-sm-9 col-xs-12 
+    {% endif %}
+{% endblock form_group_class %}
+
+{% block _crep_ac_contraintesPoste_entry_widget %}
+    {%  for child in form.niveauDifficulte.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection '}}) }}</td>
+    {% endfor %}
+    <td>{{ form_row(form.observations, {'label':false}) }}</td>
+{% endblock %}
+
+{% block _crep_ac_autresContraintesPoste_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauDifficulte.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+    	<td>{{ form_row(form.observations, {'label':false}) }}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_objectifsEvaluesCollectifs_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td class="text-center">{{ form_row(form.resultatObtenu) }}</td>
+        <td>{{ form_widget(form.resultat)}}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_objectifsEvaluesIndividuels_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td class="text-center">{{ form_row(form.resultatObtenu) }}</td>
+        <td>{{ form_widget(form.resultat)}}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_objectifsFutursCollectifs_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td>{{ form_row(form.echeance) }}</td>
+        <td>{{ form_row(form.indicateurs)}}</td>
+        <td>{{ form_row(form.observationsEventuelles)}}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_objectifsFutursIndividuels_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td>{{ form_row(form.echeance) }}</td>
+        <td>{{ form_row(form.indicateurs)}}</td>
+        <td>{{ form_row(form.observationsEventuelles)}}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_competencesTransversesRequises_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+    <td>{{ form_row(form.observations, {'label':false}) }}</td>
+{% endblock %}
+
+{% block _crep_ac_autresCompetencesTransversesRequises_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+    	<td>{{ form_row(form.observations, {'label':false}) }}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_competencesTransversesProfessionnelles_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+    <td>{{ form_row(form.observations, {'label':false}) }}</td>
+{% endblock %}
+
+{% block _crep_ac_autresCompetencesTransversesProfessionnelles_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+    	<td>{{ form_row(form.observations, {'label':false}) }}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_competencesManageriales_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+    <td>{{ form_row(form.observations, {'label':false}) }}</td>
+{% endblock %}
+
+{% block _crep_ac_autresCompetencesManageriales_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+    	<td>{{ form_row(form.observations, {'label':false}) }}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_agent_competencesTransversesDetenues_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+    	<td>{{ form_row(form.observations, {'label':false}) }}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_formationsAcSuivies_entry_widget %}
+    <tr>
+    	<td>{{ form_row(form.annee) }}</td>
+        <td>
+        	{{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
+        </td>
+        <td>{{ form_row(form.duree) }}</td>
+        <td>{{ form_row(form.commentaires, {'label':false}) }}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_formationsDemandeesAgent_entry_widget %}
+    <tr>
+    	<td>
+            {{ form_row(form.priorite, {'label':false}) }}
+        </td>
+        
+        <td>
+           	{{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+        </td>
+        
+		<td>
+            {{ form_row(form.typologie, {'label':false, 'attr': {'class': 'fieldCollection eligible-dif'} }) }}
+        </td>
+        
+		<td class="text-center">
+            {{ form_row(form.dif, {'label':false, 'attr': {'class': 'fieldCollection iCheckCollection dif'}}) }}
+        </td>
+        
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_ac_techniques_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        
+        {% for child in form.niveauAcquis.children %}
+        	<td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+    
+    	<td>{{ form_row(form.observations, {'label':false}) }}</td>
+    
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}

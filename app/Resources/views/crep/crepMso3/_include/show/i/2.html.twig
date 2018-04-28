@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="40%">Rappel de l'objectif</th>
+                <th width="220px">Réalisation</th>
+                <th width="40%">Analyse des résultats et enseignements tirés</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in crep.objectifsEvalues %}
+                <tr>
+                    <td>{{ objectif.libelle | nl2br}}</td>
+                    <td>{{ objectif.resultatObtenu|echelleObjectifEvalueCrepMso3 }}</td>
+                    <td>{{ objectif.resultat | nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th class="text-center">Priorité</th>
+                	<th>Intitulé de la formation</th>
+                    <th>Type d’actions de formation</th>
+                    <th class="text-center">DIF</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for formationDemandeeAgent in crep.formationsDemandeesAgent %}
+                <tr>
+                    <td class="text-center">{{ formationDemandeeAgent.priorite }}</td>
+                    <td>{{ formationDemandeeAgent.libelle | nl2br }}</td>
+                    <td>{{ formationDemandeeAgent.typologie|selectTypologieFormationCrepMinefAbc }}</td>
+                    <td class="text-center">{{ formationDemandeeAgent.dif|ouiNon }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

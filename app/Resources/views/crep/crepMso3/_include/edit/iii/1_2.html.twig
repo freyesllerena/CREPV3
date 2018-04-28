@@ -1,0 +1,62 @@
+{% form_theme form 'crep/crepMso3/Form/collections.form.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 30%">Savoir faire</th>
+	                <th style="width: 8%" class="text-center">Expert</th>
+	                <th style="width: 8%" class="text-center">Maîtrise</th>
+	                <th style="width: 8%" class="text-center">Pratique</th>
+	                <th style="width: 8%" class="text-center">Initié</th>
+	                <th style="width: 8%" class="text-center">Non requis</th>
+	                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for savoir in form.savoirsFairePoste %}
+            	<tr>
+            		 <td>
+  						{{ crep.savoirsFairePoste[loop.index0].libelle }}
+        			 </td>
+	                 
+  					{{ form_widget(savoir) }}
+            	</tr>
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" id="savoirsFairePosteAutresCollection" data-prototype="{{ form_widget(form.savoirsFairePosteAutres.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                   	<th>Autres savoirs faire <small>(à préciser en fonction du poste)</small></th>
+	                <th style="width: 8%" class="text-center">Expert</th>
+	                <th style="width: 8%" class="text-center">Maîtrise</th>
+	                <th style="width: 8%" class="text-center">Pratique</th>
+	                <th style="width: 8%" class="text-center">Initié</th>
+	                <th style="width: 8%" class="text-center">Non requis</th>
+	                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+	                <th width="20px"></th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for savoir in form.savoirsFairePosteAutres %}
+	            	{{ form_widget(savoir) }}
+	        	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

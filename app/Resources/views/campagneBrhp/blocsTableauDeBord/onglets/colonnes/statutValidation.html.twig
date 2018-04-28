@@ -1,0 +1,15 @@
+{% if campagneBrhp.statut != constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CREEE')  %}
+    <td align="center">
+        {% if agent.evaluable %}
+        	{% if(agent.statutValidation)  %}
+        	    {% set statutValidation = agent.statutValidation %}
+    	    {% else %}
+    	    	{% set statutValidation = constant('AppBundle\\EnumTypes\\EnumStatutValidationAgent::EN_COURS') %}
+	    	{% endif %}
+        
+			<i class="fa {{ statutValidation | statutAgentFilter('icone') }}" title="{{ statutValidation | statutAgentFilter('message') }}" style="text-align: center; display: block;"></i>
+		{% else %}
+			<i class="fa fa-info-circle blue" title="Non évaluable" style="text-align: center; display: block;"></i>
+		{% endif %}
+    </td>
+{% endif %}

@@ -1,0 +1,252 @@
+{% extends "crep/crepMindef01/mindef.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+	{{ block('alertErreurValidationFormulaireCrep') }}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block i1 %}
+	{% include 'crep/crepMindef01/_include/edit/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+	{% include 'crep/crepMindef01/_include/edit/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block ii1 %}
+	{% include 'crep/crepMindef01/_include/edit/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+	{% include 'crep/crepMindef01/_include/edit/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+	{% include 'crep/crepMindef01/_include/edit/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block ii4 %}
+    {% include 'crep/crepMindef01/_include/edit/ii/4.html.twig' %}
+{% endblock ii4 %}
+
+{% block iii1 %}
+    {% include 'crep/crepMindef01/_include/edit/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+    {% include 'crep/crepMindef01/_include/edit/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block iv1 %}
+    {% include 'crep/crepMindef01/_include/edit/iv/1.html.twig' %}
+{% endblock iv1 %}
+
+{% block iv2_1 %}
+    {% include 'crep/crepMindef01/_include/edit/iv/2.1.html.twig' %}
+{% endblock iv2_1 %}
+
+{% block iv2_2 %}
+    {% include 'crep/crepMindef01/_include/edit/iv/2.2.html.twig' %}
+{% endblock iv2_2 %}
+
+{% block v1 %}
+    {% include 'crep/crepMindef01/_include/edit/v/1.html.twig' %}
+{% endblock v1 %}
+
+{% block v2 %}
+    {% include 'crep/crepMindef01/_include/edit/v/2.html.twig' %}
+{% endblock v2 %}
+
+{% block vi1 %}
+    {% include 'crep/crepMindef01/_include/edit/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+    {% include 'crep/crepMindef01/_include/edit/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vi3 %}
+    {% include 'crep/crepMindef01/_include/edit/vi/3.html.twig' %}
+{% endblock vi3 %}
+
+{% block vi4 %}
+    {% include 'crep/crepMindef01/_include/edit/vi/4.html.twig' %}
+{% endblock vi4 %}
+
+{% block vi5 %}
+    {% include 'crep/crepMindef01/_include/edit/vi/5.html.twig' %}
+{% endblock vi5 %}
+
+{% block vi6 %}
+    {% include 'crep/crepMindef01/_include/edit/vi/6.html.twig' %}
+{% endblock vi6 %}
+
+{% block vii1 %}
+    {% include 'crep/crepMindef01/_include/edit/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2 %}
+    {% include 'crep/crepMindef01/_include/edit/vii/2.html.twig' %}
+{% endblock vii2 %}
+
+{% block vii3 %}
+    {% include 'crep/crepMindef01/_include/edit/vii/3.html.twig' %}
+{% endblock vii3 %}
+
+{% block circuitDeValidation %}
+{% endblock circuitDeValidation %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<!-- chained -->
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        if($('#crep_mindef01_refusEntretienProfessionnel').attr('checked')) {
+        	document.getElementById("crep_mindef01_dateEntretien").disabled = true;
+        } else {
+        	document.getElementById("crep_mindef01_dateEntretien").disabled = false;
+        }
+        
+        if($('#crep_mindef01_mobiliteFonctionnelle_choix_0').attr('checked')) {
+        	$("#crep_mindef01_mobiliteFonctionnelle_familleProfessionnelle").parent().parent().show();
+        	$("#crep_mindef01_mobiliteFonctionnelle_anneeDepart").parent().parent().show();
+        } else {
+        	$("#crep_mindef01_mobiliteFonctionnelle_familleProfessionnelle").parent().parent().hide();
+        	$("#crep_mindef01_mobiliteFonctionnelle_anneeDepart").parent().parent().hide();
+        }
+        
+        if($('#crep_mindef01_mobiliteGeographique_choix_0').attr('checked')) {
+        	$("#crep_mindef01_mobiliteGeographique_anneeDepart").parent().parent().show();
+        } else {
+        	$("#crep_mindef01_mobiliteGeographique_anneeDepart").parent().parent().hide();
+        }
+
+        if($('#crep_mindef01_demandeFormationProfessionnelle_choix_0').attr('checked')) {
+        	$("#crep_mindef01_demandeFormationProfessionnelle_typeFormation").parent().parent().show();
+        } else {
+        	$("#crep_mindef01_demandeFormationProfessionnelle_typeFormation").parent().parent().hide();
+        }
+
+        if($('#crep_mindef01_fichePoseAJour_1').attr('checked')) {
+        	document.getElementById("crep_mindef01_pointsActualisesFichePoste").disabled = false;
+        } else {
+        	document.getElementById("crep_mindef01_pointsActualisesFichePoste").disabled = true;
+        }
+
+        verifierNbObjectifs('tableObjectifsFuturs','btnAddObjectifsFuturs', false);
+        
+      });
+
+  	$("#crep_mindef01_refusEntretienProfessionnel" ).on('ifChanged', function(){
+  		if($('#crep_mindef01_refusEntretienProfessionnel').attr('checked')) {
+  			$('#crep_mindef01_refusEntretienProfessionnel').removeAttr("checked");
+      		document.getElementById("crep_mindef01_dateEntretien").disabled = false;
+        } else {
+            $('#crep_mindef01_refusEntretienProfessionnel').attr("checked", "checked");
+            $('#crep_mindef01_dateEntretien').val('');
+      		document.getElementById("crep_mindef01_dateEntretien").disabled = true;
+        }
+	});
+
+  	$("#crep_mindef01_mobiliteFonctionnelle_choix_0" ).on('ifChanged', function(){
+		$("#crep_mindef01_mobiliteFonctionnelle_familleProfessionnelle").parent().parent().show();
+		$("#crep_mindef01_mobiliteFonctionnelle_anneeDepart").parent().parent().show();
+	});
+	
+	$("#crep_mindef01_mobiliteFonctionnelle_choix_1" ).on('ifChanged', function(){
+		$("#crep_mindef01_mobiliteFonctionnelle_familleProfessionnelle").parent().parent().hide();
+		$("#crep_mindef01_mobiliteFonctionnelle_anneeDepart").parent().parent().hide();
+	});	
+	
+  	$("#crep_mindef01_mobiliteGeographique_choix_0" ).on('ifChanged', function(){
+		$("#crep_mindef01_mobiliteGeographique_anneeDepart").parent().parent().show();
+	});
+	
+	$("#crep_mindef01_mobiliteGeographique_choix_1" ).on('ifChanged', function(){
+		$("#crep_mindef01_mobiliteGeographique_anneeDepart").parent().parent().hide();
+	});	
+
+ 	$("#crep_mindef01_demandeFormationProfessionnelle_choix_0" ).on('ifChanged', function(){
+		$("#crep_mindef01_demandeFormationProfessionnelle_typeFormation").parent().parent().show();
+	});
+	
+	$("#crep_mindef01_demandeFormationProfessionnelle_choix_1" ).on('ifChanged', function(){
+		$("#crep_mindef01_demandeFormationProfessionnelle_typeFormation").parent().parent().hide();
+	});	
+
+	$("#crep_mindef01_fichePoseAJour_0" ).on('ifChanged', function(){
+  		document.getElementById("crep_mindef01_pointsActualisesFichePoste").disabled = true;
+  		$('#crep_mindef01_pointsActualisesFichePoste').val('');
+    });
+
+  	$("#crep_mindef01_fichePoseAJour_1" ).on('ifChanged', function(){
+  		document.getElementById("crep_mindef01_pointsActualisesFichePoste").disabled = false;
+  		$('#crep_mindef01_pointsActualisesFichePoste').val('');
+    });
+	
+	$(function() {
+       calculateNumberAgent();
+       var crepCollections = new Crep.Collections();
+		
+       $(".select2_single").select2({'placeholder': ''});
+       App_calendrier();
+    });
+    
+    function calculateNumberAgent() {
+        var catA = $("#crep_mindef01_nbAgentsEncadresA");
+        var catB = $("#crep_mindef01_nbAgentsEncadresB");
+        var catC = $("#crep_mindef01_nbAgentsEncadresC");
+        var result = $("#result_nb_agents");
+
+        catA.on('change paste keyup', calculate);
+        catB.on('change paste keyup', calculate);
+        catC.on('change paste keyup', calculate);
+
+        function isPositiveNumber(val) {
+            var value = parseInt(val) || 0;
+            value = Math.trunc(Math.abs(value));
+
+            return value
+        }
+
+        // private function permet de calculer la somme des agents de chaque catégorie
+        function calculate() {
+            var _catA = isPositiveNumber(catA.val());
+            var _catB = isPositiveNumber(catB.val());
+            var _catC = isPositiveNumber(catC.val());
+
+            catA.val(_catA);
+            catB.val(_catB);
+            catC.val(_catC);
+            result.html(_catA + _catB + _catC);
+        }
+    }
+
+ 	// Vérifier le nombre de TR que contient la table passée en paramètre (ça correspond au nombre d'objectifs contenus dans la table)
+    // Si on a 4 objectifs, on cache le bouton passé en paramètre 
+    // Le paramètre addOneTR = true, si l'action a été appelée depuis le bouton d'ajout (parce que cette fonction est appelée avant l'ajout de la nouvelle ligne)
+    function verifierNbObjectifs(tableID, boutonID, addOneTR) {
+		nbTR = $('#'+tableID).children('tbody').children('tr').length;
+
+		if (addOneTR) {
+			nbTR++;//+1 Pour compter la ligne qui s'est ajoutée en cliquant sur le bouton
+		}
+		
+		if (nbTR >= 4) {
+			$('#'+boutonID).hide();
+		} else {
+			$('#'+boutonID).show();
+		}    	
+    }
+    </script>
+{% endblock javascripts %}

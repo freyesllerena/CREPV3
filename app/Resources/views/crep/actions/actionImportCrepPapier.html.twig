@@ -1,0 +1,10 @@
+{% import "macro/app.html.twig" as macro %}
+
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::IMPORTER_CREP_PAPIER'), agent) %}
+	<a href="{{ path('agent_import_crep_papier', { 'id': agent.id}) }}" title="Importer le CREP en version papier" style="text-align: center; display: block;"><i class="glyphicon glyphicon-save"></i></a>
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\AgentVoter::SUPPRIMER_CREP_PAPIER'), agent) %}
+	<a data-toggle="modal" href="#modal_delete_crep_{{ agent.id }}" title="Supprimer le CREP importé en version papier" style="text-align: center; display: block;"><i class="fa fa-trash"></i></a>
+	{{ macro.modal('danger', 'modal_delete_crep_'~ agent.id, "Supprimer le CREP papier", "Voulez-vous vraiment <strong>supprimer</strong> le CREP papier de l'agent <br/><strong>" ~ agent | identite | escape ~ "</strong> ?", "fa-trash", deleteImportCrepForm)}} 
+{% endif %}

@@ -1,0 +1,40 @@
+{% extends 'index.base.html.twig' %}
+
+{% form_theme renvoyer_agent_form with ['Form/App_bootstrap_3_horizontal_layout.html.twig',  _self] %}
+
+{% block frameTitle %}Renvoi{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}CREP{% endblock pageTitle %}
+
+{% block content %}
+
+    {{ form_start(renvoyer_agent_form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title">
+                        <h2>Motif de renvoi du CREP<small></small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                       {{ form_row(renvoyer_agent_form.motifRenvoiAgent, {'label': false, 'attr':{'placeholder': 'Motif de renvoi', 'style': 'height: 200px;'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+         <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">   
+            	<button type="submit" id="btn_confirmer_renvoi" type="button" class="btn btn-warning pull-right"><i class="fa fa-mail-reply"></i> Confirmer le renvoi</button>
+            </div>
+        </div>
+    {{ form_end(renvoyer_agent_form) }}
+{% endblock content %}
+
+
+{% block form_group_class -%}
+	col-md-12 col-sm-12 col-xs-12
+{%- endblock form_group_class %}

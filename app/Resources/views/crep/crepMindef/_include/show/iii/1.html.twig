@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" rowspan="2">Compétences du poste</th>
+                    <th class="text-center" colspan=4>Niveau requis du poste</th>
+                    <th class="text-center" colspan=4>Compétences évaluées</th>
+                </tr>
+                <tr>
+                    <th style="width: 8%" class="text-center">Sensibilisation</th>
+                    <th style="width: 8%" class="text-center">Application</th>
+                    <th style="width: 8%" class="text-center">Maîtrise</th>
+                    <th style="width: 8%" class="text-center">Expert</th>
+
+                    <th style="width: 8%" class="text-center">Sensibilisation</th>
+                    <th style="width: 8%" class="text-center">Application</th>
+                    <th style="width: 8%" class="text-center">Maîtrise</th>
+                    <th style="width: 8%" class="text-center">Expert</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for competencesPoste in crep.competencesPostes %}
+                <tr>
+                    <td>{{ competencesPoste.libelle }}</td>
+                    {% for index in 0..3 %}
+                    	<td class="text-center">{{ competencesPoste.niveauRequis|iconCheck(loop.index0)|raw  }}</td>
+                    {% endfor %}
+                    {% for index in 0..3 %}
+                    	<td class="text-center">{{ competencesPoste.niveauAcquis|iconCheck(loop.index0)|raw  }}</td>
+                    {% endfor %}
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

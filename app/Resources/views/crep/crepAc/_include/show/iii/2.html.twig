@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 40%">Objectifs d’ordre collectif</th>
+                <th style="width: 15%" class="text-center">Échéance</th>
+                <th style="width: 15%" class="text-center">Indicateurs</th>
+                <th style="width: 30%">Observations éventuelles</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectifFutur in crep.objectifsFutursCollectifs %}
+                <tr>
+                    <td>{{ objectifFutur.libelle|nl2br}}</td>
+                    <td>{{ objectifFutur.echeance| nl2br}}</td>
+                    <td>{{ objectifFutur.indicateurs|nl2br }}</td>
+                    <td>{{ objectifFutur.observationsEventuelles|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 40%">Objectifs d’ordre individuel</th>
+                <th style="width: 15%" class="text-center">Échéance</th>
+                <th style="width: 15%" class="text-center">Indicateurs</th>
+                <th style="width: 30%">Observations éventuelles</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectifFutur in crep.objectifsFutursIndividuels %}
+                <tr>
+                    <td>{{ objectifFutur.libelle|nl2br}}</td>
+                    <td>{{ objectifFutur.echeance| nl2br}}</td>
+                    <td>{{ objectifFutur.indicateurs|nl2br }}</td>
+                    <td>{{ objectifFutur.observationsEventuelles|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

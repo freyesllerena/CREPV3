@@ -1,0 +1,29 @@
+<div class="row form-group project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class="title">Éléments de contexte à prendre en compte <i>(indiquer les éléments prévisibles pouvant impacter le poste et la mission de l'agent évalué)</i></p>
+        <p class="well well-xs">{{ crep.contexteObjectifsAnneeEnCours|nl2br }}</p>
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Objectif</th>
+                    <th>Échéance</th>
+                    <th>Observation</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for objectifFutur in crep.objectifsFuturs %}
+                <tr>
+                    <td>{{ objectifFutur.libelle }}</td>
+                    <td>{{ objectifFutur.echeance | nl2br }}</td>
+                    <td>{{ objectifFutur.resultat }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+{% extends 'index.base.html.twig' %}
+
+{% block frameTitle %}Campagnes{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}Campagnes{% endblock pageTitle %}
+
+
+{% block content %}
+
+<!-- page content -->
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+    	<div class="x_panel panel_green">
+			<div class="x_title">
+                    <h2>Liste des Campagnes<small></small></h2>
+                    
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+			</div>
+                  
+			<div class="x_content">
+				<table id="table-campagne_brhp" class="table table-striped table-bordered app_datatable_without_defaultSort dt-responsive" cellspacing="0" width="100%">
+                	<thead>
+                    	<tr>
+                            <th>Libellé</th>
+                            <th>Périmètre</th>
+                            <th>Année d'évaluation</th>
+                            <th>Date début entretiens</th>
+                            <th>Date de clôture</th>
+                            <th width="120px">Compte à rebours</th>
+                            <th>Statut</th>
+                            <th width="85px" style="text-align: center">Détail</th>
+                    	</tr>
+                	</thead>
+                	<tbody>
+	                    {% for campagneAh in campagnesAh %}
+                        <tr>
+                            <td><a href="{{ path('campagne_ah_show', { 'id': campagneAh.id }) }}" title="Détail">{{ campagneAh.libelle }}</a></td>
+                            <td>{{ campagneAh.perimetreBrhp.libelle }}</td>
+                            <td>{{ campagneAh.anneeEvaluee }}</td>
+                            <td>
+                            	{% if campagneAh.dateDebutEntretien %}
+                                {{ campagneAh.dateDebutEntretien | date('d/m/Y') }}
+                                {% endif %}
+                            </td>
+                            <td>{{ campagneAh.dateCloture | date("d/m/Y") }}</td>
+                            
+                            {# Compte à rebours : Pour calculer le nombre de jours qu'il y a entre deux dates, on convertie ces deux dates au format "timestamp", on calcule la différence puis on la convertie en jours et ce en la divisant sur 86400 #}
+        	                {% if (campagneAh.dateCloture | date('Ymd') >= "now" | date('Ymd')) and (campagneAh.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CLOTUREE'), constant('AppBundle\\EnumTypes\\EnumStatutCampagne::FERMEE')]) %}
+                            	<td><span class="label label-danger">J-{{ ((campagneAh.dateCloture | date('U') - "now" | date('U')) / 86400) | round(0, 'ceil') | abs }}</span></td>
+                            {% else %}
+                            	<td></td>
+                            {% endif %}
+                            
+                            <td><span class="label {{ campagneAh.statut | campagne_status_label }}">{{ campagneAh.statut }}</span></td>
+                            <td style="text-align: center"><a href="{{ path('campagne_ah_show', { 'id': campagneAh.id }) }}" title="Détail"><i class="fa fa-search"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                	</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /page content -->
+
+{% endblock content %}

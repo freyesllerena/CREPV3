@@ -1,0 +1,29 @@
+# id = id crep 
+# index des recours liés à un crep
+recours_index:
+    path:     /{id}/index
+    defaults: { _controller: "AppBundle:Recours:index" }
+    methods:  GET
+
+# id = id crep 
+# Mentionner un recours sur un crep
+recours_new:
+    path:     /{id}/new
+    defaults: { _controller: "AppBundle:Recours:new" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+
+recours_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Recours:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+
+recours_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:Recours:delete" }
+    methods:  DELETE
+    requirements:
+        id: '\d+'

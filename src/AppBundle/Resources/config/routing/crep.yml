@@ -1,0 +1,125 @@
+crep_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:Crep:show" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+            
+crep_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:Crep:edit" }
+    methods:  [GET, POST]
+    requirements:
+        id: '\d+'
+            
+crep_signer_shd:
+    path:     /{id}/signer-shd
+    defaults: { _controller: "AppBundle:Crep:signerShd" }
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+        
+crep_viser_agent:
+    path:     /{id}/viser-agent
+    defaults: { _controller: "AppBundle:Crep:viserAgent" }
+    methods:  [PUT] 
+    requirements:
+        id: '\d+'
+            
+crep_signer_ah:
+    path:     /{id}/signer-ah
+    defaults: { _controller: "AppBundle:Crep:signerAh" }
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+            
+crep_notifier_agent:
+    path:     /{id}/notifier-agent
+    defaults: { _controller: "AppBundle:Crep:notifierAgent" }
+    methods:  [PUT] 
+    requirements:
+        id: '\d+'
+        
+crep_rappeler_agent_ah:
+    path:     /{id}/rappeler-agent-ah
+    defaults: { _controller: "AppBundle:Crep:rappelerAgentAh" }
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+        
+crep_refuser_visa:
+    path:     /{id}/refuser-visa
+    defaults: { _controller: "AppBundle:Crep:refuserVisa" }
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+            
+crep_refuser_notification:
+    path:     /{id}/refuser-notification
+    defaults: { _controller: "AppBundle:Crep:refuserNotification" }
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+            
+crep_export_pdf:
+    path:     /{id}/pdf-export
+    defaults: { _controller: "AppBundle:Crep:pdfExport" }
+    requirements:
+        id: '\d+'
+            
+renvoyer_agent_shd:
+    path:     /{id}/renvoyer-agent-shd
+    defaults: { _controller: "AppBundle:Crep:renvoyerAgentShd" }
+    methods:  [GET, PUT]
+    requirements:
+        id: '\d+'
+        
+renvoyer_ah_shd:
+    path:     /{id}/renvoyer-ah-shd
+    defaults: { _controller: "AppBundle:Crep:renvoyerAhShd" }
+    methods:  [GET, PUT]
+    requirements:
+        id: '\d+'
+            
+reinitialiser_crep:
+    path:     /{id}/reinitialiser_crep
+    defaults: { _controller: "AppBundle:Crep:reinitialiserCrep" }
+    methods:  [DELETE] 
+    requirements:
+        id: '\d+'
+
+supprimer_crep:
+    path:     /{id}/supprimer_crep
+    defaults: { _controller: "AppBundle:Crep:supprimerCrep" }
+    methods:  [DELETE] 
+    requirements:
+        id: '\d+'
+        
+exporter_crep_vierge:
+    path:     /{id}/{campagnePnc}/exporter-crep-vierge
+    defaults: { _controller: "AppBundle:Crep:exporterCrepVierge" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+crep_show_crep_papier:
+    path:     /{id}/show-crep-papier/{filename}
+    defaults: { _controller: "AppBundle:Crep:showCrepPapier" }
+    methods:  GET
+    requirements:
+        id: '\d+'
+        
+refaire_crep: 
+    path:     /{id}/refaire_crep/
+    defaults: { _controller: "AppBundle:Crep:refaireCrep" }
+    methods:  PUT
+    requirements:
+        id: '\d+'
+
+# Acter une non modification du CREP suite à un recours
+laisser_crep_en_etat: 
+    path:     /{id}/laisser_crep_en_etat/
+    defaults: { _controller: "AppBundle:Crep:laisserCrepEnEtat" }
+    methods:  PUT
+    requirements:
+        id: '\d+'

@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Compétence <small>(à compléter à partir de la fiche de poste)</small></th>
+                <th style="width: 8%" class="text-center">Expert</th>
+                <th style="width: 8%" class="text-center">Maîtrise</th>
+                <th style="width: 8%" class="text-center">Pratique</th>
+                <th style="width: 8%" class="text-center">Initié</th>
+                <th style="width: 8%" class="text-center">Non requis</th>
+                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for competence in crep.competencesMisesEnOeuvre %}
+                <tr>
+                    <td>{{ competence.libelle|nl2br}}</td>
+                    
+            		{% for index in 4..0 %}
+                        	<td class="text-center">{{ competence.niveau|iconCheckReverse(loop.index0, 4)|raw }}</td>
+                    {% endfor %}
+                    
+                    <td>{{ competence.appreciation|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+

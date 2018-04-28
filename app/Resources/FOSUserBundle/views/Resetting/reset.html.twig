@@ -1,0 +1,68 @@
+{% extends "FOSUserBundle:Security:login.html.twig" %}
+{% block titreFormulaire %}Veuillez saisir votre nouveau mot de passe{% endblock titreFormulaire %}
+
+{% block form %}
+
+		
+		 <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" method="post" novalidate>
+     
+			<h1>Initialisation</h1>
+			
+		    {% if not form.vars.valid %}
+			<div class="has-error">	
+				<label class="control-label has-error" for="inputError">
+					<i class="fa fa-times-circle"></i> 
+						{% if error["plainPassword"]["first"][0] == "fos_user.password.mismatch" %}
+							Les mots de passe ne sont pas identiques
+						{% else %}
+							{{ error["plainPassword"]["first"][0] }}
+						{% endif %}
+				</label>
+			</div>
+		    {% endif %}
+		
+			<div class="form-group has-feedback">
+			    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+			</div>
+			<div class="form-group has-feedback">
+			    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Confirmez votre nouveau mot de passe'}}) }}
+				<span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+			</div>          
+			<div class="row">
+				<div class="col-xs-7">
+				</div><!-- /.col -->
+				<div class="col-xs-5">
+					<button type="submit" class="btn btn-primary btn-block btn-flat" id="_submit" name="_submit">Valider</button>
+				</div><!-- /.col -->
+			</div>
+			
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <div class="clearfix"></div>
+                <br />
+                
+                <div class="header_logo_login">
+                	<img src="{{ asset('bundles/framework/cisirh/images/Logo ESTEVE 2017_COULEUR1.svg') }}" alt="{{ appName }}">
+                    <h1>
+                        {% if environnement | lower starts with 'for' %}
+                        	<span style="color: #FF0000"> Formation</span>
+                        {% endif %}	
+                    </h1>
+                  
+                    <p>Copyright © {{ "now"|date("Y") }} {{ companyName }}. Tous droits réservés.</p>
+                    <p><small>Version : {{ appVersion }}</small></p>
+                </div>
+              </div>
+            {{ form_rest(form) }}
+            </form>
+            
+            
+		
+        
+       
+{% endblock form %}
+
+{% block pwd_oublie %}
+{% endblock pwd_oublie %}

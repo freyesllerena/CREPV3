@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="45%">Libellé de la formation suivie</th>
+                <th width="10%">Formation suivie</th>
+                <th>Commentaires <small>(appréciation, bilan, suites...)</small></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formation in crep.formationsN1 %}
+                <tr>
+                    <td>{{ formation.libelle |nl2br }}</td>
+                    <td class="text-center">{{ formation.formationSuivie | ouiNon }}</td>
+                    <td>{{ formation.commentaires|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
