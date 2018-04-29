@@ -18,7 +18,7 @@ class CrepMcc02CompetenceType extends AbstractType
     {
         $builder
             ->add('niveau', ChoiceType::class, [
-                'choices' => CrepMcc02::$niveauCompetenceAction,
+                'choices' => CrepMcc02::$niveauCompetence,
                 'expanded' => true,
                 'multiple' => false,
             ])

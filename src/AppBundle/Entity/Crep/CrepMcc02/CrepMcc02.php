@@ -24,7 +24,7 @@ class CrepMcc02 extends Crep
         'Devenu sans objet' => 3,
     ];
 
-    public static $niveauCompetenceAction = [
+    public static $niveauCompetence = [
         'exceptionnelle' => 0,
         'forte' => 1,
         'assez forte' => 2,

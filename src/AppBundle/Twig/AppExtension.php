@@ -122,13 +122,13 @@ class AppExtension extends \Twig_Extension
         			$this,
         			'echelleObjectifEvalueCrepMso3'
         	)),
-            new \Twig_SimpleFilter('niveauCompetenceActionCrepMcc02', array(
+            new \Twig_SimpleFilter('niveauCompetenceCrepMcc02', array(
                 $this,
-                'niveauCompetenceActionCrepMcc02'
+                'niveauCompetenceCrepMcc02'
             )),
-            new \Twig_SimpleFilter('allNiveauCompetenceActionCrepMcc02', array(
+            new \Twig_SimpleFilter('allNiveauCompetenceCrepMcc02', array(
                 $this,
-                'allNiveauCompetenceActionCrepMcc02'
+                'allNiveauCompetenceCrepMcc02'
             )),
         );
     }
@@ -644,18 +644,28 @@ class AppExtension extends \Twig_Extension
         return array_flip(CrepMso3::$echelleObjectifEvalue)[$objectifEvalue];
     }
 
-    public function niveauCompetenceActionCrepMcc02($niveaux)
+    /**
+     * Niveau competence CrepMcc02
+     *
+     * @param $niveaux
+     * @return string
+     */
+    public function niveauCompetenceCrepMcc02($niveaux)
     {
         if (null === $niveaux) {
             return '';
         }
 
-        return array_flip(CrepMcc02::$niveauCompetenceAction)[$niveaux];
+        return array_flip(CrepMcc02::$niveauCompetence)[$niveaux];
     }
 
-    public function allNiveauCompetenceActionCrepMcc02()
+    /**
+     * Liste niveau compentences CrepMcc02
+     * @return array
+     */
+    public function allNiveauCompetenceCrepMcc02()
     {
-        return CrepMcc02::$niveauCompetenceAction;
+        return CrepMcc02::$niveauCompetence;
     }
 }
 
