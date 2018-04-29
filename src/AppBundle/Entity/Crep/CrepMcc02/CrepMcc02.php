@@ -478,7 +478,7 @@ class CrepMcc02 extends Crep
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceRelation", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
      * @Assert\Valid
      */
-    protected $competencesRelations;
+    protected c;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)

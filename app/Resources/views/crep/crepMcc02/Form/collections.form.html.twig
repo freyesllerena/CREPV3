@@ -40,6 +40,12 @@
     {% endfor %}
 {% endblock %}
 
+{% block _crep_mcc02_competencesSituations_entry_widget %}
+    {%  for child in form.niveau.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
 {#{% block _crep_mcc02_natureDossiersTravaux_entry_widget %}#}
     {#<tr>#}
         {#<td>{{ form_row(form.natureDossiersTravaux, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>#}

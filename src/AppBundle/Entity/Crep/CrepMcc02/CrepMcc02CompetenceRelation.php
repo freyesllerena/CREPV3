@@ -37,7 +37,7 @@ class CrepMcc02CompetenceRelation extends CrepMcc02Competence
      * @param CrepMcc02 $crep
      *
      * @return CrepMcc02CompetenceRelation
-     */
+     */c
     public function setCrep(CrepMcc02 $crep = null)
     {
         $this->crep = $crep;

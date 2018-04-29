@@ -3,9 +3,11 @@
 namespace AppBundle\Form\Crep\CrepMcc02;
 
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
+use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation;
 use AppBundle\Form\AutreObjectifType;
-//use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceActionsType;
-use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceActionType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRelationType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceSituationType;
 use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\ObjectifEvalueType;
 use AppBundle\Form\ObjectifFuturType;
@@ -148,14 +150,33 @@ class CrepMcc02Type extends CrepType
             ->add('competencesActions',
                 CollectionType::class,
                 [
-                    'entry_type' => CrepMcc02CompetenceType::class,
+                    'entry_type' => CrepMcc02CompetenceActionType::class,
                     'allow_add' => false,
                     'allow_delete' => false,
                     'by_reference' => false,
                 ]
             )
             ->add('observationsCompetencesActions', null, ['required' => false])
-
+            ->add('ccc',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02CompetenceRelationType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'by_reference' => false,
+                ]
+            )
+            ->add('observationsCompetencesRelations', null, ['required' => false])
+            ->add('competencesSituations',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02CompetenceSituationType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'by_reference' => false,
+                ]
+            )
+            ->add('observationsCompetencesSituations', null, ['required' => false])
 
             // V
             ->add('souhaitEvolutionCarriere', null, ['required' => false])

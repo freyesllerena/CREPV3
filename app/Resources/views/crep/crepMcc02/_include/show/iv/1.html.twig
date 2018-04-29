@@ -1,6 +1,6 @@
 {% set listeNiveaux =  crep.competencesActions | allNiveauCompetenceCrepMcc02 %}
 <br>
-
+{# Competences Action #}
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
 
@@ -103,6 +103,7 @@
             {% endfor %}
             </tbody>
         </table>
+
         <label>Observations :</label>
         <div class="row form-group project_detail">
                 <p class="well well-xs"> {{ crep.observationsCompetencesActions | nl2br }}</p>
@@ -111,6 +112,7 @@
 </div>
 <br>
 
+{# Competences Relation #}
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
@@ -122,16 +124,98 @@
                 {% endfor %}
             </tr>
             </thead>
+
             <tbody>
-            {% for key,competence in crep.competencesRelations.toArray() %}
+
+            {% for key, competence in crep.competencesRelations %}
+
                 <tr>
-                    <td>{{ competence.libelle | nl2br }}</td>
-                    {% for index in 0..4 %}
-                        <td class="text-center">{{ competence.niveau | iconCheck(loop.revindex0)|raw }}</td>
-                    {% endfor %}
+                    <td>{{ competence.libelle|nl2br }}</td>
+                    {% if competence.niveau  is  not null %}
+
+                        {%  if key ==  0  %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  1 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  2 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  3 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  4 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% else %}
+
+                        {% for index in listeNiveaux %}
+                            <td><br></td>
+                        {% endfor %}
+
+                    {% endif %}
+
                 </tr>
             {% endfor %}
+
             </tbody>
+
         </table>
         <label>Observations :</label>
         <div class="row form-group project_detail">
@@ -140,8 +224,11 @@
     </div>
 </div>
 <br>
+c
+{# Competences Situation #}
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
+
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -152,16 +239,98 @@
             </tr>
             </thead>
             <tbody>
-            {% for competence in crep.competencesSituations.toArray() %}
+
+            {% for key, competence in crep.competencesSituations %}
+
                 <tr>
-                    <td>{{ competence.libelle | nl2br }}</td>
-                    {% for index in 0..4 %}
-                        <td class="text-center">{{ competence.niveau | iconCheck(loop.revindex0)|raw }}</td>
-                    {% endfor %}
+                    <td>{{ competence.libelle|nl2br }}</td>
+                    {% if competence.niveau  is  not null %}
+
+                        {%  if key ==  0  %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  1 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  2 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  3 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                        {%  if key ==  4 %}
+
+                            {% for index in listeNiveaux %}
+
+                                {%  if index ==  competence.niveau %}
+                                    <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                {% else %}
+                                    <td><br></td>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% else %}
+
+                        {% for index in listeNiveaux %}
+                            <td><br></td>
+                        {% endfor %}
+
+                    {% endif %}
+
                 </tr>
             {% endfor %}
+
             </tbody>
+
         </table>
+
         <label>Observations :</label>
         <div class="row form-group project_detail">
             <p class="well well-xs"> {{ crep.observationsCompetencesSituations | nl2br }}</p>

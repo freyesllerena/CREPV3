@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 
-class CrepMcc02CompetenceActionType extends AbstractType
+class CrepMcc02CompetenceSituationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -31,7 +31,7 @@ class CrepMcc02CompetenceActionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceAction',
+            'data_class' => 'AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation',
         ));
     }
 }
