@@ -24,6 +24,14 @@ class CrepMcc02 extends Crep
         'Devenu sans objet' => 3,
     ];
 
+    public static $niveauCompetenceAction = [
+        'exceptionnelle' => 0,
+        'forte' => 1,
+        'assez forte' => 2,
+        'à développer' => 3,
+        'non observée' => 4,
+    ];
+
     /**
      * @ORM\Column(type="string")
      * @Assert\Length(

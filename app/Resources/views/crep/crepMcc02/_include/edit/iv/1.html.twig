@@ -1,45 +1,37 @@
-<br>
-{#{{ dump(form.competencesActions) }}#}
-
-
-
 {% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
+{% set listeNiveaux =  crep.competencesActions | allNiveauCompetenceActionCrepMcc02 %}
 
-<div class="row" id="objectifsFutursCollection" data-prototype="{{ form_widget(form.objectifsFuturs.vars.prototype)|e('html_attr') }}">
+<br>
+<div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="text-center">Compétences liées à l’action</th>
-                <th class="text-center">Exceptionnelle*</th>
-                <th class="text-center">Forte</th>
-                <th class="text-center">Assez forte</th>
-                <th class="text-center">À développer</th>
-                <th class="text-center">Non observée</th>
-                <th class="text-center">Observations</th>
-                <th width="2%"></th>
+                <th>Compétences professionnelles <br><small>(grille à compléter en intégralité)</small></th>
+                {% for key, niveau in listeNiveaux %}
+                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
-            {% for objectif in form.competencesActions %}
-                {{ form_row(objectif) }}
-            {%  endfor %}
+            {% for competence in form.competencesActions %}
+                <tr>
+                    <td>
+                        {{ crep.competencesActions[loop.index0].libelle }}
+                    </td>
+                    {{ form_widget(competence) }}
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
-</div>
-<div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <button class="btn btn-primary add_collection_link pull-right">
-            <i class="fa fa-plus"></i> Ajouter
-        </button>
+        <label>observations :</label>
+        {{ form_row(form.observationsCompetencesActions, { 'label': false}) }}
     </div>
 </div>
 
 <br>
-
-
-
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -47,24 +39,16 @@
             <thead>
             <tr>
                 <th class="text-center">Compétences liées à l’action</th>
-                <th class="text-center">Exceptionnelle*</th>
-                <th class="text-center">Forte</th>
-                <th class="text-center">Assez forte</th>
-                <th class="text-center">À développer</th>
-                <th class="text-center">Non observée</th>
-                <th class="text-center">Observations</th>
+                {% for key, niveau in listeNiveaux %}
+                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
-            {#{% for competence in crep.competencesActions.toArray() %}#}
+            {#{% for competence in crep.competencesRelations.toArray() %}#}
                 {#<tr>#}
                     {#<td>{{ competence.libelle | nl2br }}</td>#}
-                    {#<td></td>#}
-                    {#<td></td>#}
-                    {#<td></td>#}
-                    {#<td></td>#}
-                    {#<td></td>#}
-                    {#<td></td>#}
+                    {#{{ form_widget(competence) }}#}
                 {#</tr>#}
             {#{% endfor %}#}
             </tbody>
@@ -72,21 +56,21 @@
     </div>
 </div>
 <br>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="text-center">Compétences liées à la relation</th>
-                <th class="text-center">Exceptionnelle*</th>
-                <th class="text-center">Forte</th>
-                <th class="text-center">Assez forte</th>
-                <th class="text-center">À développer</th>
-                <th class="text-center">Non observée</th>
-                <th class="text-center">Observations</th>
-            </tr>
-            </thead>
-            <tbody>
+{#<div class="row">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<table class="table table-bordered">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th class="text-center">Compétences liées à la relation</th>#}
+                {#<th class="text-center">Exceptionnelle*</th>#}
+                {#<th class="text-center">Forte</th>#}
+                {#<th class="text-center">Assez forte</th>#}
+                {#<th class="text-center">À développer</th>#}
+                {#<th class="text-center">Non observée</th>#}
+                {#<th class="text-center">Observations</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
             {#{% for competence in crep.competencesRelations.toArray() %}#}
                 {#<tr>#}
                     {#<td>{{ competence.libelle | nl2br }}</td>#}
@@ -98,26 +82,26 @@
                     {#<td></td>#}
                 {#</tr>#}
             {#{% endfor %}#}
-            </tbody>
-        </table>
-    </div>
-</div>
-<br>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="text-center">Compétences liées à l’intelligence des situations</th>
-                <th class="text-center">Exceptionnelle*</th>
-                <th class="text-center">Forte</th>
-                <th class="text-center">Assez forte</th>
-                <th class="text-center">À développer</th>
-                <th class="text-center">Non observée</th>
-                <th class="text-center">Observations</th>
-            </tr>
-            </thead>
-            <tbody>
+            {#</tbody>#}
+        {#</table>#}
+    {#</div>#}
+{#</div>#}
+{#<br>#}
+{#<div class="row">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<table class="table table-bordered">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th class="text-center">Compétences liées à l’intelligence des situations</th>#}
+                {#<th class="text-center">Exceptionnelle*</th>#}
+                {#<th class="text-center">Forte</th>#}
+                {#<th class="text-center">Assez forte</th>#}
+                {#<th class="text-center">À développer</th>#}
+                {#<th class="text-center">Non observée</th>#}
+                {#<th class="text-center">Observations</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
             {#{% for competence in crep.competencesSituations.toArray() %}#}
                 {#<tr>#}
                     {#<td>{{ competence.libelle | nl2br }}</td>#}
@@ -129,10 +113,10 @@
                     {#<td></td>#}
                 {#</tr>#}
             {#{% endfor %}#}
-            </tbody>
-        </table>
-    </div>
-</div>
+            {#</tbody>#}
+        {#</table>#}
+    {#</div>#}
+{#</div>#}
 <div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <span>

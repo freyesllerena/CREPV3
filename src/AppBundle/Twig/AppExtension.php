@@ -2,6 +2,7 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\Entity\Crep\CrepMcc\CrepMcc;
 use AppBundle\EnumTypes\EnumStatutCrep;
 use AppBundle\EnumTypes\EnumStatutValidationAgent;
 use AppBundle\Entity\Agent;
@@ -121,6 +122,14 @@ class AppExtension extends \Twig_Extension
         			$this,
         			'echelleObjectifEvalueCrepMso3'
         	)),
+            new \Twig_SimpleFilter('niveauCompetenceActionCrepMcc02', array(
+                $this,
+                'niveauCompetenceActionCrepMcc02'
+            )),
+            new \Twig_SimpleFilter('allNiveauCompetenceActionCrepMcc02', array(
+                $this,
+                'allNiveauCompetenceActionCrepMcc02'
+            )),
         );
     }
 
@@ -634,4 +643,19 @@ class AppExtension extends \Twig_Extension
 
         return array_flip(CrepMso3::$echelleObjectifEvalue)[$objectifEvalue];
     }
+
+    public function niveauCompetenceActionCrepMcc02($niveaux)
+    {
+        if (null === $niveaux) {
+            return '';
+        }
+
+        return array_flip(CrepMcc02::$niveauCompetenceAction)[$niveaux];
+    }
+
+    public function allNiveauCompetenceActionCrepMcc02()
+    {
+        return CrepMcc02::$niveauCompetenceAction;
+    }
 }
+

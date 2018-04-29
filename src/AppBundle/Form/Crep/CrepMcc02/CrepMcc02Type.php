@@ -4,6 +4,8 @@ namespace AppBundle\Form\Crep\CrepMcc02;
 
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 use AppBundle\Form\AutreObjectifType;
+//use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceActionsType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
 use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\ObjectifEvalueType;
 use AppBundle\Form\ObjectifFuturType;
@@ -146,12 +148,13 @@ class CrepMcc02Type extends CrepType
             ->add('competencesActions',
                 CollectionType::class,
                 [
-//                    'entry_type' => ObjectifFuturType::class,
-//                    'allow_add' => true,
-//                    'allow_delete' => true,
-//                    'by_reference' => false,
+                    'entry_type' => CrepMcc02CompetenceType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'by_reference' => false,
                 ]
             )
+            ->add('observationsCompetencesActions', null, ['required' => false])
 
 
             // V

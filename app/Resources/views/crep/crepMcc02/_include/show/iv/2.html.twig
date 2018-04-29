@@ -11,7 +11,7 @@
                 <th class="text-center">Assez forte</th>
                 <th class="text-center">À développer</th>
                 <th class="text-center">Non observée</th>
-                <th class="text-center">Observations</th>
+                <th class="text-center">Observations éventuelles</th>
             </tr>
             <tr>
                 <th colspan="7" class="text-center">Requises dans les fonctions (à compléter à partir de la fiche de poste)</th>
@@ -20,15 +20,15 @@
             <tbody>
             {% if crep.competencesRequises.toArray() is empty %}
                 {% for index in 0..2 %}
-                <tr>
-                    <td><br></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 {% endfor %}
             {% else %}
                 {% for competence in crep.competencesRequises.toArray() %}
