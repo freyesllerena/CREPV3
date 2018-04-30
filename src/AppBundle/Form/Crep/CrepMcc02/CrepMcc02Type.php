@@ -157,7 +157,7 @@ class CrepMcc02Type extends CrepType
                 ]
             )
             ->add('observationsCompetencesActions', null, ['required' => false])
-            ->add('ccc',
+            ->add('competencesRelations',
                 CollectionType::class,
                 [
                     'entry_type' => CrepMcc02CompetenceRelationType::class,
