@@ -185,44 +185,6 @@
 
             {% endfor %}
 
-
-
-            {#{% for key, competence in crep.competencesSituations %}#}
-
-                {#<tr>#}
-                    {#<td>{{ competence.libelle | nl2br }}</td>#}
-
-                    {#{% if competence.niveau  is  not null %}#}
-
-                        {#{% for keySituation, situation in listeRelations %}#}
-
-                            {#{%  if key == keySituation %}#}
-
-                                {#{% for index in listeNiveauxSituation %}#}
-
-                                    {#{%  if index ==  competence.niveau %}#}
-                                        {#<td class="text-center"><i class="fa fa-check"></i><br></td>#}
-                                    {#{% else %}#}
-                                        {#<td><br></td>#}
-                                    {#{% endif %}#}
-
-                                {#{% endfor %}#}
-
-                            {#{% endif %}#}
-
-                        {#{% endfor %}}#}
-
-                    {#{% else %}#}
-
-                        {#{% for index in listeNiveauxSituation %}#}
-                            {#<td><br></td>#}
-                        {#{% endfor %}#}
-
-                    {#{% endif %}#}
-
-                {#</tr>#}
-            {#{% endfor %}#}
-
             </tbody>
 
         </table>

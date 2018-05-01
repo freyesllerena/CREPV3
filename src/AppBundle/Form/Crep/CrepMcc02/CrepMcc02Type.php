@@ -6,9 +6,12 @@ use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation;
 use AppBundle\Form\AutreObjectifType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceActionType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceDemontreeType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRelationType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRequiseType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceSituationType;
 use AppBundle\Form\Crep\CrepType;
+use AppBundle\Form\FormationSuivieType;
 use AppBundle\Form\ObjectifEvalueType;
 use AppBundle\Form\ObjectifFuturType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -177,6 +180,26 @@ class CrepMcc02Type extends CrepType
                 ]
             )
             ->add('observationsCompetencesSituations', null, ['required' => false])
+            ->add('competencesRequises',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02CompetenceRequiseType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ]
+            )
+            ->add('observationsCompetencesRequises', null, ['required' => false])
+            ->add('competencesDemontrees',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02CompetenceDemontreeType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ]
+            )
+            ->add('observationsCompetencesDemontrees', null, ['required' => false])
 
             // V
             ->add('souhaitEvolutionCarriere', null, ['required' => false])
@@ -195,8 +218,19 @@ class CrepMcc02Type extends CrepType
                 'required' => false,
                 'placeholder' => null,
             ])
+            ->add('observationsShdProjetProfessionnel', TextareaType::class, ['required' => false])
+            ->add('observationsAgentProjetProfessionnel', TextareaType::class, ['required' => false])
 
-
+            // VI
+            ->add('formationsSuivies',
+                CollectionType::class,
+                [
+                    'entry_type' => FormationSuivieType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ]
+            )
             ->add('dateEntreePoste',
             		DateType::class,
             		array(

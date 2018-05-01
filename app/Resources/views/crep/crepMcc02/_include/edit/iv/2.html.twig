@@ -1,0 +1,75 @@
+{% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
+{% set listeNiveaux =  crep.competencesRequises | allNiveauCompetenceCrepMcc02 %}
+{% set countCR = (form.competencesRequises | length) - 1 %}
+
+<div class="row" id="competencesRequisesCollection"
+     data-prototype="{{ form_widget(form.competencesRequises.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Compétences requises dans les fonctions (à compléter à partir de la fiche de poste)</th>
+                {% for key, niveau in listeNiveaux %}
+                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
+                {% endfor %}
+                <th width="20px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, competence in form.competencesRequises %}
+                {{ form_widget(competence) }}
+            {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <label>observations éventuelles :</label>
+            {{ form_row(form.observationsCompetencesRequises, { 'label': false}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br>
+{% set listeNiveaux =  crep.competencesDemontrees | allNiveauCompetenceCrepMcc02 %}
+{% set countCR = (form.competencesDemontrees | length) - 1 %}
+
+<div class="row" id="competencesDemontreesCollection"
+     data-prototype="{{ form_widget(form.competencesDemontrees.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Autres compétences démontrées par l’agent-e</th>
+                {% for key, niveau in listeNiveaux %}
+                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
+                {% endfor %}
+                <th width="20px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, competence in form.competencesDemontrees %}
+                {{ form_widget(competence) }}
+            {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <label>observations éventuelles :</label>
+            {{ form_row(form.observationsCompetencesDemontrees, { 'label': false}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

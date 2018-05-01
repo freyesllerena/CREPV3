@@ -26,6 +26,7 @@ class CrepMcc02Competence extends GenericEntity
 	 *      max = 255,
 	 *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
 	 * )
+     * @Assert\NotBlank(message = "Libellé obligatoire")
      */
     protected $libelle;
 

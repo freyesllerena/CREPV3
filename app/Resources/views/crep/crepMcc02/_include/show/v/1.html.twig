@@ -103,7 +103,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><br><br><br></td>
+                    {% if crep.observationsAgentProjetProfessionnel  %}
+                        <td>{{ crep.observationsAgentProjetProfessionnel }}</td>
+                    {% else %}
+                        <td><br><br><br></td>
+                    {% endif %}
                 </tr>
             </tbody>
 
@@ -112,4 +116,3 @@
 </div>
 
 <br>
-

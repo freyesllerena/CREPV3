@@ -1,34 +1,33 @@
 <br>
-
 <div class="row">
+
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
             {{ form_widget(form.souhaitEvolutionCarriere, {'label': "Évolution des fonctions dans le poste actuel" }) }}
         </div>
 
-
-            {{ form_widget(form.mobiliteGeographique) }}
-
-
         <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
             <input type="checkbox" class="flat pull-right" disabled="disabled"
-                   {% if crep.mobilitePoste and (crep.mobilitePoste.memeService
-                       or crep.mobilitePoste.memeMinistere
-                       or crep.mobilitePoste.autreMinistere
-                       or crep.mobilitePoste.autreFonctionPublique
-                       or crep.mobilitePoste.autreProjet) %}
-                        checked="checked"
+                    {% if crep.mobilitePoste and (crep.mobilitePoste.memeService
+                        or crep.mobilitePoste.memeMinistere
+                        or crep.mobilitePoste.autreMinistere
+                        or crep.mobilitePoste.autreFonctionPublique
+                        or crep.mobilitePoste.autreProjet) %}
+                checked="checked"
                     {% endif %}>
             <label class="control-label">Changement de poste</label>
+        </div>
+        <div class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
             {{ form_widget(form.mobilitePoste) }}
         </div>
-
-
-        <div class="">
-
+        <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
+            {{ form_widget(form.mobiliteGeographique.choix, {'label': "Mobilité géographique" }) }}
         </div>
     </div>
 </div>
+<br>
+
+<br>
 
 <br>
 <div class="row">
@@ -60,14 +59,11 @@
             </thead>
             <tbody>
                 <tr>
-                    {% if crep.observationsShdProjetProfessionnel  %}
-                    <td>{{ crep.observationsShdProjetProfessionnel }}</td>
-                    {% else %}
-                        <td><br><br><br></td>
-                    {% endif %}
+                    <td>
+                        {{ form_row(form.observationsShdProjetProfessionnel, { 'label': false}) }}
+                    </td>
                 </tr>
             </tbody>
-
         </table>
     </div>
 </div>
@@ -82,7 +78,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><br><br><br></td>
+                    <td>
+                        {{ form_row(form.observationsAgentProjetProfessionnel, { 'label': false}) }}
+                    </td>
                 </tr>
             </tbody>
 
@@ -91,4 +89,3 @@
 </div>
 
 <br>
-

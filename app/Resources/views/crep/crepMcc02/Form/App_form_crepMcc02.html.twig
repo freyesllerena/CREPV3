@@ -43,17 +43,6 @@
     </tr>
 {% endblock %}
 
-{% block _crep_mcc_formationsSuivies_entry_widget %}
-    <tr>
-    	<td>{{ form_row(form.annee, {'label':false}) }}</td>
-    	<td>
-			{{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
-        </td>
-        <td>{{ form_row(form.commentaires, {'label':false}) }}</td>
-        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
-    </tr>
-{% endblock %}
-
 {% block _crep_mcc_formationsAdaptationPosteTravail_entry_widget %}
     <tr>
         <td>
