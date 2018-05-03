@@ -1,60 +1,24 @@
-<br/>
+{# vii 1 #}
 
-<div class="row form-group">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <label>Appréciation générale sur la valeur professionnelle de l’agent-e
-            (résultats – compétences – manière de servir)</label>
-        <p class="well well-xs">{{ crep.appreciationGenerale | nl2br }}</p>
-    </div>
-</div>
-<br/>
+<br>
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th colspan="6" class="text-center">Potentiel d’évolution de l’agent-e</th>
-                </tr>
-                <tr>
-                    <th class="text-center">Type d’emploi</th>
-                    <th class="text-center">Oui immédiatemen</th>
-                    <th class="text-center">Oui à moyen terme</th>
-                    <th class="text-center">À confirmer</th>
-                    <th class="text-center">Sans objet</th>
-                </tr>
+            <tr>
+                <th class="text-center" colspan="7">Appréciation générale sur la valeur professionnelle de l’agent-e
+                    (résultats – compétences – manière de servir)</th>
+            </tr>
             </thead>
             <tbody>
-
-                <tr align="left" bgcolor="#FFFFFF">
-                    <td>Encadrement</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr align="left" bgcolor="#FFFFFF">
-                    <td>Expertise
-                        (préciser le domaine)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr align="left" bgcolor="#FFFFFF">
-                    <td>Management de projet</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr align="left" bgcolor="#FFFFFF">
-                    <td>Autre (préciser)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
+            <tr>
+                {% if crep.appreciationgenerale  %}
+                    <td>{{ crep.appreciationgenerale }}</td>
+                {% else %}
+                    <td><br><br><br></td>
+                {% endif %}
+            </tr>
             </tbody>
 
         </table>
@@ -62,76 +26,75 @@
 </div>
 
 <br>
-<div class="row form-group">
-    <div class="col-md-7 col-sm-7 col-xs-12">
-        <label>Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</label>
-    </div>
 
-        <label>
-            <input type="checkbox" class="flat" disabled="disabled"
-            {% if crep.agent and crep.agent.ah and crep.attributionCia %}
-                checked="checked"
-            {% endif %}
-            >
-        </label> Oui &nbsp; &nbsp; &nbsp;
-        <label>
-            <input type="checkbox" class="flat" disabled="disabled"
-                    {% if crep.agent and crep.agent.ah and not crep.attributionCia and crep.attributionCia is not null %}
-                        checked="checked"
-                    {% endif %}
-            >
-        </label> Non
+{% set listeNiveauxPotentielEvolution  =  crep.potentielsEvolutions | allNiveauPotentielEvolutionCrepMcc02 %}
+{% set listePotentielsEvolutions  =  crep.potentielsEvolutions %}
 
-</div>
-
-<div class="row form-group project_detail">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <p class ="title"> Avis circonstancié </p>
-        <p class="well well-xs">
-            {% if crep.agent and crep.agent.ah %}
-                {{ crep.explicationAttributionCia | nl2br}}
-            {% endif %}
-        </p>
-    </div>
-</div>
-<br/>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
 
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th colspan="3" class="text-center">Proposition d’inscription au prochain tableau d’avancement de grade</th>
+                <th class="text-center" colspan="5">
+                    Potentiel d’évolution de l’agent-e
+                </th>
+            </tr>
+            <tr>
+                <th class="text-center">Type d’emploi</th>
+                {% for key, niveau in listeNiveauxPotentielEvolution %}
+                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
+
+            {% for key, potentiel in crep.potentielsEvolutions %}
+
                 <tr>
+                    <td>{{ potentiel.libelle | nl2br }}</td>
 
-                {% if crep.propositionAvancement is null %}
-                    <td class="text-center">
-                        <label>
-                            <input type="checkbox" class="flat" disabled="disabled">
-                        </label> Oui
-                    </td>
-                    <td class="text-center">
-                        <label>
-                            <input type="checkbox" class="flat" disabled="disabled">
-                        </label> Non
-                    </td>
-                    <td class="text-center">
-                        <label>
-                            <input type="checkbox" class="flat" disabled="disabled">
-                        </label> Sans obje
-                    </td>
-                {% else %}
+                    {% if potentiel.niveau  is  not null %}
 
-                {% endif %}
+                        {% for keyPotentiel, potentiel in listePotentielsEvolutions %}
 
+                            {%  if key ==  keyPotentiel %}
+
+                                {% for index in listeNiveauxPotentielEvolution %}
+
+                                    {%  if index ==  potentiel.niveau %}
+                                        <td class="text-center"><i class="fa fa-check"></i><br></td>
+                                    {% else %}
+                                        <td><br></td>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        {% for index in listeNiveauxPotentielEvolution %}
+                            <td><br></td>
+                        {% endfor %}
+
+                    {% endif %}
 
                 </tr>
+
+            {% endfor %}
+
             </tbody>
+
         </table>
+
+        <label>Observations :</label>
+        <div class="row form-group project_detail">
+            <p class="well well-xs"> {{ crep.observationsPotentielEvolutionAgent | nl2br }}</p>
+        </div>
     </div>
 </div>
 
-<br/>
+<br>

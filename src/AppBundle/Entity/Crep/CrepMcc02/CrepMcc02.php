@@ -32,6 +32,13 @@ class CrepMcc02 extends Crep
         'non observée' => 4,
     ];
 
+    public static $niveauPotentielEvolution = [
+        'Oui immédiatement' => 0,
+        'Oui à moyen terme' => 1,
+        'À confirmer' => 2,
+        'Sans objet' => 3,
+    ];
+
     /**
      * @ORM\Column(type="string")
      * @Assert\Length(
@@ -499,12 +506,6 @@ class CrepMcc02 extends Crep
     protected $competencesDemontrees;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceProfessionnelle", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
-     * @Assert\Valid
-     */
-    protected $competencesProfessionnelle;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="text", name="obs_competences_actions")
@@ -686,12 +687,21 @@ class CrepMcc02 extends Crep
     protected $formationsT3;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMcc02CompetenceProfessionnelle", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02PotentielEvolution", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
      * @Assert\Valid
      */
-    protected $competencesProfessionnelles;
+    protected $potentielsEvolutions;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", name="obs_potentiels_evolutions")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $observationsPotentielEvolutionAgent;
 
 
     public function __construct()
@@ -700,14 +710,13 @@ class CrepMcc02 extends Crep
         $this->competencesActions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesRelations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesSituations = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->competencesPotentiels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->potentielsEvolutions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesRequises = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesDemontrees = new \Doctrine\Common\Collections\ArrayCollection();
         $this->autresObjectifs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->formationsT1 = new \Doctrine\Common\Collections\ArrayCollection();
         $this->formationsT2 = new \Doctrine\Common\Collections\ArrayCollection();
         $this->formationsT3 = new \Doctrine\Common\Collections\ArrayCollection();
-//        $this->objectifsFutursCollectifs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -1068,19 +1077,18 @@ class CrepMcc02 extends Crep
         $this->addCompetencesSituation($competenceSituation);
 
         // Initialisatiuon des compétences lié au Potentiel d’évolution de l’agent-e
-        $competenceProfessionnelle= new CrepMcc02CompetenceProfessionnelle();
-        $competenceProfessionnelle->setLibelle('Sens de l’intérêt général');
-        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
-        $competenceProfessionnelle = new CrepMcc02CompetenceProfessionnelle();
-        $competenceProfessionnelle->setLibelle('Capacité à développer une vision stratégique et à anticiper');
-        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
-        $competenceProfessionnelle = new CrepMcc02CompetenceProfessionnelle();
-        $competenceProfessionnelle->setLibelle('Ouverture d’esprit et capacité à se remettre en question');
-        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
-        $competenceProfessionnelle = new CrepMcc02CompetenceProfessionnelle();
-        $competenceProfessionnelle->setLibelle('Imagination et goût pour l’innovation');
-        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
-
+        $potentielsEvolution = new CrepMcc02PotentielEvolution();
+        $potentielsEvolution->setLibelle('Encadrement');
+        $this->addPotentielsEvolution($potentielsEvolution);
+        $potentielsEvolution = new CrepMcc02PotentielEvolution();
+        $potentielsEvolution->setLibelle('Expertise (préciser le domaine)');
+        $this->addPotentielsEvolution($potentielsEvolution);
+        $potentielsEvolution = new CrepMcc02PotentielEvolution();
+        $potentielsEvolution->setLibelle('Management de projet');
+        $this->addPotentielsEvolution($potentielsEvolution);
+        $potentielsEvolution = new CrepMcc02PotentielEvolution();
+        $potentielsEvolution->setLibelle('Autre (préciser)');
+        $this->addPotentielsEvolution($potentielsEvolution);
     }
 
     /**
@@ -1929,39 +1937,39 @@ class CrepMcc02 extends Crep
     }
 
     /**
-     * Add competencePotentiel
+     * Add potentielsEvolution
      *
-     * @param CrepMcc02CompetencePotentiel $competencePotentiel
+     * @param CrepMcc02PotentielEvolution $potentielEvolution
      *
      * @return CrepMcc02
      */
-    public function addCompetencesPotentiel(CrepMcc02CompetencePotentiel $competencePotentiel)
+    public function addPotentielsEvolution(CrepMcc02PotentielEvolution $potentielEvolution)
     {
-        $this->competencesPotentiels[] = $competencePotentiel;
-        $competencePotentiel->setCrep($this);
+        $this->potentielsEvolutions[] = $potentielEvolution;
+        $potentielEvolution->setCrep($this);
 
         return $this;
     }
 
     /**
-     * Remove competencePotentiel
+     * Remove potentielEvolution
      *
-     * @param CrepMcc02CompetencePotentiel $competencePotentiel
+     * @param CrepMcc02PotentielEvolution $potentielEvolution
      */
-    public function removeCompetencesPotentiel(CrepMcc02CompetencePotentiel $competencePotentiel)
+    public function removePotentielsEvolution(CrepMcc02PotentielEvolution $potentielEvolution)
     {
-        $this->$competencePotentiels->removeElement($competencePotentiel);
-        $competencePotentiel->setCrep(null);
+        $this->potentielsEvolutions->removeElement($potentielEvolution);
+        $potentielEvolution->setCrep(null);
     }
 
     /**
-     * Get CompetencesPotentiels
+     * Get potentielsEvolutions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCompetencesPotentiels()
+    public function getPotentielsEvolutions()
     {
-        return $this->competencesPotentiels;
+        return $this->potentielsEvolutions;
     }
 
     public function getDateEntreePosteOccupe()
@@ -2221,38 +2229,19 @@ class CrepMcc02 extends Crep
     }
 
     /**
-     * Add competenceProfessionnelle.
-     *
-     * @param CrepMcc02CompetenceProfessionnelle $competencesProfessionnelle
-     *
-     * @return CrepMcc02
+     * @return string
      */
-    public function addCompetencesProfessionnelle(CrepMcc02CompetenceProfessionnelle $competenceProfessionnelle)
+    public function getObservationsPotentielEvolutionAgent()
     {
-        $this->competencesProfessionnelles[] = $competenceProfessionnelle;
-        $competenceProfessionnelle->setCrep($this);
-
-        return $this;
+        return $this->observationsPotentielEvolutionAgent;
     }
 
     /**
-     * Remove competenceProfessionnelle.
-     *
-     * @param CrepMcc02CompetenceProfessionnelle $competenceProfessionnelle
+     * @param string $observationsPotentielEvolutionAgent
      */
-    public function removeCompetencesProfessionnelle(CrepMcc02CompetenceProfessionnelle $competenceProfessionnelle)
+    public function setObservationsPotentielEvolutionAgent($observationsPotentielEvolutionAgent)
     {
-        $this->competencesProfessionnelles->removeElement($competenceProfessionnelle);
-        $competenceProfessionnelle->setCrep(null);
+        $this->observationsPotentielEvolutionAgent = $observationsPotentielEvolutionAgent;
     }
 
-    /**
-     * Get competencesProfessionnelles.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCompetencesProfessionnelles()
-    {
-        return $this->competencesProfessionnelles;
-    }
 }

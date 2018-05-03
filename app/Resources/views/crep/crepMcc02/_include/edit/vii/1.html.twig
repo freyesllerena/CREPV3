@@ -1,10 +1,13 @@
+{% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
+
 <br>
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th colspan="7">
+                <th class="text-center" colspan="7">
                     Appréciation générale sur la valeur professionnelle de l’agent-e
                     (résultats – compétences – manière de servir)
                 </th>
@@ -13,12 +16,59 @@
             <tbody>
             <tr>
                 <td>
-                    {{ form_row(form.appreciationGenerale, {'label':false, 'attr': {'maxlength': '4096'}}) }}
+
+
+                        {{ form_row(form.appreciationGenerale, {'label':"Attribution cia :"}) }}
+
+
                 </td>
             </tr>
             </tbody>
 
         </table>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="5">
+                        Potentiel d’évolution de l’agent-e
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">Type d’emploi</th>
+                    <th class="text-center">Oui immédiatement</th>
+                    <th class="text-center">Oui à moyen terme</th>
+                    <th class="text-center">À confirmer</th>
+                    <th class="text-center">Sans objet</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for potentiel in form.potentielsEvolutions %}
+                <tr>
+                    <td>
+                        {{ crep.potentielsEvolutions[loop.index0].libelle }}
+                    </td>
+
+                    {{ form_widget(potentiel) }}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-md-12">
+        <label>Observations : </label>
+        {{ form_widget(form.observationsPotentielEvolutionAgent) }}
     </div>
 </div>
 

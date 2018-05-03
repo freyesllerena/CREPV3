@@ -168,8 +168,9 @@
     </tr>
 {% endblock %}
 
-{% block _crep_mcc02_competencesProfessionnelles_entry_widget %}
-    {%  for child in form.niveau.children %}
-        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
-    {% endfor %}
+
+{% block _crep_mcc02_potentielsEvolutions_entry_widget %}
+        {%  for child in form.niveau.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}</td>
+        {% endfor %}
 {% endblock %}

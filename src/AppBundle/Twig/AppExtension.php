@@ -130,6 +130,10 @@ class AppExtension extends \Twig_Extension
                 $this,
                 'allNiveauCompetenceCrepMcc02'
             )),
+            new \Twig_SimpleFilter('allNiveauPotentielEvolutionCrepMcc02', array(
+                $this,
+                'allNiveauPotentielEvolutionCrepMcc02'
+            )),
         );
     }
 
@@ -666,6 +670,15 @@ class AppExtension extends \Twig_Extension
     public function allNiveauCompetenceCrepMcc02()
     {
         return CrepMcc02::$niveauCompetence;
+    }
+
+    /**
+     * Liste niveau potentiel evolution CrepMcc02
+     * @return array
+     */
+    public function allNiveauPotentielEvolutionCrepMcc02()
+    {
+        return CrepMcc02::$niveauPotentielEvolution;
     }
 }
 

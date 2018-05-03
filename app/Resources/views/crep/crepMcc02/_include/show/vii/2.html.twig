@@ -1,24 +1,50 @@
+{# vii 2 #}
+
 <br>
 
 <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <dl class="dl-horizontal m-t-md">
-            <dt>Nom</dt>
-            <dd>
-                {% if crep.shdSignataire %}
-                    {{ crep.shdSignataire | identite }}
-                {% endif %}
-            </dd>
-        </dl>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <dl class="dl-horizontal m-t-md">
-            <dt>Date</dt>
-            <dd>{% if crep.dateVisaShd %}{{ crep.dateVisaShd|date('d/m/Y H:i') }}{% endif %}</dd>
-        </dl>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="2">Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" disabled="disabled"
+                                    {% if crep.agent and crep.agent.ah and crep.attributionCia %}
+                                       checked="checked"
+                                   {% endif %}
+                            >
+                        </label> Oui
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="flat" disabled="disabled"
+                                    {% if crep.agent and crep.agent.ah and not crep.attributionCia and crep.attributionCia is not null %}
+                                        checked="checked"
+                                    {% endif %}
+                            >
+                        </label> Non
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label> Avis circonstancié :</label>
+                        <p class="well well-xs">
+                            {% if crep.agent and crep.agent.ah %}
+                                {{ crep.explicationAttributionCia|nl2br}}
+                            {% endif %}
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
     </div>
 </div>
 
-<br/>
+<br>

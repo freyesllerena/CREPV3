@@ -3,13 +3,13 @@
 namespace AppBundle\Form\Crep\CrepMcc02;
 
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
-use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation;
 use AppBundle\Form\AutreObjectifType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceActionType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceDemontreeType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRelationType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRequiseType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceSituationType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02PotentielEvolutionType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT1Type;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT2Type;
@@ -306,15 +306,27 @@ class CrepMcc02Type extends CrepType
                 'attr' => ['maxlength' => '4096'],
                 'required' => false, ])
             ->add(
-                'competencesProfessionnelles',
+                'potentielsEvolutions',
                 CollectionType::class,
                 [
-                    'entry_type' => CrepMcc02CompetenceType::class,
+                    'entry_type' => CrepMcc02PotentielEvolutionType::class,
                     'allow_add' => false,
                     'allow_delete' => false,
                     'by_reference' => false,
                 ]
             )
+            ->add('observationsPotentielEvolutionAgent', null, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false, ])
+            ->add('attributionCia', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => 1,
+                    'Non' => 0,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
+            ->add('explicationAttributionCia', null, ['attr' => ['maxlength' => '4096'], 'required' => false])
 
 
         ;

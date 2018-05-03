@@ -1,32 +1,50 @@
-{#{% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}#}
+{% form_theme form 'crep/crepMcc02/Form/App_form_crepMcc02_12.html.twig' %}
+<br>
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th>Type d’emploi</th>
-                    <th class="text-center" width="100px">Oui immédiatement</th>
-                    <th class="text-center" width="100px">Oui à moyen terme</th>
-                    <th class="text-center" width="100px">À confirmer</th>
-                    <th class="text-center" width="100px">Sans objet </th>
-                </tr>
+            <tr>
+                <th class="text-center">Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</th>
+            </tr>
             </thead>
             <tbody>
-            	{% for competence in form.competencesProfessionnelles %}
-            	<tr>
-            		 <td>
-  						{{ crep.competencesProfessionnelles[loop.index0].libelle }}
-        			 </td>
+            <tr>
+                <td>
+                    {{ form_row(form.attributionCia, { 'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
+                    <br>
+                    <br>
+                    <br>
+                    <label>&nbsp;&nbsp;&nbsp;Avis circonstancié :</label>
+                    {{ form_row(form.explicationAttributionCia, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
+                </td>
 
-  					{{ form_widget(competence) }}
-            	</tr>
-            	{% endfor %}
+            </tr>
             </tbody>
+
         </table>
     </div>
 </div>
 
+
+
 <br>
 
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="control-label col-md-7 col-sm-7 col-xs-12" style="text-align:left;">Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</label>
+        <div class="col-md-5 col-sm-5 col-xs-12">
+            {{ form_row(form.attributionCia, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label for="crep_mindef_autresActivites" class="pull-left">Avis circonstancié</label>
+        {{ form_row(form.explicationAttributionCia, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
+    </div>
+</div>
+
+<br>

@@ -10,11 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * CrepMcc02Competence
  * 
- * @ORM\InheritanceType("SINGLE_TABLE")
- * 
  * @ORM\Table(name="crep_mcc02_competence")
- * 
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02CompetenceRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AppBundle\Repository\CrepMcc02CompetenceRepository\")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  */
 class CrepMcc02Competence extends GenericEntity
 {
