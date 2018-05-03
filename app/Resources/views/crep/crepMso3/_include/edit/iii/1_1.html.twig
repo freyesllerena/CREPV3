@@ -4,21 +4,21 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-            <tr>
-                <th style="width: 30%">Compétence <small>(à compléter à partir de la fiche de poste)</small></th>
-                <th style="width: 8%" class="text-center">Expert</th>
-                <th style="width: 8%" class="text-center">Maîtrise</th>
-                <th style="width: 8%" class="text-center">Pratique</th>
-                <th style="width: 8%" class="text-center">Initié</th>
-                <th style="width: 8%" class="text-center">Non requis</th>
-                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
-                <th width="20px"></th>
-            </tr>
+                <tr>
+                   	<th style="width: 30%">Compétence <small>(à compléter à partir de la fiche de poste)</small></th>
+	                <th style="width: 8%" class="text-center">Expert</th>
+	                <th style="width: 8%" class="text-center">Maîtrise</th>
+	                <th style="width: 8%" class="text-center">Pratique</th>
+	                <th style="width: 8%" class="text-center">Initié</th>
+	                <th style="width: 8%" class="text-center">Non requis</th>
+	                <th class="text-center">Appréciation <small>(le cas échéant)</small></th>
+	                <th width="20px"></th>
+                </tr>
             </thead>
             <tbody>
-            {% for competence in form.competencesRequises %}
-                {{ form_widget(competence) }}
-            {% endfor %}
+            	{% for competence in form.competencesRequises %}
+	            	{{ form_widget(competence) }}
+	        	{% endfor %}
             </tbody>
         </table>
     </div>

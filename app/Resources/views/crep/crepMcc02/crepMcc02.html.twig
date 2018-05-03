@@ -1,58 +1,68 @@
-Hey pdf
-  {#<!-- page 1 -->#}
-{#<table>#}
-	{#<tr>#}
-		{#<td width="34%">#}
-			{#<img src="{{ asset('bundles/framework/images/logo_mcc.jpg') }}" alt="MCC" width="100" height="126">#}
-		{#</td>#}
-	{#</tr>#}
-{#</table>#}
+<style>
+	.text-center {
+		text-align: center;
+	}
 
-{#<p align="center">#}
-	{#<h2>#}
-		{#COMPTE RENDU DE L’ENTRETIEN PROFESSIONNEL <br/>#}
-		{#Année : {{ anneeEvaluee }}#}
-	{#</h2>#}
-{#</p>#}
+	.bordered {
+		border:1px #000000 solid;
+	}
 
-{#<br/><br/><br/>#}
+	.bg-full {
+		background-color: #E9E9E9;
+	}
 
-{#<table cellpadding="5" style="font-size:10.0pt; border:1px #000000 solid;">#}
-	{#<tr bgcolor="#E6E6E6">#}
-		{#<td>NOM PATRONYMIQUE :</td>#}
-		{#<td>Affectation :</td>#}
-	{#</tr>#}
-	{#<tr bgcolor="#FFFFFF">#}
-		{#<td>{{ crep.nomPatronymique|upper }}</td>#}
-		{#<td>{{ crep.affectation|title }}</td>#}
-	{#</tr>#}
-	{#<tr bgcolor="#E6E6E6">#}
-		{#<td>NOM D’USAGE :</td>#}
-		{#<td>&gt; Direction (ou établissement) :</td>#}
-	{#</tr>#}
-	{#<tr bgcolor="#FFFFFF">#}
-		{#<td>{{ crep.nomUsage|upper }}</td>#}
-		{#<td>{{ crep.direction|title }}</td>#}
-	{#</tr>#}
-	{#<tr bgcolor="#E6E6E6">#}
-		{#<td>Prénom</td>#}
-		{#<td>&gt; Service :</td>#}
-	{#</tr>#}
-	{#<tr bgcolor="#FFFFFF">#}
-		{#<td>{{ crep.prenom|title }}</td>#}
-		{#<td>{{ crep.service|title }}</td>#}
-	{#</tr>#}
-	{#<tr bgcolor="#E6E6E6">#}
-		{#<td></td>#}
-		{#<td>&gt; Bureau :</td>#}
-	{#</tr>#}
-	{#<tr bgcolor="#FFFFFF">#}
-		{#<td></td>#}
-		{#<td>{{ crep.bureau|title }}</td>#}
-	{#</tr>#}
-{#</table>#}
+	ul.demo {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+</style>
+<!-- page 1 -->
+<table>
+	<tr>
+		<td width="34%">
+			<img src="{{ asset('bundles/framework/images/logo_mcc.jpg') }}" alt="MCC" width="100" height="126">
+		</td>
+	</tr>
+</table>
 
-{#<br/><br/>#}
+<p align="center">
+	<h2>
+		COMPTE RENDU DE L’ENTRETIEN PROFESSIONNEL <br/>
+		Année : {{ anneeEvaluee }}
+	</h2>
+</p>
+
+<br/><br/><br/>
+{{ dump(crep) }}
+
+<table>
+	<tr>
+		<td width="45%" style="line-height:25pt;">
+			Prénom -  Nom :  {{ crep.prenom | title  }} {{ crep.nomUsage | upper }}   <br>
+			{#Nom d'usage : {{ crep.nomUsage | upper }}<br>#}
+			{#Prénom : {{ crep.prenom | title }}<br>#}
+			{#Date de naissance : {% if crep.dateNaissance %} {{ crep.dateNaissance | date('d/m/Y') }} {% endif %}<br>#}
+			{#Intitulé de la fonction : {{ crep.posteOccupe }}<br>#}
+			{#Service / Direction : {{ crep.service }}<br>#}
+			{#Établissement / Juridiction / Bureau : {{ crep.affectation }}<br>#}
+			{#Ancienneté dans le poste : {% if crep.dateEntreePoste %} {{ crep.dateEntreePoste | date('d/m/Y') }} {% endif %}#}
+		</td>
+		<td width="10%"></td>
+		<td width="45%" style="line-height:25pt;">
+			{#Nom de l'évaluateur : {{ crep.nomUsageShd | upper }}<br>#}
+			{#<br>#}
+			{#Prénom : {{ crep.prenomShd | title }}<br>#}
+			{#<br>#}
+			{#Intitulé de la fonction : {{ crep.posteOccupeShd }}<br>#}
+			{#Service / Direction : {{ crep.serviceShd }}<br>#}
+			{#Établissement / Juridiction / Bureau : {{ crep.affectationShd }}#}
+		</td>
+	</tr>
+</table>
+
+
+<br/><br/>
 
 {#{% set corps, dateEntreeCorps, grade, dateEntreeGrade, echelon, dateEntreeEchelon = '', '', '', '', '', ''  %}#}
 {#{% set dateDebutContrat, dateEntreeMinistere, cdd, cdi, dateDebutCdd, dateDebutCdi = '' , '', '&#9744;', '&#9744;', '', ''  %}#}

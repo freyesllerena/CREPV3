@@ -1,0 +1,32 @@
+{#{% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}#}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Type d’emploi</th>
+                    <th class="text-center" width="100px">Oui immédiatement</th>
+                    <th class="text-center" width="100px">Oui à moyen terme</th>
+                    <th class="text-center" width="100px">À confirmer</th>
+                    <th class="text-center" width="100px">Sans objet </th>
+                </tr>
+            </thead>
+            <tbody>
+            	{% for competence in form.competencesProfessionnelles %}
+            	<tr>
+            		 <td>
+  						{{ crep.competencesProfessionnelles[loop.index0].libelle }}
+        			 </td>
+
+  					{{ form_widget(competence) }}
+            	</tr>
+            	{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br>
+
+

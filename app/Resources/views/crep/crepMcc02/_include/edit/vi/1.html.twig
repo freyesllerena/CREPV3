@@ -5,19 +5,18 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Année</th>
-                <th>Formation demandée</th>
-                <th>Formation suivie</th>
-                <th>Durée</th>
-                <th>Commentaires (appréciation, bilan, suites)</th>
-                <th width="20px"></th>
+                <th style="width: 10%" class="text-center">Année</th>
+                <th style="width: 50%">Intitulé de la formation</th>
+                <th style="width: 15%" class="text-center">Durée</th>
+                <th style="width: 19%">Commentaires (appréciation, bilan, suites)</th>
+                <th style="width: 6%"></th>
             </tr>
             </thead>
             <tbody>
             <tr>
-            {% for formationSuivie in form.formationsSuivies %}
-                {{ form_widget(formationSuivie) }}
-            {% endfor %}
+                {% for formationSuivie in form.formationsSuivies %}
+                    {{ form_widget(formationSuivie, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+                {% endfor %}
             </tr>
             </tbody>
         </table>
@@ -31,3 +30,5 @@
         </button>
     </div>
 </div>
+
+

@@ -19,12 +19,11 @@ class FormationSuivieType extends AbstractType
     {
         $this->ministere = $options['ministere'];
 
-        $builder
-//            ->add('date', DateType::class, array(
-//                'attr' => ['class' => 'fieldCollection'],
-//                'widget' => 'single_text',
-//                'format' => 'dd/MM/yyyy',
-//            ))
+        $builder->add('date', DateType::class, array(
+            'attr' => ['class' => 'fieldCollection'],
+            'widget' => 'single_text',
+            'format' => 'dd/MM/yyyy',
+        ))
             ->add('annee', null, ['attr' => ['class' => 'fieldCollection']])
             ->add('type', null, ['attr' => ['class' => 'fieldCollection']])
             ->add('libelle', null, ['attr' => ['class' => 'fieldCollection']])

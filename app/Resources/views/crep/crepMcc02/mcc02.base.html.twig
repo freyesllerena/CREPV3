@@ -162,12 +162,28 @@
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h3>Formations suivies (années N-1 et N-2) :</h3>
+                            <h3>1. Formations suivies (années N-1 et N-2) :</h3>
                             {% block vi1 %}
                             {% endblock vi1 %}
-                            <h3>Recueil des besoins de formation (années N et N+1) :</h3>
-                            {% block vi2 %}
-                            {% endblock vi2 %}
+                            <h3>2. Recueil des besoins de formation (années N et N+1) :</h3>
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                <strong>(*): </strong> Porter une croix en cas de réponse positive.
+                                L’agent peut indiquer s’il souhaite utiliser son CPF pour la formation envisagée.
+                                Les formations liées à une adaptation immédiate au poste de travail ne peuvent être imputées sur le CPF.
+                            </p>
+
+                            <h3>2.1. Formations liées à l'adaptation immédiate au poste de travail (T1)</h3>
+                            {% block vi2_1 %}
+                            {% endblock vi2_1 %}
+
+                            <h3>2.2. Formations liées à l’évolution des métiers (T2)</h3>
+                            {% block vi2_2 %}
+                            {% endblock vi2_2 %}
+
+                            <h3>2.3. Formations liées au développement des qualifications ou l’acquisition de nouvelles qualifications (T3)</h3>
+                            {% block vi2_3 %}
+                            {% endblock vi2_3 %}
+
                         </div>
                     </div>
                 </div>

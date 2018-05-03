@@ -6,35 +6,32 @@
             <thead>
             <tr>
                 <th class="text-center">Année</th>
-                <th class="text-center">Formation demandée</th>
+                {#<th class="text-center">Formation demandée</th>#}
                 <th class="text-center">Formation suivie</th>
                 <th class="text-center">Durée</th>
                 <th class="text-center">Commentaires (appréciation, bilan, suites)</th>
             </tr>
             </thead>
             <tbody>
-
-            {#{% if crep.formationsDemandeesAgent is empty %}#}
-            {% for index in 0..2 %}
-                <tr align="left" bgcolor="#FFFFFF">
-                    <td><br></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+            {% if crep.formationsSuivies is empty %}
+                {% for index in 0..2 %}
+                    <tr align="left" bgcolor="#FFFFFF">
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for formation in crep.formationsSuivies %}
+                <tr>
+                    <td>{{ formation.annee | nl2br }}</td>
+                    <td>{{ formation.libelle | nl2br  }}</td>
+                    <td>{{ formation.type | nl2br }}</td>
+                    <td>{{ formation.commentaires | nl2br  }}</td>
                 </tr>
-            {% endfor %}
-            {#{% else %}#}
-            {#{% for objectif in crep.formationsDemandeesAgent %}#}
-            {#<tr>#}
-            {#<td>{{ objectif.libelle | nl2br }}</td>#}
-            {#<td>{{ objectif.echeance | nl2br  }}</td>#}
-            {#<td>{{ objectif.observationsEventuelles | nl2br }}</td>#}
-            {#<td>{{ objectif.indicateurs | nl2br  }}</td>#}
-            {#<td></td>#}
-            {#</tr>#}
-            {#{% endfor %}#}
-            {#{% endif %}#}
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>

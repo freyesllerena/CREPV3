@@ -12,4 +12,4 @@ namespace AppBundle\Repository\CrepRepository\CrepMcc02Repository;
  */
 class CrepMcc02CompetenceRelationRepository extends \Doctrine\ORM\EntityRepository
 {
-}c
+}

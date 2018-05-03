@@ -31,21 +31,9 @@
 {% block _crep_mcc02_formationsSuivies_entry_widget %}
     <tr>
         <td>{{ form_row(form.annee, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td>{{ form_row(form.libelle, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
+        <td>{{ form_row(form.libelle, {'label': false,'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}</td>
         <td>{{ form_row(form.type, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td></td>
         <td>{{ form_row(form.commentaires, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
-    </tr>
-
-
-
-    <tr>
-        <td>{{ form_row(form.annee, {'label':false}) }}</td>
-        <td>
-            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
-        </td>
-        <td>{{ form_row(form.commentaires, {'label':false}) }}</td>
         <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
     </tr>
 {% endblock %}
@@ -94,3 +82,94 @@
     </tr>
 {% endblock %}
 
+{% block _crep_mcc02_formationsT1_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
+        </td>
+
+        <td>
+            {{ form_row(form.demandeeAgent, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.avisShd, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.propositionAh, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.echeance, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mcc02_formationsT2_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
+        </td>
+
+        <td>
+            {{ form_row(form.demandeeAgent, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.avisShd, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.propositionAh, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.cpf, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.echeance, { 'label': false, 'class': 'fieldCollection' }) }}
+        </td>
+
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mcc02_formationsT3_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
+        </td>
+
+        <td>
+            {{ form_row(form.demandeeAgent, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.avisShd, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.propositionAh, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.cpf, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
+        </td>
+
+        <td>
+            {{ form_row(form.echeance, {'label': false, 'class': 'fieldCollection' }) }}
+        </td>
+
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mcc02_competencesProfessionnelles_entry_widget %}
+    {%  for child in form.niveau.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}

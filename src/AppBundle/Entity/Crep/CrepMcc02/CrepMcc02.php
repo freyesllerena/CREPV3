@@ -499,6 +499,12 @@ class CrepMcc02 extends Crep
     protected $competencesDemontrees;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceProfessionnelle", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @Assert\Valid
+     */
+    protected $competencesProfessionnelle;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="text", name="obs_competences_actions")
@@ -661,14 +667,29 @@ class CrepMcc02 extends Crep
      */
     protected $observationsObjectifsPasses;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="ObjectifFuturCollectif", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
-//     * @Assert\Valid
-//     */
-//    protected $objectifsFutursCollectifs;
+    /**
+     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT1", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
+     */
+    protected $formationsT1;
 
+    /**
+     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT2", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
+     */
+    protected $formationsT2;
 
+    /**
+     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT3", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @Assert\Valid
+     */
+    protected $formationsT3;
 
+    /**
+     * @ORM\OneToMany(targetEntity="CrepMcc02CompetenceProfessionnelle", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @Assert\Valid
+     */
+    protected $competencesProfessionnelles;
 
 
 
@@ -679,9 +700,13 @@ class CrepMcc02 extends Crep
         $this->competencesActions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesRelations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesSituations = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->competencesPotentiels = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesRequises = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesDemontrees = new \Doctrine\Common\Collections\ArrayCollection();
         $this->autresObjectifs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formationsT1 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formationsT2 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formationsT3 = new \Doctrine\Common\Collections\ArrayCollection();
 //        $this->objectifsFutursCollectifs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -976,13 +1001,16 @@ class CrepMcc02 extends Crep
         $this->setCorps($agent->getCorps());
         $this->setGrade($agent->getGrade());
         $this->setEchelon($agent->getEchelon());
-        $this->setPrenomShd($agent->getShd()->getPrenom());
-        $defaultNomShd = $agent->getShd()->getNom() ?? $agent->getShd()->getNomNaissance();
-        $this->setNomUsageShd($defaultNomShd);
-        $this->setCorpsShd($agent->getShd()->getCorps());
-        $this->setGradeShd($agent->getShd()->getGrade());
-        $this->setPosteOccupeShd($agent->getShd()->getPosteOccupe());
-        $this->setDateEntreePosteOccupeShd($agent->getShd()->getDateEntreePosteOccupe());
+        $defaultNomShd = null;
+        if ($agent->getShd()) {
+            $this->setPrenomShd($agent->getShd()->getPrenom());
+            $defaultNomShd = $agent->getShd()->getNom() ?? $agent->getShd()->getNomNaissance();
+            $this->setNomUsageShd($defaultNomShd);
+            $this->setCorpsShd($agent->getShd()->getCorps());
+            $this->setGradeShd($agent->getShd()->getGrade());
+            $this->setPosteOccupeShd($agent->getShd()->getPosteOccupe());
+            $this->setDateEntreePosteOccupeShd($agent->getShd()->getDateEntreePosteOccupe());
+        }
         $this->setAffectation($agent->getAffectation());
         $this->setPosteOccupe($agent->getPosteOccupe());
         $this->setDateEntreePoste($agent->getDateEntreePosteOccupe());
@@ -1039,7 +1067,136 @@ class CrepMcc02 extends Crep
         $competenceSituation->setLibelle('Imagination et goût pour l’innovation');
         $this->addCompetencesSituation($competenceSituation);
 
+        // Initialisatiuon des compétences lié au Potentiel d’évolution de l’agent-e
+        $competenceProfessionnelle= new CrepMcc02CompetenceProfessionnelle();
+        $competenceProfessionnelle->setLibelle('Sens de l’intérêt général');
+        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
+        $competenceProfessionnelle = new CrepMcc02CompetenceProfessionnelle();
+        $competenceProfessionnelle->setLibelle('Capacité à développer une vision stratégique et à anticiper');
+        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
+        $competenceProfessionnelle = new CrepMcc02CompetenceProfessionnelle();
+        $competenceProfessionnelle->setLibelle('Ouverture d’esprit et capacité à se remettre en question');
+        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
+        $competenceProfessionnelle = new CrepMcc02CompetenceProfessionnelle();
+        $competenceProfessionnelle->setLibelle('Imagination et goût pour l’innovation');
+        $this->addCompetencesProfessionnelle($competenceProfessionnelle);
+
     }
+
+    /**
+     * Add formationsT1.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1
+     *
+     * @return CrepMcc02
+     */
+    public function addFormationsT1(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1)
+    {
+        $this->formationsT1[] = $formationsT1;
+
+        $formationsT1->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove formationsT1.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1
+     */
+    public function removeFormationsT1(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1)
+    {
+        $this->formationsT1->removeElement($formationsT1);
+
+        $formationsT1->setCrep(null);
+    }
+
+    /**
+     * Get formationsT1.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFormationsT1()
+    {
+        return $this->formationsT1;
+    }
+
+    /**
+     * Add formationsT2.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2
+     *
+     * @return CrepMcc02
+     */
+    public function addFormationsT2(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2)
+    {
+        $this->formationsT2[] = $formationsT2;
+
+        $formationsT2->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove formationsT2.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2
+     */
+    public function removeFormationsT2(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2)
+    {
+        $this->formationsT2->removeElement($formationsT2);
+
+        $formationsT2->setCrep(null);
+    }
+
+    /**
+     * Get formationsT2.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFormationsT2()
+    {
+        return $this->formationsT2;
+    }
+
+    /**
+     * Add formationsT3.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3
+     *
+     * @return CrepMcc02
+     */
+    public function addFormationsT3(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3)
+    {
+        $this->formationsT3[] = $formationsT3;
+
+        $formationsT3->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove formationsT3.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3
+     */
+    public function removeFormationsT3(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3)
+    {
+        $this->formationsT3->removeElement($formationsT3);
+
+        $formationsT3->setCrep(null);
+    }
+
+    /**
+     * Get formationsT3.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFormationsT3()
+    {
+        return $this->formationsT3;
+    }
+
 
     /**
      *
@@ -1053,6 +1210,7 @@ class CrepMcc02 extends Crep
      */
     public function confidentialisationChampsShd()
     {
+        $this->setAppreciationGenerale(null);
     }
 
     /**
@@ -1770,6 +1928,42 @@ class CrepMcc02 extends Crep
         return $this;
     }
 
+    /**
+     * Add competencePotentiel
+     *
+     * @param CrepMcc02CompetencePotentiel $competencePotentiel
+     *
+     * @return CrepMcc02
+     */
+    public function addCompetencesPotentiel(CrepMcc02CompetencePotentiel $competencePotentiel)
+    {
+        $this->competencesPotentiels[] = $competencePotentiel;
+        $competencePotentiel->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove competencePotentiel
+     *
+     * @param CrepMcc02CompetencePotentiel $competencePotentiel
+     */
+    public function removeCompetencesPotentiel(CrepMcc02CompetencePotentiel $competencePotentiel)
+    {
+        $this->$competencePotentiels->removeElement($competencePotentiel);
+        $competencePotentiel->setCrep(null);
+    }
+
+    /**
+     * Get CompetencesPotentiels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompetencesPotentiels()
+    {
+        return $this->competencesPotentiels;
+    }
+
     public function getDateEntreePosteOccupe()
     {
         return $this->dateEntreePosteOccupe;
@@ -1917,6 +2111,7 @@ class CrepMcc02 extends Crep
     public function setAppreciationGenerale($appreciationGenerale)
     {
         $this->appreciationGenerale = $appreciationGenerale;
+
         return $this;
     }
 
@@ -2025,40 +2220,39 @@ class CrepMcc02 extends Crep
         return $this;
     }
 
+    /**
+     * Add competenceProfessionnelle.
+     *
+     * @param CrepMcc02CompetenceProfessionnelle $competencesProfessionnelle
+     *
+     * @return CrepMcc02
+     */
+    public function addCompetencesProfessionnelle(CrepMcc02CompetenceProfessionnelle $competenceProfessionnelle)
+    {
+        $this->competencesProfessionnelles[] = $competenceProfessionnelle;
+        $competenceProfessionnelle->setCrep($this);
 
-//    /**
-//     * Add objectifsFuturCollectif
-//     *
-//     * @param ObjectifFuturCollectif $objectifsFuturCollectif
-//     *
-//     * @return Crep
-//     */
-//    public function addObjectifsFutursCollectif(ObjectifFuturCollectif $objectifsFuturCollectif)
-//    {
-//        $this->objectifsFutursCollectifs[] = $objectifsFuturCollectif;
-//        $objectifsFuturCollectif->setCrep($this);
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove $objectifsFuturCollectif
-//     *
-//     * @param ObjectifFuturCollectif $objectifsFuturCollectif
-//     */
-//    public function removeObjectifsFutursCollectif(ObjectifFuturCollectif $objectifsFuturCollectif)
-//    {
-//        $this->objectifsFutursCollectifs->removeElement($objectifsFuturCollectif);
-//        $objectifsFuturCollectif->setCrep(null);
-//    }
-//
-//    /**
-//     * Get objectifsFutursCollectifs
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getObjectifsFutursCollectifs()
-//    {
-//        return $this->objectifsFutursCollectifs;
-//    }
+        return $this;
+    }
+
+    /**
+     * Remove competenceProfessionnelle.
+     *
+     * @param CrepMcc02CompetenceProfessionnelle $competenceProfessionnelle
+     */
+    public function removeCompetencesProfessionnelle(CrepMcc02CompetenceProfessionnelle $competenceProfessionnelle)
+    {
+        $this->competencesProfessionnelles->removeElement($competenceProfessionnelle);
+        $competenceProfessionnelle->setCrep(null);
+    }
+
+    /**
+     * Get competencesProfessionnelles.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompetencesProfessionnelles()
+    {
+        return $this->competencesProfessionnelles;
+    }
 }

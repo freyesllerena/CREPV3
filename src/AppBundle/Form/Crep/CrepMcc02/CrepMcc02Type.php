@@ -10,6 +10,10 @@ use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceDemontreeType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRelationType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRequiseType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceSituationType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
+use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT1Type;
+use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT2Type;
+use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT3Type;
 use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\FormationSuivieType;
 use AppBundle\Form\ObjectifEvalueType;
@@ -32,10 +36,13 @@ class CrepMcc02Type extends CrepType
         /* @var $crep CrepMcc02 */
         $crep = $builder->getData();
 
-        $options['$echelleObjectifEvalue'] = $crep::$echelleObjectifEvalue;
+        $options['echelleObjectifEvalue'] = $crep::$echelleObjectifEvalue;
         $options['ministere'] = $crep->getAgent()->getCampagnePnc()->getMinistere();
+        $anneeEvaluee = $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee();
 
         parent::buildForm($builder, $options);
+
+        $echelleObjectifEvalue = $options['echelleObjectifEvalue'];
 
         $tableauNotesAgent = [];
         
@@ -102,14 +109,15 @@ class CrepMcc02Type extends CrepType
                     'multiple' => false,
                 ])
             ->add('contexteAnneeEcoulee', null, ['required' => false])
-            ->add('objectifsEvalues',
+            ->add(
+                'objectifsEvalues',
                 CollectionType::class,
                 [
                     'entry_type' => ObjectifEvalueType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'entry_options' => ['echelleObjectifEvalue' => $crep::$echelleObjectifEvalue],
+                    'entry_options' => ['echelleObjectifEvalue' => $echelleObjectifEvalue],
                 ]
             )
             ->add('autresObjectifs',
@@ -259,6 +267,55 @@ class CrepMcc02Type extends CrepType
 
             ->add('affectationShd', null, ['required' => false])
             ->add('posteOccupeShd', null, ['required' => false])
+            ->add(
+                'formationsT1',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02FormationT1Type::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['annee_evaluee' => $anneeEvaluee],
+                ]
+            )
+            ->add(
+                'formationsT2',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02FormationT2Type::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['annee_evaluee' => $anneeEvaluee],
+                ]
+            )
+            ->add(
+                'formationsT3',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02FormationT3Type::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['annee_evaluee' => $anneeEvaluee],
+                ]
+            )
+
+            // VII
+            ->add('appreciationGenerale', null, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false, ])
+            ->add(
+                'competencesProfessionnelles',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02CompetenceType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'by_reference' => false,
+                ]
+            )
+
 
         ;
     }
