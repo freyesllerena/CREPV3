@@ -3,6 +3,7 @@
 namespace AppBundle\Form\Crep\CrepMcc02;
 
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
+use AppBundle\EnumTypes\EnumStatutCrep;
 use AppBundle\Form\AutreObjectifType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceActionType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceDemontreeType;
@@ -49,6 +50,13 @@ class CrepMcc02Type extends CrepType
         for($i=1 ; $i<=20 ; $i++){
         	$tableauNotesAgent[$i.'/20'] = $i;
         }
+
+        $disabled = true;
+
+        if (EnumStatutCrep::SIGNE_SHD == $builder->getData()->getStatut()) {
+            $disabled = false;
+        }
+
 
         $builder
             ->add('nomUsage', null, ['required' => true])
@@ -328,6 +336,23 @@ class CrepMcc02Type extends CrepType
             ])
             ->add('explicationAttributionCia', null, ['attr' => ['maxlength' => '4096'], 'required' => false])
 
+            ->add('propositionAvancement', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => 0,
+                    'Non' => 1,
+                    'Sans objet' => 2,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
+            ->add(
+                'observationsVisaAgent',
+                null,
+                [
+                    'required' => false,
+                    'disabled' => $disabled,
+                ]
+            )
 
         ;
     }

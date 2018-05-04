@@ -27,23 +27,32 @@
     </div>
 </div>
 
-
-
 <br>
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <label class="control-label col-md-7 col-sm-7 col-xs-12" style="text-align:left;">Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</label>
-        <div class="col-md-5 col-sm-5 col-xs-12">
-            {{ form_row(form.attributionCia, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
-        </div>
-    </div>
-</div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th colspan="3" class="text-center">Proposition d’inscription au prochain tableau d’avancement de grade ? </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-center" style="width: 33%">
+                    {{ form_widget(form.propositionAvancement[0], {'label': 'Oui'}) }}
+                </td>
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <label for="crep_mindef_autresActivites" class="pull-left">Avis circonstancié</label>
-        {{ form_row(form.explicationAttributionCia, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
+                <td class="text-center" style="width: 33%">
+                    {{ form_widget(form.propositionAvancement[1], {'label': 'Non'}) }}
+                </td>
+
+                <td class="text-center" style="width: 33%">
+                    {{ form_widget(form.propositionAvancement[2], {'label': 'Sans objet'}) }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

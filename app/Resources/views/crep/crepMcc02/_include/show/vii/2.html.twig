@@ -48,3 +48,35 @@
 </div>
 
 <br>
+
+{% set propositionsAvancement = ['Oui', 'Non', 'Sans objet'] %}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th colspan="3" class="text-center">Proposition d’inscription au prochain tableau d’avancement de grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for index2 in 0..2 %}
+                        <td class="text-center" style="width: 33%">
+                            <label>
+                                <input type="checkbox" class="flat" disabled="disabled"
+                                {% if crep.propositionAvancement is not null and crep.propositionAvancement == index2 %}
+                                    checked="checked"
+                                {% endif %}
+                                >
+                            </label>
+                            {{ propositionsAvancement[index2] }}
+                            <br/>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br>
