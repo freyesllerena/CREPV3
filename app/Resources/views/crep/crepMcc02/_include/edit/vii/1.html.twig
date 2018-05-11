@@ -1,42 +1,18 @@
 {% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
-{# vii 1 #}
-<br>
 
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="text-center" colspan="7">
-                    Appréciation générale sur la valeur professionnelle de l’agent-e
-                    (résultats – compétences – manière de servir)
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tbody>
-            <tr>
-                <td>
-                    {{ form_row(form.appreciationGenerale, {'label': false}) }}
-                </td>
-            </tr>
-            </tbody>
-
-        </table>
+    <label class="col-md-12 col-sm-12 col-xs-12 pull-left">Appréciation générale sur la valeur professionnelle de l’agent-e
+        (résultats – compétences – manière de servir) : </label>
+    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+        {{ form_row(form.appreciationGenerale, { 'label': false}) }}
     </div>
 </div>
 
-<br>
-
+<label>Potentiel d’évolution de l’agent-e</label>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th class="text-center" colspan="5">
-                        Potentiel d’évolution de l’agent-e
-                    </th>
-                </tr>
                 <tr>
                     <th class="text-center">Type d’emploi</th>
                     <th class="text-center">Oui immédiatement</th>
@@ -60,13 +36,9 @@
     </div>
 </div>
 
-<br>
-
 <div class="row">
     <div class="col-md-12">
         <label>Observations : </label>
-        {{ form_widget(form.observationsPotentielEvolutionAgent) }}
+        {{ form_row(form.observationsPotentielEvolutionAgent, {'label': false}) }}
     </div>
 </div>
-
-<br>

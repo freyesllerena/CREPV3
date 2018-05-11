@@ -5,15 +5,15 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Nature des dossiers ou travaux</th>
-                <th>Résultats obtenus par l’agent-e</th>
-                <th>Commentaires</th>
-                <th width="2%"></th>
+                <th class="text-center">Nature des dossiers ou travaux</th>
+                <th class="text-center">Résultats obtenus par l’agent-e</th>
+                <th class="text-center">Commentaires</th>
+                <th width="100px"></th>
             </tr>
             </thead>
             <tbody>
             {% for objectif in form.autresObjectifs %}
-                {{ form_row(objectif) }}
+                {{ form_widget(objectif) }}
             {%  endfor %}
             </tbody>
         </table>
@@ -26,5 +26,3 @@
         </button>
     </div>
 </div>
-
-<br>

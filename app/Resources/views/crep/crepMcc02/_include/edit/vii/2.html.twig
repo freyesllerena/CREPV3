@@ -2,57 +2,26 @@
 <br>
 
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="text-center">Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    {{ form_row(form.attributionCia, { 'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
-                    <br>
-                    <br>
-                    <br>
-                    <label>&nbsp;&nbsp;&nbsp;Avis circonstancié :</label>
-                    {{ form_row(form.explicationAttributionCia, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
-                </td>
-
-            </tr>
-            </tbody>
-
-        </table>
+    <div class="col-md-7 col-sm-7 col-xs-12 pull-left">
+        <label>Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ? </label>
     </div>
+    <div class="col-md-5 col-sm-5 col-xs-12 pull-left">
+        {{ form_row(form.attributionCia, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
+    </div>
+</div>
+
+<div class="row">
+    {{ form_row(form.explicationAttributionCia, { 'label': "Fonctions exercées"}) }}
 </div>
 
 <br>
 
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th colspan="3" class="text-center">Proposition d’inscription au prochain tableau d’avancement de grade ? </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="text-center" style="width: 33%">
-                    {{ form_widget(form.propositionAvancement[0], {'label': 'Oui'}) }}
-                </td>
-
-                <td class="text-center" style="width: 33%">
-                    {{ form_widget(form.propositionAvancement[1], {'label': 'Non'}) }}
-                </td>
-
-                <td class="text-center" style="width: 33%">
-                    {{ form_widget(form.propositionAvancement[2], {'label': 'Sans objet'}) }}
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="col-md-7 col-sm-7 col-xs-12 pull-left">
+        <label>Proposition d’inscription au prochain tableau d’avancement de grade </label>
+    </div>
+    <div class="col-md-5 col-sm-5 col-xs-12 pull-left">
+        {{ form_row(form.propositionAvancement, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
     </div>
 </div>
 

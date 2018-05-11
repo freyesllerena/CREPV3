@@ -1,5 +1,5 @@
 {% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
-{% set listeNiveaux =  crep.competencesActions | allNiveauCompetenceCrepMcc02 %}
+
 <br>
 {# Competences Action #}
 <div class="row">
@@ -7,10 +7,12 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Compétences professionnelles <br><small>(grille à compléter en intégralité)</small></th>
-                {% for key, niveau in listeNiveaux %}
-                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
-                {% endfor %}
+                <th class="text-center">Compétences professionnelles <br><small>(grille à compléter en intégralité)</small></th>
+                <th class="text-center" width="100px">Exceptionnelle*</th>
+                <th class="text-center" width="100px">Forte</th>
+                <th class="text-center" width="100px">Assez forte</th>
+                <th class="text-center" width="100px">À développer</th>
+                <th class="text-center" width="100px">Non observée</th>
             </tr>
             </thead>
             <tbody>
@@ -38,9 +40,11 @@
             <thead>
             <tr>
                 <th class="text-center">Compétences liées à l’action</th>
-                {% for key, niveau in listeNiveaux %}
-                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
-                {% endfor %}
+                <th class="text-center" width="100px">Exceptionnelle*</th>
+                <th class="text-center" width="100px">Forte</th>
+                <th class="text-center" width="100px">Assez forte</th>
+                <th class="text-center" width="100px">À développer</th>
+                <th class="text-center" width="100px">Non observée</th>
             </tr>
             </thead>
             <tbody>
@@ -68,9 +72,11 @@
             <thead>
             <tr>
                 <th class="text-center">Compétences liées à la relation</th>
-                {% for key, niveau in listeNiveaux %}
-                    <th class="text-center" width="100px">{{ key | capitalize }}</th>
-                {% endfor %}
+                <th class="text-center" width="100px">Exceptionnelle*</th>
+                <th class="text-center" width="100px">Forte</th>
+                <th class="text-center" width="100px">Assez forte</th>
+                <th class="text-center" width="100px">À développer</th>
+                <th class="text-center" width="100px">Non observée</th>
             </tr>
             </thead>
             <tbody>

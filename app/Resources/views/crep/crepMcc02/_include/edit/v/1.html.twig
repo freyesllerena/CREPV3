@@ -1,3 +1,5 @@
+{% form_theme form 'crep/crepMcc02/Form/App_form_crepMcc02_12.html.twig' %}
+
 <br>
 <div class="row">
 
@@ -7,7 +9,8 @@
         </div>
 
         <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
-            <input type="checkbox" class="flat pull-right" disabled="disabled"
+            <br>
+            <input id="crep_mcc02_changementPoste" type="checkbox" class="flat pull-right""
                     {% if crep.mobilitePoste and (crep.mobilitePoste.memeService
                         or crep.mobilitePoste.memeMinistere
                         or crep.mobilitePoste.autreMinistere
@@ -15,9 +18,9 @@
                         or crep.mobilitePoste.autreProjet) %}
                 checked="checked"
                     {% endif %}>
-            <label class="control-label">Changement de poste</label>
+            <span>Changement de poste</span>
         </div>
-        <div class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
+        <div id="crep_mcc02_mobilitePoste" class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
             {{ form_widget(form.mobilitePoste) }}
         </div>
         <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
@@ -38,54 +41,34 @@
 </div>
 <br>
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <label class="control-label col-md-6 col-sm-6 col-xs-12" style="text-align:left;">L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilité – carrière ?</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            {{ form_row(form.souhaitEntretienCarriere, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
-        </div>
-    </div>
-</div>
-<br/>
 
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th colspan="7">Observations éventuelles du-de la supérieur hiérarchique direct
-                    sur ces perspectives d’évolution professionnelle</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        {{ form_row(form.observationsShdProjetProfessionnel, { 'label': false}) }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="col-md-6 col-sm-6 col-xs-12 pull-left">
+        <label>L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilité – carrière ?</label>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12 pull-left">
+        {{ form_row(form.souhaitEntretienCarriere, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
     </div>
 </div>
+
 <br>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th colspan="7">Commentaires éventuels de l’agent-e</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        {{ form_row(form.observationsAgentProjetProfessionnel, { 'label': false}) }}
-                    </td>
-                </tr>
-            </tbody>
 
-        </table>
+<div class="row">
+    <label class="col-md-12 col-sm-12 col-xs-12 pull-left">Observations éventuelles du-de la supérieur hiérarchique direct
+        sur ces perspectives d’évolution professionnelle : </label>
+    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+        {{ form_row(form.observationsShdProjetProfessionnel, { 'label': false}) }}
     </div>
 </div>
+
+<br>
+
+<div class="row">
+    <label class="col-md-12 col-sm-12 col-xs-12 pull-left">Commentaires éventuels de l’agent-e : </label>
+    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+        {{ form_row(form.observationsAgentProjetProfessionnel, { 'label': false}) }}
+    </div>
+</div>
+
 
 <br>

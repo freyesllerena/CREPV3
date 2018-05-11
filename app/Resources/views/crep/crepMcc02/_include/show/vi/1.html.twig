@@ -1,13 +1,10 @@
-<br>
-
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th class="text-center">Année</th>
-                {#<th class="text-center">Formation demandée</th>#}
-                <th class="text-center">Formation suivie</th>
+                <th class="text-center">Formation demandée</th>
                 <th class="text-center">Durée</th>
                 <th class="text-center">Commentaires (appréciation, bilan, suites)</th>
             </tr>
@@ -27,7 +24,7 @@
                 <tr>
                     <td>{{ formation.annee | nl2br }}</td>
                     <td>{{ formation.libelle | nl2br  }}</td>
-                    <td>{{ formation.type | nl2br }}</td>
+                    <td>{{ formation.duree | nl2br }}</td>
                     <td>{{ formation.commentaires | nl2br  }}</td>
                 </tr>
                 {% endfor %}
@@ -36,5 +33,3 @@
         </table>
     </div>
 </div>
-
-<br>

@@ -28,7 +28,7 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Corps </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.corps | nl2br }}
+            {{ crep.corps }}
         </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -41,7 +41,7 @@
 
 <div class="row form-group">
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Échelon </label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Échelon</label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
             {{ crep.echelon }}
         </div>
@@ -50,7 +50,7 @@
 
 <div class="row form-group">
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nommé sur un emploi fonctionnel : </label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nommé sur un emploi fonctionnel</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
@@ -59,18 +59,19 @@
             </label> Oui<label class="control-label">&nbsp;</label>
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                       {% if crep.emploiFonctionnel == false %}checked="checked"{% endif %}
+                       {% if crep.emploiFonctionnel is not null and crep.emploiFonctionnel == false %}checked="checked"{% endif %}
                 >
             </label> Non
         </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Si oui, préciser lequel</label>
-        {% if crep.emploiFonctionnel %}
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.libelleEmploiFonctionnel }}
+            {% if crep.emploiFonctionnel %}
+                {{ crep.libelleEmploiFonctionnel }}
+            {% endif %}
         </div>
-        {% endif %}
+
     </div>
 </div>
 
@@ -79,11 +80,12 @@
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Et, le cas échéant, son groupe</label>
-        {% if crep.emploiFonctionnel %}
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.groupeEmploiFonctionnel }}
+            {% if crep.emploiFonctionnel %}
+                {{ crep.groupeEmploiFonctionnel }}
+            {% endif %}
         </div>
-        {% endif %}
+
     </div>
 </div>
 

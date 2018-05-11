@@ -22,14 +22,12 @@
 
 <div class="row">
     {{ form_row(form.emploiFonctionnel, {'label': "Nommé sur un emploi fonctionnel", 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
-</div>
-
-<div class="row">
     {{ form_row(form.libelleEmploiFonctionnel, { 'label': "Si oui, préciser lequel" } ) }}
 </div>
 
 <div class="row">
-        <span>{{ form_row(form.groupeEmploiFonctionnel, { 'label': "Et, le cas échéant, son groupe" } ) }}</span>
+    <dib class="col-md-6 col-sm-6 col-xs-12"></dib>
+    {{ form_row(form.groupeEmploiFonctionnel, { 'label': "Et, le cas échéant, son groupe" } ) }}
 </div>
 
 <br>

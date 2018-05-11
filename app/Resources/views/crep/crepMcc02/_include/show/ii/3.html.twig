@@ -5,25 +5,23 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Objectifs</th>
-                <th>Réalisation</th>
-                <th>Commentaires</th>
+                <th class="text-center">Objectifs</th>
+                <th class="text-center" width="180px">Réalisation</th>
+                <th class="text-center">Commentaires</th>
             </tr>
             </thead>
             <tbody>
             {% if crep.objectifsEvalues.toArray() == null %}
-                {% for index in 0..2 %}
                     <tr>
                         <td></td>
                         <td>
                             <i class="fa fa-square-o"></i> Atteint <br>
                             <i class="fa fa-square-o"></i> Partiellement atteint <br>
                             <i class="fa fa-square-o"></i> Non atteint <br>
-                            <i class="fa fa-square-o"></i> Devenu sans Objet <br>
+                            <i class="fa fa-square-o"></i> Devenu sans objet <br>
                         </td>
                         <td></td>
                     </tr>
-                {% endfor %}
             {% else %}
                 {% for objectif in crep.objectifsEvalues %}
                     <tr>
@@ -33,22 +31,22 @@
                                 <i class="fa fa-check-square-o"></i> Atteint <br>
                                 <i class="fa fa-square-o"></i> Partiellement atteint <br>
                                 <i class="fa fa-square-o"></i> Non atteint <br>
-                                <i class="fa fa-square-o"></i> Devenu sans Objet <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
                             {% elseif objectif.resultatObtenu == 1 %}
                                 <i class="fa fa-square-o"></i> Atteint <br>
                                 <i class="fa fa-check-square-o"></i> Partiellement atteint <br>
                                 <i class="fa fa-square-o"></i> Non atteint <br>
-                                <i class="fa fa-square-o"></i> Devenu sans Objet <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
                             {% elseif objectif.resultatObtenu == 2 %}
                                 <i class="fa fa-square-o"></i> Atteint <br>
                                 <i class="fa fa-square-o"></i> Partiellement atteint <br>
                                 <i class="fa fa-check-square-o"></i> Non atteint <br>
-                                <i class="fa fa-square-o"></i> Devenu sans Objet <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
                             {% elseif objectif.resultatObtenu == 3 %}
                                 <i class="fa fa-square-o"></i> Atteint <br>
                                 <i class="fa fa-square-o"></i> Partiellement atteint <br>
                                 <i class="fa fa-square-o"></i> Non atteint <br>
-                                <i class="fa fa-check-square-o"></i> Devenu sans Objet <br>
+                                <i class="fa fa-check-square-o"></i> Devenu sans objet <br>
                             {% endif %}
 
                         </td>
@@ -60,5 +58,3 @@
         </table>
     </div>
 </div>
-
-<br/>

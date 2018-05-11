@@ -1,15 +1,20 @@
 <br/>
 
+
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-6">
-        <label>Nom : </label>
-        <span>
-            {% if crep.dateVisaAh and crep.agent and crep.agent.ah %}
-                {{ crep.ahSignataire | identite }}
-            {% endif %}
-        </span>
+        <dl class="dl-horizontal m-t-md">
+            <dt>Nom</dt>
+            <dd>
+                {% if crep.ahSignataire %}
+                    {{ crep.ahSignataire | identite }}
+                {% endif %}
+            </dd>
+        </dl>
     </div>
+
 </div>
+
 
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-6">

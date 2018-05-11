@@ -39,19 +39,19 @@
 {% endblock %}
 
 {% block _crep_mcc02_competencesActions_entry_widget %}
-    {%  for child in form.niveau.children %}
+    {%  for child in form.niveauAcquis.children %}
         <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
     {% endfor %}
 {% endblock %}
 
 {% block _crep_mcc02_competencesRelations_entry_widget %}
-    {%  for child in form.niveau.children %}
+    {%  for child in form.niveauAcquis.children %}
         <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
     {% endfor %}
 {% endblock %}
 
 {% block _crep_mcc02_competencesSituations_entry_widget %}
-    {%  for child in form.niveau.children %}
+    {%  for child in form.niveauAcquis.children %}
         <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
     {% endfor %}
 {% endblock %}
@@ -61,7 +61,7 @@
         <td>
             {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}
         </td>
-        {%  for child in form.niveau.children %}
+        {%  for child in form.niveauAcquis.children %}
             <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}</td>
         {% endfor %}
 
@@ -74,7 +74,7 @@
         <td>
             {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}
         </td>
-        {%  for child in form.niveau.children %}
+        {%  for child in form.niveauAcquis.children %}
             <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}</td>
         {% endfor %}
 
@@ -170,7 +170,7 @@
 
 
 {% block _crep_mcc02_potentielsEvolutions_entry_widget %}
-        {%  for child in form.niveau.children %}
+        {%  for child in form.niveauAcquis.children %}
             <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}</td>
         {% endfor %}
 {% endblock %}

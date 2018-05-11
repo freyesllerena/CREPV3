@@ -1,21 +1,17 @@
-<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+        <label>Renvoi à un document annexe (lettre de mission ou d’objectifs) </label>
 
-<div class="row form-group">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <label class="control-label col-md-6 col-sm-6 col-xs-12" style="text-align:left;">Renvoi à un document annexe (lettre de mission ou d’objectifs) : </label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.docAnnexeBilan %}checked="checked"{% endif %}
-                >
-            </label> Oui<label class="control-label">&nbsp;</label>
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.docAnnexeBilan is not null and not crep.docAnnexeBilan %}checked="checked"{% endif %}
-                >
-            </label> Non
-        </div>
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.docAnnexeBilan %}checked="checked"{% endif %}
+            >
+        </label> Oui
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.docAnnexeBilan is not null and not crep.docAnnexeBilan %}checked="checked"{% endif %}
+            >
+        </label> Non
     </div>
 </div>
-
-<br/>
+<br>

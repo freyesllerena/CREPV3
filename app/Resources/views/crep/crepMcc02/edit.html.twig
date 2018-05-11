@@ -101,13 +101,25 @@
     {% include 'crep/crepMcc02/_include/edit/vii/2.html.twig' %}
 {% endblock vii2 %}
 
+{% block vii3 %}
+    {% include 'crep/crepMcc02/_include/edit/vii/3.html.twig' %}
+{% endblock vii3 %}
+
 {% block viii1 %}
     {% include 'crep/crepMcc02/_include/edit/viii/1.html.twig' %}
 {% endblock viii1 %}
 
-{#{% block circuitDeValidation %}#}
-{#{% endblock circuitDeValidation %}#}
+{% block viii2 %}
+    {% include 'crep/crepMcc02/_include/edit/viii/2.html.twig' %}
+{% endblock viii2 %}
 
+{% block viii3 %}
+    {% include 'crep/crepMcc02/_include/edit/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+{% block viii4 %}
+    {% include 'crep/crepMcc02/_include/edit/viii/4.html.twig' %}
+{% endblock viii4 %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -116,10 +128,170 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
-            // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
+
+
             var crepCollections = new Crep.Collections();
+            // 0 Emploi fonctionnel
+            var libelleEmploiFonctionnel = $("#crep_mcc02_libelleEmploiFonctionnel");
+            var groupeEmploiFonctionnel = $("#crep_mcc02_groupeEmploiFonctionnel");
+
+            isCacheBloc(libelleEmploiFonctionnel, groupeEmploiFonctionnel);
+
+            if ($("#crep_mcc02_emploiFonctionnel_0") && $("#crep_mcc02_emploiFonctionnel_1")) {
+                if ($("#crep_mcc02_emploiFonctionnel_0").attr('checked')) {
+                    isCacheBloc(libelleEmploiFonctionnel, groupeEmploiFonctionnel, false);
+                }
+            }
+
+            $("#crep_mcc02_emploiFonctionnel_0").on('ifChanged', function(){
+                isCacheBloc(libelleEmploiFonctionnel, groupeEmploiFonctionnel, false);
+            });
+
+            $("#crep_mcc02_emploiFonctionnel_1").on('ifChanged', function(){
+                isCacheBloc(libelleEmploiFonctionnel, groupeEmploiFonctionnel);
+            });
+
+            // I Fiche de poste
+            var pointsActualisesFichePoste = $("#crep_mcc02_pointsActualisesFichePoste");
+            isCacheBloc(pointsActualisesFichePoste);
+
+            if ($("#crep_mcc02_fichePosteAdaptee_0") && $("#crep_mcc02_fichePosteAdaptee_1")) {
+                if ($("#crep_mcc02_fichePosteAdaptee_0").attr('checked')) {
+                    isCacheBloc(pointsActualisesFichePoste);
+                }
+            }
+
+            $("#crep_mcc02_fichePosteAdaptee_0").on('ifChanged', function(){
+                isCacheBloc(pointsActualisesFichePoste);
+            });
+
+            $("#crep_mcc02_fichePosteAdaptee_1").on('ifChanged', function(){
+                isCacheBloc(pointsActualisesFichePoste, false, false);
+            });
         });
+
+        //Fonction permettant de cacher ou non un bloc selon un choix de button radio
+        function isCacheBloc(id1, id2 = false, isHide = true){
+            var label1 = id1.parent().parent().find('label');
+            if (id2) {
+                var label2 = id2.parent().parent().find('label');
+            }
+
+            if (isHide) {
+                label1.hide();
+                id1.hide();
+                if (id2) {
+                    label2.hide();
+                    id2.hide();
+                }
+            }else {
+                label1.show();
+                id1.show();
+                if (id2) {
+                    label2.show();
+                    id2.show();
+                }
+            }
+        }
+
+
+        // checkbox parent
+        jQuery('#crep_mcc02_changementPoste').on('ifChanged', function() {
+
+
+            var allItems = jQuery('#crep_mcc02_mobilitePoste').find(':checkbox').first().siblings();
+            var aItems = [];
+            var listeId = [];
+            allItems.each(function()
+            {
+                listeCheckbox = allItems.find(':checkbox').first().siblings();
+                aItems = listeCheckbox.prevObject.prevObject.prevObject.prevObject.prevObject;
+            });
+
+            if (jQuery(this).is(':checked')) {
+                for (var i = 0; i < aItems.length; i++) {
+                    jQuery(  '#' + aItems[i].id  ).parent().addClass('checked');
+
+                }
+            } else {
+                for (var i = 0; i < aItems.length; i++) {
+                    jQuery(  '#' + aItems[i].id  ).parent().removeClass('checked');
+                }
+            }
+        });
+
+
+        // memeService
+        eventOnCheckbowChild("crep_mcc02_mobilitePoste_memeService",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
+        // memeMinistere
+        eventOnCheckbowChild("crep_mcc02_mobilitePoste_memeMinistere",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
+        // autreMinistere
+        eventOnCheckbowChild("crep_mcc02_mobilitePoste_autreMinistere",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
+        // autreFonctionPublique
+        eventOnCheckbowChild("crep_mcc02_mobilitePoste_autreFonctionPublique",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
+        // autreProjet
+        eventOnCheckbowChild("crep_mcc02_mobilitePoste_autreProjet",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
+
+
+
+        /**
+         *
+         * @param aItems
+         * @returns {boolean}
+         */
+        function isCheckboxChecked(aItems) {
+            var statutParentCheckbox = true;
+            for (var i = 0; i < aItems.length; i++) {
+                var htmlData = jQuery(  '#' + aItems[i].id  );
+                var isChecked = htmlData.find('input');
+
+                statusCheckbox = isChecked.prevObject[0].checked;
+                if (statusCheckbox === false) {
+                    statutParentCheckbox = false;
+                }
+            }
+
+            return statutParentCheckbox;
+        }
+
+        /**
+         *
+         * @param childID
+         * @param divChildID
+         * @param parentID
+         */
+        function eventOnCheckbowChild(childID,  divChildID, parentID) {
+            jQuery('#'+childID).on('ifChanged', function() {
+                var allItems = jQuery('#'+divChildID).find(':checkbox').first().siblings();
+                var aItems = [];
+                allItems.each(function() {
+                    listeCheckbox = allItems.find(':checkbox').first().siblings();
+                    aItems = listeCheckbox.prevObject.prevObject.prevObject.prevObject.prevObject;
+                });
+                // control statut sur tous les checkboxs
+                var parentStatut = isCheckboxChecked(aItems);
+
+                if (jQuery(this).is(':checked')) {
+                    var isChecked = true;
+                    for (var i = 0; i < aItems.length; i++) {
+                        if (childID === aItems[i].id) {
+                            jQuery(  '#' + aItems[i].id  ).parent().addClass('checked');
+                            if (parentStatut) {
+                                jQuery('#'+parentID).parent().addClass('checked');
+                            }
+                        }
+                    }
+
+                } else {
+                    for (var i = 0; i < aItems.length; i++) {
+                        if (childID === aItems[i].id) {
+                            jQuery(  '#' + aItems[i].id  ).parent().removeClass('checked');
+                            jQuery('#'+parentID).parent().removeClass('checked');
+                        }
+                    }
+                }
+            });
+        }
 
     </script>
 {% endblock javascripts %}

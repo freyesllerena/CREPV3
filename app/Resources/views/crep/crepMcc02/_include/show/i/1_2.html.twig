@@ -1,0 +1,50 @@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>Fonctions exercées</dt>
+            <dd class="well well-xs">
+                {{ crep.fonctionsExercees }}
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>Environnement professionnel dans lequel s’exercent les fonctions</dt>
+            <dd class="well well-xs">
+                {{ crep.groupeFonctions }}
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+        <label>La fiche de poste est-elle adaptée ? </label>
+
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                {% if crep.fichePosteAdaptee == true %}checked="checked"{% endif %}
+            >
+        </label> Oui
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.fichePosteAdaptee is not null and crep.fichePosteAdaptee == false %}checked="checked"{% endif %}
+            >
+        </label> Non
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>si non, sur quels points doit-elle être actualisée ?</dt>
+            <dd class="well well-xs">
+                {{ crep.pointsActualisesFichePoste }}
+            </dd>
+        </dl>
+    </div>
+</div>

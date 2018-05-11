@@ -1,0 +1,17 @@
+{% extends "crep/crepMcc02/show.html.twig" %}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block viii1 %}
+	{% include 'crep/crepMcc02/_include/edit/viii/1.html.twig' %}
+{% endblock viii1 %}
+
+{% block content %}
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+	    {{ parent() }}
+	    {{ block('bouton_enregistrer') }}
+	    {{ form_widget(form._token) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+

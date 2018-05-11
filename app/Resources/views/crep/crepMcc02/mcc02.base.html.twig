@@ -3,13 +3,13 @@
 {% block content %}
 
     <div class="crep">
+
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h2>IDENTIFICATION DES PARTIES PRENANTES</h2>
-
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
@@ -18,12 +18,9 @@
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3>1. Identification de l’agent </h3>
-
                             {% block i01 %}
                             {% endblock i01 %}
-
                             <h3>2. Identification de l'évaluateur</h3>
-
                             {% block i02 %}
                             {% endblock i02 %}
                         </div>
@@ -38,13 +35,11 @@
                     <div class="x_title row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h2>I - DESCRIPTION DU POSTE ET DES FONCTIONS EXERCÉES </h2>
-
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
                         </div>
                     </div>
-
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             {% block i1 %}
@@ -62,9 +57,13 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
-                    <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>II - BILAN DE L’ANNEE ECOULÉE</h2>
-                        <div class="clearfix"></div>
+                    <div class="x_title row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2>II - BILAN DE L’ANNEE ECOULÉE</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -77,7 +76,7 @@
                             <h3>3. Bilan et réalisation des objectifs de l’année écoulée</h3>
                             {% block ii3 %}
                             {% endblock ii3 %}
-                            <h3>4. Autres dossiers ou travaux sur lesquels l’agent s’est investi en cours d’année</h3>
+                            <h3>4. Autres dossiers ou travaux sur lesquels l’agent-e s’est investi-e en cours d’année</h3>
                             {% block ii4 %}
                             {% endblock ii4 %}
                         </div>
@@ -89,9 +88,13 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
-                    <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>III - OBJECTIFS DE L’AGENT-E POUR L’ANNÉE : 2018</h2>
-                        <div class="clearfix"></div>
+                    <div class="x_title row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2>III - OBJECTIFS DE L’AGENT-E POUR L’ANNÉE : {{ crep.agent.campagnePnc.anneeEvaluee }}</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -114,9 +117,13 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
-                    <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>IV - EXPÉRIENCE PROFESSIONNELLE : ÉVALUATION DES ACQUIS</h2>
-                        <div class="clearfix"></div>
+                    <div class="x_title row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2>IV - EXPÉRIENCE PROFESSIONNELLE : ÉVALUATION DES ACQUIS</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -136,14 +143,16 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
-                    <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>V - PERSPECTIVES D’ÉVOLUTION PROFESSIONNELLE DE L’AGENT-E</h2>
-                        <div class="clearfix"></div>
+                    <div class="x_title row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2>V - PERSPECTIVES D’ÉVOLUTION PROFESSIONNELLE DE L’AGENT-E</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            {#{% block v1 %}#}
-                            {#{% endblock v1 %}#}
                             <h3>Souhaits d’évolution professionnelle de l’agent-e :</h3>
                             {% block v1 %}
                             {% endblock v1 %}
@@ -156,9 +165,13 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
-                    <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>VI - BESOINS DE FORMATION</h2>
-                        <div class="clearfix"></div>
+                    <div class="x_title row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2>VI - BESOINS DE FORMATION</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -166,24 +179,20 @@
                             {% block vi1 %}
                             {% endblock vi1 %}
                             <h3>2. Recueil des besoins de formation (années N et N+1) :</h3>
-                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                <strong>(*): </strong> Porter une croix en cas de réponse positive.
-                                L’agent peut indiquer s’il souhaite utiliser son CPF pour la formation envisagée.
-                                Les formations liées à une adaptation immédiate au poste de travail ne peuvent être imputées sur le CPF.
-                            </p>
-
                             <h3>2.1. Formations liées à l'adaptation immédiate au poste de travail (T1)</h3>
                             {% block vi2_1 %}
                             {% endblock vi2_1 %}
-
                             <h3>2.2. Formations liées à l’évolution des métiers (T2)</h3>
                             {% block vi2_2 %}
                             {% endblock vi2_2 %}
-
                             <h3>2.3. Formations liées au développement des qualifications ou l’acquisition de nouvelles qualifications (T3)</h3>
                             {% block vi2_3 %}
                             {% endblock vi2_3 %}
-
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                <sup>(1) </sup>Porter une coche en cas de réponse positive.<br>
+                                <sup>(2) </sup>L’agent peut indiquer s’il souhaite utiliser son CPF pour la formation envisagée.
+                                Les formations liées à une adaptation immédiate au poste de travail ne peuvent être imputées sur le CPF.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -193,9 +202,14 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
-                    <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>VII - APPRÉCIATIONS GÉNÉRALES </h2>
-                        <div class="clearfix"></div>
+                    <div class="x_title row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2>VII - APPRÉCIATIONS GÉNÉRALES</h2>
+
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -217,9 +231,13 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
-                    <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>VIII - NOTIFICATION DU COMPTE RENDU DE L’ENTRETIEN PROFESSIONNEL</h2>
-                        <div class="clearfix"></div>
+                    <div class="x_title row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2>VIII - NOTIFICATION DU COMPTE RENDU DE L’ENTRETIEN PROFESSIONNEL</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -228,9 +246,11 @@
                             <h3>Visa et observations éventuelles de l’autorité hiérarchique (N+2) :</h3>
                             {% block viii2 %}
                             {% endblock viii2 %}
-                            <h3>Signature de l’agent-e :</h3>
                             {% block viii3 %}
                             {% endblock viii3 %}
+                            <h3>Signature de l’agent-e :</h3>
+                            {% block viii4 %}
+                            {% endblock viii4 %}
                         </div>
                     </div>
                 </div>
@@ -238,7 +258,6 @@
         </div>
 
     </div>
-
 
 {% endblock content %}
 

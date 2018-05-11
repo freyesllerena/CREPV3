@@ -45,15 +45,18 @@
     </div>
 </div>
 <br>
+
 <div class="row">
-    <div class="col-md-12">
-        <label>Description du projet (préciser les échéances) : </label>
-        <div class="well well-xs">
-            <span>{{ crep.evolutionProfessionnelleEnvisagee }}</span>
-        </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>Description du projet (préciser les échéances)</dt>
+            <dd class="well well-xs">
+                {{ crep.evolutionProfessionnelleEnvisagee }}
+            </dd>
+        </dl>
     </div>
 </div>
-<br>
+
 <div class="row">
     <div class="col-md-12">
         <label class="control-label">L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilité – carrière ?</label>&nbsp;&nbsp;
@@ -72,47 +75,22 @@
 <br>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th colspan="7">Observations éventuelles du-de la supérieur hiérarchique direct
-                    sur ces perspectives d’évolution professionnelle</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    {% if crep.observationsShdProjetProfessionnel  %}
-                    <td>{{ crep.observationsShdProjetProfessionnel }}</td>
-                    {% else %}
-                        <td><br><br><br></td>
-                    {% endif %}
-                </tr>
-            </tbody>
-
-        </table>
+        <dl class="m-t-md">
+            <dt>Observations éventuelles du-de la supérieur hiérarchique direct sur ces perspectives d’évolution professionnelle</dt>
+            <dd class="well well-xs">
+                {{ crep.observationsShdProjetProfessionnel }}
+            </dd>
+        </dl>
     </div>
 </div>
-<br>
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th colspan="7">Commentaires éventuels de l’agent-e</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    {% if crep.observationsAgentProjetProfessionnel  %}
-                        <td>{{ crep.observationsAgentProjetProfessionnel }}</td>
-                    {% else %}
-                        <td><br><br><br></td>
-                    {% endif %}
-                </tr>
-            </tbody>
-
-        </table>
+        <dl class="m-t-md">
+            <dt>Commentaires éventuels de l’agent-e</dt>
+            <dd class="well well-xs">
+                {{ crep.observationsAgentProjetProfessionnel }}
+            </dd>
+        </dl>
     </div>
 </div>
-
-<br>

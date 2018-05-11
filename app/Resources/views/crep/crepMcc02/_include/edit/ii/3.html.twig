@@ -5,15 +5,15 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Objectifs</th>
-                <th>Réalisation</th>
-                <th>Commentaires</th>
-                <th width="2%"></th>
+                <th class="text-center">Objectifs</th>
+                <th class="text-center" width="180px">Réalisation</th>
+                <th class="text-center">Commentaires</th>
+                <th width="100px"><br></th>
             </tr>
             </thead>
             <tbody>
             {% for objectif in form.objectifsEvalues %}
-                {{ form_row(objectif) }}
+                {{ form_widget(objectif) }}
             {%  endfor %}
             </tbody>
         </table>
