@@ -1,14 +1,14 @@
 <?php
 
-namespace AppBundle\Form\Crep\CrepMcc02\Competences;
+namespace AppBundle\Form\Crep\CrepMcc02;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class CrepMcc02CompetenceActionType extends AbstractType
+
+class CrepMcc02AhType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,11 +17,7 @@ class CrepMcc02CompetenceActionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('niveauAcquis', ChoiceType::class, [
-                'choices' => CrepMcc02::$niveauCompetence,
-                'expanded' => true,
-                'multiple' => false,
-            ])
+            ->add('observationsAh', TextareaType::class, ['required' => false])
         ;
     }
 
@@ -31,7 +27,11 @@ class CrepMcc02CompetenceActionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceAction',
+            'data_class' => 'AppBundle\Entity\Crep\CrepMcc02\CrepMcc02',
+            'echelleObjectifEvalue' => null,
+            'echelleNiveauSame' => null,
+            'ministere' => null,
+            'selectTypologieFormation' => null,
         ));
     }
 }

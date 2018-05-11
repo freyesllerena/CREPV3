@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CrepMcc02AutreObjectif extends ObjectifEvalueParent
 {
     /**
-     * @ORM\ManyToOne(targetEntity="CrepMcc02", inversedBy="objectifsEvalues")
+     * @ORM\ManyToOne(targetEntity="CrepMcc02", inversedBy="autresObjectifs")
      */
     protected $crep;
 

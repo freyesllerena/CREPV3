@@ -7,7 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Competence.
  *
- * @ORM\MappedSuperclass
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AppBundle\Repository\CompetenceRepository\")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  */
 abstract class Competence extends GenericEntity
 {
@@ -21,7 +22,7 @@ abstract class Competence extends GenericEntity
     /**
      * @var int
      *
-     * @ORM\Column(name="niveauAcquis", type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $niveauAcquis;
 

@@ -18,7 +18,7 @@ class CrepMcc02CompetenceDemontreeType extends AbstractType
     {
         $builder
             ->add('libelle')
-            ->add('niveau', ChoiceType::class, [
+            ->add('niveauAcquis', ChoiceType::class, [
                 'choices' => CrepMcc02::$niveauCompetence,
                 'expanded' => true,
                 'multiple' => false,

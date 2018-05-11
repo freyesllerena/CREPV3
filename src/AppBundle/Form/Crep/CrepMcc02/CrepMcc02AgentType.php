@@ -10,13 +10,14 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use AppBundle\Form\CrepType;
+//use AppBundle\Form\CrepType;
+use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\ObjectifEvalueType;
-use AppBundle\Form\Crep\CrepMj01\Competences\CrepMj01CompetenceType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use AppBundle\Form\Crep\CrepMj01\Formations\CrepMj01FormationSuivieType;
-use AppBundle\Form\Crep\CrepMj01\Formations\CrepMj01FormationSolliciteeType;
-use AppBundle\Form\Crep\CrepMj01\Formations\CrepMj01FormationEnvisageeType;
+use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationSuivieType;
+//use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationSolliciteeType;
+//use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationEnvisageeType;
 
 
 class CrepMcc02AgentType extends AbstractType
@@ -30,8 +31,8 @@ class CrepMcc02AgentType extends AbstractType
         $builder
             ->add('observationsAgentObjectifsEvalues', TextareaType::class, ['required' => false])
             ->add('observationsVisaAgent', TextareaType::class, ['required' => false])
-			->add('observationsAgentDeroulementEntretien', TextareaType::class, ['required' => false])
-			->add('observationsAgentAppreciationsPortees', TextareaType::class, ['required' => false])            
+//			->add('observationsAgentDeroulementEntretien', TextareaType::class, ['required' => false])
+//			->add('observationsAgentAppreciationsPortees', TextareaType::class, ['required' => false])
         ;
     }
 
@@ -41,7 +42,7 @@ class CrepMcc02AgentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Crep\CrepMj01\CrepMj01',
+            'data_class' => 'AppBundle\Entity\Crep\CrepMcc02\CrepMcc02',
             'echelleObjectifEvalue' => null,
             'echelleNiveauSame' => null,
             'ministere'=> null,

@@ -12,6 +12,7 @@ use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRequiseType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceSituationType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02PotentielEvolutionType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
+use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationSuivieType;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT1Type;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT2Type;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT3Type;
@@ -241,10 +242,11 @@ class CrepMcc02Type extends CrepType
             ->add('formationsSuivies',
                 CollectionType::class,
                 [
-                    'entry_type' => FormationSuivieType::class,
+                    'entry_type' => CrepMcc02FormationSuivieType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
+                    'entry_options' => ['annee_evaluee' => $anneeEvaluee]
                 ]
             )
             ->add('dateEntreePoste',
@@ -345,15 +347,6 @@ class CrepMcc02Type extends CrepType
                 'expanded' => true,
                 'multiple' => false,
             ])
-            ->add(
-                'observationsVisaAgent',
-                null,
-                [
-                    'required' => false,
-                    'disabled' => $disabled,
-                ]
-            )
-
         ;
     }
 

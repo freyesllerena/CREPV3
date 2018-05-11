@@ -17,7 +17,7 @@ class CrepMcc02PotentielEvolutionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('niveau', ChoiceType::class, [
+            ->add('niveauAcquis', ChoiceType::class, [
                 'choices' => CrepMcc02::$niveauPotentielEvolution,
                 'expanded' => true,
                 'label' => false,

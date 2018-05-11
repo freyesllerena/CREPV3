@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
+use AppBundle\Entity\Competence;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\GenericEntity;
 
@@ -10,7 +11,7 @@ use AppBundle\Entity\GenericEntity;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02CompetenceDemontreeRepository")
  */
-class CrepMcc02CompetenceDemontree extends CrepMcc02Competence
+class CrepMcc02CompetenceDemontree extends Competence
 {
   
     /**

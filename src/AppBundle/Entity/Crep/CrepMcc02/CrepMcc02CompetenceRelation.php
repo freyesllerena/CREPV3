@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
+use AppBundle\Entity\Competence;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\CompetenceTransverse;
 use AppBundle\Entity\GenericEntity;
@@ -11,7 +12,7 @@ use AppBundle\Entity\GenericEntity;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02CompetenceRelationRepository")
  */
-class CrepMcc02CompetenceRelation extends CrepMcc02Competence
+class CrepMcc02CompetenceRelation extends Competence
 {
 
     /**

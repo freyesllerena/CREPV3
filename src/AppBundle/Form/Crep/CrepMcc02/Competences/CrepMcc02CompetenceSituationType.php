@@ -17,7 +17,7 @@ class CrepMcc02CompetenceSituationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('niveau', ChoiceType::class, [
+            ->add('niveauAcquis', ChoiceType::class, [
                 'choices' => CrepMcc02::$niveauCompetence,
                 'expanded' => true,
                 'multiple' => false,

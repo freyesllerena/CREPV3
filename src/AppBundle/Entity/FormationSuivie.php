@@ -67,6 +67,19 @@ class FormationSuivie extends GenericEntity
     protected $annee;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type = "float", nullable = true)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 1000,
+     *      minMessage = "Durée de formation trop petite",
+     *      maxMessage = "Durée de formation trop grande",
+     *      invalidMessage= "La durée de formation doit être positive avec un 'point' pour les valeurs décimales" )
+     */
+    private $duree;
+
+    /**
      * Set date.
      *
      * @param \DateTime $date
@@ -208,5 +221,29 @@ class FormationSuivie extends GenericEntity
         $this->annee = $annee;
 
         return $this;
+    }
+
+    /**
+     * Set duree.
+     *
+     * @param int $duree
+     *
+     * @return Formation
+     */
+    public function setDuree($duree)
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    /**
+     * Get duree.
+     *
+     * @return int
+     */
+    public function getDuree()
+    {
+        return $this->duree;
     }
 }

@@ -12,6 +12,7 @@ use AppBundle\Entity\Crep\CrepAc\CrepAc;
 use AppBundle\Entity\Crep\CrepMcc\CrepMcc;
 use AppBundle\Entity\Crep\CrepMso3\CrepMso3;
 use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
+use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 
 class AppPdf extends TCPDF
 {
@@ -87,7 +88,21 @@ class AppPdf extends TCPDF
 	                    		  		</tr>
             	         			</table>
 	    						</small>';
-        } else {
+        } elseif ($crep instanceof CrepMcc02) {
+            $this->footer = '	<small>
+    								<table>
+	                    		  		<tr>
+	                    		  		<!--
+	    						  			<td style="width:20%">NOM : '.$crep->getNomUsage().'</td>
+	    						  			<td style="width:20%">PRÉNOM : '.$crep->getPrenom().'</td>
+	    						  			<td style="width:40%">CORPS : '.$crep->getCorps().'</td>
+	    						  			-->
+	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+	                    		  		</tr>
+            	         			</table>
+	    						</small>';
+        }
+        else {
             $this->footer = ' <font color="red">Footer à définir dans AppBundle\Util\AppPdf.php</font>';
         }
     }
@@ -139,6 +154,8 @@ class AppPdf extends TCPDF
             $this->header = '<strong>ANNEXE 2</strong> 
         						 &nbsp;&nbsp;&nbsp;
 								 <small>APPRECIATION DE LA VALEUR PROFESSIONNELLE '.$crep->getAgent()->getCampagnePnc()->getAnneeEvaluee().'</small>';
+        } elseif ($crep instanceof CrepMcc02) {
+            $this->header = '<strong>Ministère de la culture</strong>';
         } else {
             $this->header = ' <font color="red">Header à définir dans AppBundle\Util\AppPdf.php</font>';
         }

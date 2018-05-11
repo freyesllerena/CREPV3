@@ -3,6 +3,8 @@
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
 use AppBundle\Entity\MobiliteGeographique;
+use AppBundle\Entity\ObjectifEvalue;
+use AppBundle\Entity\ObjectifFutur;
 use AppBundle\Util\Converter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -41,6 +43,7 @@ class CrepMcc02 extends Crep
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message = "Nom obligatoire")
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -264,6 +267,7 @@ class CrepMcc02 extends Crep
      */
     protected $noteAgent;
 
+
     /**
      * @var string
      *
@@ -314,6 +318,13 @@ class CrepMcc02 extends Crep
      *
      * @ORM\Column(type="date")
      * @Assert\Date(message = "Date d'entrée dans le poste non valide")
+     *
+     * @Assert\Range(
+     *      min = "1900-01-01",
+     *      max = "2999-12-31",
+     *      minMessage = "Date non valide",
+     *      maxMessage = "Date non valide"
+     * )
      */
     protected $dateEntreePosteOccupeShd;
 
@@ -394,7 +405,7 @@ class CrepMcc02 extends Crep
     protected $docAnnexeBilan;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02AutreObjectif", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02AutreObjectif", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
@@ -476,31 +487,31 @@ class CrepMcc02 extends Crep
     protected $contexteObjectifsAvenir;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceAction", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceAction", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid
      */
     protected $competencesActions;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceRelation", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceRelation", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid
      */
     protected $competencesRelations;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid
      */
     protected $competencesSituations;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceRequise", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceRequise", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid
      */
     protected $competencesRequises;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceDemontree", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceDemontree", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid
      */
     protected $competencesDemontrees;
@@ -669,25 +680,25 @@ class CrepMcc02 extends Crep
     protected $observationsObjectifsPasses;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT1", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT1", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $formationsT1;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT2", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT2", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $formationsT2;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT3", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT3", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $formationsT3;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02PotentielEvolution", mappedBy="crep", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02PotentielEvolution", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
      * @Assert\Valid
      */
     protected $potentielsEvolutions;
@@ -1211,6 +1222,21 @@ class CrepMcc02 extends Crep
      */
     public function actualiserDonneesShd()
     {
+        $shd = $this->getAgent()->getShd();
+
+        if ($shd) {
+            $this
+                ->setNomUsageShd($shd->getNom())
+                ->setPrenomShd($shd->getPrenom())
+                ->setPosteOccupeShd($shd->getPosteOccupe())
+                ->setAffectationShd($shd->getAffectation());
+        } else {
+            $this
+                ->setNomUsageShd(null)
+                ->setPrenomShd(null)
+                ->setPosteOccupeShd(null)
+                ->setAffectationShd(null);
+        }
     }
 
     /**
@@ -1218,7 +1244,89 @@ class CrepMcc02 extends Crep
      */
     public function confidentialisationChampsShd()
     {
-        $this->setAppreciationGenerale(null);
+
+        $this
+            ->setAffectation(null)
+            ->setPosteOccupe(null)
+            ->setDateEntreePoste(null)
+            ->setGroupeRifseep(null)
+            ->setFonctionsExercees(null)
+            ->setGroupeFonctions(null)
+            ->setFichePosteAdaptee(null)
+            ->setPointsActualisesFichePoste(null)
+            ->setDocAnnexeObjectifsAvenir(null)
+            ->setContexteObjectifsAvenir(null)
+            ->setDocAnnexeBilan(null)
+            ->setContexteAnneeEcoulee(null)
+            ->setAppreciationGenerale(null)
+            ->setAttributionCia(null)
+            ->setExplicationAttributionCia(null)
+            ->setPropositionAvancement(null);
+        /** @var CrepMcc02CompetenceAction $competenceAction */
+        foreach ($this->competencesActions as $competenceAction) {
+            $competenceAction->setNiveauAcquis(null);
+        }
+        /** @var CrepMcc02CompetenceRelation $competenceRelation */
+        foreach ($this->competencesRelations as $competenceRelation) {
+            $competenceRelation->setNiveauAcquis(null);
+        }
+        /** @var CrepMcc02CompetenceSituation $competenceSituation */
+        foreach ($this->competencesSituations as $competenceSituation) {
+            $competenceSituation->setNiveauAcquis(null);
+        }
+        /** @var CrepMcc02CompetenceRelation $competenceRequise */
+        foreach ($this->competencesRequises as $competenceRequise) {
+            $competenceRequise->setLibelle(null);
+            $competenceRequise->setNiveauAcquis(null);
+        }
+        /** @var CrepMcc02CompetenceDemontree $competenceDemontree */
+        foreach ($this->competencesDemontrees as $competenceDemontree) {
+            $competenceDemontree->setLibelle(null);
+            $competenceDemontree->setNiveauAcquis(null);
+        }
+
+        $this->setSouhaitEvolutionCarriere(null)
+            ->setMobilitePoste(null)
+            ->setMobiliteGeographique(null)
+            ->setEvolutionProfessionnelleEnvisagee(null)
+            ->setSouhaitEntretienCarriere(null)
+            ->setObservationsShdProjetProfessionnel(null);
+
+        $this->getFormationsT1()->clear();
+        $this->getFormationsT2()->clear();
+        $this->getFormationsT3()->clear();
+        $this->getFormationsSuivies()->clear();
+
+
+        /** @var  $potentiel CrepMcc02PotentielEvolution */
+        foreach ($this->potentielsEvolutions as $potentiel) {
+            $potentiel->setNiveauAcquis(null);
+        }
+
+        $this->setObservationsAgentObjectifsEvalues(null)
+            ->setObservationsVisaAgent(null);
+
+
+        /* @var ObjectifEvalue $objectif */
+        foreach ($this->getObjectifsEvalues() as $objectif) {
+            $this->removeObjectifsEvalue($objectif);
+        }
+
+        /** @var  ObjectifFutur $objectif */
+        foreach ($this->getObjectifsFuturs() as $objectif) {
+            $this->removeObjectifsFutur($objectif);
+        }
+
+        /** @var CrepMcc02AutreObjectif $objectif */
+        foreach ($this->getAutresObjectifs() as $objectif) {
+            $this->removeAutresObjectif($objectif);
+        }
+
+        $this->setObservationsCompetencesActions(null)
+            ->setObservationsCompetencesRequises(null)
+            ->setObservationsCompetencesDemontrees(null)
+            ->setObservationsCompetencesSituations(null)
+            ->setObservationsCompetencesRelations(null);
     }
 
     /**
@@ -1226,6 +1334,7 @@ class CrepMcc02 extends Crep
      */
     public function confidentialisationChampsAgent()
     {
+        $this->setObservationsVisaAgent(null);
     }
 
     /**
@@ -1240,6 +1349,7 @@ class CrepMcc02 extends Crep
      */
     public function confidentialisationChampsAh()
     {
+        $this->setObservationsAh(null);
     }
 
     /**
@@ -1637,6 +1747,30 @@ class CrepMcc02 extends Crep
     }
 
     /**
+     * Get observationsAgentObjectifsEvalues.
+     *
+     * @return string
+     */
+    public function getObservationsAgentObjectifsEvalues()
+    {
+        return $this->observationsAgentObjectifsEvalues;
+    }
+
+    /**
+     * Set observationsAgentObjectifsEvalues.
+     *
+     * @param string $observationsAgentObjectifsEvalues
+     *
+     * @return CrepMj01
+     */
+    public function setObservationsAgentObjectifsEvalues($observationsAgentObjectifsEvalues)
+    {
+        $this->observationsAgentObjectifsEvalues = $observationsAgentObjectifsEvalues;
+
+        return $this;
+    }
+
+    /**
      * Add competenceAction
      *
      * @param CrepMcc02CompetenceAction $competenceAction
@@ -2026,7 +2160,8 @@ class CrepMcc02 extends Crep
     /**
      * @return string
      */
-    public function getEvolutionProfessionnelleEnvisagee() {
+    public function getEvolutionProfessionnelleEnvisagee()
+    {
         return $this->evolutionProfessionnelleEnvisagee;
     }
 
@@ -2034,7 +2169,8 @@ class CrepMcc02 extends Crep
      * @param $evolutionProfessionnelleEnvisagee
      * @return $this
      */
-    public function setEvolutionProfessionnelleEnvisagee($evolutionProfessionnelleEnvisagee) {
+    public function setEvolutionProfessionnelleEnvisagee($evolutionProfessionnelleEnvisagee)
+    {
         $this->evolutionProfessionnelleEnvisagee = $evolutionProfessionnelleEnvisagee;
         return $this;
     }
@@ -2128,7 +2264,8 @@ class CrepMcc02 extends Crep
      *
      * @return bool
      */
-    public function getAttributionCia() {
+    public function getAttributionCia()
+    {
         return $this->attributionCia;
     }
 
@@ -2138,7 +2275,8 @@ class CrepMcc02 extends Crep
      * @param $attributionCia
      * @return $this
      */
-    public function setAttributionCia($attributionCia) {
+    public function setAttributionCia($attributionCia)
+    {
         $this->attributionCia = $attributionCia;
         return $this;
     }
@@ -2148,7 +2286,8 @@ class CrepMcc02 extends Crep
      *
      * @return mixed
      */
-    public function getExplicationAttributionCia() {
+    public function getExplicationAttributionCia()
+    {
         return $this->explicationAttributionCia;
     }
 
@@ -2158,7 +2297,8 @@ class CrepMcc02 extends Crep
      * @param $explicationAttributionCia
      * @return $this
      */
-    public function setExplicationAttributionCia($explicationAttributionCia) {
+    public function setExplicationAttributionCia($explicationAttributionCia)
+    {
         $this->explicationAttributionCia = $explicationAttributionCia;
         return $this;
     }
@@ -2213,7 +2353,8 @@ class CrepMcc02 extends Crep
      *
      * @return string
      */
-    public function getObservationsObjectifsPasses() {
+    public function getObservationsObjectifsPasses()
+    {
         return $this->observationsObjectifsPasses;
     }
 
@@ -2223,7 +2364,8 @@ class CrepMcc02 extends Crep
      * @param $observationsObjectifsPasses
      * @return $this
      */
-    public function setObservationsObjectifsPasses($observationsObjectifsPasses) {
+    public function setObservationsObjectifsPasses($observationsObjectifsPasses)
+    {
         $this->observationsObjectifsPasses = $observationsObjectifsPasses;
         return $this;
     }

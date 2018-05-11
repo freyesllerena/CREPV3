@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -26,8 +27,9 @@ class FormationSuivieType extends AbstractType
         ))
             ->add('annee', null, ['attr' => ['class' => 'fieldCollection']])
             ->add('type', null, ['attr' => ['class' => 'fieldCollection']])
+            ->add('duree', null, ['attr' => ['class' => 'fieldCollection']])
             ->add('libelle', null, ['attr' => ['class' => 'fieldCollection']])
-            ->add('commentaires', null, [
+        ->add('commentaires', TextareaType::class, [
                 'attr' => ['maxlength' => '4096',
                             'class' => 'fieldCollection', ],
                 'required' => false, ])

@@ -17,7 +17,7 @@ class CompetencePoste extends Competence
     /**
      * @var int
      *
-     * @ORM\Column(name="niveauRequis", type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $niveauRequis;
 
