@@ -1,17 +1,6 @@
 <style>
-	body {
-		font-family: "Times New Roman", Times, serif;
-	}
-	.bottom-crep {
-		font-family: "Arial", Times, sans-serif;
-		font-size: 14px;
-		font-style: italic;
-	}
 
-	pre {
-		font-family: "Arial", sans-serif;
-		font-size: 12px;
-	}
+
 	.text-center {
 		text-align: center;
 	}
@@ -24,31 +13,65 @@
 		background-color: #E9E9E9;
 	}
 
-	ul.recours {
-		list-style-type:none;
-		margin-left: 0px;
-	}
-	li {
-		margin-bottom:15px;
-		/*left: -100px;*/
-		font-style: italic;
+	.strong-th {
+		font-weight: bold;
 	}
 
-	.hauteur-30  td {
-		height: 30px;
+	td.h2 {
+		font-family: "Times New Roman", Times, serif;
 	}
 
-	td.width-3 {
-		width: 3%;
-	}
-	td.width-97 {
-		width: 97%;
-	}
-	td.width-50 {
-		width: 50%;
-	}
+	/*body {*/
+		/*font-family: "Times New Roman", Times, serif;*/
+	/*}*/
+	/*.bottom-crep {*/
+		/*font-family: "Arial", Times, sans-serif;*/
+		/*font-size: 14px;*/
+		/*font-style: italic;*/
+	/*}*/
+
+	/*pre {*/
+		/*font-family: "Arial", sans-serif;*/
+		/*font-size: 12px;*/
+	/*}*/
+	/*.text-center {*/
+		/*text-align: center;*/
+	/*}*/
+
+	/*.bordered {*/
+		/*border:1px #000000 solid;*/
+	/*}*/
+
+	/*.bg-full {*/
+		/*background-color: #E9E9E9;*/
+	/*}*/
+
+	/*ul.recours {*/
+		/*list-style-type:none;*/
+		/*margin-left: 0px;*/
+	/*}*/
+	/*li {*/
+		/*margin-bottom:15px;*/
+		/*!*left: -100px;*!*/
+		/*font-style: italic;*/
+	/*}*/
+
+	/*.hauteur-30  td {*/
+		/*height: 30px;*/
+	/*}*/
+
+	/*td.width-3 {*/
+		/*width: 3%;*/
+	/*}*/
+	/*td.width-97 {*/
+		/*width: 97%;*/
+	/*}*/
+	/*td.width-50 {*/
+		/*width: 50%;*/
+	/*}*/
 </style>
 <!-- page 1 -->
+
 <table>
 	<tr>
 		<td width="34%">
@@ -69,16 +92,56 @@
 <br>
 <br>
 <br>
-<div>
-    <table border="1">
-        <tr class="text-center">
-            <td>
-				<h3>ENCADREMENT SUPÉRIEUR</h3><br>
-					<h4>Compte rendu de l’entretien professionnel</h4>
-            </td>
-        </tr>
-    </table>
-</div>
+{#<table>#}
+	{#<tr>#}
+		{#<td style="width: 2%"></td>#}
+		{#<td style="width: 96%">#}
+			{#<div style="border: 2px solid black;" class="text-center">#}
+				{#<table style="border: 1px solid white;">#}
+					{#<tr>#}
+						{#<td>#}
+							{#<h2>ENCADREMENT SUPÉRIEUR</h2>#}
+						{#</td>#}
+					{#</tr>#}
+					{#<tr>#}
+						{#<td>#}
+							{#<br>#}
+							{#<h2><br><br>Compte rendu de l’entretien professionnel</h2>#}
+						{#</td>#}
+					{#</tr>#}
+				{#</table>#}
+			{#</div>#}
+		{#</td>#}
+		{#<td style="width: 2%"></td>#}
+	{#</tr>#}
+{#</table>#}
+
+
+
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div style="border: 1px solid black; font-size: 10pt;" class="text-center">
+				<small style="font-size: 12pt;">&nbsp;</small>
+                <table style="border: 1px solid white;">
+					<tr>
+						<td>
+							<h2>ENCADREMENT SUPÉRIEUR</h2>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<small style="font-size: 22pt;">&nbsp;</small>
+							<h2>Compte rendu de l’entretien professionnel</h2>
+						</td>
+					</tr>
+                </table>
+			</div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
 
 
 <!-- page 1 -->
@@ -186,7 +249,17 @@
 <!-- page 2 -->
 <div style="page-break-before:always;"></div>
 
-<div class="bordered text-center"><strong>I – DESCRIPTION DU POSTE ET DES FONCTIONS EXERCÉES</strong></div>
+
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"><strong>I – DESCRIPTION DU POSTE ET DES FONCTIONS EXERCÉES</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
 
 <table>
 	<tr>
@@ -207,7 +280,17 @@
 </table>
 <!-- page 3 -->
 <div style="page-break-before:always;"></div>
-<div class="bordered text-center"><strong>II – BILAN DE L’ANNÉE ÉCOULÉE</strong></div>
+
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"><strong>II – BILAN DE L’ANNÉE ÉCOULÉE</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
 
 - Renvoi à un document annexe (lettre de mission ou d’objectifs) : □ oui		□ non {{ crep.docAnnexeBilan }} <br>
 
@@ -218,9 +301,9 @@
 <br>
 <table cellpadding="5">
 	<tr class="text-center">
-		<th class="bordered" width="38%">Objectifs</th>
-		<th class="bordered" width="25%">Réalisation</th>
-		<th class="bordered" width="37%">Commentaires</th>
+		<th class="bordered bg-full strong-th" width="35%">Objectifs</th>
+		<th class="bordered bg-full strong-th" width="25%">Réalisation</th>
+		<th class="bordered bg-full strong-th" width="40%">Commentaires</th>
 	</tr>
 
     {# Afficher des lignes vides si la collection d'objectifs est vide (pour l'export d'un crep vierge) #}
@@ -271,9 +354,9 @@
 <br>
 <table cellpadding="5">
 	<tr class="text-center">
-		<th class="bordered" width="38%">Nature des dossiers ou travaux</th>
-		<th class="bordered" width="25%">Résultats obtenus par l’agent-e</th>
-		<th class="bordered" width="37%">Commentaires</th>
+		<th class="bordered bg-full strong-th" width="35%">Nature des dossiers ou travaux</th>
+		<th class="bordered bg-full strong-th" width="25%">Résultats obtenus par l’agent-e</th>
+		<th class="bordered bg-full strong-th" width="40%">Commentaires</th>
 	</tr>
 
     {# Afficher des lignes vides si la collection d'objectifs est vide (pour l'export d'un crep vierge) #}
@@ -312,8 +395,20 @@
         {% endfor %}
     {% endif %}
 </table>
+<br>
+<br>
 
-<div>III – Objectifs de l’agent-e pour l’année : 2018</div>
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"><strong>III – Objectifs de l’agent-e pour l’année : 2018</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
+
 
 - Renvoi à un document annexe (lettre de mission ou d’objectifs) : □ oui		□ non {{ crep.docAnnexeObjectifsAvenir }} <br>
 
@@ -324,10 +419,10 @@
 <br>
 <table cellpadding="5">
 	<tr class="text-center">
-		<th class="bordered">OBJECTIFS</th>
-		<th class="bordered">ECHEANCE</th>
-		<th class="bordered">CONDITIONS DE REUSSITE</th>
-		<th class="bordered">INDICATEURS</th>
+		<th class="bordered bg-full strong-th" width="30%"><div style="font-size: 5pt">&nbsp;</div>OBJECTIFS</th>
+		<th class="bordered bg-full strong-th" width="20%"><div style="font-size: 5pt">&nbsp;</div>OECHEANCE</th>
+		<th class="bordered bg-full strong-th" width="20%">CONDITIONS DE REUSSITE</th>
+		<th class="bordered bg-full strong-th" width="30%"><div style="font-size: 5pt">&nbsp;</div>OINDICATEURS</th>
 	</tr>
 
     {# Afficher des lignes vides si la collection d'objectifs est vide (pour l'export d'un crep vierge) #}
@@ -376,130 +471,145 @@
 <!-- page 4 -->
 <div style="page-break-before:always;"></div>
 
-<div class="bordered text-center"><strong>IV – EXPÉRIENCE PROFESSIONNELLE : ÉVALUATION DES ACQUIS</strong></div>
-
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"><strong>IV – EXPÉRIENCE PROFESSIONNELLE : ÉVALUATION DES ACQUIS</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
+<br>
 - Les compétences managériales démontrées par l’agent-e dans ses fonctions :<br>
-
-
+<br>
 <table cellpadding="2">
 	<tr class="text-center">
-		<th class="bordered" width="20%">COMPÉTENCES LIÉES A L’ACTION</th>
-		<th class="bordered">exceptionnelle*</th>
-		<th class="bordered">forte</th>
-		<th class="bordered">assez forte</th>
-		<th class="bordered">à développer</th>
-		<th class="bordered">non observée</th>
-		<th class="bordered">observations</th>
+		<th class="bordered bg-full strong-th " width="26%">COMPÉTENCES<br>LIÉES A L’ACTION</th>
+		<th class="bordered bg-full" width="11%">exceptionnelle*</th>
+		<th class="bordered bg-full" width="8%"><div style="font-size: 5pt">&nbsp;</div>forte</th>
+		<th class="bordered bg-full" width="9%">assez forte</th>
+		<th class="bordered bg-full" width="15%"><div style="font-size: 5pt">&nbsp;</div>à développer</th>
+		<th class="bordered bg-full" width="11%">non observée</th>
+		<th class="bordered bg-full" width="20%"><div style="font-size: 5pt">&nbsp;</div>observations</th>
 	</tr>
 
     {% if crep.competencesActions | length > 0 %}
             {% for key, competence in crep.competencesActions %}
 				<tr>
-					<td class="bordered" width="20%">{{ competence.libelle }}</td>
-                    {#{% for index in 0..4 %}#}
-                    {#<td class="text-center">{{ competence.niveauAcquis|iconCheckReverse(loop.revindex0, 4)|raw }}</td>#}
-                    {#{% endfor %}#}
+					<td class="bordered text-center">{{ competence.libelle }}</td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
-					<td class="bordered">{{ crep.observationsCompetencesActions }}</td>
+                    {% if key == 0 %}
+						<td class="bordered" rowspan="{{ crep.competencesActions | length  }}">{{ crep.observationsCompetencesActions }}</td>
+                    {% endif %}
 				</tr>
             {% endfor %}
 
     {% else %}
         {% for i in 0..2 %}
 			<tr>
-				<td class="bordered"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
-				<td class="bordered"></td>
+				<td class="bordered text-center"></td>
+				{% if i == 0 %}
+					<td class="bordered" rowspan="2"></td>
+				{% endif %}
 			</tr>
         {% endfor %}
     {% endif %}
 </table>
-
-<br><br>
-
+<br>
+<br>
 <table cellpadding="2">
 	<tr class="text-center">
-		<th class="bordered" width="20%">COMPÉTENCES LIÉES A LA RELATION</th>
-		<th class="bordered">exceptionnelle*</th>
-		<th class="bordered">forte</th>
-		<th class="bordered">assez forte</th>
-		<th class="bordered">à développer</th>
-		<th class="bordered">non observée</th>
-		<th class="bordered">observations</th>
+		<th class="bordered bg-full strong-th " width="26%">COMPÉTENCES<br>LIÉES A LA<br>RELATION</th>
+		<th class="bordered bg-full" width="11%"><div style="font-size: 5pt">&nbsp;</div>exceptionnelle*</th>
+		<th class="bordered bg-full" width="8%"><div style="font-size: 10pt">&nbsp;</div>forte</th>
+		<th class="bordered bg-full" width="9%"><div style="font-size: 5pt">&nbsp;</div>assez forte</th>
+		<th class="bordered bg-full" width="15%"><div style="font-size: 10pt">&nbsp;</div>à développer</th>
+		<th class="bordered bg-full" width="11%"><div style="font-size: 5pt">&nbsp;</div>non observée</th>
+		<th class="bordered bg-full" width="20%"><div style="font-size: 10pt">&nbsp;</div>observations</th>
 	</tr>
 
     {% if crep.competencesRelations | length > 0 %}
             {% for key, competence in crep.competencesRelations %}
 				<tr>
-					<td class="bordered" width="20%">{{ competence.libelle }}</td>
+					<td class="bordered text-center">{{ competence.libelle }}</td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
 					<td class="bordered text-center"></td>
-					<td class="bordered">{{ crep.observationsCompetencesRelations }}</td>
+                    {% if key == 0 %}
+						<td class="bordered" rowspan="{{ crep.competencesRelations | length  }}">{{ crep.observationsCompetencesRelations }}</td>
+                    {% endif %}
 				</tr>
             {% endfor %}
 
     {% else %}
         {% for i in 0..2 %}
 			<tr>
-				<td class="bordered"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
-				<td class="bordered"></td>
+				<td class="bordered text-center"></td>
+                {% if i == 0 %}
+					<td class="bordered" rowspan="2"></td>
+                {% endif %}
 			</tr>
         {% endfor %}
     {% endif %}
 </table>
-
-<br><br>
-
+<br>
+<br>
 <table cellpadding="2">
 	<tr class="text-center">
-		<th class="bordered" width="20%">COMPÉTENCES LIÉES A L’INTELLIGENCE DES SITUATIONS</th>
-		<th class="bordered">exceptionnelle*</th>
-		<th class="bordered">forte</th>
-		<th class="bordered">assez forte</th>
-		<th class="bordered">à développer</th>
-		<th class="bordered">non observée</th>
-		<th class="bordered">observations</th>
+		<th class="bordered bg-full strong-th " width="26%">COMPÉTENCES<br>LIÉES A<br>L’INTELLIGENCE<br>DES SITUATIONS</th>
+		<th class="bordered bg-full" width="11%"><div style="font-size: 5pt">&nbsp;</div>exceptionnelle*</th>
+		<th class="bordered bg-full" width="8%"><div style="font-size: 10pt">&nbsp;</div>forte</th>
+		<th class="bordered bg-full" width="9%"><div style="font-size: 5pt">&nbsp;</div>assez forte</th>
+		<th class="bordered bg-full" width="15%"><div style="font-size: 10pt">&nbsp;</div>à développer</th>
+		<th class="bordered bg-full" width="11%"><div style="font-size: 5pt">&nbsp;</div>non observée</th>
+		<th class="bordered bg-full" width="20%"><div style="font-size: 10pt">&nbsp;</div>observations</th>
 	</tr>
 
     {% if crep.competencesSituations | length > 0 %}
         {% for key, competence in crep.competencesSituations %}
 			<tr>
-				<td class="bordered" width="20%">{{ competence.libelle }}</td>
+				<td class="bordered text-center">{{ competence.libelle }}</td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
-				<td class="bordered">{{ crep.observationsCompetencesSituations }}</td>
+                {% if key == 0 %}
+					<td class="bordered" rowspan="{{ crep.competencesSituations | length  }}">{{ crep.observationsCompetencesSituations }}</td>
+                {% endif %}
 			</tr>
         {% endfor %}
 
     {% else %}
         {% for i in 0..2 %}
 			<tr>
-				<td class="bordered"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
 				<td class="bordered text-center"></td>
-				<td class="bordered"></td>
+				<td class="bordered text-center"></td>
+                {% if i == 0 %}
+					<td class="bordered" rowspan="2"></td>
+                {% endif %}
 			</tr>
         {% endfor %}
     {% endif %}
@@ -514,16 +624,16 @@ managériales ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit 
 
 <table cellpadding="2">
 	<tr class="text-center">
-		<th class="bordered" width="20%">COMPÉTENCES</th>
-		<th class="bordered">exceptionnelle</th>
-		<th class="bordered">forte</th>
-		<th class="bordered">assez forte</th>
-		<th class="bordered">à développer</th>
-		<th class="bordered">non observée</th>
-		<th class="bordered">observations éventuelles</th>
+		<th class="bordered bg-full strong-th" width="20%"><div style="font-size: 10pt">&nbsp;</div>COMPÉTENCES<div style="font-size: 10pt">&nbsp;</div></th>
+		<th class="bordered bg-full" width="11%"><div style="font-size: 5pt">&nbsp;</div>exceptionnelle*</th>
+		<th class="bordered bg-full" width="8%"><div style="font-size: 10pt">&nbsp;</div>forte</th>
+		<th class="bordered bg-full" width="9%"><div style="font-size: 5pt">&nbsp;</div>assez forte</th>
+		<th class="bordered bg-full" width="15%"><div style="font-size: 10pt">&nbsp;</div>à développer</th>
+		<th class="bordered bg-full" width="11%"><div style="font-size: 5pt">&nbsp;</div>non observée</th>
+		<th class="bordered bg-full" width="20%"><div style="font-size: 5pt">&nbsp;</div>observations éventuelles</th>
 	</tr>
 	<tr>
-		<td class="bordered" colspan="7">Requises dans les fonctions (à compléter à partir de la fiche de poste)</td>
+		<td class="bordered bg-full" colspan="7">Requises dans les fonctions (à compléter à partir de la fiche de poste)</td>
 	</tr>
     {% if crep.competencesRequises | length > 0 %}
         {% for key, competence in crep.competencesRequises %}
@@ -557,7 +667,7 @@ managériales ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit 
     {% endif %}
 
 	<tr>
-		<td class="bordered" colspan="7">Autres compétences démontrées par l’agent-e</td>
+		<td class="bordered bg-full" colspan="7">Autres compétences démontrées par l’agent-e</td>
 	</tr>
     {% if crep.competencesDemontrees | length > 0 %}
         {% for key, competence in crep.competencesDemontrees %}
@@ -600,7 +710,16 @@ managériales ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit 
 <!-- page 5 -->
 <div style="page-break-before:always;"></div>
 
-<div class="bordered text-center"><strong>V – PERSPECTIVES D’ÉVOLUTION PROFESSIONNELLE DE L’AGENT-E</strong></div>
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"><strong>V – PERSPECTIVES D’ÉVOLUTION PROFESSIONNELLE DE L’AGENT-E</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
 
 <table>
 	<tr>
@@ -632,7 +751,7 @@ L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilit
 <br>
 <table border="1">
 	<tr>
-		<th class="-align-center">
+		<th class="bordered bg-full strong-th">
 			OBSERVATIONS ÉVENTUELLES DU-DE LA SUPÉRIEUR HIÉRARCHIQUE DIRECT
 			SUR CES PERSPECTIVES D’ÉVOLUTION PROFESSIONNELLE
 		</th>
@@ -652,7 +771,7 @@ L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilit
 <br>
 <table border="1">
 	<tr>
-		<th class="align-center">COMMENTAIRES ÉVENTUELS DE L’AGENT-E</th>
+		<th class="bordered bg-full strong-th">COMMENTAIRES ÉVENTUELS DE L’AGENT-E</th>
 	</tr>
 	<tr>
 		<td>
@@ -669,7 +788,16 @@ L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilit
 <!-- page 5 -->
 <div style="page-break-before:always;"></div>
 
-<div class="bordered text-center"><strong>VI – BESOINS DE FORMATION</strong></div>
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"><strong>VI – BESOINS DE FORMATION</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
 
 <table>
 	<tr>
@@ -689,10 +817,10 @@ FORMATIONS SUIVIES (ANNEES N-1 ET N-2) :<br>
 <br>
 <table border="1">
 	<tr class="text-center">
-		<th style="width: 50px">Année</th>
-		<th>Formation suivie</th>
-		<th style="width: 50px">Durée</th>
-		<th style="width: 300px">Commentaires (appréciation, bilan, suites)</th>
+		<th class="bordered bg-full strong-th" style="width: 50px">Année</th>
+		<th class="bordered bg-full strong-th">Formation suivie</th>
+		<th class="bordered bg-full strong-th" style="width: 50px">Durée</th>
+		<th class="bordered bg-full strong-th" style="width: 300px">Commentaires (appréciation, bilan, suites)</th>
 	</tr>
 
 
@@ -721,20 +849,20 @@ FORMATIONS SUIVIES (ANNEES N-1 ET N-2) :<br>
 RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
 <table cellpadding="2">
 	<tr class="text-center">
-		<th class="bordered" width="30%"></th>
-		<th class="bordered" width="12%">Sur<br>demande de<br>l’agent-e<sup>1</sup></th>
-		<th class="bordered" width="14%">Avis favorable<br>du responsable<br>hiérarchique<sup>1</sup></th>
-		<th class="bordered" width="17%">Sur demande du <br>responsable <br>hiérarchique<sup>1</sup></th>
-		<th class="bordered" width="15%">Recours au CREP<sup>2</sup></th>
-		<th class="bordered" width="12%">Echéance</th>
+		<th class="bordered bg-full" width="30%"></th>
+		<th class="bordered bg-full" width="12%">Sur<br>demande de<br>l’agent-e<sup>1</sup></th>
+		<th class="bordered bg-full" width="14%">Avis favorable<br>du responsable<br>hiérarchique<sup>1</sup></th>
+		<th class="bordered bg-full" width="17%">Sur demande du <br>responsable <br>hiérarchique<sup>1</sup></th>
+		<th class="bordered bg-full" width="15%">Recours au CREP<sup>2</sup></th>
+		<th class="bordered bg-full" width="12%">Echéance</th>
 	</tr>
 	<tr>
-		<th class="bordered">Formations liées à l’adaptation immédiate au poste de travail (T1)</th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
+		<th class="bordered bg-full">Formations liées à l’adaptation immédiate au poste de travail (T1)</th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
 	</tr>
     {% if crep.FormationsT1 | length > 0 %}
         {% for key, formation in crep.FormationsT1 %}
@@ -760,12 +888,12 @@ RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
     {% endif %}
 
 	<tr>
-		<th class="bordered">Formations liées à l’évolution des métiers (T2)</th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
+		<th class="bordered bg-full">Formations liées à l’évolution des métiers (T2)</th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
 	</tr>
     {% if crep.FormationsT2 | length > 0 %}
         {% for key, formation in crep.FormationsT2 %}
@@ -791,12 +919,12 @@ RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
     {% endif %}
 
 	<tr>
-		<th class="bordered">Formations liées au développement des qualifications ou à l’acquisition de nouvelles qualifications (T3)</th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
-		<th class="bordered"></th>
+		<th class="bordered bg-full">Formations liées au développement des qualifications ou à l’acquisition de nouvelles qualifications (T3)</th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
+		<th class="bordered bg-full"></th>
 	</tr>
     {% if crep.FormationsT3 | length > 0 %}
         {% for key, formation in crep.FormationsT3 %}
@@ -832,7 +960,18 @@ RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
 
 <!-- page 7 -->
 <div style="page-break-before:always;"></div>
-<div class="bordered text-center"><strong>VII – APPRÉCIATIONS GÉNÉRALES</strong></div>
+
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"><strong>VII – APPRÉCIATIONS GÉNÉRALES</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
+
 <br>
 <p class="text-center">1)</p>
 <br>
@@ -856,15 +995,15 @@ RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
 
 <table cellpadding="2">
 	<tr>
-		<th class="bordered text-center" colspan="6"><strong>Potentiel d’évolution de l’agent-e</strong></th>
+		<th class="bordered bg-full" text-center" colspan="6"><strong>Potentiel d’évolution de l’agent-e</strong></th>
 	</tr>
 	<tr class="text-center">
-		<th class="bordered"><strong>Type d’emploi</strong></th>
-		<th class="bordered"><strong>Oui <br>immédiatement</strong></th>
-		<th class="bordered"><strong>Oui à <br> moyen <br> terme</strong></th>
-		<th class="bordered"><strong>À <br> confirmer</strong></th>
-		<th class="bordered"><strong>Sans objet</strong></th>
-		<th class="bordered"><strong>Observations</strong></th>
+		<th class="bordered bg-full"><strong>Type d’emploi</strong></th>
+		<th class="bordered bg-full"><strong>Oui <br>immédiatement</strong></th>
+		<th class="bordered bg-full"><strong>Oui à <br> moyen <br> terme</strong></th>
+		<th class="bordered bg-full"><strong>À <br> confirmer</strong></th>
+		<th class="bordered bg-full"><strong>Sans objet</strong></th>
+		<th class="bordered bg-full"><strong>Observations</strong></th>
 	</tr>
 
     {% if crep.potentielsEvolutions | length > 0 %}
@@ -891,7 +1030,7 @@ RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
 
 <table border="1">
 	<tr class="text-center">
-		<th colspan="3">
+		<th class="bordered bg-full" colspan="3">
 			<strong>Souhaitez-vous que l’agent-e fasse l’objet de l’attribution d’un complément indemnitaire annuel (CIA) ?</strong>
 		</th>
 	</tr>
@@ -920,7 +1059,7 @@ RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
 <br>
 <table border="1">
 	<tr class="text-center">
-		<th colspan="3">
+		<th class="bordered bg-full" colspan="3">
 			<strong>Proposition d’inscription au prochain tableau d’avancement de grade</strong>
 		</th>
 	</tr>
@@ -956,7 +1095,17 @@ RECUEIL DES BESOINS DE FORMATION (ANNÉES N ET N+1) :<br><br>
 <!-- page 8 -->
 <div style="page-break-before:always;"></div>
 
-<div class="bordered text-center"> <strong>VIII – NOTIFICATION DU COMPTE RENDU DE L’ENTRETIEN PROFESSIONNEL</strong></div>
+<table>
+	<tr>
+		<td style="width: 2%"></td>
+		<td style="width: 96%">
+			<div class="bordered text-center"> <strong>VIII – NOTIFICATION DU COMPTE RENDU DE L’ENTRETIEN PROFESSIONNEL</strong></div>
+		</td>
+		<td style="width: 2%"></td>
+	</tr>
+</table>
+<br>
+
 
 <br>
 <table border="1">

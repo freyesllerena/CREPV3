@@ -201,7 +201,6 @@
 
             var allItems = jQuery('#crep_mcc02_mobilitePoste').find(':checkbox').first().siblings();
             var aItems = [];
-            var listeId = [];
             allItems.each(function()
             {
                 listeCheckbox = allItems.find(':checkbox').first().siblings();
@@ -235,19 +234,20 @@
 
 
         /**
+         * Control si tout le groupe checkbox est false
          *
          * @param aItems
          * @returns {boolean}
          */
         function isCheckboxChecked(aItems) {
-            var statutParentCheckbox = true;
+            var statutParentCheckbox = false;
             for (var i = 0; i < aItems.length; i++) {
                 var htmlData = jQuery(  '#' + aItems[i].id  );
                 var isChecked = htmlData.find('input');
 
                 statusCheckbox = isChecked.prevObject[0].checked;
-                if (statusCheckbox === false) {
-                    statutParentCheckbox = false;
+                if (statusCheckbox === true) {
+                    statutParentCheckbox = true;
                 }
             }
 
@@ -255,6 +255,7 @@
         }
 
         /**
+         * Evenement checked ou unchecked sur le checkbox enfant
          *
          * @param childID
          * @param divChildID
@@ -286,7 +287,9 @@
                     for (var i = 0; i < aItems.length; i++) {
                         if (childID === aItems[i].id) {
                             jQuery(  '#' + aItems[i].id  ).parent().removeClass('checked');
-                            jQuery('#'+parentID).parent().removeClass('checked');
+                            if (parentStatut === false) {
+                                jQuery('#'+parentID).parent().removeClass('checked');
+                            }
                         }
                     }
                 }
