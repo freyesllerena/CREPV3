@@ -137,6 +137,8 @@
 
             isCacheBloc(libelleEmploiFonctionnel, groupeEmploiFonctionnel);
 
+
+
             if ($("#crep_mcc02_emploiFonctionnel_0") && $("#crep_mcc02_emploiFonctionnel_1")) {
                 if ($("#crep_mcc02_emploiFonctionnel_0").attr('checked')) {
                     isCacheBloc(libelleEmploiFonctionnel, groupeEmploiFonctionnel, false);
@@ -153,7 +155,7 @@
 
             // I Fiche de poste
             var pointsActualisesFichePoste = $("#crep_mcc02_pointsActualisesFichePoste");
-            isCacheBloc(pointsActualisesFichePoste);
+            isCacheBloc(pointsActualisesFichePoste, false, false);
 
             if ($("#crep_mcc02_fichePosteAdaptee_0") && $("#crep_mcc02_fichePosteAdaptee_1")) {
                 if ($("#crep_mcc02_fichePosteAdaptee_0").attr('checked')) {
