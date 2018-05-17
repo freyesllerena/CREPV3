@@ -3,7 +3,6 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\CampagneBrhp;
-use AppBundle\EnumTypes\EnumStatutCrep;
 
 /**
  * FormationSuivieRepository.
@@ -26,13 +25,11 @@ class FormationSuivieRepository extends \Doctrine\ORM\EntityRepository
         ->innerJoin('formation.crep', 'crep')
         ->innerJoin('crep.agent', 'agent')
         ->where('agent.campagneBrhp = :CAMPAGNE_BRHP')
-        ->andWhere('crep.statut IN(:STATUTS_CREPS_FINALISE)')
         ->andWhere('crep.crepPapier IS NULL')
         ->andWhere('crep INSTANCE OF '.$modeleCrep)
         ->orderBy('agent.nom')
         ->addOrderBy('agent.prenom')
-        ->setParameter('CAMPAGNE_BRHP', $campagneBrhp)
-        ->setParameter('STATUTS_CREPS_FINALISE', [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT]);
+        ->setParameter('CAMPAGNE_BRHP', $campagneBrhp);
 
         $reslut = $qb->getQuery()->getScalarResult();
 

@@ -15,7 +15,6 @@ use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\ObjectifEvalueType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationSuivieType;
 //use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationSolliciteeType;
 //use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationEnvisageeType;
 

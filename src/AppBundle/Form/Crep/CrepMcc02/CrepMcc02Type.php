@@ -11,13 +11,10 @@ use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRelationType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRequiseType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceSituationType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02PotentielEvolutionType;
-use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
-use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationSuivieType;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT1Type;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT2Type;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT3Type;
 use AppBundle\Form\Crep\CrepType;
-use AppBundle\Form\FormationSuivieType;
 use AppBundle\Form\ObjectifEvalueType;
 use AppBundle\Form\ObjectifFuturType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -237,18 +234,6 @@ class CrepMcc02Type extends CrepType
             ])
             ->add('observationsShdProjetProfessionnel', TextareaType::class, ['required' => false])
             ->add('observationsAgentProjetProfessionnel', TextareaType::class, ['required' => false])
-
-            // VI
-            ->add('formationsSuivies',
-                CollectionType::class,
-                [
-                    'entry_type' => CrepMcc02FormationSuivieType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'by_reference' => false,
-                    'entry_options' => ['annee_evaluee' => $anneeEvaluee]
-                ]
-            )
             ->add('dateEntreePoste',
             		DateType::class,
             		array(

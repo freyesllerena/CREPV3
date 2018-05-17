@@ -1478,7 +1478,7 @@ class CrepMcc02 extends Crep
      * @param string $libelleEmploiFonctionnel
      * @return $this
      */
-    public function setLibelleEmploiFonctionnel(string $libelleEmploiFonctionnel)
+    public function setLibelleEmploiFonctionnel($libelleEmploiFonctionnel)
     {
         $this->libelleEmploiFonctionnel = $libelleEmploiFonctionnel;
         return $this;
@@ -1496,7 +1496,7 @@ class CrepMcc02 extends Crep
      * @param string $groupeEmploiFonctionnel
      * @return $this
      */
-    public function setGroupeEmploiFonctionnel(string $groupeEmploiFonctionnel)
+    public function setGroupeEmploiFonctionnel($groupeEmploiFonctionnel)
     {
         $this->groupeEmploiFonctionnel = $groupeEmploiFonctionnel;
         return $this;

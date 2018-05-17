@@ -89,18 +89,13 @@ class AppPdf extends TCPDF
             	         			</table>
 	    						</small>';
         } elseif ($crep instanceof CrepMcc02) {
-            $this->footer = '	<small>
+            $this->footer = '
     								<table>
 	                    		  		<tr>
-	                    		  		<!--
-	    						  			<td style="width:20%">NOM : '.$crep->getNomUsage().'</td>
-	    						  			<td style="width:20%">PRÉNOM : '.$crep->getPrenom().'</td>
-	    						  			<td style="width:40%">CORPS : '.$crep->getCorps().'</td>
-	    						  			-->
-	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+	    									<td align="right">'.$this->getAliasNumPage().'</td>
 	                    		  		</tr>
             	         			</table>
-	    						</small>';
+	    						';
         }
         else {
             $this->footer = ' <font color="red">Footer à définir dans AppBundle\Util\AppPdf.php</font>';
@@ -155,7 +150,7 @@ class AppPdf extends TCPDF
         						 &nbsp;&nbsp;&nbsp;
 								 <small>APPRECIATION DE LA VALEUR PROFESSIONNELLE '.$crep->getAgent()->getCampagnePnc()->getAnneeEvaluee().'</small>';
         } elseif ($crep instanceof CrepMcc02) {
-            $this->header = '<strong>Ministère de la culture</strong>';
+            $this->header = '<strong>MINISTÈRE DE LA CULTURE</strong>';
         } else {
             $this->header = ' <font color="red">Header à définir dans AppBundle\Util\AppPdf.php</font>';
         }
