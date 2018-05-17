@@ -14,3 +14,9 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 /vendor/
+/web/css
+/web/documents
+/web/documents_aide
+/web/gentelella-1.3.0
+/web/js
+/web/Maquettes
