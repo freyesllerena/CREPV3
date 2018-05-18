@@ -30,7 +30,7 @@ class ImportCrepPapierType extends AbstractType
                                 'choices' => [
                                         'L\'agent a signé son CREP notifié' => EnumStatutCrep::NOTIFIE_AGENT,
                                         'L\'agent a refusé de signer son CREP notifié' => EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
-                                        'Absence de l\'agent' => EnumStatutCrep::CAS_ABSENCE,
+//                                         'Absence de l\'agent' => EnumStatutCrep::CAS_ABSENCE,
                                 ],
                                 'mapped' => false,
                                 'constraints' => [

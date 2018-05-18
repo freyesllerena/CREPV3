@@ -23,21 +23,21 @@
                 <tr>
                     <th>Libellé</th>
                     
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if app.session.get('selectedRole') == 'ROLE_ADMIN' %}
                     	<th>Ministère</th>
-                    {% elseif is_granted('ROLE_RLC') or is_granted('ROLE_BRHP') or is_granted('ROLE_SHD')or is_granted('ROLE_AH') %}
+                    {% elseif app.session.get('selectedRole') == 'ROLE_RLC' or app.session.get('selectedRole') == 'ROLE_BRHP' or app.session.get('selectedRole') == 'ROLE_SHD' or app.session.get('selectedRole') == 'ROLE_AH' %}
                     	<th>Périmètre</th>
                     {% endif %}
                     
                     <th>Année d'évaluation</th>
                     
-                    {% if is_granted('ROLE_AH') or is_granted('ROLE_AGENT') %}
+                    {% if app.session.get('selectedRole') == 'ROLE_AH' or app.session.get('selectedRole') == 'ROLE_AGENT' %}
                     	<th>Date début entretiens</th>
                     {% else %}
                     	<th>Date d'ouverture</th>
                     {% endif %}
                     
-                    {% if is_granted('ROLE_PNC') %}
+                    {% if app.session.get('selectedRole') == 'ROLE_PNC' %}
                     	<th>Date de clôture prévisionnelle</th>
                     {% else %}
                     	<th>Date de clôture</th>
@@ -54,18 +54,18 @@
 	            {% for campagne in campagnes %}
                 <tr>
                     <td><a href={{ block('route_show') }} title="Détail">{{ campagne.libelle }}</a></td>
-                    
-	                {% if is_granted('ROLE_ADMIN') %}
+
+                    {% if app.session.get('selectedRole') == 'ROLE_ADMIN' %}
                     	<td>{{ campagne.ministere.libelleCourt }}</td>
-                    {% elseif is_granted('ROLE_RLC')%}
+                    {% elseif app.session.get('selectedRole') == 'ROLE_RLC' %}
                     	<td>{{ campagne.perimetreRlc.libelle }}</td>
-                    {% elseif is_granted('ROLE_BRHP') or is_granted('ROLE_SHD') or is_granted('ROLE_AH') %}
+                    {% elseif app.session.get('selectedRole') == 'ROLE_BRHP' or app.session.get('selectedRole') == 'ROLE_SHD' or app.session.get('selectedRole') == 'ROLE_AH' %}
                     	<td>{{ campagne.perimetreBrhp.libelle }}</td>
                     {% endif %}
                     
                     <td>{{ campagne.anneeEvaluee }}</td>
                     
-                    {% if is_granted('ROLE_AH') or is_granted('ROLE_AGENT') %}
+                    {% if app.session.get('selectedRole') == 'ROLE_AH' or app.session.get('selectedRole') == 'ROLE_AGENT' %}
                         <td>
                         	{% if campagne.dateDebutEntretien %}
                             {{ campagne.dateDebutEntretien | date('d/m/Y') }}
@@ -84,15 +84,20 @@
                     	<td></td>
                     {% endif %}
 
-                    {% if is_granted('ROLE_ADMIN_MIN') %}
+                    {% if app.session.get('selectedRole') == 'ROLE_ADMIN_MIN' %}
                         <td>
-                        	{% if campagne.docPopulation is null %}
-                        		<span class="label label-warning">En attente de chargement</span>
-                        	{% elseif not campagne.diffusee %}
-                        		<span class="label label-primary">En attente de diffusion</span>
-                        	{% else %}
-                        		<span class="label {{ campagne.statut | campagne_status_label }}">{{ campagne.statut }}</span>
-                        	{% endif %}
+                        	{% if campagne.docPopulation is null and not campagne.enCoursDeChargementDuFichierAgent %}
+                            	<span class="label label-warning">En attente de chargement</span>
+                                	
+                            {% elseif campagne.docPopulation is not null and campagne.enCoursDeChargementDuFichierAgent %}
+                            	<span class="label label-default">Chargement en cours</span>
+                                		
+                            {% elseif not campagne.diffusee %}
+                            	<span class="label label-primary">En attente de diffusion</span>
+                              		
+                            {% else %}
+                            	<span class="label {{ campagne.statut | campagne_status_label }}">{{ campagne.statut }}</span>
+                             {% endif %}
                         </td>
                     {% else %}            
                         <td>

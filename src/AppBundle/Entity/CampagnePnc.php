@@ -119,6 +119,13 @@ class CampagnePnc extends Campagne
     private $diffusee = false;
 
     /**
+     * @var bool
+     *
+     *  @ORM\Column(name="en_cours_chargement_agents", type="boolean", nullable=true)
+     */
+    private $enCoursDeChargementDuFichierAgent = false;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -434,6 +441,18 @@ class CampagnePnc extends Campagne
     public function getDateDebut()
     {
         return $this->dateDebut;
+    }
+
+    public function getEnCoursDeChargementDuFichierAgent()
+    {
+        return $this->enCoursDeChargementDuFichierAgent;
+    }
+
+    public function setEnCoursDeChargementDuFichierAgent($enCoursDeChargementDuFichierAgent)
+    {
+        $this->enCoursDeChargementDuFichierAgent = $enCoursDeChargementDuFichierAgent;
+
+        return $this;
     }
 
     /**

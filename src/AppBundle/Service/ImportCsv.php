@@ -64,6 +64,13 @@ class ImportCsv extends BaseManager
             'durée',
     ];
 
+    private $repScripts;
+
+    public function init($repScripts)
+    {
+        $this->repScripts = $repScripts;
+    }
+
     private function convert($filename, $delimiter = ';')
     {
         if (!file_exists($filename) || !is_readable($filename)) {
@@ -107,7 +114,13 @@ class ImportCsv extends BaseManager
         return $data;
     }
 
-    public function importerPopulation(CampagnePnc $campagnePnc)
+    /**
+     * Importer un fichier d'agents csv.
+     *
+     * @param CampagnePnc $campagnePnc
+     * @param bool        $appeleViaCommande : égale à true si la fonction est appelée à partir d'une commande lancée par un script en asynchrone
+     */
+    public function importerPopulation(CampagnePnc $campagnePnc, $appeleViaCommande = false)
     {
         // TODO : voir comment gérer la variable entête après l'évolution : maquette par ministère
         if (3 == $campagnePnc->getMinistere()->getId()) { // si c'est le MCC
@@ -119,7 +132,7 @@ class ImportCsv extends BaseManager
         /* @var $campagneRlcRepository CampagneRlcRepository */
         $campagneRlcRepository = $this->em->getRepository('AppBundle:CampagneRlc');
 
-        $filePath = $campagnePnc->getDocPopulation()->getWebPath();
+        $filePath = $campagnePnc->getDocPopulation()->getAbsolutePath();
 
         $contientErreurs = false;
         $nbErreurs = 0;
@@ -331,22 +344,13 @@ class ImportCsv extends BaseManager
 
         // Si aucune erreur n'est trouvée, on rattache les N+1 et N+2 et on flush
         if (!$contientErreurs) {
-            $erreursRattachement = $this->rattacherShdAhAgent($agents);
-
-            if (empty($erreursRattachement)) {
-                foreach ($agents as $agent) {
-                    $this->em->persist($agent);
-                }
-
-                $this->em->flush();
-            } else {
-                $contientErreurs = true;
-                $resultatLecture = [
-                    'erreursFormat' => null,
-                    'erreursValidation' => $erreursValidation,
-                    'erreursRattachement' => $erreursRattachement,
-                    'erreursUos' => $erreursUos,
-                ];
+            // Si c'est un environnement windows (local) ou si la fonction est appelé par le script qui lance la commande en arrière plan, on rattache et on insère les agents en synchrone
+            if ('WIN' === strtoupper(substr(PHP_OS, 0, 3)) || $appeleViaCommande) {
+                $this->rattacherShdAhAgent($agents);
+                $this->insererAgents($agents);
+            } else { // Si c'est un environnement linux, on lance un script en arrière plan qui traite le fichier de population et qui envoie des notifications.
+                $commande = 'nohup '.$this->repScripts.'/traiter_fichier_agents.sh '.$campagnePnc->getId().' >/dev/null 2>&1  &';
+                exec($commande);
             }
         }
 
@@ -354,10 +358,32 @@ class ImportCsv extends BaseManager
         return $contientErreurs ? $resultatLecture : true;
     }
 
+    /**
+     * Insérer en base le tableau d'agents passé en paramètre.
+     *
+     * @param array $agents
+     *
+     * @return array
+     */
+    private function insererAgents($agents)
+    {
+        $lotFlushAgent = 5000;
+        $i = 1;
+
+        foreach ($agents as $agent) {
+            $this->em->persist($agent);
+
+            if (0 == ($i % $lotFlushAgent)) {
+                $this->em->flush();
+            }
+            ++$i;
+        }
+
+        $this->em->flush();
+    }
+
     private function rattacherShdAhAgent(&$agents)
     {
-        $erreursRattachement = array();
-
         /* @var $agent Agent */
         foreach ($agents as $agent) {
             if ($agent && $agent->getEmailShd()) {
@@ -371,7 +397,6 @@ class ImportCsv extends BaseManager
                 ->setEvaluable(false);
                     $agents[$nouvelAgent->getEmail()] = $nouvelAgent;
                     $agent->setShd($nouvelAgent);
-                    //$erreursRattachement[] = [$agent, "Le N+1 ayant pour email ".$agent->getEmailShd()." doit figurer en tant qu'agent."];
                 }
             }
 
@@ -389,8 +414,6 @@ class ImportCsv extends BaseManager
                 }
             }
         }
-
-        return $erreursRattachement;
     }
 
     private function validerFormatFichier($data)

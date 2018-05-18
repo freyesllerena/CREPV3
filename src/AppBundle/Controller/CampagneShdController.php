@@ -101,7 +101,7 @@ class CampagneShdController extends Controller
         /*@var $crepManager CrepManager */
         $crepManager = $this->get('app.crep_manager');
 
-        $indicateurs = $crepManager->calculIndicateurs($campagneShd, null, $shd);
+        $indicateurs = $crepManager->calculIndicateurs($campagneShd, null, null, $shd);
 
         //On initialise un array qui va contenir tous
         //les crep afin de supprimer les doc liés

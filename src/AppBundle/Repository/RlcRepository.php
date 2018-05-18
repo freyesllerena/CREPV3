@@ -10,8 +10,4 @@ namespace AppBundle\Repository;
  */
 class RlcRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getRlcByEmail($email)
-    {
-        return $this->findOneByEmail($email);
-    }
 }

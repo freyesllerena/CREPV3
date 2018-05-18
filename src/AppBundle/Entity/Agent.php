@@ -386,6 +386,14 @@ class Agent extends Personne
     protected $dateDebutContrat;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Document", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OrderBy({"nom" = "ASC"})
+     * @Assert\Valid
+     */
+    private $documents;
+    
+    /**
      * Constructor.
      */
     public function __construct()
@@ -1259,6 +1267,40 @@ class Agent extends Personne
         return $this;
     }
 
+    /**
+     * Add document.
+     *
+     * @param \AppBundle\Entity\Document $document
+     *
+     * @return Agent
+     */
+    public function addDocument(Document $document)
+    {
+    	$this->documents[] = $document;
+    
+    	return $this;
+    }
+    
+    /**
+     * Remove document.
+     *
+     * @param \AppBundle\Entity\Document $document
+     */
+    public function removeDocument(Document $document)
+    {
+    	$this->documents->removeElement($document);
+    }
+    
+    /**
+     * Get documents.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+    	return $this->documents;
+    }
+    
     //Fonction qui définit le nom par défaut du CREP pdf (nom_prenom_CREP_anneeEvaluation.pdf)
     public function getPdfFileName()
     {

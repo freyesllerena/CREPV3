@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Service\CrepManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use AppBundle\Form\RechercheCampagneBrhpType;
 
 class CampagneBrhpController extends Controller
 {
@@ -88,7 +89,7 @@ class CampagneBrhpController extends Controller
      *
      * @Security("has_role('ROLE_BRHP')")
      */
-    public function showAction(CampagneBrhp $campagneBrhp)
+    public function showAction(CampagneBrhp $campagneBrhp, Request $request)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::VOIR_BRHP, $campagneBrhp);
@@ -100,16 +101,28 @@ class CampagneBrhpController extends Controller
 
         $agentsEvaluables = $agentRepository->getAgentsEvaluables($campagneBrhp);
 
-        /*@var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
-        $indicateurs = $crepManager->calculIndicateurs($campagneBrhp);
-
         /*@var $campagnePncManager CampagneBrhpManager */
         $campagneBrhpManager = $this->get('app.campagne_brhp_manager');
         $historiqueIndicateurs = $campagneBrhpManager->getHistoriqueIndicateurs($campagneBrhp);
 
         $rouvrirForm = $this->creerRouvrirForm($campagneBrhp);
         $envoyerForm = $this->ouvrirShdForm($campagneBrhp);
+        $rechercheForm = $this->creerRechercheForm($campagneBrhp);
+        $rechercheForm->handleRequest($request);
+
+        $categories = [];
+        $affectations = [];
+        $corps = [];
+
+        if ($rechercheForm->isSubmitted() && $rechercheForm->isValid()) {
+            $categories = $rechercheForm->getData()['categories'];
+            $affectations = $rechercheForm->getData()['affectations'];
+            $corps = $rechercheForm->getData()['corps'];
+        }
+
+        /*@var $crepManager CrepManager */
+        $crepManager = $this->get('app.crep_manager');
+        $indicateurs = $crepManager->calculIndicateurs($campagneBrhp, [], [], null, null, $categories, $affectations, $corps);
 
         /* @var $ministere Ministere */
         $ministere = $this->getUser()->getMinistere();
@@ -127,6 +140,7 @@ class CampagneBrhpController extends Controller
             'historiqueIndicateurs' => $historiqueIndicateurs,
             'rouvrir_form' => $rouvrirForm->createView(),
             'envoyer_form' => $envoyerForm->createView(),
+            'recherche_form' => $rechercheForm->createView(),
             'agentsEvaluables' => $agentsEvaluables,
             'modelesCrep' => $modelesCrep,
         ));
@@ -347,5 +361,20 @@ class CampagneBrhpController extends Controller
         $response->headers->set('Set-Cookie', 'fileDownload=true; path=/');
 
         return $response;
+    }
+
+    /**
+     * Crée le formulaire de recherche sur une CampagneBrhp.
+     *
+     * @param CampagneBrhp $campagneBrhp
+     *
+     * @return \Symfony\Component\Form\Form Le formulaire
+     */
+    private function creerRechercheForm(CampagneBrhp $campagneBrhp)
+    {
+        return $this->createForm(RechercheCampagneBrhpType::class, null, array(
+                'campagneBrhp' => $campagneBrhp,
+                'em' => $this->getDoctrine()->getManager(),
+        ));
     }
 }

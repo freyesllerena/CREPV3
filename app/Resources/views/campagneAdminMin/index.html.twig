@@ -54,10 +54,15 @@
                                 {% endif %}
                                 
                                 <td>
-                                	{% if campagnePnc.docPopulation is null %}
+                                	{% if campagnePnc.docPopulation is null and not campagnePnc.enCoursDeChargementDuFichierAgent %}
                                 		<span class="label label-warning">En attente de chargement</span>
+                                	
+                                	{% elseif campagnePnc.docPopulation is not null and campagnePnc.enCoursDeChargementDuFichierAgent %}
+                                		<span class="label label-default">Chargement en cours</span>
+                                		
                                 	{% elseif not campagnePnc.diffusee %}
                                 		<span class="label label-primary">En attente de diffusion</span>
+                                		
                                 	{% else %}
                                 		<span class="label {{ campagnePnc.statut | campagne_status_label }}">{{ campagnePnc.statut }}</span>
                                 	{% endif %}

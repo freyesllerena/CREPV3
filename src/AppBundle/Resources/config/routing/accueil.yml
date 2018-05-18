@@ -1,3 +1,10 @@
 accueil:
     path:     /
     defaults: { _controller: "AppBundle:Accueil:index"}
+    
+deploy_collapse_menu: 
+    path: /deploy-collapse-menu/{etat}
+    defaults: { _controller: "AppBundle:Accueil:deployCollapseMenu" }
+    methods:  GET
+    requirements:
+        etat: 0|1|__etat__

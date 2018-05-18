@@ -22,6 +22,7 @@ use AppBundle\Entity\Campagne;
 use AppBundle\Repository\AgentRepository;
 use AppBundle\Repository\CampagneRlcRepository;
 use AppBundle\EnumTypes\EnumStatutCampagne;
+use AppBundle\Twig\AppExtension;
 
 class AppMailer extends Mailer implements FOSMailerInterface
 {
@@ -763,6 +764,30 @@ class AppMailer extends Mailer implements FOSMailerInterface
         }
     }
 
+    /* Notification de l'agent que son CREP a été rappelé par le N+1 */
+    public function notifierRappelAgentShd(Crep $crep)
+    {
+    	$agent = $crep->getAgent();
+    	
+    	$nomPrenomShd = AppExtension::identite($agent->getShd());
+    	$campagne = $crep->getAgent()->getCampagnePnc();
+    
+    	//Envoyer le mail de rappel du crep par le N+1
+    	$template = 'email/crep/rappelAgentShd_agent.html.twig';
+    	$subject = $campagne->getLibelle()." : Rappel du compte rendu d'évaluation professionnelle par votre N+1 (".$nomPrenomShd.')';
+    	$body = $this->templating->render($template, array(
+    			'campagne' => $campagne,
+    			'crep' => $crep,
+    			'shd' => $agent->getShd()->getUtilisateur(),
+    			'destinataire' => $agent->getUtilisateur(),
+    			'subject' => $subject,
+    	));
+    
+    	$this->sendMessage($agent->getUtilisateur(), $subject, $body);
+    }
+    
+    
+    
     /* Notification de l'agent et du N+1 que le CREP a été rappelé par le N+2 */
     public function notifierRappelAgentAh(Crep $crep)
     {
@@ -1031,6 +1056,40 @@ class AppMailer extends Mailer implements FOSMailerInterface
                     'subject' => $subject,
             ));
 
+            $this->sendMessage($destinataire, $subject, $body);
+        }
+    }
+
+    /**
+     * Notifier les admins min d'un ministère de la fin du chargement du fichier d'agents en arrière plan (échec ou succès en fonction du paramètre $succesChargement).
+     *
+     * @param CampagnePnc $campagnePnc
+     * @param bool        $succesChargement : si égale à true, envoyer une notification de succès, sinon une notification d'échec
+     */
+    public function notifierFinChargementPopulation(CampagnePnc $campagnePnc, $succesChargement)
+    {
+        /* @var $repositoryUtilisateur UtilisateurRepository */
+        $repositoryUtilisateur = $this->em->getRepository('AppBundle:Utilisateur');
+
+        // Récupérer les admin min actifs du ministère
+        $adminsMin = $repositoryUtilisateur->getAdminsMin($campagnePnc->getMinistere());
+
+        $template = 'email/chargementFichierPopulation/';
+        $template .= $succesChargement ? 'succesLecture.html.twig' : 'echecLecture.html.twig';
+
+        $subject = 'ESTEVE : '.$campagnePnc->getLibelle().' : ';
+        $subject .= $succesChargement ? 'Chargement du fichier d\'agents' : 'Échec du chargement du fichier d\'agents';
+
+        /*@var $perimetres PerimetreBrhp */
+        foreach ($adminsMin as $destinataire) {
+            $body = $this->templating->render($template, array(
+                    'campagne' => $campagnePnc,
+                    'destinataire' => $destinataire,
+                    'subject' => $subject,
+                    'classColorEmail' => $succesChargement ? 'success' : 'danger', // couleur des boutons dans le mail : rouge en cas d'échec du chargement, vert sinon
+            ));
+
+            // Envoyer le mail d'ouverture de campagne
             $this->sendMessage($destinataire, $subject, $body);
         }
     }

@@ -16,8 +16,10 @@ class CrepMcc02FormationT3Repository extends \Doctrine\ORM\EntityRepository
             ->addSelect('crep.dateNotification as c_dateNotification, crep.dateRefusNotification as c_dateRefusNotification')
 
             ->addSelect('formation.libelle as f_libelle')
+            ->addSelect('formation.commentaires as f_commentaires')
             ->addSelect('formation.demandeeAgent as f_demandeeAgent, formation.avisShd as f_avisShd, formation.propositionAh as f_propositionAh, formation.cpf as f_cpf, formation.echeance as f_echeance ')
             ->innerJoin('formation.crep', 'crep')
+
             ->innerJoin('crep.agent', 'agent')
             ->where('agent.campagneBrhp = :CAMPAGNE_BRHP')
 //            ->andWhere('crep.statut IN(:STATUTS_CREPS_FINALISE)')

@@ -10,6 +10,7 @@ use AppBundle\Entity\Utilisateur;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use AppBundle\Entity\CampagneRlc;
 use AppBundle\EnumTypes\EnumStatutCrep;
+use AppBundle\Repository\CampagneBrhpRepository;
 
 class CampagneController extends Controller
 {
@@ -18,8 +19,7 @@ class CampagneController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //récupérer le role de l'utilisateur
-        $tokenStorage = $this->get('security.token_storage');
-        $roleUtilisateur = $tokenStorage->getToken()->getRoles()[0]->getRole();
+        $roleUtilisateur = $this->get('session')->get('selectedRole');
 
         /* @var $utilisateurCourant Utilisateur  */
         $utilisateurCourant = $this->getUser();
@@ -76,7 +76,7 @@ class CampagneController extends Controller
                 break;
 
             case EnumRole::ROLE_SHD:
-                /* @var $repository CampagneBrhp */
+                /* @var $repository CampagneBrhpRepository */ 
                 $repository = $em->getRepository('AppBundle:CampagneBrhp');
                 $campagnes = $repository->findCampagnesRecentesShd($utilisateurCourant, $max);
                 $vue = 'campagneShd/campagnesRecentes.html.twig';

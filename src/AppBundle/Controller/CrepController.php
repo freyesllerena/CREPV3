@@ -52,6 +52,7 @@ class CrepController extends Controller
             $viserAgentForm = $this->creerViserAgentForm($crep);
             $signerAhForm = $this->creerSignerAhForm($crep);
             $notifierAgentForm = $this->creerNotifierAgentForm($crep);
+            $rappelerAgentShdForm = $this->creerRapplerAgentShdForm($crep);
             $rappelerAgentAhForm = $this->creerRapplerAgentAhForm($crep);
 
             if ('ROLE_ADMIN' == $this->get('session')->get('selectedRole')) {
@@ -69,6 +70,7 @@ class CrepController extends Controller
                     'viser_agent_form' => $viserAgentForm->createView(),
                     'signer_ah_form' => $signerAhForm->createView(),
                     'notifier_agent_form' => $notifierAgentForm->createView(),
+            		'rappeler_agent_shd_form' => $rappelerAgentShdForm->createView(),
                     'rappeler_agent_ah_form' => $rappelerAgentAhForm->createView(),
                     'reinitialiser_crep_form' => $reinitialiserForm->createView(),
                     'supprimer_crep_form' => $supprimerForm->createView(),
@@ -437,6 +439,25 @@ class CrepController extends Controller
     }
 
     /**
+     * Génére le formulaire de rappel du CREP de l'agent vers le N+1.
+     *
+     * @param Crep $crep
+     *
+     * @return \Symfony\Component\Form\Form Le formulaire
+     */
+    protected function creerRapplerAgentShdForm(Crep $crep)
+    {
+    	return $this
+    	->createFormBuilder()
+    	->setAction($this->generateUrl('crep_rappeler_agent_shd', array(
+    			'id' => $crep->getId(),
+    	)))
+    	->setMethod('PUT')
+    	->getForm()
+    	;
+    }
+    	
+    /**
      * Génére le formulaire de rappel du CREP de l'agent vers le N+2.
      *
      * @param Crep $crep
@@ -557,6 +578,29 @@ class CrepController extends Controller
         return $editForm;
     }
 
+    /**
+     * Rappeler le CREP de l'agent vers le N+1 (action du N+1).
+     *
+     * @Security("has_role('ROLE_SHD')")
+     */
+    public function rappelerAgentShdAction(Request $request, Crep $crep)
+    {
+    	//Voter
+    	$this->denyAccessUnlessGranted(CrepVoter::RAPPELER_AGENT_SHD, $crep);
+    
+    	$crepManager = $this->get('app.crep_manager');
+    
+    	$crepManager->rappelerAgentShd($crep);
+    
+    	$this
+    	->get('session')
+    	->getFlashBag()
+    	->set('notice', 'CREP rappelé avec succès !')
+    	;
+    
+    	return $this->redirectToRoute('crep_show', array('id' => $crep->getId()));
+    }
+    
     /**
      * Rappeler le CREP de l'agent vers le N+2 (action du N+2).
      *

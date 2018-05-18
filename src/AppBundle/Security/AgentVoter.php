@@ -195,7 +195,7 @@ class AgentVoter extends Voter
 
             if ('ROLE_BRHP' === $roleUtilisateurSession) {
                 /** @var $brhp Brhp */
-                $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+                $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
                 if (in_array($agent->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
                     return true;
@@ -256,7 +256,7 @@ class AgentVoter extends Voter
 
             if ('ROLE_BRHP' === $roleUtilisateurSession) {
                 /** @var $brhp Brhp */
-                $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+                $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
                 if (in_array($agent->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
                     return true;
                 }
@@ -413,7 +413,13 @@ class AgentVoter extends Voter
                 }
             }
         }
-
+        
+        if ('ROLE_AGENT' == $roleUtilisateurSession) {
+        	if ($utilisateur === $agent->getUtilisateur()){
+        		return true;
+        	}
+        }
+        
         // Dans tous les autres cas, on refuse l'accès
         return false;
     }
@@ -548,7 +554,7 @@ class AgentVoter extends Voter
             if ($agent->getPerimetreRlc()
                     && !in_array($agent->getCampagneRlc()->getStatut(), array(EnumStatutCampagne::CLOTUREE, EnumStatutCampagne::FERMEE))) {
                 /* @var $rlc Rlc */
-                $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+                $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
                 if ($rlc && in_array($agent->getPerimetreRlc(), $rlc->getPerimetresRlc()->toArray())) {
                     return true;
@@ -565,7 +571,7 @@ class AgentVoter extends Voter
             $campagnePnc = $agent->getCampagnePnc();
 
             /* @var $rlc Rlc */
-            $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+            $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
             $rlc->getPerimetresRlc();
 
@@ -589,7 +595,7 @@ class AgentVoter extends Voter
             if ($agent->getCampagneBrhp() && $dateCourante >= $agent->getCampagneBrhp()->getDateDebutEntretien()) {
                 if ('ROLE_BRHP' === $roleUtilisateurSession && $agent->getCrep() && $agent->getCrep()->getCrepPapier()) {
                     /** @var $brhp Brhp */
-                    $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+                    $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
                     if (in_array($agent->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
                         return true;
                     }

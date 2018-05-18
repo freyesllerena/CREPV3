@@ -87,7 +87,7 @@ class PerimetreBrhpVoter extends Voter
     private function peutModifier(PerimetreBrhp $perimetreBrhp, Utilisateur $utilisateur)
     {
         /* @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         // Si l'utilisateur est du même ministere que le celui du PerimetreBrhp
         if ($utilisateur->getMinistere() === $perimetreBrhp->getPerimetreRlc()->getMinistere()
@@ -107,14 +107,14 @@ class PerimetreBrhpVoter extends Voter
         if ($utilisateur->getMinistere() === $perimetreBrhp->getPerimetreRlc()->getMinistere()) {
             if ('ROLE_RLC' == $roleUtilisateurSession) {
                 /* @var $rlc Rlc */
-                $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+                $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
                 if ($rlc->getPerimetresRlc()->contains($perimetreBrhp->getPerimetreRlc())) {
                     return true;
                 }
             } elseif ('ROLE_BRHP' == $roleUtilisateurSession) {
                 /* @var $brhp Brhp */
-                $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+                $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
                 // Si le BRHP est responsable de $perimetreBrhp
                 if ($brhp->getPerimetresBrhp()->contains($perimetreBrhp)) {
@@ -130,7 +130,7 @@ class PerimetreBrhpVoter extends Voter
     private function peutSupprimer(PerimetreBrhp $perimetreBrhp, Utilisateur $utilisateur)
     {
         /*@var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         // Si l'utilisateur est du même ministere que le celui du PerimetreBrhp
         if ($utilisateur->getMinistere() === $perimetreBrhp->getPerimetreRlc()->getMinistere()

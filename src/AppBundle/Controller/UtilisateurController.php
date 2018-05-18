@@ -367,6 +367,9 @@ class UtilisateurController extends Controller
             $token = new UsernamePasswordToken($switchUtilisateur, null, 'main', $switchUtilisateur->getRoles());
             $tokenStorage = $this->get('security.token_storage');
             $tokenStorage->setToken($token);
+            
+            // On invalide le role sélectionné (au cas où une seconde session était active)
+            $request->getSession()->remove('selectedRole');
 
             // On enregistre l'utilisateur sélectionné dans la session
             $request->getSession()->set('switchUser', $switchUtilisateur);

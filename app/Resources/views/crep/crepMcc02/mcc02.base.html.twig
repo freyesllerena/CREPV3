@@ -67,7 +67,7 @@
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h3>1. Lettre de mission</h3>
+                            <h3>1. Lettre de mission ou d’objectifs</h3>
                             {% block ii1 %}
                             {% endblock ii1 %}
                             <h3>2. Contexte de l’année écoulée (organisation et fonctionnement du service)</h3>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h3>1. Lettre de mission</h3>
+                            <h3>1. Lettre de mission ou d’objectifs</h3>
                             {% block iii1 %}
                             {% endblock iii1 %}
                             <h3>2. Contexte prévisible de l’année à venir (organisation et fonctionnement du
@@ -125,6 +125,9 @@
                             </ul>
                         </div>
                     </div>
+
+                    {% block ivError %}{% endblock ivError %}
+
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h3>1. Les compétences managériales démontrées par l’agent-e dans ses fonctions</h3>
@@ -179,13 +182,10 @@
                             {% block vi1 %}
                             {% endblock vi1 %}
                             <h3>2. Recueil des besoins de formation (années N et N+1) :</h3>
-                            <h3>2.1. Formations liées à l'adaptation immédiate au poste de travail (T1)</h3>
                             {% block vi2_1 %}
                             {% endblock vi2_1 %}
-                            <h3>2.2. Formations liées à l’évolution des métiers (T2)</h3>
                             {% block vi2_2 %}
                             {% endblock vi2_2 %}
-                            <h3>2.3. Formations liées au développement des qualifications ou l’acquisition de nouvelles qualifications (T3)</h3>
                             {% block vi2_3 %}
                             {% endblock vi2_3 %}
                             <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
@@ -254,6 +254,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 

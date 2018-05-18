@@ -762,3 +762,14 @@ table.tile_info td:first-child {
 .form-group-no-margin{
   margin-bottom: 0px;	
 }
+
+.search-input-text{
+	 width: 100% !important;
+	 font-size: 13px;
+}
+
+.select2-selection__rendered li {
+  white-space: pre-line;
+}
+
+

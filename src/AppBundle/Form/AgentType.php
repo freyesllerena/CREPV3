@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Agent;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AgentType extends AbstractType
 {
@@ -30,9 +31,9 @@ class AgentType extends AbstractType
 
         $disabled = true;
 
-        // Si l'agent à été ajouté manuellement (via la fonctionnalité "Ajouter agent") ou l'utilisateur connecté est Administrateur :
-        // l'ensemble des champs des agents ajoutés manuellement sont modifiables
-        if ($builder->getData()->getAjouteManuellement() || 'ROLE_ADMIN' == $roleUtilisateur) {
+        // Si l'utilisateur connecté est Administrateur ou BRHP :
+        // l'ensemble des champs de l'agent sont modifiables
+        if (in_array($roleUtilisateur, ['ROLE_ADMIN', 'ROLE_BRHP'])) {
             $disabled = false;
         }
 
@@ -123,7 +124,14 @@ class AgentType extends AbstractType
                 ->add('codeSirh1', null, ['required' => false, 'disabled' => $disabled])
                 ->add('codeSirh2', null, ['required' => false, 'disabled' => $disabled])
                 ->add('capitalDif', TextType::class, ['required' => false, 'disabled' => $disabled])
-                ->add('capitalDifMobilisable', TextType::class, ['required' => false, 'disabled' => $disabled]);
+                ->add('capitalDifMobilisable', TextType::class, ['required' => false, 'disabled' => $disabled])
+        		->add('documents', CollectionType::class, array(
+                    'entry_type' => UploadeDocumentType::class,
+                    'allow_add' => true, // permettre à l'utilisateur d'ajouter des documents dynamiquement
+                    'allow_delete' => true, // permettre à l'utilisateur de supprimer des documents dynamiquement
+                    'label' => false,
+                    'by_reference' => false,
+            ));
 
         if ('ROLE_SHD' == $roleUtilisateur) {
             $builder->add('shd', Select2EntityType::class, [
@@ -335,7 +343,8 @@ class AgentType extends AbstractType
                         'multiple' => false,
                         'disabled' => false,
                     ]
-                );
+                )
+               ;
         }
     }
 

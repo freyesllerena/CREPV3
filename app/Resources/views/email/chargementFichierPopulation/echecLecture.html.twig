@@ -1,0 +1,26 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+
+    <tr>
+        <td class="content-block">
+            Bonjour,
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Nous vous informons que le chargement de votre fichier d'agents sur la campagne "{{ campagne.libelle }}" a échoué. 
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Nous vous invitons à vous connecter à l'application afin de le charger à nouveau en cliquant sur le lien suivant :
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('campagne_admin_min_charger_population',{'id' : campagne.id}) }}">Charger le fichier d'agent</a>
+        </td>
+    </tr>
+                                
+{% endblock %}

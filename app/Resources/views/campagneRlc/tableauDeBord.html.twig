@@ -1,5 +1,7 @@
 {% extends "index.base.html.twig" %}
 
+{% form_theme recherche_form 'Campagne/Form/App_form_recherche.html.twig' %}
+
 {% block frameTitle %}{{ campagneRlc.libelle }}{% endblock frameTitle %}
 {% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
 {% block pageTitle %}{{ campagneRlc.libelle }}{% endblock pageTitle %}
@@ -35,26 +37,15 @@
 		</div>
     {%  endif %} 
 
-    <!-- Filtre périmètre -->
-    <div class="form-group col-md-12 col-sm-12 col-xs-12 well">
-        <form class="form-horizontal form-label-left">
-        	<label class="control-label col-md-4 col-sm-4 col-xs-12"><i class="fa fa-share-alt"></i> Sélectionner un périmètre</label>
-            <div class="col-md-4 col-sm-4 col-xs-12" id="perimetre_filter">
-          		<select class="form-control">
-            		<option value="0">Tous</option>
-                 	{% for perimetreBrhp in campagneRlc.perimetresBrhp %}
-        			<option value="{{ perimetreBrhp.id }}">{{ perimetreBrhp.libelle }}</option>
-             		{% endfor %}
-            	</select>
-            </div>
-        </form>
-    </div>
-
 	<div class="clearfix"></div>
 
     {% block indicateurs %}
     	{% include 'Campagne/indicateurs.html.twig' %}
     {% endblock indicateurs %}
+    
+    {% block filtres %}
+        {% include 'campagneRlc/blocsTableauDeBord/filtres.html.twig' %}
+    {% endblock filtres %}
 
 	<div class="row">
     	<div class="col-md-6 col-sm-12 col-xs-12">
@@ -88,8 +79,8 @@
                 	<div class="" role="tabpanel" data-example-id="togglable-tabs">
                     	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                         	<li role="presentation" class="active"><a href="#tab_content0" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Ma population</a></li>
-                            <li role="presentation" class=""><a href="#tab_content1" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
-                            <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>
+                            <li role="presentation" class="" onclick="chargerAgentsSansShd();"><a href="#tab_content1" role="tab" id="profile-tab1" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
+                            <li role="presentation" class="" onclick="chargerAgentsSansPerimetre();"><a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
                         	<div role="tabpanel" class="tab-pane fade active in" id="tab_content0" aria-labelledby="home-tab">
@@ -205,6 +196,9 @@
         	window.location.href = url;
         });
 
+        var agentsSansShdCharges = false;
+        var agentsSansPerimetreCharges = false;
+
         $(document).ready(function() {
             
         var dtable = $('#ma_population').DataTable( {
@@ -216,7 +210,28 @@
 		        "pageLength": 10,
 		        "searchDelay": 500,
 				"order": [[ 0, "asc" ]],
-				"columnDefs": [ { orderable: false, targets: [7] } ],
+				"columnDefs": [ 
+                                { targets: [7, 8], orderable: false },     // colonnes non triables
+                ],
+				"dom": 'l<"pull-right"<"pull-right"B>>tipr',
+		        "buttons": [
+		            {
+                        extend: 'csv',
+                        text: '<i class="fa fa-file-excel-o" title="Exporter de la page courante en CSV"></i>',
+                        fieldSeparator: ';',
+                        exportOptions: {
+                        	columns: [ 0, 1, 2, 3, 4, 5, 6 ], // colonnes concernées par l'export
+                        	modifier: {
+                                selected: true
+                            }
+                        }
+                    },
+                    {
+                    	extend: 'colvis',
+                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+                    	columns: [ 1, 2, 3, 4, 5, 6, 7 ]  // colonnes pouvant être masquées
+                    }
+		        ],
 		        "columns":[ 
 		                   {"data": "agent"}, 
 		                   {"data": "perimetreBrhp"},
@@ -225,56 +240,148 @@
 		                   {"data": "affectation"},
 		                   {"data": "evaluable"},
 		                   {"data": "avancement"},
+		                   {"data": "actionShowCrep"},
 		                   {"data": "actions"},
 		               ] 
 		    } );
         setAjaxDataTable("#ma_population", dtable);
       
-
-        var dtable = $('#agents_sans_shd').DataTable( {
-		    	"oLanguage": oLanguage_fr(),
-		        "processing": true,
-		        "serverSide": true,
-		        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'perimetreBrhp': perimetreBrhp_id, 'evaluable': 2, 'sansShd': 1, 'sansPerimetre':0, 'onglet': 'agents_sans_shd' }) }}",
-		        "sAjaxDataProp": "data",
-		        "pageLength": 10,
-		        "searchDelay": 500,
-				"order": [[ 0, "asc" ]],
-				"columnDefs": [ { orderable: false, targets: [5] } ],
-		        "columns":[ 
-		                   {"data": "agent"}, 
-		                   {"data": "perimetreBrhp"},
-		                   {"data": "affectation"},
-		                   {"data": "ah"},
-		                   {"data": "evaluable"},
-		                   {"data": "actions"},
-		               ] 
-		    } );
-        setAjaxDataTable("#agents_sans_shd", dtable);
-
-        
-        var dtable = $('#agents_sans_perimetre_rlc').DataTable( {
-		    	"oLanguage": oLanguage_fr(),
-		        "processing": true,
-		        "serverSide": true,
-		        "ajax": "{{ path('agent_sans_perimetre_rlc_server_processing', { 'campagnePnc': campagneRlc.campagnePnc.id, 'campagneRlc': campagneRlc.id }) }}",
-		        "sAjaxDataProp": "data",
-		        "pageLength": 10,
-		        "searchDelay": 500,
-				"order": [[ 0, "asc" ]],
-				"columnDefs": [ { orderable: false, targets: [5] } ],
-		        "columns":[ 
-		                   {"data": "agent"}, 
-		                   {"data": "uniteOrganisationnelle"},
-		                   {"data": "affectation"},
-		                   {"data": "shd"}, 
-		                   {"data": "ah"},
-		                   {"data": "evaluable"},
-		                   {"data": "actions"},
-		               ] 
-		    } );
-        setAjaxDataTable("#agents_sans_perimetre_rlc", dtable);
         });
+
+        function chargerAgentsSansShd(){
+        	 if(!agentsSansShdCharges){ // On vérifier si le dataTable a déjà été chargé
+		        var dtable = $('#agents_sans_shd').DataTable( {
+				    	"oLanguage": oLanguage_fr(),
+				        "processing": true,
+				        "serverSide": true,
+				        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'perimetreBrhp': perimetreBrhp_id, 'evaluable': 2, 'sansShd': 1, 'sansPerimetre':0, 'onglet': 'agents_sans_shd' }) }}",
+				        "sAjaxDataProp": "data",
+				        "pageLength": 10,
+				        "searchDelay": 500,
+						"order": [[ 0, "asc" ]],
+						"columnDefs": [ 
+										{ targets: [5], orderable: false },  // colonnes non triables
+                                      ],
+	                   "dom": 'l<"pull-right"<"pull-right"B>>tipr',
+	                   "buttons": [
+		                               {
+		                                   extend: 'csv',
+		                                   text: '<i class="fa fa-file-excel-o" title="Exporter de la page courante en CSV"></i>',
+		                                   fieldSeparator: ';',
+		                                   exportOptions: {
+			                                   columns: [ 0, 1, 2, 3, 4 ], // colonnes concernées par l'export
+			                                   modifier: {
+				                                   selected: true
+				                                   }
+		                                   }
+	                                   },
+	                                   {
+		                                   extend: 'colvis',
+		                                   text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+		                                   columns: [ 1, 2, 3, 4 ]  // colonnes pouvant être masquées
+	                                   }
+                                  ],
+				        "columns":[ 
+				                   {"data": "agent"},
+				                   {"data": "perimetreBrhp"},
+				                   {"data": "affectation"},
+				                   {"data": "ah"},
+				                   {"data": "evaluable"},
+				                   {"data": "actions"},
+				               ] 
+				    } );
+		        setAjaxDataTable("#agents_sans_shd", dtable);
+		        agentsSansShdCharges = true;
+             }
+        }
+
+        function chargerAgentsSansPerimetre(){
+            if(!agentsSansPerimetreCharges){ // On vérifier si le dataTable a déjà été chargé
+		        var dtable = $('#agents_sans_perimetre_rlc').DataTable( {
+				    	"oLanguage": oLanguage_fr(),
+				        "processing": true,
+				        "serverSide": true,
+				        "ajax": "{{ path('agent_sans_perimetre_rlc_server_processing', { 'campagnePnc': campagneRlc.campagnePnc.id, 'campagneRlc': campagneRlc.id }) }}",
+				        "sAjaxDataProp": "data",
+				        "pageLength": 10,
+				        "searchDelay": 500,
+						"order": [[ 0, "asc" ]],
+						"columnDefs": [ 
+                                        { targets: [6], orderable: false } 
+                                      ],
+	                    "dom": 'l<"pull-right"<"pull-right"B>>tipr',
+               	        "buttons": [
+	                                   {
+	                                       extend: 'csv',
+               	                           text: '<i class="fa fa-file-excel-o" title="Exporter de la page courante en CSV"></i>',
+               	                           fieldSeparator: ';',
+               	                           exportOptions: {
+               		                           columns: [ 0, 1, 2, 3, 4, 5 ], // colonnes concernées par l'export
+               		                           modifier: {
+               			                          selected: true
+               			                       }
+               	                           }
+                                       },
+                                       {
+               	                           extend: 'colvis',
+               	                           text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+               	                           columns: [ 1, 2, 3, 4, 5 ]  // colonnes pouvant être masquées
+                                       }
+                                   ],
+				        "columns":[ 
+				                   {"data": "agent"}, 
+				                   {"data": "uniteOrganisationnelle"},
+				                   {"data": "affectation"},
+				                   {"data": "shd"}, 
+				                   {"data": "ah"},
+				                   {"data": "evaluable"},
+				                   {"data": "actions"},
+				               ] 
+				    } );
+		        setAjaxDataTable("#agents_sans_perimetre_rlc", dtable);
+		        agentsSansPerimetreCharges = true;
+             }
+        }
+
+        <!-- Select2 -->        
+	       $(document).ready(function() {
+             // Gestion de l'affichage ou pas de l'icone filtre
+             var filtresPerimetresBrhp = document.getElementById("recherche_campagne_rlc_perimetresBrhp").selectedOptions.length;
+             var filtresCategories = document.getElementById("recherche_campagne_rlc_categories").selectedOptions.length;
+             var filtresAffectations = document.getElementById("recherche_campagne_rlc_affectations").selectedOptions.length;
+             var filtresCorps = document.getElementById("recherche_campagne_rlc_corps").selectedOptions.length;
+
+             if(filtresPerimetresBrhp + filtresCategories + filtresAffectations + filtresCorps > 0){
+	               document.getElementById('icone_filter').style.display = 'inline-block';
+             }
+	            // Fin de gestion de l'affichage ou pas de l'icone filtre
+        
+	            $("#recherche_campagne_rlc_perimetresBrhp").select2({
+	                placeholder: "Périmètres BRHP ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_rlc_categories").select2({
+	                placeholder: "Catégories ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_rlc_affectations").select2({
+	                placeholder: "Affectations ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_rlc_corps").select2({
+	                placeholder: "Corps ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+       });
+       
+     <!-- /Select2 -->
 		
     </script>
         

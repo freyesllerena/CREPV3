@@ -19,6 +19,7 @@ class MinistereType extends AbstractType
             ->add('libelleLong')
             ->add('libelleOfficiel')
             ->add('delaiVisa')
+            ->add('delaiSignatureDefinitive')
         ;
     }
 

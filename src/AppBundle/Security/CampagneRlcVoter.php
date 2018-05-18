@@ -109,7 +109,7 @@ class CampagneRlcVoter extends Voter
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         /* @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         if ((EnumStatutCampagne::CLOTUREE === $campagneRlc->getStatut()
                 // On ne peut rouvrir une campagne rlc que si la campagne pnc a été rouverte
@@ -128,7 +128,7 @@ class CampagneRlcVoter extends Voter
     private function peutModifier(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
     {
         /* @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         if (in_array($campagneRlc->getStatut(), array(
                 EnumStatutCampagne::INITIALISEE,
@@ -147,7 +147,7 @@ class CampagneRlcVoter extends Voter
     private function peutVoir(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
     {
         /** @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         if (in_array($campagneRlc->getPerimetreRlc(), $rlc->getPerimetresRlc()->toArray())) {
             return true;
@@ -160,7 +160,7 @@ class CampagneRlcVoter extends Voter
     private function peutOuvrir(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
     {
         /** @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         /* @var $roleUtilisateurSession Role */
         $roleUtilisateurSession = $this->session->get('selectedRole');
@@ -188,7 +188,7 @@ class CampagneRlcVoter extends Voter
     private function peutSupprimerDocument(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
     {
         /** @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         if (in_array($campagneRlc->getStatut(), array(
                 EnumStatutCampagne::INITIALISEE,

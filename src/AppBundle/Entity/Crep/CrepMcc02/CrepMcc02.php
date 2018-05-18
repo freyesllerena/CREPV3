@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Crep;
 use AppBundle\Entity\Agent;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02AutreObjectif;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * CrepMcc02
@@ -19,6 +20,15 @@ use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02AutreObjectif;
  */
 class CrepMcc02 extends Crep
 {
+
+    const COMPETENCE_RELATION_01 = 'Force de conviction (leadership)';
+    const COMPETENCE_RELATION_02 = 'Capacité à conduire le changement';
+    const COMPETENCE_RELATION_03 = 'Écoute';
+    const COMPETENCE_RELATION_04 = 'Capacité à développer les compétences et à déléguer';
+    const COMPETENCE_RELATION_05 = 'Capacité à communiquer';
+    const COMPETENCE_RELATION_06 = 'Capacité à coopérer avec l’environnement';
+    const COMPETENCE_RELATION_07 = 'Capacité à conseiller';
+
     public static $echelleObjectifEvalue = [
         'Atteint' => 0,
         'Partiellement Atteint' => 1,
@@ -1052,25 +1062,25 @@ class CrepMcc02 extends Crep
 
         // Initialisatiuon des compétences liées à la relation
         $competenceRelation = new CrepMcc02CompetenceRelation();
-        $competenceRelation->setLibelle('Force de conviction (leadership)');
+        $competenceRelation->setLibelle(self::COMPETENCE_RELATION_01);
         $this->addCompetencesRelation($competenceRelation);
         $competenceRelation = new CrepMcc02CompetenceRelation();
-        $competenceRelation->setLibelle('Capacité à conduire le changement');
+        $competenceRelation->setLibelle(self::COMPETENCE_RELATION_02);
         $this->addCompetencesRelation($competenceRelation);
         $competenceRelation = new CrepMcc02CompetenceRelation();
-        $competenceRelation->setLibelle('Écoute');
+        $competenceRelation->setLibelle(self::COMPETENCE_RELATION_03);
         $this->addCompetencesRelation($competenceRelation);
         $competenceRelation = new CrepMcc02CompetenceRelation();
-        $competenceRelation->setLibelle('Capacité à développer les compétences et à déléguer');
+        $competenceRelation->setLibelle(self::COMPETENCE_RELATION_04);
         $this->addCompetencesRelation($competenceRelation);
         $competenceRelation = new CrepMcc02CompetenceRelation();
-        $competenceRelation->setLibelle('Capacité à communiquer');
+        $competenceRelation->setLibelle(self::COMPETENCE_RELATION_05);
         $this->addCompetencesRelation($competenceRelation);
         $competenceRelation = new CrepMcc02CompetenceRelation();
-        $competenceRelation->setLibelle('Capacité à coopérer avec l’environnement');
+        $competenceRelation->setLibelle(self::COMPETENCE_RELATION_06);
         $this->addCompetencesRelation($competenceRelation);
         $competenceRelation = new CrepMcc02CompetenceRelation();
-        $competenceRelation->setLibelle('Capacité à conseiller');
+        $competenceRelation->setLibelle(self::COMPETENCE_RELATION_07);
         $this->addCompetencesRelation($competenceRelation);
 
         // Initialisatiuon des compétences liées à l'intelligences des situations
@@ -2386,4 +2396,72 @@ class CrepMcc02 extends Crep
         $this->observationsPotentielEvolutionAgent = $observationsPotentielEvolutionAgent;
     }
 
+    /**
+     * @Assert\Callback
+     * @param ExecutionContextInterface $context
+     */
+    public function validateCrepMcc02(ExecutionContextInterface $context)
+    {
+
+        var_dump($this->getCompetencesRelations()->toArray());
+
+        // Cette variable calucle le nombre de compétences (requises, professionnelles et manageriales) dont le niveau acquis est exceptionnelle
+        $nbCompetenceNiveauExceptionnelle = 0;
+        $competenceR = null;
+
+        /** @var CrepMcc02CompetenceRelation $competenceRelation */
+        foreach ($this->competencesRelations as $competenceRelation) {
+
+            var_dump($competenceRelation->getLibelle());
+
+            if ($competenceRelation->getLibelle()
+                && null !== $competenceRelation->getNiveauAcquis()
+                && 0 == $competenceRelation->getNiveauAcquis()) {
+                ++$nbCompetenceNiveauExceptionnelle;
+            } else {
+
+            }
+        }
+//        die();
+
+        /*  *****   VALIDATION: Nombre de compétences dont le niveau acquis est à Exceptionnel ne doit pas dépasser 5  ***** */
+        if ($nbCompetenceNiveauExceptionnelle > 5) {
+            $context->buildViolation('Le nombre de coches figurant dans la colonne "Exceptionnelle" du tableau  "Compétences liées à la relation" ne doit pas dépasser 5')
+                ->setParameter('cause', 'nbCompetenceNiveauExceptionnelle')
+                ->addViolation();
+            $this->initCompetenceRelation();
+            $this->competencesRelations = $this->getCompetencesRelations();
+        }
+    }
+
+    /**
+     * @return CrepMcc02CompetenceRelation
+     */
+    private function initCompetenceRelation()
+    {
+        // Initialisatiuon des compétences liées à la relation
+        $competenceRelation = new CrepMcc02CompetenceRelation();
+        $competenceRelation->setLibelle('Force de conviction (leadership)');
+        $this->addCompetencesRelation($competenceRelation);
+        $competenceRelation = new CrepMcc02CompetenceRelation();
+        $competenceRelation->setLibelle('Capacité à conduire le changement');
+        $this->addCompetencesRelation($competenceRelation);
+        $competenceRelation = new CrepMcc02CompetenceRelation();
+        $competenceRelation->setLibelle('Écoute');
+        $this->addCompetencesRelation($competenceRelation);
+        $competenceRelation = new CrepMcc02CompetenceRelation();
+        $competenceRelation->setLibelle('Capacité à développer les compétences et à déléguer');
+        $this->addCompetencesRelation($competenceRelation);
+        $competenceRelation = new CrepMcc02CompetenceRelation();
+        $competenceRelation->setLibelle('Capacité à communiquer');
+        $this->addCompetencesRelation($competenceRelation);
+        $competenceRelation = new CrepMcc02CompetenceRelation();
+        $competenceRelation->setLibelle('Capacité à coopérer avec l’environnement');
+        $this->addCompetencesRelation($competenceRelation);
+        $competenceRelation = new CrepMcc02CompetenceRelation();
+        $competenceRelation->setLibelle('Capacité à conseiller');
+        $this->addCompetencesRelation($competenceRelation);
+
+        return $competenceRelation;
+    }
 }

@@ -180,3 +180,18 @@ agent_new_server_processing_pnc:
     requirements:
         campagnePnc: '\d+'
         agent_id: '\d+'
+        
+agent_get_document:
+    path:     /get-document/{id}/{document}
+    defaults: { _controller: "AppBundle:Agent:getDocument" }
+    methods:   [GET]
+    requirements:
+        id: '\d+'
+        document: '\d+'
+
+agent_delete_document:
+    path:     /delete-document/{id}/{document}
+    defaults: { _controller: "AppBundle:Agent:deleteDocument" }
+    requirements:
+        id: '\d+'
+        document: '\d+'  

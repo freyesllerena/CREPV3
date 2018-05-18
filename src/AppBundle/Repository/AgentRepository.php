@@ -13,6 +13,9 @@ use AppBundle\Entity\PerimetreRlc;
 use AppBundle\Entity\Perimetre;
 use AppBundle\EnumTypes\EnumStatutCrep;
 use Doctrine\ORM\QueryBuilder;
+use AppBundle\Traits\ConditionsFiltre;
+use AppBundle\EnumTypes\EnumStatutValidationAgent;
+use AppBundle\Entity\Utilisateur;
 
 /**
  * AgentRepository.
@@ -22,6 +25,9 @@ use Doctrine\ORM\QueryBuilder;
  */
 class AgentRepository extends \Doctrine\ORM\EntityRepository
 {
+    // Utilisation de trait
+    use ConditionsFiltre;
+
     public function getShdsByCampagneBrhp(CampagneBrhp $campagneBrhp)
     {
         $qb = $this->createQueryBuilder('a');
@@ -229,7 +235,7 @@ class AgentRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getScalarResult();
     }
 
-    public function getNbAgentsEvaluables(Campagne $campagne, Perimetre $perimetre = null, Agent $shd = null, Agent $ah = null)
+    public function getNbAgentsEvaluables(Campagne $campagne, $perimetresRlc = [], $perimetresBrhp = [], Agent $shd = null, Agent $ah = null, $categories = [], $affectations = [], $corps = [])
     {
         if ($shd && $ah) {
             throw new \Exception('Appel incorrect SHD ou AH');
@@ -240,24 +246,25 @@ class AgentRepository extends \Doctrine\ORM\EntityRepository
                     ->andWhere('agent.evaluable = :EVALUABLE')
                     ->setParameter('EVALUABLE', true);
 
+        $this->addFiltreCategories($qb, $categories);
+        $this->addFiltreAffectations($qb, $affectations);
+        $this->addFiltreCorps($qb, $corps);
+
         if ($campagne instanceof CampagnePnc) {
             $qb->andWhere('agent.campagnePnc = :CAMPAGNE');
 
-            /* @var $perimetre PerimetreRlc */
-            if ($perimetre) {
-                $qb->leftJoin('agent.campagneRlc', 'campagneRlc')
-                ->andWhere('campagneRlc.perimetreRlc = :PERIMETRE_RLC')
-                ->setParameter('PERIMETRE_RLC', $perimetre);
-            }
+            $this->addFiltrePerimetresRlc($qb, $perimetresRlc);
+            $this->addFiltrePerimetresBrhp($qb, $perimetresBrhp);
         } elseif ($campagne instanceof CampagneRlc) {
             $qb->andWhere('agent.campagneRlc = :CAMPAGNE');
 
             /* @var $perimetre PerimetreRlc */
-            if ($perimetre) {
-                $qb->leftJoin('agent.campagneBrhp', 'campagneBrhp')
-                ->andWhere('campagneBrhp.perimetreBrhp = :PERIMETRE_BRHP')
-                ->setParameter('PERIMETRE_BRHP', $perimetre);
-            }
+//             if ($perimetre) {
+//                 $qb->leftJoin('agent.campagneBrhp', 'campagneBrhp')
+//                 ->andWhere('campagneBrhp.perimetreBrhp = :PERIMETRE_BRHP')
+//                 ->setParameter('PERIMETRE_BRHP', $perimetre);
+//             }
+            $this->addFiltrePerimetresBrhp($qb, $perimetresBrhp);
         } elseif ($campagne instanceof CampagneBrhp) {
             $qb->andWhere('agent.campagneBrhp = :CAMPAGNE');
             if ($shd) {
@@ -607,6 +614,9 @@ class AgentRepository extends \Doctrine\ORM\EntityRepository
                     $qb->andWhere('agent.affectation LIKE :'.$key);
                     $qb->setParameter($key, '%'.$value.'%');
                     break;
+
+                case 'statutValidation':
+                    $this->addFiltreStatutValidation($qb, $value);
             }
         }
     }
@@ -664,6 +674,37 @@ class AgentRepository extends \Doctrine\ORM\EntityRepository
             case '8':
                 $qb->andWhere('crep.statut = :STATUT ');
                 $qb->setParameter('STATUT', EnumStatutCrep::CAS_ABSENCE);
+                break;
+        }
+    }
+
+    /**
+     * Ajouter les conditions sur le statut de validation d'un agent par son N+1 au $qb (pour les multi filtres).
+     *
+     * @param QueryBuilder $qb
+     * @param string       $value :
+     */
+    private function addFiltreStatutValidation(QueryBuilder $qb, $value)
+    {
+        $qb->andWhere('agent.evaluable = 1');
+        switch ($value) {
+            case '0':
+                $qb->andWhere('agent.statutValidation = :STATUT');
+                $qb->setParameter('STATUT', EnumStatutValidationAgent::EN_COURS);
+                break;
+            case '1':
+                $qb->andWhere('agent.statutValidation = :STATUT');
+                $qb->setParameter('STATUT', EnumStatutValidationAgent::VALIDE);
+                break;
+
+            case '2':
+                $qb->andWhere('agent.statutValidation = :STATUT');
+                $qb->setParameter('STATUT', EnumStatutValidationAgent::ERREUR_SIGNALEE);
+                break;
+
+            case '3':
+                $qb->andWhere('agent.statutValidation = :STATUT');
+                $qb->setParameter('STATUT', EnumStatutValidationAgent::REJETE);
                 break;
         }
     }
@@ -757,20 +798,19 @@ class AgentRepository extends \Doctrine\ORM\EntityRepository
         return !empty($result);
     }
 
-    public function isShd($emailShd, CampagneBrhp $campagneBrhp)
+    public function isShd(Utilisateur $shd, CampagneBrhp $campagneBrhp)
     {
         $qb = $this->createQueryBuilder('agent');
 
         $qb->innerJoin('agent.shd', 'shd')
         ->select('shd.id')
         ->where('agent.campagneBrhp = :CAMPAGNE_BRHP')
-        ->andWhere('shd.email = :EMAIL_SHD')
+        ->andWhere('shd.utilisateur = :SHD')
         ->setParameter('CAMPAGNE_BRHP', $campagneBrhp)
-        ->setParameter('EMAIL_SHD', $emailShd)
+        ->setParameter('SHD', $shd)
         ->setMaxResults(1);
 
         $result = $qb->getQuery()->getScalarResult();
-
         return !empty($result);
     }
 
@@ -870,5 +910,70 @@ class AgentRepository extends \Doctrine\ORM\EntityRepository
         $reslut = $qb->getQuery()->getScalarResult();
 
         return $reslut;
+    }
+
+    /**
+     * Récupérer les catégories/affectations/corps (en fonction du paramètre $colonne) des agents d'une campagne PNC.
+     *
+     * @param CampagnePnc $campagnePnc
+     */
+//     public function getColonneByCampagnePnc($colonne, $libelleColonne, CampagnePnc $campagnePnc)
+//     {
+//         $qb = $this->createQueryBuilder('agent');
+
+//         $qb->select('agent.' . $colonne)
+//         ->distinct()
+//         ->where('agent.campagnePnc = :CAMPAGNE_PNC')
+//         ->andWhere('agent.' . $colonne . ' IS NOT NULL')
+//         ->setParameter('CAMPAGNE_PNC', $campagnePnc)
+//         ->indexBy('agent', 'agent.' . $colonne);
+
+//         $result = [];
+
+//         $queryResult = $qb->getQuery()->getArrayResult();
+
+//         foreach ($queryResult as $key=>$value){
+//             $result[$key] = $key;
+//         }
+
+//         $result['(Sans '.$libelleColonne.')'] = null;
+//         return $result ;
+//     }
+
+    /**
+     * Récupérer les catégories/affectations/corps (en fonction du paramètre $colonne) des agents d'une campagne PNC, RLC ou BRHP.
+     *
+     * @param Campagne $campagne
+     */
+    public function getColonneByCampagne($colonne, $libelleColonne, Campagne $campagne)
+    {
+        $qb = $this->createQueryBuilder('agent');
+
+        $qb->select('agent.'.$colonne)
+        ->distinct()
+        ->where('agent.'.$colonne.' IS NOT NULL');
+
+        if ($campagne instanceof CampagnePnc) {
+            $qb->where('agent.campagnePnc = :CAMPAGNE');
+        } elseif ($campagne instanceof CampagneRlc) {
+            $qb->andWhere('agent.campagneRlc = :CAMPAGNE');
+        } elseif ($campagne instanceof CampagneBrhp) {
+            $qb->andWhere('agent.campagneBrhp = :CAMPAGNE');
+        }
+
+        $qb->setParameter('CAMPAGNE', $campagne)
+        ->indexBy('agent', 'agent.'.$colonne);
+
+        $result = [];
+
+        $queryResult = $qb->getQuery()->getArrayResult();
+
+        foreach ($queryResult as $key => $value) {
+            $result[$key] = $key;
+        }
+
+        $result['(Sans '.$libelleColonne.')'] = null;
+
+        return $result;
     }
 }

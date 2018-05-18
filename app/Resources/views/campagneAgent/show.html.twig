@@ -96,7 +96,7 @@
             					</td>
             				</tr>
                             <tr>
-                              	<th scope="row">Documents </th>
+                              	<th scope="row">Documents de la campagne</th>
                               	<td>
                                 	<ul class="list-unstyled project_files">
                                 	    {% for document in campagneBrhp.campagneRlc.campagnePnc.documents %}
@@ -111,6 +111,19 @@
                                 	</ul>
                               	</td>
                             </tr>
+                            {% if agent.documents is not empty %}
+            				</tr>
+                            <tr>
+                              	<th scope="row">Mes documents</th>
+                              	<td>
+                                	<ul class="list-unstyled project_files">
+                                	    {% for document in agent.documents %}
+                            			<li><a href="{{ path('agent_get_document', {'id': agent.id, 'document': document.id}) }}"><i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}</a></li>
+                                        {% endfor  %}
+                                	</ul>
+                              	</td>
+                            </tr>                            
+                            {% endif %}
                             
                             {% if agent.crep %}
                             
@@ -201,7 +214,7 @@
 					{% set iconeCrep = "fa-file-text-o"  %}
 				{% endif %}            
             	<a href="{{ path('crep_show', { 'id': agent.crep.id }) }}" title="voir le CREP">
-					<button type="button" class="btn btn-primary pull-right"><i class="fa {{ iconeCrep }}" aria-hidden="true"></i> Accéder au CREP</button>
+					<button type="button" class="btn btn-primary pull-right"><i class="fa {{ iconeCrep }}" aria-hidden="true"></i> Accéder à mon CREP</button>
 				</a>
             {% endif %}
                                    

@@ -1,0 +1,188 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@AppBundle/Resources/config/services.yml" }
+
+
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+    files_directory: "%kernel.root_dir%/../web/uploads/listes"
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        cookie_lifetime:    0 # durée max d'activité / cookie_lifetime: 0 => cookie expiré à  la fermeture du navigateur
+        gc_maxlifetime: 36000 # (10 heures en seconde) gc sera remis à zéro à chaque activité de l'utilisateur
+        gc_probability:     1
+        gc_divisor:       1000
+        cookie_secure:    '%app.cookie_secure%'
+        cookie_httponly : '%app.cookie_httponly%'
+        metadata_update_threshold: 120
+        
+#    serializer:
+#        cache: serializer.mapping.cache.apcu         
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'TetranzSelect2EntityBundle:Form:fields.html.twig'
+    globals:
+        defaultPassword: "%app.default_password%"
+        appName:         "%app.app_name%"
+        companyName:     "%app.company_name%"
+        appVersion:      "%app.version%"
+        sessionTimeout:   "%app.session_timeout%"
+        maxFileSize:      "%app.maxFileSize%"
+        environnement:    "%app.environnement%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_service_name%"
+        service:  "%database_service%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+        types:
+            enum_civilite: AppBundle\EnumTypes\EnumCivilite
+            enum_statut_campagne: AppBundle\EnumTypes\EnumStatutCampagne
+            enum_statut_crep:  AppBundle\EnumTypes\EnumStatutCrep
+            enum_statut_validation_agent: AppBundle\EnumTypes\EnumStatutValidationAgent
+            enum_erreur_constatee : AppBundle\EnumTypes\EnumErreurConstatee
+        mapping_types:
+            enum: string
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+#        metadata_cache_driver: apcu
+#        query_cache_driver: apcu
+#        result_cache_driver: apcu
+#        second_level_cache:
+#            enabled: true
+
+# Swiftmailer Configuration
+
+swiftmailer:
+    transport:            smtp
+    username:             ~
+    password:             ~
+    host:                 localhost
+    port:                 ~
+    encryption:           ~
+    auth_mode:            ~
+    spool:
+        type:                 file
+        path:                 '%kernel.cache_dir%/swiftmailer/spool'
+    sender_address:       '%mailer.from_address%'
+    antiflood:
+        threshold:            99
+        sleep:                10
+    delivery_addresses:     ~
+    disable_delivery:     false
+    logging:              '%kernel.debug%'
+
+
+
+# FOSUser Configuration
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AppBundle\Entity\Utilisateur
+    from_email:
+        address:        '%mailer.from_address%'
+        sender_name:    '%mailer.from_name%'
+    service:
+#        mailer: fos_user.mailer.default
+        mailer: app.mailer
+    resetting:
+        token_ttl: 3600
+        form:
+            validation_groups:  [ResetPassword, Default]
+        email:
+            template: email/password_resetting.email.twig
+    registration:
+        form:
+            type: cisirh_bacbundle_utilisateur
+        confirmation:
+            enabled: true
+            template: email/confirmation_registration.email.twig
+    change_password:
+        form:
+            validation_groups:  [ResetPassword, Default]
+
+
+# Configuration du service de génération de fichiers PDF
+white_october_tcpdf:
+    class: 'AppBundle\Util\AppPdf'
+
+
+monolog:
+    handlers:
+        main:
+            type:               fingers_crossed
+            action_level:       error
+            handler:            grouped
+        grouped:
+            type:               group
+            members:            [streamed, buffered]
+        streamed:
+            type:               stream
+            path:               "%kernel.logs_dir%/%kernel.environment%.log"
+            level:              debug
+        buffered:
+            type:               buffer
+            handler:            swift
+        swift:
+            type:               swift_mailer
+            from_email:         "%app.errors.from_email%"
+            to_email:           "%app.errors.to_email%"
+            subject:            ERREUR %app.app_name% sur %app.environnement%
+            level:              debug
+            formatter:          monolog.formatter.html
+            content_type:       text/html            
+        login:
+            type:               stream
+            path:               "%kernel.logs_dir%/auth.log"
+            level:              info
+            channels:           security
+                        
+ 
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~       

@@ -1,5 +1,6 @@
 {% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
 
+{% set exceptionnellesCompetences = form.competencesActions | length %}
 <br>
 {# Competences Action #}
 <div class="row">
@@ -7,7 +8,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="text-center">Compétences professionnelles <br><small>(grille à compléter en intégralité)</small></th>
+                <th class="text-center">Compétences liées à l'action</th>
                 <th class="text-center" width="100px">Exceptionnelle*</th>
                 <th class="text-center" width="100px">Forte</th>
                 <th class="text-center" width="100px">Assez forte</th>
@@ -28,18 +29,18 @@
         </table>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <label>observations :</label>
+        <label>observations liées à l'action :</label>
         {{ form_row(form.observationsCompetencesActions, { 'label': false}) }}
     </div>
 </div>
 <br>
 {# Competences Relation #}
-<div class="row">
+<div class="row" id="competencesRelationsCollection" data-prototype="{{ form_widget(form.competencesRelations.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="text-center">Compétences liées à l’action</th>
+                <th class="text-center">Compétences liées à la relation</th>
                 <th class="text-center" width="100px">Exceptionnelle*</th>
                 <th class="text-center" width="100px">Forte</th>
                 <th class="text-center" width="100px">Assez forte</th>
@@ -48,10 +49,13 @@
             </tr>
             </thead>
             <tbody>
+            {% set iniCompetenceRelation = ['Force de conviction (leadership)','Capacité à conduire le changement ', 'Écoute ', 'Capacité à développer les compétences et à déléguer ', 'Capacité à communiquer ', 'Capacité à coopérer avec l’environnement' , 'Capacité à conseiller '] %}
             {% for competence in form.competencesRelations %}
                 <tr>
                     <td>
-                        {{ crep.competencesRelations[loop.index0].libelle }}
+                        {% if loop.index0 in crep.competencesRelations|keys %}
+                            {{ crep.competencesRelations[loop.index0].libelle }}
+                        {% endif %}
                     </td>
                     {{ form_widget(competence) }}
                 </tr>
@@ -60,7 +64,7 @@
         </table>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <label>observations :</label>
+        <label>observations liées à la relation :</label>
         {{ form_row(form.observationsCompetencesRelations, { 'label': false}) }}
     </div>
 </div>
@@ -71,7 +75,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="text-center">Compétences liées à la relation</th>
+                <th class="text-center">Compétences liées à l’intelligence des situations</th>
                 <th class="text-center" width="100px">Exceptionnelle*</th>
                 <th class="text-center" width="100px">Forte</th>
                 <th class="text-center" width="100px">Assez forte</th>
@@ -92,7 +96,7 @@
         </table>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <label>observations :</label>
+        <label>observations liées à l’intelligence des situations :</label>
         {{ form_row(form.observationsCompetencesSituations, { 'label': false}) }}
     </div>
 </div>
@@ -107,5 +111,4 @@
 </div>
 <br>
 <br>
-
 <br>

@@ -31,6 +31,10 @@ use AppBundle\Entity\ModeleCrep;
 use AppBundle\Security\CrepVoter;
 use AppBundle\Repository\ModeleCrepRepository;
 use AppBundle\Twig\AppExtension;
+use AppBundle\Entity\Document;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use AppBundle\Service\DocumentManager;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Agent controller.
@@ -204,11 +208,8 @@ class AgentController extends Controller
         //Voter
         $this->denyAccessUnlessGranted(AgentVoter::VOIR, $agent);
 
-//         $deleteForm = $this->createDeleteForm($agent);
-
         return $this->render('agent/show.html.twig', array(
             'agent' => $agent,
-//             'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -248,6 +249,7 @@ class AgentController extends Controller
         // Récupérer l'agent 'avant modification'
         $ancienAgent = clone $agent;
         $editForm->handleRequest($request);
+        $deteteDocumentsForms = $this->creerDeleteDocumentsForms($agent);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             /* @var $agentMananger AgentManager */
@@ -266,7 +268,7 @@ class AgentController extends Controller
 
         return $this->render('agent/edit.html.twig', array('agent' => $agent,
                                                            'form' => $editForm->createView(),
-//                                                            'delete_form'=> $deleteForm->createView(),
+                                                       	   'deteteDocumentsForms' => $deteteDocumentsForms,
                                                            ));
     }
 
@@ -495,26 +497,26 @@ class AgentController extends Controller
         $campagneBrhpPourRattachement = null;
 
         switch ($onglet) {
+            case 'ma_population':
+//         		$colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom', 'agent.evaluable', 'agent.statutValidation'];
+                $colonnesTri = ['agent.nom', 'agent.affectation', 'shd.nom', 'ah.nom', 'agent.evaluable', 'agent.statutValidation', 'crep.statut'];
+                break;
             case 'agents_sans_perimetre_brhp':
-                $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'uniteOrganisationnelle.libelle', 'uniteOrganisationnelle.code', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom'];
+//                 $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'uniteOrganisationnelle.libelle', 'uniteOrganisationnelle.code', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom'];
                 $colonnesTri = ['agent.nom', 'agent.affectation', 'uniteOrganisationnelle.code', 'shd.prenom', 'ah.prenom'];
                 $campagneBrhpPourRattachement = $campagneBrhp;
                 break;
             case 'agents_sans_shd':
-                $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'ah.nom', 'ah.prenom'];
+//                 $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'ah.nom', 'ah.prenom'];
                 $colonnesTri = ['agent.nom', 'agent.affectation', 'ah.prenom'];
                 break;
-            case 'ma_population':
-                $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom', 'agent.evaluable', 'agent.statutValidation'];
-                $colonnesTri = ['agent.nom', 'agent.affectation', 'shd.nom', 'ah.nom', 'agent.evaluable', 'agent.statutValidation'];
-                break;
             case 'liste_creps':
-                $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom'];
-                $colonnesTri = ['agent.nom', 'agent.affectation', 'shd.prenom', 'ah.prenom', 'crep.statut'];
+//                 $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom'];
+                $colonnesTri = ['agent.nom', 'agent.affectation', 'shd.nom', 'ah.prenom', 'crep.statut'];
                 break;
         }
 
-        return $this->serverProcessingCampagne($request, $campagneBrhp, $colonnesRecherche, $colonnesTri, null, $evaluable, $sansShd, $sansPerimetre, null, $campagneBrhpPourRattachement);
+        return $this->serverProcessingCampagne($request, $campagneBrhp, [], $colonnesTri, null, $evaluable, $sansShd, $sansPerimetre, null, $campagneBrhpPourRattachement);
     }
 
     /**
@@ -976,5 +978,57 @@ class AgentController extends Controller
         }
 
         return $this->redirectToRoute($this->returnRoute($role), array('id' => $agent->getCampagneBrhp()->getId()));
+    }
+    
+    public function getDocumentAction(Request $request, Agent $agent, Document $document){
+    	
+    	//Voter
+    	$this->denyAccessUnlessGranted(AgentVoter::VOIR, $agent);
+    	
+    	if(!$agent->getDocuments()->contains($document)){
+			throw new AccessDeniedHttpException();
+    	}
+    	
+    	/* @var $documentManager DocumentManager */
+    	$documentManager = $this->get('app.document_manager');
+    	
+    	return $documentManager->getDocument($document);
+    }
+    
+    public function deleteDocumentAction(Request $request, Agent $agent, Document $document){
+    	 
+    	//Voter
+    	$this->denyAccessUnlessGranted(AgentVoter::MODIFIER, $agent);
+    	 
+    	if(!$agent->getDocuments()->contains($document)){
+    		throw new AccessDeniedHttpException();
+    	}
+    	 
+    	/* @var $documentManager DocumentManager */
+    	$documentManager = $this->get('app.document_manager');
+    	 
+    	$documentManager->deleteDocuments([$document], true);
+    	
+    	$this->get('session')->getFlashBag()->set('notice', 'Document supprimé !');
+    	
+    	return $this->redirectToRoute('agent_show', ['id' => $agent->getId()]);
+    }
+    
+    
+    private function creerDeleteDocumentsForms(Agent $agent) {
+    	
+    	$deleteForms = [];
+    	foreach ($agent->getDocuments() as $document){
+    		if($document->getId()){
+	    		$deleteForms [] = $this->createFormBuilder()
+	    		->setAction($this->generateUrl('agent_delete_document', [
+	    			'id' => $agent->getId(),
+	    			'document' => $document->getId()
+	    			]))
+	    		->setMethod('DELETE')
+	    		->getForm()->createView();
+    		}
+    	}
+    	return $deleteForms;
     }
 }

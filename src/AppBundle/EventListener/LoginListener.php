@@ -49,6 +49,9 @@ class LoginListener
         // On invalide le role sélectionné (au cas où une seconde session était active)
         $event->getRequest()->getSession()->remove('selectedRole');
 
+        // Initialiser l'état du menu à "déployé"
+        $event->getRequest()->getSession()->set('deployCollapseMenu', 1);
+
         // Recuperation du token
         $token = $event->getAuthenticationToken();
 

@@ -518,7 +518,7 @@ function initPopover(){
 //		var dtable = $('#mon_dataTable').DataTable();
 // 		setAjaxDataTable("#mon_dataTable", dtable);
 function setAjaxDataTable(dataTableId, dataTable){
-		
+	
     var delay = (function(){
   	  var timer = 0;
   	  return function(callback, ms){
@@ -527,27 +527,31 @@ function setAjaxDataTable(dataTableId, dataTable){
   	  };
   	})();
     
-    
-    $(dataTableId + "_filter input")
+    $(dataTableId + ' .search-input-text')
     .unbind() // Pour éviter que la recherche par défaut se fasse
- 	.bind('keyup paste', function(e) {
-     	
+ 	.bind('keyup paste change', function(e) {
 		var e = e;
-
+		var indexColumn = $(this).attr('data-column');  // getting column index
+		
 		if (e.type == 'paste') {
             var value = e.originalEvent.clipboardData.getData('text');
+		} else if(e.type == 'change'){
+			var value = e.originalEvent.target.value;
+			dataTable.columns(indexColumn).search(value).draw();
 		} else {
             var value = this.value;
 		}
 
 		delay(function(){
         	if(value.length == 0 || (e.keyCode == 13 && value.length >0 && value.length < 3)){
-        		dataTable.search( value ).draw();
+//        		dataTable.search( value ).draw();
+        		dataTable.columns(indexColumn).search(value).draw();
             }
             else{
             	
                 if( value.length >= 3 && e.keyCode != 13){
-                	dataTable.search( value ).draw();
+//                	dataTable.search( value ).draw();
+                	dataTable.columns(indexColumn).search(value).draw();
                 }
             }
           }, 1000 );
@@ -566,5 +570,20 @@ function redimensionnerIframe() {
 		// redimensionner la iframe qui affiche un crep papier au chargement de la page 
 	$iframe = $('.auto-resize-iframe');
 	$iframe.css('min-height', contentHeight-footerHeight-120);
+}
+
+function deployCollapseMenu(urlAjax) {
+	$BODY = $('body');
+
+	if ($BODY.hasClass('nav-md')) {
+		urlAjax = urlAjax.replace('__etat__', '0');
+
+	} else {
+		urlAjax = urlAjax.replace('__etat__', '1');
+	}
+
+	$.ajax({
+		url : urlAjax
+	});
 }
 

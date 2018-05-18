@@ -14,6 +14,7 @@ use AppBundle\EnumTypes\EnumStatutCampagne;
 use AppBundle\Entity\Ministere;
 use AppBundle\Util\Util;
 use AppBundle\Entity\Crep;
+use AppBundle\Traits\ConditionsFiltre;
 
 /**
  * CrepRepository.
@@ -23,7 +24,10 @@ use AppBundle\Entity\Crep;
  */
 class CrepRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getNbCreps(Campagne $campagne, Perimetre $perimetre = null, $statuts = null, Agent $shd = null, Agent $ah = null)
+    // Utilisation de trait
+    use ConditionsFiltre;
+
+    public function getNbCreps(Campagne $campagne, $perimetresRlc = [], $perimetresBrhp = [], $statuts = null, Agent $shd = null, Agent $ah = null, $categories = [], $affectations = [], $corps = [])
     {
         if ($shd && $ah) {
             throw new \Exception('Appel incorrect SHD ou AH');
@@ -35,16 +39,15 @@ class CrepRepository extends \Doctrine\ORM\EntityRepository
            ->where('agent.evaluable = :EVALUABLE')
            ->setParameter('EVALUABLE', true);
 
+        $this->addFiltreCategories($qb, $categories);
+        $this->addFiltreAffectations($qb, $affectations);
+        $this->addFiltreCorps($qb, $corps);
+
         /* @var $campagne CampagnePnc */
         if ($campagne instanceof CampagnePnc) {
             $qb->andWhere('agent.campagnePnc = :CAMPAGNE');
-
-            /* @var $perimetre PerimetreRlc */
-            if ($perimetre) {
-                $qb->leftJoin('agent.campagneRlc', 'campagneRlc')
-                ->andWhere('campagneRlc.perimetreRlc = :PERIMETRE_RLC')
-                ->setParameter('PERIMETRE_RLC', $perimetre);
-            }
+            $this->addFiltrePerimetresRlc($qb, $perimetresRlc);
+            $this->addFiltrePerimetresBrhp($qb, $perimetresBrhp);
         }
 
         /* @var $campagne CampagneRlc */
@@ -52,11 +55,12 @@ class CrepRepository extends \Doctrine\ORM\EntityRepository
             $qb->andWhere('agent.campagneRlc = :CAMPAGNE');
 
             /* @var $perimetre PerimetreRlc */
-            if ($perimetre) {
-                $qb->leftJoin('agent.campagneBrhp', 'campagneBrhp')
-                ->andWhere('campagneBrhp.perimetreBrhp = :PERIMETRE_BRHP')
-                ->setParameter('PERIMETRE_BRHP', $perimetre);
-            }
+//             if ($perimetre) {
+//                 $qb->leftJoin('agent.campagneBrhp', 'campagneBrhp')
+//                 ->andWhere('campagneBrhp.perimetreBrhp = :PERIMETRE_BRHP')
+//                 ->setParameter('PERIMETRE_BRHP', $perimetre);
+//             }
+            $this->addFiltrePerimetresBrhp($qb, $perimetresBrhp);
         }
 
         if ($campagne instanceof CampagneBrhp) {

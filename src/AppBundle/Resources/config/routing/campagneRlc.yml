@@ -6,7 +6,7 @@ campagne_rlc_index:
 campagne_rlc_show:
     path:     /{id}/show/{id_perimetre}
     defaults: { _controller: "AppBundle:CampagneRlc:show", id_perimetre: 0 }
-    methods:  GET
+    methods:  [GET, POST]
     requirements:
         id: '\d+'
         

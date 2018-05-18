@@ -7,6 +7,7 @@ use AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02FormationT3
 use AppBundle\Repository\FormationSuivieRepository;
 use AppBundle\Service\BaseManager;
 use AppBundle\Entity\CampagneBrhp;
+use AppBundle\Twig\AppExtension;
 use AppBundle\Util\Util;
 use AppBundle\Entity\ModeleCrep;
 use AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02FormationT1Repository;
@@ -89,6 +90,7 @@ class CrepMcc02Manager extends BaseManager
                     $key,
                     $formation['f_libelle'],
                     $cpf,
+                    $formation['f_commentaires'],
                     $formation['c_dateNotification'],
                     $formation['c_dateRefusNotification'],
                 ), ';');

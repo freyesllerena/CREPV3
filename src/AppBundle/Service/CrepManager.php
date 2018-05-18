@@ -11,7 +11,6 @@ use AppBundle\Entity\ModeleCrep;
 use AppBundle\Repository\CrepRepository;
 use AppBundle\Repository\AgentRepository;
 use AppBundle\Entity\Campagne;
-use AppBundle\Entity\Perimetre;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use AppBundle\Entity\Document;
 use Symfony\Component\HttpFoundation\File\File;
@@ -225,6 +224,19 @@ class CrepManager extends BaseManager
         $this->appMailer->notifierRenvoieAhShd($crep);
     }
 
+    public function rappelerAgentShd(Crep $crep)
+    {
+    	$crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
+    	$crep->setDateVisaShd(null);
+    	$crep->setShdSignataire(null);
+    
+    	$this->em->persist($crep);
+    	$this->em->flush();
+    
+    	//Notification de l'agent
+    	$this->appMailer->notifierRappelAgentShd($crep);
+    }
+    
     public function rappelerAgentAh(Crep $crep)
     {
         $crep->setStatut(EnumStatutCrep::VISE_AGENT);
@@ -271,7 +283,7 @@ class CrepManager extends BaseManager
         $this->appMailer->notifierRefusSignatureAgent($crep);
     }
 
-    public function calculIndicateurs(Campagne $campagne, Perimetre $perimetre = null, Agent $shd = null, Agent $ah = null)
+    public function calculIndicateurs(Campagne $campagne, $perimetresRlc = [], $perimetresBrhp = [], Agent $shd = null, Agent $ah = null, $categories = [], $affectations = [], $corps = [])
     {
         /* @var $crepRepository CrepRepository */
         $crepRepository = $this->em->getRepository('AppBundle:Crep');
@@ -285,23 +297,23 @@ class CrepManager extends BaseManager
         // Tableau qui va contenir les indicateurs à afficher dans le tableau de bord
         $indicateurs = [];
 
-        $indicateurs['nbCrep'] = $agentRepository->getNbAgentsEvaluables($campagne, $perimetre, $shd, $ah);
+        $indicateurs['nbCrep'] = $agentRepository->getNbAgentsEvaluables($campagne, $perimetresRlc, $perimetresBrhp, $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepSignesShd'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::SIGNE_SHD), $shd, $ah);
+        $indicateurs['nbCrepSignesShd'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::SIGNE_SHD), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepVisesAgent'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::VISE_AGENT), $shd, $ah);
+        $indicateurs['nbCrepVisesAgent'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::VISE_AGENT), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepSignesAh'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::SIGNE_AH), $shd, $ah);
+        $indicateurs['nbCrepSignesAh'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::SIGNE_AH), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepNotifies'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::NOTIFIE_AGENT), $shd, $ah);
+        $indicateurs['nbCrepNotifies'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::NOTIFIE_AGENT), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepRefusNotification'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::REFUS_NOTIFICATION_AGENT), $shd, $ah);
+        $indicateurs['nbCrepRefusNotification'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::REFUS_NOTIFICATION_AGENT), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepModifieShd'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::MODIFIE_SHD), $shd, $ah);
+        $indicateurs['nbCrepModifieShd'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::MODIFIE_SHD), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepRefusVisas'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::REFUS_VISA_AGENT), $shd, $ah);
+        $indicateurs['nbCrepRefusVisas'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::REFUS_VISA_AGENT), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepCasAbsence'] = $crepRepository->getNbCreps($campagne, $perimetre, array(EnumStatutCrep::CAS_ABSENCE), $shd, $ah);
+        $indicateurs['nbCrepCasAbsence'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::CAS_ABSENCE), $shd, $ah, $categories, $affectations, $corps);
 
         $indicateurs['nbCrepNonRenseignes'] = $indicateurs['nbCrep']
             - $indicateurs['nbCrepSignesShd']
@@ -315,16 +327,16 @@ class CrepManager extends BaseManager
 
         /************** Statistiques sur les recours **************/
 
-        $indicateurs['nbTotalRecours'] = $recoursRepository->getNbRecours($campagne, $perimetre, null, $shd, $ah);
+        $indicateurs['nbTotalRecours'] = $recoursRepository->getNbRecours($campagne, $perimetresRlc, $perimetresBrhp, null, $shd, $ah, null, $categories, $affectations, $corps);
 
-        $indicateurs['nbRecoursHierarchique'] = $recoursRepository->getNbRecours($campagne, $perimetre, EnumTypeRecours::RECOURS_HIERARCHIQUE, $shd, $ah);
+        $indicateurs['nbRecoursHierarchique'] = $recoursRepository->getNbRecours($campagne, $perimetresRlc, $perimetresBrhp, EnumTypeRecours::RECOURS_HIERARCHIQUE, $shd, $ah, null, $categories, $affectations, $corps);
 
-        $indicateurs['nbRecoursEnCAP'] = $recoursRepository->getNbRecours($campagne, $perimetre, EnumTypeRecours::RECOURS_CAP, $shd, $ah);
+        $indicateurs['nbRecoursEnCAP'] = $recoursRepository->getNbRecours($campagne, $perimetresRlc, $perimetresBrhp, EnumTypeRecours::RECOURS_CAP, $shd, $ah, null, $categories, $affectations, $corps);
 
-        $indicateurs['nbRecoursAuTA'] = $recoursRepository->getNbRecours($campagne, $perimetre, EnumTypeRecours::RECOURS_TRIBUNAL_ADMINISTRATIF, $shd, $ah);
+        $indicateurs['nbRecoursAuTA'] = $recoursRepository->getNbRecours($campagne, $perimetresRlc, $perimetresBrhp, EnumTypeRecours::RECOURS_TRIBUNAL_ADMINISTRATIF, $shd, $ah, null, $categories, $affectations, $corps);
 
         //@param string $distinctCrep : pour avoir le nombre de CREP en mention de recours
-        $indicateurs['nbCrepEnRecours'] = $recoursRepository->getNbRecours($campagne, $perimetre, null, $shd, $ah, true);
+        $indicateurs['nbCrepEnRecours'] = $recoursRepository->getNbRecours($campagne, $perimetresRlc, $perimetresBrhp, null, $shd, $ah, true, $categories, $affectations, $corps);
 
         return $indicateurs;
     }

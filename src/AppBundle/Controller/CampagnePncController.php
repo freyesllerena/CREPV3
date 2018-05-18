@@ -16,6 +16,7 @@ use AppBundle\Entity\Document;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Service\CrepManager;
+use AppBundle\Form\RechercheCampagnePncType;
 
 /**
  * CampagnePnc controller.
@@ -104,62 +105,101 @@ class CampagnePncController extends Controller
     public function showAction(CampagnePnc $campagnePnc, Request $request)
     {
         $this->denyAccessUnlessGranted(CampagnePncVoter::VOIR, $campagnePnc);
-        $em = $this->getDoctrine()->getManager();
 
-        //On récupère l'id du périmètre donnée en parametre depuis le tableau de bord
-        $perimetreId = $request->attributes->get('id_perimetre');
-        $perimetre = null;
-        if ($perimetreId > 0) {
-            $perimetre = $em->getRepository('AppBundle:PerimetreRlc')->find($perimetreId);
-
-            //si le périmetre n'existe pas, on déclenche une erreur
-            if (!$perimetre) {
-                throw $this->createNotFoundException(
-                'Aucun périmètre trouvé !'
-                );
-            }
+        //On redirige vers la vue tableau de bord que si le fichier d'agents a été diffusé par l'admin ministériel
+        if ($campagnePnc->getDiffusee() && !in_array($campagnePnc->getStatut(), array(EnumStatutCampagne::CREEE,
+        ))) {
+            $response = $this->tableauDeBord($campagnePnc, $request);
+        } else {
+            $response = $this->show($campagnePnc, $request);
         }
 
-        $cloturerForm = $this->creerCloturerForm($campagnePnc);
-        $rouvrirForm = $this->creerRouvrirForm($campagnePnc);
-        $fermerForm = $this->creerFermerForm($campagnePnc);
+        return $response;
+    }
+
+    /**
+     * Renvoie vers la vue show d'une campagne PNC avant ouverture.
+     *
+     * @param CampagnePnc $campagnePnc
+     * @param Request     $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function show(CampagnePnc $campagnePnc, Request $request)
+    {
         $deleteForm = $this->createDeleteForm($campagnePnc);
         $ouvrirForm = $this->creerOuvrirForm($campagnePnc);
 
-        $nbAgents = $this->getDoctrine()->getRepository('AppBundle:Agent')->countAgentsByCampagne($campagnePnc);
+        $em = $this->getDoctrine()->getManager();
 
+        /* @var $modeleCrepRepository  ModeleCrepRepository */
+        $modeleCrepRepository = $em->getRepository('AppBundle:ModeleCrep');
+
+        // Récupérer les modèles de CREP actifs du ministère
+        $modelesCrep = $modeleCrepRepository->getModelesCrep($campagnePnc->getMinistere(), true);
+
+        return $this->render('campagnePnc/show.html.twig', array(
+            'campagnePnc' => $campagnePnc,
+            'ouvrir_form' => $ouvrirForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'modelesCrep' => $modelesCrep,
+        ));
+    }
+
+    /**
+     * Renvoie vers la vue tableau de bord d'une campagne PNC après ouverture.
+     *
+     * @param CampagnePnc $campagnePnc
+     * @param Request     $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function tableauDeBord(CampagnePnc $campagnePnc, Request $request)
+    {
+        $cloturerForm = $this->creerCloturerForm($campagnePnc);
+        $rouvrirForm = $this->creerRouvrirForm($campagnePnc);
+        $fermerForm = $this->creerFermerForm($campagnePnc);
+        $rechercheForm = $this->creerRechercheForm($campagnePnc);
+        $rechercheForm->handleRequest($request);
+
+        $perimetresRlc = [];
+        $perimetresBrhp = [];
+        $categories = [];
+        $affectations = [];
+        $corps = [];
+
+        if ($rechercheForm->isSubmitted() && $rechercheForm->isValid()) {
+            $perimetresRlc = $rechercheForm->get('perimetresRlc')->getData();
+            $perimetresBrhp = $rechercheForm->get('perimetresBrhp')->getData();
+            $categories = $rechercheForm->getData()['categories'];
+            $affectations = $rechercheForm->getData()['affectations'];
+            $corps = $rechercheForm->getData()['corps'];
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $perimetre = null;
         /*@var $crepManager CrepManager */
         $crepManager = $this->get('app.crep_manager');
-        $indicateurs = $crepManager->calculIndicateurs($campagnePnc, $perimetre);
+
+        $indicateurs = $crepManager->calculIndicateurs($campagnePnc, $perimetresRlc, $perimetresBrhp, null, null, $categories, $affectations, $corps);
 
         /*@var $campagnePncManager CampagnePncManager */
         $campagnePncManager = $this->get('app.campagne_pnc_manager');
         $historiqueIndicateurs = $campagnePncManager->getHistoriqueIndicateurs($campagnePnc);
 
-        //On redirige vers la vue tableau de bord que si le fichier d'agents a été diffusé par l'admin ministériel
-        if ($campagnePnc->getDiffusee() && !in_array($campagnePnc->getStatut(), array(EnumStatutCampagne::CREEE,
-           ))) {
-            $template = 'campagnePnc/tableauDeBord.html.twig';
-        } else {
-            $template = 'campagnePnc/show.html.twig';
-        }
-
-        /* @var $ministere Ministere */
-        $ministere = $this->getUser()->getMinistere();
-
         /* @var $modeleCrepRepository  ModeleCrepRepository */
         $modeleCrepRepository = $em->getRepository('AppBundle:ModeleCrep');
-        // Récupérer les modèles de CREP actifs du ministère
-        $modelesCrep = $modeleCrepRepository->getModelesCrep($ministere, true);
 
-        return $this->render($template, array(
+        // Récupérer les modèles de CREP actifs du ministère
+        $modelesCrep = $modeleCrepRepository->getModelesCrep($campagnePnc->getMinistere(), true);
+
+        return $this->render('campagnePnc/tableauDeBord.html.twig', array(
             'campagnePnc' => $campagnePnc,
-            'ouvrir_form' => $ouvrirForm->createView(),
-            'delete_form' => $deleteForm->createView(),
             'cloturer_form' => $cloturerForm->createView(),
             'rouvrir_form' => $rouvrirForm->createView(),
             'fermer_form' => $fermerForm->createView(),
-            'nbAgents' => $nbAgents,
+            'recherche_form' => $rechercheForm->createView(),
             'indicateurs' => $indicateurs,
             'historiqueIndicateurs' => $historiqueIndicateurs,
             'perimetre' => $perimetre,
@@ -590,5 +630,20 @@ class CampagnePncController extends Controller
         )))
         ->setMethod('PUT')
         ->getForm();
+    }
+
+    /**
+     * Crée le formulaire de recherche sur une CampagnePnc.
+     *
+     * @param CampagnePnc $campagnePnc
+     *
+     * @return \Symfony\Component\Form\Form Le formulaire
+     */
+    private function creerRechercheForm(CampagnePnc $campagnePnc)
+    {
+        return $this->createForm(RechercheCampagnePncType::class, null, array(
+            'campagnePnc' => $campagnePnc,
+            'em' => $this->getDoctrine()->getManager(),
+        ));
     }
 }

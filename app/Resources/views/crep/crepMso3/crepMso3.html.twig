@@ -251,7 +251,7 @@ Fonction exercée : {{ crep.fonctionExerceeShd | nl2br }}
 		<th class="bordered" width="35%"><strong>CONDITIONS DE REUSSITE </strong><br><small>(liées à l’agent ou/et à des facteurs externes)</small></th>
 	</tr>
 	
-	{% if crep.objectifsEvalues | length > 0 %}
+	{% if crep.objectifsFuturs | length > 0 %}
 		
 		{% for objectif in crep.objectifsFuturs %}
 			<tr>

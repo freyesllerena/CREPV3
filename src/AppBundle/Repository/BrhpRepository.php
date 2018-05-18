@@ -10,8 +10,4 @@ namespace AppBundle\Repository;
  */
 class BrhpRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getBrhpByEmail($email)
-    {
-        return $this->findOneByEmail($email);
-    }
 }

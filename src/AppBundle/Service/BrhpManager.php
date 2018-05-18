@@ -55,7 +55,7 @@ class BrhpManager extends BaseManager
         /* @var $brhpRepository BrhpRepository */
         $brhpRepository = $this->em->getRepository('AppBundle:Brhp');
         /* @var $brhpExistant Brhp */
-        $brhpExistant = $brhpRepository->getBrhpByEmail($brhp->getEmail());
+        $brhpExistant = $brhpRepository->findOneByUtilisateur($brhp->getUtilisateur());
 
         if ($brhpExistant) {
             foreach ($brhp->getPerimetresBrhp() as $perimetreBrhp) {
@@ -82,7 +82,7 @@ class BrhpManager extends BaseManager
     {
         // Récupérer l'utilisateur associé au BRHP
         /* @var $utilisateur Utilisateur */
-        $utilisateur = $this->em->getRepository('AppBundle:Utilisateur')->findOneByEmail($brhp->getEmail());
+        $utilisateur = $brhp->getUtilisateur();
 
         // Mettre à jour l'utilisateur associé au BRHP s'il possède un compte
         if ($utilisateur) {

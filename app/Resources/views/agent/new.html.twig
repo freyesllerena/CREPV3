@@ -1,7 +1,6 @@
 {% extends "index.base.html.twig" %} 
 
-{# {% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}#}
-{% form_theme form with ['Form/App_bootstrap_3_horizontal_layout.html.twig',  _self] %}
+{% form_theme form 'agent/Form/App_form_edit_agent.html.twig' %}
 
 {% block pageIcon %}fa fa-plus{% endblock pageIcon %}
 {% block pageTitle %}Nouvel agent{% endblock pageTitle %}
@@ -44,15 +43,15 @@
                         {{ form_row(form.ah, { 'label': "Adresse mail N+2", 'id' : "ah",'attr': {'class': 'select_ah'} }) }}
                         {{ form_row(form.sansAh, { 'label': "Agent sans N+2", 'label_attr': {'class' : 'radio-inline'}, 'info': block('sans_ah') }) }}
                         
-                        {% if is_granted('ROLE_PNC') or is_granted('ROLE_ADMIN') %}
+						{% if app.session.get('selectedRole') == "ROLE_PNC" or app.session.get('selectedRole') == "ROLE_ADMIN" %}
                             {{ form_row(form.perimetreRlc, { 'label': "Périmètre RLC" ,  'attr': { 'class': "select2_perimetre_rlc" }}) }}
                         {% endif %}
                         
-						{% if is_granted('ROLE_RLC') or is_granted('ROLE_ADMIN') %}
+                        {% if app.session.get('selectedRole') == "ROLE_RLC" or app.session.get('selectedRole') == "ROLE_ADMIN" %}
                             {{ form_row(form.perimetreBrhp, { 'label': "Périmètre BRHP" ,  'attr': { 'class': "select2_perimetre_brhp" }}) }}
                         {% endif %}
                         
-                        {% if is_granted('ROLE_BRHP') or is_granted('ROLE_SHD') or is_granted('ROLE_ADMIN') %}
+                        {% if app.session.get('selectedRole') == "ROLE_BRHP" or app.session.get('selectedRole') == "ROLE_SHD" or app.session.get('selectedRole') == "ROLE_ADMIN"%}
                             {{ form_row(form.uniteOrganisationnelle, { 'label': "Unité organisationnelle" ,  'attr': { 'class': "select2_unite_organisationnelle" }}) }}
                         {% endif %}
                         
@@ -102,6 +101,41 @@
                         {{ form_row(form.capitalDif, { 'label': "Capital CPF" }) }}
                         {{ form_row(form.capitalDifMobilisable, { 'label': "Capital CPF mobilisable" }) }}
 
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Pièce(s) jointe(s) <span style="color:red;">**</span></label>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <ul class="list-unstyled project_files">
+                                {% for document in agent.documents %}
+                                    {% if document.id %}
+                                        <li class="row">
+                                            <div class="col-md-10 text-overflow">
+                                                <a href="{{ path('agent_get_document', {'id': agent.id, 'document': document.id}) }}">
+                                                    <i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a href="#" data-toggle="modal" data-target="#modal_delete_{{ document.id }}" title="Supprimer">
+                                                    <i class="fa fa-trash pull-right"></i>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor  %}
+                            </ul>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    	<label class="control-label col-md-3 col-sm-3 col-xs-12"></span></label>
+                    	<div class="documents col-md-6 col-sm-6 col-xs-12" data-prototype="{{ form_widget(form.documents.vars.prototype)|e('html_attr') }}">
+							{% for document in form.documents %}
+								{{ form_widget(document.file, {'attr': { 'type': "file", 'class': 'hide'}}) }}
+							{% endfor %}
+						</div>
+                   </div>
+                   <span style="color:red"><b>*</b></span><small>Champ obligatoire</small><br>
+                   <span style="color:red"><b>**</b></span><small>Les pièces jointes ne doivent pas dépasser {{ maxFileSize }} Mo</small>
 					</div>
 				</div>
 			</div>
@@ -215,6 +249,67 @@
 	 </script>
 	 <!-- /Select2 -->
 
+    <!-- Prototype: les fichiers des campagnes -->
+
+    <script type="text/javascript">
+
+        var $collectionHolder;
+
+        // ajoute un tag <a>
+        var $addTagLink = $('<a href="#" class="btn btn-primary add_tag_link"><i class="fa fa-plus"></i> Ajouter</a>');
+        var $newLinkLi = $('<div></div>').append($addTagLink);
+
+        // récupére la div où on ajoute la valeur du data-prototype
+        $collectionHolder = $('div.documents');
+
+        // ajoute la valeur du data-prototype dans la div
+        $collectionHolder.append($newLinkLi);
+
+        // compte le nombre de inputs
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+        $addTagLink.on('click', function (e) {
+            e.preventDefault();
+
+            // ajoute le tag form
+            addTagForm($collectionHolder, $newLinkLi);
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // récupère le data-prototype
+            var prototype = $collectionHolder.data('prototype');
+
+            // recupère l'index
+            var index = $collectionHolder.data('index');
+
+            // remplace '__name__' dans le prototype
+            // par le nombre d'items
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // incrémente l'index avec le nouvel item
+            $collectionHolder.data('index', index + 1);
+
+            // affiche la vue de l'item
+            var $newFormLi = $('<div></div>').append(newForm);
+            $newLinkLi.before($newFormLi);
+            //ajoute le lien supprimer
+            addTagFormDeleteLink($newFormLi);
+        }
+
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<div class="input-group-btn"><button class="btn btn-danger"><i class="fa fa-trash"></i></button></div>');
+
+            App_file_upload_campagne({{ maxFileSize }});
+
+            $tagFormLi.find('.input-group').append($removeFormA);
+
+            $removeFormA.on('click', function (e) {
+                e.preventDefault();
+
+                $tagFormLi.remove();
+            });
+        }
+        </script>
  {% endblock javascripts %}
 
  

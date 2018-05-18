@@ -148,7 +148,7 @@ class CampagneBrhpVoter extends Voter
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         /* @var $brhp Brhp */
-        $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+        $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
         if ((EnumStatutCampagne::CLOTUREE === $campagneBrhp->getStatut()
                 // On ne peut rouvrir une campagne brhp que si la campagne rlc a été rouverte
@@ -169,7 +169,7 @@ class CampagneBrhpVoter extends Voter
 
         if ('ROLE_BRHP' == $roleUtilisateurSession) {
             /** @var $brhp Brhp */
-            $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+            $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
             if (in_array($campagneBrhp->getStatut(), array(
                 EnumStatutCampagne::INITIALISEE,
@@ -199,7 +199,7 @@ class CampagneBrhpVoter extends Voter
     private function peutBrhpVoir(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
         /** @var $brhp Brhp */
-        $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+        $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
         if (in_array($campagneBrhp->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
             return true;
@@ -231,7 +231,7 @@ class CampagneBrhpVoter extends Voter
         /* @var $agentRepository AgentRepository */
         $agentRepository = $this->em->getRepository('AppBundle:Agent');
 
-        if ($agentRepository->isShd($utilisateur->getEmail(), $campagneBrhp)) {
+        if ($agentRepository->isShd($utilisateur, $campagneBrhp)) {
             return true;
         }
 
@@ -257,7 +257,7 @@ class CampagneBrhpVoter extends Voter
     private function peutOuvrirShd(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
         /** @var $brhp Brhp */
-        $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+        $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
         /* @var $roleUtilisateurSession Role */
         $roleUtilisateurSession = $this->session->get('selectedRole');
@@ -287,7 +287,7 @@ class CampagneBrhpVoter extends Voter
     private function peutSupprimerDocument(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
         /** @var $brhp Brhp */
-        $brhp = $this->em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+        $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
         if (in_array($campagneBrhp->getStatut(), array(
                 EnumStatutCampagne::INITIALISEE,

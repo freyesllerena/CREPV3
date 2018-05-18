@@ -22,17 +22,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                      <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                          <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Informations générales</a>
-                          </li>
-                          <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Liste des agents</a>
-                          </li>
-                        </ul>
-                        
-                        <div id="myTabContent" class="tab-content">
                       	<!-- Informations générales -->
-                      	<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
 	                      <div class="table-responsive">
 	                      	<table class="table table-striped table-borderles">
 	                      		<tbody>
@@ -48,6 +38,14 @@
 								      <th scope="row">Libellé officiel</th>
 								      <td>{{ ministere.libelleOfficiel }}</td>
 			    				  </tr>
+			    				  <tr>
+								      <th scope="row">Délai visa agent</th>
+								      <td>{{ ministere.delaiVisa }}</td>
+			    				  </tr>
+			    				  <tr>
+								      <th scope="row">Délai signature définitive agent</th>
+								      <td>{{ ministere.delaiSignatureDefinitive }}</td>
+			    				  </tr>			    				  
 			                       <tr>
 								      <th scope="row">Date de création</th>
 								      <td>{{ ministere.dateCreation | date("d/m/Y") }}</td>
@@ -59,17 +57,7 @@
 	                      		</tbody>
 	                      	</table>
 	                      </div>
-                      </div>
                           <!-- end Informations générales -->
-                          <!-- Liste des agents -->
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                          </div>
-{#                           <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">#}
-{# 			                   Ici, mettre la liste des agents appertenant à ce ministère...#}
-{# 			              </div>#}
-			               <!-- end Liste des agents -->
-                          </div>
-                        </div>
                       </div>
                   </div>
                 </div>

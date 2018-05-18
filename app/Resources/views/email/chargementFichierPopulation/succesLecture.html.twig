@@ -1,0 +1,26 @@
+{% extends 'email/mail.base.html.twig' %}
+
+{% block corpsMessage %}
+
+    <tr>
+        <td class="content-block">
+            Bonjour,
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Nous vous informons que le chargement de votre fichier d'agents sur la campagne "{{ campagne.libelle }}" a bien été effectué. 
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block">
+        	Nous vous invitons à vous connecter à l'application afin d'accéder à la liste chargée, en cliquant sur le lien suivant :
+		</td>
+    </tr>
+    <tr>
+        <td class="content-block" align="center">
+            <a class="btn_mail_link" href="{{ url('campagne_admin_min_show',{'id' : campagne.id}) }}">Accèder à la liste d'agents</a>
+        </td>
+    </tr>
+                                
+{% endblock %}

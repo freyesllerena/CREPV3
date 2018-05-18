@@ -107,10 +107,10 @@ class CampagneAdminMinController extends Controller
             $this
                 ->get('session')
                 ->getFlashBag()
-                ->set('notice', 'Votre population a été chargée avec succès !')
+                ->set('notice', 'Votre fichier est en cours de chargement, vous serez notifié par mail à la fin du chargement !')
                 ;
 
-            return $this->redirectToRoute('campagne_admin_min_show', array('id' => $campagnePnc->getId()));
+            return $this->redirectToRoute('campagne_admin_min_index');
         }
 
         $template = 'campagneAdminMin/upload.html.twig';

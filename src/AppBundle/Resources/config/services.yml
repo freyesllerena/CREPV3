@@ -321,6 +321,8 @@ services:
     app.import_csv:
         class: AppBundle\Service\ImportCsv  
         parent: app.base_manager
+        calls:
+            - [init, ['%app.rep_scripts%']]
         
     # Service de gestion des documents
     app.document_manager:

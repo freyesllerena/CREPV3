@@ -1,4 +1,5 @@
 {% extends "index.base.html.twig" %} 
+{% form_theme recherche_form 'Campagne/Form/App_form_recherche.html.twig' %}
 
 {% block frameTitle %}{{ campagnePnc.libelle }}{% endblock frameTitle %} 
 {% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %} 
@@ -24,20 +25,6 @@
 
 
 {% block content %}
-    <!-- Filtre périmètre -->
-    <div class="form-group col-md-12 col-sm-12 col-xs-12 well">
-        <form class="form-horizontal form-label-left">
-        	<label class="control-label col-md-4 col-sm-4 col-xs-12"><i class="fa fa-share-alt"></i> Sélectionner un périmètre</label>
-            <div class="col-md-4 col-sm-4 col-xs-12" id="perimetre_filter">
-          		<select class="form-control">
-            		<option value="0">Tous</option>
-                 	{% for perimetreRlc in campagnePnc.perimetresRlc %}
-        			<option value="{{ perimetreRlc.id }}">{{ perimetreRlc.libelle }}</option>
-             		{% endfor %}
-            	</select>
-            </div>
-        </form>
-    </div>
 
 	<div class="clearfix"></div>
 	
@@ -45,6 +32,12 @@
     	{% include 'Campagne/indicateurs.html.twig' %}
     {% endblock indicateurs %}
 
+    {% block filtres %}
+        {% include 'campagnePnc/blocsTableauDeBord/filtres.html.twig' %}
+    {% endblock filtres %}
+    
+    
+    
 	<div class="row">
     	<div class="col-md-6 col-sm-12 col-xs-12">
     	    {% block informationsCampagne %}
@@ -182,6 +175,76 @@
 
 	<script type="text/javascript">
 
+
+
+	var perimetresRlc = 'recherche_campagne_pnc_perimetresRlc';
+    var perimetresBrhp = 'recherche_campagne_pnc_perimetresBrhp';
+
+    //On récupère les grades en fonction du corps
+    App_ajaxSelection(perimetresRlc, perimetresBrhp);
+
+
+
+
+  //fonction permettant de charger une selection en fonction d'une autre avec une requete ajax
+    function App_ajaxSelection(parentSelection, enfantSelection) {
+
+
+        var $loader = '<span id="loader" style="display: block; text-align:left" ><i class="fa fa-spinner fa-pulse fa-fw text-primary fa-2x"></i></span>';
+
+        //Lorsequ'un  ministere est choisit par exemple ...
+        $(document.body).on('select2:close', '#' + parentSelection, function () {
+// $( '#' + parentSelection).change(function() {
+            // on récupère le form correspondant à la liste.
+            var $form = $(this).closest('form');
+
+            // On simule le data, mais seulement avec la valeur du ministere choisit.
+            var data = {};
+            data[$('#' + parentSelection).attr('name')] = $('#' + parentSelection).val();
+
+            //On désactive le select pour ne pas avoir l'ancien
+            $('#' + enfantSelection).prop('disabled', true);
+
+            //On ajoute un loader dans la div parent s'il n'est pas déjà présent
+            if($('#loader').length == 0){
+                $('#' + enfantSelection).closest('.form-group').append($loader);
+            }
+            
+            // Submit data via AJAX to the form's action path.
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: data,
+                success: function (html) {
+                    // Replace current position field ...
+                    $('#' + enfantSelection).replaceWith(
+                        // ... with the returned one from the AJAX response.
+                        $(html).find('#' + enfantSelection)
+                    );
+                    // Position field now displays the appropriate positions.
+                    $('#' + enfantSelection).select2({
+                        placeholder: "Périmètres BRHP ...",
+                        allowClear: true,
+                        width: '100%'
+                      });
+                    //On remonte à la div parent du select, puis on supprimer les span select2 en trop qui sont vide
+                    var parent = $('#' + enfantSelection)
+                        .closest('div');
+                    $('span.select2', parent).each(function (index) {
+                        if (index != 0)
+                            $(this).remove();
+                    })
+//                     //On réactive le select
+                    $('#' + enfantSelection).prop('disabled', false);
+                    //On fait disparaite le loader;
+                    $('#loader').remove();
+                }
+            });
+        });
+    }
+        
+	
+
        <!-- Doughnut Chart -->
 
        {% if nbCrep==0 %}
@@ -232,8 +295,15 @@
 		        "pageLength": 10,
 		        "searchDelay": 500,
 				"order": [[ 1, "asc" ]],
-				"columnDefs": [ { orderable: false, targets: [7] } ],
-				"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+				"columnDefs": [ { targets: [7], orderable: false } ],
+                "dom": 'l<"pull-right"<"pull-right"B>>tipr',
+                "buttons": [
+                                {
+	                                   extend: 'colvis',
+	                                   text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+	                                   columns: [ 1, 2, 3, 4, 5, 6 ]  // colonnes pouvant être masquées
+                                }
+                           ],
 		        "columns":[ 
 		                   {"data": "agent"}, 
 		                   {"data": "perimetreRlc"},
@@ -259,8 +329,15 @@
 				        "pageLength": 10,
 				        "searchDelay": 500,
 						"order": [[ 0, "asc" ]],
-						"columnDefs": [ { orderable: false, targets: [5] } ],
-						"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+						"columnDefs": [ { targets: [5], orderable: false } ],
+		                "dom": 'l<"pull-right"<"pull-right"B>>tipr',
+		                "buttons": [
+		                                {
+			                                   extend: 'colvis',
+			                                   text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+			                                   columns: [ 1, 2, 3, 4 ]  // colonnes pouvant être masquées
+		                                }
+		                           ],
 				        "columns":[ 
 				                   {"data": "agent"}, 
 				                   {"data": "email"},
@@ -286,8 +363,15 @@
 				        "pageLength": 10,
 				        "searchDelay": 500,
 						"order": [[ 1, "asc" ]],
-						"columnDefs": [ { orderable: false, targets: [4] } ],
-						"sDom": '<"top"l>rt<"bottom"ip><"clear">',
+						"columnDefs": [ { targets: [4], orderable: false } ],
+		                "dom": 'l<"pull-right"<"pull-right"B>>tipr',
+		                "buttons": [
+		                                {
+			                                   extend: 'colvis',
+			                                   text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+			                                   columns: [ 1, 2, 3 ]  // colonnes pouvant être masquées
+		                                }
+		                           ],
 				        "columns":[ 
 				                   {"data": "agent"}, 
 				                   {"data": "email"}, 
@@ -300,6 +384,54 @@
 		        agentsSansPerimetreCharges = true;
             }
         }
+
+        <!-- Select2 -->        
+	       $(document).ready(function() {
+                // Gestion de l'affichage ou pas de l'icone filtre
+                var filtresPerimetresRlc = document.getElementById("recherche_campagne_pnc_perimetresRlc").selectedOptions.length;
+                var filtresPerimetresBrhp = document.getElementById("recherche_campagne_pnc_perimetresBrhp").selectedOptions.length;
+                var filtresCategories = document.getElementById("recherche_campagne_pnc_categories").selectedOptions.length;
+                var filtresAffectations = document.getElementById("recherche_campagne_pnc_affectations").selectedOptions.length;
+                var filtresCorps = document.getElementById("recherche_campagne_pnc_corps").selectedOptions.length;
+
+                if(filtresPerimetresRlc + filtresPerimetresBrhp + filtresCategories + filtresAffectations + filtresCorps > 0){
+	               document.getElementById('icone_filter').style.display = 'inline-block';
+                }
+	            // Fin de gestion de l'affichage ou pas de l'icone filtre
+           
+           
+	            $("#recherche_campagne_pnc_perimetresRlc").select2({
+	              placeholder: "Périmètres RLC ...",
+	              allowClear: true,
+	              width: '100%'
+	            });
+	
+	            $("#recherche_campagne_pnc_perimetresBrhp").select2({
+	                placeholder: "Périmètres BRHP ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_pnc_categories").select2({
+	                placeholder: "Catégories ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_pnc_affectations").select2({
+	                placeholder: "Affectations ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_pnc_corps").select2({
+	                placeholder: "Corps ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+          });
+          
+        <!-- /Select2 -->
 
 
 	</script>

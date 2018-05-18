@@ -51,7 +51,7 @@ class RlcManager extends BaseManager
      */
     public function supprimerRlc(Rlc $rlc)
     {
-        $rlcUser = $this->em->getRepository('AppBundle:Utilisateur')->findOneByEmail($rlc->getEmail());
+        $rlcUser = $rlc->getUtilisateur();
 
         $this->utilisateurManager->supprimerRole('ROLE_RLC', $rlcUser);
 

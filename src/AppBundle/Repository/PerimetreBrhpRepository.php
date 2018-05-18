@@ -52,4 +52,31 @@ class PerimetreBrhpRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    //On recherche des perimetres BRHP en fonction d'un périmetre RLC
+    public function findPerimetresBrhpByPerimetresRlc($perimetresRlc = [])
+    {
+        // Au 1er chargement du formulaire de recherche, aucun périmitre RLC n'est sélectionné
+        // On ne retourne alors aucun périmètre BRHP
+        if (!$perimetresRlc) {
+            return;
+        }
+
+        $qb = $this->createQueryBuilder('p');
+
+        // Si on séléectionne les "sans périmètres RLC"
+        if ($perimetresRlc && false !== ($key = array_search('null', $perimetresRlc))) {
+            unset($perimetresRlc[$key]);
+            $qb->where('p.perimetreRlc IS NULL');
+        }
+
+        // Si on séléctionne des périmètres RLC
+        if (!empty($perimetresRlc)) {
+            $qb->leftJoin('p.perimetreRlc', 'perimetreRlc');
+            $qb->orWhere('perimetreRlc.id IN(:PERIMETRES_RLC)')
+            ->setParameter('PERIMETRES_RLC', $perimetresRlc);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -65,6 +65,16 @@
     {% include 'crep/crepMcc02/_include/edit/iii/3.html.twig' %}
 {% endblock iii3 %}
 
+{% block ivError %}
+    {% for errorIndex, error in errors %}
+        {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbCompetenceNiveauExceptionnelle" ) %}
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock ivError %}
+
 {% block iv1 %}
     {% include 'crep/crepMcc02/_include/edit/iv/1.html.twig' %}
 {% endblock iv1 %}

@@ -46,6 +46,60 @@
 	{% endif %}
 {% endblock alertRecours %}
 
+{% block alertRefusVisa %}
+    {% if (crep.dateRefusVisa) and (crep.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::VISE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::NOTIFIE_AGENT'),
+                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::REFUS_NOTIFICATION_AGENT')]) %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <strong>Refus de visa</strong> du CREP par l'agent acté le <strong>{{ crep.dateRefusVisa|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusVisa %}
+
+{% block alertRefusNotification %}
+    {% if crep.dateRefusNotification %}
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>Refus de l'agent de signer</strong> le CREP notifié acté le <strong>{{ crep.dateRefusNotification|date('d/m/Y à H:i') }}</strong>
+        </div>
+    {% endif %}
+{% endblock alertRefusNotification %}
+
+{% block renvoyerAgent %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AGENT')) and crep.dateRenvoiAgent  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            {% set debutMessageRenvoiAgent = "L'agent a" %}
+            {% if is_granted('ROLE_AGENT') %}
+                {% set debutMessageRenvoiAgent = "Vous avez" %}
+            {% endif %}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            {{ debutMessageRenvoiAgent }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAgent|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAgent|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAgent %}
+
+{% block renvoyerAh %}
+    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AH')) and crep.dateRenvoiAh  %}
+        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            {% set debutMessageRenvoiAh = "Le N+2 a" %}
+            {% if is_granted('ROLE_AH') %}
+                {% set debutMessageRenvoiAh = "Vous avez" %}
+            {% endif %}
+            {{ debutMessageRenvoiAh }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAh|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
+            {{ crep.motifRenvoiAh|nl2br }}
+        </div>
+    {% endif %}
+{% endblock renvoyerAh %}
+
 {% block alertDebutEntretien %}
     {% if ("now" | date('Ymd') < crep.agent.campagneBrhp.dateDebutEntretien | date('Ymd')) %}
         <div class="alert alert-info alert-dismissible fade in" role="alert">
@@ -116,6 +170,8 @@
 			<a href="{{ path('crep_edit', { 'id': crep.id }) }}">
 				<button type="submit" class="btn btn-primary bouton-160"><i class="fa fa-edit" aria-hidden="true"></i> Modifier le CREP</button>
 			</a>
+		{% elseif is_granted(constant('AppBundle\\Security\\CrepVoter::RAPPELER_AGENT_SHD'), crep) %}
+			<button type="button" class="btn btn-warning bouton-160" data-toggle="modal" data-target="#modal_rappler_agent_shd"><i class="fa fa-mail-reply"></i> Rappeler le CREP</button>		
 	    {% endif %}
 	</div>
 	<div class="col-xs-4 text-center">
@@ -264,6 +320,10 @@
 
 {% if is_granted(constant('AppBundle\\Security\\CrepVoter::RAPPELER_AGENT_AH'), crep) %}
     {{ macro.modal('warning', 'modal_rappler_agent_ah', "Rappeler le CREP", "Voulez-vous vraiment <strong>rappeler</strong> ce CREP ?", "fa-mail-reply", rappeler_agent_ah_form)}} 
+{% endif %}
+
+{% if is_granted(constant('AppBundle\\Security\\CrepVoter::RAPPELER_AGENT_SHD'), crep) %}
+    {{ macro.modal('warning', 'modal_rappler_agent_shd', "Rappeler le CREP", "Voulez-vous vraiment <strong>rappeler</strong> ce CREP ?", "fa-mail-reply", rappeler_agent_shd_form)}} 
 {% endif %}
 
 

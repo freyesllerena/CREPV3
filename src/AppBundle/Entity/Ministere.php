@@ -56,6 +56,13 @@ class Ministere extends GenericEntity
     protected $delaiVisa = 2;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"default":0})
+     */
+    protected $delaiSignatureDefinitive = 0;
+    
+    /**
      * @var ModeleCrep
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ModeleCrep", mappedBy="ministere", cascade={"persist", "remove"})
@@ -224,6 +231,30 @@ class Ministere extends GenericEntity
         $this->delaiVisa = $delaiVisa;
 
         return $this;
+    }
+    
+    /**
+     * Get delaiSignatureDefinitive.
+     *
+     * @return int
+     */
+    public function getDelaiSignatureDefinitive()
+    {
+    	return $this->delaiSignatureDefinitive;
+    }
+    
+    /**
+     * Set delaiSignatureDefinitive.
+     *
+     * @param int $delaiSignatureDefinitive
+     *
+     * @return Ministere
+     */
+    public function setDelaiSignatureDefinitive($delaiSignatureDefinitive)
+    {
+    	$this->delaiSignatureDefinitive = $delaiSignatureDefinitive;
+    
+    	return $this;
     }
 
     public function __toString()

@@ -1,5 +1,7 @@
 {% extends "index.base.html.twig" %}
 
+{% form_theme recherche_form 'Campagne/Form/App_form_recherche.html.twig' %}
+
 {% block frameTitle %}{{ campagneBrhp.libelle }}{% endblock frameTitle %}
 {% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
 {% block pageTitle %}{{ campagneBrhp.libelle }}{% endblock pageTitle %}
@@ -55,6 +57,10 @@
         {% block indicateurs %}
         	{% include 'Campagne/indicateurs.html.twig' %}
         {% endblock indicateurs %}
+        
+		{% block filtres %}
+        	{% include 'campagneBrhp/blocsTableauDeBord/filtres.html.twig' %}
+	    {% endblock filtres %}
     
         <div class="row">
         	<div class="col-md-6 col-sm-12 col-xs-12">
@@ -89,9 +95,9 @@
                         	<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                             	<li role="presentation" class="active"><a href="#tab_content0" role="tab" data-toggle="tab" aria-expanded="true">Ma population</a></li>
                             	<li role="presentation" class=""><a href="#tab_content1" role="tab" data-toggle="tab" aria-expanded="false">Agents évaluables par N+1</a></li>
-                                <li role="presentation" class=""><a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
-                                <li role="presentation" class=""><a href="#tab_content3" role="tab" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>
-                                <li role="presentation" class=""><a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">CREP</a></li>
+                                <li role="presentation" class="" onclick="chargerAgentsSansShd();"><a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">Agents sans N+1</a></li>
+                                <li role="presentation" class="" onclick="chargerAgentsSansPerimetre();"><a href="#tab_content3" role="tab" data-toggle="tab" aria-expanded="false">Agents sans périmètre</a></li>
+                                <li role="presentation" class="" onclick="chargerCreps();"><a href="#tab_content4" role="tab" data-toggle="tab" aria-expanded="false">CREP</a></li>
                             </ul>
                             <div id="myTabContent" class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade active in" id="tab_content0" aria-labelledby="home-tab">
@@ -194,6 +200,10 @@
             {% set nbCrepNonRenseignes = 1 %}
             {% set nbCrep = 1 %}
         {% endif %}
+
+        var agentsSansShdCharges = false;
+        var agentsSansPerimetreCharges = false;
+        var crepsCharges = false;
         
 		$(document).ready(function() {
 			// rend le crep non cliquable
@@ -214,11 +224,59 @@
 		        "sAjaxDataProp": "data",
 		        "pageLength": 10,
 		        "searchDelay": 500,
-		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
+				"dom": 'l<"pull-right"<"pull-right"B>>tipr',
+		        "buttons": [
+		            {
+                        extend: 'csv',
+                        text: '<i class="fa fa-file-excel-o" title="Exporter de la page courante en CSV"></i>',
+                        fieldSeparator: ';',
+                        exportOptions: {
+                        	columns: [ 0, 1, 2, 3, 4, 5, 6 ], // colonnes concernées par l'export
+                        	modifier: {
+                                selected: true
+                            },
+                            format: {
+                                body: function ( data, column, row, node ) {
+                                                // Suppression des espaces
+                                                data = data.trim();
+
+                                                // Gestion de l'export de la colonne N+1
+                                                if(column === 2){
+                                                	return formatColonneShd( data, column, row, node );
+                                                }
+                                                
+                                                // Gestion de l'export de la colonne N+2
+                                                if(column === 3){
+                                                	return formatColonneAh( data, column, row, node );
+                                                }
+
+                                                // Gestion de l'export de la colonne statut de validation
+                                                if(column === 5){
+                                                	return formatColonneStatutValidation( data, column, row, node );
+                                                }
+                                                
+                                                // Gestion de l'export de la colonne statut d'avancement du CREP
+                                                if(column === 6){
+                                                	return formatColonneStatutAvancement( data, column, row, node );
+                                                }
+                                                
+                                                return data;
+                                }
+                            }
+                        }
+                    },
+                    {
+                    	extend: 'colvis',
+                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+                    	columns: [ 1, 2, 3, 4, 5, 6 ]  // colonnes pouvant être masquées
+                    }
+		        ],
 				"order": [[ 0, "asc" ]],
 				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
 					initPopover();},
-				"columnDefs": [ { orderable: false, targets: [5, 6] } ],
+				"columnDefs": [ 
+                                { targets: [7], orderable: false } 
+                              ],
 		        "columns":[ 
 		                   {"data": "agent"}, 
 		                   {"data": "affectation"},
@@ -226,90 +284,211 @@
 		                   {"data": "ah"},
 		                   {"data": "evaluable"},
 		                   {"data": "statutValidation"},
-		                   {"data": "actions"},
-		               ] 
-		    } );
-
-		
-		setAjaxDataTable("#ma_population", dtable);
-		
-
-	    
-		var dtable = $('#agents_sans_shd').DataTable( {
-		    	"oLanguage": oLanguage_fr(),
-		        "processing": true,
-		        "serverSide": true,
-		        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 1, 'sansShd': 1, 'sansPerimetre': 0, 'onglet': 'agents_sans_shd' }) }}",
-		        "sAjaxDataProp": "data",
-		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
-		        "pageLength": 10,
-		        "searchDelay": 500,
-				"order": [[ 0, "asc" ]],
-				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
-					initPopover();},
-				"columnDefs": [ { orderable: false, targets: [3] } ],
-		        "columns":[ 
-		                   {"data": "agent"}, 
-		                   {"data": "affectation"},
-		                   {"data": "ah"},
-		                   {"data": "actions"},
-		               ] 
-		    } );
-		    
-		setAjaxDataTable("#agents_sans_shd", dtable);
-		
-
-		var dtable = $('#agents_sans_perimetre_brhp').DataTable( {
-		    	"oLanguage": oLanguage_fr(),
-		        "processing": true,
-		        "serverSide": true,
-		        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre': 1, 'onglet': 'agents_sans_perimetre_brhp' }) }}",
-		        "sAjaxDataProp": "data",
-		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
-		        "pageLength": 10,
-		        "searchDelay": 500,
-				"order": [[ 0, "asc" ]],
-				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
-					initPopover();},
-				"columnDefs": [ { orderable: false, targets: [5] } ],
-		        "columns":[ 
-		                   {"data": "agent"}, 
-		                   {"data": "affectation"},
-		                   {"data": "uniteOrganisationnelle"}, 
-		                   {"data": "shd"},
-		                   {"data": "ah"},
-		                   {"data": "actions"},
-		               ] 
-		    } );
-		    
-		setAjaxDataTable("#agents_sans_perimetre_brhp", dtable);
-
-		var dtable = $('#liste_creps').DataTable( {
-		    	"oLanguage": oLanguage_fr(),
-		        "processing": true,
-		        "serverSide": true,
-		        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 1, 'sansShd': 0, 'sansPerimetre': 0, 'onglet': 'liste_creps' }) }}",
-		        "sAjaxDataProp": "data",
-		        "sDom": '<"top"l>rt<"bottom"ip><"clear">',
-		        "pageLength": 10,
-		        "searchDelay": 500,
-				"order": [[ 0, "asc" ]],
-				"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
-					initPopover();},
-				"columnDefs": [ { orderable: false, targets: [5, 6] } ],
-		        "columns":[ 
-		                   {"data": "agent"}, 
-		                   {"data": "affectation"},
-		                   {"data": "shd"}, 
-		                   {"data": "ah"},
 		                   {"data": "avancement"},
-		                   {"data": "actionImportCrepPapier"},
-		                   {"data": "actionShowCrep"},
+		                   {"data": "actions"},
 		               ] 
 		    } );
-		setAjaxDataTable("#liste_creps", dtable);
-
+		setAjaxDataTable("#ma_population", dtable);
 		});
+
+		function chargerAgentsSansShd(){
+			if(!agentsSansShdCharges){ // On vérifier si le dataTable a déjà été chargé
+				var dtable = $('#agents_sans_shd').DataTable( {
+				    	"oLanguage": oLanguage_fr(),
+				        "processing": true,
+				        "serverSide": true,
+				        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 1, 'sansShd': 1, 'sansPerimetre': 0, 'onglet': 'agents_sans_shd' }) }}",
+				        "sAjaxDataProp": "data",
+						"dom": 'l<"pull-right"<"pull-right"B>>tipr',
+				        "buttons": [
+				            {
+		                        extend: 'csv',
+		                        text: '<i class="fa fa-file-excel-o" title="Exporter de la page courante en CSV"></i>',
+		                        fieldSeparator: ';',
+		                        exportOptions: {
+		                        	columns: [ 0, 1, 2], // colonnes concernées par l'export
+		                        	modifier: {
+		                                selected: true
+		                            },
+		                            format: {
+		                                body: function ( data, column, row, node ) {
+		                                                // Suppression des espaces
+		                                                data = data.trim();
+
+		                                                // Gestion de l'export de la colonne N+1
+		                                                if(column === 2){
+		                                                	return formatColonneAh( data, column, row, node );
+		                                                }
+
+		                                                return data;
+		                                }
+		                            }
+		                        }
+		                    },
+		                    {
+		                    	extend: 'colvis',
+		                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+		                    	columns: [ 1, 2 ]  // colonnes pouvant être masquées
+		                    }
+				        ],
+
+				        "pageLength": 10,
+				        "searchDelay": 500,
+						"order": [[ 0, "asc" ]],
+						"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+							initPopover();},
+						"columnDefs": [ { targets: [3], orderable: false } ],
+				        "columns":[ 
+				                   {"data": "agent"}, 
+				                   {"data": "affectation"},
+				                   {"data": "ah"},
+				                   {"data": "actions"},
+				               ] 
+				    } );
+				    
+				setAjaxDataTable("#agents_sans_shd", dtable);
+				agentsSansShdCharges = true;
+            }
+        }
+		
+		function chargerAgentsSansPerimetre(){
+            if(!agentsSansPerimetreCharges){ // On vérifier si le dataTable a déjà été chargé
+				var dtable = $('#agents_sans_perimetre_brhp').DataTable( {
+				    	"oLanguage": oLanguage_fr(),
+				        "processing": true,
+				        "serverSide": true,
+				        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre': 1, 'onglet': 'agents_sans_perimetre_brhp' }) }}",
+				        "sAjaxDataProp": "data",
+						"dom": 'l<"pull-right"<"pull-right"B>>tipr',
+				        "buttons": [
+				            {
+		                        extend: 'csv',
+		                        text: '<i class="fa fa-file-excel-o" title="Exporter de la page courante en CSV"></i>',
+		                        fieldSeparator: ';',
+		                        exportOptions: {
+		                        	columns: [ 0, 1, 2, 3, 4], // colonnes concernées par l'export
+		                        	modifier: {
+		                                selected: true
+		                            },
+		                            format: {
+		                                body: function ( data, column, row, node ) {
+		                                                // Suppression des espaces
+		                                                data = data.trim();
+
+		                                                // Gestion de l'export de la colonne N+1
+		                                                if(column === 3){
+		                                                	return formatColonneShd( data, column, row, node );
+		                                                }
+		                                                
+		                                                // Gestion de l'export de la colonne N+2
+		                                                if(column === 4){
+		                                                	return formatColonneAh( data, column, row, node );
+		                                                }
+
+		                                                return data;
+		                                }
+		                            }
+		                        }
+		                    },
+		                    {
+		                    	extend: 'colvis',
+		                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+		                    	columns: [ 1, 2, 3, 4 ]  // colonnes pouvant être masquées
+		                    }
+				        ],
+				        "pageLength": 10,
+				        "searchDelay": 500,
+						"order": [[ 0, "asc" ]],
+						"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+							initPopover();},
+						"columnDefs": [ { targets: [5], orderable: false } ],
+				        "columns":[ 
+				                   {"data": "agent"}, 
+				                   {"data": "affectation"},
+				                   {"data": "uniteOrganisationnelle"}, 
+				                   {"data": "shd"},
+				                   {"data": "ah"},
+				                   {"data": "actions"},
+				               ] 
+				    } );
+				    
+				setAjaxDataTable("#agents_sans_perimetre_brhp", dtable);
+				agentsSansPerimetreCharges = true;
+            }
+        }
+
+		function chargerCreps(){
+            if(!crepsCharges){ // On vérifier si le dataTable a déjà été chargé
+				var dtable = $('#liste_creps').DataTable( {
+				    	"oLanguage": oLanguage_fr(),
+				        "processing": true,
+				        "serverSide": true,
+				        "ajax": "{{ path('agent_campagne_brhp_server_processing', { 'campagneBrhp': campagneBrhp.id, 'evaluable': 1, 'sansShd': 0, 'sansPerimetre': 0, 'onglet': 'liste_creps' }) }}",
+				        "sAjaxDataProp": "data",
+						"dom": 'l<"pull-right"<"pull-right"B>>tipr',
+				        "buttons": [
+				            {
+		                        extend: 'csv',
+		                        text: '<i class="fa fa-file-excel-o" title="Exporter de la page courante en CSV"></i>',
+		                        fieldSeparator: ';',
+		                        exportOptions: {
+		                        	columns: [ 0, 1, 2, 3, 4 ], // colonnes concernées par l'export
+		                        	modifier: {
+		                                selected: true
+		                            },
+		                            format: {
+		                                body: function ( data, column, row, node ) {
+		                                                // Suppression des espaces
+		                                                data = data.trim();
+
+		                                                // Gestion de l'export de la colonne N+1
+		                                                if(column === 2){
+		                                                	return formatColonneShd( data, column, row, node );
+		                                                }
+		                                                
+		                                                // Gestion de l'export de la colonne N+2
+		                                                if(column === 3){
+		                                                	return formatColonneAh( data, column, row, node );
+		                                                }
+		                                                
+		                                                // Gestion de l'export de la colonne statut d'avancement du CREP
+		                                                if(column === 4){
+		                                                	return formatColonneStatutAvancement( data, column, row, node );
+		                                                }
+		                                                
+		                                                return data;
+		                                }
+		                            }
+		                        }
+		                    },
+		                    {
+		                    	extend: 'colvis',
+		                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
+		                    	columns: [ 1, 2, 3, 4, 5, 6 ]  // colonnes pouvant être masquées
+		                    }
+				        ],
+
+				        "pageLength": 10,
+				        "searchDelay": 500,
+						"order": [[ 0, "asc" ]],
+						"drawCallback": function( settings ) { // Pour réinitialier les popovers (info-bulles) de la table
+							initPopover();},
+						"columnDefs": [ { orderable: false, targets: [5, 6] } ],
+				        "columns":[ 
+				                   {"data": "agent"}, 
+				                   {"data": "affectation"},
+				                   {"data": "shd"}, 
+				                   {"data": "ah"},
+				                   {"data": "avancement"},
+				                   {"data": "actionImportCrepPapier"},
+				                   {"data": "actionShowCrep"},
+				               ] 
+				    } );
+				setAjaxDataTable("#liste_creps", dtable);
+				crepsCharges = true;
+            }
+        }
+
 		
 		function afficherPlusOuMoins(panelHeadingId, boutonPlusOuMoinsId ) {
 		    
@@ -347,6 +526,108 @@
 		        return false; //this is critical to stop the click event which will trigger a normal file download!
 		    });
 		});
-		
+
+
+		<!-- Select2 -->        
+	       $(document).ready(function() {
+          // Gestion de l'affichage ou pas de l'icone filtre
+          var filtresCategories = document.getElementById("recherche_campagne_brhp_categories").selectedOptions.length;
+          var filtresAffectations = document.getElementById("recherche_campagne_brhp_affectations").selectedOptions.length;
+          var filtresCorps = document.getElementById("recherche_campagne_brhp_corps").selectedOptions.length;
+
+          if(filtresCategories + filtresAffectations + filtresCorps > 0){
+	               document.getElementById('icone_filter').style.display = 'inline-block';
+          }
+	            // Fin de gestion de l'affichage ou pas de l'icone filtre
+	
+	            $("#recherche_campagne_brhp_categories").select2({
+	                placeholder: "Catégories ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_brhp_affectations").select2({
+	                placeholder: "Affectations ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+	
+	            $("#recherche_campagne_brhp_corps").select2({
+	                placeholder: "Corps ...",
+	                allowClear: true,
+	                width: '100%'
+	            });
+    });     
+  <!-- /Select2 -->
+
+  
+  function formatColonneShd(data, column, row, node){
+	  if(data.includes("N+1 non renseigné")){
+          return '';
+      }
+      return data;
+  }
+
+  function formatColonneAh(data, column, row, node){
+	  if(data.includes("N+2 non renseigné")){
+          return '';
+      }
+      return data;
+  }
+
+  function formatColonneStatutValidation(data, column, row, node){
+	  if(data.includes("Rattachement en attente de validation")){
+          return "Rattachement en attente de validation";
+      }
+      if(data.includes("Rattachement validé")){
+          return "Rattachement validé";
+      }
+      if(data.includes("Rattachement rejeté")){
+          return "Rattachement rejeté";
+      }
+      if(data.includes("Erreur signalée")){
+          return "Erreur signalée";
+      }
+      return '';
+  }
+
+  function formatColonneStatutAvancement(data, column, row, node){
+      if(data.includes("En attente d'initialisation")){
+          return "Etape 0/5 : En attente d'initialisation";
+      }
+      if(data.includes("Créé")){
+          return "Etape 1/5 : Créé";
+      }
+      if(data.includes("En cours de rédaction")){
+          return "Etape 1/5 : En cours de rédaction";
+      }
+      if(data.includes("Signé N+1")){
+          return "Etape 2/5 : Signé N+1";
+      }
+      if(data.includes("Visé agent")){
+          return "Etape 3/5 : Visé agent";
+      }
+      if(data.includes("Refus visa agent")){
+          return "Etape 3/5 : Refus visa agent";
+      }
+      if(data.includes("Signé N+2")){
+          return "Etape 4/5 : Signé N+2";
+      }
+      if(data.includes("Signé agent")){
+          return "Etape 5/5 : Signé agent";
+      }
+      if(data.includes("Refus entretien professionnel")){
+          return "Etape 5/5 : Refus entretien professionnel";
+      }
+      if(data.includes("Refus signature agent")){
+          return "Etape 5/5 : Refus signature agent";
+      }
+      if(data.includes("CREP en cas d'absence de l'agent")){
+          return "Etape 5/5 : CREP en cas d'absence de l'agent";
+      }
+      return '';
+  }
+  
+  
 	</script>
 {% endblock javascripts %}

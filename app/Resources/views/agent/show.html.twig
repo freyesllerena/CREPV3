@@ -270,6 +270,30 @@
 	       						{{ agent.capitalDifMobilisable }}
        						</div>
        					</div>
+       					
+       					{% if agent.documents is not empty %}
+       					<div class="form-group">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Pièce(s) jointe(s)</label>
+	
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                            <ul class="list-unstyled project_files">
+	                                {% for document in agent.documents %}
+	                                    {% if document.id %}
+	                                        <li class="row">
+	                                            <div class="col-md-10 text-overflow">
+	                                                <a href="{{ path('agent_get_document', {'id': agent.id, 'document': document.id}) }}">
+	                                                    <i class="{{ document.nom | fileIcon }}"></i> {{ document.nom }}
+	                                                </a>
+	                                            </div>
+	                                        </li>
+	                                    {% endif %}
+	                                {% endfor  %}
+	                            </ul>
+	                            
+	                        </div>
+                    	</div>
+                    	{% endif %}
+       					
 					</div>
 				</div>
 			</div>
@@ -277,9 +301,6 @@
 		
 		
 		<div class="row">
-{#     		<div class="col-md-6 col-sm-6 col-xs-6 text-center">#}
-{#     			<button type="button" class="btn btn-danger pull-left" data-toggle="modal" data-target="#modal_supprimer_agent"><i class="fa fa-trash"></i> Supprimer</button>#}
-{#     		</div>#}
     		<div class="col-md-6 col-sm-6 col-xs-6">
     		    {% if is_granted(constant('AppBundle\\Security\\AgentVoter::MODIFIER'), agent) %}
             		<a href="{{ path('agent_edit', { 'id': agent.id }) }}">

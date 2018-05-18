@@ -39,7 +39,14 @@ crep_notifier_agent:
     methods:  [PUT] 
     requirements:
         id: '\d+'
-        
+
+crep_rappeler_agent_shd:
+    path:     /{id}/rappeler-agent-shd
+    defaults: { _controller: "AppBundle:Crep:rappelerAgentShd" }
+    methods:  [PUT]
+    requirements:
+        id: '\d+'
+                
 crep_rappeler_agent_ah:
     path:     /{id}/rappeler-agent-ah
     defaults: { _controller: "AppBundle:Crep:rappelerAgentAh" }

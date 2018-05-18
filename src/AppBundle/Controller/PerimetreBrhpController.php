@@ -31,10 +31,10 @@ class PerimetreBrhpController extends Controller
             $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->findAll();
         } elseif ($utilisateur->hasRole('ROLE_BRHP')) {
             /* @var $brhp Brhp */
-            $brhp = $em->getRepository('AppBundle:Brhp')->getBrhpByEmail($utilisateur->getEmail());
+            $brhp = $em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
             $perimetreBrhps = $brhp->getPerimetresBrhp();
         } else {
-            $rlc = $em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+            $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
             $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->getPerimetresBrhpByRlc($rlc);
         }
 
@@ -60,7 +60,7 @@ class PerimetreBrhpController extends Controller
         $utilisateur = $this->getUser();
         $ministere = $utilisateur->getMinistere();
 
-        $rlc = $em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         $perimetresRlc = $rlc->getPerimetresRlc();
 
@@ -107,7 +107,7 @@ class PerimetreBrhpController extends Controller
         $em = $this->getDoctrine()->getManager();
         $utilisateur = $this->getUser();
 
-        $rlc = $em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         $perimetresRlc = $rlc->getPerimetresRlc();
 

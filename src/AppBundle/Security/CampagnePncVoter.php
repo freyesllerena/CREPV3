@@ -305,7 +305,7 @@ class CampagnePncVoter extends Voter
 
         if ('ROLE_RLC' == $roleUtilisateurSession) {
             /** @var $rlc Rlc */
-            $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+            $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
             // On fait l'intersection des périmètres de la campagne et des périmètres du RLC
             // Il faut que le RLC gère au moins un périmètre des ceux de la campagne

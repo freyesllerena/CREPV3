@@ -6,7 +6,7 @@ campagne_pnc_index:
 campagne_pnc_show:
     path:     /{id}/show/{id_perimetre}
     defaults: { _controller: "AppBundle:CampagnePnc:show", id_perimetre: 0 }
-    methods:  GET
+    methods:  [GET, POST]
     requirements:
         id: '\d+'
         
@@ -72,3 +72,4 @@ campagne_pnc_fermer :
     methods:  PUT
     requirements:
         id: '\d+'    
+

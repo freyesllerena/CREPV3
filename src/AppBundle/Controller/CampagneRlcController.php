@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormError;
 use AppBundle\Service\CrepManager;
+use AppBundle\Entity\CampagnePnc;
+use AppBundle\Form\RechercheCampagneRlcType;
 
 /**
  * CampagneRlc controller.
@@ -73,13 +75,28 @@ class CampagneRlcController extends Controller
 
         //On redirige vers la vue tableau de bord que si le fichier d'agents a été diffusé par l'admin ministériel
         if ($campagneRlc->getCampagnePnc()->getDiffusee()) {
-            /*@var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
-            $indicateurs = $crepManager->calculIndicateurs($campagneRlc, $perimetreBrhp);
-
             /*@var $campagnePncManager CampagnePncManager */
             $campagneRlcManager = $this->get('app.campagne_rlc_manager');
             $historiqueIndicateurs = $campagneRlcManager->getHistoriqueIndicateurs($campagneRlc);
+
+            $rechercheForm = $this->creerRechercheForm($campagneRlc);
+            $rechercheForm->handleRequest($request);
+
+            $perimetresBrhp = [];
+            $categories = [];
+            $affectations = [];
+            $corps = [];
+
+            if ($rechercheForm->isSubmitted() && $rechercheForm->isValid()) {
+                $perimetresBrhp = $rechercheForm->get('perimetresBrhp')->getData();
+                $categories = $rechercheForm->getData()['categories'];
+                $affectations = $rechercheForm->getData()['affectations'];
+                $corps = $rechercheForm->getData()['corps'];
+            }
+
+            /*@var $crepManager CrepManager */
+            $crepManager = $this->get('app.crep_manager');
+            $indicateurs = $crepManager->calculIndicateurs($campagneRlc, [], $perimetresBrhp, null, null, $categories, $affectations, $corps);
 
             $template = 'campagneRlc/tableauDeBord.html.twig';
 
@@ -90,6 +107,7 @@ class CampagneRlcController extends Controller
                 'perimetre' => $perimetreBrhp,
                 'ouvrir_form' => $ouvrirForm->createView(),
                 'rouvrir_form' => $rouvrirForm->createView(),
+                'recherche_form' => $rechercheForm->createView(),
                 'modelesCrep' => $modelesCrep,
             ));
         }
@@ -323,5 +341,20 @@ class CampagneRlcController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('campagne_rlc_edit', array('id' => $campagneRlc->getId()));
+    }
+
+    /**
+     * Crée le formulaire de recherche sur une CampagneRlc.
+     *
+     * @param CampagneRlc $campagneRlc
+     *
+     * @return \Symfony\Component\Form\Form Le formulaire
+     */
+    private function creerRechercheForm(CampagneRlc $campagneRlc)
+    {
+        return $this->createForm(RechercheCampagneRlcType::class, null, array(
+                'campagneRlc' => $campagneRlc,
+                'em' => $this->getDoctrine()->getManager(),
+        ));
     }
 }

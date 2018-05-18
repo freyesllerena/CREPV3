@@ -4,17 +4,6 @@
 {% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
 {% block pageTitle %}Campagnes{% endblock pageTitle %}
 
-{% set  nbCrep = indicateurs["nbCrep"] %}
-{% set  nbCrepSignesShd = indicateurs["nbCrepSignesShd"] %}
-{% set  nbCrepVisesAgent = indicateurs["nbCrepVisesAgent"] %}
-{% set  nbCrepSignesAh = indicateurs["nbCrepSignesAh"] %}
-{% set  nbCrepNotifies = indicateurs["nbCrepNotifies"] %}
-{% set  nbRefusNotification = indicateurs["nbCrepRefusNotification"] %}
-{% set  nbCrepNonRenseignes = indicateurs["nbCrepNonRenseignes"] %}
-{% set  nbCrepModifieShd = indicateurs["nbCrepModifieShd"] %}
-{% set  nbCrepRefusVisas = indicateurs["nbCrepRefusVisas"] %}
-{% set  nbCrepCasAbsence = indicateurs["nbCrepCasAbsence"] %}
-
 {% block content %}
 
 	<div class="row">
@@ -43,33 +32,11 @@
         <div class="col-xs-4">
 			{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::OUVRIR'), campagnePnc) %}
                 <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_ouvrir"><i class="fa fa-unlock"></i> Ouvrir la campagne</button>
-               	
-			{% elseif is_granted(constant('AppBundle\\Security\\CampagnePncVoter::CLOTURER'), campagnePnc)%}
-               		<button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#modal_cloturer"><i class="fa fa-flag"></i> Clôturer la campagne</button>
-               	
-			{% elseif is_granted(constant('AppBundle\\Security\\CampagnePncVoter::ROUVRIR'), campagnePnc) %}
-               	<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal_rouvrir"><i class="fa fa-unlock"></i> Rouvrir la campagne</button>
-               	
-			{% elseif is_granted(constant('AppBundle\\Security\\CampagnePncVoter::FERMER'), campagnePnc) %}
-               	<button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#modal_fermer"><i class="fa fa-lock"></i> Fermer la campagne</button>
             {% endif %}
 		</div>
     </div><!-- /.row -->
     
     {############## Modals ##############}
-	
-	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::CLOTURER'), campagnePnc) %}
-		{{ macro.modal('danger', 'modal_cloturer', "Clôturer la campagne", "Voulez-vous vraiment <strong>clôturer</strong> cette campagne ?", "fa-flag", cloturer_form)}} 
-	{% endif %}
-	
-	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::FERMER'), campagnePnc) %}
-		{{ macro.modal('danger', 'modal_fermer', "Fermeture la campagne", "Voulez-vous vraiment <strong>fermer</strong> cette campagne ?", "fa-lock", fermer_form)}} 
-	{% endif %}
-	
-	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::ROUVRIR'), campagnePnc) %}
-		{{ macro.modal('success', 'modal_rouvrir', "Rouvrir la campagne", "Voulez-vous vraiment <strong>rouvrir</strong> cette campagne ?", "fa-unlock", rouvrir_form)}} 
-	{% endif %}
-    
 	{% if is_granted(constant('AppBundle\\Security\\CampagnePncVoter::OUVRIR'), campagnePnc) %}
         {{ macro.modal('success', 'modal_ouvrir', "Ouvrir la campagne", "Voulez-vous vraiment <strong>ouvrir</strong> cette campagne aux acteurs de niveau local ?", "fa-unlock", ouvrir_form)}} 
     {% endif %}

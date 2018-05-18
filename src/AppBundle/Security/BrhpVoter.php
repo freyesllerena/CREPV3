@@ -76,7 +76,7 @@ class BrhpVoter extends Voter
     private function canEdit(Brhp $brhp, Utilisateur $utilisateur)
     {
         /* @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         $perimetresBrhp = $brhp->getPerimetresBrhp();
 
@@ -96,7 +96,7 @@ class BrhpVoter extends Voter
     private function canDelete(Brhp $brhp, Utilisateur $utilisateur)
     {
         /** @var $rlc Rlc */
-        $rlc = $this->em->getRepository('AppBundle:Rlc')->getRlcByEmail($utilisateur->getEmail());
+        $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
         $perimetresBrhp = $brhp->getPerimetresBrhp();
 

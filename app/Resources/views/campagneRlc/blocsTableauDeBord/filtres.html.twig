@@ -1,0 +1,31 @@
+    <!-- Filtres -->
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green collapsed">
+                <div class="x_title">
+                    <h2>Filtres sur les statistiques <i id="icone_filter"class="fa fa-filter" style="display: none"></i><small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+    
+                <div class="x_content" style="display: none">
+        
+                    {{ form_start(recherche_form, {'attr': {'novalidate': 'novalidate'}})}}
+                        {{ form_row(recherche_form.perimetresBrhp, { 'label': 'Périmètres BRHP', 'attr': {'class': 'select2_multiplex'}}) }}
+                        {{ form_row(recherche_form.categories, { 'label': 'Catégories', 'attr': {'class': 'select2_multiplex'}}) }}
+                        {{ form_row(recherche_form.affectations, { 'label': 'Affectations', 'attr': {'class': 'select2_multiple'}}) }}
+                        {{ form_row(recherche_form.corps, { 'label': 'Corps', 'attr': {'class': 'select2_multiple'}}) }}
+                        
+                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Rechercher</button>
+                    {{ form_end(recherche_form) }}    
+                </div>
+            </div>
+        </div>
+    </div>

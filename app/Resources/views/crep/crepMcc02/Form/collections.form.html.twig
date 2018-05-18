@@ -50,6 +50,7 @@
     {% endfor %}
 {% endblock %}
 
+
 {% block _crep_mcc02_competencesSituations_entry_widget %}
     {%  for child in form.niveauAcquis.children %}
         <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
@@ -174,3 +175,43 @@
             <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}</td>
         {% endfor %}
 {% endblock %}
+
+{###################### Fin collecions ################################}
+
+{# Redéfinition du bloc from_errors aligner à gauche les erreurs de validation, en ajoutant style="text-align: left;"   #}
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        <div class="has-error">
+            {%- for error in errors -%}
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+                </div>
+            {%- endfor -%}
+        </div>
+
+    {%- endif %}
+{%- endblock form_errors %}
+
+{# Redéfinition du bloc form_row pour supprimer les marges basses sur les champs en mettant en place la classe form-group-no-margin  #}
+{% block form_row -%}
+    {% spaceless %}
+        {{ form_errors(form) }}
+        {% if label != false %}
+            <div class="form-group-no-margin{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+            {{ form_label(form) }}
+            <div class="{{ block('form_group_class') }}">
+        {% else %}
+            <div class="form-group-no-margin{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+            <div class="{{ block('form_group_class') }}">
+        {% endif %}
+
+        {{ form_widget(form) }}
+
+        {% if icone is defined %}
+            <span class="{{ icone }} form-control-feedback left" aria-hidden="true"></span>
+        {% endif %}
+
+        </div>
+        </div>
+    {% endspaceless %}
+{%- endblock form_row %}

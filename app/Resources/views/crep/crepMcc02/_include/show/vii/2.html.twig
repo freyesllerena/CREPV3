@@ -40,7 +40,7 @@
 
         <label>
             <input type="checkbox" class="flat" disabled="disabled"
-                    {% if crep.agent and crep.agent.ah and crep.propositionAvancement == 0 %}
+                    {% if crep.agent and crep.agent.ah and crep.propositionAvancement == 0 and crep.propositionAvancement is not null %}
                         checked="checked"
                     {% endif %}
             >

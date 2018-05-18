@@ -20,3 +20,12 @@
 {% block bouton_submit %}
 	<button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-floppy-o"></i> Enregistrer</button>
 {% endblock bouton_submit %}
+
+{% block content %}
+    {{ parent() }}
+    {% for document in agent.documents %}
+    	{% if document.id %}
+    		{{ macro.modal('danger', 'modal_delete_'~ document.id, "Supprimer le document", "Voulez-vous vraiment <strong>supprimer</strong> ce document ?", "fa-trash", deteteDocumentsForms[loop.index0])}}
+    	{% endif %} 
+    {% endfor %}
+{% endblock content %}

@@ -5,11 +5,11 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Campagne;
 use AppBundle\Entity\Perimetre;
 use AppBundle\Entity\CampagnePnc;
-use AppBundle\Entity\PerimetreRlc;
 use AppBundle\Entity\CampagneRlc;
 use AppBundle\Entity\PerimetreBrhp;
 use AppBundle\Entity\CampagneBrhp;
 use AppBundle\Entity\Agent;
+use AppBundle\Traits\ConditionsFiltre;
 
 /**
  * RecoursRepository.
@@ -19,6 +19,9 @@ use AppBundle\Entity\Agent;
  */
 class RecoursRepository extends \Doctrine\ORM\EntityRepository
 {
+    // Utilisation de trait
+    use ConditionsFiltre;
+
     /**
      * Calcul d'indicateurs sur les recours.
      *
@@ -33,7 +36,7 @@ class RecoursRepository extends \Doctrine\ORM\EntityRepository
      *
      * @return number
      */
-    public function getNbRecours(Campagne $campagne, Perimetre $perimetre = null, $typeRecours = null, Agent $shd = null, Agent $ah = null, $nbCrepEnRecours = false)
+    public function getNbRecours(Campagne $campagne, $perimetresRlc = [], $perimetresBrhp = [], $typeRecours = null, Agent $shd = null, Agent $ah = null, $nbCrepEnRecours = false, $categories = [], $affectations = [], $corps = [])
     {
         if ($shd && $ah) {
             throw new \Exception('Appel incorrect SHD ou AH');
@@ -50,31 +53,31 @@ class RecoursRepository extends \Doctrine\ORM\EntityRepository
         $qb->join('recours.crep', 'crep')
             ->join('crep.agent', 'agent');
 
+        $this->addFiltreCategories($qb, $categories);
+        $this->addFiltreAffectations($qb, $affectations);
+        $this->addFiltreCorps($qb, $corps);
+
         /* @var $campagne CampagnePnc */
         if ($campagne instanceof CampagnePnc) {
             $qb->andWhere('agent.campagnePnc = :CAMPAGNE');
 
-            // Si le PNC fait un filtre pour avoir des stats sur un périmètre RLC
-            /* @var $perimetre PerimetreRlc */
-            if ($perimetre) {
-                $qb->leftJoin('agent.campagneRlc', 'campagneRlc')
-                ->andWhere('campagneRlc.perimetreRlc = :PERIMETRE_RLC')
-                ->setParameter('PERIMETRE_RLC', $perimetre);
-            }
+            $this->addFiltrePerimetresRlc($qb, $perimetresRlc);
+            $this->addFiltrePerimetresBrhp($qb, $perimetresBrhp);
 
-            /* @var $campagne CampagneRlc */
+        /* @var $campagne CampagneRlc */
         } elseif ($campagne instanceof CampagneRlc) {
             $qb->andWhere('agent.campagneRlc = :CAMPAGNE');
 
             // Si le RLC fait un filtre pour avoir des stats sur un périmètre BRHP
             /* @var $perimetre PerimetreBrhp */
-            if ($perimetre) {
-                $qb->leftJoin('agent.campagneBrhp', 'campagneBrhp')
-                ->andWhere('campagneBrhp.perimetreBrhp = :PERIMETRE_BRHP')
-                ->setParameter('PERIMETRE_BRHP', $perimetre);
-            }
+//             if ($perimetre) {
+//                 $qb->leftJoin('agent.campagneBrhp', 'campagneBrhp')
+//                 ->andWhere('campagneBrhp.perimetreBrhp = :PERIMETRE_BRHP')
+//                 ->setParameter('PERIMETRE_BRHP', $perimetre);
+//             }
+            $this->addFiltrePerimetresBrhp($qb, $perimetresBrhp);
 
-            /* @var $campagne CampagneBrhp */
+        /* @var $campagne CampagneBrhp */
         } elseif ($campagne instanceof CampagneBrhp) {
             $qb->andWhere('agent.campagneBrhp = :CAMPAGNE');
 

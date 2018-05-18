@@ -127,80 +127,11 @@
     {% include 'crep/crepMindef01/_include/show/viii/5.html.twig' %}
 {% endblock viii5 %}
 
-
-{% block alertRefusVisa %}
-    {% if (crep.dateRefusVisa) and (crep.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD'),
-                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::VISE_AGENT'),
-                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::NOTIFIE_AGENT'),
-                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::REFUS_NOTIFICATION_AGENT')]) %}
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <strong>Refus de visa</strong> du CREP par l'agent acté le <strong>{{ crep.dateRefusVisa|date('d/m/Y à H:i') }}</strong>
-        </div>
-    {% endif %}
-{% endblock alertRefusVisa %}
-
-{% block alertRefusNotification %}
-    {% if crep.dateRefusNotification %}
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <strong>Refus de l'agent de signer</strong> le CREP notifié acté le <strong>{{ crep.dateRefusNotification|date('d/m/Y à H:i') }}</strong>
-        </div>
-    {% endif %}
-{% endblock alertRefusNotification %}
-
-{% block renvoyerAgent %}
-    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AGENT')) and crep.dateRenvoiAgent  %}
-        <div class="alert alert-warning alert-dismissible fade in" role="alert">
-            {% set debutMessageRenvoiAgent = "L'agent a" %}
-            {% if is_granted('ROLE_AGENT') %}
-                {% set debutMessageRenvoiAgent = "Vous avez" %}
-            {% endif %}
-            {{ debutMessageRenvoiAgent }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAgent|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
-            {{ crep.motifRenvoiAgent|nl2br }}
-        </div>
-    {% endif %}
-{% endblock renvoyerAgent %}
-
-{% block renvoyerAh %}
-    {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AH')) and crep.dateRenvoiAh  %}
-        <div class="alert alert-warning alert-dismissible fade in" role="alert">
-            {% set debutMessageRenvoiAh = "Le N+2 a" %}
-            {% if is_granted('ROLE_AH') %}
-                {% set debutMessageRenvoiAh = "Vous avez" %}
-            {% endif %}
-            {{ debutMessageRenvoiAh }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAh|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>
-            {{ crep.motifRenvoiAh|nl2br }}
-        </div>
-    {% endif %}
-{% endblock renvoyerAh %}
-
-
-
 {% block javascripts %}
 	{{ parent() }}
 	<!-- chained -->
-	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"
-			type="text/javascript"></script>
-	{# 		<script>#}
-	{# 		$(function () {#}
-	{# 		  var onClass = 'on',#}
-	{# 		    showClass = 'show';#}
+	<script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}" type="text/javascript"></script>
 
-	{# 		  $('input').bind('checkval', function () {#}
-	{# 		    var label = $(this).prev('label');#}
-	{# 		    if(this.value !== '') {#}
-	{# 		      label.addClass(showClass);#}
-	{# 		    } else {#}
-	{# 		      label.removeClass(showClass);#}
-	{# 		    }#}
-	{# 		  }).on('keyup', function () {#}
-	{# 		    $(this).trigger('checkval');#}
-	{# 		  }).on('focus', function () {#}
-	{# 		    $(this).prev('label').addClass(onClass);#}
-	{# 		  }).on('blur', function () {#}
-	{# 		    $(this).prev('label').removeClass(onClass);#}
-	{# 		  }).trigger('checkval');#}
-	{# 		});#}
-	{# 		</script>#}
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
 			$("#departement").chained("#region");
