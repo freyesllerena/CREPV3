@@ -35,6 +35,7 @@
 </div>
 <br>
 {# Competences Relation #}
+{% set competencesRelactionsMcc02 = constant('COMPETENCE_RELATION_MCC02') %}
 <div class="row" id="competencesRelationsCollection" data-prototype="{{ form_widget(form.competencesRelations.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
@@ -49,17 +50,57 @@
             </tr>
             </thead>
             <tbody>
-            {% set iniCompetenceRelation = ['Force de conviction (leadership)','Capacité à conduire le changement ', 'Écoute ', 'Capacité à développer les compétences et à déléguer ', 'Capacité à communiquer ', 'Capacité à coopérer avec l’environnement' , 'Capacité à conseiller '] %}
-            {% for competence in form.competencesRelations %}
-                <tr>
-                    <td>
-                        {% if loop.index0 in crep.competencesRelations|keys %}
-                            {{ crep.competencesRelations[loop.index0].libelle }}
-                        {% endif %}
-                    </td>
-                    {{ form_widget(competence) }}
-                </tr>
-            {% endfor %}
+
+            {% if errors is empty %}
+
+                {% for competence in form.competencesRelations %}
+                    <tr>
+                        <td>
+                            {% if loop.index0 in crep.competencesRelations|keys %}
+                                {{ crep.competencesRelations[loop.index0].libelle }}
+                            {% endif %}
+                        </td>
+                        {{ form_widget(competence) }}
+                    </tr>
+                {% endfor %}
+
+            {% else %}
+
+                {% for key, codeNiveau in competencesRelactionsMcc02  %}
+                    <tr>
+                        <td>
+                            {{ key }}
+                        </td>
+
+                        {% for index in 0..4 %}
+
+                            {% set idCR =  "crep_mcc02_competencesRelations_" ~ codeNiveau ~ "_niveauAcquis_" ~ index %}
+                            {% set nameCR =  "crep_mcc02[competencesRelations][" ~ codeNiveau ~ "][niveauAcquis]" %}
+                            <td class="text-center">
+                                <div class="form-group">
+                                    <div class="radio"><label class="required">
+                                            <div class="iradio_flat-green" style="position: relative;"><input type="radio"
+                                                                                                              id="{{ idCR }}"
+                                                                                                              name="{{ nameCR }}"
+                                                                                                              required="required"
+                                                                                                              class="fieldCollection iCheckCollection flat"
+                                                                                                              value="{{ index }}"
+                                                                                                              style="position: absolute; opacity: 0;">
+                                                <ins class="iCheck-helper"
+                                                     style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </td>
+                        {% endfor %}
+
+                    </tr>
+
+                {% endfor %}
+
+            {% endif %}
+
             </tbody>
         </table>
     </div>
