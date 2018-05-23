@@ -7,7 +7,7 @@
         {{ form_row(form.appreciationGenerale, { 'label': false}) }}
     </div>
 </div>
-
+<br><br>
 <label>Potentiel d’évolution de l’agent-e</label>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -23,13 +23,25 @@
             </thead>
             <tbody>
             {% for potentiel in form.potentielsEvolutions %}
-                <tr>
-                    <td>
-                        {{ crep.potentielsEvolutions[loop.index0].libelle }}
-                    </td>
+                {% if potentiel.vars.value.libelle != 'Autre (préciser)' %}
+                    <tr>
+                        <td>
+                            {{ crep.potentielsEvolutions[loop.index0].libelle }}
+                        </td>
 
-                    {{ form_widget(potentiel) }}
-                </tr>
+                        {{ form_widget(potentiel) }}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            {{ crep.potentielsEvolutions[loop.index0].libelle }}
+                        </td>
+                        <td class="text-left" colspan="4">
+                            {{ form_widget(potentiel.children['appreciation']) }}
+                        </td>
+                    </tr>
+                {% endif %}
+
             {% endfor %}
             </tbody>
         </table>

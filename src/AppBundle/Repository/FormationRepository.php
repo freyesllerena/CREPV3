@@ -114,11 +114,13 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
 
         $qb = $this->createQueryBuilder('formation');
         $qb->select('formation.libelle as value')
-        ->addSelect('formation.libelle as data')
-        ->where('formation.ministere = :MINISTERE')
-        ->andWhere('formation.libelle LIKE :SEARCH')
-        ->setParameter('MINISTERE', $ministere)
-        ->setParameter('SEARCH', '%'.$search.'%');
+            ->addSelect('formation.libelle as data')
+            ->addSelect('formation.duree as duree')
+            ->addSelect('formation.code as code')
+            ->where('formation.ministere = :MINISTERE')
+            ->andWhere('formation.libelle LIKE :SEARCH')
+            ->setParameter('MINISTERE', $ministere)
+            ->setParameter('SEARCH', '%'.$search.'%');
 
         return $qb->getQuery()->getScalarResult();
     }

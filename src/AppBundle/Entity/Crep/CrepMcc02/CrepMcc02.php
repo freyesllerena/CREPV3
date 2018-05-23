@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
+use AppBundle\Entity\FormationSuivie;
 use AppBundle\Entity\MobiliteGeographique;
 use AppBundle\Entity\ObjectifEvalue;
 use AppBundle\Entity\ObjectifFutur;
@@ -2391,9 +2392,11 @@ class CrepMcc02 extends Crep
      */
     public function validateCrepMcc02(ExecutionContextInterface $context)
     {
+        $annee = '';
         // Cette variable calucle le nombre de compétences (requises, professionnelles et manageriales) dont le niveau acquis est exceptionnelle
         $nbCompetenceNiveauExceptionnelle = 0;
         $competencesRelationsAcquises = [];
+        $competencesRelationsAcquisesOrder = [];
         /** @var CrepMcc02CompetenceRelation $competenceRelation */
         foreach ($this->competencesRelations as $competenceRelation) {
             // on compte le total des niveaux acquis exceptionnelles et on récupère son libellé ainsi que le code niveau acquis
@@ -2411,19 +2414,29 @@ class CrepMcc02 extends Crep
             }
 
         }
+        // trie liste competence relation
+        foreach (COMPETENCE_RELATION_MCC02 as $keyCR => $competenceRelationMcc02) {
 
+            if (array_key_exists($keyCR, $competencesRelationsAcquises)) {
+                if (isset($competencesRelationsAcquises[$keyCR])) {
+                    $competencesRelationsAcquisesOrder[$keyCR] = $competencesRelationsAcquises[$keyCR];
+                }
+            } else {
+                $competencesRelationsAcquisesOrder[$keyCR] = null;
+            }
+        }
         // on efface toutes les competences
         $this->getCompetencesRelations()->clear();
         // on re-initialise les compétences liées à la relation
-        foreach (COMPETENCE_RELATION_MCC02 as $keyCR => $competenceRelationMcc02) {
-                $competenceRelation = new CrepMcc02CompetenceRelation();
-                $competenceRelation->setLibelle($keyCR);
-                if (array_key_exists($keyCR, $competencesRelationsAcquises)) {
-                    if (isset($competencesRelationsAcquises[$keyCR])) {
-                        $competenceRelation->setNiveauAcquis($competencesRelationsAcquises[$keyCR]);
-                    }
-                }
+        foreach ($competencesRelationsAcquisesOrder as $libelle => $niveauAcquis) {
+            $competenceRelation = new CrepMcc02CompetenceRelation();
+            $competenceRelation->setLibelle($libelle);
+            if (!is_null($niveauAcquis)) {
+                $competenceRelation->setNiveauAcquis($niveauAcquis);
                 $this->addCompetencesRelation($competenceRelation);
+            } else {
+                $this->addCompetencesRelation($competenceRelation);
+            }
         }
         /*  *****   VALIDATION: Nombre de compétences dont le niveau acquis est à Exceptionnel ne doit pas dépasser 5  ***** */
         if ($nbCompetenceNiveauExceptionnelle > 5) {
@@ -2431,6 +2444,17 @@ class CrepMcc02 extends Crep
             $context->buildViolation('Le nombre de coches figurant dans la colonne "Exceptionnelle" du tableau  "Compétences liées à la relation" ne doit pas dépasser 5')
             ->setParameter('cause', 'nbCompetenceNiveauExceptionnelle')
             ->addViolation();
+        }
+
+        /*  *****   VALIDATION: année   ***** */
+        $anneeEvaluation = parent::getAgent()->getCampagnePnc()->getAnneeEvaluee();
+        //L'année doit être soit N, N-1 ou N-2 (N : l'année d'évaluation)
+        foreach ($this->formationsSuivies as $formation) {
+            if (is_null($formation->getAnnee()) || ($formation->getAnnee() && !in_array($formation->getAnnee(), array($anneeEvaluation, $anneeEvaluation - 1, $anneeEvaluation - 2)))) {
+                $context->buildViolation('Veuillez saisir une année valide')
+                    ->setParameter('cause_formation', 'annee')
+                    ->addViolation();
+            }
         }
     }
 

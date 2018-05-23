@@ -23,6 +23,9 @@ class CrepMcc02PotentielEvolutionType extends AbstractType
                 'label' => false,
                 'multiple' => false,
             ])
+            ->add('appreciation', null, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false, ])
         ;
     }
 

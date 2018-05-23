@@ -27,13 +27,19 @@
 
             {% for key, potentiel in crep.potentielsEvolutions %}
 
-                <tr>
-                    <td>{{ potentiel.libelle | nl2br }}</td>
-                    {% for index in 0..3 %}
-                        <td class="text-center">{{ potentiel.niveauAcquis|iconCheckReverse(loop.revindex0, 3)|raw }}</td>
-                    {% endfor %}
-                </tr>
-
+                {% if 'Autre (préciser)' != potentiel.libelle %}
+                    <tr>
+                        <td>{{ potentiel.libelle | nl2br }}</td>
+                        {% for index in 0..3 %}
+                            <td class="text-center">{{ potentiel.niveauAcquis|iconCheckReverse(loop.revindex0, 3)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>{{ potentiel.libelle | nl2br }}</td>
+                            <td colspan="4" class="text-left">{{ potentiel.appreciation }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
 
             </tbody>

@@ -22,9 +22,9 @@
             {% else %}
                 {% for formation in crep.formationsSuivies %}
                 <tr>
-                    <td>{{ formation.annee | nl2br }}</td>
+                    <td class="text-center">{{ formation.annee | nl2br }}</td>
                     <td>{{ formation.libelle | nl2br  }}</td>
-                    <td>{{ formation.type | nl2br }}</td>
+                    <td class="text-center">{{ formation.type | nl2br }}</td>
                     <td>{{ formation.commentaires | nl2br  }}</td>
                 </tr>
                 {% endfor %}

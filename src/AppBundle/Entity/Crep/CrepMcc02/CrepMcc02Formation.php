@@ -17,11 +17,13 @@ class CrepMcc02Formation extends GenericEntity
 {
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=true, length=255)
-     * @Assert\NotBlank(message = "Champ obligatoire", groups={"EnregistrementShd"})
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Le libellé est obligatoire")
      * @Assert\Length(
-     *    max = 255,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *      max = 255,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $libelle;
 

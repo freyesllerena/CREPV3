@@ -27,6 +27,14 @@ abstract class Competence extends GenericEntity
     protected $niveauAcquis;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="appreciation", type="text")
+     */
+    protected $appreciation;
+
+
+    /**
      * Set libelle.
      *
      * @param string $libelle
@@ -72,5 +80,21 @@ abstract class Competence extends GenericEntity
     public function getNiveauAcquis()
     {
         return $this->niveauAcquis;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppreciation()
+    {
+        return $this->appreciation;
+    }
+
+    /**
+     * @param string $appreciation
+     */
+    public function setAppreciation($appreciation)
+    {
+        $this->appreciation = $appreciation;
     }
 }

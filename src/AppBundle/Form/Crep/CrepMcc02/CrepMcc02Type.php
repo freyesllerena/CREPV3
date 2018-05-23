@@ -15,6 +15,7 @@ use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT1Type;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT2Type;
 use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationT3Type;
 use AppBundle\Form\Crep\CrepType;
+use AppBundle\Form\FormationSuivieType;
 use AppBundle\Form\ObjectifEvalueType;
 use AppBundle\Form\ObjectifFuturType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -34,15 +35,14 @@ class CrepMcc02Type extends CrepType
     {
         /* @var $crep CrepMcc02 */
         $crep = $builder->getData();
-
         $options['echelleObjectifEvalue'] = $crep::$echelleObjectifEvalue;
         $options['ministere'] = $crep->getAgent()->getCampagnePnc()->getMinistere();
-        $anneeEvaluee = $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee();
+        $options['anneeEvaluee']  = $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee();
 
         parent::buildForm($builder, $options);
 
         $echelleObjectifEvalue = $options['echelleObjectifEvalue'];
-
+        $ministere = $crep->getAgent()->getCampagnePnc()->getMinistere();
         $tableauNotesAgent = [];
         
         for($i=1 ; $i<=20 ; $i++){
@@ -259,9 +259,22 @@ class CrepMcc02Type extends CrepType
                     'required' => false,
                 )
             )
-
             ->add('affectationShd', null, ['required' => false])
             ->add('posteOccupeShd', null, ['required' => false])
+            ->add(
+                'formationsSuivies',
+                CollectionType::class,
+                [
+                    'entry_type' => FormationSuivieType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => [
+                        'ministere' => $ministere,
+                        'anneeEvaluation' => $options['anneeEvaluee'],
+                    ],
+                ]
+            )
             ->add(
                 'formationsT1',
                 CollectionType::class,
@@ -270,7 +283,7 @@ class CrepMcc02Type extends CrepType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'entry_options' => ['annee_evaluee' => $anneeEvaluee],
+                    'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
                 ]
             )
             ->add(
@@ -281,7 +294,7 @@ class CrepMcc02Type extends CrepType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'entry_options' => ['annee_evaluee' => $anneeEvaluee],
+                    'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
                 ]
             )
             ->add(
@@ -292,7 +305,7 @@ class CrepMcc02Type extends CrepType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'entry_options' => ['annee_evaluee' => $anneeEvaluee],
+                    'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
                 ]
             )
 

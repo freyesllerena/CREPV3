@@ -1267,7 +1267,6 @@
 <br>
 <br>
 
-
 <table cellpadding="1" style="font-size: 11px;">
     <tr>
         <th class="bordered bg-full text-center" colspan="6"><strong>Potentiel d’évolution de l’agent-e</strong></th>
@@ -1283,28 +1282,33 @@
 
     {% if crep.potentielsEvolutions | length > 0 %}
 
-
         {% for key, potentiel in crep.potentielsEvolutions %}
 
-            <tr>
-                <td class="bordered text-center">{{ potentiel.libelle }}</td>
-                {% for index in 0..3 %}
-                    <td class="bordered text-center">
-                        {% if potentiel.niveauAcquis == index %}X{% endif %}
-                    </td>
-                {% endfor %}
+            {% if 'Autre (préciser)' != potentiel.libelle %}
+                <tr>
+                    <td class="bordered text-center">{{ potentiel.libelle }}</td>
+                    {% for index in 0..3 %}
+                        <td class="bordered text-center">
+                            {% if potentiel.niveauAcquis == index %}X{% endif %}
+                        </td>
+                    {% endfor %}
 
-                {% if key == 0 %}
-                    <td class="bordered"
-                        rowspan="{{ crep.observationsPotentielEvolutionAgent | length }}">{{ crep.observationsPotentielEvolutionAgent }}</td>
-                {% endif %}
-            </tr>
+                    {% if key == 0 %}
+                        <td class="bordered"
+                            rowspan="4">{{ crep.observationsPotentielEvolutionAgent }}</td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="bordered text-center">{{ potentiel.libelle }}</td>
+                    <td colspan="4" class="bordered text-left">{{ potentiel.appreciation }}</td>
+                </tr>
+            {% endif %}
 
         {% endfor %}
 
     {% endif %}
 </table>
-
 <br>
 <br>
 

@@ -83,6 +83,18 @@
     {% include 'crep/crepMcc02/_include/edit/iv/2.html.twig' %}
 {% endblock iv2 %}
 
+{% block viError %}
+    {% for errorIndex, error in errors %}
+        {% if errorIndex == 0 %}
+            {% if (error.messageParameters['cause_formation'] is defined and error.messageParameters['cause_formation'] == "annee" ) %}
+                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endblock viError %}
+
 {% block v1 %}
     {% include 'crep/crepMcc02/_include/edit/v/1.html.twig' %}
 {% endblock v1 %}
@@ -138,6 +150,12 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
+
+            // pour test autocomplete
+            // $("input").on('click', function(){
+            //     console.log(this.id);
+            // });
+
 
 
             var crepCollections = new Crep.Collections();
@@ -208,32 +226,6 @@
             }
         }
 
-
-        // checkbox parent
-        jQuery('#crep_mcc02_changementPoste').on('ifChanged', function() {
-
-
-            var allItems = jQuery('#crep_mcc02_mobilitePoste').find(':checkbox').first().siblings();
-            var aItems = [];
-            allItems.each(function()
-            {
-                listeCheckbox = allItems.find(':checkbox').first().siblings();
-                aItems = listeCheckbox.prevObject.prevObject.prevObject.prevObject.prevObject;
-            });
-
-            if (jQuery(this).is(':checked')) {
-                for (var i = 0; i < aItems.length; i++) {
-                    jQuery(  '#' + aItems[i].id  ).parent().addClass('checked');
-
-                }
-            } else {
-                for (var i = 0; i < aItems.length; i++) {
-                    jQuery(  '#' + aItems[i].id  ).parent().removeClass('checked');
-                }
-            }
-        });
-
-
         // memeService
         eventOnCheckbowChild("crep_mcc02_mobilitePoste_memeService",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
         // memeMinistere
@@ -244,8 +236,6 @@
         eventOnCheckbowChild("crep_mcc02_mobilitePoste_autreFonctionPublique",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
         // autreProjet
         eventOnCheckbowChild("crep_mcc02_mobilitePoste_autreProjet",  'crep_mcc02_mobilitePoste', 'crep_mcc02_changementPoste');
-
-
 
         /**
          * Control si tout le groupe checkbox est false
@@ -306,6 +296,24 @@
                             }
                         }
                     }
+                }
+            });
+        }
+
+        //Mcc02 autocomplete pour formation suivie - voir version globale : \app\Resources\views\crep\crep.base.html.twig
+        urlAjax = "{{ path('formation_ajax_search', {'ministere': crep.agent.campagnePnc.ministere.id}) }}";
+        // AutoComplete
+        autoCompleteFormation();
+
+        function autoCompleteFormation(){
+
+            $('.formation-autocomplete').autocomplete({
+                serviceUrl: urlAjax,
+                minChars: 3,
+                onSelect: function (suggestion) {
+                    // console.log($(this)parent().attr('id'));
+                    var mcc02DureeFormation =  $(this).closest('td').next('td').find('input').show();
+                    mcc02DureeFormation.val(suggestion.duree);
                 }
             });
         }
