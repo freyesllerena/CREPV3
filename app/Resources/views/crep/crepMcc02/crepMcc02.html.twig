@@ -16,10 +16,6 @@
         font-weight: bold;
     }
 
-    td.h2 {
-        font-family: "Times New Roman", Times, serif;
-    }
-
     body {
         font-size: 12px;
     }
@@ -37,9 +33,6 @@
         padding-bottom: 30px;
     }
 
-    .v-align-label {
-        vertical-align: middle;
-    }
 </style>
 <!-- début -->
 
@@ -538,49 +531,40 @@
 <br>
 - <u>Les compétences managériales démontrées par l’agent-e dans ses fonctions</u> :<br>
 <br>
-<table cellpadding="1" style="font-size: 11px;">
+<table cellpadding="3" style="font-size: 11px;">
     <tr class="text-center">
         <th class="bordered bg-full strong-th" width="24%" >COMPÉTENCES<br>LIÉES A L’ACTION</th>
         <th class="bordered bg-full" width="10%">exceptionnelle*</th>
-        <th class="bordered bg-full text-center" width="8%"><br><br>forte</th>
+        <th class="bordered bg-full text-center" width="8%">forte</th>
         <th class="bordered bg-full" width="9%">assez forte</th>
-        <th class="bordered bg-full" width="15%"><br><br>à développer</th>
+        <th class="bordered bg-full" width="15%">à développer</th>
         <th class="bordered bg-full" width="11%">non observée</th>
-        <th class="bordered bg-full" width="23%"><br><br>observations</th>
+        <th class="bordered bg-full" width="23%">observations</th>
     </tr>
-    {% if crep.competencesActions | length > 0 %}
-        {% for key, competence in crep.competencesActions %}
-            <tr class="text-center">
-                <td class="bordered">{{ competence.libelle }}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 0 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 1 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 2 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 3 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 4 %}X{% endif %}</td>
-                {% if key == 0 %}
-                    <td class="bordered" rowspan="{{ crep.competencesActions | length }}">{{ crep.observationsCompetencesActions }}</td>
+
+    {% for key, competence in crep.competencesActions %}
+        <tr class="text-center">
+            <td class="bordered">{{ competence.libelle }}</td>
+            {% for index in 0..4 %}
+                {% set niveauAcquis = competence.niveauAcquis|iconCheckReverse(loop.revindex0, 4)|raw %}
+                {% if niveauAcquis is not empty %}
+                    <td class="bordered">X</td>
+                {% else %}
+                    <td class="bordered"><br></td>
                 {% endif %}
-            </tr>
-        {% endfor %}
-    {% else %}
-        {% for i in 0..2 %}
-            <tr class="text-center">
-                <td class="bordered"></td>
-                <td class="bordered"></td>
-                <td class="bordered"></td>
-                <td class="bordered"></td>
-                <td class="bordered"></td>
-                <td class="bordered"></td>
-                {% if i == 0 %}
-                    <td class="bordered" rowspan="2"></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    {% endif %}
+            {% endfor %}
+            {% if key == 0 %}
+                <td class="bordered" rowspan="{{ crep.competencesActions | length }}">{{ crep.observationsCompetencesActions }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+
 </table>
 <br>
 <br>
-<table cellpadding="1" style="font-size: 11px;">
+
+
+<table cellpadding="3" style="font-size: 11px;">
     <tr class="text-center">
         <th class="bordered bg-full strong-th " width="24%">COMPÉTENCES<br>LIÉES A LA<br>RELATION</th>
         <th class="bordered bg-full" width="10%"><br><br>exceptionnelle*</th>
@@ -591,39 +575,28 @@
         <th class="bordered bg-full" width="23%"><br><br>observations</th>
     </tr>
 
-    {% if crep.competencesRelations | length > 0 %}
-        {% for key, competence in crep.competencesRelations %}
-            <tr class="text-center">
-                <td class="bordered">{{ competence.libelle }}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 0 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 1 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 2 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 3 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 4 %}X{% endif %}</td>
-                {% if key == 0 %}
-                    <td class="bordered" rowspan="{{ crep.competencesRelations | length }}">{{ crep.observationsCompetencesRelations }}</td>
+    {% for key, competence in crep.competencesRelations %}
+        <tr class="text-center">
+            <td class="bordered">{{ competence.libelle }}</td>
+            {% for index in 0..4 %}
+                {% set niveauAcquis = competence.niveauAcquis|iconCheckReverse(loop.revindex0, 4)|raw %}
+                {% if niveauAcquis is not empty %}
+                    <td class="bordered">X</td>
+                {% else %}
+                    <td class="bordered"><br></td>
                 {% endif %}
-            </tr>
-        {% endfor %}
+            {% endfor %}
+            {% if key == 0 %}
+                <td class="bordered" rowspan="{{ crep.competencesRelations | length }}">{{ crep.observationsCompetencesRelations }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
 
-    {% else %}
-        {% for i in 0..2 %}
-            <tr>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                {% if i == 0 %}
-                    <td class="bordered" rowspan="2"></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    {% endif %}
 </table>
 <br>
 <br>
+
+
 <table cellpadding="1" style="font-size: 11px;">
     <tr class="text-center">
         <th class="bordered bg-full strong-th " width="24%">COMPÉTENCES<br>LIÉES A<br>L’INTELLIGENCE<br>DES SITUATIONS</th>
@@ -634,38 +607,26 @@
         <th class="bordered bg-full" width="11%"><br><br>non observée</th>
         <th class="bordered bg-full" width="23%"><br><br>observations</th>
     </tr>
-    {% if crep.competencesSituations | length > 0 %}
-        {% for key, competence in crep.competencesSituations %}
 
-            <tr class="text-center">
-                <td class="bordered">{{ competence.libelle }}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 0 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 1 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 2 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 3 %}X{% endif %}</td>
-                <td class="bordered">{% if competence.niveauAcquis == 4 %}X{% endif %}</td>
-                {% if key == 0 %}
-                    <td class="bordered" rowspan="{{ crep.competencesSituations | length }}">{{ crep.observationsCompetencesSituations }}</td>
+    {% for key, competence in crep.competencesSituations %}
+        <tr class="text-center">
+            <td class="bordered">{{ competence.libelle }}</td>
+            {% for index in 0..4 %}
+                {% set niveauAcquis = competence.niveauAcquis|iconCheckReverse(loop.revindex0, 4)|raw %}
+                {% if niveauAcquis is not empty %}
+                    <td class="bordered">X</td>
+                {% else %}
+                    <td class="bordered"><br></td>
                 {% endif %}
-            </tr>
-        {% endfor %}
+            {% endfor %}
+            {% if key == 0 %}
+                <td class="bordered" rowspan="{{ crep.competencesSituations | length }}">{{ crep.observationsCompetencesSituations }}</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
 
-    {% else %}
-        {% for i in 0..2 %}
-            <tr>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                <td class="bordered text-center"></td>
-                {% if i == 0 %}
-                    <td class="bordered" rowspan="2"></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    {% endif %}
 </table>
+
 <br>
 <br>
 <table>
@@ -1092,14 +1053,14 @@
 
     {% else %}
 
-        {% for i in 0..2 %}
+        {#{% for i in 0..2 %}#}
             <tr>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
             </tr>
-        {% endfor %}
+        {#{% endfor %}#}
     {% endif %}
 </table>
 <br>
@@ -1139,7 +1100,7 @@
                 <td class="bordered text-center">{% if formation.avisShd %}X{% endif %}</td>
                 <td class="bordered text-center">{% if formation.propositionAh %}X{% endif %}</td>
                 <td class="bordered text-center"></td>
-                <td class="bordered text-center">{% if formation.echeance %}X{% endif %}</td>
+                <td class="bordered text-center">{% if formation.echeance %}{{ formation.echeance }}{% endif %}</td>
             </tr>
         {% endfor %}
 
@@ -1170,7 +1131,7 @@
                 <td class="bordered text-center">{% if formation.avisShd %}X{% endif %}</td>
                 <td class="bordered text-center">{% if formation.propositionAh %}X{% endif %}</td>
                 <td class="bordered text-center">{% if formation.cpf %}X{% endif %}</td>
-                <td class="bordered text-center">{% if formation.echeance %}X{% endif %}</td>
+                <td class="bordered text-center">{% if formation.echeance %} {{ formation.echeance }} {% endif %}</td>
             </tr>
         {% endfor %}
 
@@ -1203,7 +1164,7 @@
                 <td class="bordered text-center">{% if formation.avisShd %}X{% endif %}</td>
                 <td class="bordered text-center">{% if formation.propositionAh %}X{% endif %}</td>
                 <td class="bordered text-center">{% if formation.cpf %}X{% endif %}</td>
-                <td class="bordered text-center">{% if formation.echeance %}X{% endif %}</td>
+                <td class="bordered text-center">{% if formation.echeance %} {{ formation.echeance }} {% endif %}</td>
 
             </tr>
         {% endfor %}
@@ -1289,7 +1250,9 @@
                     <td class="bordered text-center">{{ potentiel.libelle }}</td>
                     {% for index in 0..3 %}
                         <td class="bordered text-center">
-                            {% if potentiel.niveauAcquis == index %}X{% endif %}
+                            {% if potentiel.niveauAcquis is not empty %}
+                                {% if potentiel.niveauAcquis == index %}X{% endif %}
+                            {% endif %}
                         </td>
                     {% endfor %}
 
@@ -1359,7 +1322,7 @@
     <tr class="text-center">
         <td>
             Oui
-            {% if crep.agent and crep.agent.ah and crep.propositionAvancement == 0 %}
+            {% if crep.agent and crep.agent.ah and crep.propositionAvancement == 0 and crep.propositionAvancement is not null %}
                 &#9745;
             {% else %}
                 &#9744;
