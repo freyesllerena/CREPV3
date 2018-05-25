@@ -501,30 +501,35 @@ class CrepMcc02 extends Crep
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceAction", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $competencesActions;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceRelation", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $competencesRelations;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceSituation", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $competencesSituations;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceRequise", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $competencesRequises;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02CompetenceDemontree", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $competencesDemontrees;
@@ -694,24 +699,28 @@ class CrepMcc02 extends Crep
 
     /**
      * @ORM\OneToMany(targetEntity="CrepMcc02FormationT1", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $formationsT1;
 
     /**
      * @ORM\OneToMany(targetEntity="CrepMcc02FormationT2", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $formationsT2;
 
     /**
      * @ORM\OneToMany(targetEntity="CrepMcc02FormationT3", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $formationsT3;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02PotentielEvolution", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $potentielsEvolutions;
@@ -790,9 +799,8 @@ class CrepMcc02 extends Crep
     }
 
     /**
-     *
      * @param $nomNaissance
-     * @return CrepMcc02
+     * @return $this
      */
     public function setNomNaissance($nomNaissance)
     {
@@ -1757,9 +1765,8 @@ class CrepMcc02 extends Crep
     /**
      * Set observationsAgentObjectifsEvalues.
      *
-     * @param string $observationsAgentObjectifsEvalues
-     *
-     * @return CrepMj01
+     * @param $observationsAgentObjectifsEvalues
+     * @return $this
      */
     public function setObservationsAgentObjectifsEvalues($observationsAgentObjectifsEvalues)
     {
@@ -2392,7 +2399,6 @@ class CrepMcc02 extends Crep
      */
     public function validateCrepMcc02(ExecutionContextInterface $context)
     {
-        $annee = '';
         // Cette variable calucle le nombre de compétences (requises, professionnelles et manageriales) dont le niveau acquis est exceptionnelle
         $nbCompetenceNiveauExceptionnelle = 0;
         $competencesRelationsAcquises = [];

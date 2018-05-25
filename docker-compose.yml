@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+   oracledb:
+       build: ./docker/oracle
+       volumes:
+           - .:/var/www/CREP3:rw
+   php:
+       build: docker/php71-apache # Get our Dockerfile configuration
+       ports:
+           - 8080:80
+       environment:
+#           FPM_HOST: php:9000
+           XDEBUG_CONFIG: remote_host=172.18.0.3
+       links:
+           - oracledb
+       volumes:
+           - .:/var/www/CREP3:rw

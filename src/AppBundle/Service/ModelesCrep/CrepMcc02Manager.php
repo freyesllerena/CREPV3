@@ -7,19 +7,28 @@ use AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02FormationT3
 use AppBundle\Repository\FormationSuivieRepository;
 use AppBundle\Service\BaseManager;
 use AppBundle\Entity\CampagneBrhp;
-use AppBundle\Twig\AppExtension;
 use AppBundle\Util\Util;
 use AppBundle\Entity\ModeleCrep;
 use AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02FormationT1Repository;
 
+/**
+ * Class CrepMcc02Manager
+ * @package AppBundle\Service\ModelesCrep
+ */
 class CrepMcc02Manager extends BaseManager
 {
     protected $modeleCrep = 'AppBundle\Entity\Crep\CrepMcc02\CrepMcc02';
 
+    /**
+     * Exporter Formation
+     * @param CampagneBrhp $campagneBrhp
+     * @param ModeleCrep $modeleCrep
+     * @param \ZipArchive $zip
+     * @return \ZipArchive
+     */
     public function exporterFormations(CampagneBrhp $campagneBrhp, ModeleCrep $modeleCrep, \ZipArchive $zip)
     {
         $sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $modeleCrep->getLibelle());
-
         $result = [];
         $result[] = $this->exportFormations($campagneBrhp);
         $zip->addFile($result[0], $sousDossier.'/Besoins_formation_suivi_'.($campagneBrhp->getAnneeEvaluee() - 1).'_'.$campagneBrhp->getAnneeEvaluee().'.csv');
@@ -27,7 +36,12 @@ class CrepMcc02Manager extends BaseManager
         return $zip;
     }
 
-    // Export des formations suivies N-1 et N-2
+    /**
+     * Export Formations suivies N-1 et N-2
+     *
+     * @param CampagneBrhp $campagneBrhp
+     * @return string
+     */
     private function exportFormations(CampagneBrhp $campagneBrhp)
     {
         // Repository de chaque formation
@@ -47,7 +61,6 @@ class CrepMcc02Manager extends BaseManager
         // On regroupe toutes les formations
         $allFormation = array_merge($exportFormationSuivie, $exportFormationT1, $exportFormationT2, $exportFormationT3);
 
-
         // Fusionner les deux tableaux de formations
         $formationsSuivies = [];
         $formationsSuivies[$campagneBrhp->getAnneeEvaluee()] = $allFormation;
@@ -60,7 +73,23 @@ class CrepMcc02Manager extends BaseManager
         fputs($handle, "\xEF\xBB\xBF");
 
         // Nom des colonnes du CSV
-        fputcsv($handle, array('Matricule', 'Email', 'Civilité', 'Nom', 'Prénom', 'Catégorie', 'Corps', 'Grade', 'Affectation', 'Année', 'Libellé de la formation', 'Recours au CPF',  'Commentaires', 'Date signature définitive du CREP', 'Date refus signature du CREP'), ';');
+        fputcsv($handle, [
+            'Matricule',
+            'Email',
+            'Civilité',
+            'Nom',
+            'Prénom',
+            'Catégorie',
+            'Corps',
+            'Grade',
+            'Affectation',
+            'Année',
+            'Libellé de la formation',
+            'Recours au CPF',
+            'Commentaires',
+            'Date signature définitive du CREP',
+            'Date refus signature du CREP'
+        ], ';');
 
         // Champs
         // $key = annee (N-1 ou N-2)

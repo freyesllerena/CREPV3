@@ -143,6 +143,10 @@
     {% include 'crep/crepMcc02/_include/edit/viii/4.html.twig' %}
 {% endblock viii4 %}
 
+{% block viii5 %}
+    {{ parent() }}
+{% endblock viii5 %}
+
 {% block javascripts %}
     {{ parent() }}
     <!-- chained -->
@@ -151,21 +155,12 @@
 
         $(document).ready(function() {
 
-            // pour test autocomplete
-            // $("input").on('click', function(){
-            //     console.log(this.id);
-            // });
-
-
-
             var crepCollections = new Crep.Collections();
             // 0 Emploi fonctionnel
             var libelleEmploiFonctionnel = $("#crep_mcc02_libelleEmploiFonctionnel");
             var groupeEmploiFonctionnel = $("#crep_mcc02_groupeEmploiFonctionnel");
 
             isCacheBloc(libelleEmploiFonctionnel, groupeEmploiFonctionnel);
-
-
 
             if ($("#crep_mcc02_emploiFonctionnel_0") && $("#crep_mcc02_emploiFonctionnel_1")) {
                 if ($("#crep_mcc02_emploiFonctionnel_0").attr('checked')) {

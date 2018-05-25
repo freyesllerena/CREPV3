@@ -29,7 +29,7 @@ abstract class Competence extends GenericEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="appreciation", type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $appreciation;
 

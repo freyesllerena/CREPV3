@@ -295,9 +295,11 @@ class CrepController extends Controller
     }
 
     /**
-     *  Render in a PDF the export_pdf URL.
+     * Render in a PDF the export_pdf URL.
      *
-     * @return Response
+     * @param Crep $crep
+     * @return \AppBundle\Entity\Document|Response
+     * @throws \Exception
      */
     public function pdfExportAction(Crep $crep)
     {

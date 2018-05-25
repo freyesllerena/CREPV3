@@ -669,7 +669,7 @@
                 <td class="bordered text-center">{% if competence.niveauAcquis == 3 %}X{% endif %}</td>
                 <td class="bordered text-center">{% if competence.niveauAcquis == 4 %}X{% endif %}</td>
                 {% if key == 0 %}
-                    <td class="bordered"
+                    <td class="bordered text-center"
                         rowspan="{{ crep.competencesRequises | length }}">{{ crep.observationsCompetencesRequises }}</td>
                 {% endif %}
             </tr>
@@ -704,7 +704,7 @@
                 <td class="bordered text-center">{% if competence.niveauAcquis == 3 %}X{% endif %}</td>
                 <td class="bordered text-center">{% if competence.niveauAcquis == 4 %}X{% endif %}</td>
                 {% if key == 0 %}
-                    <td class="bordered"
+                    <td class="bordered text-center"
                         rowspan="{{ crep.observationsCompetencesDemontrees | length }}" style="font-size: 11px;">{{ crep.observationsCompetencesDemontrees }}</td>
                 {% endif %}
             </tr>
@@ -1053,14 +1053,15 @@
 
     {% else %}
 
-        {#{% for i in 0..2 %}#}
+        {% for i in 0..2 %}
             <tr>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
             </tr>
-        {#{% endfor %}#}
+        {% endfor %}
+
     {% endif %}
 </table>
 <br>
