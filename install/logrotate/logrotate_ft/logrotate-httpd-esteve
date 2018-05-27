@@ -1,0 +1,14 @@
+@@HTTP_REP_EXPLOIT_FT@@/logs/error_log
+@@HTTP_REP_EXPLOIT_FT@@/logs/access_log {
+    missingok
+    notifempty
+    dateext
+    weekly
+    rotate 53
+    sharedscripts
+    compress
+    delaycompress
+    postrotate
+        /bin/systemctl reload @@HTTP_SERVICE_FT@@ > /dev/null 2>/dev/null || true
+    endscript
+}

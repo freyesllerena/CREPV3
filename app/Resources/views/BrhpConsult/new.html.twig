@@ -1,0 +1,30 @@
+{% extends 'Personne/new.html.twig' %}
+
+{% block frameTitle %}BRHP consultation{% endblock frameTitle %}
+{% block pageTitle %}BRHP consultation{% endblock pageTitle %}
+{% block formTitle %}Création d'un acteur RH de proximité en consultation (BRHP consultation){% endblock formTitle %}
+
+
+
+{% block otherRows %}
+	{{ form_row(form.perimetresBrhp, { 'label': "Périmètres BRHP", 'attr': {'class': 'select2_multiple'}}) }}
+{% endblock otherRows %}
+
+
+    
+ {% block javascripts %}
+ 	{{ parent() }}
+
+     <!-- Select2 -->
+    <script>
+      $(document).ready(function() {
+        $(".select2_multiple").select2({
+          //maximumSelectionLength: 1,
+          placeholder: "Périmètres BRHP",
+          allowClear: true
+        });
+      });
+    </script>
+    <!-- /Select2 -->
+     
+ {% endblock javascripts %}

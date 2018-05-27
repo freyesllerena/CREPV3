@@ -1,0 +1,20 @@
+@@HTTP_REP_EXPLOIT_AS@@/logs/error_log
+@@HTTP_REP_EXPLOIT_AS@@/logs/auth.log
+@@HTTP_REP_EXPLOIT_AS@@/logs/dev.log
+@@HTTP_REP_EXPLOIT_AS@@/logs/prod.log
+@@HTTP_REP_EXPLOIT_AS@@/logs/sendmail.log
+@@HTTP_REP_EXPLOIT_AS@@/logs/sendmail.err
+@@HTTP_REP_EXPLOIT_AS@@/logs/commandes.log
+@@HTTP_REP_EXPLOIT_AS@@/logs/access_log {
+    missingok
+    notifempty
+    dateext
+    weekly
+    rotate 53
+    sharedscripts
+    compress
+    delaycompress
+    postrotate
+		sudo systemctl reload @@HTTP_SERVICE_AS@@ > /dev/null 2>/dev/null || true
+    endscript
+}

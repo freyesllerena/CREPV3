@@ -1,0 +1,26 @@
+/exploit/httpd-esteve/logs/error_log
+/exploit/httpd-esteve/logs/auth.log
+/exploit/httpd-esteve/logs/dev.log
+/exploit/httpd-esteve/logs/prod.log
+#/exploit/httpd-esteve/logs/rappel.log
+#/exploit/httpd-esteve/logs/rappel.err
+#/exploit/httpd-esteve/logs/cloturer.log
+#/exploit/httpd-esteve/logs/cloturer.err
+#/exploit/httpd-esteve/logs/ouvrir.log
+#/exploit/httpd-esteve/logs/ouvrir.err
+/exploit/httpd-esteve/logs/sendmail.log
+/exploit/httpd-esteve/logs/sendmail.err
+/exploit/httpd-esteve/logs/commandes.log
+/exploit/httpd-esteve/logs/access_log {
+    missingok
+    notifempty
+    dateext
+    weekly
+    rotate 53
+    sharedscripts
+    compress
+    delaycompress
+    postrotate
+        /sbin/service httpd-esteve reload > /dev/null 2>/dev/null || true
+    endscript
+}

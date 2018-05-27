@@ -1,0 +1,4 @@
+ALTER TABLE CREP DROP (SHD_TITULAIRE);
+
+commit;
+exit;
