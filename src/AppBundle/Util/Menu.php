@@ -16,25 +16,7 @@ class Menu
                 'active' => false,
                 'sousMenu' => null,
         );
-        /*
 
-            	$agent = array(
-            			'libelle' 	=> 'Agent',
-            			'icone' 	=> 'fa-user',
-            			'href'		=> 'fos_user_profile_show',
-            			'routes' 	=> array('fos_user_profile_show'),
-            			'active'	=> false,
-            			'sousMenu'	=> null
-            	);
-
-            	$organisation = array(
-            			'libelle' 	=> 'Organisation',
-            			'icone' 	=> 'fa-paper-plane',
-            			'routes' 	=> array(),
-            			'active'	=> false,
-            			'sousMenu'	=> array($RLC, $BRHP, $agent)
-            	);
-            	*/
         $ministeres = array(
                 'libelle' => 'Ministères',
                 'icone' => 'fa-bank',
@@ -71,6 +53,15 @@ class Menu
                 'sousMenu' => null,
         );
 
+        $brhpConsult = array(
+        		'libelle' => 'BRHP consultation',
+        		'icone' => 'fa-user',
+        		'href' => 'brhp_consult_index',
+        		'routes' => array('brhp_consult_index', 'brhp_consult_new', 'brhp_consult_edit'),
+        		'active' => false,
+        		'sousMenu' => null,
+        );
+        
         $perimetresBrhp = array(
                 'libelle' => 'Périmètres',
                 'icone' => 'fa-share-alt',
@@ -80,30 +71,6 @@ class Menu
                 'sousMenu' => null,
         );
 
-        /*
-
-
-
-            	$campagne = array(
-            			'libelle' 	=> 'Campagne',
-            			'icone' 	=> 'fa-circle-o',
-            			'routes' 	=> array(''),
-            			'active'	=> false,
-            			'sousMenu'	=> array($avancement , $mi, $am)
-            	);
-
-
-
-            	/*
-            	$notifications = array(
-            			'libelle' 	=> 'Notifications',
-            			'icone' 	=> 'fa-comment-o',
-            			'href'		=> 'bac_homepage',
-            			'routes' 	=> array('bac_homepage'),
-            			'active'	=> false,
-            			'sousMenu'	=> null,
-            	);
-            	*/
 
         $utilisateurs = array(
                 'libelle' => 'Utilisateurs',
@@ -112,105 +79,6 @@ class Menu
                 'routes' => array('utilisateur_index', 'utilisateur_new'),
                 'active' => false,
                 'sousMenu' => null,
-        );
-
-        $agents = array(
-                'libelle' => 'Agents',
-                'icone' => 'fa-user',
-                'href' => 'agent',
-                'routes' => array('agent', 'agent_show', 'agent_new', 'agent_edit'),
-                'active' => false,
-                'sousMenu' => null,
-        );
-
-        $annuaire = array(
-                'libelle' => 'Annuaire',
-                'icone' => 'fa-tty',
-                'href' => 'annuaire',
-                'routes' => array('annuaire', 'annuaire_new', 'annuaire_edit'),
-                'active' => false,
-                'sousMenu' => null,
-        );
-
-        $cap = array(
-                'libelle' => 'CAP',
-                'icone' => 'fa-file-text',
-                'href' => 'cap',
-                'routes' => array('cap'),
-                'active' => false,
-                'sousMenu' => null,
-        );
-
-        $documentsComplementaire = array(
-                'libelle' => 'Autres documents',
-                'icone' => 'fa-file-text',
-                'href' => 'documents_complementaire',
-                'routes' => array('documents_complementaire'),
-                'active' => false,
-                'sousMenu' => null,
-        );
-
-        $texteDeReference = array(
-                'libelle' => 'Textes de Référence',
-                'icone' => 'fa-file-text',
-                'href' => 'texte_reference',
-                'routes' => array('texte_reference'),
-                'active' => false,
-                'sousMenu' => null,
-        );
-
-        /*
-    	$circulaires = array(
-    			'libelle' 	=> 'Circulaires',
-    			'icone' 	=> 'fa-file-text',
-    			'href'		=> 'circulaires',
-    			'routes' 	=> array('circulaires'),
-    			'active'	=> false,
-    			'sousMenu'	=> null,
-    	);
-
-    	$regleDeGestion = array(
-    			'libelle' 	=> 'Régles de Gestion',
-    			'icone' 	=> 'fa-file-text',
-    			'href'		=> 'regles_gestion',
-    			'routes' 	=> array('regles_gestion'),
-    			'active'	=> false,
-    			'sousMenu'	=> null,
-    	);
-    	*/
-        $baseConnaissance = array(
-                'libelle' => 'Base connaissance',
-                'icone' => 'fa-book',
-                'routes' => array(),
-                'active' => false,
-                'sousMenu' => array($texteDeReference/*, $circulaires, $regleDeGestion*/, $documentsComplementaire, $cap),
-        );
-
-        $faq = array(
-                'libelle' => 'FAQ',
-                'icone' => 'fa-comments-o',
-                'href' => 'faq',
-                'routes' => array('faq'),
-                'active' => false,
-                'sousMenu' => null,
-        );
-
-//     	$statistique = array(
-//     			'libelle' 	=> 'Statistique',
-//     			'icone' 	=> 'fa-pie-chart',
-//     			'href'		=> 'bac_homepage',
-//     			'routes' 	=> array(''),
-//     			'active'	=> false,
-//     			'sousMenu'	=> null,
-//     	);
-
-        $baseDocumentaire = array(
-                'libelle' => 'Base documentaire',
-                'icone' => 'fa-book',
-                'href' => 'bac_homepage',
-                'routes' => array(''),
-                'active' => false,
-                 'sousMenu' => array($baseConnaissance, $faq/*, $statistique*/),
         );
 
         $campagnesPNC = array(
@@ -294,39 +162,10 @@ class Menu
                 'sousMenu' => null,
         );
 
-//     	$referentiels = array(
-//     			'libelle' 	=> 'Référentiels',
-//     			'icone' 	=> 'fa-sitemap',
-//     			'href'		=> 'unite_organisationnelle_index',
-//     			'routes' 	=> array(),
-//     			'active'	=> false,
-//     			'sousMenu'	=> array($organisation , $formation),
-//     	);
-
-        // Constitution du menu en fonction des roles de l'utilisateur
 
         $menu = array();
         $menu[] = $acceuil;
 
-        //$menu[] = $organisation;
-        //$menu[] = $agent;
-
-        /*
-    	if($securityAuthorizationChecker->isGranted('ROLE_DGAFP')){
-    		$menu[] = $ministeres;
-    	}
-
-    	$menu[] = $agents;
-    	$menu[] = $annuaire;
-    	$menu[] = $baseDocumentaire;
-
-    	//$menu[] = $notifications;
-
-    	if($securityAuthorizationChecker->isGranted('ROLE_ADMIN')){
-    		$menu[] = $utilisateurs;
-    	}
-
-    	*/
         if ($securityAuthorizationChecker->isGranted('ROLE_ADMIN')) {
             $perimetresRlc = array(
                 'libelle' => 'Périmètres RLC',
@@ -359,7 +198,7 @@ class Menu
                 'icone' => 'fa-user',
                 'routes' => array(),
                 'active' => false,
-                'sousMenu' => array($rlc, $brhp),
+                'sousMenu' => array($rlc, $brhp, $brhpConsult),
             );
 
             $campagnesPNC = array(
@@ -446,8 +285,9 @@ class Menu
         } elseif ($securityAuthorizationChecker->isGranted('ROLE_RLC')) {
             $menu[] = $perimetresBrhp;
             $menu[] = $brhp;
+            $menu[] = $brhpConsult;
             $menu[] = $campagnesRLC;
-        } elseif ($securityAuthorizationChecker->isGranted('ROLE_BRHP')) {
+        } elseif ($securityAuthorizationChecker->isGranted('ROLE_BRHP') || $securityAuthorizationChecker->isGranted('ROLE_BRHP_CONSULT')) {
             $menu[] = $perimetresBrhp;
             $menu[] = $campagnesBRHP;
         } elseif ($securityAuthorizationChecker->isGranted('ROLE_SHD')) {

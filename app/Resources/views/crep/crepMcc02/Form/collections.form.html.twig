@@ -40,20 +40,19 @@
 
 {% block _crep_mcc02_competencesActions_entry_widget %}
     {%  for child in form.niveauAcquis.children %}
-        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
     {% endfor %}
 {% endblock %}
 
 {% block _crep_mcc02_competencesRelations_entry_widget %}
     {%  for child in form.niveauAcquis.children %}
-        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
     {% endfor %}
 {% endblock %}
 
-
 {% block _crep_mcc02_competencesSituations_entry_widget %}
     {%  for child in form.niveauAcquis.children %}
-        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
     {% endfor %}
 {% endblock %}
 

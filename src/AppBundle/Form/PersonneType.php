@@ -18,7 +18,7 @@ class PersonneType extends AbstractType
     {
         $typeAction = $options['typeAction'];
 
-        if ('editBrhp' == $typeAction) {
+        if ('edit' == $typeAction) {
             $disabled = true;
         } else {
             $disabled = false;

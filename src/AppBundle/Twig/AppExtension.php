@@ -186,6 +186,7 @@ class AppExtension extends \Twig_Extension
             'ROLE_PNC' => 'Pilote national de campagne',
             'ROLE_RLC' => 'Responsable local de campagne',
             'ROLE_BRHP' => 'Acteur RH de proximité',
+        	'ROLE_BRHP_CONSULT' => 'Acteur RH de proximité consultation',
             'ROLE_GESTIONNAIRE_RECOURS' => 'Gestionnaire de recours',
             'ROLE_CONSEILLER_FORMATION' => 'Conseiller de formation',
             'ROLE_SHD' => 'N+1',

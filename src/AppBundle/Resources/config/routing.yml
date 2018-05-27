@@ -34,6 +34,10 @@ app_brhp:
     resource: "@AppBundle/Resources/config/routing/brhp.yml"
     prefix:   /brhp
 
+app_brhp_consult:
+    resource: "@AppBundle/Resources/config/routing/brhpConsult.yml"
+    prefix:   /brhpConsultation
+
 app_campagne_pnc:
     resource: "@AppBundle/Resources/config/routing/campagnePnc.yml"
     prefix: /campagne-pnc

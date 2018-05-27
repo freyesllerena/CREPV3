@@ -27,8 +27,8 @@ class CrepMcc02FormationSuivieType extends FormationSuivieType
 
         $builder->add('annee', ChoiceType::class, [
                 'choices' => [
+                    $anneeEvaluee => $anneeEvaluee,
                     $anneeEvaluee - 1 => $anneeEvaluee - 1,
-                    $anneeEvaluee - 2 => $anneeEvaluee - 2,
                 ],
                 'expanded' => false,
                 'multiple' => false,

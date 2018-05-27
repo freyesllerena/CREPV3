@@ -50,7 +50,7 @@ class CampagnePncManager extends CampagneManager
 
         $perimetresRlc = $campagnePnc->getPerimetresRlc();
 
-        $rlcs = $this->personneManager->recuperePersonnesDesPerimetres($perimetresRlc);
+        $rlcs = $this->personneManager->getRlcs($perimetresRlc);
 
         $this->personneManager->ajoutePersonnesDansUtilisateurs($rlcs, 'ROLE_RLC');
 
@@ -69,7 +69,7 @@ class CampagnePncManager extends CampagneManager
      */
     public function ouvrirNouveauxPerimetres(CampagnePnc $campagnePnc, Collection $perimetresRlc)
     {
-        $rlcs = $this->personneManager->recuperePersonnesDesPerimetres($perimetresRlc);
+        $rlcs = $this->personneManager->getRlcs($perimetresRlc);
 
         $this->personneManager->ajoutePersonnesDansUtilisateurs($rlcs, 'ROLE_RLC');
 

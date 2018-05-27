@@ -112,7 +112,7 @@ class PerimetreBrhpVoter extends Voter
                 if ($rlc->getPerimetresRlc()->contains($perimetreBrhp->getPerimetreRlc())) {
                     return true;
                 }
-            } elseif ('ROLE_BRHP' == $roleUtilisateurSession) {
+            } elseif ('ROLE_BRHP' === $roleUtilisateurSession || 'ROLE_BRHP_CONSULT' === $roleUtilisateurSession) {
                 /* @var $brhp Brhp */
                 $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 

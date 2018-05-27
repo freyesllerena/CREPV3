@@ -233,17 +233,28 @@ class CrepVoter extends Voter
             /** @var $brhp Brhp */
             $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
-            if (EnumStatutCrep::NOTIFIE_AGENT == $crep->getStatut() && in_array($crep->getAgent()->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
-                return true;
+            // Si le CREP est finalisé
+            if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT], EnumStatutCrep::CAS_ABSENCE)) {
+            
+	            // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
+	            if ($brhp->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
+	            	return true;
+	            }
             }
-
-            if (EnumStatutCrep::REFUS_NOTIFICATION_AGENT == $crep->getStatut() && in_array($crep->getAgent()->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
-                return true;
-            }
-
-            if (EnumStatutCrep::CAS_ABSENCE == $crep->getStatut() && in_array($crep->getAgent()->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
-                return true;
-            }
+        }
+        
+        if ('ROLE_BRHP_CONSULT' === $roleUtilisateurSession) {
+        	/** @var $brhpConsult BrhpConsult */
+        	$brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+        
+        	// Si le CREP est finalisé
+        	if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT], EnumStatutCrep::CAS_ABSENCE)) {
+        
+        		// Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
+        		if ($brhpConsult->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
+        			return true;
+        		}
+        	}
         }
 
         if ('ROLE_RLC' === $roleUtilisateurSession) {

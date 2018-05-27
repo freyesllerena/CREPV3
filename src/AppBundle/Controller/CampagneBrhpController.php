@@ -22,12 +22,12 @@ class CampagneBrhpController extends Controller
     /**
      * Lists all CampagneBrhp entities.
      *
-     * @Security("has_role('ROLE_BRHP')")
+     * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $campagnesBrhp = $em->getRepository('AppBundle:CampagneBrhp')->findCampagnesRecentesBrhp($this->getUser());
+        $campagnesBrhp = $em->getRepository('AppBundle:CampagneBrhp')->findCampagnesRecentesBrhp($this->getUser(), $this->get('session')->get('selectedRole'));
 
         return $this->render('campagneBrhp/index.html.twig', array(
             'campagnesBrhp' => $campagnesBrhp,
@@ -87,7 +87,7 @@ class CampagneBrhpController extends Controller
     /**
      * Rediriger l'utilisateur vers la vue appropriée selon le statut de la campagne.
      *
-     * @Security("has_role('ROLE_BRHP')")
+     * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      */
     public function showAction(CampagneBrhp $campagneBrhp, Request $request)
     {
@@ -300,7 +300,7 @@ class CampagneBrhpController extends Controller
     /**
      * Exporte les formation en un fichier CSV.
      *
-     * @Security("has_role('ROLE_BRHP')")
+     * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      *
      * @param CampagneBrhp $campagneBrhp
      */
@@ -327,7 +327,11 @@ class CampagneBrhpController extends Controller
     }
 
     /**
-     *  Exporter l'ensemble des CREPs finalisés.
+     * Exporter l'ensemble des CREPs finalisés.
+     *
+     * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
+     *
+     * @param CampagneBrhp $campagneBrhp
      */
     public function exporterCrepsFinalisesAction(Request $request, CampagneBrhp $campagneBrhp)
     {

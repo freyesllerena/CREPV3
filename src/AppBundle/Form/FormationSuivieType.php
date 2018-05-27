@@ -29,7 +29,7 @@ class FormationSuivieType extends AbstractType
             ->add('libelle', null, ['attr' => ['class' => 'fieldCollection']])
             ->add('commentaires', null, [
                 'attr' => ['maxlength' => '4096',
-                            'class' => 'fieldCollection'],
+                            'class' => 'fieldCollection', ],
                 'required' => false, ])
             ;
     }

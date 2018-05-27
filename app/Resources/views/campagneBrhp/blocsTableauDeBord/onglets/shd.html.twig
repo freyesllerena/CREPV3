@@ -84,8 +84,13 @@
                                     {% endif %}
                                     
                                     <td align="center">
-                                    	<a href="{{ path('agent_edit', { 'id': agent['a_id'] }) }}" title="Modifier"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+										{# Ne pas utiliser les voter ici car la variable $agent n'est pas un objet Agent mais un tableau de données #}
+                                    	{% if app.session.get('selectedRole') == 'ROLE_BRHP' %}
+                                    		<a href="{{ path('agent_edit', { 'id': agent['a_id'] }) }}" title="Modifier"><i class="fa fa-edit"></i></a>&nbsp; &nbsp;
+                    					{% endif %}
+                    					
                     					<a href="{{ path('agent_show', { 'id': agent['a_id'] }) }}" title="voir"><i class="fa fa-search"></i></a>
+                    					
                         			</td>
                                 </tr>
 			{% if(finPanel) %}

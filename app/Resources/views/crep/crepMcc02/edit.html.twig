@@ -71,6 +71,23 @@
             <div class="alert alert-danger alert-dismissible fade in" role="alert">
                 <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
             </div>
+       {% endif %}
+        {% if (error.messageParameters['cause_observation_action'] is defined and error.messageParameters['cause_observation_action'] == "errorObservationsCompetencesActions" ) %}
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+            </div>
+        {% endif %}
+
+        {% if (error.messageParameters['cause_observation_relation'] is defined and error.messageParameters['cause_observation_relation'] == "errorObservationsCompetencesRelation" ) %}
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+            </div>
+        {% endif %}
+
+        {% if (error.messageParameters['cause_observation_situation'] is defined and error.messageParameters['cause_observation_situation'] == "errorObservationsCompetencesSituation" ) %}
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+            </div>
         {% endif %}
     {% endfor %}
 {% endblock ivError %}
@@ -306,7 +323,6 @@
                 serviceUrl: urlAjax,
                 minChars: 3,
                 onSelect: function (suggestion) {
-                    // console.log($(this)parent().attr('id'));
                     var mcc02DureeFormation =  $(this).closest('td').next('td').find('input').show();
                     mcc02DureeFormation.val(suggestion.duree);
                 }

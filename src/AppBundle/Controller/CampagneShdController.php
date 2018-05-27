@@ -28,7 +28,7 @@ class CampagneShdController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $campagnesShd = $em->getRepository('AppBundle:CampagneBrhp')->findCampagnesRecentesShd($this->getUser());
+        $campagnesShd = $em->getRepository('AppBundle:CampagneBrhp')->findCampagnesRecentesShd($this->getUser(), $this->get('session')->get('selectedRole'));
 
         return $this->render('campagneShd/index.html.twig', array(
             'campagnesShd' => $campagnesShd,

@@ -488,7 +488,7 @@ class AgentController extends Controller
     /**
      * Fonction appelée en ajax pour gérer les données du datatables côté serveur.
      *
-     * @Security("has_role('ROLE_BRHP')")
+     * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      */
     public function serverProcessingCampagneBrhpAction(Request $request, CampagneBrhp $campagneBrhp, $evaluable, $sansShd, $sansPerimetre, $onglet)
     {

@@ -92,7 +92,7 @@ class AppPdf extends TCPDF
             $this->footer = '
     								<table>
 	                    		  		<tr>
-	    									<td align="right">'.$this->getAliasNumPage().'</td>
+	    									<td align="right" style="font-size: large">'.$this->getAliasNumPage().'</td>
 	                    		  		</tr>
             	         			</table>
 	    						';
@@ -150,7 +150,7 @@ class AppPdf extends TCPDF
         						 &nbsp;&nbsp;&nbsp;
 								 <small>APPRECIATION DE LA VALEUR PROFESSIONNELLE '.$crep->getAgent()->getCampagnePnc()->getAnneeEvaluee().'</small>';
         } elseif ($crep instanceof CrepMcc02) {
-            $this->header = '<strong>MINISTÈRE DE LA CULTURE</strong>';
+//            $this->header = '<strong>MINISTÈRE DE LA CULTURE</strong>';
         } else {
             $this->header = ' <font color="red">Header à définir dans AppBundle\Util\AppPdf.php</font>';
         }

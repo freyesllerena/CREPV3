@@ -81,9 +81,13 @@ class CampagneRlcManager extends CampagneManager
 
         $perimetresBrhp = $campagneRlc->getPerimetresBrhp();
 
-        $brhps = $this->personneManager->recuperePersonnesDesPerimetres($perimetresBrhp);
-
+        $brhps = $this->personneManager->getBrhps($perimetresBrhp);
+        
         $this->personneManager->ajoutePersonnesDansUtilisateurs($brhps, 'ROLE_BRHP');
+        
+        $brhpsConsult = $this->personneManager->getBrhpsConsult($perimetresBrhp);
+        
+        $this->personneManager->ajoutePersonnesDansUtilisateurs($brhpsConsult, 'ROLE_BRHP_CONSULT');
 
         // crée les campagne BRHP à partir des périmètres de la campagne BRHP
         $campagnesBrhp = $this->campagneBrhpManager->creer($campagneRlc);
@@ -151,7 +155,7 @@ class CampagneRlcManager extends CampagneManager
      */
     public function ouvrirNouveauxPerimetres(CampagneRlc $campagneRlc, Collection $perimetresBrhp)
     {
-        $brhps = $this->personneManager->recuperePersonnesDesPerimetres($perimetresBrhp);
+        $brhps = $this->personneManager->getBrhps($perimetresBrhp);
 
         $this->personneManager->ajoutePersonnesDansUtilisateurs($brhps, 'ROLE_BRHP');
 

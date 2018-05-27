@@ -23,6 +23,8 @@ use AppBundle\Repository\AgentRepository;
 use AppBundle\Repository\CampagneRlcRepository;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use AppBundle\Twig\AppExtension;
+use AppBundle\Repository\CampagneBrhpRepository;
+use Doctrine\ORM\EntityRepository;
 
 class AppMailer extends Mailer implements FOSMailerInterface
 {
@@ -101,41 +103,56 @@ class AppMailer extends Mailer implements FOSMailerInterface
         }
     }
 
-    /* Notification des BRHP de l'ouverture de la campagne RLC */
-    public function notifierOuvrirCampagneRlc(CampagneRlc $campagneRlc, $brhps = [])
+    /* Notification des BRHP et BRHP consultation de l'ouverture de la campagne RLC */
+    public function notifierOuvrirCampagneRlc(CampagneRlc $campagneRlc)
     {
+    	/* @var $repositoryCampagneBrhp CampagneBrhpRepository */
         $repositoryCampagneBrhp = $this->em->getRepository('AppBundle:CampagneBrhp');
         $template = 'email/campagneRlc/ouvertureCampagne.html.twig';
-
-        $brhpIds = array();
-        foreach ($brhps as $brhp) {
-            $brhpIds[$brhp->getId()] = $brhp;
-        }
 
         /* @var $perimetreBrhp PerimetreBrhp */
         foreach ($campagneRlc->getPerimetresBrhp() as $perimetreBrhp) {
             // Récupérer la campagneBRHP de chaque brhp, pour générer l'url show dans le template
             $campagneBrhp = $repositoryCampagneBrhp->findOneBy(array('campagneRlc' => $campagneRlc, 'perimetreBrhp' => $perimetreBrhp));
-
+            
+            // Notification des BRHP
             /*@var $brhp Brhp */
             foreach ($perimetreBrhp->getBrhps() as $brhp) {
-                if (empty($brhps) || isset($brhpIds[$brhp->getId()])) {
-                    $destinataire = $brhp->getUtilisateur();
-
-                    if ($brhp->getUtilisateur()->isEnabled()) {
-                        $subject = $campagneRlc->getLibelle().' ouverte aux acteurs de niveau proximité pour le périmètre '.$perimetreBrhp->getLibelle();
-                        $body = $this->templating->render($template, array(
-                                'campagneRlc' => $campagneRlc,
-                                'campagne' => $campagneBrhp,
-                                'perimetre' => $perimetreBrhp,
-                                'destinataire' => $destinataire,
-                                'subject' => $subject,
-                        ));
-
-                        // Envoyer le mail d'ouverture de campagne
-                        $this->sendMessage($destinataire, $subject, $body);
-                    }
-                }
+				$destinataire = $brhp->getUtilisateur ();
+				
+				if ($brhp->getUtilisateur ()->isEnabled ()) {
+					$subject = $campagneRlc->getLibelle () . ' ouverte aux acteurs de niveau proximité pour le périmètre ' . $perimetreBrhp->getLibelle ();
+					$body = $this->templating->render ( $template, array (
+							'campagneRlc' => $campagneRlc,
+							'campagne' => $campagneBrhp,
+							'perimetre' => $perimetreBrhp,
+							'destinataire' => $destinataire,
+							'subject' => $subject 
+					) );
+					
+					// Envoyer le mail d'ouverture de campagne
+					$this->sendMessage ( $destinataire, $subject, $body );
+				}
+            }
+            
+            // Notification des BRHP consultation
+            /*@var $brhp Brhp */
+            foreach ($perimetreBrhp->getBrhpsConsult() as $brhpConsult) {
+            	$destinataire = $brhpConsult->getUtilisateur ();
+            
+            	if ($brhpConsult->getUtilisateur ()->isEnabled ()) {
+            		$subject = $campagneRlc->getLibelle () . ' ouverte aux acteurs de niveau proximité pour le périmètre ' . $perimetreBrhp->getLibelle ();
+            		$body = $this->templating->render ( $template, array (
+            				'campagneRlc' => $campagneRlc,
+            				'campagne' => $campagneBrhp,
+            				'perimetre' => $perimetreBrhp,
+            				'destinataire' => $destinataire,
+            				'subject' => $subject
+            		) );
+            			
+            		// Envoyer le mail d'ouverture de campagne
+            		$this->sendMessage ( $destinataire, $subject, $body );
+            	}
             }
         }
     }

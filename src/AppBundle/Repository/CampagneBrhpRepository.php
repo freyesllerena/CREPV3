@@ -8,17 +8,18 @@ use AppBundle\Entity\Brhp;
 use AppBundle\Entity\CampagnePnc;
 use AppBundle\Entity\PerimetreBrhp;
 use AppBundle\Entity\CampagneRlc;
+use AppBundle\Entity\Personne;
 
 /**
  * CampagneBrhpRepository.
  */
 class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findCampagnesRecentesBrhp($utilisateurCourant, $max = null)
+    public function findCampagnesRecentesBrhp($utilisateurCourant, $roleUtilisateur, $max = null)
     {
         $qb = $this->createQueryBuilder('c');
 
-        if ($utilisateurCourant->hasRole('ROLE_ADMIN')) {
+        if ($roleUtilisateur === 'ROLE_ADMIN') {
             $qb->leftJoin('c.campagneRlc', 'campagneRlc')
                ->leftJoin('campagneRlc.campagnePnc', 'campagnePnc')
                ->addOrderBy('campagnePnc.anneeEvaluee', 'DESC')
@@ -29,8 +30,13 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
             return array_slice($qb->getQuery()->getResult(), 0, $max);
         }
 
+        $brhps = 'brhps';
+        if($roleUtilisateur === 'ROLE_BRHP_CONSULT'){
+        	$brhps = 'brhpsConsult';
+        }
+        
         $qb->leftjoin('c.perimetreBrhp', 'perimetreBrhp')
-            ->leftJoin('perimetreBrhp.brhps', 'brhp')
+            ->leftJoin('perimetreBrhp.'.$brhps, 'brhp')
             ->leftJoin('c.campagneRlc', 'campagneRlc')
             ->leftJoin('campagneRlc.campagnePnc', 'campagnePnc')
             ->where('brhp.utilisateur = :UTILISATEUR')
@@ -42,11 +48,11 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
         return array_slice($qb->getQuery()->getResult(), 0, $max);
     }
 
-    public function findCampagnesRecentesShd(Utilisateur $utilisateurCourant, $max = null)
+    public function findCampagnesRecentesShd(Utilisateur $utilisateurCourant, $roleUtilisateur, $max = null)
     {
         $qb = $this->createQueryBuilder('c');
 
-        if ($utilisateurCourant->hasRole('ROLE_ADMIN')) {
+        if ($roleUtilisateur === 'ROLE_ADMIN') {
             $qb->leftjoin('c.agents', 'agent')
                 ->where('c.statut NOT IN (:STATUTS)')
                 ->setParameter('STATUTS', array(EnumStatutCampagne::INITIALISEE, EnumStatutCampagne::CREEE));
@@ -67,11 +73,11 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
         return array_slice($qb->getQuery()->getResult(), 0, $max);
     }
 
-    public function findCampagnesRecentesAh(Utilisateur $utilisateurCourant, $max = null)
+    public function findCampagnesRecentesAh(Utilisateur $utilisateurCourant, $roleUtilisateur, $max = null)
     {
         $qb = $this->createQueryBuilder('c');
 
-        if ($utilisateurCourant->hasRole('ROLE_ADMIN')) {
+        if ($roleUtilisateur === 'ROLE_ADMIN') {
             $qb->leftjoin('c.agents', 'agent')
                 ->where('c.statut NOT IN (:STATUTS)')
                 ->setParameter('STATUTS', array(EnumStatutCampagne::INITIALISEE, EnumStatutCampagne::CREEE));
@@ -159,7 +165,7 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Récupère les camapgnes accessibles par le brhp passé en paramètre.
      */
-    public function getCampagnes(Brhp $brhp)
+    public function getCampagnes(Personne $brhp)
     {
         $qb = $this->createQueryBuilder('c')
         ->where('c.perimetreBrhp IN (:PERIMETRES)')

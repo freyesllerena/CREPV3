@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CrepMj01FormationSuivie extends GenericEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="CrepMj01", inversedBy="formationsSuivies")
+     * @ORM\ManyToOne(targetEntity="CrepMj01", inversedBy="crepMj01FormationsSuivies")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $crep;

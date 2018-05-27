@@ -170,8 +170,8 @@ class CrepMcc02Type extends CrepType
                 CollectionType::class,
                 [
                     'entry_type' => CrepMcc02CompetenceRelationType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true,
+                    'allow_add' => false,
+                    'allow_delete' => false,
                     'by_reference' => false,
                 ]
             )

@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
-use AppBundle\Entity\FormationSuivie;
-use AppBundle\Entity\MobiliteGeographique;
+//use AppBundle\Entity\FormationSuivie;
+//use AppBundle\Entity\MobiliteGeographique;
 use AppBundle\Entity\ObjectifEvalue;
 use AppBundle\Entity\ObjectifFutur;
 use AppBundle\Util\Converter;
@@ -1297,7 +1297,6 @@ class CrepMcc02 extends Crep
             ->setEvolutionProfessionnelleEnvisagee(null)
             ->setSouhaitEntretienCarriere(null)
             ->setObservationsShdProjetProfessionnel(null);
-
         $this->getFormationsT1()->clear();
         $this->getFormationsT2()->clear();
         $this->getFormationsT3()->clear();
@@ -2399,51 +2398,49 @@ class CrepMcc02 extends Crep
      */
     public function validateCrepMcc02(ExecutionContextInterface $context)
     {
-        // Cette variable calucle le nombre de compétences (requises, professionnelles et manageriales) dont le niveau acquis est exceptionnelle
         $nbCompetenceNiveauExceptionnelle = 0;
-        $competencesRelationsAcquises = [];
-        $competencesRelationsAcquisesOrder = [];
-        /** @var CrepMcc02CompetenceRelation $competenceRelation */
+        $errorObservationsCompetencesActions = false;
+        $errorObservationsCompetencesRelation = false;
+        $errorObservationsCompetencesSituation = false;
+
+        /** @var  CrepMcc02CompetenceAction $competenceAction */
+        foreach ($this->competencesActions as $competenceAction) {
+            if ($competenceAction->getLibelle()
+                && null !== $competenceAction->getNiveauAcquis()
+                && 0 == $competenceAction->getNiveauAcquis()) {
+                if (!$this->observationsCompetencesActions) {
+                    $errorObservationsCompetencesActions = true;
+                }
+                ++$nbCompetenceNiveauExceptionnelle;
+            }
+        }
+
+        /** @var  CrepMcc02CompetenceRelation $competenceRelation */
         foreach ($this->competencesRelations as $competenceRelation) {
-            // on compte le total des niveaux acquis exceptionnelles et on récupère son libellé ainsi que le code niveau acquis
             if ($competenceRelation->getLibelle()
                 && null !== $competenceRelation->getNiveauAcquis()
                 && 0 == $competenceRelation->getNiveauAcquis()) {
-                ++$nbCompetenceNiveauExceptionnelle;
-                $competencesRelationsAcquises[$competenceRelation->getLibelle()] = $competenceRelation->getNiveauAcquis();
-            }
-            // on récupère le libellé et le code niveaux acquis des libellés niveaux acquis non exceptionnelles
-            if ($competenceRelation->getLibelle()
-                && null !== $competenceRelation->getNiveauAcquis()
-                && 0 !== $competenceRelation->getNiveauAcquis()) {
-                $competencesRelationsAcquises[$competenceRelation->getLibelle()] = $competenceRelation->getNiveauAcquis();
-            }
-
-        }
-        // trie liste competence relation
-        foreach (COMPETENCE_RELATION_MCC02 as $keyCR => $competenceRelationMcc02) {
-
-            if (array_key_exists($keyCR, $competencesRelationsAcquises)) {
-                if (isset($competencesRelationsAcquises[$keyCR])) {
-                    $competencesRelationsAcquisesOrder[$keyCR] = $competencesRelationsAcquises[$keyCR];
+                if (!$this->observationsCompetencesRelations) {
+                    $errorObservationsCompetencesRelation = true;
                 }
-            } else {
-                $competencesRelationsAcquisesOrder[$keyCR] = null;
+                ++$nbCompetenceNiveauExceptionnelle;
             }
         }
-        // on efface toutes les competences
-        $this->getCompetencesRelations()->clear();
-        // on re-initialise les compétences liées à la relation
-        foreach ($competencesRelationsAcquisesOrder as $libelle => $niveauAcquis) {
-            $competenceRelation = new CrepMcc02CompetenceRelation();
-            $competenceRelation->setLibelle($libelle);
-            if (!is_null($niveauAcquis)) {
-                $competenceRelation->setNiveauAcquis($niveauAcquis);
-                $this->addCompetencesRelation($competenceRelation);
-            } else {
-                $this->addCompetencesRelation($competenceRelation);
+
+
+        /** @var  CrepMcc02CompetenceSituation $competenceSituation
+         */
+        foreach ($this->competencesSituations as $competenceSituation) {
+            if ($competenceSituation->getLibelle()
+                && null !== $competenceSituation->getNiveauAcquis()
+                && 0 == $competenceSituation->getNiveauAcquis()) {
+                if (!$this->observationsCompetencesSituations) {
+                    $errorObservationsCompetencesSituation = true;
+                }
+                ++$nbCompetenceNiveauExceptionnelle;
             }
         }
+
         /*  *****   VALIDATION: Nombre de compétences dont le niveau acquis est à Exceptionnel ne doit pas dépasser 5  ***** */
         if ($nbCompetenceNiveauExceptionnelle > 5) {
 
@@ -2451,6 +2448,31 @@ class CrepMcc02 extends Crep
             ->setParameter('cause', 'nbCompetenceNiveauExceptionnelle')
             ->addViolation();
         }
+
+        /*  *****   VALIDATION Compétences action: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($errorObservationsCompetencesActions) {
+
+            $context->buildViolation('L\'observation sur le tableau Compétences liées à l\'action ayant un niveau exceptionnel doit être motivée')
+                ->setParameter('cause_observation_action', 'errorObservationsCompetencesActions')
+                ->addViolation();
+        }
+
+        /*  *****   VALIDATION Compétences action: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($errorObservationsCompetencesRelation) {
+
+            $context->buildViolation('L\'observation sur le tableau "Compétences liées à la relation" ayant un niveau exceptionnel  doit être motivée')
+                ->setParameter('cause_observation_relation', 'errorObservationsCompetencesRelation')
+                ->addViolation();
+        }
+
+        /*  *****   VALIDATION Compétences action: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($errorObservationsCompetencesSituation) {
+
+            $context->buildViolation('L\'observation sur le tableau "Compétences liées à l’intelligence des situations" ayant un niveau exceptionnel doit être motivée')
+                ->setParameter('cause_observation_situation', 'errorObservationsCompetencesSituation')
+                ->addViolation();
+        }
+
 
         /*  *****   VALIDATION: année   ***** */
         $anneeEvaluation = parent::getAgent()->getCampagnePnc()->getAnneeEvaluee();
@@ -2463,5 +2485,4 @@ class CrepMcc02 extends Crep
             }
         }
     }
-
 }

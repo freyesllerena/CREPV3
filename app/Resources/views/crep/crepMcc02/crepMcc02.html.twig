@@ -75,7 +75,13 @@
 <!-- page 1 -->
 
 <div style="page-break-before:always;"></div>
-
+<table>
+    <tr>
+        <td>
+            <span style="font-size: large; font-family: 'Times New Roman',serif">MINISTÈRE DE LA CULTURE</span>
+        </td>
+    </tr>
+</table>
 <table class="height-title">
     <tr>
         <td style="width: 2%"></td>
@@ -1359,24 +1365,15 @@
                 <table cellpadding="3">
                     <tr>
                         <td width="12%">Nom :</td>
-                        <td width="88%">{{ crep.shdSignataire }}</td>
+                        <td width="88%">{{ crep.shdSignataire | identite }}</td>
                     </tr>
                     <tr>
                         <td width="12%">Date :</td>
-                        <td width="88%">
-                            {% if crep.dateVIsaShd %}
-                                {%  set dateVisaShd = crep.dateVIsaShd | date('d/m/Y H:i') %}
-                                {{ dateVisaShd  }}
-                            {% endif %}
-                        </td>
+                        <td width="88%">{% if crep.dateVIsaShd %}{%  set dateVisaShd = crep.dateVIsaShd | date('d/m/Y H:i') %}{{ dateVisaShd  }}{% endif %}                        </td>
                     </tr>
                     <tr>
                         <td width="12%">Signature :</td>
-                        <td width="88%">
-                            {% if crep.dateVisaShd %}
-                                CREP signé de manière dématérialisée<br>
-                            {% endif %}
-                        </td>
+                        <td width="88%">{% if crep.dateVisaShd %}CREP signé de manière dématérialisée<br>{% endif %}</td>
                     </tr>
                 </table>
             </div>
@@ -1405,6 +1402,7 @@
             <div style="border: 1px solid black;" class="text-center">
                 <strong>OBSERVATIONS ÉVENTUELLES DE L’AGENT-E</strong>
                 <br><br>{{ crep.observationsVisaAgent | nl2br  }}
+                <br><br><br><br>
             </div>
         </td>
         <td style="width: 2%"></td>
@@ -1427,20 +1425,20 @@
     <table cellpadding="6" style="font-size: 11px;">
         <tr>
             <td colspan="2" style="width: 50%">
-                <strong>Nom</strong> : {{ crep.ahSignataire }}
+                <strong>Nom</strong> : {% if crep.dateVisaAh %}{{ crep.ahSignataire | identite}} {% endif %}
             </td>
             <td style="width: 50%">
-                <strong>Observations éventuelles</strong>  :<br> {{ crep.observationsAh }}
+                <strong>Observations éventuelles</strong>  :<br> {% if crep.dateVisaAh %}{{ crep.observationsAh }}{% endif %}
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <strong>Fonction exercée</strong> : {{ crep.posteOccupe }}
+                <strong>Fonction exercée</strong> : {% if crep.dateVisaAh %}{{ crep.posteOccupe }}{% endif %}
             </td>
         </tr>
         <tr>
             <td>
-                <strong>Date</strong> : {{ crep.dateVisaAh | date('d/m/Y') }}
+                <strong>Date</strong> : {% if crep.dateVisaAh %}{{ crep.dateVisaAh | date('d/m/Y') }} {% endif %}
             </td>
             <td>
                 <strong>Visa</strong> :
@@ -1448,8 +1446,6 @@
                     <span style="color: red">L'agent est déclaré comme étant <strong>"sans N+2"</strong>. L'étape de la signature du N+2 est donc <strong>supprimée</strong>.</span>
                 {% elseif crep.dateVisaAh %}
                     CREP signé de manière dématérialisée<br>
-                    {{ crep.ahSignataire | identite }}<br>
-                    le {{ crep.dateVisaAh | date('d/m/Y H:i') }}
                 {% endif %}
             </td>
         </tr>
@@ -1487,10 +1483,10 @@
                         </td>
                         <td>
                             <strong>Signature</strong>  :<br>
-                            {% if crep.dateVisaAgent %}
+                            {% if crep.dateNotification is not empty %}
                                 CREP visé de manière dématérialisée<br>
                                 {{ crep.agent.civilite | title }} {{ crep.prenom | title }} {{ crep.nomUsage | upper }}
-                            {% elseif crep.dateRefusVisa %}
+                            {% elseif crep.dateRefusNotification is not empty %}
                                 <span style="color: red">L'agent a refusé de viser son CREP.</span>
                             {% elseif crep.agent and crep.agent.sansAh and crep.dateVisaShd %}
                                 <span style="color: red">L'agent est déclaré comme étant <strong>"sans N+2"</strong>. L'étape de visa de l'agent est donc <strong>supprimée</strong>.</span>

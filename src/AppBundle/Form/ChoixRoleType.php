@@ -19,6 +19,7 @@ class ChoixRoleType extends AbstractType
             'Pilote national de campagne' => 'ROLE_PNC',
             'Responsable local de campagne' => 'ROLE_RLC',
             'Acteur RH de proximité' => 'ROLE_BRHP',
+    		'Acteur RH de proximité consultation' => 'ROLE_BRHP_CONSULT',
             'Gestionnaire de recours' => 'ROLE_GESTIONNAIRE_RECOURS',
             'Conseiller de formation' => 'ROLE_CONSEILLER_FORMATION',
             'N+1' => 'ROLE_SHD',

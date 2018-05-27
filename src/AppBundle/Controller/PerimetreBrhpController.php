@@ -19,7 +19,7 @@ class PerimetreBrhpController extends Controller
     /**
      * Lists all PerimetreBrhp entities.
      *
-     * @Security("has_role('ROLE_RLC') or has_role('ROLE_BRHP') ")
+     * @Security("has_role('ROLE_RLC') or has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      */
     public function indexAction()
     {
@@ -27,12 +27,18 @@ class PerimetreBrhpController extends Controller
         /* @var $user Utilisateur */
         $utilisateur = $this->getUser();
 
-        if ($utilisateur->hasRole('ROLE_ADMIN')) {
+        $selectedRole = $this->get('session')->get('selectedRole');
+        
+        if ('ROLE_ADMIN' === $selectedRole) {
             $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->findAll();
-        } elseif ($utilisateur->hasRole('ROLE_BRHP')) {
+        } elseif ('ROLE_BRHP' === $selectedRole) {
             /* @var $brhp Brhp */
             $brhp = $em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
             $perimetreBrhps = $brhp->getPerimetresBrhp();
+        } elseif ('ROLE_BRHP_CONSULT' === $selectedRole) {
+            /* @var $brhpConsult BrhpConsult */
+            $brhpConsult = $em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+            $perimetreBrhps = $brhpConsult->getPerimetresBrhp();
         } else {
             $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
             $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->getPerimetresBrhpByRlc($rlc);
@@ -144,7 +150,7 @@ class PerimetreBrhpController extends Controller
     /**
      * Show a PerimetreBrhp entity.
      *
-     * @Security("has_role('ROLE_RLC') or has_role('ROLE_BRHP') ")
+     * @Security("has_role('ROLE_RLC') or has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      */
     public function showAction(Request $request, PerimetreBrhp $perimetreBrhp)
     {

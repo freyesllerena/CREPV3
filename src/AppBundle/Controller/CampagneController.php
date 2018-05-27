@@ -68,9 +68,10 @@ class CampagneController extends Controller
                 break;
 
             case EnumRole::ROLE_BRHP:
+            case EnumRole::ROLE_BRHP_CONSULT:
                 /* @var $repository CampagneBrhp */
                 $repository = $em->getRepository('AppBundle:CampagneBrhp');
-                $campagnes = $repository->findCampagnesRecentesBrhp($utilisateurCourant, $max);
+                $campagnes = $repository->findCampagnesRecentesBrhp($utilisateurCourant, $this->get('session')->get('selectedRole'), $max);
                 $vue = 'campagneBrhp/campagnesRecentes.html.twig';
 
                 break;
@@ -78,7 +79,7 @@ class CampagneController extends Controller
             case EnumRole::ROLE_SHD:
                 /* @var $repository CampagneBrhpRepository */ 
                 $repository = $em->getRepository('AppBundle:CampagneBrhp');
-                $campagnes = $repository->findCampagnesRecentesShd($utilisateurCourant, $max);
+                $campagnes = $repository->findCampagnesRecentesShd($utilisateurCourant, $this->get('session')->get('selectedRole'), $max);
                 $vue = 'campagneShd/campagnesRecentes.html.twig';
                 /* Indicateurs du tableau de bord */
                 $indicateurs['nbCampagnesOuvertes'] = $repository->countCampagnesShd($utilisateurCourant, EnumStatutCampagne::OUVERTE);
@@ -90,7 +91,7 @@ class CampagneController extends Controller
             case EnumRole::ROLE_AH:
                 /* @var $repository CampagneBrhp */
                 $repository = $em->getRepository('AppBundle:CampagneBrhp');
-                $campagnes = $repository->findCampagnesRecentesAh($utilisateurCourant, $max);
+                $campagnes = $repository->findCampagnesRecentesAh($utilisateurCourant, $this->get('session')->get('selectedRole'), $max);
                 $vue = 'campagneAh/campagnesRecentes.html.twig';
                 /* Indicateurs du tableau de bord */
                 $indicateurs['nbCampagnesOuvertes'] = $repository->countCampagnesAh($utilisateurCourant, EnumStatutCampagne::OUVERTE);

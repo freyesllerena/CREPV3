@@ -193,7 +193,7 @@ class AgentVoter extends Voter
             // Il n'est pas nécessaire de vérifier le statut, car un crep papier ne peut avoir que 3 statuts de toutes manières
             // (notifié agent, cas d'absence, refus de notification de l'agent)
 
-            if ('ROLE_BRHP' === $roleUtilisateurSession) {
+            if ('ROLE_BRHP' === $roleUtilisateurSession || 'ROLE_BRHP_CONSULT' === $roleUtilisateurSession) {
                 /** @var $brhp Brhp */
                 $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
@@ -383,11 +383,24 @@ class AgentVoter extends Voter
             //On récupère le BRHP de l'utilisateur
             /** @var $brhp BRHP */
             $brhp = $this->em->getRepository('AppBundle:BRHP')->findOneByUtilisateur($utilisateur);
-            if (in_array($agent->getCampagneBrhp()->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
-                return true;
+            
+            // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
+            if ($brhp->getPerimetresBrhp()->contains($agent->getCampagneBrhp()->getPerimetreBrhp())) {
+            	return true;
             }
         }
 
+        if ('ROLE_BRHP_CONSULT' == $roleUtilisateurSession) {
+        	//On récupère le BRHP_CONSULT de l'utilisateur
+        	/** @var $brhpConsult BrhpConsult */
+        	$brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+
+            // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
+            if ($brhpConsult->getPerimetresBrhp()->contains($agent->getCampagneBrhp()->getPerimetreBrhp())) {
+            	return true;
+            }
+        }
+        
         if ('ROLE_SHD' == $roleUtilisateurSession) {
             //Si l'agent possède un N+1
             if ($agent->getShd()) {

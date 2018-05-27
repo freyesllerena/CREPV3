@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CrepMso3FormationAutre extends CrepMso3Formation
 {
     /**
-     * @ORM\ManyToOne(targetEntity="CrepMso3", inversedBy="formationsautres")
+     * @ORM\ManyToOne(targetEntity="CrepMso3", inversedBy="formationsAutres")
      */
     protected $crep;
 

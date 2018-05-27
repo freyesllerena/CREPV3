@@ -20,7 +20,7 @@ class CampagneAhController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $campagnesAh = $em->getRepository('AppBundle:CampagneBrhp')->findCampagnesRecentesAh($this->getUser());
+        $campagnesAh = $em->getRepository('AppBundle:CampagneBrhp')->findCampagnesRecentesAh($this->getUser(), $this->get('session')->get('selectedRole'));
 
         return $this->render('campagneAh/index.html.twig', array(
             'campagnesAh' => $campagnesAh,

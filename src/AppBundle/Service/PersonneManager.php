@@ -44,29 +44,61 @@ class PersonneManager extends BaseManager
         return $this->em->getRepository('AppBundle:Personne');
     }
 
+    
     /**
-     * Récupère les personnes d'un ou plusieurs périmètres.
+     * Récupère les brhps d'un ou plusieurs périmètres.
      *
      * @param Collection $perimetres Une collection de périmètres
      *
      * @return array Un tableau contenant les personnes
      */
-    public function recuperePersonnesDesPerimetres(Collection $perimetres)
-    {
-        $personnes = array();
-
-        if ($perimetres[0] instanceof PerimetreRlc) {
-            $accesseursPersonne = 'getRlcs';
-        } elseif ($perimetres[0] instanceof PerimetreBrhp) {
-            $accesseursPersonne = 'getBrhps';
-        }
-
-        foreach ($perimetres as $perimetre) {
-            $personnes = array_merge($personnes, $perimetre->$accesseursPersonne()->toArray());
-        }
-
-        return $personnes;
+    public function getBrhps(Collection $perimetresBrhp){
+    	$brhps = [];
+    	
+    	/* @var $perimetreBrhp PerimetreBrhp */
+    	foreach ($perimetresBrhp as $perimetreBrhp) {
+    		$brhps = array_merge($brhps, $perimetreBrhp->getBrhps()->toArray());
+    	}
+    	
+    	return $brhps;
     }
+    
+    /**
+     * Récupère les brhps consultants d'un ou plusieurs périmètres.
+     *
+     * @param Collection $perimetres Une collection de périmètres
+     *
+     * @return array Un tableau contenant les personnes
+     */
+    public function getBrhpsConsult(Collection $perimetresBrhp){
+    	$brhpsConsult = [];
+    	 
+    	/* @var $perimetreBrhp PerimetreBrhp */
+    	foreach ($perimetresBrhp as $perimetreBrhp) {
+    		$brhpsConsult = array_merge($brhpsConsult, $perimetreBrhp->getBrhpsConsult()->toArray());
+    	}
+    	 
+    	return $brhpsConsult;
+    }
+    
+    /**
+     * Récupère les rlcs d'un ou plusieurs périmètres.
+     *
+     * @param Collection $perimetres Une collection de périmètres
+     *
+     * @return array Un tableau contenant les personnes
+     */
+    public function getRlcs(Collection $perimetresRlc){
+    	$rlcs = [];
+    
+    	/* @var $perimetreRlc PerimetreRlc */
+    	foreach ($perimetresRlc as $perimetreRlc) {
+    		$rlcs = array_merge($rlcs, $perimetreRlc->getRlcs()->toArray());
+    	}
+    
+    	return $rlcs;
+    }
+    
 
     /**
      * Fait passer les gestionnaires en utilisateurs.

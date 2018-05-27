@@ -26,6 +26,11 @@ class PerimetreBrhp extends Perimetre
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Brhp", mappedBy="perimetresBrhp")
      */
     private $brhps;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\BrhpConsult", mappedBy="perimetresBrhp")
+     */
+    private $brhpsConsult;
 
     /**
      * @var campagneBrhp
@@ -114,6 +119,40 @@ class PerimetreBrhp extends Perimetre
     public function getBrhps()
     {
         return $this->brhps;
+    }
+
+    /**
+     * Add brhpConsult.
+     *
+     * @param \AppBundle\Entity\BrhpConsult $brhpConsult
+     *
+     * @return PerimetreBrhp
+     */
+    public function addBrhpConsult(\AppBundle\Entity\BrhpConsult $brhpConsult)
+    {
+    	$this->brhpsConsult[] = $brhpConsult;
+    
+    	return $this;
+    }
+    
+    /**
+     * Remove brhpConsult.
+     *
+     * @param \AppBundle\Entity\BrhpConsult $brhpConsult
+     */
+    public function removeBrhpConsult(\AppBundle\Entity\BrhpConsult $brhpConsult)
+    {
+    	$this->brhpsConsult->removeElement($brhpConsult);
+    }
+    
+    /**
+     * Get brhpsConsult.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBrhpsConsult()
+    {
+    	return $this->brhpsConsult;
     }
 
     /**

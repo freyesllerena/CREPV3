@@ -198,12 +198,25 @@ class CampagneBrhpVoter extends Voter
 
     private function peutBrhpVoir(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        /** @var $brhp Brhp */
-        $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
-
-        if (in_array($campagneBrhp->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
-            return true;
-        }
+		if('ROLE_BRHP' === $this->session->get('selectedRole')){
+			/** @var $brhp Brhp */
+			$brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
+			
+			// Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
+			if ($brhp->getPerimetresBrhp()->contains($campagneBrhp->getPerimetreBrhp())) {
+				return true;
+			}
+		}
+		
+		if('ROLE_BRHP_CONSULT' === $this->session->get('selectedRole')){
+			/** @var $brhp Brhp */
+			$brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+			
+			// Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
+			if ($brhpConsult->getPerimetresBrhp()->contains($campagneBrhp->getPerimetreBrhp())) {
+				return true;
+			}
+		}
 
         // Dans tous les autres cas, on refuse l'accès
         return false;
@@ -256,12 +269,17 @@ class CampagneBrhpVoter extends Voter
 
     private function peutOuvrirShd(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
+    	/* @var $roleUtilisateurSession Role */
+    	$roleUtilisateurSession = $this->session->get('selectedRole');
+    	
+    	if('ROLE_BRHP' !== $roleUtilisateurSession && 'ROLE_ADMIN' !== $roleUtilisateurSession){
+    		return false;
+    	}
+    	
         /** @var $brhp Brhp */
         $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
-        /* @var $roleUtilisateurSession Role */
-        $roleUtilisateurSession = $this->session->get('selectedRole');
-
+        
         //Si la population d'agents n'a pas encore été diffusée par l'AM, il n'est pas possible d'ouvrir la campagne aux N+1
         if ($campagneBrhp->getCampagnePnc()->getDiffusee()) {
             if (EnumStatutCampagne::CREEE == $campagneBrhp->getStatut()
@@ -274,7 +292,6 @@ class CampagneBrhpVoter extends Voter
                     // On ne peut rouvrir une campagne brhp que si la campagne rlc a été rouverte
                     && EnumStatutCampagne::OUVERTE === $campagneBrhp->getCampagneRlc()->getStatut()
                     && !$campagneBrhp->getDateOuverture() // La campagne n'a jamais été ouverte
-                    && 'ROLE_BRHP' === $roleUtilisateurSession
                     && in_array($campagneBrhp->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
                 return true;
             }
@@ -341,7 +358,29 @@ class CampagneBrhpVoter extends Voter
                         EnumStatutCampagne::CLOTUREE,
                         EnumStatutCampagne::FERMEE,
                 ])) {
-            return true;
+            
+            /** @var $brhp Brhp */
+            $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
+                		
+            // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
+            if ($brhp->getPerimetresBrhp()->contains($campagneBrhp->getPerimetreBrhp())) {
+            	return true;
+            }
+        }
+        
+        if ('ROLE_BRHP_CONSULT' == $roleUtilisateurSession
+        		&& in_array($campagneBrhp->getStatut(), [
+        				EnumStatutCampagne::OUVERTE,
+        				EnumStatutCampagne::CLOTUREE,
+        				EnumStatutCampagne::FERMEE,
+        		])) {
+			/** @var $brhp Brhp */
+        	$brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+        				
+        	// Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
+        	if ($brhpConsult->getPerimetresBrhp()->contains($campagneBrhp->getPerimetreBrhp())) {
+        		return true;
+        	}        			
         }
 
         // Dans tous les autres cas, on refuse l'accès
@@ -366,17 +405,21 @@ class CampagneBrhpVoter extends Voter
                 /** @var $brhp BRHP */
                 $brhp = $this->em->getRepository('AppBundle:BRHP')->findOneByUtilisateur($utilisateur);
 
-                $perimetresBrhpIds = array();
-
-                $perimetresBrhp = $brhp->getPerimetresBrhp()->toArray();
-
-                foreach ($perimetresBrhp as $perimetreBrhp) {
-                    $perimetresBrhpIds[] = $perimetreBrhp->getId();
-                }
-
-                if (in_array($campagne->getPerimetreBrhp()->getId(), $perimetresBrhpIds)) {
-                    return true;
-                }
+                // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
+            	if ($brhp->getPerimetresBrhp()->contains($campagne->getPerimetreBrhp())) {
+            		return true;
+            	}
+            }
+            
+            if ('ROLE_BRHP_CONSULT' == $roleUtilisateurSession) {
+            	//On récupère le BRHP Consult de l'utilisateur
+            	/** @var $brhpConsult BrhpConsult */
+            	$brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+            
+            	// Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
+            	if ($brhpConsult->getPerimetresBrhp()->contains($campagne->getPerimetreBrhp())) {
+            		return true;
+            	}
             }
 
             if ('ROLE_SHD' == $roleUtilisateurSession) {

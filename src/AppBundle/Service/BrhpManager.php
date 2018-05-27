@@ -55,8 +55,14 @@ class BrhpManager extends BaseManager
         /* @var $brhpRepository BrhpRepository */
         $brhpRepository = $this->em->getRepository('AppBundle:Brhp');
         /* @var $brhpExistant Brhp */
-        $brhpExistant = $brhpRepository->findOneByUtilisateur($brhp->getUtilisateur());
-
+        $brhpExistant = null;
+        
+        if($brhp->getUtilisateur()){
+        	$brhpExistant = $brhpRepository->findOneByUtilisateur($brhp->getUtilisateur());
+        }
+        
+		// Si le BRHP existe déjà, c'est à dire qu'il a été ajouté par un autre RLC
+        // alors on lui ajoute les nouveaux périmètres aux périmètres qu'il gère déjà
         if ($brhpExistant) {
             foreach ($brhp->getPerimetresBrhp() as $perimetreBrhp) {
                 if (!$brhpExistant->getPerimetresBrhp()->contains($perimetreBrhp)) {

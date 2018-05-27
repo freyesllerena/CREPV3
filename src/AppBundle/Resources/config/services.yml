@@ -252,6 +252,13 @@ services:
         calls:
             - [init, ['@utilisateur_manager','@personne_manager']]
 
+    # Service de gestion de BRHP Consult
+    app.brhp_consult_manager:
+        class: 'AppBundle\Service\BrhpConsultManager'
+        parent: app.base_manager
+        calls:
+            - [init, ['@utilisateur_manager','@personne_manager']]
+            
     # Voter BRHP
     app.brhp_voter:
         class: AppBundle\Security\BrhpVoter
@@ -260,6 +267,14 @@ services:
         tags:
             - { name: security.voter }
 
+    # Voter BRHP Consult
+    app.brhp_consult_voter:
+        class: AppBundle\Security\BrhpConsultVoter
+        arguments: ['@security.access.decision_manager', '@doctrine.orm.entity_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+            
     # Voter PerimetreBrhp
     app.perimetre_brhp_voter:
         class: AppBundle\Security\PerimetreBrhpVoter

@@ -40,6 +40,10 @@ class CrepController extends Controller
         if (!$crep->getCrepPapier()) {
             $role = $this->get('session')->get('selectedRole');
             $role = strtolower(str_replace('ROLE_', '', $role));
+            
+            if($role === 'brhp_consult'){
+            	$role = 'brhp';
+            }
 
             // Ici nous utilisons le service d'anomysation du crep en fonction du statut du crep
             /* @var $crepConfidentialisationManager CrepConfidentialisationManager */
