@@ -39,6 +39,9 @@ class CrepMcc02FormationSuivieType extends FormationSuivieType
             ->add('duree', null, ['attr' => ['class' => 'fieldCollection']])
             ->add('libelle', null, array(
                 'required' => true,
+                'constraints' => array(
+                    new NotBlank(['message' => 'Le libellé est obligatoire'])
+                )
             ))
             ->add('libelle2', null, array(
                 'required' => true,

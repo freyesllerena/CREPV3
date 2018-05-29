@@ -30,6 +30,7 @@ class CrepMcc02AgentType extends AbstractType
         $builder
             ->add('observationsAgentObjectifsEvalues', TextareaType::class, ['required' => false])
             ->add('observationsVisaAgent', TextareaType::class, ['required' => false])
+            ->add('observationsAgentProjetProfessionnel', TextareaType::class, ['required' => false])
 //			->add('observationsAgentDeroulementEntretien', TextareaType::class, ['required' => false])
 //			->add('observationsAgentAppreciationsPortees', TextareaType::class, ['required' => false])
         ;

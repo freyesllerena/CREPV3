@@ -225,7 +225,6 @@ class CrepMcc02Type extends CrepType
                 'placeholder' => null,
             ])
             ->add('observationsShdProjetProfessionnel', TextareaType::class, ['required' => false])
-            ->add('observationsAgentProjetProfessionnel', TextareaType::class, ['required' => false])
             ->add('dateEntreePoste',
             		DateType::class,
             		array(

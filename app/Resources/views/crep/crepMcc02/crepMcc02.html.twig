@@ -157,7 +157,7 @@
                 <tr>
                     <td style="width: 17%">Poste occupé :</td>
                     <td style="width: 40%">{{ crep.posteOccupeShd }}</td>
-                    <td style="width: 43%">Depuis le : {{ crep.dateEntreePosteOccupeShd }} </td>
+                    <td style="width: 43%">Depuis le : {{ crep.dateEntreePosteOccupeShd |  date('d/m/Y') }} </td>
                 </tr>
             </table>
 
@@ -208,10 +208,10 @@
                     </tr>
                 {% endif %}
                 <tr>
-                    <td class="padding-mcc002" colspan="3" width="100%">Fonctions exercées : {{ crep.fonctionsExercees }}</td>
+                    <td class="padding-mcc002" colspan="3" width="100%">Fonctions exercées : {% if  crep.fonctionsExercees is not empty %} {{ crep.fonctionsExercees }} {% else %} <br><br>{% endif %} </td>
                 </tr>
                 <tr>
-                    <td colspan="3" width="100%">Environnement professionnel dans lequel s’exercent les fonctions : {{  crep.groupeFonctions }}</td>
+                    <td colspan="3" width="100%">Environnement professionnel dans lequel s’exercent les fonctions : {% if  crep.groupeFonctions is not empty %} {{ crep.groupeFonctions }} {% else %} <br><br>{% endif %}</td>
                 </tr>
                 <tr>
                     <td colspan="2" width="45%">La fiche de poste est-elle adaptée ?</td>
@@ -535,7 +535,17 @@
     </tr>
 </table>
 <br>
-- <u>Les compétences managériales démontrées par l’agent-e dans ses fonctions</u> 
+
+<table>
+    <tr>
+        <td style="width: 2%"></td>
+        <td style="width: 96%">
+            - <u>Les compétences managériales démontrées par l’agent-e dans ses fonctions</u> 
+        </td>
+        <td style="width: 2%"></td>
+    </tr>
+</table>
+
 <br>
 <table cellpadding="3" style="font-size: 11px;">
     <tr class="text-center">
@@ -626,9 +636,11 @@
 <table>
     <tr>
         <td style="width: 2%"></td>
-        <td style="width: 96%;font-size:9px;">
+        <td style="width: 96%;">
+            <small style="font-size:9px;">
             * Au total, le nombre de croix figurant dans la colonne « exceptionnelle » de ces 3 tableaux des compétences <br>
                 managériales ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit être motivée dans la colonne « observations».
+            </small>
             <br><br>
             - <u>Les compétences autres que managériales démontrées par l’agent-e dans ses fonctions</u> :
         </td>
@@ -665,7 +677,7 @@
             </tr>
         {% endfor %}
     {% else %}
-        {% for i in 0..2 %}
+        {% for i in 0..1 %}
             <tr>
                 <td class="bordered text-center"></td>
                 <td class="bordered text-center"></td>
@@ -698,7 +710,7 @@
             </tr>
         {% endfor %}
     {% else %}
-        {% for i in 0..2 %}
+        {% for i in 0..1 %}
             <tr>
                 <td class="bordered"></td>
                 <td class="bordered text-center"></td>
@@ -707,7 +719,7 @@
                 <td class="bordered text-center"></td>
                 <td class="bordered text-center"></td>
                 {% if i == 0 %}
-                    <td class="bordered" rowspan="3"></td>
+                    <td class="bordered" rowspan="2"></td>
                 {% endif %}
             </tr>
         {% endfor %}
@@ -747,6 +759,11 @@
                     <td width="40%">{{ crep.corps }} - {{ crep.grade }}</td>
                     <td width="21%"><u>Échelon</u> :</td>
                     <td width="21%">{{ crep.echelon }}</td>
+                </tr>
+                <tr>
+                    <td width="17%"><u>Affectation</u> :</td>
+                    <td width="40%">{{ crep.affectation }}</td>
+                    <td colspan="2"></td>
                 </tr>
                 <tr>
                     <td width="17%"><u>Poste occupé</u> :</td>
@@ -1004,6 +1021,11 @@
                         <td width="21%">{{ crep.echelon }}</td>
                     </tr>
                     <tr>
+                        <td width="17%"><u>Affectation</u> :</td>
+                        <td width="40%">{{ crep.affectation }}</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
                         <td width="17%"><u>Poste occupé</u> :</td>
                         <td width="40%">{{ crep.posteOccupe }}</td>
                         <td width="21%"><u>Depuis le</u> :</td>
@@ -1187,8 +1209,7 @@
         <td style="width: 96%">
                 <p>
                     <sup>1 </sup>Porter une coche en cas de réponse positive.<br>
-                    <sup>2 </sup>L’agent peut indiquer s’il souhaite utiliser son CPF pour la formation envisagée.
-                    Les formations liées à une adaptation immédiate au poste de travail ne peuvent être imputées sur le CPF.
+                    <sup>2 </sup>L’agent peut indiquer s’il souhaite utiliser son compte personnel de formation (CPF) pour la formation envisagée. Les formations liées à une adaptation au poste de travail (T1) ne peuvent être imputées sur le CPF.
                 </p>
         </td>
         <td style="width: 2%"></td>
@@ -1428,7 +1449,7 @@
         </tr>
         <tr>
             <td>
-                <strong>Date</strong> : {% if crep.dateVisaAh %}{{ crep.dateVisaAh | date('d/m/Y') }} {% endif %}
+                <strong>Date</strong> : {% if crep.dateVisaAh %}{{ crep.dateVisaAh | date('d/m/Y H:i') }} {% endif %}
             </td>
             <td>
                 <strong>Visa</strong> :
