@@ -1,0 +1,223 @@
+{% use "Form/App_bootstrap_3_layout.html.twig" %}
+
+{% block _crep_edd_contraintesPostes_entry_widget %}
+    {% for child in form.niveauDifficulte.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+    {% endfor %}
+    <td>{{ form_row(form.observations, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
+{% endblock %}
+
+{% block _crep_edd_autresContraintesPostes_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {% for child in form.niveauDifficulte.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+        <td>{{ form_row(form.observations, {'label':false}) }}</td>
+        <td class="text-center">
+            <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_objectifsEvaluesCollectifs_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td class="text-center">{{ form_row(form.resultatObtenu) }}</td>
+        <td>{{ form_widget(form.resultat) }}</td>
+        <td class="text-center">
+            <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_objectifsEvaluesIndividuels_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td class="text-center">{{ form_row(form.resultatObtenu) }}</td>
+        <td>{{ form_widget(form.resultat)}}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_objectifsFutursCollectifs_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td>{{ form_row(form.echeance) }}</td>
+        <td>{{ form_row(form.indicateurs)}}</td>
+        <td>{{ form_row(form.observationsEventuelles)}}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_objectifsFutursIndividuels_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        <td>{{ form_row(form.echeance) }}</td>
+        <td>{{ form_row(form.indicateurs)}}</td>
+        <td>{{ form_row(form.observationsEventuelles)}}</td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_competencesTransversesRequises_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
+{% block _crep_edd_autresCompetencesTransversesRequises_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_techniques_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+
+        {% for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+
+
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_competencesManageriales_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+    {#<td>{{ form_row(form.observations, {'label':false}) }}</td>#}
+{% endblock %}
+
+{% block _crep_edd_autresCompetencesManageriales_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+        {#<td>{{ form_row(form.observations, {'label':false}) }}</td>#}
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_agent_competencesTransversesDetenues_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label':false}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection'}}) }}</td>
+        {% endfor %}
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_formationsSuivies_entry_widget %}
+    <tr>
+        <td>{{ form_row(form.annee, {'attr': {'class': 'fieldCollection'}}) }}</td>
+
+        <td>
+            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
+        </td>
+
+        <td>
+            {{ form_row(form.duree, {'attr': {'class': 'fieldCollection'}}) }}
+        </td>
+        <td>
+            {{ form_row(form.commentaires, {'label':false, 'attr': {'class': 'fieldCollection'}}) }}
+        </td>
+
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection" ><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_edd_formationsDemandeesAgent_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.priorite, {'label':false}) }}
+        </td>
+
+        <td>
+            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+        </td>
+
+        <td>
+            {{ form_row(form.typologie, {'label':false, 'attr': {'class': 'fieldCollection eligible-dif'} }) }}
+        </td>
+
+        <td class="text-center">
+            {{ form_row(form.dif, {'label':false, 'attr': {'class': 'fieldCollection iCheckCollection dif'}}) }}
+        </td>
+
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+    {###################### Fin collecions ################################}
+
+
+    {# Redéfinition du bloc from_errors aligner à gauche les erreurs de validation, en ajoutant style="text-align: left;"   #}
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        <div class="has-error">
+            {%- for error in errors -%}
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError"><i
+                                class="fa fa-times-circle"></i> {{ error.message }}</label>
+                </div>
+            {%- endfor -%}
+        </div>
+
+    {%- endif %}
+{%- endblock form_errors %}
+
+
+
+{# Redéfinition du bloc form_row pour supprimer les marges basses sur les champs en mettant en place la classe form-group-no-margin  #}
+{% block form_row -%}
+{% spaceless %}
+    {{ form_errors(form) }}
+	{% if label != false %}
+<div class="form-group-no-margin{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    {{ form_label(form) }}
+    <div class="{{ block('form_group_class') }}">
+        {% else %}
+        <div class="form-group-no-margin{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+            <div class="{{ block('form_group_class') }}">
+                {% endif %}
+
+                {{ form_widget(form) }}
+
+                {% if icone is defined %}
+                    <span class="{{ icone }} form-control-feedback left" aria-hidden="true"></span>
+                {% endif %}
+
+            </div>
+        </div>
+        {% endspaceless %}
+        {%- endblock form_row %}
+    </div>
+</div>

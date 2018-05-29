@@ -1,0 +1,150 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 30%">Connaissances professionnelles requises sur le poste</th>
+                <th style="width: 10%" class="text-center">Exceptionnelle<sup>1</sup></th>
+                <th style="width: 10%" class="text-center">Forte</th>
+                <th style="width: 10%" class="text-center">Assez forte</th>
+                <th style="width: 10%" class="text-center">A développer</th>
+                <th style="width: 10%" class="text-center">Non pertinent</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for competenceRequise in crep.competencesTransversesRequises %}
+                <tr>
+                    <td>
+                        {{ competenceRequise.libelle }}
+                    </td>
+                    {% for index in 0..4 %}
+                        <td class="text-center">{{ competenceRequise.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                    {% endfor %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{#<div class="row">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<dl class="m-t-md">#}
+            {#<dt>Observations</dt>#}
+            {#<dd class="well well-xs">#}
+                {#{{ crep.observationsCompetencesTransversesRequises | nl2br }}#}
+            {#</dd>#}
+        {#</dl>#}
+    {#</div>#}
+{#</div>#}
+
+{#<br>#}
+
+{#<div class="row">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<table class="table table-bordered">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th style="width: 30%">Autres connaissances spécifiques éventuellement requises sur le poste</th>#}
+                {#<th style="width: 10%" class="text-center">Exceptionnelle*</th>#}
+                {#<th style="width: 10%" class="text-center">Forte</th>#}
+                {#<th style="width: 10%" class="text-center">Assez forte</th>#}
+                {#<th style="width: 10%" class="text-center">A développer</th>#}
+                {#<th style="width: 10%" class="text-center">Non pertinent</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+            {#{% if crep.autresCompetencesTransversesRequises is not empty %}#}
+                {#{% for autreCompetenceRequise in crep.autresCompetencesTransversesRequises %}#}
+                    {#<tr>#}
+                        {#<td>#}
+                            {#{{ autreCompetenceRequise.libelle }}#}
+                        {#</td>#}
+                        {#{% for index in 0..4 %}#}
+                            {#<td class="text-center">{{ autreCompetenceRequise.niveauAcquis|iconCheck(loop.index0)|raw }}</td>#}
+                        {#{% endfor %}#}
+
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% else %}#}
+                {#{% for i in 1..2 %}#}
+                    {#<tr>#}
+                        {#<td><br></td>#}
+                        {#{% for index in 0..4 %}#}
+                            {#<td></td>#}
+                        {#{% endfor %}#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+
+            {#{% endif %}#}
+            {#</tbody>#}
+        {#</table>#}
+    {#</div>#}
+{#</div>#}
+
+{#<div class="row">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<dl class="m-t-md">#}
+            {#<dt>Observations</dt>#}
+            {#<dd class="well well-xs">#}
+                {#{{ crep.observationsAutresCompetencesTransversesRequises | nl2br }}#}
+            {#</dd>#}
+        {#</dl>#}
+    {#</div>#}
+{#</div>#}
+
+{#<br>#}
+
+{#<div class="row">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<table class="table table-bordered">#}
+            {#<thead>#}
+            {#<tr>#}
+                {#<th style="width: 30%">Techniques</th>#}
+                {#<th style="width: 10%" class="text-center">Exceptionnelle*</th>#}
+                {#<th style="width: 10%" class="text-center">Forte</th>#}
+                {#<th style="width: 10%" class="text-center">Assez forte</th>#}
+                {#<th style="width: 10%" class="text-center">A développer</th>#}
+                {#<th style="width: 10%" class="text-center">Non pertinent</th>#}
+            {#</tr>#}
+            {#</thead>#}
+            {#<tbody>#}
+
+            {#{% if crep.techniques is not empty %}#}
+                {#{% for technique in crep.techniques %}#}
+                    {#<tr>#}
+                        {#<td>#}
+                            {#{{ technique.libelle }}#}
+                        {#</td>#}
+                        {#{% for index in 0..4 %}#}
+                            {#<td class="text-center">{{ technique.niveauAcquis|iconCheck(loop.index0)|raw }}</td>#}
+                        {#{% endfor %}#}
+
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% else %}#}
+                {#{% for i in 1..2 %}#}
+                    {#<tr>#}
+                        {#<td><br></td>#}
+                        {#{% for index in 0..4 %}#}
+                            {#<td></td>#}
+                        {#{% endfor %}#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+            {#</tbody>#}
+        {#</table>#}
+    {#</div>#}
+{#</div>#}
+
+{#<div class="row">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<dl class="m-t-md">#}
+            {#<dt>Observations</dt>#}
+            {#<dd class="well well-xs">#}
+                {#{{ crep.observationsTechniques| nl2br }}#}
+            {#</dd>#}
+        {#</dl>#}
+    {#</div>#}
+{#</div>#}

@@ -535,7 +535,7 @@
     </tr>
 </table>
 <br>
-- <u>Les compétences managériales démontrées par l’agent-e dans ses fonctions</u> :<br>
+- <u>Les compétences managériales démontrées par l’agent-e dans ses fonctions</u> 
 <br>
 <table cellpadding="3" style="font-size: 11px;">
     <tr class="text-center">
@@ -547,7 +547,6 @@
         <th class="bordered bg-full" width="11%">non observée</th>
         <th class="bordered bg-full" width="23%">observations</th>
     </tr>
-
     {% for key, competence in crep.competencesActions %}
         <tr class="text-center">
             <td class="bordered">{{ competence.libelle }}</td>
@@ -564,12 +563,9 @@
             {% endif %}
         </tr>
     {% endfor %}
-
 </table>
 <br>
 <br>
-
-
 <table cellpadding="3" style="font-size: 11px;">
     <tr class="text-center">
         <th class="bordered bg-full strong-th " width="24%">COMPÉTENCES<br>LIÉES A LA<br>RELATION</th>
@@ -580,7 +576,6 @@
         <th class="bordered bg-full" width="11%"><br><br>non observée</th>
         <th class="bordered bg-full" width="23%"><br><br>observations</th>
     </tr>
-
     {% for key, competence in crep.competencesRelations %}
         <tr class="text-center">
             <td class="bordered">{{ competence.libelle }}</td>
@@ -597,12 +592,9 @@
             {% endif %}
         </tr>
     {% endfor %}
-
 </table>
 <br>
 <br>
-
-
 <table cellpadding="1" style="font-size: 11px;">
     <tr class="text-center">
         <th class="bordered bg-full strong-th " width="24%">COMPÉTENCES<br>LIÉES A<br>L’INTELLIGENCE<br>DES SITUATIONS</th>
@@ -613,7 +605,6 @@
         <th class="bordered bg-full" width="11%"><br><br>non observée</th>
         <th class="bordered bg-full" width="23%"><br><br>observations</th>
     </tr>
-
     {% for key, competence in crep.competencesSituations %}
         <tr class="text-center">
             <td class="bordered">{{ competence.libelle }}</td>
@@ -630,10 +621,7 @@
             {% endif %}
         </tr>
     {% endfor %}
-
 </table>
-
-<br>
 <br>
 <table>
     <tr>
@@ -648,10 +636,8 @@
     </tr>
 </table>
 <br>
-<br>
 <table cellpadding="1" style="font-size: 11px;">
     <tr class="text-center">
-
         <th class="bordered bg-full strong-th " width="24%">COMPÉTENCES</th>
         <th class="bordered bg-full" width="11%">exceptionnelle*</th>
         <th class="bordered bg-full" width="8%">forte</th>
@@ -661,9 +647,7 @@
         <th class="bordered bg-full" width="20%">observations éventuelles</th>
     </tr>
     <tr>
-        <td class="bordered bg-full" colspan="7">Requises dans les fonctions (à compléter à partir de la fiche de
-            poste)
-        </td>
+        <td class="bordered bg-full" colspan="7">Requises dans les fonctions (à compléter à partir de la fiche de poste)</td>
     </tr>
     {% if crep.competencesRequises | length > 0 %}
         {% for key, competence in crep.competencesRequises %}
@@ -680,7 +664,6 @@
                 {% endif %}
             </tr>
         {% endfor %}
-
     {% else %}
         {% for i in 0..2 %}
             <tr>
@@ -696,7 +679,6 @@
             </tr>
         {% endfor %}
     {% endif %}
-
     <tr>
         <td class="bordered bg-full" colspan="7">Autres compétences démontrées par l’agent-e</td>
     </tr>
@@ -715,7 +697,6 @@
                 {% endif %}
             </tr>
         {% endfor %}
-
     {% else %}
         {% for i in 0..2 %}
             <tr>
@@ -955,6 +936,12 @@
             {% if crep.observationsShdProjetProfessionnel is empty %}
                 <br>
                 <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             {% else %}
                 {{ crep.observationsShdProjetProfessionnel }}
             {% endif %}
@@ -972,6 +959,12 @@
             {% if crep.observationsAgentProjetProfessionnel is empty %}
                 <br>
                 <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             {% else %}
                 {{ crep.observationsAgentProjetProfessionnel }}
             {% endif %}
@@ -981,7 +974,6 @@
 
 <!-- page 5 -->
 <div style="page-break-before:always;"></div>
-
 <table>
     <tr>
         <td style="width: 2%"></td>
@@ -993,8 +985,6 @@
     </tr>
 </table>
 <br>
-
-
 <table>
     <tr>
         <td style="width: 2%"></td>
@@ -1041,10 +1031,11 @@
 <br>
 <table cellpadding="1" style="font-size: 11px;">
     <tr class="text-center">
-        <th class="bordered bg-full strong-th " width="10%"><div style="font-size: 5pt">&nbsp;</div>Année</th>
-        <th class="bordered bg-full strong-th " width="33%"><div style="font-size: 5pt">&nbsp;</div>Formation demandee</th>
-        <th class="bordered bg-full strong-th " width="15%"><div style="font-size: 5pt">&nbsp;</div>Durée</th>
-        <th class="bordered bg-full strong-th " width="42%">Commentaires (appréciation, bilan, suites)</th>
+        <th class="bordered bg-full strong-th " width="8%"><div style="font-size: 5pt">&nbsp;</div>Année</th>
+        <th class="bordered bg-full strong-th " width="27%"><div style="font-size: 5pt">&nbsp;</div>Formation demandée</th>
+        <th class="bordered bg-full strong-th " width="25%"><div style="font-size: 5pt">&nbsp;</div>Formation suivie</th>
+        <th class="bordered bg-full strong-th " width="10%"><div style="font-size: 5pt">&nbsp;</div>Durée</th>
+        <th class="bordered bg-full strong-th " width="30%">Commentaires (appréciation, bilan, suites)</th>
     </tr>
     {% if crep.formationsSuivies | length > 0 %}
 
@@ -1052,6 +1043,7 @@
             <tr>
                 <td class="bordered text-center">{{ formation.annee | nl2br }}</td>
                 <td class="bordered">{{ formation.libelle | nl2br }}</td>
+                <td class="bordered">{{ formation.libelle2 | nl2br }}</td>
                 <td class="bordered text-center">{{ formation.type | nl2br }}</td>
                 <td class="bordered">{{ formation.commentaires | nl2br }}</td>
             </tr>
@@ -1061,6 +1053,7 @@
 
         {% for i in 0..2 %}
             <tr>
+                <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
                 <td class="bordered"><br></td>
@@ -1186,15 +1179,12 @@
             <td class="bordered text-center"></td>
         </tr>
     {% endif %}
-
-
 </table>
 <br>
 <table style="font-size: 9px;">
     <tr>
         <td style="width: 2%"></td>
         <td style="width: 96%">
-                {#<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">#}
                 <p>
                     <sup>1 </sup>Porter une coche en cas de réponse positive.<br>
                     <sup>2 </sup>L’agent peut indiquer s’il souhaite utiliser son CPF pour la formation envisagée.

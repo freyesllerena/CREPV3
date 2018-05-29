@@ -1,0 +1,37 @@
+{% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
+
+            <dt>Observations</dt>
+            <dd>{{ form_widget(form.observationsAh, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}</dd>
+
+{% if crep.agent and not crep.agent.sansAh %}
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Nom</dt>
+                <dd>
+                    {% if crep.ahSignataire %}
+                        {{ crep.ahSignataire | identite }}
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Fonctions exercées</dt>
+                <dd>{% if crep.ahSignataire %} {{ crep.ahSignataire.posteOccupe | capitalize }} {% endif %}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Date</dt>
+                <dd>{% if crep.dateVisaAh %}{{ crep.dateVisaAh|date('d/m/Y H:i') }}{% endif %}</dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

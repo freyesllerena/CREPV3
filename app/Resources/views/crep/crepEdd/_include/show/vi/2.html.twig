@@ -1,0 +1,25 @@
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 10%" class="text-center">Année</th>
+                <th style="width: 50%">Intitulé de la formation</th>
+                <th style="width: 10%" class="text-center">Durée</th>
+                <th style="width: 30%">Commentaires (appréciation, bilan, suites)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formation in crep.formationsSuivies %}
+                <tr>
+                	<td class="text-center">{{ formation.annee }}</td>
+                    <td>{{ formation.libelle|nl2br }}</td>
+                    <td class="text-center">{{ formation.duree }}</td>
+                    <td>{{ formation.commentaires|nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

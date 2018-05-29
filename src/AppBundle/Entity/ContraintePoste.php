@@ -12,17 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContraintePosteRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
-class ContraintePoste
+class ContraintePoste extends GenericEntity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var text
      *
@@ -109,18 +100,6 @@ class ContraintePoste
     public function setObservations($observations)
     {
         $this->observations = $observations;
-
-        return $this;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
 
         return $this;
     }

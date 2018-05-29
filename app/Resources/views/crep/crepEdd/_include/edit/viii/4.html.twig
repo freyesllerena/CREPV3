@@ -1,0 +1,16 @@
+{% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_6.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Date</dt>
+            <dd>
+                {% if crep.dateRefusVisa %}
+                    Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
+                {% elseif crep.dateVisaAgent %}
+                    {{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+                {% endif %}
+            </dd>
+        </dl>
+    </div>
+</div>

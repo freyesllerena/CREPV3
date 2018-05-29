@@ -34,6 +34,7 @@ class CompetencePosteType extends AbstractType
                         'A' => 1,
                         'M' => 2,
                         'E' => 3,
+                        'F' => 4,
                     ],
                     'attr' => [
                         'class' => 'flat',
@@ -52,6 +53,7 @@ class CompetencePosteType extends AbstractType
                         'A' => 1,
                         'M' => 2,
                         'E' => 3,
+                        'F' => 4,
                     ],
                     'attr' => [
                         'class' => 'flat',

@@ -1,0 +1,45 @@
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 30%">Techniques</th>
+                <th style="width: 10%" class="text-center">Exceptionnelle<sup>1</sup></th>
+                <th style="width: 10%" class="text-center">Forte</th>
+                <th style="width: 10%" class="text-center">Assez forte</th>
+                <th style="width: 10%" class="text-center">A développer</th>
+                <th style="width: 10%" class="text-center">Non pertinent</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% if crep.techniques is not empty %}
+                {% for technique in crep.techniques %}
+                    <tr>
+                        <td>
+                            {{ technique.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+                            <td class="text-center">{{ technique.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        <td><br></td>
+                        {% for index in 0..4 %}
+                            <td></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+

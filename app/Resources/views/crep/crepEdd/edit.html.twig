@@ -1,0 +1,216 @@
+{% extends "crep/crepEdd/edd.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block organisation %} {% endblock %}
+
+{% block frameTitle %}CREP{% endblock frameTitle %}
+
+{% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
+{% block pageTitle %}CREP de {{ crep.agent.civilite | title }} {{ crep.prenom | title }} {{ crep.nomUsage | upper }}{% endblock pageTitle %}
+
+
+{% block content %}
+    {{ block('alertErreurValidationFormulaireCrep') }}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block i01 %}
+    {% include 'crep/crepEdd/_include/edit/0/1.html.twig' %}
+{% endblock i01 %}
+
+{% block i02 %}
+    {% include 'crep/crepEdd/_include/edit/0/2.html.twig' %}
+{% endblock i02 %}
+
+{% block i1_1 %}
+    {% include 'crep/crepEdd/_include/edit/i/1_1.html.twig' %}
+{% endblock i1_1 %}
+
+{% block i1_2 %}
+    {% include 'crep/crepEdd/_include/edit/i/1_2.html.twig' %}
+{% endblock i1_2 %}
+
+{% block i2 %}
+    {% include 'crep/crepEdd/_include/edit/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block i3 %}
+    {% include 'crep/crepEdd/_include/edit/i/3.html.twig' %}
+{% endblock i3 %}
+
+{% block i4 %}
+    {% include 'crep/crepEdd/_include/edit/i/4.html.twig' %}
+{% endblock i4 %}
+
+{% block ii1_1 %}
+    {% include 'crep/crepEdd/_include/edit/ii/1.1.html.twig' %}
+{% endblock ii1_1 %}
+
+{% block ii1_2 %}
+    {% include 'crep/crepEdd/_include/edit/ii/1.2.html.twig' %}
+{% endblock ii1_2 %}
+
+{% block ii2 %}
+    {% include 'crep/crepEdd/_include/edit/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+    {% include 'crep/crepEdd/_include/edit/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block iii1 %}
+    {% include 'crep/crepEdd/_include/edit/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2 %}
+    {% include 'crep/crepEdd/_include/edit/iii/2.html.twig' %}
+{% endblock iii2 %}
+
+{% block ivError %}
+    {% for errorIndex, error in errors %}
+        {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbCompetenceNiveauExceptionnelle" ) %}
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock ivError %}
+
+{% block iv1_1_1 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.1.1.html.twig' %}
+{% endblock iv1_1_1 %}
+
+{% block iv1_1_2 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.1.2.html.twig' %}
+{% endblock iv1_1_2 %}
+
+{% block iv1_1_3 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.1.3.html.twig' %}
+{% endblock iv1_1_3 %}
+
+{% block iv1_1_4 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.1.4.html.twig' %}
+{% endblock iv1_1_4 %}
+
+{% block iv1_1_5 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.1.5.html.twig' %}
+{% endblock iv1_1_5 %}
+
+{% block iv1_1_6 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.1.6.html.twig' %}
+{% endblock iv1_1_6 %}
+
+{% block iv1_2_1 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.2.1.html.twig' %}
+{% endblock iv1_2_1 %}
+
+{% block iv1_2_2 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.2.2.html.twig' %}
+{% endblock iv1_2_2 %}
+
+
+{% block iv1_2_3 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.2.3.html.twig' %}
+{% endblock iv1_2_3 %}
+
+{% block iv1_2_4 %}
+    {% include 'crep/crepEdd/_include/edit/iv/1.2.4.html.twig' %}
+{% endblock iv1_2_4 %}
+
+{% block iv2 %}
+    {% include 'crep/crepEdd/_include/edit/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block v1_1 %}
+    {% include 'crep/crepEdd/_include/edit/v/1.1.html.twig' %}
+{% endblock v1_1 %}
+
+{% block v1_2 %}
+    {% include 'crep/crepEdd/_include/edit/v/1.2.html.twig' %}
+{% endblock v1_2 %}
+
+{% block v2 %}
+    {% include 'crep/crepEdd/_include/edit/v/2.html.twig' %}
+{% endblock v2 %}
+
+{% block vi1 %}
+    {% include 'crep/crepEdd/_include/edit/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+    {% include 'crep/crepEdd/_include/edit/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+
+{% block vi3 %}
+    {% include 'crep/crepEdd/_include/edit/vi/3.html.twig' %}
+{% endblock vi3 %}
+
+
+{% block vii1 %}
+    {% include 'crep/crepEdd/_include/edit/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2 %}
+    {% include 'crep/crepEdd/_include/edit/vii/2.html.twig' %}
+{% endblock vii2 %}
+
+{% block viii1 %}
+    {% include 'crep/crepEdd/_include/edit/viii/1.html.twig' %}
+{% endblock viii1 %}
+
+{% block viii2 %}
+    {% include 'crep/crepEdd/_include/edit/viii/2.html.twig' %}
+{% endblock viii2 %}
+
+{% block viii3 %}
+    {% include 'crep/crepEdd/_include/edit/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+{% block viii4 %}
+    {% include 'crep/crepEdd/_include/edit/viii/4.html.twig' %}
+{% endblock viii4 %}
+
+
+{% block circuitDeValidation %}
+{% endblock circuitDeValidation %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- chained -->
+    <script src="{{ asset('bundles/framework/cisirh/js/chained.js') }}"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
+            // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
+            var crepCollections = new Crep.Collections();
+        });
+
+        //Edd autocomplete pour formation suivie - voir version globale : \app\Resources\views\crep\crep.base.html.twig
+        urlAjax = "{{ path('formation_ajax_search', {'ministere': crep.agent.campagnePnc.ministere.id}) }}";
+        // AutoComplete
+        autoCompleteFormation();
+
+        function autoCompleteFormation(){
+
+            $('.formation-autocomplete').autocomplete({
+                serviceUrl: urlAjax,
+                minChars: 3,
+                onSelect: function (suggestion) {
+                    var EddDureeFormation =  $(this).closest('td').next('td').find('input').show();
+                    EddDureeFormation.val(suggestion.duree);
+                }
+            });
+        }
+
+    </script>
+
+{% endblock javascripts %}

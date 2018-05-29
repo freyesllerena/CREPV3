@@ -363,6 +363,7 @@ services:
                   - '@app.crep_mso3_manager'
                   - '@app.crep_mj01_manager'
                   - '@app.crep_mcc02_manager'
+                  - '@app.crep_edd_manager'
   
         
     # Service de gestion de confidentialisation des CREP
@@ -410,6 +411,11 @@ services:
         class: 'AppBundle\Service\ModelesCrep\CrepMso3Manager'
         parent: app.base_manager                
 
+    # Service export des formations Edd
+    app.crep_edd_manager:
+        class: 'AppBundle\Service\ModelesCrep\CrepEddManager'
+        parent: app.base_manager
+
     # Service export des formations Mj01
     app.crep_mj01_manager:
         class: 'AppBundle\Service\ModelesCrep\CrepMj01Manager'
@@ -419,7 +425,7 @@ services:
     app.crep_mcc02_manager:
         class: 'AppBundle\Service\ModelesCrep\CrepMcc02Manager'
         parent: app.base_manager
-                            
+
     app.oracle.session.listener:
         class: 'AppBundle\EventListener\AppOracleSessionInit'
         tags:

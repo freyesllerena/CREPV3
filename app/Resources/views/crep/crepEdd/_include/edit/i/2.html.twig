@@ -1,0 +1,26 @@
+{% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 15%" class="text-center">Nombre de sous-directions et bureaux dans la direction</th>
+                <th style="width: 15%" class="text-center">Nombre de cadres A encadrés</th>
+                <th style="width: 15%" class="text-center">Nombre total d’agents encadrés</th>
+                <th style="width: 15%" class="text-center">Présence d’un (ou d’) adjoint(s)</th>
+                <th style="width: 40%" class="text-center">Observations particulières</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ form_row(form.nbBureauxDirection) }}</td>
+                <td>{{ form_row(form.nbCadresEncadresA) }}</td>
+                <td>{{ form_row(form.nbTotalAgentsEncadres) }}</td>
+                <td>{{ form_row(form.presenceAdjoints, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:right;'}}) }}</td>
+                <td>{{ form_widget(form.observationsEffectifs) }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

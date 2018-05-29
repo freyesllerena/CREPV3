@@ -31,7 +31,8 @@
 {% block _crep_mcc02_formationsSuivies_entry_widget %}
     <tr>
         <td>{{ form_row(form.annee, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td>{{ form_row(form.libelle, {'label': false,'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}</td>
+        <td>{{ form_row(form.libelle, {'label': false,'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}</td>
+        <td>{{ form_row(form.libelle2, {'label': false,'attr': {'class': 'fieldCollection'}}) }}</td>
         <td>{{ form_row(form.type, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
         <td>{{ form_row(form.commentaires, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
         <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>

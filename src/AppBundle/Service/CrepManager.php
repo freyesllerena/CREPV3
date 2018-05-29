@@ -27,6 +27,7 @@ use AppBundle\Entity\Crep\CrepMso3\CrepMso3;
 use AppBundle\Service\ModelesCrep\CrepMcc02Manager;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 use AppBundle\Service\ModelesCrep\CrepMj01Manager;
+use AppBundle\Service\ModelesCrep\CrepEddManager;
 use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
 use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
 
@@ -54,6 +55,8 @@ class CrepManager extends BaseManager
 
     protected $modelesCrepManagers;
 
+    protected $crepEddManager;
+
     protected $crepMj01Manager;
 
     protected $crepMcc02Manager;
@@ -66,16 +69,16 @@ class CrepManager extends BaseManager
         TwigEngine $templating,
 
         $certificat,
-        CrepMindef01Manager $crepMindef01Manager,
-        CrepAcManager $crepAcManager,
-        CrepMccManager $crepMccManager,
-        CrepMinefAbcManager $crepMinefAbcManager,
-        CrepSclManager $crepSclManager,
-        CrepMso3Manager $crepMso3Manager,
-        CrepMj01Manager $crepMj01Manager,
-        CrepMcc02Manager $crepMcc02Manager
-    )
-    {
+                        CrepMindef01Manager $crepMindef01Manager,
+                        CrepAcManager $crepAcManager,
+                        CrepMccManager $crepMccManager,
+                        CrepMinefAbcManager $crepMinefAbcManager,
+                        CrepSclManager $crepSclManager,
+                        CrepMso3Manager $crepMso3Manager,
+                        CrepMj01Manager $crepMj01Manager,
+                        CrepMcc02Manager $crepMcc02Manager,
+                        CrepEddManager $crepEddManager
+            ) {
         $this->tcpdf = $tcpdf;
         $this->confidentialisationManager = $confidentialisationManager;
         $this->templating = $templating;
@@ -88,16 +91,18 @@ class CrepManager extends BaseManager
         $this->crepMso3Manager = $crepMso3Manager;
         $this->crepMj01Manager = $crepMj01Manager;
         $this->crepMcc02Manager = $crepMcc02Manager;
+        $this->crepEddManager = $crepEddManager;
 
         $this->modelesCrepManagers = [
-            'CrepMindef01' => $this->crepMindef01Manager,
-            'CrepAc' => $this->crepAcManager,
-            'CrepMcc' => $this->crepMccManager,
-            'CrepMinefAbc' => $this->crepMinefAbcManager,
-            'CrepScl' => $this->crepSclManager,
-            'CrepMso3' => $this->crepMso3Manager,
-            'CrepMj01' => $this->crepMj01Manager,
-            'CrepMcc02' => $this->crepMcc02Manager,
+                'CrepMindef01' => $this->crepMindef01Manager,
+                'CrepAc' => $this->crepAcManager,
+                'CrepMcc' => $this->crepMccManager,
+                'CrepMinefAbc' => $this->crepMinefAbcManager,
+                'CrepScl' => $this->crepSclManager,
+                'CrepMso3' => $this->crepMso3Manager,
+                'CrepMj01' => $this->crepMj01Manager,
+                'CrepMcc02' => $this->crepMcc02Manager,
+                'CrepEdd' => $this->crepEddManager,
         ];
     }
 

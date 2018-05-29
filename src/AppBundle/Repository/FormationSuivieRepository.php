@@ -22,6 +22,7 @@ class FormationSuivieRepository extends \Doctrine\ORM\EntityRepository
 
         ->addSelect('formation.libelle as f_libelle')
         ->addSelect('formation.annee as f_annee, formation.commentaires as f_commentaires') // Pour le CrepMcc
+        ->addSelect('formation.duree as f_duree') // Pour le CrepEdd
         ->innerJoin('formation.crep', 'crep')
         ->innerJoin('crep.agent', 'agent')
         ->where('agent.campagneBrhp = :CAMPAGNE_BRHP')

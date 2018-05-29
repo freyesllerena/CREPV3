@@ -1,5 +1,32 @@
 {% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
 
+{% set competenceActionExceptionnelle = 'false' %}
+{% for competence in form.competencesActions %}
+    {% for rowCompetance in competence %}
+        {% if rowCompetance.vars.value == '0' %}
+            {% set competenceActionExceptionnelle = 'true' %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% set competenceRelationExceptionnelle = 'false' %}
+{% for competence in form.competencesRelations %}
+    {% for rowCompetance in competence %}
+        {% if rowCompetance.vars.value == '0' %}
+            {% set competenceRelationExceptionnelle = 'true' %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% set competenceSituationExceptionnelle = 'false' %}
+{% for competence in form.competencesSituations %}
+    {% for rowCompetance in competence %}
+        {% if rowCompetance.vars.value == '0' %}
+            {% set competenceSituationExceptionnelle = 'true' %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
 <br>
 {# Competences Action #}
 <div class="row">
@@ -16,19 +43,51 @@
             </tr>
             </thead>
             <tbody>
+
+            {% for errorIndex, error in errors %}
+                {% if 'true' == competenceActionExceptionnelle %}
+                    {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbCompetenceNiveauExceptionnelle" ) %}
+                        <div class="has-error">
+                            <div class="col-md-12">
+                                <label class="control-label has-error" style="text-align: left;" for="inputError">
+                                    <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                            </div>
+                        </div>
+                     {% endif %}
+                {% endif %}
+            {% endfor %}
+
             {% for competence in form.competencesActions %}
                 <tr>
                     <td>
                         {{ crep.competencesActions[loop.index0].libelle }}
                     </td>
                     {{ form_widget(competence) }}
+                    {#{{ form_widget(competence, {'attr': {'class': 'has-error'}}) }}#}
                 </tr>
             {% endfor %}
+
             </tbody>
         </table>
     </div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
+    {% set libelleObservationCa = 'true' %}
+    {% set classeCaExceptionnelle = 'col-md-12 col-sm-12 col-xs-12' %}
+    {% for errorIndex, error in errors %}
+        {% if (error.messageParameters['cause_observation_action'] is defined and error.messageParameters['cause_observation_action'] == "errorObservationsCompetencesActions" ) %}
+            {% set classeCaExceptionnelle = 'col-md-12 col-sm-12 col-xs-12 has-error' %}
+            {% set libelleObservationCa = 'false' %}
+            <div class="has-error">
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError">
+                        <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="{{ classeCaExceptionnelle }}">
+        {% if  libelleObservationCa == 'true' %}
         <label>observations liées à l'action :</label>
+        {% endif %}
         {{ form_row(form.observationsCompetencesActions, { 'label': false}) }}
     </div>
 </div>
@@ -48,6 +107,20 @@
             </tr>
             </thead>
             <tbody>
+
+            {% for errorIndex, error in errors %}
+                {% if 'true' == competenceRelationExceptionnelle %}
+                    {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbCompetenceNiveauExceptionnelle" ) %}
+                        <div class="has-error">
+                            <div class="col-md-12">
+                                <label class="control-label has-error" style="text-align: left;" for="inputError">
+                                    <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
             {% for competence in form.competencesRelations %}
                 <tr>
                     <td>
@@ -59,8 +132,24 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <label>observations liées à la relation :</label>
+    {% set libelleObservationCr = 'true' %}
+    {% set classeCrExceptionnelle = 'col-md-12 col-sm-12 col-xs-12' %}
+    {% for errorIndex, error in errors %}
+        {% if (error.messageParameters['cause_observation_relation'] is defined and error.messageParameters['cause_observation_relation'] == "errorObservationsCompetencesRelation" ) %}
+            {% set classeCrExceptionnelle = 'col-md-12 col-sm-12 col-xs-12 has-error' %}
+            {% set libelleObservationCr = 'false' %}
+            <div class="has-error">
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError">
+                        <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="{{ classeCrExceptionnelle }}">
+        {% if  libelleObservationCr == 'true' %}
+            <label>observations liées à la relation :</label>
+        {% endif %}
         {{ form_row(form.observationsCompetencesRelations, { 'label': false}) }}
     </div>
 </div>
@@ -80,6 +169,20 @@
             </tr>
             </thead>
             <tbody>
+
+            {% for errorIndex, error in errors %}
+                {% if 'true' == competenceSituationExceptionnelle %}
+                    {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbCompetenceNiveauExceptionnelle" ) %}
+                        <div class="has-error">
+                            <div class="col-md-12">
+                                <label class="control-label has-error" style="text-align: left;" for="inputError">
+                                    <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
             {% for competence in form.competencesSituations %}
                 <tr>
                     <td>
@@ -91,8 +194,25 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <label>observations liées à l’intelligence des situations :</label>
+
+    {% set libelleObservationCs = 'true' %}
+    {% set classeCsExceptionnelle = 'col-md-12 col-sm-12 col-xs-12' %}
+    {% for errorIndex, error in errors %}
+        {% if (error.messageParameters['cause_observation_situation'] is defined and error.messageParameters['cause_observation_situation'] == "errorObservationsCompetencesSituation" ) %}
+            {% set classeCsExceptionnelle = 'col-md-12 col-sm-12 col-xs-12 has-error' %}
+            {% set libelleObservationCs = 'false' %}
+            <div class="has-error">
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError">
+                        <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="{{ classeCsExceptionnelle }}">
+        {% if  libelleObservationCs == 'true' %}
+            <label>observations liées à la relation :</label>
+        {% endif %}
         {{ form_row(form.observationsCompetencesSituations, { 'label': false}) }}
     </div>
 </div>

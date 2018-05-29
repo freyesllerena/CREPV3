@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CrepMcc02FormationSuivieType extends FormationSuivieType
 {
@@ -36,6 +37,15 @@ class CrepMcc02FormationSuivieType extends FormationSuivieType
                 'placeholder' => ''
             ])
             ->add('duree', null, ['attr' => ['class' => 'fieldCollection']])
+            ->add('libelle', null, array(
+                'required' => true,
+            ))
+            ->add('libelle2', null, array(
+                'required' => true,
+                'constraints' => array(
+                    new NotBlank(['message' => 'Le libellé est obligatoire'])
+                )
+            ))
             ->add('commentaires', TextareaType::class, [
                 'attr' => ['maxlength' => '4096',
                     'class' => 'fieldCollection', ],

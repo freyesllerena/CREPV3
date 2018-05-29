@@ -1,0 +1,9 @@
+{% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
+
+{% if crep.statut == constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD') %}
+    {% set class = 'champMisEnEvidence' %}
+{% else %}
+    {% set class = '' %}
+{% endif %}
+
+        {{ form_row(form.commentaireAgentEvolution, {'label':false, 'attr': {'maxlength': '4096', 'class':class}}) }}

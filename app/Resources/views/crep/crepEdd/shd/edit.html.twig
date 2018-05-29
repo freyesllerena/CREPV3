@@ -1,0 +1,95 @@
+{% extends "crep/crepEdd/edit.html.twig" %}
+
+
+{% block i4 %}
+    {% include 'crep/crepEdd/_include/show/i/4.html.twig' %}
+{% endblock i4 %}
+
+{#{% block v1_1 %}#}
+    {#{% include 'crep/crepEdd/_include/show/v/1.1.html.twig' %}#}
+{#{% endblock v1_1 %}#}
+
+{% block v2 %}
+    {% include 'crep/crepEdd/_include/show/v/2.html.twig' %}
+{% endblock v2 %}
+
+{% block iv2 %}
+    {% include 'crep/crepEdd/_include/show/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block viii2 %}
+    {% include 'crep/crepEdd/_include/show/viii/2.html.twig' %}
+{% endblock viii2 %}
+
+
+{#{% block i4AvecTitre %}{% endblock i4AvecTitre %}#}
+
+{#{% block iv2AvecTitre %}{% endblock iv2AvecTitre %}#}
+
+{#{% block v2AvecTitre %}{% endblock v2AvecTitre %}#}
+
+{% block circuitDeValidation %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VIII - CIRCUIT DE VALIDATION</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1.Signature du supérieur hiérarchique direct ayant conduit l’entretien</h3>
+
+                            {% include 'crep/crepEdd/_include/edit/viii/1.html.twig' %}
+
+                        <h3>2.Observations éventuelles de l’agent</h3>
+
+                            {% include 'crep/crepEdd/_include/show/viii/2.html.twig' %}
+
+                        <h3>3.Visa et observations éventuelles de l’autorité hiérarchique (N+2)</h3>
+
+
+                            {% include 'crep/crepEdd/_include/show/viii/3.html.twig' %}
+
+                        <h3>4.Signature de l’agent </h3>
+
+                            {% include 'crep/crepEdd/_include/show/viii/4.html.twig' %}
+
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            La signature de l’agent vaut notification du présent document (et non approbation de
+                            son contenu).
+                            <br> <br>
+                            <u>Destinataire</u> : dossier individuel de l’agent.
+                            <br> <br>
+                            <u>Copies</u> : agent, supérieur hiérarchique direct et chef de service.
+                        </p>
+
+                        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                            <b>RECOURS EVENTUELS DE L’AGENT :</b>
+                            <br><br>
+                            <i>
+                                L’agent peut saisir l’autorité hiérarchique d’une demande de révision de tout ou
+                                partie du compte-rendu de l’entretien professionnel, dans un délai de 15 jours
+                                francs à compter de la date de notification du présent document.
+                                <br><br>
+                                L’autorité hiérarchique dispose d’un délai de 15 jours francs à compter de la
+                                date de réception de la demande de révision pour notifier sa réponse. L’exercice
+                                de ce recours est un préalable obligatoire à la saisine de la CAP compétente,
+                                qui doit avoir lieu dans le délai d’un mois à compter de la date de notification
+                                de la réponse formulée par l’autorité hiérarchique dans le cadre du recours.
+                                <br><br>
+                                L’agent dispose également des voies et délais de recours de droit commun pour
+                                contester le compte-rendu de son entretien professionnel.
+                            </i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock circuitDeValidation %}

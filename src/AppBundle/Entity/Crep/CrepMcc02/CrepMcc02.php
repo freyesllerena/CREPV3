@@ -2,8 +2,6 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
-//use AppBundle\Entity\FormationSuivie;
-//use AppBundle\Entity\MobiliteGeographique;
 use AppBundle\Entity\ObjectifEvalue;
 use AppBundle\Entity\ObjectifFutur;
 use AppBundle\Util\Converter;
@@ -2444,7 +2442,7 @@ class CrepMcc02 extends Crep
         /*  *****   VALIDATION: Nombre de compétences dont le niveau acquis est à Exceptionnel ne doit pas dépasser 5  ***** */
         if ($nbCompetenceNiveauExceptionnelle > 5) {
 
-            $context->buildViolation('Le nombre de coches figurant dans la colonne "Exceptionnelle" du tableau  "Compétences liées à la relation" ne doit pas dépasser 5')
+            $context->buildViolation('   Le nombre total de selections sur la colonne « exceptionnelle » des 3 tableaux Compétences Managériales ne doit pas dépasser 5')
             ->setParameter('cause', 'nbCompetenceNiveauExceptionnelle')
             ->addViolation();
         }
@@ -2452,7 +2450,7 @@ class CrepMcc02 extends Crep
         /*  *****   VALIDATION Compétences action: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
         if ($errorObservationsCompetencesActions) {
 
-            $context->buildViolation('L\'observation sur le tableau Compétences liées à l\'action ayant un niveau exceptionnel doit être motivée')
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
                 ->setParameter('cause_observation_action', 'errorObservationsCompetencesActions')
                 ->addViolation();
         }
@@ -2460,7 +2458,7 @@ class CrepMcc02 extends Crep
         /*  *****   VALIDATION Compétences action: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
         if ($errorObservationsCompetencesRelation) {
 
-            $context->buildViolation('L\'observation sur le tableau "Compétences liées à la relation" ayant un niveau exceptionnel  doit être motivée')
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
                 ->setParameter('cause_observation_relation', 'errorObservationsCompetencesRelation')
                 ->addViolation();
         }
@@ -2468,7 +2466,7 @@ class CrepMcc02 extends Crep
         /*  *****   VALIDATION Compétences action: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
         if ($errorObservationsCompetencesSituation) {
 
-            $context->buildViolation('L\'observation sur le tableau "Compétences liées à l’intelligence des situations" ayant un niveau exceptionnel doit être motivée')
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
                 ->setParameter('cause_observation_situation', 'errorObservationsCompetencesSituation')
                 ->addViolation();
         }

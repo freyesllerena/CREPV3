@@ -24,14 +24,14 @@ abstract class GenericEntity implements GenericEntityInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_creation", type="datetime")
+     * @ORM\Column(name="date_creation", type="datetime", nullable=true)
      */
     protected $dateCreation;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_modification", type="datetime")
+     * @ORM\Column(name="date_modification", type="datetime", nullable=true)
      */
     protected $dateModification;
 

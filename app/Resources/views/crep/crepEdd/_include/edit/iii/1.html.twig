@@ -1,0 +1,8 @@
+{% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
+        <label>Renvoi à un document annexe (lettre de mission ou d’objectifs) : </label>
+            {{ form_row(form.docAnnexeObjectifsAvenir, {'label':false ,'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+
+            <label>Contexte prévisible de l’année à venir (organisation et fonctionnement du service)</label>
+            {{ form_widget(form.contexteObjectifsAvenir) }}
+
+<br/>

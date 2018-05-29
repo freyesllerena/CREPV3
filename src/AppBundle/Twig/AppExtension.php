@@ -2,10 +2,8 @@
 
 namespace AppBundle\Twig;
 
-use AppBundle\Entity\Crep\CrepMcc\CrepMcc;
 use AppBundle\EnumTypes\EnumStatutCrep;
 use AppBundle\EnumTypes\EnumStatutValidationAgent;
-use AppBundle\Entity\Agent;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Personne;
 use AppBundle\Util\Util;
@@ -15,7 +13,7 @@ use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
 use AppBundle\Entity\Crep\CrepMindef\CrepMindef;
 use AppBundle\Entity\Crep\CrepAc\CrepAc;
 use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
-
+use AppBundle\Entity\Crep\CrepEdd\CrepEdd;
 
 class AppExtension extends \Twig_Extension
 {
@@ -66,6 +64,10 @@ class AppExtension extends \Twig_Extension
                 $this,
                 'echelleObjectifEvalueCrepAc',
             )),
+            new \Twig_SimpleFilter('echelleObjectifEvalueCrepEdd', array(
+                $this,
+                'echelleObjectifEvalueCrepEdd',
+            )),
             new \Twig_SimpleFilter('echelleNiveauSameCrepMindef01', array(
                 $this,
                 'echelleNiveauSameCrepMindef01',
@@ -77,6 +79,10 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('selectTypologieFormationCrepMinefAbc', array(
                 $this,
                 'selectTypologieFormationCrepMinefAbc',
+            )),
+            new \Twig_SimpleFilter('selectTypologieFormationCrepEdd', array(
+                $this,
+                'selectTypologieFormationCrepEdd',
             )),
             new \Twig_SimpleFilter('ouiNon', array(
                 $this,
@@ -457,6 +463,15 @@ class AppExtension extends \Twig_Extension
         return array_flip(CrepAc::$echelleObjectifEvalue)[$objectifEvalue];
     }
 
+    public function echelleObjectifEvalueCrepEdd($objectifEvalue)
+    {
+        if (null === $objectifEvalue) {
+            return '';
+        }
+
+        return array_flip(CrepEdd::$echelleObjectifEvalue)[$objectifEvalue];
+    }
+
     public static function echelleNiveauSameCrepMindef01($niveauSame)
     {
         if (null === $niveauSame) {
@@ -483,7 +498,7 @@ class AppExtension extends \Twig_Extension
 
         return array_flip(CrepMinefAbc::$selectTypologieFormation)[$typologieFormation];
     }
-	
+
     public function echelleObjectifEvalueCrepMcc02($objectifEvalue)
     {
         if (null === $objectifEvalue) {
@@ -493,8 +508,17 @@ class AppExtension extends \Twig_Extension
         return array_flip(CrepMcc02::$echelleObjectifEvalue)[$objectifEvalue];
     }
 
+    public static function selectTypologieFormationCrepEdd($typologieFormation)
+    {
+        if (null === $typologieFormation) {
+            return '';
+        }
+
+        return array_flip(CrepEdd::$selectTypologieFormation)[$typologieFormation];
+    }
+
     public static function ouiNon($valeur)
-    {   
+    {
     	$resultat ='';
 
         if (true === $valeur || 1 == $valeur) {
@@ -682,4 +706,3 @@ class AppExtension extends \Twig_Extension
         return CrepMcc02::$niveauPotentielEvolution;
     }
 }
-

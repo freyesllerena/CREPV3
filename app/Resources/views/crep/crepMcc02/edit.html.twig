@@ -4,12 +4,14 @@
 {% block campagne %} active {% endblock %}
 
 {% block content %}
+
 {% if errors| length > 0 %}
 <div class="alert alert-danger alert-dismissible fade in" role="alert">
     <strong>Le formulaire de CREP n'est pas valide.</strong><br>
 	Veuillez rectifier votre saisie.
 </div>
 {% endif %}
+
 {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
     {{ parent() }}
     {{ block('bouton_enregistrer') }}
@@ -64,33 +66,6 @@
 {% block iii3 %}
     {% include 'crep/crepMcc02/_include/edit/iii/3.html.twig' %}
 {% endblock iii3 %}
-
-{% block ivError %}
-    {% for errorIndex, error in errors %}
-        {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbCompetenceNiveauExceptionnelle" ) %}
-            <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
-            </div>
-       {% endif %}
-        {% if (error.messageParameters['cause_observation_action'] is defined and error.messageParameters['cause_observation_action'] == "errorObservationsCompetencesActions" ) %}
-            <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
-            </div>
-        {% endif %}
-
-        {% if (error.messageParameters['cause_observation_relation'] is defined and error.messageParameters['cause_observation_relation'] == "errorObservationsCompetencesRelation" ) %}
-            <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
-            </div>
-        {% endif %}
-
-        {% if (error.messageParameters['cause_observation_situation'] is defined and error.messageParameters['cause_observation_situation'] == "errorObservationsCompetencesSituation" ) %}
-            <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
-            </div>
-        {% endif %}
-    {% endfor %}
-{% endblock ivError %}
 
 {% block iv1 %}
     {% include 'crep/crepMcc02/_include/edit/iv/1.html.twig' %}
@@ -323,7 +298,7 @@
                 serviceUrl: urlAjax,
                 minChars: 3,
                 onSelect: function (suggestion) {
-                    var mcc02DureeFormation =  $(this).closest('td').next('td').find('input').show();
+                    var mcc02DureeFormation =  $(this).closest('td').next('td').next('td').find('input').show();
                     mcc02DureeFormation.val(suggestion.duree);
                 }
             });

@@ -27,12 +27,6 @@ class FormationSuivie extends GenericEntity
      */
     protected $type;
 
-//     /**
-//      * @ORM\ManyToOne(targetEntity="Formation")
-//      * @ORM\JoinColumn(nullable=false)
-//      */
-//     protected $formation;
-
     /**
      * @var string
      *
@@ -46,6 +40,19 @@ class FormationSuivie extends GenericEntity
      *    maxMessage = "Le libellé de la formation doit contenir au plus {{ limit }} caractères")
      */
     protected $libelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     *
+     * @Assert\Length(
+     *    min = 1,
+     *    max = 200,
+     *    minMessage = "Le libellé 2 de la formation doit contenir au moins {{ limit }} caractère",
+     *    maxMessage = "Le libellé 2 de la formation doit contenir au plus {{ limit }} caractères")
+     */
+    protected $libelle2;
 
     /**
      * @ORM\ManyToOne(targetEntity="Crep", inversedBy="formationsSuivies")
@@ -246,4 +253,22 @@ class FormationSuivie extends GenericEntity
     {
         return $this->duree;
     }
+
+    /**
+     * @return string
+     */
+    public function getLibelle2()
+    {
+        return $this->libelle2;
+    }
+
+    /**
+     * @param string $libelle2
+     */
+    public function setLibelle2($libelle2)
+    {
+        $this->libelle2 = $libelle2;
+    }
+
+
 }

@@ -1,0 +1,53 @@
+<div class="row form-group">
+
+	<div class="col-md-6 col-sm-6 col-xs-12">
+    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Civilité </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.civiliteShd }}
+        </div>
+
+    </div>
+
+ </div>
+
+<div class="row form-group">
+
+    <div class="col-md-6 col-sm-6 col-xs-12">
+
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.prenomShd|title }}
+        </div>
+    </div>
+
+	<div class="col-md-6 col-sm-6 col-xs-12">
+
+		<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom </label>
+		<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+	        {{ crep.nomUsageShd|upper }}
+		</div>
+
+    </div>
+
+</div>
+
+<div class="row form-group">
+
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Poste occupé </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.posteOccupeShd }}
+        </div>
+
+    </div>
+
+	<div class="col-md-6 col-sm-6 col-xs-12">
+
+		<label class="control-label col-md-3 col-sm-3 col-xs-12">Depuis le </label>
+		<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+			{% if crep.dateEntreePosteOccupeShd %}{{ crep.dateEntreePosteOccupeShd | date('d/m/Y') }}{% endif %}
+		</div>
+
+    </div>
+
+</div>

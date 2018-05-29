@@ -160,12 +160,6 @@ class CrepController extends Controller
                 'form' => $editForm->createView(),
                 'errors' => $formErrors,
         ));
-
-        $controleur = Util::getClassName($crep);
-
-        return $this->forward('AppBundle:'.$controleur.':edit', array(
-                    'id' => $crep,
-        ));
     }
 
     /**
@@ -325,7 +319,6 @@ class CrepController extends Controller
 
         /* @var $crepManager CrepManager */
         $crepManager = $this->get('app.crep_manager');
-
         return $crepManager->genererCrepPdf($crep, 'D');
     }
 

@@ -3,11 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Competence.
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\AppBundle\Repository\CompetenceRepository\")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CompetenceRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
 abstract class Competence extends GenericEntity
@@ -16,6 +18,7 @@ abstract class Competence extends GenericEntity
      * @var string
      *
      * @ORM\Column(name="libelle", type="text")
+     * @Assert\NotBlank(message = "Libellé obligatoire")
      */
     protected $libelle;
 

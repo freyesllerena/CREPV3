@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+
+            <thead>
+            <tr>
+                <th style="width: 40%">COMPETENCES DETENUES NON REQUISES SUR LE POSTE ACTUELLEMENT OCCUPE (A REMPLIR PAR
+                    L’AGENT)
+                </th>
+                <th style="width: 15%" class="text-center">Exceptionnelle</th>
+                <th style="width: 15%" class="text-center">Forte</th>
+                <th style="width: 15%" class="text-center">Assez forte</th>
+                <th style="width: 15%" class="text-center">A développer</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {% if crep.competencesTransversesDetenues is not empty %}
+
+                {% for competenceTransverseDetenue in crep.competencesTransversesDetenues %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverseDetenue.libelle }}
+                        </td>
+                        {% for index in 0..3 %}
+                            <td class="text-center">{{ competenceTransverseDetenue.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        {% for i in 0..4 %}
+                            <td><br></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>Observations</dt>
+            <dd class="well well-xs">
+                {{ crep.observationsCompetencesTransversesDetenues | nl2br }}
+            </dd>
+        </dl>
+    </div>
+</div>
+

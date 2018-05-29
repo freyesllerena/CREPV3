@@ -1,0 +1,23 @@
+{% set propositionsEvolution = ['Augmentation', 'Maintien', 'Diminution'] %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                	<th colspan="3" class="text-center">Proposition d’évolution du montant indemnitaire lié à l’engagement professionnel et à la manière de servir</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+            		{% for index in 0..2 %}
+                        <td class="text-center" style="width: 33%">
+	                        {% if crep.evolutionIndemnitaire is not null and crep.evolutionIndemnitaire == index %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %} {{ propositionsEvolution[index] }} <br/>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+ 
