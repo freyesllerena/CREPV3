@@ -28,6 +28,7 @@ class ChoixUtilisateurType extends AbstractType
                 'cache' => true,
                 'cache_timeout' => 60000, // 60 sec
                 'language' => 'fr',
+        		'width' => '100%'
         ]);
     }
 }

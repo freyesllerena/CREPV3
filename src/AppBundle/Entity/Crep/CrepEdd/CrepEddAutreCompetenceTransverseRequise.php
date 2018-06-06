@@ -8,17 +8,17 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * CrepEddAutreCompetenceTransverseRequise
+ * CrepEddAutreCompetenceTransverseRequise.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddAutreCompetenceTransverseRequiseRepository")
  */
 class CrepEddAutreCompetenceTransverseRequise extends Competence
 {
-	/**
-	 * @ORM\ManyToOne(targetEntity="CrepEdd", inversedBy="autresCompetencesTransversesRequises")
-	 * @ORM\JoinColumn(nullable=false)
-	 */
-	protected $crep;
+    /**
+     * @ORM\ManyToOne(targetEntity="CrepEdd", inversedBy="autresCompetencesTransversesRequises")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $crep;
 
 	public function getCrep() {
 		return $this->crep;

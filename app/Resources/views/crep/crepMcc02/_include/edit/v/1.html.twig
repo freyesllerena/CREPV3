@@ -2,22 +2,20 @@
 
 <br>
 <div class="row">
-
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
             {{ form_widget(form.souhaitEvolutionCarriere, {'label': "Évolution des fonctions dans le poste actuel" }) }}
         </div>
-
         <div class="col-md-9 col-md-offset-1 col-sm-12  col-xs-12 col-sm-offset-0 col-xs-offset-0">
             <br>
             <label for="crep_mcc02_changementPoste"></label><input id="crep_mcc02_changementPoste" type="checkbox" disabled class="flat pull-right"
-                    {% if crep.mobilitePoste and (crep.mobilitePoste.memeService
-                        or crep.mobilitePoste.memeMinistere
-                        or crep.mobilitePoste.autreMinistere
-                        or crep.mobilitePoste.autreFonctionPublique
-                        or crep.mobilitePoste.autreProjet) %}
-                checked="checked"
-                    {% endif %}>
+                {% if crep.mobilitePoste and (crep.mobilitePoste.memeService
+                    or crep.mobilitePoste.memeMinistere
+                    or crep.mobilitePoste.autreMinistere
+                    or crep.mobilitePoste.autreFonctionPublique
+                    or crep.mobilitePoste.autreProjet) %}
+                    checked="checked"
+                {% endif %}>
             <span>Changement de poste</span>
         </div>
         <div id="crep_mcc02_mobilitePoste" class="col-md-8 col-md-offset-2 col-sm-12  col-xs-12 col-sm-offset-1 col-xs-offset-1">
@@ -29,9 +27,7 @@
     </div>
 </div>
 <br>
-
 <br>
-
 <br>
 <div class="row">
     <div class="col-md-12">
@@ -40,8 +36,6 @@
     </div>
 </div>
 <br>
-
-
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-12 pull-left">
         <label>L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilité – carrière ?</label>
@@ -50,15 +44,10 @@
         {{ form_row(form.souhaitEntretienCarriere, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
     </div>
 </div>
-
 <br>
-
 <div class="row">
-    <label class="col-md-12 col-sm-12 col-xs-12 pull-left">Observations éventuelles du-de la supérieur hiérarchique direct
+    <label class="col-md-12 col-sm-12 col-xs-12">Observations éventuelles du-de la supérieur hiérarchique direct
         sur ces perspectives d’évolution professionnelle : </label>
-    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
         {{ form_row(form.observationsShdProjetProfessionnel, { 'label': false}) }}
-    </div>
 </div>
-
 <br>

@@ -7,9 +7,17 @@ use AppBundle\Entity\Agent;
 use AppBundle\Entity\Crep;
 use AppBundle\EnumTypes\EnumRole;
 use AppBundle\EnumTypes\EnumStatutCrep;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CrepConfidentialisationManager extends BaseManager
+class CrepConfidentialisationManager
 {
+    protected $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
     public function confidentialisation(Crep $crep, Utilisateur $utilisateur)
     {
         /* @var $roleUtilisateurSession Role*/

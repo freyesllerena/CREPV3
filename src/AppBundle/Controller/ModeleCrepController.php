@@ -139,7 +139,7 @@ class ModeleCrepController extends Controller
     /**
      * @Security("has_role('ROLE_SHD')")
      */
-    public function choixCrepAction(Request $request, Agent $agent)
+    public function choixCrepAction(Request $request, Agent $agent, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(AgentVoter::CHOISIR_CREP, $agent);
@@ -172,9 +172,6 @@ class ModeleCrepController extends Controller
 
             // Récupérer le modèle associé au libellé choisi
             $modeleCrepChoisi = $modeleCrepRepository->getModeleCrepByLibelle($libelleModeleChoisi, $ministere);
-
-            /* @var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
 
             // Initialiser un CREP à l'agent
             $crep = $crepManager->creer($agent, $modeleCrepChoisi);

@@ -11,6 +11,9 @@ use AppBundle\Entity\Recours;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\EnumTypes\EnumTypeRecours;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class RecoursVoter extends Voter
 {
@@ -28,7 +31,7 @@ class RecoursVoter extends Voter
     const MODIFIER = 'modifier_recours';
     const SUPPRIMER = 'supprimer_recours';
 
-    public function __construct($decisionManager, Session $session, EntityManager $em)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->decisionManager = $decisionManager;
         $this->session = $session;

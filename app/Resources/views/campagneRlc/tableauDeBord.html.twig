@@ -1,4 +1,5 @@
 {% extends "index.base.html.twig" %}
+{% import "macro/app.html.twig" as macro %}
 
 {% form_theme recherche_form 'Campagne/Form/App_form_recherche.html.twig' %}
 
@@ -172,15 +173,8 @@
 
             {{ macro.historiqueAvancement('canvasLine', historiqueIndicateurs) }}
          });
-        //------------------------------------------------
-        //Function de filtre des indicateurs par périmètre
-        //------------------------------------------------
+
         
-        {% set perimetreBrhp_id = 0 %}
-        {% if perimetre %}
-        	$('#perimetre_filter select').val("{{ perimetre.id }}");
-        	{% set perimetreBrhp_id = perimetre.id %}
-        {% endif %}
         
         //A chaque change du select on récupère la value du perimetre et on lance l'url
         $('#perimetre_filter select').on('change', function(){
@@ -205,31 +199,52 @@
 		    	"oLanguage": oLanguage_fr(),
 		        "processing": true,
 		        "serverSide": true,
-		        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'perimetreBrhp': perimetreBrhp_id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre':0, 'onglet': 'ma_population' }) }}",
+		        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre':0, 'onglet': 'ma_population' }) }}",
 		        "sAjaxDataProp": "data",
 		        "pageLength": 10,
 		        "searchDelay": 500,
 				"order": [[ 0, "asc" ]],
 				"columnDefs": [ 
-                                { targets: [7, 8], orderable: false },     // colonnes non triables
+                                { targets: [8, 9], orderable: false },     // colonnes non triables
                 ],
 				"dom": 'l<"pull-right"<"pull-right"B>>tipr',
 		        "buttons": [
 		            {
                         extend: 'csv',
                         text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+						title: 'Ma population',
                         fieldSeparator: ';',
                         exportOptions: {
-                        	columns: [ 0, 1, 2, 3, 4, 5, 6 ], // colonnes concernées par l'export
+                        	columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ], // colonnes concernées par l'export
                         	modifier: {
                                 selected: true
+                            },
+                            format: {
+                                body: function ( data, column, row, node ) {
+                                                // Suppression des espaces
+                                                data = data.trim();
+
+                                                // Gestion de l'export de la colonne statut de validation
+                                                if(column === 6){
+                                                	return formatColonneStatutValidation( data, column, row, node );
+                                                }
+
+                                                // Gestion de l'export de la colonne statut d'avancement du CREP
+                                                if(column === 7){
+                                                	return formatColonneStatutAvancement( data, column, row, node );
+                                                }
+                                                
+                                                return data;
+                                }
                             }
+
+                            
                         }
                     },
                     {
                     	extend: 'colvis',
                     	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
-                    	columns: [ 1, 2, 3, 4, 5, 6, 7 ]  // colonnes pouvant être masquées
+                    	columns: [ 1, 2, 3, 4, 5, 6, 7, 8 ]  // colonnes pouvant être masquées
                     }
 		        ],
 		        "columns":[ 
@@ -239,6 +254,7 @@
 		                   {"data": "ah"},
 		                   {"data": "affectation"},
 		                   {"data": "evaluable"},
+		                   {"data": "statutValidation"},
 		                   {"data": "avancement"},
 		                   {"data": "actionShowCrep"},
 		                   {"data": "actions"},
@@ -254,7 +270,7 @@
 				    	"oLanguage": oLanguage_fr(),
 				        "processing": true,
 				        "serverSide": true,
-				        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'perimetreBrhp': perimetreBrhp_id, 'evaluable': 2, 'sansShd': 1, 'sansPerimetre':0, 'onglet': 'agents_sans_shd' }) }}",
+				        "ajax": "{{ path('agent_campagne_rlc_server_processing', { 'campagneRlc': campagneRlc.id, 'evaluable': 2, 'sansShd': 1, 'sansPerimetre':0, 'onglet': 'agents_sans_shd' }) }}",
 				        "sAjaxDataProp": "data",
 				        "pageLength": 10,
 				        "searchDelay": 500,
@@ -267,6 +283,7 @@
 		                               {
 		                                   extend: 'csv',
 		                                   text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+		                                   title: 'Agents sans N+1',
 		                                   fieldSeparator: ';',
 		                                   exportOptions: {
 			                                   columns: [ 0, 1, 2, 3, 4 ], // colonnes concernées par l'export
@@ -314,6 +331,7 @@
 	                                   {
 	                                       extend: 'csv',
                	                           text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+               	                           title: 'Agents sans périmètre RLC',
                	                           fieldSeparator: ';',
                	                           exportOptions: {
                		                           columns: [ 0, 1, 2, 3, 4, 5 ], // colonnes concernées par l'export

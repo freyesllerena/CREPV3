@@ -27,7 +27,8 @@ class ModeleCrepData extends AbstractFixture implements FixtureInterface, Contai
             $modele
             ->setActif(1)
             ->setMinistere($this->getReference('ministere'.$i))
-            ->setLibelle('Modèle Ministère des armées');
+            ->setLibelle('Modèle Ministère des armées')
+            ->setTypeEntity('CrepMindef01');
             $manager->persist($modele);
 
             $modele = new ModeleCrep();

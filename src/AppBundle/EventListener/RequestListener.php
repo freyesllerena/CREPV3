@@ -3,23 +3,24 @@
 namespace AppBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use AppBundle\Entity\Utilisateur;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RequestListener
 {
-    private $securityContext;
-    private $securityAuthorizationChecker;
+    private $tokenStorage;
+    private $authorizationChecker;
     private $router;
 
-    public function __construct(TokenStorage $securityContext, AuthorizationChecker $securityAuthorizationChecker, Router $router)
+    public function __construct(TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authorizationChecker, RouterInterface $router)
     {
-        $this->securityContext = $securityContext;
-        $this->securityAuthorizationChecker = $securityAuthorizationChecker;
+        $this->tokenStorage = $tokenStorage;
+        $this->authorizationChecker = $authorizationChecker;
         $this->router = $router;
     }
 
@@ -29,29 +30,31 @@ class RequestListener
             return;
         }
 
-        if ($event->getRequest()->isXmlHttpRequest()) {
+        /* @var $request Request */
+        $request = $event->getRequest();
+
+        $route = $request->get('_route');
+
+        if ($request->isXmlHttpRequest() && '_wdt' !== $route) {
             // Enregistrement de la session dans la cas d'un appel AJAX
             // Ceci permet aux requetes AJAX de s'executer en parallèle
-            // Sans cela, la requête n° devra attendre la réponse de la requête n°1
+            // Sans cela, la requête n°2 devra attendre la réponse de la requête n°1
             // et ainsi de suite
-            $request = $event->getRequest();
             $session = $request->getSession();
             $session->save();
 
             return;
         }
 
-        $route = $event->getRequest()->get('_route');
-
         if ('_' == substr($route, 0, 1)) {
             return;
         }
 
-        if (!$this->securityAuthorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if (!$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             return;
         }
 
-        if (null !== $this->securityContext->getToken()
+        if (null !== $this->tokenStorage->getToken()
                 && !in_array($route, [
                         'utilisateur_choix_role',
                         'utilisateur_choix_utilisateur',
@@ -59,7 +62,7 @@ class RequestListener
                 ])) {
             // Recuperation de l'objet Utilisateur
             /* @var $utilisateur Utilisateur */
-            $utilisateur = $this->securityContext->getToken()->getUser();
+            $utilisateur = $this->tokenStorage->getToken()->getUser();
 
             $session = $event->getRequest()->getSession();
 

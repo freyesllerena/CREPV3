@@ -5,8 +5,8 @@ namespace AppBundle\Form\Crep\CrepMso3;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use AppBundle\Form\CrepType;
 use AppBundle\EnumTypes\EnumStatutCrep;
+use AppBundle\Form\Crep\CrepType;
 
 class CrepMso3AgentType extends CrepType
 {

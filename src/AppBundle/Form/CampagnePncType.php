@@ -54,12 +54,13 @@ class CampagnePncType extends AbstractType
                     'input' => 'datetime',
                     'format' => 'dd/MM/yyyy',
             ))
-            ->add('documents', CollectionType::class, array(
+            ->add('nouveauxDocuments', CollectionType::class, array(
                     'entry_type' => UploadeDocumentType::class,
                     'allow_add' => true, // permettre à l'utilisateur d'ajouter des documents dynamiquement
-                    'allow_delete' => true, // permettre à l'utilisateur de supprimer des documents dynamiquement
+                    'allow_delete' => false, // permettre à l'utilisateur de supprimer des documents dynamiquement
                     'label' => false,
                     'by_reference' => false,
+            		'mapped' => false
             ))
             ->add('dateDebutEntretien', DateType::class, array(
                 'widget' => 'single_text',

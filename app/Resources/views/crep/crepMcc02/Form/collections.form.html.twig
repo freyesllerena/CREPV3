@@ -30,12 +30,64 @@
 
 {% block _crep_mcc02_formationsSuivies_entry_widget %}
     <tr>
-        <td>{{ form_row(form.annee, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td>{{ form_row(form.libelle, {'label': false,'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}</td>
-        <td>{{ form_row(form.libelle2, {'label': false,'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td>{{ form_row(form.type, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td>{{ form_row(form.commentaires, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>
-        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+        <td>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mcc02_libelle2">Formation demandée <span style="color:red;">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.libelle2, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mcc02_duree">Duree</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.type, {'label': false, 'attr': {'style': 'width:30%'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mcc02_libelle2">Formation suivie <span style="color:red;">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mcc02_annee">Année</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.annee, {'label': false}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mcc02_commentaires">Commentaires (appréciation, bilan, suites)</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.commentaires, {'label': false}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 text-right">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <button class="btn btn-danger btn-xs remove-from-collection_mcc02"><i class="fa fa-close"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
     </tr>
 {% endblock %}
 
@@ -89,19 +141,19 @@
             {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.demandeeAgent, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.avisShd, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.propositionAh, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.echeance, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
@@ -115,23 +167,23 @@
             {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.demandeeAgent, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.avisShd, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.propositionAh, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.cpf, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.echeance, { 'label': false, 'class': 'fieldCollection' }) }}
         </td>
 
@@ -145,23 +197,23 @@
             {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.demandeeAgent, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.avisShd, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.propositionAh, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.cpf, { 'label': false, 'attr': {'class': 'fieldCollection'} }) }}
         </td>
 
-        <td>
+        <td class="text-center">
             {{ form_row(form.echeance, {'label': false, 'class': 'fieldCollection' }) }}
         </td>
 
@@ -169,11 +221,22 @@
     </tr>
 {% endblock %}
 
-
 {% block _crep_mcc02_potentielsEvolutions_entry_widget %}
         {%  for child in form.niveauAcquis.children %}
             <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}</td>
         {% endfor %}
+{% endblock %}
+
+{% block _crep_mcc02_autresPotentielsEvolutions_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'fieldCollection'}}) }}
+        </td>
+        {%  for child in form.niveauAcquis.children %}
+            <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}</td>
+        {% endfor %}
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
 {% endblock %}
 
 {###################### Fin collecions ################################}
@@ -191,27 +254,3 @@
 
     {%- endif %}
 {%- endblock form_errors %}
-
-{# Redéfinition du bloc form_row pour supprimer les marges basses sur les champs en mettant en place la classe form-group-no-margin  #}
-{% block form_row -%}
-    {% spaceless %}
-        {{ form_errors(form) }}
-        {% if label != false %}
-            <div class="form-group-no-margin{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
-            {{ form_label(form) }}
-            <div class="{{ block('form_group_class') }}">
-        {% else %}
-            <div class="form-group-no-margin{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
-            <div class="{{ block('form_group_class') }}">
-        {% endif %}
-
-        {{ form_widget(form) }}
-
-        {% if icone is defined %}
-            <span class="{{ icone }} form-control-feedback left" aria-hidden="true"></span>
-        {% endif %}
-
-        </div>
-        </div>
-    {% endspaceless %}
-{%- endblock form_row %}

@@ -143,15 +143,6 @@ class AppExtension extends \Twig_Extension
         );
     }
 
-    /* (non-PHPdoc)
-     * @see Twig_Extension::getFunctions()
-     */
-    public function getFunctions()
-    {
-        return array(
-                'setElementArray' => new \Twig_Function_Method($this, 'setElementArray'),
-        );
-    }
 
     public function getTests()
     {
@@ -161,22 +152,6 @@ class AppExtension extends \Twig_Extension
                 'roleImpression',
             )),
         );
-    }
-
-    // faire l'opération $data[$key] = $value en twig
-    public function setElementArray($data, $key, $value)
-    {
-        if (!is_array($data)) {
-            return $data;
-        }
-
-        if (!isset($data[$key]) || null === $key) {
-            return $data;
-        }
-
-        $data[$key] = $value;
-
-        return $data;
     }
 
     public function roleImpression($role = null)
@@ -192,7 +167,7 @@ class AppExtension extends \Twig_Extension
             'ROLE_PNC' => 'Pilote national de campagne',
             'ROLE_RLC' => 'Responsable local de campagne',
             'ROLE_BRHP' => 'Acteur RH de proximité',
-        	'ROLE_BRHP_CONSULT' => 'Acteur RH de proximité consultation',
+            'ROLE_BRHP_CONSULT' => 'Acteur RH de proximité consultation',
             'ROLE_GESTIONNAIRE_RECOURS' => 'Gestionnaire de recours',
             'ROLE_CONSEILLER_FORMATION' => 'Conseiller de formation',
             'ROLE_SHD' => 'N+1',

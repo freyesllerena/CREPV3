@@ -8,8 +8,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use AppBundle\Entity\Formation;
 use AppBundle\Entity\Ministere;
-use Doctrine\ORM\EntityManager;
 use AppBundle\Repository\FormationRepository;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class FormationVoter extends Voter
 {
@@ -28,7 +29,7 @@ class FormationVoter extends Voter
     const SUPPRIMER_REFERENTIEL = 'supprimer_referentiel_formations';
     const VOIR_REFERENTIEL = 'voir_referentiel_formations';
 
-    public function __construct($decisionManager, EntityManager $em)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em)
     {
         $this->decisionManager = $decisionManager;
         $this->em = $em;

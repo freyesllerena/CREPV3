@@ -4,6 +4,7 @@ namespace AppBundle\Form\Crep\CrepMcc02;
 
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 use AppBundle\Form\AutreObjectifType;
+use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02AutresPotentielEvolutionType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceActionType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceDemontreeType;
 use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceRelationType;
@@ -79,9 +80,19 @@ class CrepMcc02Type extends CrepType
                 ])
             ->add('libelleEmploiFonctionnel', null, ['required' => false])
             ->add('groupeEmploiFonctionnel', null, ['required' => false])
-            ->add('groupeRifseep')
-            ->add('fonctionsExercees', TextareaType::class, ['required' => false])
-            ->add('groupeFonctions', TextareaType::class, ['required' => false])
+            ->add('groupeRifseep', null, [
+                    'attr' => ['maxlength' => '255'],
+                    'required' => false
+                ]
+            )
+            ->add('fonctionsExercees', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('groupeFonctions', TextareaType::class, [
+                'attr' => ['maxlength' => '255'],
+                'required' => false
+            ])
             ->add('fichePosteAdaptee', ChoiceType::class,
                 [
                     'choices' => [
@@ -93,7 +104,11 @@ class CrepMcc02Type extends CrepType
                     'required' =>false,
                     'multiple' => false,
                 ])
-            ->add('pointsActualisesFichePoste', null, ['required' => false])
+            ->add('pointsActualisesFichePoste', null, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+
             ->add('observationsObjectifsPasses', null, [ "attr"=> ["maxlength" => "4096"], 'required' => false,])
             ->add('docAnnexeBilan', ChoiceType::class,
                 [
@@ -106,7 +121,10 @@ class CrepMcc02Type extends CrepType
                     'required' =>false,
                     'multiple' => false,
                 ])
-            ->add('contexteAnneeEcoulee', null, ['required' => false])
+            ->add('contexteAnneeEcoulee', null, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add(
                 'objectifsEvalues',
                 CollectionType::class,
@@ -143,7 +161,7 @@ class CrepMcc02Type extends CrepType
                     'required' =>false,
                     'multiple' => false,
                 ])
-            ->add('contexteObjectifsAvenir', null, [
+            ->add('contexteObjectifsAvenir', TextareaType::class, [
                 "attr"=> ["maxlength" => "4096"],
                 'required' => false,])
             ->add('objectifsFuturs',
@@ -165,7 +183,10 @@ class CrepMcc02Type extends CrepType
                     'by_reference' => false,
                 ]
             )
-            ->add('observationsCompetencesActions', null, ['required' => false])
+            ->add('observationsCompetencesActions', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add('competencesRelations',
                 CollectionType::class,
                 [
@@ -175,7 +196,10 @@ class CrepMcc02Type extends CrepType
                     'by_reference' => false,
                 ]
             )
-            ->add('observationsCompetencesRelations', null, ['required' => false])
+            ->add('observationsCompetencesRelations', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add('competencesSituations',
                 CollectionType::class,
                 [
@@ -185,7 +209,10 @@ class CrepMcc02Type extends CrepType
                     'by_reference' => false,
                 ]
             )
-            ->add('observationsCompetencesSituations', null, ['required' => false])
+            ->add('observationsCompetencesSituations', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add('competencesRequises',
                 CollectionType::class,
                 [
@@ -195,7 +222,10 @@ class CrepMcc02Type extends CrepType
                     'by_reference' => false,
                 ]
             )
-            ->add('observationsCompetencesRequises', null, ['required' => false])
+            ->add('observationsCompetencesRequises', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add('competencesDemontrees',
                 CollectionType::class,
                 [
@@ -205,15 +235,20 @@ class CrepMcc02Type extends CrepType
                     'by_reference' => false,
                 ]
             )
-            ->add('observationsCompetencesDemontrees', null, ['required' => false])
-
+            ->add('observationsCompetencesDemontrees', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             // V
             ->add('souhaitEvolutionCarriere', null, ['required' => false])
             ->add('mobilitePoste', CrepMcc02MobilitePosteType::class, ['required' => false])
 
             ->add('mobiliteGeographique', CrepMcc02MobiliteGeographiqueType::class, ['required' => false])
 
-            ->add('evolutionProfessionnelleEnvisagee')
+            ->add('evolutionProfessionnelleEnvisagee', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add('souhaitEntretienCarriere', ChoiceType::class, [
                 'choices' => [
                     'Oui'       => 1,
@@ -224,7 +259,10 @@ class CrepMcc02Type extends CrepType
                 'required' => false,
                 'placeholder' => null,
             ])
-            ->add('observationsShdProjetProfessionnel', TextareaType::class, ['required' => false])
+            ->add('observationsShdProjetProfessionnel', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add('dateEntreePoste',
             		DateType::class,
             		array(
@@ -311,6 +349,16 @@ class CrepMcc02Type extends CrepType
                     'entry_type' => CrepMcc02PotentielEvolutionType::class,
                     'allow_add' => false,
                     'allow_delete' => false,
+                    'by_reference' => false,
+                ]
+            )
+            ->add(
+                'autresPotentielsEvolutions',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMcc02AutresPotentielEvolutionType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
                     'by_reference' => false,
                 ]
             )

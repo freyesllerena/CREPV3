@@ -2,14 +2,29 @@
 
 namespace AppBundle\Service\ModelesCrep;
 
-use AppBundle\Service\BaseManager;
 use AppBundle\Entity\CampagneBrhp;
 use AppBundle\Util\Util;
 use AppBundle\Entity\ModeleCrep;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use AppBundle\Service\ConstanteManager;
 
-class CrepMj01Manager extends BaseManager
+class CrepMj01Manager
 {
-    protected $modeleCrep = 'AppBundle\Entity\Crep\CrepMj01\CrepMj01';
+	protected $em;
+	
+	protected $session;
+	
+	protected $kernelRootDir;
+	
+	protected $modeleCrep = 'AppBundle\Entity\Crep\CrepMj01\CrepMj01';
+
+    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session, ConstanteManager $constanteManager)
+    {
+    	$this->em = $entityManager;
+    	$this->session = $session;
+    	$this->kernelRootDir = $constanteManager->getKernelRootDir();
+    }
 
     public function exporterFormations(CampagneBrhp $campagneBrhp, ModeleCrep $modeleCrep, \ZipArchive $zip)
     {

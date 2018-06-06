@@ -18,9 +18,17 @@
 <!-- page 1 -->
 <body>
 <p align="center">
-    <img src="{{ asset('bundles/framework/images/edd.jpg') }}" alt="EDD" width="800">
+    <img src="{{ asset('bundles/framework/images/Logo_republique.png') }}" alt="EDD" width="100">
     <br>
 
+<table>
+<tr class="text-center">
+    <td>MINISTÈRE DE L’ÉCONOMIE<br>ET DES FINANCES</td>
+    <td>MINISTÈRE DE L’ACTION<br>ET DES COMPTES PUBLICS</td>
+</tr>
+</table>
+<br>
+<br>
 <strong>
     COMPTE-RENDU<br><br>
     DE L’ENTRETIEN PROFESSIONNEL<br><br>
@@ -35,91 +43,74 @@
     {% elseif crep.dateVisaShd %}
         {{ crep.dateVisaShd|date('d/m/Y') }}
     {% endif %}
-    <br/><br/>
+    <br><br>
     au titre de l'année {{ anneeEvaluee }}
 </p>
 
-<br/>
-
+<br>
+<br>
 <table cellpadding="3">
     <tr>
         <td><u>entre l'agent :</u></td>
     </tr>
     <tr>
-        <td width="30%">Civilité – Prénom – Nom :</td>
+        <td width="25%">Civilité – Prénom – Nom :</td>
         <td width="35%">{{ crep.agent.civilite|capitalize }} {{ crep.prenom|title }} {{ crep.nomUsage|capitalize }}</td>
         <td width="20%">Date de naissance :</td>
-        <td width="15%">{% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %}</td>
-    </tr>
-
-
-    <tr>
-        <td width="30%">Emploi occupé :</td>
-        <td width="70%">{{ crep.posteOccupeAgent }}</td>
-    </tr>
-
-    <tr>
-        <td width="30%">Echelon :</td>
-        <td width="70%">{{ crep.echelon }}</td>
-    </tr>
-
-    <tr>
-        <td width="30%">Direction/Service :</td>
-        <td width="70%">{{ crep.direction }}</td>
-    </tr>
-
-    <br>
-
-    <tr>
-        <td colspan="2">Corps/cadre d’emplois et grade d’origine :</td>
-    </tr>
-
-    <tr>
-        <td colspan="2">{{ crep.corps }}     /</td>
+        <td width="20%">{% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %}</td>
     </tr>
     <tr>
-        <td colspan="2">{{ crep.grade }}</td>
+        <td width="25%">Emploi occupé :</td>
+        <td colspan="3" width="75%">{{ crep.posteOccupeAgent }}</td>
     </tr>
-
     <tr>
-        <td width="30%">Echelon :</td>
-        <td width="70%">{{ crep.echelonOrigine }}</td>
+        <td width="25%">Echelon :</td>
+        <td colspan="3" width="75%">{{ crep.echelon }}</td>
     </tr>
-
-    <br><br>
-
     <tr>
-        <td colspan="2" width="100%"><u>et son supérieur hiérarchique direct</u> :</td>
+        <td width="25%">Direction/Service :</td>
+        <td colspan="3" width="75%">{{ crep.direction }}</td>
     </tr>
-
-
     <tr>
-        <td width="30%">Civilité – Prénom – Nom :</td>
-        <td width="70%">{% if crep.agent.shd %} {{ crep.agent.shd.civilite|capitalize }} {% endif %} {{ crep.prenomShd|title }} {{ crep.nomUsageShd|capitalize }}</td>
+        <td width="25%">Corps/cadre d’emplois d'origine :</td>
+        <td colspan="3" width="75%">{{ crep.corps }} </td>
     </tr>
-
-    <br>
-
     <tr>
-        <td width="30%">Poste occupé :</td>
+        <td width="25%">Grade d'origine :</td>
+        <td colspan="3" width="75%">{{ crep.grade }}</td>
+    </tr>
+    <tr>
+        <td width="25%">Echelon d'origine :</td>
+        <td colspan="3" width="75%">{{ crep.echelonOrigine }}</td>
+    </tr>
+</table>
+<br>
+<br>
+<table cellpadding="3">
+    <tr>
+        <td colspan="4" width="100%"><u>et son supérieur hiérarchique direct</u> :</td>
+    </tr>
+    <tr>
+        <td width="25%">Civilité – Prénom – Nom :</td>
+        <td colspan="3" width="75%">{% if crep.agent.shd %}{{ crep.agent.shd.civilite | capitalize }} {% endif %}{{ crep.prenomShd|title }}{{ crep.nomUsageShd|capitalize }}</td>
+    </tr>
+    <tr>
+        <td width="25%">Poste occupé :</td>
         <td width="35%">{{ crep.posteOccupeShd }}</td>
         <td width="20%">Depuis le :</td>
-        <td width="15%">{% if crep.dateEntreePosteOccupeShd %}{{ crep.dateEntreePosteOccupeShd | date('d/m/Y') }}{% endif %}</td>
+        <td width="20%">{% if crep.dateEntreePosteOccupeShd %}{{ crep.dateEntreePosteOccupeShd | date('d/m/Y') }}{% endif %}</td>
     </tr>
-
 </table>
-
-<br/>
-
-
+<br>
+<br>
 <h5><div style="border:1px #000000 solid;" align="center"><strong>I – FONCTIONS EXERCEES</strong></div></h5>
 
-<br/>
+<br>
 
 <table cellpadding="3">
     <tr>
         <td width="45%">- Description du poste et des fonctions exercées :</td>
-        <td width="55%">{{ crep.descriptionFonctions|nl2br }}</td>
+        <td width="55%">  {% if crep.descriptionFonctions is not empty %}{{ crep.descriptionFonctions|nl2br }}{% else %} <br><br><br><br><br><br><br><br><br><br> {% endif %}</td>
     </tr>
     <br><br>
     <tr>
@@ -132,7 +123,7 @@
     </tr>
 </table>
 
-<br/><br/>
+<br><br>
 
 <!-- page 2 -->
 <div style="page-break-before:always;"></div>
@@ -145,7 +136,7 @@
 </table>
 <br><br>
 
-<table cellpadding="5" style="font-size: 9px">
+<table cellpadding="10" style="font-size: 9px">
     <tr align="center" bgcolor="#D9D9D9">
         <th width="20%" style="border:1px #000000 solid;"><strong>Nombre de services, sous-directions et bureaux dans la structure</strong></th>
         <th width="20%" style="border:1px #000000 solid;"><strong>Nombre de cadres A encadrés</strong></th>
@@ -172,19 +163,19 @@
 </table>
 <br><br>
 
-<table cellpadding="5" style="font-size: 9px">
+<table cellpadding="10" style="font-size: 9px">
 	<tr align="center" bgcolor="#D9D9D9">
 		<th width="27%" style="border:1px #000000 solid;" bgcolor="#FFFFFF"></th>
-		<th width="10%" style="border:1px #000000 solid;"><strong>Faibles</strong></th>
-		<th width="11%"  style="border:1px #000000 solid;"><strong>Moyennes</strong></th>
+		<th width="9%" style="border:1px #000000 solid;"><strong>Faibles</strong></th>
+		<th width="12%"  style="border:1px #000000 solid;"><strong>Moyennes</strong></th>
 		<th width="10%" style="border:1px #000000 solid;"><strong>Fortes</strong></th>
-		<th width="10%" style="border:1px #000000 solid;"><strong>Très fortes</strong></th>
-		<th width="10%" style="border:1px #000000 solid;"><strong>Non pertinent</strong></th>
+		<th width="9%" style="border:1px #000000 solid;"><strong>Très fortes</strong></th>
+		<th width="11%" style="border:1px #000000 solid;"><strong>Non pertinent</strong></th>
 		<th width="22%" style="border:1px #000000 solid;"><strong>Expliciter</strong></th>
 	</tr>
 
     {% for contraintePoste in crep.contraintesPostes %}
-		<tr align="center" bgcolor="#FFFFFF">
+		<tr bgcolor="#FFFFFF">
 			<th style="border:1px #000000 solid;" align="left" bgcolor="#D9D9D9"><strong>{{ contraintePoste.libelle }}</strong></th>
 
             {% for index in 0..4 %}
@@ -229,8 +220,8 @@
     {% endif %}
 </table>
 
-<br/>
-<br/>
+<br><br><br><br>
+
 
 <table>
     <tr>
@@ -247,19 +238,19 @@
 
 <div style="border:1px #000000 solid;" align="center"><strong>II – BILAN DE L’ANNEE ECOULEE</strong></div>
 
-<br/>
+<br>
 <table>
     <tr>
         <td width="5%"></td>
         <td width="67%">- Renvoi à un document annexe (lettre de mission ou d’objectifs) :
-            {% if crep.docAnnexeBilan == 1 %}
+            {% if crep.docAnnexeBilan == 1 and  crep.docAnnexeBilan is not empty %}
             &#9745; oui
             {% else %}
             &#9744; oui
             {% endif %}
         </td>
         <td width="28%">
-            {% if crep.docAnnexeBilan == 0 %}
+            {% if crep.docAnnexeBilan == 0 and  crep.docAnnexeBilan is not empty %}
                 &#9745; non
             {% else %}
                 &#9744; non
@@ -268,7 +259,7 @@
     </tr>
 </table>
 <br>
-<br/>
+<br>
 
 
 <table>
@@ -278,7 +269,7 @@
     </tr>
     <tr>
         <td width="5%"></td>
-        <td width="95%">{{ crep.contexteObjectifsPasses|nl2br }}</td>
+        <td width="95%">{% if crep.contexteObjectifsPasses is not empty %}{{ crep.contexteObjectifsPasses|nl2br }} {% else %} <br><br><br><br><br><br><br><br>{% endif %}</td>
     </tr>
 </table>
 
@@ -305,7 +296,7 @@
     </tr>
 
     {% if crep.objectifsEvaluesCollectifs is empty %}
-        {% for index in 0..1 %}
+        {% for index in 0..2 %}
             <tr align="left" bgcolor="#FFFFFF">
                 <td style="border:1px #000000 solid;"></td>
                 <td style="border:1px #000000 solid;">
@@ -348,7 +339,7 @@
     </tr>
 
     {% if crep.objectifsEvaluesIndividuels is empty %}
-        {% for index in 0..1 %}
+        {% for index in 0..2 %}
             <tr align="left" bgcolor="#FFFFFF">
                 <td style="border:1px #000000 solid;"></td>
                 <td style="border:1px #000000 solid;">
@@ -380,14 +371,14 @@
                     {% endfor %}
                 </td>
 
-                        {#<span class="alignright"> </span><br/></td>#}
+                        {#<span class="alignright"> </span><br></td>#}
                 <td style="border:1px #000000 solid;">{{ objectif.resultat|nl2br }}</td>
             </tr>
         {%  endfor %}
     {% endif %}
 </table>
-<br/>
-<br/>
+<br><br>
+
 
 <table>
     <tr>
@@ -406,7 +397,7 @@
 
 <div style="border:1px #000000 solid;" align="center"><strong>III – OBJECTIFS DE L’AGENT POUR L’ANNEE A VENIR</strong></div>
 
-<br/>
+<br>
 <table>
     <tr>
         <td>
@@ -433,8 +424,8 @@
     </tr>
 </table>
 
-<br/>
-<br/>
+<br>
+<br>
 
 <table>
     <tr>
@@ -443,12 +434,12 @@
     </tr>
     <tr>
         <td width="5%"></td>
-        <td width="95%">{{ crep.contexteObjectifsAvenir|nl2br }}</td>
+        <td width="95%">{% if crep.contexteObjectifsAvenir is not empty %}{{ crep.contexteObjectifsAvenir|nl2br }} {% else %} <br><br><br><br><br><br><br><br>{% endif %}</td>
     </tr>
 </table>
 
-<br/>
-<br/>
+<br>
+<br>
 
 <table>
     <tr>
@@ -458,9 +449,9 @@
 </table>
 
 <br>
-<br/>
+<br>
 
-<table cellpadding="5" style="font-size: 9px">
+<table cellpadding="10" style="font-size: 9px">
     <tr align="center" bgcolor="#D9D9D9">
         <th width="30%" style="border:1px #000000 solid;"><strong>Objectifs d’ordre collectif</strong></th>
         <th width="20%" style="border:1px #000000 solid;"><strong>Echéances</strong></th>
@@ -470,7 +461,7 @@
 
 
     {% if crep.objectifsFutursCollectifs is empty %}
-        {% for index in 0..1 %}
+        {% for index in 0..4 %}
             <tr align="left" bgcolor="#FFFFFF">
                 <td style="border:1px #000000 solid;"><br><br></td>
                 <td style="border:1px #000000 solid;"></td>
@@ -496,7 +487,7 @@
         <th style="border:1px #000000 solid;"><strong>Observations éventuelles</strong></th>
     </tr>
     {% if crep.objectifsFutursIndividuels is empty %}
-        {% for index in 0..1 %}
+        {% for index in 0..4 %}
             <tr align="left" bgcolor="#FFFFFF">
                 <td style="border:1px #000000 solid;"><br><br></td>
                 <td style="border:1px #000000 solid;"></td>
@@ -538,17 +529,17 @@
     </tr>
 </table>
 
-<p class="text-center">  <br></p><br/>
+<p class="text-center">  <br></p><br>
 <br>
 
 <table cellpadding="3" style="font-size: 9px;">
     <tr align="center" bgcolor="#D9D9D9">
         <th width="22%" style="border:1px #000000 solid;"><strong><h3>CONNAISSANCES PROFESSIONNELLES REQUISES SUR LE POSTE</h3></strong></th>
-        <th width="12%" style="border:1px #000000 solid;"><strong><h4>exception-<br/>nelle<sup>1</sup></h4></strong></th>
+        <th width="12%" style="border:1px #000000 solid;"><strong><h4>exception-<br>nelle<sup>1</sup></h4></strong></th>
         <th width="9%" style="border:1px #000000 solid;"><strong><h4>forte</h4></strong></th>
         <th width="9%" style="border:1px #000000 solid;"><strong><h4>assez forte</h4></strong></th>
-        <th width="13%" style="border:1px #000000 solid;"><strong><h4>à<br/>développer</h4></strong></th>
-        <th width="11%" style="border:1px #000000 solid;"><strong><h4>non<br/>pertinent</h4></strong></th>
+        <th width="13%" style="border:1px #000000 solid;"><strong><h4>à<br>développer</h4></strong></th>
+        <th width="11%" style="border:1px #000000 solid;"><strong><h4>non<br>pertinent</h4></strong></th>
         <th width="24%" style="border:1px #000000 solid;"><strong><h4>observations</h4></strong></th>
     </tr>
 
@@ -653,11 +644,11 @@
 <table cellpadding="3" style="font-size: 9px;">
     <tr align="center" bgcolor="#D9D9D9">
         <th width="22%" style="border:1px #000000 solid;"><strong><h3>COMPETENCES MANAGERIALES</h3></strong></th>
-        <th width="12%" style="border:1px #000000 solid;"><strong><h4>exception-<br/>nelle</h4></strong></th>
+        <th width="12%" style="border:1px #000000 solid;"><strong><h4>exception-<br>nelle</h4></strong></th>
         <th width="9%" style="border:1px #000000 solid;"><strong><h4>forte</h4></strong></th>
         <th width="9%" style="border:1px #000000 solid;"><strong><h4>assez forte</h4></strong></th>
-        <th width="13%" style="border:1px #000000 solid;"><strong><h4>à<br/>développer</h4></strong></th>
-        <th width="11%" style="border:1px #000000 solid;"><strong><h4>non<br/>pertinent</h4></strong></th>
+        <th width="13%" style="border:1px #000000 solid;"><strong><h4>à<br>développer</h4></strong></th>
+        <th width="11%" style="border:1px #000000 solid;"><strong><h4>non<br>pertinent</h4></strong></th>
         <th width="24%" style="border:1px #000000 solid;"><strong><h4>observations</h4></strong></th>
     </tr>
 
@@ -753,15 +744,15 @@
         <td width="3%"></td>
         <td width="82%">OCCUPE (A REMPLIR PAR L’AGENT)<sup>3</sup></td>
     </tr>
-</table> <br/><br/>
+</table> <br><br>
 
 <table cellpadding="3" style="font-size: 9px;">
     <tr align="center" bgcolor="#D9D9D9">
         <th width="25%" style="border:1px #000000 solid;"><strong><h3>COMPETENCES DETENUES NON REQUISES SUR LE POSTE ACTUELLEMENT OCCUPE (A REMPLIR PAR L’AGENT)</h3></strong></th>
-        <th width="12%" style="border:1px #000000 solid;"><strong><h4>exception-<br/>nelle</h4></strong></th>
+        <th width="12%" style="border:1px #000000 solid;"><strong><h4>exception-<br>nelle</h4></strong></th>
         <th width="9%" style="border:1px #000000 solid;"><strong><h4>forte</h4></strong></th>
         <th width="9%" style="border:1px #000000 solid;"><strong><h4>assez forte</h4></strong></th>
-        <th width="13%" style="border:1px #000000 solid;"><strong><h4>à<br/>développer</h4></strong></th>
+        <th width="13%" style="border:1px #000000 solid;"><strong><h4>à<br>développer</h4></strong></th>
         <th width="32%" style="border:1px #000000 solid;"><strong><h4>observations</h4></strong></th>
     </tr>
 
@@ -822,7 +813,7 @@
 
 <div style="border:1px #000000 solid;" align="center"><strong>V – PERSPECTIVES D’EVOLUTION PROFESSIONNELLE DE L’AGENT</strong></div>
 
-<br/>
+<br>
 
 <table cellpadding="5" style="border:1px #000000 solid;">
     <tr>
@@ -842,32 +833,31 @@
 
     <tr>
         <td width="28%"><u>Echelon</u> : </td>
-        <td width="33%">{{ crep.echelon }}</td>
-        <td colspan="2" width="39%"></td>
+        <td colspan="2" width="72%">{{ crep.echelon }}</td>
     </tr>
 
     <tr>
-        <td width="28%">Direction/Service </td>
-        <td width="33%">{{ crep.direction }}</td>
-        <td colspan="2" width="39%"></td>
+        <td width="28%"><u>Direction/Service</u> : </td>
+        <td colspan="2" width="72%">{{ crep.direction }}</td>
     </tr>
     <br>  <br>
 
     <tr>
-        <td width="40%"><u>Corps/Cadre d’emplois et Grade d’origine </u> : </td>
-        <td width="58%">{{ crep.corps }} -<br>{{ crep.grade }}</td>
-        <td colspan="2" width="2%"></td>
+        <td width="28%"><u>Corps/cadre d’emplois d'origine</u> :</td>
+        <td colspan="2" width="72%">{{ crep.corps }}</td>
+    </tr>
+    <tr>
+        <td width="28%"><u>Grade d'origine :</u></td>
+        <td width="72%">{{ crep.grade }}</td>
     </tr>
 
     <tr>
-        <td width="28%"><u>Echelon</u> : </td>
-        <td width="33%">{{ crep.echelonOrigine }}</td>
-        <td colspan="2" width="39%"></td>
+        <td width="28%"><u>Echelon  d'origine</u> : </td>
+        <td colspan="2" width="72%">{{ crep.echelonOrigine }}</td>
     </tr>
 </table>
 
 <br><br>
-
 
 <table>
     <tr>
@@ -876,12 +866,12 @@
     </tr>
     <tr>
         <td width="5%"></td>
-        <td width="95%">{{ crep.typeEvolutionCarriere|nl2br }}</td>
+        <td width="95%">{% if crep.typeEvolutionCarriere is not empty %}{{ crep.typeEvolutionCarriere|nl2br }} {% else %} <br><br><br><br>{% endif %}</td>
     </tr>
 </table>
 
 
-<br><br>
+<br><br><br><br>
 
 
 <table>
@@ -891,17 +881,14 @@
     </tr>
     <tr>
         <td width="5%"></td>
-        <td width="95%">{{ crep.typeMobilite|nl2br }}</td>
+        <td width="95%">{% if crep.typeMobilite is not empty %}{{ crep.typeMobilite|nl2br }} {% else %} <br><br><br><br>{% endif %}</td>
     </tr>
 </table>
 
 
-<br><br>
+<br><br><br><br>
 
 <table>
-
-    <br>
-
     <tr>
         <td width="5%"></td>
         <td width="95%">- L’agent-e souhaite-il bénéficier d’un entretien avec un conseiller mobilité –
@@ -925,37 +912,14 @@
                  non
         </td>
     </tr>
-
-
-    {#<tr align="center">#}
-        {#<td width="5%"></td>#}
-        {#<td width="95%">#}
-            {#{% if crep.souhaitEntretienCarriere == 1%}#}
-                {#&#9745; oui#}
-            {#{% else %}#}
-                {#&#9744; oui#}
-            {#{% endif %}#}
-
-            {#{% if crep.souhaitEntretienCarriere == 0 %}#}
-                {#&#9745; non#}
-            {#{% else %}#}
-                {#&#9744; non#}
-            {#{% endif %}#}
-        {#</td>#}
-    {#</tr>#}
 </table>
-
-
-<br><br>
+<br><br><br><br>
 
 <table>
     <tr>
         <td width="5%"></td>
         <td width="95%">- Aptitude à exercer des fonctions de niveau supérieur</td>
     </tr>
-    <br>
-
-
     <tr align="center">
         <td width="5%"></td>
         <td width="95%">
@@ -973,29 +937,8 @@
             non
         </td>
     </tr>
-
-    {#<tr align="center">#}
-        {#<td width="5%"></td>#}
-        {#<td width="95%">#}
-            {#{% if crep.apptitudeNiveauSup == 1%}#}
-                {#&#9745; oui#}
-            {#{% else %}#}
-                {#&#9744; oui#}
-            {#{% endif %}#}
-
-            {#{% if crep.apptitudeNiveauSup == 0 %}#}
-                {#&#9745; non#}
-            {#{% else %}#}
-                {#&#9744; non#}
-            {#{% endif %}#}
-        {#</td>#}
-    {#</tr>#}
 </table>
-
-
-<br><br>
-
-
+<br><br><br><br>
 
 <table>
     <tr>
@@ -1008,7 +951,7 @@
     </tr>
 </table>
 
-<br><br>
+<br><br><br><br><br><br>
 
 
 <table>
@@ -1028,7 +971,7 @@
 
 <div style="border:1px #000000 solid;" align="center"><strong>VI – BESOINS DE FORMATION</strong></div>
 
-<br/>
+<br>
 
 <table>
     <tr>
@@ -1056,8 +999,8 @@
     </tr>
 </table>
 
-<br/>
-<br/>
+<br>
+<br>
 
 <table cellpadding="5" style="border:1px #000000 solid;">
     <tr>
@@ -1077,33 +1020,33 @@
 
     <tr>
         <td width="28%"><u>Echelon</u> : </td>
-        <td width="33%">{{ crep.echelon }}</td>
-        <td colspan="2" width="39%"></td>
+        <td colspan="2" width="72%">{{ crep.echelon }}</td>
     </tr>
 
     <tr>
-        <td width="28%">Direction/Service </td>
-        <td width="33%">{{ crep.direction }}</td>
-        <td colspan="2" width="39%"></td>
+        <td width="28%"><u>Direction/Service</u> : </td>
+        <td colspan="2" width="72%">{{ crep.direction }}</td>
     </tr>
     <br>  <br>
 
     <tr>
-        <td width="40%"><u>Corps/Cadre d’emplois et Grade d’origine </u> : </td>
-        <td width="58%">{{ crep.corps }} -<br>{{ crep.grade }}</td>
-        <td colspan="2" width="2%"></td>
+        <td width="28%"><u>Corps/cadre d’emplois d'origine</u> :</td>
+        <td colspan="2" width="72%">{{ crep.corps }}</td>
+    </tr>
+    <tr>
+        <td width="28%"><u>Grade d'origine :</u></td>
+        <td width="72%">{{ crep.grade }}</td>
     </tr>
 
     <tr>
-        <td width="28%"><u>Echelon</u> : </td>
-        <td width="33%">{{ crep.echelonOrigine }}</td>
-        <td colspan="2" width="39%"></td>
+        <td width="28%"><u>Echelon  d'origine</u> : </td>
+        <td colspan="2" width="72%">{{ crep.echelonOrigine }}</td>
     </tr>
 </table>
 
-<br/>
-<br/>
-<br/>
+<br>
+<br>
+<br>
 
 
 <table>

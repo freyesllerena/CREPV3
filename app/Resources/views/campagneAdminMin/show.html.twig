@@ -36,11 +36,11 @@
 			    	"oLanguage": oLanguage_fr(),
 			        "processing": true,
 			        "serverSide": true,
-			        "ajax": "{{ path('agent_campagne_pnc_server_processing', { 'campagnePnc': campagnePnc.id, 'evaluable': 2, 'sansShd': 0, 'sansPerimetre':0, 'onglet': 'population_globale' }) }}",
+			        "ajax": "{{ path('agent_campagne_admin_min_server_processing', { 'campagnePnc': campagnePnc.id }) }}",
 			        "sAjaxDataProp": "data",
 			        "pageLength": 10,
 			        "searchDelay": 500,
-					"order": [[ 1, "asc" ]],
+					"order": [[ 0, "asc" ]],
 					"columnDefs": [ { orderable: false, targets: [7] } ],
 					"sDom": '<"top"l>rt<"bottom"ip><"clear">',
 			        "columns":[ 

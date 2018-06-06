@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use AppBundle\Entity\Utilisateur;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChoixRoleType extends AbstractType
 {
@@ -19,7 +20,7 @@ class ChoixRoleType extends AbstractType
             'Pilote national de campagne' => 'ROLE_PNC',
             'Responsable local de campagne' => 'ROLE_RLC',
             'Acteur RH de proximité' => 'ROLE_BRHP',
-    		'Acteur RH de proximité consultation' => 'ROLE_BRHP_CONSULT',
+            'Acteur RH de proximité consultation' => 'ROLE_BRHP_CONSULT',
             'Gestionnaire de recours' => 'ROLE_GESTIONNAIRE_RECOURS',
             'Conseiller de formation' => 'ROLE_CONSEILLER_FORMATION',
             'N+1' => 'ROLE_SHD',
@@ -28,10 +29,10 @@ class ChoixRoleType extends AbstractType
 
     private $tokenStorage;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
-    {
-        $this->tokenStorage = $tokenStorage;
-    }
+//     public function __construct(TokenStorageInterface $tokenStorage)
+//     {
+//         $this->tokenStorage = $tokenStorage;
+//     }
 
     /**
      * @param FormBuilderInterface $builder
@@ -39,6 +40,8 @@ class ChoixRoleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+    	$this->tokenStorage = $options['tokenStorage'];
+    	
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /* @var $utilisateur Utilisateur */
             $utilisateur = $this->tokenStorage->getToken()->getUser();
@@ -72,4 +75,15 @@ class ChoixRoleType extends AbstractType
             $form->add('roles', ChoiceType::class, $formOptions);
         });
     }
+    
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+    	$resolver->setDefaults(array(
+    			'tokenStorage' => null,
+    	));
+    }
+    
 }

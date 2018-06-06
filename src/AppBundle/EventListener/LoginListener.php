@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Connexion;
 use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use AppBundle\Service\ConstanteManager;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Custom login listener.
@@ -31,12 +34,12 @@ class LoginListener
      * @param UserManager          $userManager
      * @param Parametre_general    $nbConnexionsAvantBlocage
      */
-    public function __construct(AuthorizationChecker $authorizationChecker, Doctrine $doctrine, UserManager $userManager, $nbConnexionsAvantBlocage)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, EntityManagerInterface $entityManager, UserManager $userManager, ConstanteManager $constanteManager)
     {
         $this->authorizationChecker = $authorizationChecker;
-        $this->em = $doctrine->getManager();
+        $this->em = $entityManager;
         $this->userManager = $userManager;
-        $this->nbConnexionsAvantBlocage = $nbConnexionsAvantBlocage;
+        $this->nbConnexionsAvantBlocage = $constanteManager->getNbConnexionsAvantBlocage();
     }
 
     /**

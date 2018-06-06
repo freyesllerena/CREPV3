@@ -7,11 +7,19 @@ namespace AppBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use AppBundle\Service\UtilisateurManager;
+use Symfony\Component\Console\Command\Command;
 
-class CreerUtilisateursCommand extends ContainerAwareCommand
+class CreerUtilisateursCommand extends Command
 {
+    protected $utilisateurManager;
+
+    public function __construct(UtilisateurManager $utilisateurManager)
+    {
+    	parent::__construct();
+        $this->utilisateurManager = $utilisateurManager;
+    }
+
     protected function configure()
     {
         $this
@@ -31,10 +39,7 @@ class CreerUtilisateursCommand extends ContainerAwareCommand
             '',
         ]);
 
-        /* @var $utilisateurManager UtilisateurManager */
-        $utilisateurManager = $this->getContainer()->get('utilisateur_manager');
-
-        $utilisateurManager->creerFromAgents($nbAgents);
+        $this->utilisateurManager->creerFromAgents($nbAgents);
 
         $output->writeln('Utilisateurs créés');
     }

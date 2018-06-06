@@ -8,15 +8,6 @@
 
 {% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
 {% block pageTitle %}CREP de {{crep.agent.civilite | title}} {{crep.prenom | title}} {{crep.nomUsage | upper}}{% endblock pageTitle %}
-{% block image %}
-    <div class="title_right">
-        {% if is_granted(constant('AppBundle\\Security\\CrepVoter::EXPORTER_PDF'), crep) %}
-            <a href="{{ path('crep_export_pdf', { 'id': crep.id }) }}">
-            	<img src="{{ asset('bundles/framework/cisirh/images/pdf_3d_32.png') }}" alt="Export PDF" title="Export PDF" >
-            </a>
-        {% endif %}
-    </div>	
-{% endblock image %}
 
 {% block content %}
     

@@ -14,6 +14,7 @@ use AppBundle\Repository\FormationRepository;
 use AppBundle\Entity\Formation;
 use AppBundle\Entity\Ministere;
 use AppBundle\Security\FormationVoter;
+use AppBundle\Service\FormationManager;
 
 /**
  * Formation controller.
@@ -49,7 +50,7 @@ class FormationController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, FormationManager $formationManager)
     {
         $formation = new Formation();
 
@@ -62,8 +63,6 @@ class FormationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $formationManager FormationManager */
-            $formationManager = $this->get('formation_manager');
             $formationManager->creer($formation);
 
             $flashbagMessage = 'Formation \"'.$formation->getLibelle().'\" créée !';
@@ -86,7 +85,7 @@ class FormationController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function editAction(Request $request, Formation $formation)
+    public function editAction(Request $request, Formation $formation, FormationManager $formationManager)
     {
         $this->denyAccessUnlessGranted(FormationVoter::MODIFIER, $formation);
 
@@ -95,8 +94,6 @@ class FormationController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            /* @var $formationManager FormationManager */
-            $formationManager = $this->get('formation_manager');
             $formationManager->sauvegarder($formation);
 
             $flashbagMessage = 'Formation \"'.$formation->getLibelle().'\" mise à jour avec succès !';
@@ -141,7 +138,7 @@ class FormationController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request, ImportCsv $importCsv)
     {
         $uploadeDocument = new UploadeDocument();
         $uploadForm = $this->createForm('AppBundle\Form\UploadeDocumentType', $uploadeDocument, ['validation_groups' => ['Default', 'injection_referentiel']]);
@@ -152,11 +149,8 @@ class FormationController extends Controller
             $ministere = $this->getUser()->getMinistere();
 
             // on utilise le service pour l'import d'un fichier csv
-            /* @var $csvtoarray ImportCsv */
-            $csvtoarray = $this->get('app.import_csv');
-
 //             try {
-            $resultatLecture = $csvtoarray->importerReferentielFormation($filePath, $ministere);
+            $resultatLecture = $importCsv->importerReferentielFormation($filePath, $ministere);
 //             }catch (\Exception $e){
 //                 $uploadForm->get('file')->addError(new FormError("Erreur lors du chargement du fichier, veuillez vérifier sa structure."));
 //                 return $this->render('uniteOrganisationnelle/upload.html.twig', array(
@@ -270,7 +264,7 @@ class FormationController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function deleteAllAction(Request $request, Ministere $ministere)
+    public function deleteAllAction(Request $request, Ministere $ministere, FormationManager $formationManager)
     {
         $this->denyAccessUnlessGranted(FormationVoter::SUPPRIMER_REFERENTIEL, $ministere);
 
@@ -282,8 +276,6 @@ class FormationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $formationManager FormationManager */
-            $formationManager = $this->get('formation_manager');
             $formationManager->supprimerReferentiel($ministere);
 
             $flashbagMessage = 'Réferentiel supprimé !';

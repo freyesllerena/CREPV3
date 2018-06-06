@@ -18,7 +18,7 @@ class CrepEddAutreContraintePosteType extends ContraintePosteType
 
         $builder
             ->add('libelle', null, [
-                        'attr' => ['maxlength' => '4096', ],
+                        'attr' => ['maxlength' => '4096'],
                     ]);
     }
 

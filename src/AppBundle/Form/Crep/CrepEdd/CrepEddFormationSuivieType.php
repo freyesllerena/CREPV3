@@ -23,7 +23,6 @@ class CrepEddFormationSuivieType extends FormationSuivieType
 
         parent::buildForm($builder, $options);
 
-
         $builder
 
             ->remove('date')
@@ -43,7 +42,6 @@ class CrepEddFormationSuivieType extends FormationSuivieType
             ->add('duree', null, ['attr' => ['class' => 'fieldCollection']])
         ;
     }
-
 
     /**
      * @param OptionsResolver $resolver

@@ -27,32 +27,37 @@ class CrepMcc02FormationSuivieType extends FormationSuivieType
         $anneeEvaluee = $options['anneeEvaluation'];
 
         $builder->add('annee', ChoiceType::class, [
+                'label' => 'Année',
                 'choices' => [
                     $anneeEvaluee => $anneeEvaluee,
                     $anneeEvaluee - 1 => $anneeEvaluee - 1,
                 ],
                 'expanded' => false,
                 'multiple' => false,
-                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px;'],
+                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px; width: 20%'],
                 'placeholder' => ''
             ])
-            ->add('duree', null, ['attr' => ['class' => 'fieldCollection']])
-            ->add('libelle', null, array(
+            ->add('libelle', null, [
+                'label' => 'Formation demandée',
                 'required' => true,
                 'constraints' => array(
                     new NotBlank(['message' => 'Le libellé est obligatoire'])
                 )
-            ))
-            ->add('libelle2', null, array(
-                'required' => true,
-                'constraints' => array(
-                    new NotBlank(['message' => 'Le libellé est obligatoire'])
-                )
-            ))
+            ])
+            ->add('libelle2', null, [
+                'label' => 'Formation suivie',
+                    'required' => true,
+                    'constraints' => array(
+                        new NotBlank(['message' => 'Le libellé est obligatoire'])
+                    )
+            ])
             ->add('commentaires', TextareaType::class, [
+                'label' => 'Commentaires (appréciation, bilan, suites)',
                 'attr' => ['maxlength' => '4096',
                     'class' => 'fieldCollection', ],
-                'required' => false, ])
+                    'required' => false
+                ]
+            )
         ;
     }
 

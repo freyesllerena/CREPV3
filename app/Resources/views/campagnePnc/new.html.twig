@@ -56,8 +56,8 @@
                                     {% endif %}
                                 {% endfor  %}
                             </ul>
-                            <div class="documents col-md-8 col-sm-8 col-xs-12" data-prototype="{{ form_widget(form.documents.vars.prototype)|e('html_attr') }}">
-                                {% for document in form.documents %}
+                            <div class="documents col-md-8 col-sm-8 col-xs-12" data-prototype="{{ form_widget(form.nouveauxDocuments.vars.prototype)|e('html_attr') }}">
+                                {% for document in form.nouveauxDocuments %}
                                     {{ form_widget(document.file, {'attr': { 'type': "file", 'class': 'hide'}}) }}
                                 {% endfor %}
                             </div>
@@ -179,6 +179,7 @@
 {% endblock javascripts %}
 
 
-{% block _campagne_pnc_documents_entry_widget %}
+{% block _campagne_pnc_nouveauxDocuments_entry_widget %}
+	{{ form_errors(form.file) }}
     {{ form_widget(form.file) }}
 {% endblock %}

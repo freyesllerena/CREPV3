@@ -51,7 +51,7 @@ class UniteOrganisationnelleController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, UniteOrganisationnelleManager $uniteOrganisationnelleManager)
     {
         $uo = new UniteOrganisationnelle();
 
@@ -65,9 +65,7 @@ class UniteOrganisationnelleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $uoManager UniteOrganisationnelleManager */
-            $uoManager = $this->get('unite_organisationnelle_manager');
-            $uoManager->creer($uo);
+            $uniteOrganisationnelleManager->creer($uo);
 
             $flashbagMessage = 'Unite organisationnelle \"'.$uo->getLibelle().'\" créée !';
 
@@ -97,7 +95,7 @@ class UniteOrganisationnelleController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function editAction(Request $request, UniteOrganisationnelle $uo)
+    public function editAction(Request $request, UniteOrganisationnelle $uo, UniteOrganisationnelleManager $uniteOrganisationnelleManager)
     {
         $this->denyAccessUnlessGranted(UniteOrganisationnelleVoter::MODIFIER, $uo);
 
@@ -106,9 +104,7 @@ class UniteOrganisationnelleController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            /* @var $uoManager UniteOrganisationnelleManager */
-            $uoManager = $this->get('unite_organisationnelle_manager');
-            $uoManager->sauvegarder($uo);
+            $uniteOrganisationnelleManager->sauvegarder($uo);
 
             $flashbagMessage = 'Unite organisationnelle \"'.$uo->getLibelle().'\" mise à jour avec succès !';
 
@@ -145,7 +141,7 @@ class UniteOrganisationnelleController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request, ImportCsv $importCsv)
     {
         $uploadeDocument = new UploadeDocument();
         $uploadForm = $this->createForm('AppBundle\Form\UploadeDocumentType', $uploadeDocument, ['validation_groups' => ['Default', 'injection_referentiel']]);
@@ -156,11 +152,8 @@ class UniteOrganisationnelleController extends Controller
             $ministere = $this->getUser()->getMinistere();
 
             // on utilise le service pour l'import d'un fichier csv
-            /* @var $csvtoarray ImportCsv */
-            $csvtoarray = $this->get('app.import_csv');
-
 //             try {
-            $resultatLecture = $csvtoarray->importerOrganisation($filePath, $ministere);
+            $resultatLecture = $importCsv->importerOrganisation($filePath, $ministere);
 //             }catch (\Exception $e){
 //                 $uploadForm->get('file')->addError(new FormError("Erreur lors du chargement du fichier, veuillez vérifier sa structure."));
 //                 return $this->render('uniteOrganisationnelle/upload.html.twig', array(
@@ -268,7 +261,7 @@ class UniteOrganisationnelleController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function deleteAllAction(Request $request, Ministere $ministere)
+    public function deleteAllAction(Request $request, Ministere $ministere, UniteOrganisationnelleManager $uniteOrganisationnelleManager)
     {
         $this->denyAccessUnlessGranted(UniteOrganisationnelleVoter::SUPPRIMER_REFERENTIEL, $ministere);
 
@@ -280,8 +273,6 @@ class UniteOrganisationnelleController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $uniteOrganisationnelleManager UniteOrganisationnelleManager */
-            $uniteOrganisationnelleManager = $this->get('unite_organisationnelle_manager');
             $uniteOrganisationnelleManager->supprimerReferentiel($ministere);
 
             $flashbagMessage = 'Réferentiel des unités organisationnelles supprimé !';

@@ -26,11 +26,11 @@
                                     <div id="crop-avatar">
                                       <!-- Current avatar -->                      
                                       {% if utilisateur.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MONSIEUR')%}
-                                      	 <img src="{{ asset('bundles/framework/cisirh/images/homme.png') }}" alt="avatar" class="img-responsive">
+                                      	 <img src="{{ asset('images/homme.png') }}" alt="avatar" class="img-responsive">
                                       {% elseif utilisateur.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MADAME') %}
-                                      	 <img src="{{ asset('bundles/framework/cisirh/images/femme.png') }}" alt="avatar" class="img-responsive">
+                                      	 <img src="{{ asset('images/femme.png') }}" alt="avatar" class="img-responsive">
                                       {% else %}
-                                      	 <img src="{{ asset('bundles/framework/cisirh/images/user.png') }}" alt="avatar" class="img-responsive">
+                                      	 <img src="{{ asset('images/user.png') }}" alt="avatar" class="img-responsive">
                                       {% endif %}
                                     </div>
                             	</div>

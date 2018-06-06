@@ -13,6 +13,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Agent;
 use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use AppBundle\Repository\ModeleCrepRepository;
+use AppBundle\Entity\ModeleCrep;
 
 class AgentType extends AbstractType
 {
@@ -23,6 +25,7 @@ class AgentType extends AbstractType
     {
         /* @var $agent Agent */
         $agent = $builder->getData();
+        $ministere = $agent->getCampagnePnc()->getMinistere();
 
         $unitesOrganisationnelles = $options['unitesOrganisationnelles'];
         $perimetresRlc = $options['perimetresRlc'];
@@ -33,7 +36,7 @@ class AgentType extends AbstractType
 
         // Si l'utilisateur connecté est Administrateur ou BRHP :
         // l'ensemble des champs de l'agent sont modifiables
-        if (in_array($roleUtilisateur, ['ROLE_ADMIN', 'ROLE_BRHP'])) {
+        if (in_array($roleUtilisateur, ['ROLE_ADMIN', 'ROLE_PNC', 'ROLE_RLC', 'ROLE_BRHP'])) {
             $disabled = false;
         }
 
@@ -125,13 +128,26 @@ class AgentType extends AbstractType
                 ->add('codeSirh2', null, ['required' => false, 'disabled' => $disabled])
                 ->add('capitalDif', TextType::class, ['required' => false, 'disabled' => $disabled])
                 ->add('capitalDifMobilisable', TextType::class, ['required' => false, 'disabled' => $disabled])
-        		->add('documents', CollectionType::class, array(
+                ->add('documents', CollectionType::class, array(
                     'entry_type' => UploadeDocumentType::class,
                     'allow_add' => true, // permettre à l'utilisateur d'ajouter des documents dynamiquement
                     'allow_delete' => true, // permettre à l'utilisateur de supprimer des documents dynamiquement
                     'label' => false,
                     'by_reference' => false,
-            ));
+                	'disabled' => $disabled,
+                ))
+                ->add('modeleCrep', EntityType::class, [
+                        'class' => 'AppBundle:ModeleCrep',
+                        'query_builder' => function (ModeleCrepRepository $er) use ($ministere) {
+                            return $er->getModelesCrep($ministere, true, true);
+                        },
+                        'choice_label' => function (ModeleCrep $modeleCrep) {
+                            return $modeleCrep->getLibelle().' ('.$modeleCrep->getTypeEntity().')';
+                        },
+                        'required' => false,
+                        'disabled' => $disabled,
+                ])
+                ;
 
         if ('ROLE_SHD' == $roleUtilisateur) {
             $builder->add('shd', Select2EntityType::class, [
@@ -147,8 +163,9 @@ class AgentType extends AbstractType
                     'cache' => true,
                     'cache_timeout' => 60000, // 60 sec
                     'language' => 'fr',
-                     'placeholder' => 'Email du N+1',
+                    'placeholder' => 'Email du N+1',
                     'disabled' => true,
+            		'width' => '100%'
             ]);
         } else {
             $builder->add('shd', Select2EntityType::class, [
@@ -164,8 +181,9 @@ class AgentType extends AbstractType
                     'cache' => true,
                     'cache_timeout' => 60000, // 60 sec
                     'language' => 'fr',
-                     'placeholder' => 'Email du N+1',
+                    'placeholder' => 'Email du N+1',
                     'disabled' => false,
+            		'width' => '100%'
             ]);
         }
 
@@ -183,6 +201,7 @@ class AgentType extends AbstractType
                 'cache_timeout' => 60000, // 60 sec
                 'language' => 'fr',
                 'placeholder' => 'Email du N+2',
+        		'width' => '100%'
                         ])
 
                 ->add(

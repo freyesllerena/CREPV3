@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use AppBundle\Entity\PerimetreRlc;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 class PerimetreRlcVoter extends Voter
 {
@@ -18,7 +19,7 @@ class PerimetreRlcVoter extends Voter
     const EDIT = 'edit_perimetre_rlc';
     const DELETE = 'delete_perimetre_rlc';
 
-    public function __construct($decisionManager)
+    public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;
     }

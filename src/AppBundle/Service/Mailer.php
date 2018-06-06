@@ -10,27 +10,11 @@ use AppBundle\Entity\Utilisateur;
 abstract class Mailer extends FOSMailer
 {
     protected $mailer;
-    // 	protected $twig;
     protected $container;
     protected $from;
     protected $reply;
     protected $companyName;
     protected $appName;
-
-    /**
-     * Constructor.
-     *
-     * @param $mailer
-     * @param Twig          $twig
-     * @param RoleService   $roleService
-     * @param EntityManager $em
-     * @param $companyName
-     * @param $appName
-     * @param $fromAddress
-     * @param $replyAddress
-     */
-    //public abstract function __construct($mailer, $twig, RoleService $roleService,EntityManager $em,$companyName, $appName, $fromAddress, $replyAddress);
-    //public abstract function __construct($container, RoleService $roleService,EntityManager $em, $companyName, $appName, $fromAddress, $replyAddress);
 
     protected function sendMessage(Utilisateur $to, $subject, $body, $piecesJointes = [], $flush = true)
     {
@@ -60,7 +44,7 @@ abstract class Mailer extends FOSMailer
             $this->em->flush();
         }
 
-        $mail = \Swift_Message::newInstance();
+        $mail = new \Swift_Message();
         $mail
             ->setFrom($this->from, $this->appName)
             ->setTo($to->getEmail())

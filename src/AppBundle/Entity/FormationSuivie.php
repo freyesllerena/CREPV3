@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="formation_suivie")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FormationSuivieRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
  */
 class FormationSuivie extends GenericEntity
 {
@@ -32,7 +33,6 @@ class FormationSuivie extends GenericEntity
      *
      * @ORM\Column(type="string")
      *
-     * @Assert\NotBlank(message="Le libellé est obligatoire")
      * @Assert\Length(
      *    min = 1,
      *    max = 200,
@@ -72,11 +72,11 @@ class FormationSuivie extends GenericEntity
      * @ORM\Column(type="string", nullable = true)
      */
     protected $annee;
-
+    
     /**
      * @var int
      *
-     * @ORM\Column(type = "float", nullable = true)
+     * @ORM\Column(type = "integer", nullable = true)
      * @Assert\Range(
      *      min = 0,
      *      max = 1000,
@@ -84,7 +84,7 @@ class FormationSuivie extends GenericEntity
      *      maxMessage = "Durée de formation trop grande",
      *      invalidMessage= "La durée de formation doit être positive avec un 'point' pour les valeurs décimales" )
      */
-    private $duree;
+    protected $duree;
 
     /**
      * Set date.
@@ -269,6 +269,4 @@ class FormationSuivie extends GenericEntity
     {
         $this->libelle2 = $libelle2;
     }
-
-
 }

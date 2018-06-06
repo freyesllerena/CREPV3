@@ -5,33 +5,37 @@ namespace AppBundle\Service;
 use AppBundle\Entity\PerimetreBrhp;
 use AppBundle\Entity\PerimetreRlc;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Utilisateur;
 use FOS\UserBundle\Util\TokenGenerator;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use AppBundle\Service\ConstanteManager;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
-class PersonneManager extends BaseManager
+class PersonneManager
 {
     protected $tokenGenerateur;
 
-    protected $tokenSauvegarde;
+    protected $tokenStorage;
 
     protected $mailer;
 
     protected $defaultPassword;
+    
+    protected $em;
 
     public function __construct(
-        EntityManager $em,
+        EntityManagerInterface $em,
         TokenGenerator $tokenGenerateur,
-        TokenStorage $tokenSauvegarde,
-        Mailer $mailer,
-        $defaultPassword
+        TokenStorageInterface $tokenStorage,
+        AppMailer $mailer,
+        ConstanteManager $constanteManager
     ) {
         $this->em = $em;
         $this->tokenGenerateur = $tokenGenerateur;
-        $this->tokenSauvegarde = $tokenSauvegarde;
+        $this->tokenStorage = $tokenStorage;
         $this->mailer = $mailer;
-        $this->defaultPassword = $defaultPassword;
+        $this->defaultPassword = $constanteManager->getDefaultPassword();
     }
 
     /**
@@ -44,7 +48,6 @@ class PersonneManager extends BaseManager
         return $this->em->getRepository('AppBundle:Personne');
     }
 
-    
     /**
      * Récupère les brhps d'un ou plusieurs périmètres.
      *
@@ -52,17 +55,18 @@ class PersonneManager extends BaseManager
      *
      * @return array Un tableau contenant les personnes
      */
-    public function getBrhps(Collection $perimetresBrhp){
-    	$brhps = [];
-    	
-    	/* @var $perimetreBrhp PerimetreBrhp */
-    	foreach ($perimetresBrhp as $perimetreBrhp) {
-    		$brhps = array_merge($brhps, $perimetreBrhp->getBrhps()->toArray());
-    	}
-    	
-    	return $brhps;
+    public function getBrhps(Collection $perimetresBrhp)
+    {
+        $brhps = [];
+
+        /* @var $perimetreBrhp PerimetreBrhp */
+        foreach ($perimetresBrhp as $perimetreBrhp) {
+            $brhps = array_merge($brhps, $perimetreBrhp->getBrhps()->toArray());
+        }
+
+        return $brhps;
     }
-    
+
     /**
      * Récupère les brhps consultants d'un ou plusieurs périmètres.
      *
@@ -70,17 +74,18 @@ class PersonneManager extends BaseManager
      *
      * @return array Un tableau contenant les personnes
      */
-    public function getBrhpsConsult(Collection $perimetresBrhp){
-    	$brhpsConsult = [];
-    	 
-    	/* @var $perimetreBrhp PerimetreBrhp */
-    	foreach ($perimetresBrhp as $perimetreBrhp) {
-    		$brhpsConsult = array_merge($brhpsConsult, $perimetreBrhp->getBrhpsConsult()->toArray());
-    	}
-    	 
-    	return $brhpsConsult;
+    public function getBrhpsConsult(Collection $perimetresBrhp)
+    {
+        $brhpsConsult = [];
+
+        /* @var $perimetreBrhp PerimetreBrhp */
+        foreach ($perimetresBrhp as $perimetreBrhp) {
+            $brhpsConsult = array_merge($brhpsConsult, $perimetreBrhp->getBrhpsConsult()->toArray());
+        }
+
+        return $brhpsConsult;
     }
-    
+
     /**
      * Récupère les rlcs d'un ou plusieurs périmètres.
      *
@@ -88,17 +93,17 @@ class PersonneManager extends BaseManager
      *
      * @return array Un tableau contenant les personnes
      */
-    public function getRlcs(Collection $perimetresRlc){
-    	$rlcs = [];
-    
-    	/* @var $perimetreRlc PerimetreRlc */
-    	foreach ($perimetresRlc as $perimetreRlc) {
-    		$rlcs = array_merge($rlcs, $perimetreRlc->getRlcs()->toArray());
-    	}
-    
-    	return $rlcs;
+    public function getRlcs(Collection $perimetresRlc)
+    {
+        $rlcs = [];
+
+        /* @var $perimetreRlc PerimetreRlc */
+        foreach ($perimetresRlc as $perimetreRlc) {
+            $rlcs = array_merge($rlcs, $perimetreRlc->getRlcs()->toArray());
+        }
+
+        return $rlcs;
     }
-    
 
     /**
      * Fait passer les gestionnaires en utilisateurs.
@@ -128,7 +133,7 @@ class PersonneManager extends BaseManager
                     ->setNom($personne->getNom())
                     ->setEmail($personne->getEmail())
                     ->setRoles(array($role))
-                    ->setMinistere($this->tokenSauvegarde->getToken()->getUser()->getMinistere())
+                    ->setMinistere($this->tokenStorage->getToken()->getUser()->getMinistere())
                     ->setEnabled(true)
                     ->setNbConnexionKO(0);
 
@@ -140,6 +145,8 @@ class PersonneManager extends BaseManager
 
                 $this->em->persist($nouvelUtilisateur);
                 $this->em->persist($personne);
+
+                $this->em->flush();
 
                 if (null === $nouvelUtilisateur->getConfirmationToken()) {
                     $nouvelUtilisateur->setConfirmationToken($token);

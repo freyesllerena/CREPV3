@@ -11,7 +11,6 @@ use AppBundle\Entity\ModeleCrep;
 use AppBundle\Repository\CrepRepository;
 use AppBundle\Repository\AgentRepository;
 use AppBundle\Entity\Campagne;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use AppBundle\Entity\Document;
 use Symfony\Component\HttpFoundation\File\File;
 use AppBundle\Entity\Recours;
@@ -30,17 +29,32 @@ use AppBundle\Service\ModelesCrep\CrepMj01Manager;
 use AppBundle\Service\ModelesCrep\CrepEddManager;
 use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
 use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use AppBundle\Service\ConstanteManager;
+use Symfony\Component\Templating\EngineInterface;
 
-class CrepManager extends BaseManager
+class CrepManager
 {
+    protected $tokenStorage;
+
     protected $tcpdf;
 
     protected $confidentialisationManager;
 
+    protected $appMailer;
+    
     protected $templating;
+    
+    protected $session;
 
+    protected $kernelRootDir;
+    
     protected $certificat;
-
+    
     protected $crepMindef01Manager;
 
     protected $crepAcManager;
@@ -61,28 +75,36 @@ class CrepManager extends BaseManager
 
     protected $crepMcc02Manager;
 
-    public function init(
-        $tcpdf,
+    public function __construct(
+            EntityManagerInterface $entityManager,
+            TokenStorageInterface $tokenStorage,
+            TCPDFController $tcpdf,
+            CrepConfidentialisationManager $confidentialisationManager,
+    		AppMailer $appMailer,
+            EngineInterface $templating,
+    		SessionInterface $session,
+    		ConstanteManager $constanteManager,
 
-        $confidentialisationManager,
-
-        TwigEngine $templating,
-
-        $certificat,
-                        CrepMindef01Manager $crepMindef01Manager,
-                        CrepAcManager $crepAcManager,
-                        CrepMccManager $crepMccManager,
-                        CrepMinefAbcManager $crepMinefAbcManager,
-                        CrepSclManager $crepSclManager,
-                        CrepMso3Manager $crepMso3Manager,
-                        CrepMj01Manager $crepMj01Manager,
-                        CrepMcc02Manager $crepMcc02Manager,
-                        CrepEddManager $crepEddManager
+    		CrepMindef01Manager $crepMindef01Manager,
+            CrepAcManager $crepAcManager,
+            CrepMccManager $crepMccManager,
+            CrepMinefAbcManager $crepMinefAbcManager,
+            CrepSclManager $crepSclManager,
+            CrepMso3Manager $crepMso3Manager,
+            CrepMj01Manager $crepMj01Manager,
+            CrepMcc02Manager $crepMcc02Manager,
+            CrepEddManager $crepEddManager
             ) {
+    	
+        $this->em = $entityManager;
+        $this->tokenStorage = $tokenStorage;
         $this->tcpdf = $tcpdf;
         $this->confidentialisationManager = $confidentialisationManager;
+        $this->appMailer = $appMailer;
         $this->templating = $templating;
-        $this->certificat = $certificat;
+        $this->session = $session;
+        $this->certificat = $constanteManager->getCertificat();
+        $this->kernelRootDir = $constanteManager->getKernelRootDir();
         $this->crepMindef01Manager = $crepMindef01Manager;
         $this->crepAcManager = $crepAcManager;
         $this->crepMccManager = $crepMccManager;
@@ -110,7 +132,7 @@ class CrepManager extends BaseManager
     {
         $classe = $modeleCrep->getTypeEntity();
 
-        $classPath = 'AppBundle\Entity\Crep\\' . $classe . '\\' . $classe;
+        $classPath = 'AppBundle\Entity\Crep\\'.$classe.'\\'.$classe;
 
         $crep = new $classPath();
 
@@ -231,17 +253,17 @@ class CrepManager extends BaseManager
 
     public function rappelerAgentShd(Crep $crep)
     {
-    	$crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
-    	$crep->setDateVisaShd(null);
-    	$crep->setShdSignataire(null);
-    
-    	$this->em->persist($crep);
-    	$this->em->flush();
-    
-    	//Notification de l'agent
-    	$this->appMailer->notifierRappelAgentShd($crep);
+        $crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
+        $crep->setDateVisaShd(null);
+        $crep->setShdSignataire(null);
+
+        $this->em->persist($crep);
+        $this->em->flush();
+
+        //Notification de l'agent
+        $this->appMailer->notifierRappelAgentShd($crep);
     }
-    
+
     public function rappelerAgentAh(Crep $crep)
     {
         $crep->setStatut(EnumStatutCrep::VISE_AGENT);
@@ -321,14 +343,14 @@ class CrepManager extends BaseManager
         $indicateurs['nbCrepCasAbsence'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::CAS_ABSENCE), $shd, $ah, $categories, $affectations, $corps);
 
         $indicateurs['nbCrepNonRenseignes'] = $indicateurs['nbCrep']
-            - $indicateurs['nbCrepSignesShd']
-            - $indicateurs['nbCrepVisesAgent']
-            - $indicateurs['nbCrepSignesAh']
-            - $indicateurs['nbCrepNotifies']
-            - $indicateurs['nbCrepRefusNotification']
-            - $indicateurs['nbCrepModifieShd']
-            - $indicateurs['nbCrepRefusVisas']
-            - $indicateurs['nbCrepCasAbsence'];
+                                            - $indicateurs['nbCrepSignesShd']
+                                            - $indicateurs['nbCrepVisesAgent']
+                                            - $indicateurs['nbCrepSignesAh']
+                                            - $indicateurs['nbCrepNotifies']
+                                            - $indicateurs['nbCrepRefusNotification']
+                                            - $indicateurs['nbCrepModifieShd']
+                                            - $indicateurs['nbCrepRefusVisas']
+                                            - $indicateurs['nbCrepCasAbsence'];
 
         /************** Statistiques sur les recours **************/
 
@@ -347,7 +369,7 @@ class CrepManager extends BaseManager
     }
 
     /**
-     * @param Crep $crep
+     * @param Crep   $crep
      * @param string $dest I => Affiche le Crep PDF sur la fenêtre courante
      *                     F => enregistre le Crep PDF sur le disque local
      *                     D => Propose le Crep PDF en téléchargement
@@ -359,11 +381,11 @@ class CrepManager extends BaseManager
         $pdf = $this->tcpdf->create(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         $repertoireVuesCrep = lcfirst(Util::getClassName($crep));
-        $vueCrep = $repertoireVuesCrep . '.html.twig';
+        $vueCrep = $repertoireVuesCrep.'.html.twig';
 
-        $template = 'crep/' . $repertoireVuesCrep . '/' . $vueCrep;
+        $template = 'crep/'.$repertoireVuesCrep.'/'.$vueCrep;
 
-        $utilisateur = $this->securityTokenStorage->getToken()->getUser();
+        $utilisateur = $this->tokenStorage->getToken()->getUser();
 
         // Ici nous utilisons le service de confidentialisation du crep en fonction du statut du crep
         $this->confidentialisationManager->confidentialisation($crep, $utilisateur);
@@ -391,8 +413,8 @@ class CrepManager extends BaseManager
         $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
         // set some language-dependent strings (optional)
-        if (@file_exists(dirname(__FILE__) . '/../Resources/lang/fra.php')) {
-            require_once dirname(__FILE__) . '/../Resources/lang/fra.php';
+        if (@file_exists(dirname(__FILE__).'/../Resources/lang/fra.php')) {
+            require_once dirname(__FILE__).'/../Resources/lang/fra.php';
             $pdf->setLanguageArray($l);
         }
 
@@ -406,8 +428,8 @@ class CrepManager extends BaseManager
         $pdf->AddPage();
 
         $content = $this->templating->render($template, array(
-            'crep' => $crep,
-            'anneeEvaluee' => $anneeEvaluation,
+                'crep' => $crep,
+                'anneeEvaluee' => $anneeEvaluation,
         ));
 
         $pdf->writeHTML($content, true, false, true, false, '');
@@ -417,19 +439,19 @@ class CrepManager extends BaseManager
         // Signature numérique
         if (in_array($crep->getStatut(), array(EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT)) && !$crep->getCrepPdf()) {
             // fichier certificat
-            $certificate = dirname(__FILE__) . '/../../../../../../tmp/server.crt';
+            $certificate = dirname(__FILE__).'/../../../../../../tmp/server.crt';
 
             // openssl req -x509 -nodes -days 365000 -newkey rsa:1024 -keyout private_key.crt -out certificate.crt
-            $certificate = 'file://' . realpath('/tmp/certificate.crt');
+            $certificate = 'file://'.realpath('/tmp/certificate.crt');
             //$pricateKey = 'file://'.realpath('/tmp/private_key.crt');
-            $certificate = 'file://' . realpath($this->certificat);
+            $certificate = 'file://'.realpath($this->certificat);
 
             // informations à mettre dans le fichier PDF
             $info = array(
-                'Name' => 'Expérimentation ESTEVE V2',
-                'Location' => 'CISIRH',
-                'Reason' => 'Expérimentation ESTEVE V2',
-                'ContactInfo' => 'innovation.cisirh@finances.gouv.fr',
+                    'Name' => 'Expérimentation ESTEVE V2',
+                    'Location' => 'CISIRH',
+                    'Reason' => 'Expérimentation ESTEVE V2',
+                    'ContactInfo' => 'innovation.cisirh@finances.gouv.fr',
             );
 
             // signature du document
@@ -443,7 +465,7 @@ class CrepManager extends BaseManager
         if ($crep->getId()) {
             $filename = $crep->getPdfFileName();
         } else {
-            $filename = $crep->getModeleCrep()->getLibelle() . '.pdf';
+            $filename = $crep->getModeleCrep()->getLibelle().'.pdf';
         }
 
         switch ($dest) {
@@ -452,7 +474,7 @@ class CrepManager extends BaseManager
                 break;
 
             case 'F':
-                $filePath = Document::getRootDir() . '/' . $filename;
+                $filePath = Document::getRootDir().'/'.$filename;
 
                 // Enregistrement du PDF sur le disque
                 $pdf->Output($filePath, 'F');
@@ -466,7 +488,7 @@ class CrepManager extends BaseManager
                 exit(); // ce exit() est indispensable pour que le pdf ne soit pas modifié par des entêtes http après sa génération
                 break;
             default:
-                throw new \Exception('Le paramètre $dist doit être égal à I, F ou D');
+                    throw new \Exception('Le paramètre $dist doit être égal à I, F ou D');
         }
     }
 
@@ -474,8 +496,8 @@ class CrepManager extends BaseManager
     {
         $zip = new \ZipArchive();
 
-        $zipName = $this->kernelRootDir . '/../var/tmp/';
-        $zipName .= 'Documents_' . time() . $this->session->getId() . '.zip';
+        $zipName = $this->kernelRootDir.'/../var/tmp/';
+        $zipName .= 'Documents_'.time().$this->session->getId().'.zip';
 
         $zip->open($zipName, \ZipArchive::CREATE);
 
@@ -507,7 +529,7 @@ class CrepManager extends BaseManager
                 $sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $agent->getCorps());
             }
 
-            $zip->addFile($crepPath, $sousDossier . '/' . $agent->getCrep()->getPdfFileName());
+            $zip->addFile($crepPath, $sousDossier.'/'.$agent->getCrep()->getPdfFileName());
         }
 
         $zip->close();
@@ -593,8 +615,8 @@ class CrepManager extends BaseManager
     {
         $zip = new \ZipArchive();
 
-        $zipName = $this->kernelRootDir . '/../var/tmp/';
-        $zipName .= 'Documents_' . time() . $this->session->getId() . '.zip';
+        $zipName = $this->kernelRootDir.'/../var/tmp/';
+        $zipName .= 'Documents_'.time().$this->session->getId().'.zip';
 
         $zip->open($zipName, \ZipArchive::CREATE);
 
@@ -608,7 +630,7 @@ class CrepManager extends BaseManager
             if (isset($this->modelesCrepManagers[$modeleCrep->getTypeEntity()])) {
                 $zip = $this->modelesCrepManagers[$modeleCrep->getTypeEntity()]->exporterFormations($campagneBrhp, $modeleCrep, $zip);
             } else {
-                throw new \Exception('Modèle de CREP : ' . $modeleCrep->getTypeEntity() . ' non défini dans la class : ' . __CLASS__);
+                throw new \Exception('Modèle de CREP : '.$modeleCrep->getTypeEntity().' non défini dans la class : '.__CLASS__);
             }
         }
 

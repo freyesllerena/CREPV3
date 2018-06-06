@@ -100,11 +100,12 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-
     /**
      * Methode appelée par l'autocomple ajax de jQuerry.
+     *
      * @param Ministere $ministere
      * @param $search
+     *
      * @return array
      */
     public function searchAjax(Ministere $ministere, $search)
@@ -124,7 +125,6 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getScalarResult();
     }
-
 
     public function countFormations($ministere, $search = null)
     {

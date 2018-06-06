@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Brhp;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CampagnePncVoter extends Voter
 {
@@ -42,7 +45,7 @@ class CampagnePncVoter extends Voter
     const CONSULTER_FICHIER_POPULATION = 'consulter_fichier_population_campagne_pnc';
     const EXTRAIRE_DONNEES_AGENTS = 'extraire_donnees_agents_campagne_pnc';
 
-    public function __construct($decisionManager, EntityManager $em, Session $session)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->em = $em;
         $this->decisionManager = $decisionManager;

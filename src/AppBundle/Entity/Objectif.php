@@ -18,6 +18,7 @@ abstract class Objectif extends GenericEntity
      * @ORM\Column(type="text")
      *
      * @Assert\NotBlank(message="Le libellé est obligatoire")
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $libelle;
 
@@ -25,18 +26,16 @@ abstract class Objectif extends GenericEntity
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $resultat;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Assert\Length(
-     *      max = 4096,
-     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-     * )
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $indicateurs;
 

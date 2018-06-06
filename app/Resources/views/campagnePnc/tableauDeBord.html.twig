@@ -1,4 +1,6 @@
-{% extends "index.base.html.twig" %} 
+{% extends "index.base.html.twig" %}
+{% import "macro/app.html.twig" as macro %}
+
 {% form_theme recherche_form 'Campagne/Form/App_form_recherche.html.twig' %}
 
 {% block frameTitle %}{{ campagnePnc.libelle }}{% endblock frameTitle %} 

@@ -27,9 +27,9 @@ class PersonneType extends AbstractType
         $builder
 
             ->add('civilite', ChoiceType::class, ['choices' => ['M.' => EnumCivilite::MONSIEUR,
-                    'Mme' => EnumCivilite::MADAME, ],
-                    'expanded' => false,
-                    'multiple' => false,
+                                                                            'Mme' => EnumCivilite::MADAME, ],
+                                                'expanded' => false,
+                                                'multiple' => false,
                                                 'choices_as_values' => true,
             ])
             ->add('nom', null)

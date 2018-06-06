@@ -3,11 +3,12 @@
 namespace AppBundle\Security;
 
 use AppBundle\Entity\Utilisateur;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use AppBundle\Entity\ModeleCrep;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ModeleCrepVoter extends Voter
 {
@@ -22,7 +23,7 @@ class ModeleCrepVoter extends Voter
     // Liste des actions supportées
     const EXPORTER_MODELE_VIERGE = 'exporter_modele_vierge';
 
-    public function __construct($decisionManager, EntityManager $em)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->decisionManager = $decisionManager;

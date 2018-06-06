@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
+use AppBundle\Entity\FormationSuivie;
 use AppBundle\Entity\ObjectifEvalue;
 use AppBundle\Entity\ObjectifFutur;
 use AppBundle\Util\Converter;
@@ -9,9 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Crep;
 use AppBundle\Entity\Agent;
-use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02AutreObjectif;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-
 
 define('COMPETENCE_RELATION_MCC02', [
     'Force de conviction (leadership)' => 0,
@@ -52,6 +51,12 @@ class CrepMcc02 extends Crep
         'Sans objet' => 3,
     ];
 
+    public static $niveauAutrePotentielEvolution = [
+        'Oui immédiatement' => 0,
+        'Oui à moyen terme' => 1,
+        'À confirmer' => 2,
+    ];
+
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message = "Nom obligatoire")
@@ -77,6 +82,17 @@ class CrepMcc02 extends Crep
     protected $prenom;
 
     /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    min = 2,
+     *    max = 50,
+     *    minMessage = "Le nom de naissance doit faire au moins {{ limit }} caractères",
+     *    maxMessage = "Le nom de naissance ne doit pas faire plus de {{ limit }} caractères"
+     * )
+     */
+    protected $nomNaissance;
+
+    /**
      * @var \DateTime @ORM\Column(type="date")
      *
      * @Assert\Date(message = "Date non valide")
@@ -87,7 +103,6 @@ class CrepMcc02 extends Crep
      *      minMessage = "Date non valide",
      *      maxMessage = "Date non valide"
      * )
-     *
      */
     protected $dateNaissance;
 
@@ -131,7 +146,6 @@ class CrepMcc02 extends Crep
      *    max = 255,
      *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
      * )
-     *
      */
     protected $posteOccupe;
 
@@ -192,7 +206,6 @@ class CrepMcc02 extends Crep
      *    max = 255,
      *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
      * )
-     *
      */
     protected $affectationShd;
 
@@ -204,7 +217,6 @@ class CrepMcc02 extends Crep
      *    max = 255,
      *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
      * )
-     *
      */
     protected $posteOccupeShd;
 
@@ -216,7 +228,6 @@ class CrepMcc02 extends Crep
      *    max = 255,
      *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
      * )
-     *
      */
     protected $serviceShd;
 
@@ -291,6 +302,7 @@ class CrepMcc02 extends Crep
     protected $observationsShd;
 
     /**
+     * Fait à
      * @ORM\Column(type="string")
      * @Assert\Length(
      *    min = 2,
@@ -299,7 +311,7 @@ class CrepMcc02 extends Crep
      *    maxMessage = "Ce champ ne doit pas faire plus de {{ limit }} caractères"
      * )
      */
-    protected $lieu; // Pour le champ " fait à ... "
+    protected $lieu;
 
     /**
      * Grade du Supérieur hierarchique direct
@@ -343,7 +355,10 @@ class CrepMcc02 extends Crep
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
-     *
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $groupeRifseep;
 
@@ -387,7 +402,9 @@ class CrepMcc02 extends Crep
      * @var string
      *
      * @ORM\Column(type="string")
-     *
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
      */
     protected $groupeFonctions;
 
@@ -471,7 +488,7 @@ class CrepMcc02 extends Crep
      * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-     * )     *
+     * )
      */
     protected $acquisExperiencePro;
 
@@ -615,7 +632,10 @@ class CrepMcc02 extends Crep
      * @var string
      *
      * @ORM\Column(type="text", name="evol_pro_envisagee", nullable=true)
-     *
+     * @Assert\Length(
+     *    max = 4096,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $evolutionProfessionnelleEnvisagee;
 
@@ -631,7 +651,10 @@ class CrepMcc02 extends Crep
      * @var string
      *
      * @ORM\Column(type="text", name="obs_shd_projet_pro")
-     *
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $observationsShdProjetProfessionnel;
 
@@ -643,7 +666,7 @@ class CrepMcc02 extends Crep
      * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-     * )     *
+     * )
      */
     protected $appreciationGenerale;
 
@@ -663,7 +686,7 @@ class CrepMcc02 extends Crep
      * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-     * )     *
+     * )
      */
     protected $explicationAttributionCia;
 
@@ -680,6 +703,10 @@ class CrepMcc02 extends Crep
      *
      * @ORM\Column(type="text", name="obs_agent_projet_pro")
      *
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $observationsAgentProjetProfessionnel;
 
@@ -691,7 +718,7 @@ class CrepMcc02 extends Crep
      * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-     * )     *
+     * )
      */
     protected $observationsObjectifsPasses;
 
@@ -724,6 +751,13 @@ class CrepMcc02 extends Crep
     protected $potentielsEvolutions;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02AutresPotentielEvolution", mappedBy="crep", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $autresPotentielsEvolutions;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="text", name="obs_potentiels_evolutions")
@@ -742,6 +776,7 @@ class CrepMcc02 extends Crep
         $this->competencesRelations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesSituations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->potentielsEvolutions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->autresPotentielsEvolutions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesRequises = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesDemontrees = new \Doctrine\Common\Collections\ArrayCollection();
         $this->autresObjectifs = new \Doctrine\Common\Collections\ArrayCollection();
@@ -778,9 +813,10 @@ class CrepMcc02 extends Crep
     }
 
     /**
+     * Set Lieu
      *
      * @param $lieu
-     * @return CrepMcc02
+     * @return $this
      */
     public function setLieu($lieu)
     {
@@ -1101,9 +1137,6 @@ class CrepMcc02 extends Crep
         $potentielsEvolution = new CrepMcc02PotentielEvolution();
         $potentielsEvolution->setLibelle('Management de projet');
         $this->addPotentielsEvolution($potentielsEvolution);
-        $potentielsEvolution = new CrepMcc02PotentielEvolution();
-        $potentielsEvolution->setLibelle('Autre (préciser)');
-        $this->addPotentielsEvolution($potentielsEvolution);
     }
 
     /**
@@ -1291,8 +1324,8 @@ class CrepMcc02 extends Crep
 
         $this->setSouhaitEvolutionCarriere(null)
             ->setMobilitePoste(null)
-            ->setMobiliteGeographique(null)
-            ->setEvolutionProfessionnelleEnvisagee(null)
+            ->setMobiliteGeographique(null);
+        $this->setEvolutionProfessionnelleEnvisagee(null)
             ->setSouhaitEntretienCarriere(null)
             ->setObservationsShdProjetProfessionnel(null);
         $this->getFormationsT1()->clear();
@@ -1300,9 +1333,12 @@ class CrepMcc02 extends Crep
         $this->getFormationsT3()->clear();
         $this->getFormationsSuivies()->clear();
 
-
         /** @var  $potentiel CrepMcc02PotentielEvolution */
         foreach ($this->potentielsEvolutions as $potentiel) {
+            $potentiel->setNiveauAcquis(null);
+        }
+        /** @var  $potentiel CrepMcc02AutresPotentielEvolution */
+        foreach ($this->autresPotentielsEvolutions as $potentiel) {
             $potentiel->setNiveauAcquis(null);
         }
 
@@ -1338,6 +1374,7 @@ class CrepMcc02 extends Crep
     public function confidentialisationChampsAgent()
     {
         $this->setObservationsVisaAgent(null);
+        $this->setObservationsAgentProjetProfessionnel(null);
     }
 
     /**
@@ -2108,6 +2145,45 @@ class CrepMcc02 extends Crep
         return $this->potentielsEvolutions;
     }
 
+    /**
+     * Add autresPotentielsEvolution
+     *
+     * @param CrepMcc02AutresPotentielEvolution $autresPotentielEvolution
+     *
+     * @return CrepMcc02
+     */
+    public function addAutresPotentielsEvolution($autresPotentielEvolution)
+    {
+        $this->autresPotentielsEvolutions[] = $autresPotentielEvolution;
+        $autresPotentielEvolution->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove autresPotentielsEvolution
+     *
+     * @param CrepMcc02AutresPotentielEvolution $autresPotentielEvolution
+     */
+    public function removeAutresPotentielsEvolution($autresPotentielEvolution)
+    {
+        $this->autresPotentielsEvolutions->removeElement($autresPotentielEvolution);
+        $autresPotentielEvolution->setCrep(null);
+    }
+
+    /**
+     * Get autresPotentielsEvolution
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAutresPotentielsEvolutions()
+    {
+        return $this->autresPotentielsEvolutions;
+    }
+
+
+
+
     public function getDateEntreePosteOccupe()
     {
         return $this->dateEntreePosteOccupe;
@@ -2174,6 +2250,7 @@ class CrepMcc02 extends Crep
     public function setEvolutionProfessionnelleEnvisagee($evolutionProfessionnelleEnvisagee)
     {
         $this->evolutionProfessionnelleEnvisagee = $evolutionProfessionnelleEnvisagee;
+
         return $this;
     }
 
@@ -2475,6 +2552,7 @@ class CrepMcc02 extends Crep
         /*  *****   VALIDATION: année   ***** */
         $anneeEvaluation = parent::getAgent()->getCampagnePnc()->getAnneeEvaluee();
         //L'année doit être soit N, N-1 ou N-2 (N : l'année d'évaluation)
+        /** @var FormationSuivie $formation */
         foreach ($this->formationsSuivies as $formation) {
             if (is_null($formation->getAnnee()) || ($formation->getAnnee() && !in_array($formation->getAnnee(), array($anneeEvaluation, $anneeEvaluation - 1, $anneeEvaluation - 2)))) {
                 $context->buildViolation('Veuillez saisir une année valide')

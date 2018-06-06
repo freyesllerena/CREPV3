@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormError;
 use AppBundle\Service\CrepManager;
 use AppBundle\Entity\CampagnePnc;
 use AppBundle\Form\RechercheCampagneRlcType;
+use AppBundle\Service\CampagneBrhpManager;
 
 /**
  * CampagneRlc controller.
@@ -42,24 +43,12 @@ class CampagneRlcController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function showAction(CampagneRlc $campagneRlc, Request $request)
+    public function showAction(CampagneRlc $campagneRlc, Request $request, CampagneRlcManager $campagneRlcManager, CampagneBrhpManager $campagneBrhpManager, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneRlcVoter::VOIR, $campagneRlc);
 
         $em = $this->getDoctrine()->getManager();
-
-        //On récupère l'id du périmètre donnée en parametre depuis le tableau de bord
-        $perimetreId = $request->attributes->get('id_perimetre');
-        $perimetreBrhp = null;
-        if ($perimetreId > 0) {
-            $perimetreBrhp = $em->getRepository('AppBundle:PerimetreBrhp')->find($perimetreId);
-
-            //si le périmetre n'existe pas, on déclenche une erreur
-            if (!$perimetreBrhp) {
-                throw $this->createNotFoundException('Aucun périmètre trouvé !');
-            }
-        }
 
         $ouvrirForm = $this->creerOuvrirForm($campagneRlc);
 
@@ -75,10 +64,10 @@ class CampagneRlcController extends Controller
 
         //On redirige vers la vue tableau de bord que si le fichier d'agents a été diffusé par l'admin ministériel
         if ($campagneRlc->getCampagnePnc()->getDiffusee()) {
-            /*@var $campagnePncManager CampagnePncManager */
-            $campagneRlcManager = $this->get('app.campagne_rlc_manager');
             $historiqueIndicateurs = $campagneRlcManager->getHistoriqueIndicateurs($campagneRlc);
-
+            
+            $campagnesBrhp = $campagneBrhpManager->getCampagnesBrhpByCampagneRlc($campagneRlc);
+            
             $rechercheForm = $this->creerRechercheForm($campagneRlc);
             $rechercheForm->handleRequest($request);
 
@@ -94,17 +83,15 @@ class CampagneRlcController extends Controller
                 $corps = $rechercheForm->getData()['corps'];
             }
 
-            /*@var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
             $indicateurs = $crepManager->calculIndicateurs($campagneRlc, [], $perimetresBrhp, null, null, $categories, $affectations, $corps);
 
             $template = 'campagneRlc/tableauDeBord.html.twig';
 
             return $this->render($template, array(
                 'campagneRlc' => $campagneRlc,
+            	'campagnesBrhp' => $campagnesBrhp,
                 'indicateurs' => $indicateurs,
                 'historiqueIndicateurs' => $historiqueIndicateurs,
-                'perimetre' => $perimetreBrhp,
                 'ouvrir_form' => $ouvrirForm->createView(),
                 'rouvrir_form' => $rouvrirForm->createView(),
                 'recherche_form' => $rechercheForm->createView(),
@@ -125,7 +112,7 @@ class CampagneRlcController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function editAction(Request $request, CampagneRlc $campagneRlc)
+    public function editAction(Request $request, CampagneRlc $campagneRlc, CampagneRlcManager $campagneRlcManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneRlcVoter::MODIFIER, $campagneRlc);
@@ -147,8 +134,6 @@ class CampagneRlcController extends Controller
 
         $editForm->handleRequest($request);
 
-        /* @var $campagneRlcManager CampagneRlcManager */
-        $campagneRlcManager = $this->get('app.campagne_rlc_manager');
         $campagneRlc = $campagneRlcManager->verfierDocuments($campagneRlc);
 
         /* @var $campagneRlcDuFormulaire CampagneRlc */
@@ -222,13 +207,10 @@ class CampagneRlcController extends Controller
      * @param CampagneRlc $campagnePnc Campagne Rlc que l'on souhaite ouvrir
      * @Security("has_role('ROLE_RLC')")
      */
-    public function ouvrirAction(CampagneRlc $campagneRlc)
+    public function ouvrirAction(CampagneRlc $campagneRlc, CampagneRlcManager $campagneRlcManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneRlcVoter::OUVRIR, $campagneRlc);
-
-        /* @var $campagneRlcManager CampagneRlcManager */
-        $campagneRlcManager = $this->get('app.campagne_rlc_manager');
 
         $campagneRlcManager->ouvrir($campagneRlc);
 
@@ -247,7 +229,7 @@ class CampagneRlcController extends Controller
      * @param CampagnePnc $campagnePnc
      * @Security("has_role('ROLE_RLC')")
      */
-    public function rouvrirAction(Request $request, CampagneRlc $campagneRlc)
+    public function rouvrirAction(Request $request, CampagneRlc $campagneRlc, CampagneRlcManager $campagneRlcManager)
     {
         $this->denyAccessUnlessGranted(CampagneRlcVoter::ROUVRIR, $campagneRlc);
 
@@ -256,9 +238,6 @@ class CampagneRlcController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $campagneRlcManager CampagneRlcManager */
-            $campagneRlcManager = $this->get('app.campagne_rlc_manager');
-
             $campagneRlcManager->rouvrir($campagneRlc);
 
             $this->get('session')

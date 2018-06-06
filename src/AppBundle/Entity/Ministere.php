@@ -61,7 +61,7 @@ class Ministere extends GenericEntity
      * @ORM\Column(type="integer", options={"default":0})
      */
     protected $delaiSignatureDefinitive = 0;
-    
+
     /**
      * @var ModeleCrep
      *
@@ -232,7 +232,7 @@ class Ministere extends GenericEntity
 
         return $this;
     }
-    
+
     /**
      * Get delaiSignatureDefinitive.
      *
@@ -240,9 +240,9 @@ class Ministere extends GenericEntity
      */
     public function getDelaiSignatureDefinitive()
     {
-    	return $this->delaiSignatureDefinitive;
+        return $this->delaiSignatureDefinitive;
     }
-    
+
     /**
      * Set delaiSignatureDefinitive.
      *
@@ -252,9 +252,9 @@ class Ministere extends GenericEntity
      */
     public function setDelaiSignatureDefinitive($delaiSignatureDefinitive)
     {
-    	$this->delaiSignatureDefinitive = $delaiSignatureDefinitive;
-    
-    	return $this;
+        $this->delaiSignatureDefinitive = $delaiSignatureDefinitive;
+
+        return $this;
     }
 
     public function __toString()

@@ -8,15 +8,6 @@
 
 {% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
 {% block pageTitle %}CREP de {{crep.agent.civilite | title}} {{crep.prenom | title}} {{crep.nomUsage | upper}}{% endblock pageTitle %}
-{% block image %}
-    <div class="title_right">
-        {% if is_granted(constant('AppBundle\\Security\\CrepVoter::EXPORTER_PDF'), crep) %}
-            <a href="{{ path('crep_export_pdf', { 'id': crep.id }) }}">
-            	<img src="{{ asset('bundles/framework/cisirh/images/pdf_3d_32.png') }}" alt="Export PDF" title="Export PDF" >
-            </a>
-        {% endif %}
-    </div>	
-{% endblock image %}
 
 {% block content %}
     
@@ -202,33 +193,4 @@
      {% endif %}
  {% endblock alertRefusNotification %}
 
-{# {% block renvoyerAgent %}#}
-{#     {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AGENT')) and crep.dateRenvoiAgent  %}#}
-{#         <div class="alert alert-warning alert-dismissible fade in" role="alert">#}
-{#             {% set debutMessageRenvoiAgent = "L'agent a" %}#}
-{#             {% if is_granted('ROLE_AGENT') %}#}
-{#                 {% set debutMessageRenvoiAgent = "Vous avez" %}#}
-{#             {% endif %}#}
-{#             {{ debutMessageRenvoiAgent }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAgent|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>#}
-{#             {{ crep.motifRenvoiAgent|nl2br }}#}
-{#         </div>#}
-{#     {% endif %}#}
-{# {% endblock renvoyerAgent %}#}
 
-{# {% block renvoyerAh %}#}
-{#     {% if (is_granted('ROLE_SHD') or is_granted('ROLE_AH')) and crep.dateRenvoiAh  %}#}
-{#         <div class="alert alert-warning alert-dismissible fade in" role="alert">#}
-{#             {% set debutMessageRenvoiAh = "Le N+2 a" %}#}
-{#             {% if is_granted('ROLE_AH') %}#}
-{#                 {% set debutMessageRenvoiAh = "Vous avez" %}#}
-{#             {% endif %}#}
-{#             {{ debutMessageRenvoiAh }} <strong>renvoyé</strong> le CREP le <strong>{{ crep.dateRenvoiAh|date('d/m/Y à H:i') }}</strong> pour le motif suivant :<br>#}
-{#             {{ crep.motifRenvoiAh|nl2br }}#}
-{#         </div>#}
-{#     {% endif %}#}
-{# {% endblock renvoyerAh %}#}
-
-
-{# {% block javascripts %}#}
-{# 	{{ parent() }}#}
-{# {% endblock javascripts %}#}

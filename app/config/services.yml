@@ -1,12 +1,96 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
-parameters:
-#    parameter_name: value
-
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-#    serializer.mapping.cache.apcu:
-#        class: Doctrine\Common\Cache\ApcuCache
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/AppBundle/{Entity,Repository,DataFixtures,Resources,Exception,Form,Tests,Traits}'
+
+
+    FOS\UserBundle\Doctrine\UserManager:
+        alias: fos_user.user_manager.default
+
+    FOS\UserBundle\Util\TokenGenerator:
+        alias: fos_user.util.token_generator.default
+        
+    FOS\UserBundle\Model\UserManagerInterface:
+        alias: fos_user.user_manager.default
+
+    FOS\UserBundle\Util\TokenGeneratorInterface:
+        alias: fos_user.util.token_generator.default
+
+       
+    WhiteOctober\TCPDFBundle\Controller\TCPDFController:
+        alias: white_october.tcpdf
+
+
+        
+    # Service pour logger les connexions utilisateurs
+    AppBundle\EventListener\LoginListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login', method: onAuthenticationSuccess }
+            - { name: 'kernel.event_listener', event: 'fos_user.resetting.reset.completed', method: onInitPasswordSuccess }
+            - { name: 'kernel.event_listener', event: 'security.authentication.failure', method: onAuthenticationFailure }
+
+    # Permet de rafraichir le menu de gauche sur l'application
+    AppBundle\EventListener\MenuListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', method: refreshMenu }
+
+    # Permet de rediriger vers la page principale apres un reset du mot de passe
+    AppBundle\EventListener\PasswordResettingListener:
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    # Service d'envoi des notifications par mail
+#    AppBundle\Service\AppMailer:
+#        tags:
+#            - { name: 'app.mailer', method: __construct }    
+
+                        
+    # Service pour vérifier les rôles après l'authentification et rediriger l'utilisateur
+    AppBundle\EventListener\RequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: checkRole }
+            
+
+    # Service pour logger les traces sur les entités
+    AppBundle\EventListener\GenericEntityListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist}
+            - { name: doctrine.event_listener, event: preUpdate}
+
+            
+    # Service pour vérifier la session est toujours valide
+    AppBundle\EventListener\SessionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: checkSession, priority: 9 }
+
+    # Service pour retirer "ROLE_FORCEPASSWORDCHANGE" après la modification du mot de passe attribué par l'admin
+    AppBundle\EventListener\PasswordChangeListener:
+        tags:
+            - { name: kernel.event_subscriber }
+            
+                
+    AppBundle\Service\ConstanteManager:
+        $kernelRootDir: '%kernel.root_dir%'
+        $certificat : '%fichier.certificat%'
+        $repScripts : '%app.rep_scripts%'
+        $defaultPassword: '%app.default_password%'
+        $companyName: '%app.company_name%'
+        $fromAddress: '%mailer.from_address%'
+        $replyAddress: '%mailer.reply_address%'
+        $appName: '%app.app_name%'
+        $nbConnexionsAvantBlocage: '%app.connexion.nb_connexions_avant_blocage%'
+        $sessionTimeout: '%app.session_timeout%'
+        
+
+    AppBundle\EventListener\AppOracleSessionInit:
+        tags:
+            - { name: doctrine.event_listener, event: postConnect }         
+                    

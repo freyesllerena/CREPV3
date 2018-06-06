@@ -21,6 +21,7 @@ class FormationSuivieRepository extends \Doctrine\ORM\EntityRepository
         ->addSelect('crep.dateNotification as c_dateNotification, crep.dateRefusNotification as c_dateRefusNotification')
 
         ->addSelect('formation.libelle as f_libelle')
+        ->addSelect('formation.libelle2 as f_libelle2')
         ->addSelect('formation.annee as f_annee, formation.commentaires as f_commentaires') // Pour le CrepMcc
         ->addSelect('formation.duree as f_duree') // Pour le CrepEdd
         ->innerJoin('formation.crep', 'crep')

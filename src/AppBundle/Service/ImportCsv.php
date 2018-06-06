@@ -14,8 +14,11 @@ use AppBundle\Repository\CampagneBrhpRepository;
 use AppBundle\Entity\AgentImport;
 use AppBundle\Repository\CampagneRlcRepository;
 use AppBundle\Entity\Formation;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use AppBundle\Service\ConstanteManager;
 
-class ImportCsv extends BaseManager
+class ImportCsv
 {
     private $entete = [
         'matricule',
@@ -64,11 +67,21 @@ class ImportCsv extends BaseManager
             'durée',
     ];
 
-    private $repScripts;
+    /* @var $em EntityManager */
+    protected $em;
 
-    public function init($repScripts)
-    {
-        $this->repScripts = $repScripts;
+    protected $validator;
+
+    protected $repScripts;
+
+    public function __construct(
+            EntityManagerInterface $entityManager,
+            ValidatorInterface $validator,
+    		ConstanteManager $constanteManager
+            ) {
+        $this->em = $entityManager;
+        $this->validator = $validator;
+        $this->repScripts = $constanteManager->getRepScripts();
     }
 
     private function convert($filename, $delimiter = ';')
@@ -248,10 +261,9 @@ class ImportCsv extends BaseManager
                 if (isset($uosIndexees[$row['code uo']])) {
                     /* @var $uo UniteOrganisationnelle */
                     $uo = $uosIndexees[$row['code uo']];
-
                     $agent->setUniteOrganisationnelle($uo);
-
                     if ($uo->getPerimetreBrhp()) {
+                        // Si les campagnes BRHP existent
                         if (isset($perimetresBrhp[$uo->getPerimetreBrhp()->getId()])) {
                             $agent->setPerimetreBrhp($uo->getPerimetreBrhp());
                             $agent->setPerimetreRlc($uo->getPerimetreBrhp()->getPerimetreRlc());
@@ -260,6 +272,11 @@ class ImportCsv extends BaseManager
                             $campagneBrhp = $campagneBrhpRepository->getCampagneBrhp($campagnePnc, $uo->getPerimetreBrhp());
                             $agent->setCampagneBrhp($campagneBrhp);
                             $agent->setCampagneRlc($campagnesRlc[$agent->getPerimetreRlc()->getId()]);
+                        } else {
+                            // Si les campagnes BRHP n'existent pas encore
+                            $agent->setPerimetreBrhp($uo->getPerimetreBrhp());
+
+                            $agent->setPerimetreRlc($uo->getPerimetreBrhp()->getPerimetreRlc());
                         }
                     }
                 } else {
@@ -663,17 +680,11 @@ class ImportCsv extends BaseManager
                 $ancienne_uo = $anciennes_uos[$nouvelle_uo->getCode()];
                 $ancienne_uo->setLibelle($nouvelle_uo->getLibelle());
 
-                // Ce code présente un bug qd une UO change d'UO mère
-//                if($nouvelle_uo->getUniteOrganisationnelleMere()){
-//                    $ancienne_uo->setUniteOrganisationnelleMere($nouvelles_uos[$nouvelle_uo->getUniteOrganisationnelleMere()->getCode()]);
-//                }
-
                 $ancienne_uo->setSupprime(false);
 
                 $nouvelle_uo = $ancienne_uo;
             }
 
-            //dump($nouvelle_uo);
             $this->em->persist($nouvelle_uo);
         }
 

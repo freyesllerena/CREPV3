@@ -19,6 +19,7 @@ abstract class Competence extends GenericEntity
      *
      * @ORM\Column(name="libelle", type="text")
      * @Assert\NotBlank(message = "Libellé obligatoire")
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $libelle;
 
@@ -33,6 +34,7 @@ abstract class Competence extends GenericEntity
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $appreciation;
 

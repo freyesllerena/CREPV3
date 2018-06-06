@@ -20,7 +20,7 @@ class CampagneController extends Controller
 
         //récupérer le role de l'utilisateur
         $roleUtilisateur = $this->get('session')->get('selectedRole');
-
+        
         /* @var $utilisateurCourant Utilisateur  */
         $utilisateurCourant = $this->getUser();
         $ministere = $utilisateurCourant->getMinistere();
@@ -77,7 +77,7 @@ class CampagneController extends Controller
                 break;
 
             case EnumRole::ROLE_SHD:
-                /* @var $repository CampagneBrhpRepository */ 
+                /* @var $repository CampagneBrhpRepository */
                 $repository = $em->getRepository('AppBundle:CampagneBrhp');
                 $campagnes = $repository->findCampagnesRecentesShd($utilisateurCourant, $this->get('session')->get('selectedRole'), $max);
                 $vue = 'campagneShd/campagnesRecentes.html.twig';

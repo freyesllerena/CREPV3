@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Service\CrepManager;
 use AppBundle\Form\RechercheCampagnePncType;
+use AppBundle\Form\CampagnePncType;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * CampagnePnc controller.
@@ -56,7 +58,7 @@ class CampagnePncController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, CampagnePncManager $campagnePncManager)
     {
         $campagnePnc = new CampagnePnc();
 
@@ -73,9 +75,6 @@ class CampagnePncController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $campagnePncManager CampagnePncManager */
-            $campagnePncManager = $this->get('app.campagne_pnc_manager');
-
             $campagnePnc = $campagnePncManager->verfierDocuments($campagnePnc);
 
             $flashbagMessage = 'Campagne PNC \"'.$campagnePnc->getLibelle().'\" créée !';
@@ -102,14 +101,14 @@ class CampagnePncController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function showAction(CampagnePnc $campagnePnc, Request $request)
+    public function showAction(CampagnePnc $campagnePnc, Request $request, CrepManager $crepManager, CampagnePncManager $campagnePncManager)
     {
         $this->denyAccessUnlessGranted(CampagnePncVoter::VOIR, $campagnePnc);
 
         //On redirige vers la vue tableau de bord que si le fichier d'agents a été diffusé par l'admin ministériel
         if ($campagnePnc->getDiffusee() && !in_array($campagnePnc->getStatut(), array(EnumStatutCampagne::CREEE,
         ))) {
-            $response = $this->tableauDeBord($campagnePnc, $request);
+            $response = $this->tableauDeBord($campagnePnc, $request, $crepManager, $campagnePncManager);
         } else {
             $response = $this->show($campagnePnc, $request);
         }
@@ -154,7 +153,7 @@ class CampagnePncController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function tableauDeBord(CampagnePnc $campagnePnc, Request $request)
+    private function tableauDeBord(CampagnePnc $campagnePnc, Request $request, CrepManager $crepManager, CampagnePncManager $campagnePncManager)
     {
         $cloturerForm = $this->creerCloturerForm($campagnePnc);
         $rouvrirForm = $this->creerRouvrirForm($campagnePnc);
@@ -179,13 +178,9 @@ class CampagnePncController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $perimetre = null;
-        /*@var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
 
         $indicateurs = $crepManager->calculIndicateurs($campagnePnc, $perimetresRlc, $perimetresBrhp, null, null, $categories, $affectations, $corps);
 
-        /*@var $campagnePncManager CampagnePncManager */
-        $campagnePncManager = $this->get('app.campagne_pnc_manager');
         $historiqueIndicateurs = $campagnePncManager->getHistoriqueIndicateurs($campagnePnc);
 
         /* @var $modeleCrepRepository  ModeleCrepRepository */
@@ -212,14 +207,12 @@ class CampagnePncController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function editAction(Request $request, CampagnePnc $campagnePnc)
-    {
+    public function editAction(Request $request, CampagnePnc $campagnePnc, CampagnePncManager $campagnePncManager, ValidatorInterface $validator)
+    {	
         $this->denyAccessUnlessGranted(CampagnePncVoter::MODIFIER, $campagnePnc);
-
-        $anciensDocuments = clone $campagnePnc->getDocuments();
+        
         /* @var $utilisateur Utilisateur */
         $utilisateur = $this->getUser();
-        //$campagnePnc->setMinistere($utilisateur->getMinistere());
 
         $collectionPerimetresRlc = new ArrayCollection();
         foreach ($campagnePnc->getPerimetresRlc() as $perimetreRlc) {
@@ -227,17 +220,29 @@ class CampagnePncController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($campagnePnc);
-        $editForm = $this->createForm('AppBundle\Form\CampagnePncType', $campagnePnc, array(
+        $editForm = $this->createForm(CampagnePncType::class, $campagnePnc, array(
             'utilisateur' => $utilisateur,
             'campagnePnc' => $campagnePnc,
             'validation_groups' => ['Default', 'modification'],
         ));
 
         $editForm->handleRequest($request);
+        
+        $nouveauxDocuments = $editForm->get('nouveauxDocuments')->getData();
 
+        // Suppression des documents vides
+        /* @var $nouveauDocument Document */
+        if($nouveauxDocuments){
+	        foreach ($nouveauxDocuments as $key => $nouveauDocument){
+	        	if(!$nouveauDocument->getFile()){
+	        		unset($nouveauxDocuments[$key]);
+	        	}
+	        }
+        }
+        
         $deleteForms = $this->createDeleteDocumentForms($campagnePnc);
 
-        /** @var CampagnePnc $campagnePncDuFormulaire */
+        /* @var $campagnePncDuFormulaire CampagnePnc */
         $campagnePncDuFormulaire = $editForm->getData();
 
         if (EnumStatutCampagne::OUVERTE === $campagnePnc->getStatut()) {
@@ -250,16 +255,12 @@ class CampagnePncController extends Controller
                 }
             }
         }
-
+        
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            // Les anciens de documents ne figurent pas dans le formulaire,
-            //il faut les rajouter à l'entité sinon ils sont écrasés
-            foreach ($anciensDocuments as $ancienDocument) {
-                $campagnePnc->addDocument($ancienDocument);
+            // Ajout des nouveaux documents
+            foreach ($nouveauxDocuments as $nouveauDocument) {
+                $campagnePnc->addDocument($nouveauDocument);
             }
-
-            /* @var $campagnePncManager CampagnePncManager */
-            $campagnePncManager = $this->get('app.campagne_pnc_manager');
 
             $campagnePnc = $campagnePncManager->verfierDocuments($campagnePnc);
 
@@ -322,12 +323,9 @@ class CampagnePncController extends Controller
      * @param CampagnePnc $campagnePnc
      * @Security("has_role('ROLE_PNC')")
      */
-    public function ouvrirAction(CampagnePnc $campagnePnc)
+    public function ouvrirAction(CampagnePnc $campagnePnc, CampagnePncManager $campagnePncManager)
     {
         $this->denyAccessUnlessGranted(CampagnePncVoter::OUVRIR, $campagnePnc);
-
-        /* @var $campagnePncManager CampagnePncManager */
-        $campagnePncManager = $this->get('app.campagne_pnc_manager');
 
         // Si c'est un environnement windows (local), on ouvre la campagne et envoie les notifications directement
         if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
@@ -353,7 +351,7 @@ class CampagnePncController extends Controller
      * @param CampagnePnc $campagnePnc
      * @Security("has_role('ROLE_PNC')")
      */
-    public function cloturerAction(Request $request, CampagnePnc $campagnePnc)
+    public function cloturerAction(Request $request, CampagnePnc $campagnePnc, CampagnePncManager $campagnePncManager)
     {
         $this->denyAccessUnlessGranted(CampagnePncVoter::CLOTURER, $campagnePnc);
 
@@ -362,9 +360,6 @@ class CampagnePncController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $campagnePncManager CampagnePncManager */
-            $campagnePncManager = $this->get('app.campagne_pnc_manager');
-
             // Si c'est un environnement windows (local), on clôture la campagne et envoie les notifications directement
             if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
                 $campagnePncManager->cloturer($campagnePnc);
@@ -392,7 +387,7 @@ class CampagnePncController extends Controller
      * @param CampagnePnc $campagnePnc
      * @Security("has_role('ROLE_PNC')")
      */
-    public function rouvrirAction(Request $request, CampagnePnc $campagnePnc)
+    public function rouvrirAction(Request $request, CampagnePnc $campagnePnc, CampagnePncManager $campagnePncManager)
     {
         $this->denyAccessUnlessGranted(CampagnePncVoter::ROUVRIR, $campagnePnc);
 
@@ -401,9 +396,6 @@ class CampagnePncController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $campagnePncManager CampagnePncManager */
-            $campagnePncManager = $this->get('app.campagne_pnc_manager');
-
             // Si c'est un environnement windows (local), on rouvre la campagne et envoie les notifications directement
             if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
                 $campagnePncManager->rouvrir($campagnePnc);
@@ -431,7 +423,7 @@ class CampagnePncController extends Controller
      * @param CampagnePnc $campagnePnc
      * @Security("has_role('ROLE_PNC')")
      */
-    public function fermerAction(Request $request, CampagnePnc $campagnePnc)
+    public function fermerAction(Request $request, CampagnePnc $campagnePnc, CampagnePncManager $campagnePncManager)
     {
         $this->denyAccessUnlessGranted(CampagnePncVoter::FERMER, $campagnePnc);
 
@@ -440,9 +432,6 @@ class CampagnePncController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $campagnePncManager CampagnePncManager */
-            $campagnePncManager = $this->get('app.campagne_pnc_manager');
-
             // Si c'est un environnement windows (local), on ferme la campagne et envoie les notifications directement
             if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
                 $campagnePncManager->fermer($campagnePnc);

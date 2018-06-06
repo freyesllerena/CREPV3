@@ -9,19 +9,20 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Listener responsible to change the redirection at the end of the password change.
  */
 class PasswordChangeListener implements EventSubscriberInterface
 {
-    private $security_context;
+    private $tokenStorage;
     private $router;
     private $usermanager;
 
-    public function __construct(UrlGeneratorInterface $router, TokenStorage $security_context, UserManager $usermanager)
+    public function __construct(UrlGeneratorInterface $router, TokenStorageInterface $tokenStorage, UserManager $usermanager)
     {
-        $this->security_context = $security_context;
+        $this->tokenStorage = $tokenStorage;
         $this->router = $router;
         $this->usermanager = $usermanager;
     }
@@ -41,7 +42,7 @@ class PasswordChangeListener implements EventSubscriberInterface
      */
     public function onChangePasswordSuccess(FormEvent $event)
     {
-        $user = $this->security_context->getToken()->getUser();
+        $user = $this->tokenStorage->getToken()->getUser();
         if ($user->hasRole('ROLE_FORCEPASSWORDCHANGE')) {
             $user->removeRole('ROLE_FORCEPASSWORDCHANGE');
             $this->usermanager->updateUser($user);

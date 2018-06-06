@@ -11,7 +11,6 @@ use AppBundle\Entity\Rlc;
 use AppBundle\Entity\BrhpConsult;
 use AppBundle\Twig\AppExtension;
 use AppBundle\Security\BrhpConsultVoter;
-use AppBundle\Service\BaseManager;
 use AppBundle\Service\BrhpConsultManager;
 
 /**
@@ -24,14 +23,14 @@ class BrhpConsultController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function indexAction()
+    public function indexAction(BrhpConsultManager $brhpConsultManager)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var $utilisateur Utilisateur */
         $utilisateur = $this->getUser();
 
-        if ($utilisateur->hasRole('ROLE_ADMIN')) {
+        if ('ROLE_ADMIN' === $this->get('session')->get('selectedRole')) {
             $perimetresRlc = $em->getRepository('AppBundle:PerimetreRlc')->findAll();
         } else {
             /* @var $rlc Rlc */
@@ -40,15 +39,13 @@ class BrhpConsultController extends Controller
             $perimetresRlc = $rlc->getPerimetresRlc();
         }
 
-        /* @var $brhpConsultManager BrhpConsultManager */
-        $brhpConsultManager = $this->get('app.brhp_consult_manager');
         $listeBrhpsConsult = $brhpConsultManager->getBrhpsConsult($perimetresRlc);
 
         $deleteForms = $this->createDeleteForms($listeBrhpsConsult);
 
         return $this->render('BrhpConsult/index.html.twig', array(
             'personnes' => $listeBrhpsConsult,
-        	'deleteForms' => $deleteForms,
+            'deleteForms' => $deleteForms,
             'routePrefix' => 'brhp_consult',
             'perimetresRlc' => $perimetresRlc,
         ));
@@ -59,7 +56,7 @@ class BrhpConsultController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, BrhpConsultManager $brhpConsultManager)
     {
         $brhpConsult = new BrhpConsult();
 
@@ -78,10 +75,7 @@ class BrhpConsultController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $this->isUnique($rlc->getPerimetresRlc(), $form)) {
-            /* @var $brhpConsultManager BrhpConsultManager */
-            $brhpConsultManager = $this->get('app.brhp_consult_manager');
-
+        if ($form->isSubmitted() && $form->isValid() && $this->isUnique($rlc->getPerimetresRlc(), $form, $brhpConsultManager)) {
             $brhpConsultManager->creerBrhpConsult($brhpConsult);
 
             $this->get('session')->getFlashBag()->set('notice', 'BRHP en consulation \"'.AppExtension::identite($brhpConsult).'\" créé !');
@@ -94,10 +88,8 @@ class BrhpConsultController extends Controller
         ));
     }
 
-    private function isUnique($perimetresRlc, $form)
+    private function isUnique($perimetresRlc, $form, BrhpConsultManager $brhpConsultManager)
     {
-        /* @var $brhpConsultManager BrhpConsultManager */
-        $brhpConsultManager = $this->get('app.brhp_consult_manager');
         $listeBrhpsConsult = $brhpConsultManager->getBrhpsConsult($perimetresRlc);
 
         $nouveauBrhpConsult = $form->getData();
@@ -118,7 +110,7 @@ class BrhpConsultController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function editAction(Request $request, BrhpConsult $brhpConsult)
+    public function editAction(Request $request, BrhpConsult $brhpConsult, BrhpConsultManager $brhpConsultManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(BrhpConsultVoter::EDIT, $brhpConsult);
@@ -141,8 +133,6 @@ class BrhpConsultController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            /* @var $brhpConsultManager BrhpConsultManager */
-            $brhpConsultManager = $this->get('app.brhp_consult_manager');
             $brhpConsultManager->updateBrhpConsult($brhpConsult, $anciensPerimetres, $rlc->getPerimetresRlc());
 
             $this->get('session')->getFlashBag()->set('notice', 'BRHP consultation\"'.AppExtension::identite($brhpConsult).'\" modifié !');
@@ -161,7 +151,7 @@ class BrhpConsultController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function deleteAction(Request $request, BrhpConsult $brhpConsult)
+    public function deleteAction(Request $request, BrhpConsult $brhpConsult, BrhpConsultManager $brhpConsultManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(BrhpConsultVoter::DELETE, $brhpConsult);
@@ -175,11 +165,9 @@ class BrhpConsultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
-            /* @var $brhpConsultManager BrhpConsultManager */
-            $brhpConsultManager = $this->get('app.brhp_consult_manager');
             $brhpConsultManager->delete($brhpConsult, $rlc->getPerimetresRlc());
 
-            $this->get('session')->getFlashBag()->set('notice', 'BRHP \"' . AppExtension::identite($brhpConsult) . '\" supprimé !');
+            $this->get('session')->getFlashBag()->set('notice', 'BRHP \"'.AppExtension::identite($brhpConsult).'\" supprimé !');
         }
 
         return $this->redirectToRoute('brhp_consult_index');
@@ -203,7 +191,6 @@ class BrhpConsultController extends Controller
 
     /**
      * Crée un tableau de formulaires de suppression de BrhpConsult.
-     *
      */
     private function createDeleteForms($listeBrhpsConsult)
     {

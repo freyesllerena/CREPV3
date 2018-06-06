@@ -2,7 +2,7 @@
 <table>
 	<tr>
 		<td width="34%">
-			<img src="{{ asset('bundles/framework/images/logo_mcc.jpg') }}" alt="MCC" width="100" height="126">
+			<img src="{{ asset('images/logo_mcc.jpg') }}" alt="MCC" width="100" height="126">
 		</td>
 	</tr>
 </table>
@@ -190,7 +190,7 @@ Bilan et réalisation des objectifs fixés de l’année écoulée*
 	
 		{% for objectif in crep.objectifsEvalues %}
 			{% set statuts = ['&#9744;', '&#9744;', '&#9744;', '&#9744;', '&#9744;'] %}
-			{% set statuts = setElementArray(statuts, objectif.resultatObtenu, '&#9745;')  %} {# <==> status[objectif.resultatObtenu] = '&#9745;' #}
+			{% set status = status|merge({(objectif.resultatObtenu): '&#9745;'}) %} {# <==> status[objectif.resultatObtenu] = '&#9745;' #}
 			<tr>
 				<td colspan="2" width="75%" bgcolor="#E6E6E6" style="border:1px #000000 solid;"><strong>Intitulé de l’objectif : {{ objectif.libelle|nl2br}}</strong></td>
 				<td  width="25%" bgcolor="#E6E6E6" style="border:1px #000000 solid;"><strong>Réalisation</strong></td>
@@ -738,7 +738,7 @@ Bilan et réalisation des objectifs fixés de l’année écoulée*
 		<td colspan="2" bgcolor="#FFFFFF">
 			{% set avisAvancement = ['&#9744;', '&#9744;', '&#9744;', '&#9744;'] %}
 			{% if crep.agent and crep.agent.ah and crep.titulaire  %}
-				{% set avisAvancement = setElementArray(avisAvancement, crep.avisSurAvancementGrade, '&#9745;' ) %}
+				{% set avisAvancement = avisAvancement|merge({(crep.avisSurAvancementGrade): '&#9745;'}) %}
 			{% endif %}
 			{{ avisAvancement[0] | raw }} TRÈS FAVORABLE <br/>
 			{{ avisAvancement[1] | raw }} FAVORABLE <br/>
@@ -796,7 +796,7 @@ Bilan et réalisation des objectifs fixés de l’année écoulée*
 		<td colspan="2" bgcolor="#FFFFFF">
 			{% set avisAvancement = ['&#9744;', '&#9744;', '&#9744;', '&#9744;'] %}
 			{% if crep.agent and crep.agent.ah and crep.titulaire %}
-				{% set avisAvancement = setElementArray(avisAvancement, crep.avisSurAvancementCorps, '&#9745;' ) %}
+				{% set avisAvancement = avisAvancement|merge({(crep.avisSurAvancementCorps): '&#9745;'}) %}
 			{% endif %}
 			{{ avisAvancement[0] | raw }} TRÈS FAVORABLE <br/>
 			{{ avisAvancement[1] | raw }} FAVORABLE <br/>

@@ -15,12 +15,13 @@
           <td>{{ campagnePnc.libelle }}</td>
         </tr>
         <tr>
-          <th scope="row">Périmètre RLC</th>
+          <th scope="row">Périmètres RLC</th>
           <td>
-              {% for perimetreRlc in campagnePnc.perimetresRlc %}
-            	<a href="{{ path('perimetre_rlc_show', {'id': perimetreRlc.id}) }}">{{ perimetreRlc.libelle }}</a>
-            	{% if not loop.last %}, {% endif %}
-              {% endfor  %}
+				<ul class="list-unstyled project_files">
+					{% for perimetreRlc in campagnePnc.perimetresRlc %}
+						<li><a href="{{ path('perimetre_rlc_show', { 'id': perimetreRlc.id}) }}" title="Détail"> {{ perimetreRlc.libelle }}</a> </li>
+					{% endfor %}
+				</ul>
           </td>
         </tr>
         <tr>

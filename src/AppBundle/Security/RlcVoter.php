@@ -7,6 +7,7 @@ use AppBundle\Entity\Utilisateur;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 class RlcVoter extends Voter
 {
@@ -17,7 +18,7 @@ class RlcVoter extends Voter
     const MODIFIER = 'modifier_rlc';
     const SUPPRIMER = 'supprimer_rlc';
 
-    public function __construct($decisionManager)
+    public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;
     }

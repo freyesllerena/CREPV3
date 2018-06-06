@@ -1,14 +1,14 @@
 <?php
 
 namespace AppBundle\Entity\Crep\CrepEdd;
+
 use AppBundle\Entity\Competence;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
- * CrepEddCompetenceManagerialeExclu
+ * CrepEddCompetenceManagerialeExclu.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepositery\CrepEddRepositery\CrepEddCompetenceManagerialeExcluRepository")
  */
@@ -31,20 +31,22 @@ class CrepEddCompetenceManageriale extends Competence
      public function __construct($libelle){
 
         $this->libelle = $libelle;
+    }
 
-     }
-
-    public function getCrep() {
+    public function getCrep()
+    {
         return $this->crep;
     }
 
-    public function setCrep($crep) {
+    public function setCrep($crep)
+    {
         $this->crep = $crep;
+
         return $this;
-  }
+    }
 
     /**
-     * @return int
+     * @Assert\Callback
      */
     public function getNiveauRequis()
     {
@@ -58,6 +60,4 @@ class CrepEddCompetenceManageriale extends Competence
     {
         $this->niveauRequis = $niveauRequis;
     }
-
-
 }

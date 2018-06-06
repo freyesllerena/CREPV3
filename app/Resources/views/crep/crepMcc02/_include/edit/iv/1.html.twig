@@ -28,7 +28,7 @@
 {% endfor %}
 
 <br>
-{# Competences Action #}
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
@@ -63,13 +63,14 @@
                         {{ crep.competencesActions[loop.index0].libelle }}
                     </td>
                     {{ form_widget(competence) }}
-                    {#{{ form_widget(competence, {'attr': {'class': 'has-error'}}) }}#}
                 </tr>
             {% endfor %}
 
             </tbody>
         </table>
     </div>
+</div>
+<div class="row">
     {% set libelleObservationCa = 'true' %}
     {% set classeCaExceptionnelle = 'col-md-12 col-sm-12 col-xs-12' %}
     {% for errorIndex, error in errors %}
@@ -86,13 +87,14 @@
     {% endfor %}
     <div class="{{ classeCaExceptionnelle }}">
         {% if  libelleObservationCa == 'true' %}
-        <label>Observations liées à l'action :</label>
+            <label>Observations liées à l'action :</label>
         {% endif %}
         {{ form_row(form.observationsCompetencesActions, { 'label': false}) }}
     </div>
 </div>
 <br>
-{# Competences Relation #}
+<br>
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
@@ -154,7 +156,7 @@
     </div>
 </div>
 <br>
-{# Competences Situation #}
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">

@@ -1,4 +1,5 @@
 {% extends 'index.base.html.twig' %}
+{% import "macro/app.html.twig" as macro %}
 
 {% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}
 
@@ -8,15 +9,6 @@
 
 
 {% block content %}
-
-{# 	<div class="row">#}
-{#     	<div class="col-md-12 col-sm-12 col-xs-12">#}
-{# 			<div class="alert alert-warning alert-dismissible fade in" role="alert">#}
-{# 				<strong>Attention : </strong> Le nouveau référentiel des formations annulera et remplacera le référentiel existant.#}
-{# 			</div>#}
-{# 		</div>#}
-{# 	</div>#}
-
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal form-label-left'}})}}
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Form\Crep\CrepMcc02\Formations;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,61 +22,53 @@ class CrepMcc02FormationType extends AbstractType
             array('label' => false)
         )
             ->add('commentaires')
-            ->add('demandeeAgent', ChoiceType::class, [
-                'choices' => [
-                    'Oui' => 1,
-                    'Non' => 0,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+            ->add('demandeeAgent', CheckboxType::class, [
+//                'choices' => [
+//                    'Oui' => 1,
+//                    'Non' => 0,
+//                ],
+////                'expanded' => false,
+//                'multiple' => false,
                 'required' => false,
-                'placeholder' => null,
             ])
-            ->add('avisShd', ChoiceType::class, [
-                'choices' => [
-                    'Oui' => 1,
-                    'Non' => 0,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+            ->add('avisShd', CheckboxType::class, [
+//                'choices' => [
+//                    'Oui' => 1,
+//                    'Non' => 0,
+//                ],
+//                'expanded' => false,
+//                'multiple' => false,
                 'required' => false,
-                'placeholder' => null,
             ])
-            ->add('propositionAh', ChoiceType::class, [
-                'choices' => [
-                    'Oui' => 1,
-                    'Non' => 0,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+            ->add('propositionAh', CheckboxType::class, [
+//                'choices' => [
+//                    'Oui' => 1,
+//                    'Non' => 0,
+//                ],
+//                'expanded' => false,
+//                'multiple' => false,
                 'required' => false,
-                'placeholder' => null,
             ])
-            ->add('cpf', ChoiceType::class, [
-                'choices' => [
-                    'Oui' => 1,
-                    'Non' => 0,
-                ],
-                'expanded' => true,
-                'multiple' => false,
+            ->add('cpf', CheckboxType::class, [
+//                'choices' => [
+//                    'Oui' => 1,
+//                    'Non' => 0,
+//                ],
+//                'expanded' => false,
+//                'multiple' => false,
                 'required' => false,
-                'placeholder' => null,
             ])
             ->add('echeance', ChoiceType::class, [
                 'choices' => [
                     $anneeEvaluee + 1 => $anneeEvaluee + 1,
                     $anneeEvaluee + 2 => $anneeEvaluee + 2,
                 ],
-                'expanded' => true,
+                'expanded' => false,
                 'multiple' => false,
+                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px;'],
                 'required' => false,
-                'placeholder' => null,
+                'placeholder' => '',
             ]);
-
-
-
-
-
     }
 
     /**

@@ -43,7 +43,7 @@
 {%- endblock percent_widget %}
 
 {% block tel_widget %}
-    {%- set type = type|default('text') -%}
+    {%- set type = type|default('text') -%}   
     {%- set icone="fa fa-phone"  %}
         {{- block('form_widget_simple') -}}
         <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
@@ -77,7 +77,7 @@
     {% if widget == 'single_text' %}
    		<div class="input-group">
 			<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-			{% set attr = attr|merge({placeholder : (attr.placeholder|default('JJ/MM/AAAA')), class: (attr.class|default('date-picker'))}) -%}
+			{% set attr = attr|merge({placeholder : (attr.placeholder|default('JJ/MM/AAAA')), class: (attr.class|default('date-picker'))}) -%}  
         	{{- block('form_widget_simple') -}}
         </div>
     {% else -%}
@@ -142,7 +142,7 @@
 {#     {% set parent_label_class = parent_label_class|default('') -%}#}
     {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' flat')|trim}) -%}
-
+    
     {% if 'checkbox-inline' in parent_label_class %}
         {{- form_label(form, null, { widget: parent() }) -}}
     {% else -%}
@@ -241,7 +241,7 @@
 
 {% block checkbox_row -%}
     <div class="form-group{% if not valid %} has-error{% endif %}">
-        {{- form_errors(form) -}}
+        {{- form_errors(form) -}}    
         {{- form_widget(form) -}}
     </div>
 {%- endblock checkbox_row %}
@@ -270,8 +270,8 @@
 			<label class="control-label has-error" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
         {%- endfor -%}
 	</div>
-
+    
     {%- endif %}
-
-
+    
+    
 {%- endblock form_errors %}

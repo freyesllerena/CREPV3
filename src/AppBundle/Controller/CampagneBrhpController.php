@@ -39,7 +39,7 @@ class CampagneBrhpController extends Controller
      *
      * @Security("has_role('ROLE_BRHP')")
      */
-    public function editAction(Request $request, CampagneBrhp $campagneBrhp)
+    public function editAction(Request $request, CampagneBrhp $campagneBrhp, CampagneBrhpManager $campagneBrhpManager)
     {
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::MODIFIER, $campagneBrhp);
 
@@ -57,8 +57,6 @@ class CampagneBrhpController extends Controller
                 $campagneBrhp->addDocument($ancienDocument);
             }
 
-            /* @var $campagneBrhpManager CampagneBrhpManager */
-            $campagneBrhpManager = $this->get('app.campagne_brhp_manager');
             $campagneBrhp = $campagneBrhpManager->verfierDocuments($campagneBrhp);
             $campagneBrhpManager->sauvegarder($campagneBrhp);
             $this
@@ -86,10 +84,10 @@ class CampagneBrhpController extends Controller
 
     /**
      * Rediriger l'utilisateur vers la vue appropriée selon le statut de la campagne.
-     *
+     * @param $campagneBrhp CampagneBrhp
      * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      */
-    public function showAction(CampagneBrhp $campagneBrhp, Request $request)
+    public function showAction(CampagneBrhp $campagneBrhp, Request $request, CrepManager $crepManager, CampagneBrhpManager $campagneBrhpManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::VOIR_BRHP, $campagneBrhp);
@@ -101,8 +99,6 @@ class CampagneBrhpController extends Controller
 
         $agentsEvaluables = $agentRepository->getAgentsEvaluables($campagneBrhp);
 
-        /*@var $campagnePncManager CampagneBrhpManager */
-        $campagneBrhpManager = $this->get('app.campagne_brhp_manager');
         $historiqueIndicateurs = $campagneBrhpManager->getHistoriqueIndicateurs($campagneBrhp);
 
         $rouvrirForm = $this->creerRouvrirForm($campagneBrhp);
@@ -120,8 +116,6 @@ class CampagneBrhpController extends Controller
             $corps = $rechercheForm->getData()['corps'];
         }
 
-        /*@var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
         $indicateurs = $crepManager->calculIndicateurs($campagneBrhp, [], [], null, null, $categories, $affectations, $corps);
 
         /* @var $ministere Ministere */
@@ -170,7 +164,7 @@ class CampagneBrhpController extends Controller
      * @param CampagnePnc $campagnePnc
      * @Security("has_role('ROLE_BRHP')")
      */
-    public function rouvrirAction(Request $request, CampagneBrhp $campagneBrhp)
+    public function rouvrirAction(Request $request, CampagneBrhp $campagneBrhp, CampagneBrhpManager $campagneBrhpManager)
     {
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::ROUVRIR, $campagneBrhp);
 
@@ -179,9 +173,6 @@ class CampagneBrhpController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $campagneBrhp CampagneBrhpManager */
-            $campagneBrhpManager = $this->get('app.campagne_brhp_manager');
-
             // Si c'est un environnement windows (local), on clôture la campagne et envoie les notifications directement
             if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
                 $campagneBrhpManager->rouvrir($campagneBrhp);
@@ -210,7 +201,7 @@ class CampagneBrhpController extends Controller
      *
      * @param CampagneBrhp $campagneBrhp
      */
-    public function ouvrirShdAction(Request $request, CampagneBrhp $campagneBrhp)
+    public function ouvrirShdAction(Request $request, CampagneBrhp $campagneBrhp, CampagneBrhpManager $campagneBrhpManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::OUVRIR_SHD, $campagneBrhp);
@@ -220,9 +211,6 @@ class CampagneBrhpController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $campagneBrhpManager CampagneBrhpManager */
-            $campagneBrhpManager = $this->get('app.campagne_brhp_manager');
-
             // Si c'est un environnement windows (local), on ouvre la campagne et envoie les notifications directement
             if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
                 $campagneBrhpManager->ouvrirShd($campagneBrhp);
@@ -304,13 +292,10 @@ class CampagneBrhpController extends Controller
      *
      * @param CampagneBrhp $campagneBrhp
      */
-    public function exporterFormationsAction(CampagneBrhp $campagneBrhp)
+    public function exporterFormationsAction(CampagneBrhp $campagneBrhp, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::EXPORTER_FORMATIONS, $campagneBrhp);
-
-        /* @var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
 
         $zip = $crepManager->exporterFormations($campagneBrhp);
 
@@ -333,7 +318,7 @@ class CampagneBrhpController extends Controller
      *
      * @param CampagneBrhp $campagneBrhp
      */
-    public function exporterCrepsFinalisesAction(Request $request, CampagneBrhp $campagneBrhp)
+    public function exporterCrepsFinalisesAction(Request $request, CampagneBrhp $campagneBrhp, CrepManager $crepManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::EXPORTER_CREPS_FINALISES, $campagneBrhp);
@@ -349,9 +334,6 @@ class CampagneBrhpController extends Controller
 
         //On récupère l'ensemble des agents ayant un CREP finalisé pour un rôle (BRHP, N+1 ou N+2) donné
         $agentsAyantCrepFinalise = $agentRepository->getAgentsAyantCrepFinalise($campagneBrhp, $role, $evaluateur);
-
-        /* @var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
 
         $zip = $crepManager->exporterCrepsFinalises($agentsAyantCrepFinalise);
 

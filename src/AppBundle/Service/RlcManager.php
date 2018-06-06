@@ -9,8 +9,12 @@ use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Rlc;
 use AppBundle\Entity\CampagneRlc;
 use AppBundle\Repository\CampagneRlcRepository;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class RlcManager extends BaseManager
+class RlcManager
 {
     protected $utilisateurManager;
 
@@ -18,11 +22,27 @@ class RlcManager extends BaseManager
 
     protected $personneManager;
 
-    public function init(UtilisateurManager $utilisateurManager, UserManagerInterface $fos_user_manager, PersonneManager $personneManager)
+    protected $tokenStorage;
+
+    protected $session;
+
+    protected $em;
+
+    public function __construct(
+            UtilisateurManager $utilisateurManager,
+            UserManagerInterface $fos_user_manager,
+            PersonneManager $personneManager,
+            TokenStorageInterface $tokenStorage,
+    		EntityManagerInterface $entityManager,
+            SessionInterface $session
+            )
     {
         $this->utilisateurManager = $utilisateurManager;
         $this->fos_user_manager = $fos_user_manager;
         $this->personneManager = $personneManager;
+        $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
+        $this->em = $entityManager;
     }
 
     /**
@@ -128,6 +148,24 @@ class RlcManager extends BaseManager
     public function getRlc(Ministere $ministere)
     {
         return $this->getRepository()->findByMinistere($ministere);
+    }
+
+    /**
+     * Retourne l'ensemble des RLC d'un ministère.
+     *
+     * @param Ministere $ministere
+     *
+     * @return Collection Rlc
+     */
+    public function getRlcs()
+    {
+        if ('ROLE_ADMIN' === $this->session->get('selectedRole')) {
+            return $this->em->getRepository('AppBundle:Rlc')->findAll();
+        } else {
+            $ministere = $this->tokenStorage->getToken()->getUser()->getMinistere();
+
+            return $this->em->getRepository('AppBundle:Rlc')->findByMinistere($ministere);
+        }
     }
 
     /**

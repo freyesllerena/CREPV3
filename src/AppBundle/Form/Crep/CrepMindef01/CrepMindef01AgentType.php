@@ -1,9 +1,10 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Crep\CrepMindef01;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Form\Crep\CrepType;
 
 class CrepMindef01AgentType extends CrepType
 {

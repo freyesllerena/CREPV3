@@ -480,7 +480,7 @@ class CampagnePnc extends Campagne
         }
 
         if ($this->dateDebut && $this->dateDebutEntretien && !($this->dateDebut <= $this->dateDebutEntretien)) {
-            $context->buildViolation('La date de début des entretiens doit être postérieure à la date d\'ouverture de campagne')
+            $context->buildViolation('La date de début des entretiens ne doit pas être antérieure à la date de début de campagne')
             ->atPath('dateDebutEntretien')
             ->addViolation();
         }

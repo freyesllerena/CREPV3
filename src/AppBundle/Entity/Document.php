@@ -49,7 +49,7 @@ class Document extends GenericEntity
      *
      * @Assert\File(maxSize="12M", mimeTypes={"application/pdf"}, mimeTypesMessage="Le fichier chargé est corrompu",  groups={"chargement_crep_pdf"})
      *
-     * @Assert\NotBlank(message = "Champ obligatoire")
+     * @ Assert\NotBlank(message = "Champ obligatoire")
      */
     protected $file;
 
@@ -330,5 +330,16 @@ class Document extends GenericEntity
                 ->addViolation();
             }
         }
+    }
+    
+    /**
+     * @Assert\Callback(groups = {"agent_edit", "Default"})
+     */
+    public function validateFile(ExecutionContextInterface $context){
+    	if(null === $this->getId() && null === $this->file){
+    		$context->buildViolation('Champ obligatoire')
+    		->atPath('file')
+    		->addViolation();
+    	}
     }
 }

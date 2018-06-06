@@ -99,7 +99,7 @@
 	{% if crep.objectifsEvalues | length > 0 %}
 		{% for objectif in crep.objectifsEvalues %}
 			{% set echelleEvaluation = ['&#9744;', '&#9744;', '&#9744;', '&#9744;'] %}
-			{% set echelleEvaluation = setElementArray(echelleEvaluation, objectif.resultatObtenu, '&#9745;')  %} {# <==> echelleEvaluation[objectif.resultatObtenu] = '&#9745;' #}
+			{% set echelleEvaluation = echelleEvaluation|merge({(objectif.resultatObtenu): '&#9745;'}) %} {# <==> echelleEvaluation[objectif.resultatObtenu] = '&#9745;' #}
 			<tr>
 				<td class="bordered">
 					{{ objectif.libelle | nl2br}} 

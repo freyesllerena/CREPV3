@@ -3,23 +3,24 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Ministere;
-use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class PerimetreRlcManager extends BaseManager
+class PerimetreRlcManager
 {
-    protected $utilisateurManager;
+    protected $tokenStorage;
 
-    /* @var $repository RLCRepository */
-    protected $repository;
+    protected $session;
 
-    protected $fos_user_manager;
+    protected $em;
 
-    public function init(UtilisateurManager $utilisateurManager, UserManagerInterface $fos_user_manager)
+    public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, SessionInterface $session)
     {
-        //call_user_func_array(array($this, 'parent::__construct'), func_get_args());
-        $this->utilisateurManager = $utilisateurManager;
-        $this->fos_user_manager = $fos_user_manager;
-        $this->repository = $this->em->getRepository('AppBundle:PerimetreRlc');
+        $this->tokenStorage = $tokenStorage;
+        $this->session = $session;
+        $this->em = $entityManager;
     }
 
     /**
@@ -29,6 +30,17 @@ class PerimetreRlcManager extends BaseManager
      */
     public function getPerimetreRlc(Ministere $ministere)
     {
-        return $this->repository->findByMinistere($ministere, ['libelle' => 'asc']);
+        return $this->em->getRepository('AppBundle:PerimetreRlc')->findByMinistere($ministere, ['libelle' => 'asc']);
+    }
+
+    public function getPerimetresRlc()
+    {
+        if ('ROLE_ADMIN' === $this->session->get('selectedRole')) {
+            return $this->em->getRepository('AppBundle:PerimetreRlc')->findAll();
+        } else {
+            $ministere = $this->tokenStorage->getToken()->getUser()->getMinistere();
+
+            return $this->em->getRepository('AppBundle:PerimetreRlc')->findByMinistere($ministere, ['libelle' => 'asc']);
+        }
     }
 }

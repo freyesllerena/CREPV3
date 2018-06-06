@@ -22,6 +22,9 @@ use AppBundle\Repository\UtilisateurRepository;
 use AppBundle\Security\UtilisateurVoter;
 use AppBundle\Service\AppMailer;
 use AppBundle\Util\Util;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use AppBundle\Service\UtilisateurManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Utilisateur controller.
@@ -43,25 +46,20 @@ class UtilisateurController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, UtilisateurManager $utilisateurManager, EventDispatcherInterface $eventDispatcher)
     {
         $utilisateur = new Utilisateur();
 
         $form = $this->createForm('AppBundle\Form\UtilisateurType', $utilisateur);
         $form->handleRequest($request);
 
-        /* @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface*/
-        $dispatcher = $this->get('event_dispatcher');
-
         $event = new GetResponseUserEvent($utilisateur, $request);
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+        $eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // SUCCESS event: form is valid, and before saving
             $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
-            $utilisateurManager = $this->get('utilisateur_manager');
+            $eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
             $utilisateurManager->creer($utilisateur);
             $this->get('session')->getFlashBag()->set('notice', 'Utilisateur \"'.$utilisateur->getEmail().'\" créé !');
@@ -311,9 +309,9 @@ class UtilisateurController extends Controller
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function choixRoleAction(Request $request)
+    public function choixRoleAction(Request $request, TokenStorageInterface $tokenStorage)
     {
-        $form = $this->createForm(ChoixRoleType::class);
+        $form = $this->createForm(ChoixRoleType::class, null, ['tokenStorage' => $tokenStorage]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -327,7 +325,6 @@ class UtilisateurController extends Controller
             $loggedInUser->removeAllRoles();
             $loggedInUser->addRole($role);
             $token = new UsernamePasswordToken($loggedInUser, null, 'main', $loggedInUser->getRoles());
-            $tokenStorage = $this->get('security.token_storage');
             $tokenStorage->setToken($token);
 
             // On enregistre le role sélectionné dans la session
@@ -354,7 +351,7 @@ class UtilisateurController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function choixUtilisateurAction(Request $request)
+    public function choixUtilisateurAction(Request $request, TokenStorageInterface $tokenStorage)
     {
         $form = $this->createForm(ChoixUtilisateurType::class, ['utilisateur' => $this->getUser()]);
         $form->handleRequest($request);
@@ -365,9 +362,8 @@ class UtilisateurController extends Controller
             $switchUtilisateur = $form->get('utilisateur')->getData();
 
             $token = new UsernamePasswordToken($switchUtilisateur, null, 'main', $switchUtilisateur->getRoles());
-            $tokenStorage = $this->get('security.token_storage');
             $tokenStorage->setToken($token);
-            
+
             // On invalide le role sélectionné (au cas où une seconde session était active)
             $request->getSession()->remove('selectedRole');
 
@@ -412,6 +408,7 @@ class UtilisateurController extends Controller
         // Récupérer le role de l'utilisateur connecté
         $roleSelected = $this->get('session')->get('selectedRole');
 
+        $ministere = null;
         if ('ROLE_ADMIN' == $roleSelected) {
             $ministere = null;
         } elseif ('ROLE_ADMIN_MIN' == $roleSelected) {
@@ -482,7 +479,7 @@ class UtilisateurController extends Controller
     /**
      * Fonction appelée pour renvoyer le mail de création de compte un utilisateur.
      */
-    public function renvoiMailCreationCompteAction(Request $request, Utilisateur $utilisateur)
+    public function renvoiMailCreationCompteAction(Request $request, Utilisateur $utilisateur, AppMailer $appMailer)
     {
         //Voter
         $this->denyAccessUnlessGranted(UtilisateurVoter::RENVOYER_MAIL_CREATION_COMPTE, $utilisateur);
@@ -492,8 +489,6 @@ class UtilisateurController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $appMailer AppMailer */
-            $appMailer = $this->get('app.mailer');
             $appMailer->sendConfirmationEmailMessage($utilisateur);
 
             $this->get('session')->getFlashBag()->set('notice', 'Email renvoyé !');

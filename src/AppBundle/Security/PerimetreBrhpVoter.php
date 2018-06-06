@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use AppBundle\Entity\PerimetreBrhp;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Entity\Brhp;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PerimetreBrhpVoter extends Voter
 {
@@ -29,7 +32,7 @@ class PerimetreBrhpVoter extends Voter
     const VOIR = 'voir_perimetre_brhp';
     const SUPPRIMER = 'supprimer_perimetre_brhp';
 
-    public function __construct($decisionManager, EntityManager $em, Session $session)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->em = $em;
         $this->decisionManager = $decisionManager;

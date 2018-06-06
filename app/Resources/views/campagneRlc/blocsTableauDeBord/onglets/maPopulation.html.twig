@@ -13,8 +13,17 @@
             		<option value="0">Non</option>
             	</select>
             </th>
-            <th class="hasinput" width="230px">
+            <th class="hasinput" width="107px">
             	<select data-column="6" class="form-control search-input-text">
+            		<option value="" selected="selected"></option>
+            		<option value="0">En cours</option>
+                    <option value="1">Validé</option>
+                    <option value="2">En erreur</option>
+                    <option value="3">Rejeté</option>
+            	</select>
+            </th>            
+            <th class="hasinput" width="232px">
+            	<select data-column="7" class="form-control search-input-text">
             		<option value="" selected="selected"></option>
             		<option value="0">Non renseigné</option>
             		<option value="1">En cours de rédaction</option>
@@ -27,7 +36,7 @@
             		<option value="8">Cas d'absence</option>
             	</select>
             </th>
-			<th width="73px"></th>            
+			<th colspan="2"></th>      
         </tr>
         
 		<tr>
@@ -37,9 +46,10 @@
 			<th>N+2</th>
 			<th>Affectation</th>
 			<th>Evaluable</th>
+			<th>Statut</th>
 			<th>Avancement du CREP</th>
 			<th class="text-center" style="width: 60px">CREP</th>
-			<th>Actions</th>
+			<th style="width: 80px;">Actions</th>
 		</tr>
 	</thead>
 </table>

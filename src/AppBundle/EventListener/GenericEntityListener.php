@@ -2,31 +2,24 @@
 
 namespace AppBundle\EventListener;
 
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
-use FOS\UserBundle\Doctrine\UserManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\GenericEntityInterface;
 use AppBundle\Entity\Utilisateur;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Custom login listener.
  */
 class GenericEntityListener
 {
-    private $securityContext;
+    protected $tokenStorage;
 
     /**
      * Constructor.
-     *
-     * @param AuthorizationChecker $authorizationChecker
-     * @param Doctrine             $doctrine
-     * @param UserManager          $userManager
-     * @param Parametre_general    $nbConnexionsAvantBlocage
      */
-    public function __construct($securityContext)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
     }
 
     private function logAction(LifecycleEventArgs $args)
@@ -39,7 +32,7 @@ class GenericEntityListener
         }
 
         //Si l'action a été lancée depuis une commande le currentToken == null
-        $currentToken = $this->securityContext->getToken();
+        $currentToken = $this->tokenStorage->getToken();
         $utilisateur = null;
 
         //Si le currentToken est différent de null on récupère l'utilisateur du token
@@ -51,11 +44,13 @@ class GenericEntityListener
         }
 
         // Log de l'action de modification
-        $entity->setModifiePar($utilisateur);
-        $entity->setDateModification(new \DateTime('now'));
-
+        if($utilisateur){
+        	$entity->setModifiePar($utilisateur);
+        	$entity->setDateModification(new \DateTime('now'));
+        }
+        
         // Log de l'action de création
-        if (null === $entity->getId()) {
+        if (null === $entity->getId() && $utilisateur) {
             $entity->setCreePar($utilisateur);
             $entity->setDateCreation(new \DateTime('now'));
         }

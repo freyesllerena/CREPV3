@@ -2,13 +2,16 @@
 
 namespace AppBundle\Service;
 
-use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Repository\UtilisateurRepository;
 use FOS\UserBundle\Model\UserManager;
 use AppBundle\Entity\Agent;
 use AppBundle\Entity\Personne;
 use AppBundle\Entity\UtilisateurTmp;
+use FOS\UserBundle\Util\TokenGeneratorInterface;
+use AppBundle\Service\ConstanteManager;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 
 class UtilisateurManager
 {
@@ -26,13 +29,13 @@ class UtilisateurManager
 
     protected $mailer;
 
-    public function __construct(EntityManager $em, $tokenGenerator, UserManager $fos_user_manager, $defaultPassword, AppMailer $mailer)
+    public function __construct(EntityManagerInterface $em, TokenGeneratorInterface $tokenGenerator, UserManagerInterface $fos_user_manager, AppMailer $mailer, ConstanteManager $constanteManager)
     {
         $this->em = $em;
         $this->repository = $this->em->getRepository('AppBundle:Utilisateur');
         $this->tokenGenerator = $tokenGenerator;
         $this->fos_user_manager = $fos_user_manager;
-        $this->defaultPassword = $defaultPassword;
+        $this->defaultPassword = $constanteManager->getDefaultPassword();
         $this->mailer = $mailer;
     }
 

@@ -4,11 +4,12 @@ namespace AppBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\UniteOrganisationnelle;
 use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Ministere;
 use AppBundle\Repository\UniteOrganisationnelleRepository;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class UniteOrganisationnelleVoter extends Voter
 {
@@ -26,7 +27,7 @@ class UniteOrganisationnelleVoter extends Voter
     const SUPPRIMER = 'supprimer_unite_organisationnelle';
     const SUPPRIMER_REFERENTIEL = 'supprimer_referentiel_unite_organisationnelle';
 
-    public function __construct($decisionManager, EntityManager $em)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em)
     {
         $this->decisionManager = $decisionManager;
         $this->em = $em;

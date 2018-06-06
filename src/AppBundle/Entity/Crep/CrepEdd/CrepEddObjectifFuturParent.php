@@ -3,13 +3,10 @@
 namespace AppBundle\Entity\Crep\CrepEdd;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Objectif;
 
-
 /**
- * CrepEddObjectifFutur
+ * CrepEddObjectifFutur.
  *
  * @ORM\Table(name="crep_edd_objectif_futur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddObjectifFuturParentRepository")
@@ -23,17 +20,16 @@ class CrepEddObjectifFuturParent extends Objectif
      * @ORM\Column(type="string", nullable=true)
      */
     protected $echeance;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
-     *
      */
     protected $observationsEventuelles;
 
     /**
-     * Set echeance
+     * Set echeance.
      *
      * @return ObjectifFutur
      */
@@ -45,8 +41,7 @@ class CrepEddObjectifFuturParent extends Objectif
     }
 
     /**
-     * Get echeance
-     *
+     * Get echeance.
      */
     public function getEcheance()
     {
@@ -54,7 +49,6 @@ class CrepEddObjectifFuturParent extends Objectif
     }
 
     /**
-     *
      * @return the string
      */
     public function getObservationsEventuelles()
@@ -63,14 +57,13 @@ class CrepEddObjectifFuturParent extends Objectif
     }
 
     /**
-     *
      * @param
      *            $observationsEventuelles
      */
     public function setObservationsEventuelles($observationsEventuelles)
     {
         $this->observationsEventuelles = $observationsEventuelles;
+
         return $this;
     }
-        
 }

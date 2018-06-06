@@ -6,7 +6,7 @@
    	{% set statut = agent.crep.statut %}
 {% endif %}
 
-
+{% if agent.evaluable %}
 <td class="project_progress">
 	<div class="progress progress_sm">
 	    <div class="progress-bar {{ statut | statutCrepCouleur }}" role="progressbar" data-transitiongoal="{{ avancementPourcentage }}" style="width: {{ avancementPourcentage }}%"></div>
@@ -16,3 +16,4 @@
     	<i class="fa fa-balance-scale red" data-placement="auto" data-toggle="popover-danger" title="Recours en cours" data-content="Ce CREP fait l'objet de recours" data-trigger="hover"></i>
     {% endif %}
 </td>
+{% endif %}

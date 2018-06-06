@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 /**
- * CrepEddTechnique
+ * CrepEddTechnique.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddTechniqueRepository")
@@ -22,12 +22,12 @@ class CrepEddTechnique extends Competence
     protected $crep;
 
     /**
-     * Set crep
+     * Set crep.
      *
      *
      * @return Technique
      */
-    public function setCrep( $crep)
+    public function setCrep($crep)
     {
         $this->crep = $crep;
 
@@ -35,8 +35,7 @@ class CrepEddTechnique extends Competence
     }
 
     /**
-     * Get crep
-     *
+     * Get crep.
      */
     public function getCrep()
     {

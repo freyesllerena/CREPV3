@@ -7,13 +7,28 @@ namespace AppBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use AppBundle\Entity\CampagnePnc;
 use AppBundle\Service\ImportCsv;
 use AppBundle\Service\AppMailer;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
 
-class TraiterFichierAgentsCommand extends ContainerAwareCommand
+class TraiterFichierAgentsCommand extends Command
 {
+    protected $importCsv;
+
+    protected $appMailer;
+
+    protected $em;
+
+    public function __construct(ImportCsv $importCsv, AppMailer $appMailer, EntityManagerInterface $entityManager)
+    {
+    	parent::__construct();
+        $this->importCsv = $importCsv;
+        $this->appMailer = $appMailer;
+        $this->em = $entityManager;
+    }
+
     protected function configure()
     {
         $this
@@ -32,37 +47,30 @@ class TraiterFichierAgentsCommand extends ContainerAwareCommand
             '',
         ]);
 
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
         /* @var $campagnePnc CampagnePnc */
-        $campagnePnc = $em->getRepository('AppBundle:CampagnePnc')->find($campagneId);
+        $campagnePnc = $this->em->getRepository('AppBundle:CampagnePnc')->find($campagneId);
 
         $campagnePnc->setEnCoursDeChargementDuFichierAgent(true);
-        $em->flush();
+        $this->em->flush();
 
-        /* @var $importCsvManager ImportCsv */
-        $importCsvManager = $this->getContainer()->get('app.import_csv');
-        $retour = $importCsvManager->importerPopulation($campagnePnc, true);
-
-        /* @var $appMailer AppMailer */
-        $appMailer = $this->getContainer()->get('app.mailer');
+        $retour = $this->importCsv->importerPopulation($campagnePnc, true);
 
         // Si le retour est un tableau, c'est qu'il y a eu des erreurs au chargement
         // Envoyer une notification pour informer les administrateurs ministériels
         if (is_array($retour)) {
-            $appMailer->notifierfinChargementPopulation($campagnePnc, false);
+            $this->appMailer->notifierfinChargementPopulation($campagnePnc, false);
 
             // Supprimer le fichier d'agents suite à une erreur de chargement
             $uploadeDocument = $campagnePnc->getDocPopulation();
             $campagnePnc->setDocPopulation(null);
-            $em->remove($uploadeDocument);
+            $this->em->remove($uploadeDocument);
         } elseif (true == $retour) { // $retour == true signifie que le fichier d'agent a été correctement chargée
-            $appMailer->notifierFinChargementPopulation($campagnePnc, true);
+            $this->appMailer->notifierFinChargementPopulation($campagnePnc, true);
         }
 
         // Dans tous les cas on met le flag enCoursDeChargementDuFichierAgent à false après la fin du script asynchrone
         $campagnePnc->setEnCoursDeChargementDuFichierAgent(false);
-        $em->flush();
+        $this->em->flush();
 
         $output->writeln('Fin du chargement du fichier d\'agents sur la campagne : '.$retour.' '.$campagnePnc->getId());
     }

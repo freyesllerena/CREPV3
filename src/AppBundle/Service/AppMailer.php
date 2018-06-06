@@ -2,8 +2,6 @@
 
 namespace AppBundle\Service;
 
-use Symfony\Bundle\TwigBundle\TwigEngine;
-use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Mailer\MailerInterface as FOSMailerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -24,7 +22,10 @@ use AppBundle\Repository\CampagneRlcRepository;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use AppBundle\Twig\AppExtension;
 use AppBundle\Repository\CampagneBrhpRepository;
-use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Routing\RouterInterface;
+use AppBundle\Service\ConstanteManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 class AppMailer extends Mailer implements FOSMailerInterface
 {
@@ -35,18 +36,16 @@ class AppMailer extends Mailer implements FOSMailerInterface
     protected $kernelRootDir;
     protected $router;
 
-    // function __construct($mailer, $twig,RoleService $roleService,EntityManager $em,$companyName, $appName, $fromAddress, $replyAddress) {
-    public function __construct($mailer, TwigEngine $templating, $router, EntityManager $em, $companyName, $fromAddress, $replyAddress, $kernelRootDir, $appName)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, RouterInterface $router, EntityManagerInterface $em, ConstanteManager $constanteManager)
     {
-        $this->companyName = $companyName;
-        $this->from = $fromAddress;
-        $this->reply = $replyAddress;
-        //$this->roleService = $roleService;
+        $this->companyName = $constanteManager->getCompanyName();
+        $this->from = $constanteManager->getFromAddress();
+        $this->reply = $constanteManager->getReplyAddress();
         $this->em = $em;
         $this->repository = $this->em->getRepository('AppBundle:Utilisateur');
         $this->templating = $templating;
-        $this->kernelRootDir = $kernelRootDir;
-        $this->appName = $appName;
+        $this->kernelRootDir = $constanteManager->getKernelRootDir();
+        $this->appName = $constanteManager->getAppName();
         $this->router = $router;
         $this->mailer = $mailer;
     }
@@ -106,7 +105,7 @@ class AppMailer extends Mailer implements FOSMailerInterface
     /* Notification des BRHP et BRHP consultation de l'ouverture de la campagne RLC */
     public function notifierOuvrirCampagneRlc(CampagneRlc $campagneRlc)
     {
-    	/* @var $repositoryCampagneBrhp CampagneBrhpRepository */
+        /* @var $repositoryCampagneBrhp CampagneBrhpRepository */
         $repositoryCampagneBrhp = $this->em->getRepository('AppBundle:CampagneBrhp');
         $template = 'email/campagneRlc/ouvertureCampagne.html.twig';
 
@@ -114,45 +113,45 @@ class AppMailer extends Mailer implements FOSMailerInterface
         foreach ($campagneRlc->getPerimetresBrhp() as $perimetreBrhp) {
             // Récupérer la campagneBRHP de chaque brhp, pour générer l'url show dans le template
             $campagneBrhp = $repositoryCampagneBrhp->findOneBy(array('campagneRlc' => $campagneRlc, 'perimetreBrhp' => $perimetreBrhp));
-            
+
             // Notification des BRHP
             /*@var $brhp Brhp */
             foreach ($perimetreBrhp->getBrhps() as $brhp) {
-				$destinataire = $brhp->getUtilisateur ();
-				
-				if ($brhp->getUtilisateur ()->isEnabled ()) {
-					$subject = $campagneRlc->getLibelle () . ' ouverte aux acteurs de niveau proximité pour le périmètre ' . $perimetreBrhp->getLibelle ();
-					$body = $this->templating->render ( $template, array (
-							'campagneRlc' => $campagneRlc,
-							'campagne' => $campagneBrhp,
-							'perimetre' => $perimetreBrhp,
-							'destinataire' => $destinataire,
-							'subject' => $subject 
-					) );
-					
-					// Envoyer le mail d'ouverture de campagne
-					$this->sendMessage ( $destinataire, $subject, $body );
-				}
+                $destinataire = $brhp->getUtilisateur();
+
+                if ($brhp->getUtilisateur()->isEnabled()) {
+                    $subject = $campagneRlc->getLibelle().' ouverte aux acteurs de niveau proximité pour le périmètre '.$perimetreBrhp->getLibelle();
+                    $body = $this->templating->render($template, array(
+                            'campagneRlc' => $campagneRlc,
+                            'campagne' => $campagneBrhp,
+                            'perimetre' => $perimetreBrhp,
+                            'destinataire' => $destinataire,
+                            'subject' => $subject,
+                    ));
+
+                    // Envoyer le mail d'ouverture de campagne
+                    $this->sendMessage($destinataire, $subject, $body);
+                }
             }
-            
+
             // Notification des BRHP consultation
             /*@var $brhp Brhp */
             foreach ($perimetreBrhp->getBrhpsConsult() as $brhpConsult) {
-            	$destinataire = $brhpConsult->getUtilisateur ();
-            
-            	if ($brhpConsult->getUtilisateur ()->isEnabled ()) {
-            		$subject = $campagneRlc->getLibelle () . ' ouverte aux acteurs de niveau proximité pour le périmètre ' . $perimetreBrhp->getLibelle ();
-            		$body = $this->templating->render ( $template, array (
-            				'campagneRlc' => $campagneRlc,
-            				'campagne' => $campagneBrhp,
-            				'perimetre' => $perimetreBrhp,
-            				'destinataire' => $destinataire,
-            				'subject' => $subject
-            		) );
-            			
-            		// Envoyer le mail d'ouverture de campagne
-            		$this->sendMessage ( $destinataire, $subject, $body );
-            	}
+                $destinataire = $brhpConsult->getUtilisateur();
+
+                if ($brhpConsult->getUtilisateur()->isEnabled()) {
+                    $subject = $campagneRlc->getLibelle().' ouverte aux acteurs de niveau proximité pour le périmètre '.$perimetreBrhp->getLibelle();
+                    $body = $this->templating->render($template, array(
+                            'campagneRlc' => $campagneRlc,
+                            'campagne' => $campagneBrhp,
+                            'perimetre' => $perimetreBrhp,
+                            'destinataire' => $destinataire,
+                            'subject' => $subject,
+                    ));
+
+                    // Envoyer le mail d'ouverture de campagne
+                    $this->sendMessage($destinataire, $subject, $body);
+                }
             }
         }
     }
@@ -784,27 +783,25 @@ class AppMailer extends Mailer implements FOSMailerInterface
     /* Notification de l'agent que son CREP a été rappelé par le N+1 */
     public function notifierRappelAgentShd(Crep $crep)
     {
-    	$agent = $crep->getAgent();
-    	
-    	$nomPrenomShd = AppExtension::identite($agent->getShd());
-    	$campagne = $crep->getAgent()->getCampagnePnc();
-    
-    	//Envoyer le mail de rappel du crep par le N+1
-    	$template = 'email/crep/rappelAgentShd_agent.html.twig';
-    	$subject = $campagne->getLibelle()." : Rappel du compte rendu d'évaluation professionnelle par votre N+1 (".$nomPrenomShd.')';
-    	$body = $this->templating->render($template, array(
-    			'campagne' => $campagne,
-    			'crep' => $crep,
-    			'shd' => $agent->getShd()->getUtilisateur(),
-    			'destinataire' => $agent->getUtilisateur(),
-    			'subject' => $subject,
-    	));
-    
-    	$this->sendMessage($agent->getUtilisateur(), $subject, $body);
+        $agent = $crep->getAgent();
+
+        $nomPrenomShd = AppExtension::identite($agent->getShd());
+        $campagne = $crep->getAgent()->getCampagnePnc();
+
+        //Envoyer le mail de rappel du crep par le N+1
+        $template = 'email/crep/rappelAgentShd_agent.html.twig';
+        $subject = $campagne->getLibelle()." : Rappel du compte rendu d'évaluation professionnelle par votre N+1 (".$nomPrenomShd.')';
+        $body = $this->templating->render($template, array(
+                'campagne' => $campagne,
+                'crep' => $crep,
+                'shd' => $agent->getShd()->getUtilisateur(),
+                'destinataire' => $agent->getUtilisateur(),
+                'subject' => $subject,
+        ));
+
+        $this->sendMessage($agent->getUtilisateur(), $subject, $body);
     }
-    
-    
-    
+
     /* Notification de l'agent et du N+1 que le CREP a été rappelé par le N+2 */
     public function notifierRappelAgentAh(Crep $crep)
     {

@@ -19,6 +19,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            @@APPLI_SECRET@@
+    container.autowiring.strict_mode: true
     mailer.from_address: noreply-esteve@cisirh.finances.gouv.fr
     mailer.from_name: Administrateur %app.app_name%
 

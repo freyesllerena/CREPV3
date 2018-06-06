@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 
 class CrepMcc02CompetenceRequiseType extends AbstractType
@@ -17,7 +18,10 @@ class CrepMcc02CompetenceRequiseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libelle')
+            ->add('libelle', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add('niveauAcquis', ChoiceType::class, [
                 'choices' => CrepMcc02::$niveauCompetence,
                 'expanded' => true,

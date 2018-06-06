@@ -17,7 +17,10 @@ class CrepMcc02AhType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('observationsAh', TextareaType::class, ['required' => false])
+            ->add('observationsAh', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
         ;
     }
 

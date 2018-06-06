@@ -362,7 +362,6 @@ services:
                   - '@app.crep_scl_manager'
                   - '@app.crep_mso3_manager'
                   - '@app.crep_mj01_manager'
-                  - '@app.crep_mcc02_manager'
                   - '@app.crep_edd_manager'
   
         
@@ -419,13 +418,8 @@ services:
     # Service export des formations Mj01
     app.crep_mj01_manager:
         class: 'AppBundle\Service\ModelesCrep\CrepMj01Manager'
-        parent: app.base_manager
-
-    # Service export des formations Mcc02
-    app.crep_mcc02_manager:
-        class: 'AppBundle\Service\ModelesCrep\CrepMcc02Manager'
-        parent: app.base_manager
-
+        parent: app.base_manager 
+                            
     app.oracle.session.listener:
         class: 'AppBundle\EventListener\AppOracleSessionInit'
         tags:

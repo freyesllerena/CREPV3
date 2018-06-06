@@ -5,35 +5,40 @@ namespace AppBundle\Service;
 use AppBundle\Entity\CampagnePnc;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use AppBundle\Entity\CampagneRlc;
-use Symfony\Bundle\TwigBundle\TwigEngine;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use AppBundle\Entity\Campagne;
 use Doctrine\Common\Collections\Collection;
 use AppBundle\Entity\Agent;
 use AppBundle\Entity\CampagneBrhp;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CampagneRlcManager extends CampagneManager
 {
-    /* @var $repository CampagneRlcRepository */
-    protected $repository;
-
     /* @var $campagneBrhpManager CampagneBrhpManager */
     protected $campagneBrhpManager;
 
-    public function init(
+    protected $em;
+
+    /* @var $repository CampagneRlcRepository */
+    protected $repository;
+
+    public function __construct(
         PersonneManager $personneManager,
         CampagneBrhpManager $campagneBrhpManager,
-        TokenStorage $jetonRegistre,
+        TokenStorageInterface $tokenStorage,
         AppMailer $mailer,
-        TwigEngine $templating
+        EngineInterface $templating,
+        EntityManagerInterface $entityManager
     ) {
-        $this->repository = $this->em->getRepository('AppBundle:CampagneRlc');
         $this->personneManager = $personneManager;
         $this->campagneBrhpManager = $campagneBrhpManager;
-        $this->jetonRegistre = $jetonRegistre;
+        $this->tokenStorage = $tokenStorage;
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->em = $entityManager;
+        $this->repository = $this->em->getRepository('AppBundle:CampagneRlc');
     }
 
     /**
@@ -82,11 +87,11 @@ class CampagneRlcManager extends CampagneManager
         $perimetresBrhp = $campagneRlc->getPerimetresBrhp();
 
         $brhps = $this->personneManager->getBrhps($perimetresBrhp);
-        
+
         $this->personneManager->ajoutePersonnesDansUtilisateurs($brhps, 'ROLE_BRHP');
-        
+
         $brhpsConsult = $this->personneManager->getBrhpsConsult($perimetresBrhp);
-        
+
         $this->personneManager->ajoutePersonnesDansUtilisateurs($brhpsConsult, 'ROLE_BRHP_CONSULT');
 
         // crée les campagne BRHP à partir des périmètres de la campagne BRHP
@@ -138,13 +143,15 @@ class CampagneRlcManager extends CampagneManager
             $this->ouvrirNouveauxPerimetres($campagneRlc, $collectionNouveauxPerimetresBrhp);
         }
 
-        $this->sauvegarder($campagneRlc);
+        $this->em->persist($campagneRlc);
+        $this->em->flush();
+        
         $this->mailer->notifierRouvrirCampagne($campagneRlc);
     }
 
     protected function getUser()
     {
-        return $this->jetonRegistre->getToken()->getUser();
+        return $this->tokenStorage->getToken()->getUser();
     }
 
     /**

@@ -52,10 +52,11 @@
                         {% endif %}
                         
                         {% if app.session.get('selectedRole') == "ROLE_BRHP" or app.session.get('selectedRole') == "ROLE_SHD" or app.session.get('selectedRole') == "ROLE_ADMIN"%}
-                            {{ form_row(form.uniteOrganisationnelle, { 'label': "Unité organisationnelle" ,  'attr': { 'class': "select2_unite_organisationnelle" }}) }}
+                            {{ form_row(form.uniteOrganisationnelle, { 'label': "Unité organisationnelle" ,  'attr': { 'class': "select2_unite_organisationnelle", 'style': "width:100%" }}) }}
                         {% endif %}
                         
                         {{ form_row(form.evaluable, { 'label': "Agent évaluable", 'label_attr': {'class' : 'radio-inline'} }) }}
+                        {{ form_row(form.modeleCrep, { 'label': "Modèle de CREP" }) }}
                         {{ form_row(form.motifNonEvaluation, { 'label': "Motif de non évaluation", 'id' : "motif_non_evaluation" }) }}
 
                         {# TODO: à déplacer dans une vue agentMcc/new en V3 #}
@@ -126,6 +127,8 @@
                             
                         </div>
                     </div>
+                    
+                    {% if app.session.get('selectedRole') == 'ROLE_ADMIN' or app.session.get('selectedRole') == 'ROLE_PNC' or app.session.get('selectedRole') == 'ROLE_RLC' or app.session.get('selectedRole') == 'ROLE_BRHP' %}
                     <div class="form-group">
                     	<label class="control-label col-md-3 col-sm-3 col-xs-12"></span></label>
                     	<div class="documents col-md-6 col-sm-6 col-xs-12" data-prototype="{{ form_widget(form.documents.vars.prototype)|e('html_attr') }}">
@@ -134,8 +137,8 @@
 							{% endfor %}
 						</div>
                    </div>
-                   <span style="color:red"><b>*</b></span><small>Champ obligatoire</small><br>
                    <span style="color:red"><b>**</b></span><small>Les pièces jointes ne doivent pas dépasser {{ maxFileSize }} Mo</small>
+					{% endif %}
 					</div>
 				</div>
 			</div>
@@ -181,10 +184,13 @@
                  allowClear: true
              });
 
+             
              if($('#appbundle_agent_evaluable_0').attr('checked')) {
                  $("#motif_non_evaluation").parent().parent().hide();
+                 $("#appbundle_agent_modeleCrep").parent().parent().show();
              } else {
                  $("#motif_non_evaluation").parent().parent().show();
+                 $("#appbundle_agent_modeleCrep").parent().parent().hide();
              }
 
              if($('#appbundle_agent_sansAh_0').attr('checked')) {
@@ -192,7 +198,6 @@
              } else {
                  document.getElementById("ah").disabled = false;
              }
-
          });
 
          {# TODO: à déplacer dans une vue agentMcc/new en V3 #}
@@ -202,7 +207,8 @@
              if($('#appbundle_agent_titulaire_0').attr('checked')) {
                  hideChampsMcc();
              } else {
-                 showChampsMcc();}
+                 showChampsMcc();
+             }
          });
 
          $("#appbundle_agent_titulaire_0" ).on('ifChanged', function(){
@@ -230,10 +236,12 @@
 
          $("#appbundle_agent_evaluable_0" ).on('ifChanged', function(){
              $("#motif_non_evaluation").parent().parent().hide();
+             $("#appbundle_agent_modeleCrep").parent().parent().show();
          });
 
          $("#appbundle_agent_evaluable_1" ).on('ifChanged', function(){
              $("#motif_non_evaluation").parent().parent().show();
+             $("#appbundle_agent_modeleCrep").parent().parent().hide();
          });
 
          $("#appbundle_agent_sansAh_0" ).on('ifChanged', function(){

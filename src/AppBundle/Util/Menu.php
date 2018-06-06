@@ -2,7 +2,7 @@
 
 namespace AppBundle\Util;
 
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 class Menu
 {
@@ -54,14 +54,14 @@ class Menu
         );
 
         $brhpConsult = array(
-        		'libelle' => 'BRHP consultation',
-        		'icone' => 'fa-user',
-        		'href' => 'brhp_consult_index',
-        		'routes' => array('brhp_consult_index', 'brhp_consult_new', 'brhp_consult_edit'),
-        		'active' => false,
-        		'sousMenu' => null,
+                'libelle' => 'BRHP consultation',
+                'icone' => 'fa-user',
+                'href' => 'brhp_consult_index',
+                'routes' => array('brhp_consult_index', 'brhp_consult_new', 'brhp_consult_edit'),
+                'active' => false,
+                'sousMenu' => null,
         );
-        
+
         $perimetresBrhp = array(
                 'libelle' => 'Périmètres',
                 'icone' => 'fa-share-alt',
@@ -70,7 +70,6 @@ class Menu
                 'active' => false,
                 'sousMenu' => null,
         );
-
 
         $utilisateurs = array(
                 'libelle' => 'Utilisateurs',
@@ -161,7 +160,6 @@ class Menu
                 'active' => false,
                 'sousMenu' => null,
         );
-
 
         $menu = array();
         $menu[] = $acceuil;
@@ -355,7 +353,7 @@ class Menu
         return $breadCrumb;
     }
 
-    private static function getRoutes(Router $router, $suffixe)
+    private static function getRoutes(RouterInterface $router, $suffixe)
     {
         $routes = array();
 

@@ -5,14 +5,14 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Campagne;
 use AppBundle\Entity\Document;
 
-class CampagneManager extends BaseManager
+class CampagneManager
 {
     protected $templating;
 
     /**
      * @var TokenStorage
      */
-    protected $jetonRegistre;
+    protected $tokenStorage;
 
     protected $mailer;
 

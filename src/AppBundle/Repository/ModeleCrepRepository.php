@@ -7,7 +7,7 @@ use AppBundle\Entity\Ministere;
 class ModeleCrepRepository extends \Doctrine\ORM\EntityRepository
 {
     // Cette requête retourne les modèles de crep actifs d'un ministère
-    public function getModelesCrep($ministere = null, $actif = null)
+    public function getModelesCrep($ministere = null, $actif = null, $getQueryBuilder = false)
     {
         $qb = $this->createQueryBuilder('mc');
 
@@ -19,6 +19,10 @@ class ModeleCrepRepository extends \Doctrine\ORM\EntityRepository
         if ($actif) {
             $qb->andWhere('mc.actif = :ACTIF')
                ->setParameter('ACTIF', 1);
+        }
+
+        if ($getQueryBuilder) {
+            return $qb;
         }
 
         return $qb->getQuery()->getResult();

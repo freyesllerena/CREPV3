@@ -1,17 +1,21 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
         <label>Renvoi à un document annexe </label>
-
+        &nbsp;&nbsp;
         <label>
             <input type="checkbox" class="flat" disabled="disabled"
-                   {% if crep.docAnnexeBilan %}checked="checked"{% endif %}
-            >
-        </label> Oui
+               {% if crep.docAnnexeBilan %}
+                    checked="checked"
+                {% endif %}>
+        </label>
+        Oui
         <label>
-            <input type="checkbox" class="flat" disabled="disabled"
-                   {% if crep.docAnnexeBilan is not null and not crep.docAnnexeBilan %}checked="checked"{% endif %}
-            >
-        </label> Non
+        <input type="checkbox" class="flat" disabled="disabled"
+           {% if crep.docAnnexeBilan is not null and not crep.docAnnexeBilan %}
+                checked="checked"
+            {% endif %}>
+        Non
+        </label>
     </div>
 </div>
 <br>

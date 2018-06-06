@@ -19,8 +19,11 @@ use AppBundle\Repository\AgentRepository;
 use AppBundle\Entity\UtilisateurTmp;
 use AppBundle\Repository\UtilisateurTmpRepository;
 use AppBundle\Util\Util;
+use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Service\ConstanteManager;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class AgentManager extends BaseManager
+class AgentManager
 {
     protected $personneManager;
 
@@ -31,15 +34,32 @@ class AgentManager extends BaseManager
     /* @var $crepManager CrepManager */
     protected $crepManager;
 
+    protected $em;
+    
+    protected $session;
+
     protected $repScripts;
 
-    public function init(PersonneManager $personneManager, AppMailer $appMailer, UtilisateurManager $utilisateurManager, CrepManager $crepManager, $repScripts)
+    protected $kernelRootDir;
+    
+
+    public function __construct(
+    		PersonneManager $personneManager, 
+    		AppMailer $appMailer, 
+    		UtilisateurManager $utilisateurManager, 
+    		CrepManager $crepManager, 
+    		EntityManagerInterface $entityManager,
+    		SessionInterface $session,
+    		ConstanteManager $constanteManager)
     {
         $this->personneManager = $personneManager;
         $this->appMailer = $appMailer;
         $this->utilisateurManager = $utilisateurManager;
         $this->crepManager = $crepManager;
-        $this->repScripts = $repScripts;
+        $this->em = $entityManager;
+        $this->session = $session;
+        $this->repScripts = $constanteManager->getRepScripts();
+        $this->kernelRootDir = $constanteManager->getKernelRootDir();
     }
 
     /*

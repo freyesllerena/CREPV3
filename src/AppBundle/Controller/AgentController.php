@@ -32,7 +32,6 @@ use AppBundle\Security\CrepVoter;
 use AppBundle\Repository\ModeleCrepRepository;
 use AppBundle\Twig\AppExtension;
 use AppBundle\Entity\Document;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use AppBundle\Service\DocumentManager;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -60,7 +59,7 @@ class AgentController extends Controller
     /**
      * Creates a new agent entity by BRHP.
      */
-    public function newAgentBrhpAction(Request $request, CampagneBrhp $campagneBrhp)
+    public function newAgentBrhpAction(Request $request, CampagneBrhp $campagneBrhp, AgentManager $agentMananger)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::AJOUTER_AGENT, $campagneBrhp);
@@ -80,9 +79,6 @@ class AgentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $agentMananger AgentManager */
-            $agentMananger = $this->get('app.agent_manager');
-
             $agentMananger->creer($agent, $campagneBrhp->getCampagnePnc(), $campagneBrhp->getCampagneRlc(), $campagneBrhp);
 
             $this->get('session')->getFlashBag()->set('notice', 'Agent créé avec succès !');
@@ -99,7 +95,7 @@ class AgentController extends Controller
     /**
      * Creates a new agent entity by RLC.
      */
-    public function newAgentRlcAction(Request $request, CampagneRlc $campagneRlc)
+    public function newAgentRlcAction(Request $request, CampagneRlc $campagneRlc, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneRlcVoter::AJOUTER_AGENT, $campagneRlc);
@@ -134,10 +130,7 @@ class AgentController extends Controller
 
             $agent->setCampagneRlc($campagneRlc);
 
-            /* @var $agentMananger AgentManager */
-            $agentMananger = $this->get('app.agent_manager');
-
-            $agentMananger->creer($agent, $campagneRlc->getCampagnePnc(), $campagneRlc, $campagneBrhp);
+            $agentManager->creer($agent, $campagneRlc->getCampagnePnc(), $campagneRlc, $campagneBrhp);
 
             $this->get('session')->getFlashBag()->set('notice', 'Agent créé avec succès !');
 
@@ -153,7 +146,7 @@ class AgentController extends Controller
     /**
      * Creates a new agent entity by PNC.
      */
-    public function newAgentPncAction(Request $request, CampagnePnc $campagnePnc)
+    public function newAgentPncAction(Request $request, CampagnePnc $campagnePnc, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagnePncVoter::AJOUTER_AGENT, $campagnePnc);
@@ -184,10 +177,7 @@ class AgentController extends Controller
                 $campagneRlc = $campagneRlcRepository->getCampagneRlc($campagnePnc, $agent->getPerimetreRlc());
             }
 
-            /* @var $agentMananger AgentManager */
-            $agentMananger = $this->get('app.agent_manager');
-
-            $agentMananger->creer($agent, $campagnePnc, $campagneRlc);
+            $agentManager->creer($agent, $campagnePnc, $campagneRlc);
 
             $this->get('session')->getFlashBag()->set('notice', 'Agent créé avec succès !');
 
@@ -216,7 +206,7 @@ class AgentController extends Controller
     /**
      * Displays a form to edit an existing agent entity.
      */
-    public function editAction(Request $request, Agent $agent)
+    public function editAction(Request $request, Agent $agent, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(AgentVoter::MODIFIER, $agent);
@@ -239,7 +229,7 @@ class AgentController extends Controller
 
         $perimetresRlc = $agent->getCampagnePnc()->getPerimetresRlc();
 
-        $editForm = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('importCSV'),
+        $editForm = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('importCSV', 'agent_edit'),
                                                                            'unitesOrganisationnelles' => $unitesOrganisationnelles,
                                                                            'perimetresBrhp' => $perimetresBrhp,
                                                                            'perimetresRlc' => $perimetresRlc,
@@ -252,10 +242,7 @@ class AgentController extends Controller
         $deteteDocumentsForms = $this->creerDeleteDocumentsForms($agent);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            /* @var $agentMananger AgentManager */
-            $agentMananger = $this->get('app.agent_manager');
-
-            $agentMananger->update($agent, $ancienAgent);
+            $agentManager->update($agent, $ancienAgent);
 
             $em->flush();
 
@@ -268,7 +255,7 @@ class AgentController extends Controller
 
         return $this->render('agent/edit.html.twig', array('agent' => $agent,
                                                            'form' => $editForm->createView(),
-                                                       	   'deteteDocumentsForms' => $deteteDocumentsForms,
+                                                              'deteteDocumentsForms' => $deteteDocumentsForms,
                                                            ));
     }
 
@@ -277,7 +264,7 @@ class AgentController extends Controller
      *
      * @Security("has_role('ROLE_SHD')")
      */
-    public function detacherShdAction(Request $request, Agent $agent)
+    public function detacherShdAction(Request $request, Agent $agent, AgentManager $agentManager)
     {
         $this->denyAccessUnlessGranted(AgentVoter::DETACHER_SHD, $agent);
 
@@ -285,8 +272,6 @@ class AgentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $agentManager AgentManager */
-            $agentManager = $this->get('app.agent_manager');
             $agentManager->detacherShd($agent);
 
             $this->get('session')->getFlashBag()->set('notice', 'Agent libéré !');
@@ -300,7 +285,7 @@ class AgentController extends Controller
      *
      * @Security("has_role('ROLE_SHD')")
      */
-    public function rattacherShdAction(Request $request, Agent $agent, CampagneBrhp $campagneBrhp)
+    public function rattacherShdAction(Request $request, Agent $agent, CampagneBrhp $campagneBrhp, AgentManager $agentManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(AgentVoter::RATTACHER_SHD, ['agent' => $agent, 'campagneBrhp' => $campagneBrhp]);
@@ -322,9 +307,6 @@ class AgentController extends Controller
 
             $agent->setCampagneBrhp($campagneBrhp);
 
-            /* @var $agentManager AgentManager */
-            $agentManager = $this->get('app.agent_manager');
-
             $agentManager->rattacherShd($agent, $shd);
 
             $this->get('session')->getFlashBag()->set('notice', 'Agent ajouté à votre liste !');
@@ -338,7 +320,7 @@ class AgentController extends Controller
      *
      * @Security("has_role('ROLE_BRHP')")
      */
-    public function detacherPerimetreBrhpAction(Request $request, Agent $agent)
+    public function detacherPerimetreBrhpAction(Request $request, Agent $agent, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(AgentVoter::DETACHER_PERIMETRE_BRHP, $agent);
@@ -348,9 +330,6 @@ class AgentController extends Controller
 
         if ($form->isValid()) {
             $url = $this->generateUrlShowCampagneByRole($agent);
-
-            /* @var $agentManager AgentManager */
-            $agentManager = $this->get('app.agent_manager');
 
             $agentManager->detacherPerimetreBrhp($agent);
 
@@ -365,7 +344,7 @@ class AgentController extends Controller
      *
      * @Security("has_role('ROLE_BRHP')")
      */
-    public function rattacherPerimetreBrhpAction(Request $request, Agent $agent, CampagneBrhp $campagneBrhp)
+    public function rattacherPerimetreBrhpAction(Request $request, Agent $agent, CampagneBrhp $campagneBrhp, AgentManager $agentManager)
     {
         //Voters
         $this->denyAccessUnlessGranted(AgentVoter::RATTACHER_PERIMETRE_BRHP, ['agent' => $agent, 'campagneBrhp' => $campagneBrhp]);
@@ -375,9 +354,6 @@ class AgentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $agentManager AgentManager */
-            $agentManager = $this->get('app.agent_manager');
-
             $agentManager->rattacherPerimetreBrhp($agent, $campagneBrhp, $this->getUser());
 
             $this->get('session')->getFlashBag()->set('notice', 'Agent rattaché !');
@@ -426,7 +402,7 @@ class AgentController extends Controller
     /**
      * Fonction appelée en ajax pour gérer les données du datatables côté serveur.
      *
-     * @Security("has_role('ROLE_ADMIN_MIN') or has_role('ROLE_PNC')")
+     * @Security("has_role('ROLE_PNC')")
      */
     public function serverProcessingCampagnePncAction(Request $request, CampagnePnc $campagnePnc, $perimetreRlc, $evaluable, $sansShd, $sansPerimetre, $onglet)
     {
@@ -457,32 +433,37 @@ class AgentController extends Controller
     /**
      * Fonction appelée en ajax pour gérer les données du datatables côté serveur.
      *
+     * @Security("has_role('ROLE_ADMIN_MIN')")
+     */
+    public function serverProcessingCampagneAdminMinAction(Request $request, CampagnePnc $campagnePnc)
+    {
+    	$this->denyAccessUnlessGranted(CampagnePncVoter::VOIR, $campagnePnc);
+    
+    	$colonnesTri = ['agent.nom', 'agent.email', 'agent.uniteOrganisationnelle', 'agent.perimetreRlc', 'agent.perimetreBrhp', 'shd.nom', 'ah.nom'];
+    	
+    	return $this->serverProcessingCampagne($request, $campagnePnc, [], $colonnesTri, null, 2, 0, 0);
+    }
+    
+    /**
+     * Fonction appelée en ajax pour gérer les données du datatables côté serveur.
+     *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function serverProcessingCampagneRlcAction(Request $request, CampagneRlc $campagneRlc, $perimetreBrhp, $evaluable, $sansShd, $sansPerimetre, $onglet)
+    public function serverProcessingCampagneRlcAction(Request $request, CampagneRlc $campagneRlc, $evaluable, $sansShd, $sansPerimetre, $onglet)
     {
         $this->denyAccessUnlessGranted(CampagneRlcVoter::VOIR, $campagneRlc);
 
         switch ($onglet) {
             case 'agents_sans_shd':
-                $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'perimetreBrhp.libelle', 'ah.nom', 'ah.prenom', 'agent.affectation', 'agent.evaluable'];
                 $colonnesTri = ['agent.nom', 'perimetreBrhp.libelle', 'agent.affectation', 'ah.prenom', 'agent.evaluable'];
                 break;
 
             case 'ma_population':
-                $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'perimetreBrhp.libelle', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom', 'agent.affectation', 'agent.evaluable', 'crep.statut'];
                 $colonnesTri = ['agent.nom', 'perimetreBrhp.libelle', 'shd.prenom', 'ah.prenom', 'agent.affectation', 'agent.evaluable', 'crep.statut'];
                 break;
         }
 
-        if (0 != $perimetreBrhp) {
-            $em = $this->getDoctrine()->getManager();
-            $perimetreBrhp = $em->getRepository('AppBundle:PerimetreBrhp')->find($perimetreBrhp);
-        } else {
-            $perimetreBrhp = null;
-        }
-
-        return $this->serverProcessingCampagne($request, $campagneRlc, $colonnesRecherche, $colonnesTri, $perimetreBrhp, $evaluable, $sansShd, $sansPerimetre);
+        return $this->serverProcessingCampagne($request, $campagneRlc, [], $colonnesTri, null, $evaluable, $sansShd, $sansPerimetre);
     }
 
     /**
@@ -498,20 +479,16 @@ class AgentController extends Controller
 
         switch ($onglet) {
             case 'ma_population':
-//         		$colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom', 'agent.evaluable', 'agent.statutValidation'];
                 $colonnesTri = ['agent.nom', 'agent.affectation', 'shd.nom', 'ah.nom', 'agent.evaluable', 'agent.statutValidation', 'crep.statut'];
                 break;
             case 'agents_sans_perimetre_brhp':
-//                 $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'uniteOrganisationnelle.libelle', 'uniteOrganisationnelle.code', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom'];
                 $colonnesTri = ['agent.nom', 'agent.affectation', 'uniteOrganisationnelle.code', 'shd.prenom', 'ah.prenom'];
                 $campagneBrhpPourRattachement = $campagneBrhp;
                 break;
             case 'agents_sans_shd':
-//                 $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'ah.nom', 'ah.prenom'];
                 $colonnesTri = ['agent.nom', 'agent.affectation', 'ah.prenom'];
                 break;
             case 'liste_creps':
-//                 $colonnesRecherche = ['agent.civilite', 'agent.nom', 'agent.prenom', 'agent.affectation', 'shd.nom', 'shd.prenom', 'ah.nom', 'ah.prenom'];
                 $colonnesTri = ['agent.nom', 'agent.affectation', 'shd.nom', 'ah.prenom', 'crep.statut'];
                 break;
         }
@@ -676,7 +653,7 @@ class AgentController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function detacherPerimetreRlcAction(Request $request, Agent $agent)
+    public function detacherPerimetreRlcAction(Request $request, Agent $agent, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(AgentVoter::DETACHER_PERIMETRE_RLC, $agent);
@@ -686,8 +663,6 @@ class AgentController extends Controller
 
         if ($form->isValid()) {
             $url = $this->generateUrlShowCampagneByRole($agent);
-            /* @var $agentManager AgentManager */
-            $agentManager = $this->get('app.agent_manager');
 
             $agentManager->detacherPerimetreRlc($agent);
 
@@ -702,7 +677,7 @@ class AgentController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function rattacherPerimetreRlcAction(Request $request, Agent $agent, CampagneRlc $campagneRlc)
+    public function rattacherPerimetreRlcAction(Request $request, Agent $agent, CampagneRlc $campagneRlc, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(AgentVoter::RATTACHER_PERIMETRE_RLC, $agent);
@@ -712,9 +687,6 @@ class AgentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $agentManager AgentManager */
-            $agentManager = $this->get('app.agent_manager');
-
             $agentManager->rattacherPerimetreRlc($agent, $campagneRlc);
 
             $this->get('session')->getFlashBag()->set('notice', 'Agent rattaché !');
@@ -727,7 +699,7 @@ class AgentController extends Controller
     /*
      * La fonction renvoie au crep de l'agent s'il en a un. Sinon, elle renvoie à un écran demandant au N+1 de choisir un modèle de crep pour l'agent.
      */
-    public function checkCrepAgentAction(Request $request, Agent $agent)
+    public function checkCrepAgentAction(Request $request, Agent $agent, CrepManager $crepManager)
     {
         /* @var $crep Crep */
         $crep = $agent->getCrep();
@@ -757,8 +729,6 @@ class AgentController extends Controller
         if (1 == count($modelesCrepMinistere)) {
             $modeleCrep = $modelesCrepMinistere[0];
 
-            /* @var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
             $crep = $crepManager->creer($agent, $modeleCrep);
 
             $em->persist($crep);
@@ -879,7 +849,7 @@ class AgentController extends Controller
     }
 
     //*********  Action permettant l'affichage et l'envoie du form d'import CREP*********//
-    public function importCrepPapierAction(Request $request, Agent $agent)
+    public function importCrepPapierAction(Request $request, Agent $agent, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(AgentVoter::IMPORTER_CREP_PAPIER, $agent);
@@ -918,9 +888,7 @@ class AgentController extends Controller
             $statut = $importCrepForm->get('statut')->getData();
             $modeleCrep = $importCrepForm->get('modeleCrep')->getData();
 
-            /* @var $agentMananger AgentManager */
-            $agentMananger = $this->get('app.agent_manager');
-            $agentMananger->ImporterCrepPapier($agent, $crepPapier, $statut, $modeleCrep);
+            $agentManager->ImporterCrepPapier($agent, $crepPapier, $statut, $modeleCrep);
 
             $this->get('session')->getFlashBag()->set('notice', 'Le CREP a bien été importé !');
 
@@ -979,56 +947,50 @@ class AgentController extends Controller
 
         return $this->redirectToRoute($this->returnRoute($role), array('id' => $agent->getCampagneBrhp()->getId()));
     }
-    
-    public function getDocumentAction(Request $request, Agent $agent, Document $document){
-    	
-    	//Voter
-    	$this->denyAccessUnlessGranted(AgentVoter::VOIR, $agent);
-    	
-    	if(!$agent->getDocuments()->contains($document)){
-			throw new AccessDeniedHttpException();
-    	}
-    	
-    	/* @var $documentManager DocumentManager */
-    	$documentManager = $this->get('app.document_manager');
-    	
-    	return $documentManager->getDocument($document);
+
+    public function getDocumentAction(Request $request, Agent $agent, Document $document, DocumentManager $documentManager)
+    {
+        //Voter
+        $this->denyAccessUnlessGranted(AgentVoter::VOIR, $agent);
+
+        if (!$agent->getDocuments()->contains($document)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        return $documentManager->getDocument($document);
     }
-    
-    public function deleteDocumentAction(Request $request, Agent $agent, Document $document){
-    	 
-    	//Voter
-    	$this->denyAccessUnlessGranted(AgentVoter::MODIFIER, $agent);
-    	 
-    	if(!$agent->getDocuments()->contains($document)){
-    		throw new AccessDeniedHttpException();
-    	}
-    	 
-    	/* @var $documentManager DocumentManager */
-    	$documentManager = $this->get('app.document_manager');
-    	 
-    	$documentManager->deleteDocuments([$document], true);
-    	
-    	$this->get('session')->getFlashBag()->set('notice', 'Document supprimé !');
-    	
-    	return $this->redirectToRoute('agent_show', ['id' => $agent->getId()]);
+
+    public function deleteDocumentAction(Request $request, Agent $agent, Document $document, DocumentManager $documentManager)
+    {
+        //Voter
+        $this->denyAccessUnlessGranted(AgentVoter::MODIFIER, $agent);
+
+        if (!$agent->getDocuments()->contains($document)) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $documentManager->deleteDocuments([$document], true);
+
+        $this->get('session')->getFlashBag()->set('notice', 'Document supprimé !');
+
+        return $this->redirectToRoute('agent_show', ['id' => $agent->getId()]);
     }
-    
-    
-    private function creerDeleteDocumentsForms(Agent $agent) {
-    	
-    	$deleteForms = [];
-    	foreach ($agent->getDocuments() as $document){
-    		if($document->getId()){
-	    		$deleteForms [] = $this->createFormBuilder()
-	    		->setAction($this->generateUrl('agent_delete_document', [
-	    			'id' => $agent->getId(),
-	    			'document' => $document->getId()
-	    			]))
-	    		->setMethod('DELETE')
-	    		->getForm()->createView();
-    		}
-    	}
-    	return $deleteForms;
+
+    private function creerDeleteDocumentsForms(Agent $agent)
+    {
+        $deleteForms = [];
+        foreach ($agent->getDocuments() as $document) {
+            if ($document->getId()) {
+                $deleteForms[] = $this->createFormBuilder()
+                ->setAction($this->generateUrl('agent_delete_document', [
+                    'id' => $agent->getId(),
+                    'document' => $document->getId(),
+                    ]))
+                ->setMethod('DELETE')
+                ->getForm()->createView();
+            }
+        }
+
+        return $deleteForms;
     }
 }

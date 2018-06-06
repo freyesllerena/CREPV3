@@ -135,24 +135,24 @@
     </tr>
 {% endblock %}
 
-{% block _crep_edd_formationsSuivies_entry_widget %}
-    <tr>
-        <td>{{ form_row(form.annee, {'attr': {'class': 'fieldCollection'}}) }}</td>
+{#{% block _crep_edd_formationsSuivies_entry_widget %}#}
+    {#<tr>#}
+        {#<td>{{ form_row(form.annee, {'attr': {'class': 'fieldCollection'}}) }}</td>#}
 
-        <td>
-            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}
-        </td>
+        {#<td>#}
+            {#{{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete '}}) }}#}
+        {#</td>#}
 
-        <td>
-            {{ form_row(form.duree, {'attr': {'class': 'fieldCollection'}}) }}
-        </td>
-        <td>
-            {{ form_row(form.commentaires, {'label':false, 'attr': {'class': 'fieldCollection'}}) }}
-        </td>
+        {#<td>#}
+            {#{{ form_row(form.duree, {'attr': {'class': 'fieldCollection'}}) }}#}
+        {#</td>#}
+        {#<td>#}
+            {#{{ form_row(form.commentaires, {'label':false, 'attr': {'class': 'fieldCollection'}}) }}#}
+        {#</td>#}
 
-        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection" ><i class="fa fa-close"></i></button></td>
-    </tr>
-{% endblock %}
+        {#<td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection" ><i class="fa fa-close"></i></button></td>#}
+    {#</tr>#}
+{#{% endblock %}#}
 
 {% block _crep_edd_formationsDemandeesAgent_entry_widget %}
     <tr>
@@ -176,6 +176,14 @@
     </tr>
 {% endblock %}
 
+
+{% block form_group_class -%}
+    {% if label == false %}
+        col-md-12 col-sm-12 col-xs-12
+    {% else %}
+        col-md-9 col-sm-9 col-xs-12
+    {% endif %}
+{% endblock form_group_class %}
     {###################### Fin collecions ################################}
 
 

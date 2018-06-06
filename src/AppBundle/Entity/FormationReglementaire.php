@@ -106,18 +106,4 @@ class FormationReglementaire extends FormationDemandee
     {
         return $this->niveauSame;
     }
-
-//         /**
-//          * @Assert\Callback
-//          */
-//         public function validate(ExecutionContextInterface $context, $payload)
-//         {
-//             dump($this->libelle);
-//             if ($this->libelle === null) {
-//                 dump('hahahah');
-//                 $context->buildViolation('Champ obligatoire')
-//                 ->atPath('libelle')
-//                 ->addViolation();
-//             }
-//         }
 }

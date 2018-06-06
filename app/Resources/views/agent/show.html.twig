@@ -91,6 +91,17 @@
 	       						{{ agent.evaluable|ouiNon }}
        						</div>
        					</div>
+       					{% if agent.evaluable %}
+       					<div class="form-group">
+		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Modèle de CREP </label>
+	       					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+	       						{% if agent.modeleCrep %}
+	       							{{ agent.modeleCrep.libelle }} ({{ agent.modeleCrep.typeEntity }})
+	       						{% endif %}
+       						</div>
+       					</div>       					
+       					{% endif %}
+       					
        					{% if not agent.evaluable %}
        					<div class="form-group">
 		       				<label class="control-label col-md-3 col-sm-3 col-xs-12">Motif de non évaluation </label>

@@ -22,24 +22,21 @@ class BrhpController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function indexAction()
+    public function indexAction(BrhpManager $brhpManager)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var $utilisateur Utilisateur */
         $utilisateur = $this->getUser();
 
-        if ($utilisateur->hasRole('ROLE_ADMIN')) {
+        if ('ROLE_ADMIN' === $this->get('session')->get('selectedRole')) {
             $perimetresRlc = $em->getRepository('AppBundle:PerimetreRlc')->findAll();
         } else {
             /* @var $rlc Rlc */
             $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
-
             $perimetresRlc = $rlc->getPerimetresRlc();
         }
 
-        /* @var $brhpManager BrhpManager */
-        $brhpManager = $this->get('app.brhp_manager');
         $listeBrhps = $brhpManager->getBrhps($perimetresRlc);
 
         $deleteForms = $this->createDeleteForms($listeBrhps);
@@ -57,7 +54,7 @@ class BrhpController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, BrhpManager $brhpManager)
     {
         $brhp = new Brhp();
 
@@ -76,9 +73,7 @@ class BrhpController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $this->isUnique($rlc->getPerimetresRlc(), $form)) {
-            /* @var $brhpManager BrhpManager */
-            $brhpManager = $this->get('app.brhp_manager');
+        if ($form->isSubmitted() && $form->isValid() && $this->isUnique($rlc->getPerimetresRlc(), $form, $brhpManager)) {
             $brhpManager->creerBrhp($brhp);
 
             $this->get('session')->getFlashBag()->set('notice', 'BRHP \"'.$brhp->getNom().' '.$brhp->getPrenom().'\" créé !');
@@ -91,10 +86,8 @@ class BrhpController extends Controller
         ));
     }
 
-    private function isUnique($perimetresRlc, $form)
+    private function isUnique($perimetresRlc, $form, BrhpManager $brhpManager)
     {
-        /* @var $brhpManager BrhpManager */
-        $brhpManager = $this->get('app.brhp_manager');
         $listeBrhps = $brhpManager->getBrhps($perimetresRlc);
 
         $nouveauBrhp = $form->getData();
@@ -115,31 +108,30 @@ class BrhpController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function editAction(Request $request, Brhp $brhp)
+    public function editAction(Request $request, Brhp $brhp, BrhpManager $brhpManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(BrhpVoter::EDIT, $brhp);
 
         $anciensPerimetres = $brhp->getPerimetresBrhp()->toArray();
 
-        $utilisateur = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
 
         // Affectation du ministere de l'utilisateur
-        $ministere = $utilisateur->getMinistere();
-        $brhp->setMinistere($ministere);
-
-        $em = $this->getDoctrine()->getManager();
-        $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
-
-        $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->getPerimetresBrhpByRlc($rlc);
+        if ('ROLE_ADMIN' !== $this->get('session')->get('selectedRole')) {
+            $utilisateur = $this->getUser();
+            $brhp->setMinistere($utilisateur->getMinistere());
+            $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
+            $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->getPerimetresBrhpByRlc($rlc);
+        } else {
+            $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->findAll();
+        }
 
         $editForm = $this->createForm('AppBundle\Form\BrhpType', $brhp, array('perimetresBrhp' => $perimetreBrhps, 'typeAction' => 'editBrhp'));
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            /* @var $brhpManager BrhpManager */
-            $brhpManager = $this->get('app.brhp_manager');
             $brhpManager->updateBrhp($brhp, $anciensPerimetres, $rlc->getPerimetresRlc());
 
             $this->get('session')->getFlashBag()->set('notice', 'BRHP \"'.$brhp->getNom().' '.$brhp->getPrenom().'\" modifié !');
@@ -158,7 +150,7 @@ class BrhpController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function deleteAction(Request $request, Brhp $brhp)
+    public function deleteAction(Request $request, Brhp $brhp, BrhpManager $brhpManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(BrhpVoter::DELETE, $brhp);
@@ -172,8 +164,6 @@ class BrhpController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
-            /* @var $brhpManager BrhpManager */
-            $brhpManager = $this->get('app.brhp_manager');
             $brhpManager->delete($brhp, $rlc->getPerimetresRlc());
 
             $this->get('session')->getFlashBag()->set('notice', 'BRHP \"'.$brhp->getNom().' '.$brhp->getPrenom().'\" supprimé !');

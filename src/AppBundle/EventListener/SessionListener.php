@@ -3,17 +3,18 @@
 namespace AppBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
+use AppBundle\Service\ConstanteManager;
 
 class SessionListener
 {
     private $router;
     private $sessionTimeout;
 
-    public function __construct(Router $router, $sessionTimeout)
+    public function __construct(RouterInterface $router, ConstanteManager $constanteManager)
     {
         $this->router = $router;
-        $this->sessionTimeout = $sessionTimeout;
+        $this->sessionTimeout = $constanteManager->getSessionTimeout();
     }
 
     public function checkSession(GetResponseEvent $event)

@@ -131,7 +131,8 @@ Fonction exercée : {{ crep.fonctionExerceeShd | nl2br }}
 		
 		{% for objectif in crep.objectifsEvalues %}
 			{% set echelleEvaluation = ['&#9744;', '&#9744;', '&#9744;', '&#9744;'] %}
-			{% set echelleEvaluation = setElementArray(echelleEvaluation, objectif.resultatObtenu, '&#9745;')  %} {# <==> echelleEvaluation[objectif.resultatObtenu] = '&#9745;' #}
+{# 			{% set echelleEvaluation = setElementArray(echelleEvaluation, objectif.resultatObtenu, '&#9745;')  %} #}
+			{% set echelleEvaluation = echelleEvaluation|merge({(objectif.resultatObtenu): '&#9745;'}) %} {# <==> echelleEvaluation[objectif.resultatObtenu] = '&#9745;' #}
 			<tr>
 				<td class="bordered">
 					{{ objectif.libelle | nl2br}} 
@@ -311,7 +312,8 @@ Fonction exercée : {{ crep.fonctionExerceeShd | nl2br }}
 	{% if crep.competencesRequises | length > 0 %}
 		{% for competence in crep.competencesRequises %}
 			{% set echelleEvaluation = ['', '', '', '', ''] %}
-			{% set echelleEvaluation = setElementArray(echelleEvaluation, competence.niveau, 'X')  %} {# <==> echelleEvaluation[competence.niveau] = 'X' #}
+{# 			{% set echelleEvaluation = setElementArray(echelleEvaluation, competence.niveau, 'X')  %} #}
+			{% set echelleEvaluation = echelleEvaluation|merge({(competence.niveau): 'X'}) %} {# <==> echelleEvaluation[competence.niveau] = 'X' #}
 			<tr>
 				<td class="bordered">{{ competence.libelle | nl2br}}</td>
 				<td class="bordered text-center">{{ echelleEvaluation[4]  }}</td>
@@ -353,8 +355,7 @@ Fonction exercée : {{ crep.fonctionExerceeShd | nl2br }}
 	
 	{% for savoir in crep.savoirsFairePoste %}
 		{% set echelleEvaluation = ['', '', '', '', '', ''] %}
-		{% set echelleEvaluation = setElementArray(echelleEvaluation, savoir.niveau, 'X')  %} {# <==> echelleEvaluation[savoir.niveau] = 'X' #}
-			
+		{% set echelleEvaluation = echelleEvaluation|merge({(savoir.niveau): 'X'}) %}	{# <==> echelleEvaluation[savoir.niveau] = 'X' #}
 		<tr>
 			<td class="bordered">{{ savoir.libelle | nl2br}}</td>
 			<td class="bordered text-center">{{ echelleEvaluation[4] }}</td>
@@ -369,8 +370,7 @@ Fonction exercée : {{ crep.fonctionExerceeShd | nl2br }}
 	{% if crep.savoirsFairePosteAutres | length > 0 %}
 		{% for savoir in crep.savoirsFairePosteAutres %}
 			{% set echelleEvaluation = ['', '', '', '', '', ''] %}
-			{% set echelleEvaluation = setElementArray(echelleEvaluation, savoir.niveau, 'X')  %} {# <==> echelleEvaluation[savoir.niveau] = 'X' #}
-		
+			{% set echelleEvaluation = echelleEvaluation|merge({(savoir.niveau): 'X'}) %} {# <==> echelleEvaluation[savoir.niveau] = 'X' #}
 			<tr>
 				<td class="bordered">{{ savoir.libelle|nl2br}}</td>
 				<td class="bordered text-center">{{ echelleEvaluation[4] }}</td>

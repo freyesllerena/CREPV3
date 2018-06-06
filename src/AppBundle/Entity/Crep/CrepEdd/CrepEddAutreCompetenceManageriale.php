@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * CrepEddAutreCompetenceManageriale
+ * CrepEddAutreCompetenceManageriale.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepositery\CrepEddRepositery\CrepEddAutreCompetenceManagerialeRepository")
  */
@@ -21,12 +21,15 @@ class CrepEddAutreCompetenceManageriale extends Competence
      */
     protected $crep;
 
-
-    public function getCrep() {
+    public function getCrep()
+    {
         return $this->crep;
     }
-    public function setCrep($crep) {
+
+    public function setCrep($crep)
+    {
         $this->crep = $crep;
+
         return $this;
     }
 

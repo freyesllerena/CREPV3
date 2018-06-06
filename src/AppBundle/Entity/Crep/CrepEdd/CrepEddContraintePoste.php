@@ -4,10 +4,9 @@ namespace AppBundle\Entity\Crep\CrepEdd;
 
 use AppBundle\Entity\ContraintePoste;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 /**
- * CrepEddContraintePoste
+ * CrepEddContraintePoste.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddContraintePosteRepository")
  */
@@ -17,10 +16,10 @@ class CrepEddContraintePoste extends ContraintePoste
      * @ORM\ManyToOne(targetEntity="CrepEdd", inversedBy="contraintesPostes")
      */
     protected $crep;
-    
+
     /**
-     * Set crep
-     *      
+     * Set crep.
+     *
      * @param \AppBundle\Entity\Crep\CrepEdd\CrepEdd $crep
      *
      * @return ContraintePoste
@@ -28,12 +27,12 @@ class CrepEddContraintePoste extends ContraintePoste
     public function setCrep(CrepEdd $crep = null)
     {
         $this->crep = $crep;
-    
+
         return $this;
     }
-    
+
     /**
-     * Get crep
+     * Get crep.
      *
      * @return \AppBundle\Entity\Crep\CrepEdd\CrepEdd
      */
@@ -41,11 +40,9 @@ class CrepEddContraintePoste extends ContraintePoste
     {
         return $this->crep;
     }
-    
-    public function __construct($libelle){
-        
+
+    public function __construct($libelle)
+    {
         $this->libelle = $libelle;
-        
     }
- 
 }

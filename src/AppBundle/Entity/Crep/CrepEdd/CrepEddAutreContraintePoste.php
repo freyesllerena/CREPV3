@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use AppBundle\Entity\Crep;
 
 /**
- * CrepEddAutreContraintePoste
+ * CrepEddAutreContraintePoste.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddAutreContraintePosteRepository")
  */
@@ -19,9 +19,9 @@ class CrepEddAutreContraintePoste extends ContraintePoste
      * @ORM\ManyToOne(targetEntity="CrepEdd", inversedBy="autresContraintesPostes")
      */
     protected $crep;
-    
+
     /**
-     * Set crep
+     * Set crep.
      *
      * @param \AppBundle\Entity\Crep\CrepEdd\CrepEdd $crep
      *
@@ -30,12 +30,12 @@ class CrepEddAutreContraintePoste extends ContraintePoste
     public function setCrep(CrepEdd $crep = null)
     {
         $this->crep = $crep;
-    
+
         return $this;
     }
-    
+
     /**
-     * Get crepEdd
+     * Get crepEdd.
      *
      * @return \AppBundle\Entity\Crep\CrepEdd\CrepEdd
      */
@@ -43,17 +43,16 @@ class CrepEddAutreContraintePoste extends ContraintePoste
     {
         return $this->crep;
     }
-    
+
     /**
      * @Assert\Callback
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if($this->libelle !== null && $this->niveauDifficulte === null){
-            $context->buildViolation("Le niveau de difficulté est obligatoire")
+        if (null !== $this->libelle && null === $this->niveauDifficulte) {
+            $context->buildViolation('Le niveau de difficulté est obligatoire')
             ->atPath('libelle')
             ->addViolation();
         }
     }
-    
 }

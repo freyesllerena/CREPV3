@@ -16,6 +16,9 @@ use AppBundle\Entity\PerimetreBrhp;
 use AppBundle\Entity\CampagneRlc;
 use AppBundle\Entity\Rlc;
 use AppBundle\EnumTypes\EnumStatutCrep;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AgentVoter extends Voter
 {
@@ -60,7 +63,7 @@ class AgentVoter extends Voter
 
     const CHOISIR_CREP = 'choisir_crep';
 
-    public function __construct($decisionManager, EntityManager $em, Session $session)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->decisionManager = $decisionManager;
         $this->em = $em;
@@ -383,24 +386,31 @@ class AgentVoter extends Voter
             //On récupère le BRHP de l'utilisateur
             /** @var $brhp BRHP */
             $brhp = $this->em->getRepository('AppBundle:BRHP')->findOneByUtilisateur($utilisateur);
-            
+
             // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
             if ($brhp->getPerimetresBrhp()->contains($agent->getCampagneBrhp()->getPerimetreBrhp())) {
-            	return true;
+                return true;
             }
         }
 
         if ('ROLE_BRHP_CONSULT' == $roleUtilisateurSession) {
-        	//On récupère le BRHP_CONSULT de l'utilisateur
-        	/** @var $brhpConsult BrhpConsult */
-        	$brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+            //On récupère le BRHP_CONSULT de l'utilisateur
+            /** @var $brhpConsult BrhpConsult */
+            $brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
 
             // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
             if ($brhpConsult->getPerimetresBrhp()->contains($agent->getCampagneBrhp()->getPerimetreBrhp())) {
-            	return true;
+                return true;
             }
         }
-        
+
+        if ('ROLE_AH' == $roleUtilisateurSession) {
+            // Si l'utilisateur est le N+2 de l'agent
+            if ($utilisateur = $agent->getAh()->getUtilisateur()) {
+                return true;
+            }
+        }
+
         if ('ROLE_SHD' == $roleUtilisateurSession) {
             //Si l'agent possède un N+1
             if ($agent->getShd()) {
@@ -426,13 +436,13 @@ class AgentVoter extends Voter
                 }
             }
         }
-        
+
         if ('ROLE_AGENT' == $roleUtilisateurSession) {
-        	if ($utilisateur === $agent->getUtilisateur()){
-        		return true;
-        	}
+            if ($utilisateur === $agent->getUtilisateur()) {
+                return true;
+            }
         }
-        
+
         // Dans tous les autres cas, on refuse l'accès
         return false;
     }

@@ -2,16 +2,31 @@
 
 namespace AppBundle\Service\ModelesCrep;
 
-use AppBundle\Service\BaseManager;
 use AppBundle\Repository\FormationDemandeeAgentRepository;
 use AppBundle\Entity\CampagneBrhp;
 use AppBundle\Util\Util;
 use AppBundle\Repository\FormationSuivieRepository;
 use AppBundle\Entity\ModeleCrep;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use AppBundle\Service\ConstanteManager;
 
-class CrepSclManager extends BaseManager
+class CrepSclManager
 {
+    protected $em;
+    
+    protected $session;
+    
+    protected $kernelRootDir;
+    
     protected $modeleCrep = 'AppBundle\Entity\Crep\CrepScl\CrepScl';
+
+    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session, ConstanteManager $constanteManager)
+    {
+    	$this->em = $entityManager;
+    	$this->session = $session;
+    	$this->kernelRootDir = $constanteManager->getKernelRootDir();
+    }
 
     public function exporterFormations(CampagneBrhp $campagneBrhp, ModeleCrep $modeleCrep, \ZipArchive $zip)
     {

@@ -7,6 +7,9 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class UtilisateurVoter extends Voter
 {
@@ -34,7 +37,7 @@ class UtilisateurVoter extends Voter
     const DEBLOQUER = 'debloquer_utilisateur';
     const RENVOYER_MAIL_CREATION_COMPTE = 'renvoyer_mail_creation_compte_utilisateur';
 
-    public function __construct($decisionManager, EntityManager $em, Session $session)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->decisionManager = $decisionManager;
         $this->em = $em;

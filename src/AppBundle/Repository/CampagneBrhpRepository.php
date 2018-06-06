@@ -19,7 +19,7 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('c');
 
-        if ($roleUtilisateur === 'ROLE_ADMIN') {
+        if ('ROLE_ADMIN' === $roleUtilisateur) {
             $qb->leftJoin('c.campagneRlc', 'campagneRlc')
                ->leftJoin('campagneRlc.campagnePnc', 'campagnePnc')
                ->addOrderBy('campagnePnc.anneeEvaluee', 'DESC')
@@ -31,10 +31,10 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $brhps = 'brhps';
-        if($roleUtilisateur === 'ROLE_BRHP_CONSULT'){
-        	$brhps = 'brhpsConsult';
+        if ('ROLE_BRHP_CONSULT' === $roleUtilisateur) {
+            $brhps = 'brhpsConsult';
         }
-        
+
         $qb->leftjoin('c.perimetreBrhp', 'perimetreBrhp')
             ->leftJoin('perimetreBrhp.'.$brhps, 'brhp')
             ->leftJoin('c.campagneRlc', 'campagneRlc')
@@ -52,7 +52,7 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('c');
 
-        if ($roleUtilisateur === 'ROLE_ADMIN') {
+        if ('ROLE_ADMIN' === $roleUtilisateur) {
             $qb->leftjoin('c.agents', 'agent')
                 ->where('c.statut NOT IN (:STATUTS)')
                 ->setParameter('STATUTS', array(EnumStatutCampagne::INITIALISEE, EnumStatutCampagne::CREEE));
@@ -77,7 +77,7 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('c');
 
-        if ($roleUtilisateur === 'ROLE_ADMIN') {
+        if ('ROLE_ADMIN' === $roleUtilisateur) {
             $qb->leftjoin('c.agents', 'agent')
                 ->where('c.statut NOT IN (:STATUTS)')
                 ->setParameter('STATUTS', array(EnumStatutCampagne::INITIALISEE, EnumStatutCampagne::CREEE));

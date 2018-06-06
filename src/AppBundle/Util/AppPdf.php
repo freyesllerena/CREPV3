@@ -105,8 +105,7 @@ class AppPdf extends TCPDF
 	                    		  		</tr>
             	         			</table>
 	    						</small>';
-        }
-        else {
+        } else {
             $this->footer = ' <font color="red">Footer à définir dans AppBundle\Util\AppPdf.php</font>';
         }
     }
@@ -120,11 +119,10 @@ class AppPdf extends TCPDF
             $this->header = '';
 
         // set default header data
-//     		$this->SetHeaderData("/../../../../../web/bundles/framework/images/logo.jpg", PDF_HEADER_LOGO_WIDTH, 'COMPTE RENDU D\'ENTRETIEN PROFESSIONNEL', "réalisé au titre de l'année " . $anneeEvaluation);
         } elseif ($crep instanceof CrepMcc) {
             $this->header = '';
         } elseif ($crep instanceof CrepScl) { // CrepScl
-            $logo = dirname(__FILE__).'/../../../web/bundles/framework/images/scl.jpg';
+            $logo = dirname(__FILE__).'/../../../web/images/scl.jpg';
 
             $htmlHeader = '<table style="border:1px #000000 solid;padding:2px">
 							<tr>

@@ -14,6 +14,8 @@ use AppBundle\Entity\UploadeDocument;
 use AppBundle\Service\ImportCsv;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use AppBundle\Service\DocumentManager;
+use AppBundle\Service\AgentManager;
 
 /**
  * CampagneAdminMin controller.
@@ -72,7 +74,7 @@ class CampagneAdminMinController extends Controller
      *
      * @Security("has_role('ROLE_ADMIN_MIN')")
      */
-    public function chargerPopulationAction(CampagnePnc $campagnePnc, Request $request)
+    public function chargerPopulationAction(CampagnePnc $campagnePnc, Request $request, ImportCsv $importCsv)
     {
         $uploadeDocument = new UploadeDocument();
         $uploadForm = $this->createForm('AppBundle\Form\UploadeDocumentType', $uploadeDocument, ['validation_groups' => ['Default', 'injection_referentiel']]);
@@ -88,11 +90,8 @@ class CampagneAdminMinController extends Controller
             // le flush est indispensable pour pouvoir ouvrir le fichier uploadé
             $em->flush();
 
-            /* @var $csvtoarray ImportCsv */
-            $csvtoarray = $this->get('app.import_csv');
-
             // on utilise le service pour l'import d'un fichier csv//
-            $resultatLecture = $csvtoarray->importerPopulation($campagnePnc);
+            $resultatLecture = $importCsv->importerPopulation($campagnePnc);
 
             if (true !== $resultatLecture) {
                 $campagnePnc->setDocPopulation(null);
@@ -145,7 +144,7 @@ class CampagneAdminMinController extends Controller
      *
      * @param CampagnePnc $campagnePnc
      */
-    public function supprimerPopulationAction(Request $request, CampagnePnc $campagnePnc)
+    public function supprimerPopulationAction(Request $request, CampagnePnc $campagnePnc, DocumentManager $documentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagnePncVoter::SUPPRIMER_POPULATION, $campagnePnc);
@@ -163,9 +162,6 @@ class CampagneAdminMinController extends Controller
             $document = $campagnePnc->getDocPopulation();
 
             if ($document) {
-                /* @var $documentManager DocumentManager */
-                $documentManager = $this->get('app.document_manager');
-
                 $documentManager->deleteDocuments(array($document));
             }
 
@@ -233,7 +229,7 @@ class CampagneAdminMinController extends Controller
      *
      * @param CampagnePnc $campagnePnc
      */
-    public function diffuserPopulationAction(CampagnePnc $campagnePnc, Request $request)
+    public function diffuserPopulationAction(CampagnePnc $campagnePnc, Request $request, CampagnePncManager $campagnePncManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagnePncVoter::DIFFUSER_POPULATION, $campagnePnc);
@@ -242,9 +238,6 @@ class CampagneAdminMinController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $campagnePncManager CampagnePncManager */
-            $campagnePncManager = $this->get('app.campagne_pnc_manager');
-
             $campagnePncManager->diffuser($campagnePnc);
 
             $this->get('session')->getFlashBag()->set('notice', 'Votre population a été diffusée avec succès !');
@@ -291,13 +284,10 @@ class CampagneAdminMinController extends Controller
      *
      * @param CampagnePnc $campagnePnc
      */
-    public function getFichierAgentsDepuisAgentAction(CampagnePnc $campagnePnc, Request $request)
+    public function getFichierAgentsDepuisAgentAction(CampagnePnc $campagnePnc, Request $request, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagnePncVoter::EXTRAIRE_DONNEES_AGENTS, $campagnePnc);
-
-        /* @var $agentManager AgentManager */
-        $agentManager = $this->get('app.agent_manager');
 
         $fichier = $agentManager->exporterFichierAgents($campagnePnc);
 

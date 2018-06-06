@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ObjectifFutur.
@@ -17,6 +18,7 @@ class ObjectifFuturParent extends Objectif
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(max = 255, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $echeance;
 
@@ -24,6 +26,7 @@ class ObjectifFuturParent extends Objectif
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $observationsEventuelles;
 

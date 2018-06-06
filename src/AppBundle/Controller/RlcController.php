@@ -9,6 +9,7 @@ use AppBundle\Entity\Rlc;
 use AppBundle\Security\RlcVoter;
 use AppBundle\Service\RlcManager;
 use AppBundle\Entity\Utilisateur;
+use AppBundle\Service\PerimetreRlcManager;
 
 /**
  * Rlc controller.
@@ -20,17 +21,9 @@ class RlcController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function indexAction()
+    public function indexAction(RlcManager $rlcManager)
     {
-        /* @var $utilisateur Utilisateur */
-        $utilisateur = $this->getUser();
-        $ministere = $utilisateur->getMinistere();
-        if ($utilisateur->hasRole('ROLE_ADMIN')) {
-            $em = $this->getDoctrine()->getManager();
-            $rlcs = $em->getRepository('AppBundle:Rlc')->findAll();
-        } else {
-            $rlcs = $this->get('app.rlc_manager')->getRlc($ministere);
-        }
+        $rlcs = $rlcManager->getRlcs();
 
         $deleteForms = $this->createDeleteForms($rlcs);
 
@@ -46,7 +39,7 @@ class RlcController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, PerimetreRlcManager $perimetreRlcManager, RlcManager $rlcManager)
     {
         $rlc = new Rlc();
 
@@ -55,14 +48,12 @@ class RlcController extends Controller
         $ministere = $utilisateur->getMinistere();
         $rlc->setMinistere($ministere);
 
-        $perimetresRlc = $this->get('app.perimetre_rlc_manager')->getPerimetreRlc($ministere);
+        $perimetresRlc = $perimetreRlcManager->getPerimetreRlc($ministere);
 
         $form = $this->createForm('AppBundle\Form\RlcType', $rlc, array('perimetresRlc' => $perimetresRlc));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $rlcManager RlcManager */
-            $rlcManager = $this->get('app.rlc_manager');
             $rlcManager->creerRlc($rlc);
 
             $this->get('session')->getFlashBag()->set('notice', 'RLC \"'.$rlc->getNom().' '.$rlc->getPrenom().'\" créé !');
@@ -81,17 +72,18 @@ class RlcController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function editAction(Request $request, Rlc $rlc)
+    public function editAction(Request $request, Rlc $rlc, PerimetreRlcManager $perimetreRlcManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(RlcVoter::MODIFIER, $rlc);
 
         // Affectation du ministere de l'utilisateur
-        $utilisateur = $this->getUser();
-        $ministere = $utilisateur->getMinistere();
-        $rlc->setMinistere($ministere);
+        if ('ROLE_ADMIN' !== $this->get('session')->get('selectedRole')) {
+            $utilisateur = $this->getUser();
+            $rlc->setMinistere($utilisateur->getMinistere());
+        }
 
-        $perimetresRlc = $this->get('app.perimetre_rlc_manager')->getPerimetreRlc($ministere);
+        $perimetresRlc = $perimetreRlcManager->getPerimetresRlc();
 
         $editForm = $this->createForm('AppBundle\Form\RlcType', $rlc, array('perimetresRlc' => $perimetresRlc));
 
@@ -118,7 +110,7 @@ class RlcController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function deleteAction(Request $request, Rlc $rlc)
+    public function deleteAction(Request $request, Rlc $rlc, RlcManager $rlcManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(RlcVoter::SUPPRIMER, $rlc);
@@ -127,8 +119,6 @@ class RlcController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /* @var $rlcManager RlcManager */
-            $rlcManager = $this->get('app.rlc_manager');
             $rlcManager->supprimerRlc($rlc);
 
             $this->get('session')->getFlashBag()->set('notice', 'RLC \"'.$rlc->getNom().' '.$rlc->getPrenom().'\" supprimé !');

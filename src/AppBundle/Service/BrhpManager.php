@@ -6,18 +6,21 @@ use AppBundle\Entity\Brhp;
 use AppBundle\Repository\CampagneBrhpRepository;
 use AppBundle\Entity\PerimetreBrhp;
 use AppBundle\Entity\PerimetreRlc;
+use Doctrine\ORM\EntityManagerInterface;
 
-class BrhpManager extends BaseManager
+class BrhpManager
 {
     protected $utilisateurManager;
 
     protected $personneManager;
+    
+    protected $em;
 
-    public function init(UtilisateurManager $utilisateurManager, PersonneManager $personneManager)
+    public function __construct(UtilisateurManager $utilisateurManager, PersonneManager $personneManager, EntityManagerInterface $entityManager)
     {
-        //call_user_func_array(array($this, 'parent::__construct'), func_get_args());
         $this->utilisateurManager = $utilisateurManager;
         $this->personneManager = $personneManager;
+        $this->em = $entityManager;
     }
 
     /**
@@ -56,12 +59,12 @@ class BrhpManager extends BaseManager
         $brhpRepository = $this->em->getRepository('AppBundle:Brhp');
         /* @var $brhpExistant Brhp */
         $brhpExistant = null;
-        
-        if($brhp->getUtilisateur()){
-        	$brhpExistant = $brhpRepository->findOneByUtilisateur($brhp->getUtilisateur());
+
+        if ($brhp->getUtilisateur()) {
+            $brhpExistant = $brhpRepository->findOneByUtilisateur($brhp->getUtilisateur());
         }
-        
-		// Si le BRHP existe déjà, c'est à dire qu'il a été ajouté par un autre RLC
+
+        // Si le BRHP existe déjà, c'est à dire qu'il a été ajouté par un autre RLC
         // alors on lui ajoute les nouveaux périmètres aux périmètres qu'il gère déjà
         if ($brhpExistant) {
             foreach ($brhp->getPerimetresBrhp() as $perimetreBrhp) {

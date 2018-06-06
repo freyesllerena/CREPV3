@@ -1,34 +1,18 @@
 {% form_theme form 'crep/crepMcc02/Form/collections.form.html.twig' %}
-<div class="row" id="formationsSuiviesCollection" data-prototype="{{ form_widget(form.formationsSuivies.vars.prototype)|e('html_attr') }}">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="text-center">Année</th>
-                <th class="text-center">Formation demandée</th>
-                <th class="text-center">Formation suivie</th>
-                <th class="text-center">Durée</th>
-                <th class="text-center">Commentaires (appréciation, bilan, suites)</th>
-                <th class="text-center"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                {% for formationSuivie in form.formationsSuivies %}
-                    {{ form_widget(formationSuivie, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
-                {% endfor %}
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
+<div class="row" id="formationsSuiviesCollection" data-prototype="{{ form_widget(form.formationsSuivies.vars.prototype)|e('html_attr') }}">
+    <table class="table table-bordered">
+        <tbody>
+            {% for formationSuivie in form.formationsSuivies %}
+                {{ form_widget(formationSuivie) }}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <button class="btn btn-primary add_collection_link formationsSuivies pull-right">
+        <button class="btn btn-primary add_collection_mcc02_link formationsSuivies pull-right">
             <i class="fa fa-plus"></i> Ajouter
         </button>
     </div>
 </div>
-
-

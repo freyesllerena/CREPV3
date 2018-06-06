@@ -40,7 +40,7 @@ class CampagneShdController extends Controller
      *
      * @Security("has_role('ROLE_SHD')")
      */
-    public function showAction(CampagneBrhp $campagneShd, Request $request)
+    public function showAction(CampagneBrhp $campagneShd, Request $request, AgentManager $agentManager, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::VOIR_SHD, $campagneShd);
@@ -68,8 +68,6 @@ class CampagneShdController extends Controller
 
             $agentsAValider = $validerForm->getData()['agents'];
 
-            /* @var $agentManager AgentManager */
-            $agentManager = $this->get('app.agent_manager');
             $agentManager->validerRejeterAgents($agentsAValider);
 
             $this->get('session')->getFlashBag()->set('notice', 'La liste a bien été envoyée !');
@@ -94,12 +92,6 @@ class CampagneShdController extends Controller
         foreach ($agentsNonEvaluables as $agent) {
             $detacherShdForms[$agent->getId()] = $this->createDetacherShdForm($agent->getId())->createView();
         }
-
-        // Récupérer les agents sans SHD du périmètre du BRHP
-        //$agentsSansShd = $agentRepository->findBy(["shd" => null , "campagneBrhp" => $campagneShd]);
-
-        /*@var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
 
         $indicateurs = $crepManager->calculIndicateurs($campagneShd, null, null, $shd);
 

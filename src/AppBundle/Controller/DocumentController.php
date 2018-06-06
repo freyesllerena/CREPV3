@@ -5,15 +5,15 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Psr\Log\LoggerInterface;
 
 class DocumentController extends Controller
 {
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function getFileAction($id, $checksum)
+    public function getFileAction($id, $checksum, LoggerInterface $logger)
     {
-        $logger = $this->get('logger');
         $em = $this->getDoctrine()->getManager();
 
         /* @var $document Document */

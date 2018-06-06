@@ -5,10 +5,11 @@ namespace AppBundle\Service;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Monolog\Logger;
-use Symfony\Component\Validator\Validator\RecursiveValidator;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\Router;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Validator\Validator\TraceableValidator;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class BaseManager
 {
@@ -23,7 +24,7 @@ abstract class BaseManager
     protected $appMailer;
     protected $kernelRootDir;
 
-    public function __construct(Doctrine $doctrine, AuthorizationChecker $authorizationChecker, $securityTokenStorage, Logger $logger, RecursiveValidator $validator, Session $session, Router $router, AppMailer $appMailer, $kernelRootDir)
+    public function __construct(Doctrine $doctrine, AuthorizationChecker $authorizationChecker, $securityTokenStorage, Logger $logger, TraceableValidator $validator, SessionInterface $session, RouterInterface $router, AppMailer $appMailer, $kernelRootDir)
     {
         $this->em = $doctrine->getManager();
         $this->logger = $logger;

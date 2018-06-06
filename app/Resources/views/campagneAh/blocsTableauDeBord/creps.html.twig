@@ -29,9 +29,8 @@
                         {% for agent in listeAgentsAvecCrep %}
                             <tr>
                                 <td>
-                                    {% if ( is_granted(constant('AppBundle\\Security\\AgentVoter::VOIR_CREP_PAPIER'), agent) )
-                                    		or ( is_granted(constant('AppBundle\\Security\\CrepVoter::VOIR'), agent.crep) ) %}
-                                    	<a href="{{ path('check_crep_agent', {'id': agent.id}) }}">
+                                    {% if ( is_granted(constant('AppBundle\\Security\\AgentVoter::VOIR'), agent)) %}
+                                    	<a href="{{ path('agent_show', {'id': agent.id}) }}">
                                     {% endif %}
                            			
                            				{{ agent | identite }}

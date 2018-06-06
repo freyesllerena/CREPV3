@@ -8,36 +8,39 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * CrepEddCompetenceTransverseDetenue
+ * CrepEddCompetenceTransverseDetenue.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddCompetenceTransverseDetenueRepository")
  */
 class CrepEddCompetenceTransverseDetenue extends Competence
 {
-	/**
-	 * @ORM\ManyToOne(targetEntity="CrepEdd", inversedBy="competencesTransversesDetenues")
-	 * @ORM\JoinColumn(nullable=false)
-	 */
-	protected $crep;
-	
+    /**
+     * @ORM\ManyToOne(targetEntity="CrepEdd", inversedBy="competencesTransversesDetenues")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $crep;
+
     /**
      * @Assert\Callback
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if($this->libelle !== null && $this->niveauAcquis === null){
-            $context->buildViolation("Le niveau de la compétence est obligatoire")
+        if (null !== $this->libelle && null === $this->niveauAcquis) {
+            $context->buildViolation('Le niveau de la compétence est obligatoire')
             ->atPath('libelle')
             ->addViolation();
         }
     }
-    
-	public function getCrep() {
-		return $this->crep;
-	}
-	public function setCrep($crep) {
-		$this->crep = $crep;
-		return $this;
-	}
-	
+
+    public function getCrep()
+    {
+        return $this->crep;
+    }
+
+    public function setCrep($crep)
+    {
+        $this->crep = $crep;
+
+        return $this;
+    }
 }

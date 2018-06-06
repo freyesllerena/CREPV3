@@ -6,11 +6,19 @@ namespace AppBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use AppBundle\Service\StatistiquesManager;
+use Symfony\Component\Console\Command\Command;
 
-class StatistiquesCommand extends ContainerAwareCommand
+class StatistiquesCommand extends Command
 {
+    protected $statistiquesManager;
+
+    public function __construct(StatistiquesManager $statistiquesManager)
+    {
+    	parent::__construct();
+        $this->statistiquesManager = $statistiquesManager;
+    }
+
     protected function configure()
     {
         $this
@@ -26,10 +34,7 @@ class StatistiquesCommand extends ContainerAwareCommand
             '',
         ]);
 
-        /* @var $statistiquesManager StatistiquesManager */
-        $statistiquesManager = $this->getContainer()->get('app.statistiques_manager');
-
-        $statistiquesManager->calculer();
+        $this->statistiquesManager->calculer();
 
         $output->writeln('Statistiques calcules');
     }

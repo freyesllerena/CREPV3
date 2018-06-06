@@ -2,8 +2,6 @@
 
 namespace AppBundle\Form\Crep\CrepEdd;
 
-use AppBundle\Entity\Crep\CrepEdd\CrepEddFormationSuivie;
-use AppBundle\Form\Crep\CrepEdd\CrepEddFormationSuivieType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -107,18 +105,18 @@ class CrepEddType extends CrepType
             ->add('nbBureauxDirection', TextType::class,
                 array(
                     'label' => false,
-                    'required' => false
+                    'required' => false,
                 ))
 
             ->add('nbCadresEncadresA', TextType::class,
                 array(
                     'label' => false,
-                    'required' => false
+                    'required' => false,
                 ))
             ->add('nbTotalAgentsEncadres', TextType::class,
                 array(
                     'label' => false,
-                    'required' => false
+                    'required' => false,
                 ))
             ->add(
                 'presenceAdjoints',
@@ -132,13 +130,11 @@ class CrepEddType extends CrepType
                                 'placeholder' => null,
                                 'required' => false,
                                 'multiple' => false,
-                                'label'=> false
+                                'label' => false,
                             ]
             )
             ->add('observationsEffectifs', null, [
                                 'required' => false, ])
-
-
 
             ->add(
                 'contraintesPostes',
@@ -209,7 +205,7 @@ class CrepEddType extends CrepType
                 'objectifsEvaluesCollectifs',
                 CollectionType::class,
                                 [
-                                    'entry_type' =>ObjectifEvalueCollectifType::class,
+                                    'entry_type' => ObjectifEvalueCollectifType::class,
                                     'allow_add' => true,
                                     'allow_delete' => true,
                                     'by_reference' => false,
@@ -220,7 +216,7 @@ class CrepEddType extends CrepType
                 'objectifsEvaluesIndividuels',
                 CollectionType::class,
                                 [
-                                    'entry_type' =>ObjectifEvalueIndividuelType::class,
+                                    'entry_type' => ObjectifEvalueIndividuelType::class,
                                     'allow_add' => true,
                                     'allow_delete' => true,
                                     'by_reference' => false,
@@ -279,7 +275,6 @@ class CrepEddType extends CrepType
 
             ->add('observationsCompetencesTransversesRequises', null, [
                 'required' => false, ])
-
 
             ->add(
                 'autresCompetencesTransversesRequises',
@@ -368,7 +363,6 @@ class CrepEddType extends CrepType
             )
             ->add('observationShdEvolution', null, [
                                 'required' => false, ])
-            
 
             ->add('appreciationGenerale', null, [
                                 'required' => false, ])

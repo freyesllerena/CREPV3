@@ -4,9 +4,17 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Formation;
 use AppBundle\Repository\FormationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
-class FormationManager extends BaseManager
+class FormationManager
 {
+    protected $em;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
     public function creer(Formation $uo)
     {
         $this->em->persist($uo);

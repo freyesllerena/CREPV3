@@ -7,18 +7,21 @@ use AppBundle\Repository\CampagneBrhpRepository;
 use AppBundle\Entity\PerimetreBrhp;
 use AppBundle\Entity\PerimetreRlc;
 use AppBundle\Entity\BrhpConsult;
+use Doctrine\ORM\EntityManagerInterface;
 
-class BrhpConsultManager extends BaseManager
+class BrhpConsultManager
 {
     protected $utilisateurManager;
 
     protected $personneManager;
+    
+    protected $em;
 
-    public function init(UtilisateurManager $utilisateurManager, PersonneManager $personneManager)
+    public function __construct(UtilisateurManager $utilisateurManager, PersonneManager $personneManager, EntityManagerInterface $entityManager)
     {
-        //call_user_func_array(array($this, 'parent::__construct'), func_get_args());
         $this->utilisateurManager = $utilisateurManager;
         $this->personneManager = $personneManager;
+        $this->em = $entityManager;
     }
 
     /**
@@ -57,9 +60,9 @@ class BrhpConsultManager extends BaseManager
         $brhpConsultRepository = $this->em->getRepository('AppBundle:BrhpConsult');
         /* @var $brhpExistant BrhpConsult */
         $brhpConsultExistant = null;
-        
-        if($brhpConsult->getUtilisateur()){
-        	$brhpConsultExistant = $brhpConsultRepository->findOneByUtilisateur($brhpConsult->getUtilisateur());
+
+        if ($brhpConsult->getUtilisateur()) {
+            $brhpConsultExistant = $brhpConsultRepository->findOneByUtilisateur($brhpConsult->getUtilisateur());
         }
 
         // Si le BRHP Consultant existe déjà, c'est à dire qu'il a été ajouté par un autre RLC
@@ -119,7 +122,6 @@ class BrhpConsultManager extends BaseManager
         $this->em->flush();
     }
 
-    
     /**
      * Récupérer les Brhps consultation rattachés aux périmètres RLC passés en paramètre.
      *
@@ -127,25 +129,24 @@ class BrhpConsultManager extends BaseManager
      */
     public function getBrhpsConsult($perimetresRlc)
     {
-    	$brhpsConsult = array();
-    	$listeBrhpsConsultSansDoublon = array();
-    
-    	foreach ($perimetresRlc as $perimetreRlc) {
-    		$perimetresBrhp = $perimetreRlc->getPerimetresBrhp();
-    
-    		/* @var $perimetreBrhp PerimetreBrhp */
-    		foreach ($perimetresBrhp as $perimetreBrhp) {
-    			$brhpsConsult = array_merge($brhpsConsult, $perimetreBrhp->getBrhpsConsult()->toArray()); //listeBrhpsConsult avec doublons
-    		}
-    	}
-    
-    	foreach ($brhpsConsult as $brhpConsult) {
-    		if (!in_array($brhpConsult, $listeBrhpsConsultSansDoublon)) {
-    			array_push($listeBrhpsConsultSansDoublon, $brhpConsult);
-    		}
-    	}
-    
-    	return $listeBrhpsConsultSansDoublon;
+        $brhpsConsult = array();
+        $listeBrhpsConsultSansDoublon = array();
+
+        foreach ($perimetresRlc as $perimetreRlc) {
+            $perimetresBrhp = $perimetreRlc->getPerimetresBrhp();
+
+            /* @var $perimetreBrhp PerimetreBrhp */
+            foreach ($perimetresBrhp as $perimetreBrhp) {
+                $brhpsConsult = array_merge($brhpsConsult, $perimetreBrhp->getBrhpsConsult()->toArray()); //listeBrhpsConsult avec doublons
+            }
+        }
+
+        foreach ($brhpsConsult as $brhpConsult) {
+            if (!in_array($brhpConsult, $listeBrhpsConsultSansDoublon)) {
+                array_push($listeBrhpsConsultSansDoublon, $brhpConsult);
+            }
+        }
+
+        return $listeBrhpsConsultSansDoublon;
     }
-    
 }

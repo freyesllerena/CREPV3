@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use AppBundle\EnumTypes\EnumStatutCrep;
 
 /**
- * Crep
+ * Crep.
  *
  * @ORM\Table(name="crep")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository")
@@ -32,7 +32,7 @@ abstract class Crep extends GenericEntity
      * @Assert\Date(message = "Date non valide")
      */
     protected $dateVisaAgent;
-    
+
     /**
      * @var \DateTime
      *
@@ -44,47 +44,47 @@ abstract class Crep extends GenericEntity
      * @var string
      *
      * @ORM\Column(name="observations_visa_agent", type="text", nullable=true)
-     * 
+     *
      * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
      * )
      */
-	protected $observationsVisaAgent;
+    protected $observationsVisaAgent;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="date_visa_ah", type="datetime", nullable=true)
-	 * @Assert\Date(message = "Date non valide")
-	 */
-	protected $dateVisaAh;
-	
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="date_refus_notification", type="datetime", nullable=true)
-	 */
-	protected $dateRefusNotification;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_visa_ah", type="datetime", nullable=true)
+     * @Assert\Date(message = "Date non valide")
+     */
+    protected $dateVisaAh;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="observations_ah", type="text", nullable=true)
-	 * 
-	 * @Assert\Length(
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_refus_notification", type="datetime", nullable=true)
+     */
+    protected $dateRefusNotification;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observations_ah", type="text", nullable=true)
+     *
+     * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
      * )
-	 */
-	protected $observationsAh;
+     */
+    protected $observationsAh;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="date_notification", type="datetime", nullable=true)
-	 * @Assert\Date(message = "Date non valide")
-	 */
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_notification", type="datetime", nullable=true)
+     * @Assert\Date(message = "Date non valide")
+     */
     protected $dateNotification;
 
     /**
@@ -101,7 +101,7 @@ abstract class Crep extends GenericEntity
 //      * @ORM\JoinColumn(name="shd_id", nullable=false)
 //      */
 //     protected $shd;
-    
+
     /**
      * @var Agent
      *
@@ -117,14 +117,14 @@ abstract class Crep extends GenericEntity
 //      * @ORM\JoinColumn(name="ah_id")
 //      */
 //     protected $ah;
-    
+
     /**
      * @var Agent
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Agent")
      * @ORM\JoinColumn(name="ah_signataire_id", nullable=true)
      */
-    protected $ahSignataire; 
+    protected $ahSignataire;
 
     /**
      * @var \DateTime
@@ -133,7 +133,7 @@ abstract class Crep extends GenericEntity
      * @Assert\Date(message = "Date non valide")
      */
     protected $dateEntretien;
-    
+
     /**
      * @var string
      *
@@ -141,29 +141,29 @@ abstract class Crep extends GenericEntity
      *
      */
     protected $refusEntretienProfessionnel = false;
-    
-     /**
+
+    /**
      * @var Agent
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Agent")
      * @ORM\JoinColumn(name="agent_id", nullable=false)
      */
     protected $agent;
-    
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_renvoi_agent", type="datetime", nullable=true)
      */
     protected $dateRenvoiAgent;
-    
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_renvoi_ah", type="datetime", nullable=true)
      */
     protected $dateRenvoiAh;
-    
+
     /**
      * @var string
      *
@@ -178,24 +178,24 @@ abstract class Crep extends GenericEntity
      * )
      */
     protected $motifRenvoiAgent;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="motif_renvoi_ah", type="text", nullable=true)
-     * 
+     *
      * @Assert\NotBlank(
      * 		message = "Motif de renvoi au N+1 obligatoire",
      * 		groups = {"renvoiAh"}
      * )
-     * 
+     *
      * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Le motif ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $motifRenvoiAh;
-    
+
     /**
      * @var Document
      *
@@ -212,20 +212,19 @@ abstract class Crep extends GenericEntity
      * @Assert\Valid
      */
     protected $crepPapier;   // Crep au format papier
-    
+
     /**
      * @var EnumStatutCrep
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $statutCrepAvantImport;
-    
-    
+
     /**
-    * =====================================================================================================
-    *                                        Liste des collections de compétences
-    * ======================================================================================================
-    */
+     * =====================================================================================================
+     *                                        Liste des collections de compétences
+     * ======================================================================================================.
+     */
 
     /**
      * @ORM\OneToMany(targetEntity="CompetencePoste", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
@@ -238,11 +237,11 @@ abstract class Crep extends GenericEntity
      * @Assert\Valid
      */
     protected $competencesDeclarees;
-    
+
     /**
      * =====================================================================================================
      *                                        Liste des collections des objectifs
-     * ======================================================================================================
+     * ======================================================================================================.
      */
 
     /**
@@ -251,7 +250,7 @@ abstract class Crep extends GenericEntity
      * @Assert\Valid
      */
     protected $objectifsEvalues;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="ObjectifFutur", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
      * @ORM\OrderBy({"id" = "ASC"})
@@ -259,15 +258,15 @@ abstract class Crep extends GenericEntity
      */
     protected $objectifsFuturs;
 
-
     /**
      * =====================================================================================================
      *                                        Liste des collections formations
-     * ======================================================================================================
+     * ======================================================================================================.
      */
 
     /**
      * @ORM\OneToMany(targetEntity="FormationSuivie", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $formationsSuivies;
@@ -289,7 +288,7 @@ abstract class Crep extends GenericEntity
      * @Assert\Valid
      */
     protected $formationsDemandeesAdministration;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="FormationReglementaire", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
@@ -297,50 +296,43 @@ abstract class Crep extends GenericEntity
     protected $formationsReglementaires;
 
     /**
-     * @ORM\OneToMany(targetEntity="FormationFuture", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
-     * @Assert\Valid
-     */
-    protected $formationsFutures;
-
-    /**
      * @ORM\OneToMany(targetEntity="FormationDemandeeEmployeur", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
     protected $formationsDemandeesEmployeur;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="FormationDemandeeAgent", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
     protected $formationsDemandeesAgent;
-    
 
     /**
      * =====================================================================================================
      *                                   Liste des collections des souhaits
-     * ======================================================================================================
+     * ======================================================================================================.
      */
 
     /**
-//      * @ORM\OneToOne(targetEntity="MobiliteFonctionnelle", inversedBy="crep", cascade={"persist"},orphanRemoval=true, fetch="EAGER")
+//      * @ORM\OneToOne(targetEntity="MobiliteFonctionnelle", inversedBy="crep", cascade={"persist"},orphanRemoval=true)
      * @Assert\Valid
      */
     protected $mobiliteFonctionnelle;
 
     /**
-     * @ORM\OneToOne(targetEntity="MobiliteGeographique", inversedBy="crep", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="MobiliteGeographique", inversedBy="crep", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
     protected $mobiliteGeographique;
 
     /**
-     * @ORM\OneToOne(targetEntity="MobiliteExterne", inversedBy="crep",  orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="MobiliteExterne", inversedBy="crep",  orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
     protected $mobiliteExterne;
-    
+
     /**
-     * @ORM\OneToOne(targetEntity="MotivationsMobilite", inversedBy="crep",  orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="MotivationsMobilite", inversedBy="crep",  orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
     protected $motivationsMobilite;
@@ -348,7 +340,7 @@ abstract class Crep extends GenericEntity
     /**
      * =====================================================================================================
      *                                   Liste des collections des emplois
-     * ======================================================================================================
+     * ======================================================================================================.
      */
 
     /**
@@ -356,47 +348,42 @@ abstract class Crep extends GenericEntity
      * @Assert\Valid
      */
     protected $emplois;
-    
+
     /**
      * @var boolean
      *
      * @ORM\Column(name="notif_absence_visa_agent", type="boolean", options={"default":false})
-     *
      */
     protected $notificationAbsenceVisaAgent = false;
-    
+
     /**
      * @var ModeleCrep
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ModeleCrep")
      */
     protected $modeleCrep;
-    
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Recours", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
     protected $recours;
-    
-    
-    
 
     abstract public function initialiser(Agent $agent, $em);
-    
+
     /**
-     * Méthode appelée lors d'un rattachement d'un nouveau N+1
+     * Méthode appelée lors d'un rattachement d'un nouveau N+1.
      */
     abstract public function actualiserDonneesShd();
-    
-    protected function initialiserParent(Agent $agent, $em){
-    	$this->setAgent($agent);
-    	$this->setStatut(EnumStatutCrep::CREE);
+
+    protected function initialiserParent(Agent $agent, $em)
+    {
+        $this->setAgent($agent);
+        $this->setStatut(EnumStatutCrep::CREE);
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     protected function init()
     {
@@ -910,36 +897,36 @@ abstract class Crep extends GenericEntity
         return $this->formationsAVenir;
     }
 
-    /**
-     * @param FormationFuture $formation
-     * @return $this
-     */
-    public function addFormationsFuture(FormationFuture $formation)
-    {
-        $this->formationsFutures[] = $formation;
-        $formation->setCrep($this);
+//    /**
+//     * @param FormationFuture $formation
+//     * @return $this
+//     */
+//    public function addFormationsFuture(FormationFuture $formation)
+//    {
+//        $this->formationsFutures[] = $formation;
+//        $formation->setCrep($this);
+//
+//        return $this;
+//    }
 
-        return $this;
-    }
+//    /**
+//     * @param FormationFuture $formation
+//     */
+//    public function removeFormationsFuture(FormationFuture $formation)
+//    {
+//        $this->formationsFutures->removeElement($formation);
+//        $formation->setCrep(null);
+//    }
 
-    /**
-     * @param FormationFuture $formation
-     */
-    public function removeFormationsFuture(FormationFuture $formation)
-    {
-        $this->formationsFutures->removeElement($formation);
-        $formation->setCrep(null);
-    }
-
-    /**
-     * Get formationsFutures
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFormationsFutures()
-    {
-        return $this->formationsFutures;
-    }
+//    /**
+//     * Get formationsFutures
+//     *
+//     * @return \Doctrine\Common\Collections\Collection
+//     */
+//    public function getFormationsFutures()
+//    {
+//        return $this->formationsFutures;
+//    }
 
     /**
      * Add formationsDemandeesAdministration

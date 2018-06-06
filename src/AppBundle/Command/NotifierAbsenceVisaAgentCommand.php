@@ -6,12 +6,24 @@ namespace AppBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use AppBundle\Entity\Crep;
 use AppBundle\Service\CrepManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
 
-class NotifierAbsenceVisaAgentCommand extends ContainerAwareCommand
+class NotifierAbsenceVisaAgentCommand extends Command
 {
+    protected $crepManager;
+
+    protected $em;
+
+    public function __construct(CrepManager $crepManager, EntityManagerInterface $entityManager)
+    {
+    	parent::__construct();
+        $this->crepManager = $crepManager;
+        $this->em = $entityManager;
+    }
+
     protected function configure()
     {
         $this
@@ -27,16 +39,11 @@ class NotifierAbsenceVisaAgentCommand extends ContainerAwareCommand
             '',
         ]);
 
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
-        $creps = $em->getRepository('AppBundle:Crep')->getCrepsEnAbsenceVisaAgent();
-
-        /* @var $crepManager CrepManager */
-        $crepManager = $this->getContainer()->get('app.crep_manager');
+        $creps = $this->em->getRepository('AppBundle:Crep')->getCrepsEnAbsenceVisaAgent();
 
         /* @var $crep Crep */
         foreach ($creps as $crep) {
-            $crepManager->notifierAbsenceVisaAgent($crep);
+            $this->crepManager->notifierAbsenceVisaAgent($crep);
 
             $output->writeln('Notification de : '.$crep->getShd()->getUtilisateur()->getEmail().' pour le CREP de '.$crep->getAgent()->getUtilisateur()->getEmail());
         }

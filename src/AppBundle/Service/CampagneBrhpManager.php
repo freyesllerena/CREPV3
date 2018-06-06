@@ -8,30 +8,39 @@ use AppBundle\Entity\CampagneRlc;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use AppBundle\Repository\AgentRepository;
 use Doctrine\Tests\Common\DataFixtures\TestEntity\User;
-use Symfony\Bundle\TwigBundle\TwigEngine;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use AppBundle\Entity\Campagne;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use AppBundle\Entity\CampagnePnc;
+use Doctrine\ORM\EntityRepository;
 
-class CampagneBrhpManager extends CampagneManager
+class CampagneBrhpManager
 {
+    /* @var $repository CampagneBrhpRepository */
+
+    protected $em;
+
+    protected $tokenStorage;
+
+    protected $personneManager;
+
+    protected $appMailer;
+
     /* @var $repository CampagneBrhpRepository */
     protected $repository;
 
-    protected $crepManager;
-
-    public function init(
-        PersonneManager $personneManager,
-        TokenStorage $jetonRegistre,
-        AppMailer $mailer,
-        TwigEngine $templating,
-        CrepManager $crepManager
+    public function __construct(
+            EntityManagerInterface $entityManager,
+            TokenStorageInterface $tokenStorage,
+            PersonneManager $personneManager,
+            AppMailer $appMailer
     ) {
-        $this->repository = $this->em->getRepository('AppBundle:CampagnePnc');
+        $this->em = $entityManager;
+        $this->tokenStorage = $tokenStorage;
         $this->personneManager = $personneManager;
-        $this->jetonRegistre = $jetonRegistre;
-        $this->mailer = $mailer;
-        $this->templating = $templating;
-        $this->crepManager = $crepManager;
+        $this->appMailer = $appMailer;
+        
+        $this->repository = $this->em->getRepository('AppBundle:CampagneBrhp');
     }
 
     /**
@@ -78,7 +87,7 @@ class CampagneBrhpManager extends CampagneManager
      */
     protected function getUser()
     {
-        return $this->jetonRegistre->getToken()->getUser();
+        return $this->tokenStorage->getToken()->getUser();
     }
 
     /**
@@ -92,7 +101,8 @@ class CampagneBrhpManager extends CampagneManager
         $campagneBrhp->setDateOuverture(new \DateTime());
         $campagneBrhp->setOuvertePar($this->getUser());
 
-        $this->sauvegarder($campagneBrhp);
+        $this->em->persist($campagneBrhp);
+        $this->em->flush();
 
         /* @var $repositoryAgent AgentRepository */
         $repositoryAgent = $this->em->getRepository('AppBundle:Agent');
@@ -116,11 +126,16 @@ class CampagneBrhpManager extends CampagneManager
         $campagneBrhp->setDateOuverture(new \DateTime());
         $campagneBrhp->setOuvertePar($this->getUser());
 
-        $this->sauvegarder($campagneBrhp);
+        $this->em->persist($campagneBrhp);
+        $this->em->flush();
     }
 
     public function getHistoriqueIndicateurs(CampagneBrhp $campagneBrhp)
     {
         return $this->em->getRepository("AppBundle:Statistiques\StatCampagneBrhp")->getHistoriqueIndicateurs($campagneBrhp);
+    }
+    
+    public function getCampagnesBrhpByCampagneRlc(CampagneRlc $campagneRlc){
+    	return $this->repository->getCampagnesBrhpByCampagneRlc($campagneRlc);
     }
 }

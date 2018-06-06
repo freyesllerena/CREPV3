@@ -4,14 +4,18 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Ministere;
 use AppBundle\Entity\PerimetreBrhp;
+use Doctrine\ORM\EntityManagerInterface;
 
-class PerimetreBrhpManager extends BaseManager
+class PerimetreBrhpManager
 {
     protected $agentManager;
 
-    public function init(AgentManager $agentManager)
+    protected $em;
+
+    public function __construct(AgentManager $agentManager, EntityManagerInterface $entityManager)
     {
         $this->agentManager = $agentManager;
+        $this->em = $entityManager;
     }
 
     /**

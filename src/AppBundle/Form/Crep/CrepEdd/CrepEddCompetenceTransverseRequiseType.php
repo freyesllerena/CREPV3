@@ -17,7 +17,6 @@ class CrepEddCompetenceTransverseRequiseType extends CompetencePosteType
         parent::buildForm($builder, $options);
         $builder
             ->remove('libelle');
-
     }
 
     /**

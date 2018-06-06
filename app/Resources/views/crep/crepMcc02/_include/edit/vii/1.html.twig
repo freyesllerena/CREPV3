@@ -13,38 +13,54 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th class="text-center">Type d’emploi</th>
-                    <th class="text-center">Oui immédiatement</th>
-                    <th class="text-center">Oui à moyen terme</th>
-                    <th class="text-center">À confirmer</th>
-                    <th class="text-center">Sans objet</th>
-                </tr>
+            <tr>
+                <th class="text-center" style="width: 40%">Type d’emploi</th>
+                <th class="text-center" style="width: 15%">Oui immédiatement</th>
+                <th class="text-center" style="width: 15%">Oui à moyen terme</th>
+                <th class="text-center" style="width: 15%">À confirmer</th>
+                <th class="text-center" style="width: 15%">Sans objet</th>
+            </tr>
             </thead>
             <tbody>
             {% for potentiel in form.potentielsEvolutions %}
-                {% if potentiel.vars.value.libelle != 'Autre (préciser)' %}
-                    <tr>
-                        <td>
-                            {{ crep.potentielsEvolutions[loop.index0].libelle }}
-                        </td>
+                <tr>
+                    <td>
+                        {{ crep.potentielsEvolutions[loop.index0].libelle }}
+                    </td>
 
-                        {{ form_widget(potentiel) }}
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td>
-                            {{ crep.potentielsEvolutions[loop.index0].libelle }}
-                        </td>
-                        <td class="text-left" colspan="4">
-                            {{ form_widget(potentiel.children['appreciation']) }}
-                        </td>
-                    </tr>
-                {% endif %}
-
+                    {{ form_widget(potentiel) }}
+                </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
 
+<div class="row" id="autresPotentielsEvolutionsCollection" data-prototype="{{ form_widget(form.autresPotentielsEvolutions.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 40%">Autres type d’emploi <span style="color:red;">*</span></th>
+                <th class="text-center" style="width: 15%">Oui immédiatement</th>
+                <th class="text-center" style="width: 15%">Oui à moyen terme</th>
+                <th class="text-center" style="width: 15%">À confirmer</th>
+                <th class="text-center" style="width: 15%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for potentiel in form.autresPotentielsEvolutions %}
+                {{ form_widget(potentiel) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsT1 pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

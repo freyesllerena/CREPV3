@@ -11,6 +11,7 @@ use AppBundle\Entity\CrepMindef01;
 use TCPDF;
 use Doctrine\ORM\Tools\SchemaTool;
 use AppBundle\Entity\ModeleCrep;
+use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 //CREP7\vendor\tecnickcom\tcpdf\examples\tcpdf_include.php
 //require_once('C:\Users\kben-daali-adc\Applications\XAMPP7\htdocs\CREP7\vendor\tecnickcom\tcpdf\examples\tcpdf_include.php');
@@ -65,7 +66,7 @@ class DefaultController extends Controller
         return $this->render($template);
     }
 
-    public function testCertificatAction(CrepMindef01 $crep)
+    public function testCertificatAction(\AppBundle\Entity\Crep\CrepMindef01\CrepMindef01 $crep, TCPDFController $pdf)
     {
         return $this->testTcpdf();
 
@@ -74,9 +75,6 @@ class DefaultController extends Controller
         $html = $this->renderView($template, array(
             'crep' => $crep,
         ));
-
-        /* @var $pdf TCPDF */
-        $pdf = $this->get('white_october.tcpdf')->create();
 
         // set default header data
         //$pdf->SetHeaderData("/../../../../../app/Resources/views/crep/crepMindef/logo.png", PDF_HEADER_LOGO_WIDTH, 'COMPTE RENDU D\'ENTRETIEN PROFESSIONNEL', "rÃ©alisÃ© au titre de l'annÃ©e 2016");

@@ -1,5 +1,7 @@
 {% extends "Campagne/campagnesRecentes.html.twig" %}
 
+{% block KPI %}{% endblock KPI %}
+
 {% block route_show %}
 	"{{ path('campagne_brhp_show', { 'id': campagne.id }) }}"
 {% endblock route_show %}

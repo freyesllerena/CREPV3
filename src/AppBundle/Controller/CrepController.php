@@ -20,12 +20,22 @@ use AppBundle\Security\ModeleCrepVoter;
 use AppBundle\Twig\AppExtension;
 use AppBundle\Service\CrepConfidentialisationManager;
 
+/**
+ * Class CrepController
+ *
+ * @package AppBundle\Controller
+ */
 class CrepController extends Controller
 {
     /**
      * Finds and displays a Crep entity.
+     *
+     * @param Crep $crep
+     * @param CrepConfidentialisationManager $crepConfidentialisationManager
+     *
+     * @return Response
      */
-    public function showAction(Crep $crep)
+    public function showAction(Crep $crep, CrepConfidentialisationManager $crepConfidentialisationManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::VOIR, $crep);
@@ -40,14 +50,12 @@ class CrepController extends Controller
         if (!$crep->getCrepPapier()) {
             $role = $this->get('session')->get('selectedRole');
             $role = strtolower(str_replace('ROLE_', '', $role));
-            
-            if($role === 'brhp_consult'){
-            	$role = 'brhp';
+
+            if ('brhp_consult' === $role) {
+                $role = 'brhp';
             }
 
             // Ici nous utilisons le service d'anomysation du crep en fonction du statut du crep
-            /* @var $crepConfidentialisationManager CrepConfidentialisationManager */
-            $crepConfidentialisationManager = $this->get('app.crep_confidentialisation_manager');
             $crepConfidentialisationManager->confidentialisation($crep, $this->getUser());
 
             $signerShdForm = $this->creerSignerShdForm($crep);
@@ -74,7 +82,7 @@ class CrepController extends Controller
                     'viser_agent_form' => $viserAgentForm->createView(),
                     'signer_ah_form' => $signerAhForm->createView(),
                     'notifier_agent_form' => $notifierAgentForm->createView(),
-            		'rappeler_agent_shd_form' => $rappelerAgentShdForm->createView(),
+                    'rappeler_agent_shd_form' => $rappelerAgentShdForm->createView(),
                     'rappeler_agent_ah_form' => $rappelerAgentAhForm->createView(),
                     'reinitialiser_crep_form' => $reinitialiserForm->createView(),
                     'supprimer_crep_form' => $supprimerForm->createView(),
@@ -83,28 +91,32 @@ class CrepController extends Controller
             ));
         } else {
             return $this->render(
-                'crep/showCrepPapier.html.twig',
-                                 [
-                                    'crep' => $crep,
-                                    'reinitialiser_crep_form' => $reinitialiserForm->createView(),
-                                    'supprimer_crep_form' => $supprimerForm->createView(),
-                                    'refaire_crep_form' => $refaireForm->createView(),
-                                    'laisser_crep_en_etat' => $laisserCrepEnEtatForm->createView(),
-                                 ]
+            'crep/showCrepPapier.html.twig',
+                             [
+                                'crep' => $crep,
+                                'reinitialiser_crep_form' => $reinitialiserForm->createView(),
+                                'supprimer_crep_form' => $supprimerForm->createView(),
+                                'refaire_crep_form' => $refaireForm->createView(),
+                                'laisser_crep_en_etat' => $laisserCrepEnEtatForm->createView(),
+                             ]
             );
         }
     }
 
+    /**
+     * Show Crep Papier Action
+     *
+     * @param Crep $crep
+     *
+     * @return Response
+     */
     public function showCrepPapierAction(Crep $crep)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::VOIR, $crep);
-
         $filename = $crep->getCrepPapier()->getWebPath();
-
         $response = new Response(file_get_contents($filename));
-
-        $disposition = $response->headers->set('Content-Type', 'application/pdf');
+//        $disposition = $response->headers->set('Content-Type', 'application/pdf');
         $disposition = $response->headers->makeDisposition(
                 ResponseHeaderBag::DISPOSITION_INLINE,
                 ''
@@ -118,17 +130,19 @@ class CrepController extends Controller
     /**
      * @Security("has_role('ROLE_USER')")
      * Displays a form to edit an existing CrepMindef01 entity.
+     *
+     * @param Request $request
+     * @param Crep $crep
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editAction(Request $request, Crep $crep)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::EDIT, $crep);
-
         $role = $this->get('session')->get('selectedRole');
         $role = strtolower(str_replace('ROLE_', '', $role));
-
         $editForm = $this->createEditForm($crep);
-
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -137,13 +151,9 @@ class CrepController extends Controller
             if (EnumStatutCrep::CREE == $crep->getStatut()) {
                 $crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
             }
-
             $em->persist($crep);
-
             $em->flush();
-
             $flashbagMessage = 'Le CREP a bien été enregistré !';
-
             $this->get('session')->getFlashBag()->set('notice', $flashbagMessage);
 
             return $this->redirectToRoute('crep_show', array(
@@ -152,7 +162,6 @@ class CrepController extends Controller
         }
 
         $formErrors = $editForm->getErrors(true);
-
         $repertoireVuesCrep = lcfirst(Util::getClassName($crep));
 
         return $this->render('crep/'.$repertoireVuesCrep.'/'.$role.'/edit.html.twig', array(
@@ -166,16 +175,17 @@ class CrepController extends Controller
      * Signer N+1.
      *
      * @Security("has_role('ROLE_SHD')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function signerShdAction(Request $request, Crep $crep)
+    public function signerShdAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::SIGNER_SHD, $crep);
-        /* @var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
-
         $crepManager->signerShd($crep);
-
         $this
                 ->get('session')
                 ->getFlashBag()
@@ -189,16 +199,17 @@ class CrepController extends Controller
      * Viser agent.
      *
      * @Security("has_role('ROLE_AGENT')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function viserAgentAction(Request $request, Crep $crep)
+    public function viserAgentAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::VISER_AGENT, $crep);
-
-        $crepManager = $this->get('app.crep_manager');
-
         $crepManager->viserAgent($crep);
-
         $this
                 ->get('session')
                 ->getFlashBag()
@@ -212,16 +223,17 @@ class CrepController extends Controller
      * Signer N+2.
      *
      * @Security("has_role('ROLE_AH')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function signerAhAction(Request $request, Crep $crep)
+    public function signerAhAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::SIGNER_AH, $crep);
-
-        $crepManager = $this->get('app.crep_manager');
-
         $crepManager->signerAh($crep);
-
         $this
                 ->get('session')
                 ->getFlashBag()
@@ -235,13 +247,16 @@ class CrepController extends Controller
      * Notifier agent.
      *
      * @Security("has_role('ROLE_AGENT')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function notifierAgentAction(Request $request, Crep $crep)
+    public function notifierAgentAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::NOTIFIER_AGENT, $crep);
-
-        $crepManager = $this->get('app.crep_manager');
 
         $crepManager->signerDefinitivementAgent($crep);
 
@@ -258,13 +273,16 @@ class CrepController extends Controller
      * Refuser visa.
      *
      * @Security("has_role('ROLE_SHD')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function refuserVisaAction(Request $request, Crep $crep)
+    public function refuserVisaAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::REFUSER_VISA_AGENT, $crep);
-
-        $crepManager = $this->get('app.crep_manager');
 
         $crepManager->refuserVisa($crep);
 
@@ -277,13 +295,16 @@ class CrepController extends Controller
      * Refuser notification.
      *
      * @Security("has_role('ROLE_SHD')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function refuserNotificationAction(Request $request, Crep $crep)
+    public function refuserNotificationAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::REFUSER_NOTIFICATION_AGENT, $crep);
-
-        $crepManager = $this->get('app.crep_manager');
 
         $crepManager->refuserNotification($crep);
 
@@ -296,10 +317,12 @@ class CrepController extends Controller
      * Render in a PDF the export_pdf URL.
      *
      * @param Crep $crep
+     * @param CrepManager $crepManager
      * @return \AppBundle\Entity\Document|Response
+     *
      * @throws \Exception
      */
-    public function pdfExportAction(Crep $crep)
+    public function pdfExportAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::EXPORTER_PDF, $crep);
@@ -317,8 +340,6 @@ class CrepController extends Controller
             );
         }
 
-        /* @var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
         return $crepManager->genererCrepPdf($crep, 'D');
     }
 
@@ -326,8 +347,14 @@ class CrepController extends Controller
      * Action de renvoi du CREP au N+1 quand l'agent n'est pas d'accord avec le contenu du CREP.
      *
      * @Security("has_role('ROLE_AGENT')")
+     *
+     * @param Request $request
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function renvoyerAgentShdAction(Request $request, Crep $crep)
+    public function renvoyerAgentShdAction(Request $request, Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::RENVOYER_AGENT_SHD, $crep);
@@ -336,8 +363,6 @@ class CrepController extends Controller
         $renvoyerAgentForm->handleRequest($request);
 
         if ($renvoyerAgentForm->isSubmitted() && $renvoyerAgentForm->isValid()) {
-            /* @var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
             $crepManager->renvoyerAgentShd($crep);
 
             $this->get('session')->getFlashBag()->set('notice', 'CREP renvoyé au N+1 !');
@@ -350,14 +375,18 @@ class CrepController extends Controller
         ));
     }
 
-    //*********  *********//
-
     /**
      * Action de renvoi du CREP au N+1 quand le N+2 n'est pas d'accord avec le contenu du CREP.
      *
      * @Security("has_role('ROLE_AH')")
+     *
+     * @param Request $request
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function renvoyerAhShdAction(Request $request, Crep $crep)
+    public function renvoyerAhShdAction(Request $request, Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::RENVOYER_AH_SHD, $crep);
@@ -366,8 +395,6 @@ class CrepController extends Controller
         $renvoyerAhForm->handleRequest($request);
 
         if ($renvoyerAhForm->isSubmitted() && $renvoyerAhForm->isValid()) {
-            /* @var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
             $crepManager->renvoyerAhShd($crep);
 
             $this->get('session')->getFlashBag()->set('notice', 'CREP renvoyé au N+1 !');
@@ -385,7 +412,7 @@ class CrepController extends Controller
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerSignerShdForm(Crep $crep)
     {
@@ -404,7 +431,7 @@ class CrepController extends Controller
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerRefuserVisaForm(Crep $crep)
     {
@@ -423,7 +450,7 @@ class CrepController extends Controller
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerRefuserNotificationForm(Crep $crep)
     {
@@ -442,26 +469,26 @@ class CrepController extends Controller
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerRapplerAgentShdForm(Crep $crep)
     {
-    	return $this
-    	->createFormBuilder()
-    	->setAction($this->generateUrl('crep_rappeler_agent_shd', array(
-    			'id' => $crep->getId(),
-    	)))
-    	->setMethod('PUT')
-    	->getForm()
-    	;
+        return $this
+        ->createFormBuilder()
+        ->setAction($this->generateUrl('crep_rappeler_agent_shd', array(
+                'id' => $crep->getId(),
+        )))
+        ->setMethod('PUT')
+        ->getForm()
+        ;
     }
-    	
+
     /**
      * Génére le formulaire de rappel du CREP de l'agent vers le N+2.
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerRapplerAgentAhForm(Crep $crep)
     {
@@ -480,7 +507,7 @@ class CrepController extends Controller
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerViserAgentForm(Crep $crep)
     {
@@ -499,7 +526,7 @@ class CrepController extends Controller
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerSignerAhForm(Crep $crep)
     {
@@ -518,18 +545,17 @@ class CrepController extends Controller
      *
      * @param Crep $crep
      *
-     * @return \Symfony\Component\Form\Form Le formulaire
+     * @return \Symfony\Component\Form\FormInterface
      */
     protected function creerNotifierAgentForm(Crep $crep)
     {
         return $this
-                        ->createFormBuilder()
-                        ->setAction($this->generateUrl('crep_notifier_agent', array(
-                                    'id' => $crep->getId(),
-                        )))
-                        ->setMethod('PUT')
-                        ->getForm()
-        ;
+                    ->createFormBuilder()
+                    ->setAction($this->generateUrl('crep_notifier_agent', array(
+                                'id' => $crep->getId(),
+                    )))
+                    ->setMethod('PUT')
+                    ->getForm();
     }
 
     protected function createReinitialiserForm(Crep $crep)
@@ -559,6 +585,11 @@ class CrepController extends Controller
         ;
     }
 
+    /**
+     * @param Crep $crep
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     private function createEditForm(Crep $crep)
     {
         $classeCrep = Util::getClassName($crep);
@@ -581,36 +612,42 @@ class CrepController extends Controller
      * Rappeler le CREP de l'agent vers le N+1 (action du N+1).
      *
      * @Security("has_role('ROLE_SHD')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function rappelerAgentShdAction(Request $request, Crep $crep)
+    public function rappelerAgentShdAction(Crep $crep, CrepManager $crepManager)
     {
-    	//Voter
-    	$this->denyAccessUnlessGranted(CrepVoter::RAPPELER_AGENT_SHD, $crep);
-    
-    	$crepManager = $this->get('app.crep_manager');
-    
-    	$crepManager->rappelerAgentShd($crep);
-    
-    	$this
-    	->get('session')
-    	->getFlashBag()
-    	->set('notice', 'CREP rappelé avec succès !')
-    	;
-    
-    	return $this->redirectToRoute('crep_show', array('id' => $crep->getId()));
+        //Voter
+        $this->denyAccessUnlessGranted(CrepVoter::RAPPELER_AGENT_SHD, $crep);
+
+        $crepManager->rappelerAgentShd($crep);
+
+        $this
+        ->get('session')
+        ->getFlashBag()
+        ->set('notice', 'CREP rappelé avec succès !')
+        ;
+
+        return $this->redirectToRoute('crep_show', array('id' => $crep->getId()));
     }
-    
+
     /**
      * Rappeler le CREP de l'agent vers le N+2 (action du N+2).
      *
      * @Security("has_role('ROLE_AH')")
+     *
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function rappelerAgentAhAction(Request $request, Crep $crep)
+    public function rappelerAgentAhAction(Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::RAPPELER_AGENT_AH, $crep);
-
-        $crepManager = $this->get('app.crep_manager');
 
         $crepManager->rappelerAgentAh($crep);
 
@@ -627,8 +664,14 @@ class CrepController extends Controller
      * réinitialiser un CREP d'un agent par son SHD, pour lui choisir un autre formulaire.
      *
      * @Security("has_role('ROLE_SHD')")
+     *
+     * @param Request $request
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function reinitialiserCrepAction(Request $request, Crep $crep)
+    public function reinitialiserCrepAction(Request $request, Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::REINITIALISER, $crep);
@@ -641,8 +684,6 @@ class CrepController extends Controller
             $agent = $crep->getAgent();
             $campagneBrhp = $agent->getCampagneBrhp();
 
-            /* @var $crepManager CrepManager  */
-            $crepManager = $this->get('app.crep_manager');
             $crepManager->supprimerCrep($crep);
 
             $this->get('session')->getFlashBag()->set('notice', 'Le CREP de '.AppExtension::identite($agent).' a été réinitialisé avec succès !');
@@ -657,8 +698,14 @@ class CrepController extends Controller
 
     /**
      * Supprimer un CREP par le RLC suite à un recours.
+     *
+     * @param Request $request
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function supprimerCrepAction(Request $request, Crep $crep)
+    public function supprimerCrepAction(Request $request, Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::SUPPRIMER, $crep);
@@ -671,8 +718,6 @@ class CrepController extends Controller
             $agent = $crep->getAgent();
             $campagneRlc = $agent->getCampagneRlc();
 
-            /* @var $crepManager CrepManager  */
-            $crepManager = $this->get('app.crep_manager');
             $crepManager->supprimerCrep($crep);
 
             $this->get('session')->getFlashBag()->set('notice', 'Le CREP de '.AppExtension::identite($agent).' a été supprimé avec succès !');
@@ -685,45 +730,49 @@ class CrepController extends Controller
         return $this->redirectToRoute('crep_show', ['id' => $crep->getId()]);
     }
 
-    public function exporterCrepViergeAction(Request $request, ModeleCrep $modele, CampagnePnc $campagnePnc)
+    /**
+     * Exporter Crep Vierge Action
+     *
+     * @param ModeleCrep $modele
+     * @param CampagnePnc $campagnePnc
+     * @param CrepManager $crepManager
+     * @return \AppBundle\Entity\Document
+     *
+     * @throws \Exception
+     */
+    public function exporterCrepViergeAction(ModeleCrep $modele, CampagnePnc $campagnePnc, CrepManager $crepManager)
     {
-        //Voter
         $this->denyAccessUnlessGranted(ModeleCrepVoter::EXPORTER_MODELE_VIERGE, $modele);
-
         $classe = $modele->getTypeEntity();
-
         $classPath = 'AppBundle\Entity\Crep\\'.$classe.'\\'.$classe;
-
         $crep = new $classPath();
-
         $crep->setModeleCrep($modele);
-
         $agent = new Agent();
         $agent->setCampagnePnc($campagnePnc);
-
         $em = $this->getDoctrine()->getManager();
         $crep->initialiser($agent, $em);
-
-        /* @var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
 
         return $crepManager->genererCrepPdf($crep, 'D');
     }
 
-    public function refaireCrepAction(Request $request, Crep $crep)
+    /**
+     * Reefaire Crep Action
+     *
+     * @param Request $request
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function refaireCrepAction(Request $request, Crep $crep, CrepManager $crepManager)
     {
         $this->denyAccessUnlessGranted(CrepVoter::REFAIRE_CREP, $crep);
-
         $form = $this->createRefaireCrepForm($crep);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
-
             // Supprimer les différentes signatures
             $crepManager->devaliderCrep($crep);
-
             $this->get('session')->getFlashBag()->set('notice', 'Le CREP de '.AppExtension::identite($crep->getAgent()).' a été dévalidé avec succès !');
 
             return $this->redirectToRoute('campagne_brhp_show', ['id' => $crep->getAgent()->getCampagneBrhp()->getId()]);
@@ -737,10 +786,13 @@ class CrepController extends Controller
     /**
      * Cette action permet d'acter de laisser un CREP en l'état suite un recours. Cela revient à valider tous les recours liés au CREP.
      *
-     * @param unknown $request
-     * @param unknown $crep
+     * @param Request $request
+     * @param Crep $crep
+     * @param CrepManager $crepManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function laisserCrepEnEtatAction(Request $request, Crep $crep)
+    public function laisserCrepEnEtatAction(Request $request, Crep $crep, CrepManager $crepManager)
     {
         $this->denyAccessUnlessGranted(CrepVoter::LAISSER_CREP_EN_ETAT, $crep);
 
@@ -748,9 +800,6 @@ class CrepController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            /* @var $crepManager CrepManager */
-            $crepManager = $this->get('app.crep_manager');
-
             // Valider tous les recours du CREP
             $crepManager->laisserCrepEnEtat($crep);
 

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\PerimetreRlc;
 use AppBundle\Security\PerimetreRlcVoter;
 use AppBundle\Entity\Utilisateur;
+use AppBundle\Service\PerimetreRlcManager;
 
 /**
  * PerimetreRlc controller.
@@ -19,7 +20,7 @@ class PerimetreRlcController extends Controller
      *
      * @Security("has_role('ROLE_PNC')")
      */
-    public function indexAction()
+    public function indexAction(PerimetreRlcManager $perimetreRlcManager)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -27,6 +28,8 @@ class PerimetreRlcController extends Controller
         $utilisateur = $this->getUser();
 
         $ministere = $utilisateur->getMinistere();
+
+        $perimetreRlcs = $perimetreRlcManager->getPerimetresRlc();
 
         if ($utilisateur->hasRole('ROLE_ADMIN')) {
             $perimetreRlcs = $em->getRepository('AppBundle:PerimetreRlc')->findAll();

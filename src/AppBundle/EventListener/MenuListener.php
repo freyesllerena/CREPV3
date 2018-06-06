@@ -6,21 +6,24 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use FOS\UserBundle\Model\User;
 use AppBundle\Util\Menu;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * La calsse MenuListener dispose d'une methode qui s'execute sur un evenement kernel.request pour rafraichir le menu stocke en session.
  */
 class MenuListener
 {
-    private $securityContext;
-    private $securityAuthorizationChecker;
+    private $tokenStorage;
+    private $authChecker;
     private $libelleActif;
     private $router;
 
-    public function __construct($securityContext, $securityAuthorizationChecker, $router)
+    public function __construct(TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authChecker, UrlGeneratorInterface $router)
     {
-        $this->securityContext = $securityContext;
-        $this->securityAuthorizationChecker = $securityAuthorizationChecker;
+        $this->tokenStorage = $tokenStorage;
+        $this->authChecker = $authChecker;
         $this->libelleActif = 'Accueil';
         $this->router = $router;
     }
@@ -41,16 +44,16 @@ class MenuListener
             return;
         }
 
-        if (null !== $this->securityContext->getToken()) {
+        if (null !== $this->tokenStorage->getToken()) {
             // Recuperation de l'objet Utilisateur
-            $user = $this->securityContext->getToken()->getUser();
+            $user = $this->tokenStorage->getToken()->getUser();
 
             if (null !== $user && $user instanceof User) {
                 // recuperation des roles de l'utilisateur
                 //$roles = $user->getRoles();
 
                 // Recuperation du menu en fonction l'utilisateur
-                $menu = Menu::getMenu($user, $this->securityAuthorizationChecker, $this->router);
+                $menu = Menu::getMenu($user, $this->authChecker, $this->router);
 
                 // Activation de l'item correspondant a la route appelee
                 $menu = Menu::setActiveMenu($event->getRequest()->attributes->get('_route'), $menu);

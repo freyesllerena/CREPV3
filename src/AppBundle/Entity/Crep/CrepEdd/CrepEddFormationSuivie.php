@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * CrepEddFormationSuivie.
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddFormationSuivieRepository")
-
  */
 class CrepEddFormationSuivie extends FormationSuivie
 {
@@ -50,8 +49,8 @@ class CrepEddFormationSuivie extends FormationSuivie
         $anneeEvaluation = $this->crep->getAgent()->getCampagnePnc()->getAnneeEvaluee();
 
         //L'année doit être soit N, N-1  (N : l'année d'évaluation)
-        if ($this->annee && !in_array($this->annee, array($anneeEvaluation, $anneeEvaluation-1))) {
-            $context->buildViolation("Veuillez saisir une année valide")
+        if ($this->annee && !in_array($this->annee, array($anneeEvaluation, $anneeEvaluation - 1))) {
+            $context->buildViolation('Veuillez saisir une année valide')
                 ->atPath('annee')
                 ->addViolation();
         }

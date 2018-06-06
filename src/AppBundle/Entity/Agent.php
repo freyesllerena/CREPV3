@@ -392,7 +392,15 @@ class Agent extends Personne
      * @Assert\Valid
      */
     private $documents;
-    
+
+    /**
+     * @var ModeleCrep
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ModeleCrep")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $modeleCrep;
+
     /**
      * Constructor.
      */
@@ -1276,11 +1284,11 @@ class Agent extends Personne
      */
     public function addDocument(Document $document)
     {
-    	$this->documents[] = $document;
-    
-    	return $this;
+        $this->documents[] = $document;
+
+        return $this;
     }
-    
+
     /**
      * Remove document.
      *
@@ -1288,9 +1296,9 @@ class Agent extends Personne
      */
     public function removeDocument(Document $document)
     {
-    	$this->documents->removeElement($document);
+        $this->documents->removeElement($document);
     }
-    
+
     /**
      * Get documents.
      *
@@ -1298,9 +1306,27 @@ class Agent extends Personne
      */
     public function getDocuments()
     {
-    	return $this->documents;
+        return $this->documents;
     }
-    
+
+    /**
+     * @return ModeleCrep
+     */
+    public function getModeleCrep()
+    {
+        return $this->modeleCrep;
+    }
+
+    /**
+     * @param ModeleCrep $modeleCrep
+     */
+    public function setModeleCrep($modeleCrep)
+    {
+        $this->modeleCrep = $modeleCrep;
+
+        return $this;
+    }
+
     //Fonction qui définit le nom par défaut du CREP pdf (nom_prenom_CREP_anneeEvaluation.pdf)
     public function getPdfFileName()
     {

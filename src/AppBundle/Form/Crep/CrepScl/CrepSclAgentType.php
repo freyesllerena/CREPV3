@@ -4,7 +4,7 @@ namespace AppBundle\Form\Crep\CrepScl;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use AppBundle\Form\CrepType;
+use AppBundle\Form\Crep\CrepType;
 
 class CrepSclAgentType extends CrepType
 {

@@ -30,7 +30,7 @@ class CampagneAhController extends Controller
     /**
      * @Security("has_role('ROLE_AH')")
      */
-    public function showAction(CampagneBrhp $campagneAh)
+    public function showAction(CampagneBrhp $campagneAh, CrepManager $crepManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(CampagneBrhpVoter::VOIR_AH, $campagneAh);
@@ -46,9 +46,6 @@ class CampagneAhController extends Controller
 
         // On récupère la liste des agents du AH
         $agentsAh = $em->getRepository('AppBundle:Agent')->getAgentsByAh($ah, $campagneAh);
-
-        /*@var $crepManager CrepManager */
-        $crepManager = $this->get('app.crep_manager');
 
         $indicateurs = $crepManager->calculIndicateurs($campagneAh, null, null, $ah);
 

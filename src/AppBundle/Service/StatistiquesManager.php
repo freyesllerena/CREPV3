@@ -9,15 +9,19 @@ use AppBundle\Entity\CampagneRlc;
 use AppBundle\Entity\Statistiques\StatCampagnePnc;
 use AppBundle\Entity\Statistiques\StatCampagneRlc;
 use AppBundle\Entity\Statistiques\StatCampagneBrhp;
+use Doctrine\ORM\EntityManagerInterface;
 
-class StatistiquesManager extends BaseManager
+class StatistiquesManager
 {
     /* @var $crepManager CrepManager */
     protected $crepManager;
 
-    public function init(CrepManager $crepManager)
+    protected $em;
+
+    public function __construct(CrepManager $crepManager, EntityManagerInterface $entityManager)
     {
         $this->crepManager = $crepManager;
+        $this->entityManager = $entityManager;
     }
 
     public function calculer()

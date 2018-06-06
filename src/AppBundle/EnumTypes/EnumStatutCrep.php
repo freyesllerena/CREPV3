@@ -2,6 +2,10 @@
 
 namespace AppBundle\EnumTypes;
 
+/**
+ * Class EnumStatutCrep
+ * @package AppBundle\EnumTypes
+ */
 class EnumStatutCrep extends GeneriqueEnum
 {
     const CREE = '01 créé';

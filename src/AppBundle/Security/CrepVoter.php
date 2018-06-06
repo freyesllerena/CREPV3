@@ -20,6 +20,9 @@ use AppBundle\EnumTypes\EnumStatutCampagne;
 // use AppBundle\Entity\Rlc;
 // use AppBundle\EnumTypes\EnumTypeRecours;
 use AppBundle\EnumTypes\EnumTypeResultatRecours;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CrepVoter extends Voter
 {
@@ -57,7 +60,7 @@ class CrepVoter extends Voter
     const REFAIRE_CREP = 'refaire_crep';
     const LAISSER_CREP_EN_ETAT = 'laisser_crep_en_etat';
 
-    public function __construct($decisionManager, EntityManager $em, Session $session)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->em = $em;
         $this->decisionManager = $decisionManager;
@@ -82,7 +85,7 @@ class CrepVoter extends Voter
                     self::EXPORTER_PDF,
                     self::RENVOYER_AGENT_SHD,
                     self::RENVOYER_AH_SHD,
-        			self::RAPPELER_AGENT_SHD,
+                    self::RAPPELER_AGENT_SHD,
                     self::RAPPELER_AGENT_AH,
                     self::REINITIALISER,
                     self::VOIR_RECOURS, // TODO : ligne à décommenter pour activer les fonctionnalités de recours
@@ -235,40 +238,39 @@ class CrepVoter extends Voter
 
             // Si le CREP est finalisé
             if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT], EnumStatutCrep::CAS_ABSENCE)) {
-            
-	            // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
-	            if ($brhp->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
-	            	return true;
-	            }
+                // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
+                if ($brhp->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
+                    return true;
+                }
             }
         }
-        
+
         if ('ROLE_BRHP_CONSULT' === $roleUtilisateurSession) {
-        	/** @var $brhpConsult BrhpConsult */
-        	$brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
-        
-        	// Si le CREP est finalisé
-        	if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT], EnumStatutCrep::CAS_ABSENCE)) {
-        
-        		// Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
-        		if ($brhpConsult->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
-        			return true;
-        		}
-        	}
+            /** @var $brhpConsult BrhpConsult */
+            $brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
+
+            // Si le CREP est finalisé
+            if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT], EnumStatutCrep::CAS_ABSENCE)) {
+                // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
+                if ($brhpConsult->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
+                    return true;
+                }
+            }
         }
 
         if ('ROLE_RLC' === $roleUtilisateurSession) {
-        	/** @var $rlc Rlc */
-        	$rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
-        	
-        	// Si l'agent est dans un des périmètres gérés par le RLC
-        	if ($rlc && in_array($crep->getAgent()->getPerimetreRlc(), $rlc->getPerimetresRlc()->toArray())) {
-        		// Si le CREP est finalisé
-        		if(in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT, EnumStatutCrep::CAS_ABSENCE]))
-        		return true;
-        	}
+            /** @var $rlc Rlc */
+            $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
+
+            // Si l'agent est dans un des périmètres gérés par le RLC
+            if ($rlc && in_array($crep->getAgent()->getPerimetreRlc(), $rlc->getPerimetresRlc()->toArray())) {
+                // Si le CREP est finalisé
+                if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT, EnumStatutCrep::CAS_ABSENCE])) {
+                    return true;
+                }
+            }
         }
-        
+
         // Dans tous les autres cas, on refuse l'accès
         return false;
     }
@@ -448,28 +450,25 @@ class CrepVoter extends Voter
         //Si la date de début des entretiens n'est pas atteinte, aucune action n'est possible sur le CREP, mise à part : la consultation et l'export du formulaire
         if ($dateCourante >= $crep->getAgent()->getCampagnePnc()->getDateDebutEntretien()) {
             if ('ROLE_SHD' === $roleUtilisateurSession) {
-            	
-            	$nbJoursOuvres = $crep->getAgent()->getCampagnePnc()->getMinistere()->getDelaiSignatureDefinitive();
-            	
+                $nbJoursOuvres = $crep->getAgent()->getCampagnePnc()->getMinistere()->getDelaiSignatureDefinitive();
+
                 //Si l'agent possède un N+2 et que ce dernier a signé et transmis le CREP à l'agent, le N+1 peut mentionner le refus de signer définitivement le CREP par l'agent
                 if (EnumStatutCrep::SIGNE_AH == $crep->getStatut() && $crep->getShd()->getUtilisateur() == $utilisateur) {
-                    
-                	$dateAffichageBoutonRefusDeSignatureDefinitive = Util::calculeDate($crep->getDateVisaAh(), $nbJoursOuvres);
-                	
-                	if ($dateCourante >= $dateAffichageBoutonRefusDeSignatureDefinitive) {
-                		return true;
-                	}
+                    $dateAffichageBoutonRefusDeSignatureDefinitive = Util::calculeDate($crep->getDateVisaAh(), $nbJoursOuvres);
+
+                    if ($dateCourante >= $dateAffichageBoutonRefusDeSignatureDefinitive) {
+                        return true;
+                    }
                 }
 
                 //Si l'agent est déclaré comme étant "Sans N+2" et que le N+1 a signé et transmis le CREP à l'agent, il peut directement mentionner le refus de signer définitivement le CREP par l'agent
                 if (EnumStatutCrep::SIGNE_SHD == $crep->getStatut()
                     && $crep->getAgent()->getSansAh()
                     && $crep->getShd()->getUtilisateur() == $utilisateur) {
-                    	
-                    	$dateAffichageBoutonRefusDeSignatureDefinitive = Util::calculeDate($crep->getDateVisaShd(), $nbJoursOuvres);
-                    	if ($dateCourante >= $dateAffichageBoutonRefusDeSignatureDefinitive) {
-                    		return true;
-                    	}
+                    $dateAffichageBoutonRefusDeSignatureDefinitive = Util::calculeDate($crep->getDateVisaShd(), $nbJoursOuvres);
+                    if ($dateCourante >= $dateAffichageBoutonRefusDeSignatureDefinitive) {
+                        return true;
+                    }
                 }
             }
         }
@@ -578,8 +577,7 @@ class CrepVoter extends Voter
         // Dans tous les autres cas, on refuse l'accès
         return false;
     }
-    
-    
+
     // Rappel du CREP par le N+2 (le CREP était côté agent pour la signature finale)
     private function peutRappelerAgentAh(Crep $crep, Utilisateur $utilisateur, $roleUtilisateurSession)
     {

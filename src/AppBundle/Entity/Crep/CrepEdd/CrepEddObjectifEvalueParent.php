@@ -3,19 +3,14 @@
 namespace AppBundle\Entity\Crep\CrepEdd;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Objectif;
 
-
-
 /**
- * CrepEddObjectifEvalueParent
+ * CrepEddObjectifEvalueParent.
  *
  * @ORM\Table(name="crep_edd_objectif_evalue")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepEddRepository\CrepEddObjectifEvalueParentRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * 
  */
 class CrepEddObjectifEvalueParent extends Objectif
 {
@@ -27,9 +22,9 @@ class CrepEddObjectifEvalueParent extends Objectif
     protected $resultatObtenu;
 
     /**
-     * Set resultatObtenu
+     * Set resultatObtenu.
      *
-     * @param integer $resultatObtenu
+     * @param int $resultatObtenu
      *
      * @return ObjectifEvalueParent
      */
@@ -41,9 +36,9 @@ class CrepEddObjectifEvalueParent extends Objectif
     }
 
     /**
-     * Get resultatObtenu
+     * Get resultatObtenu.
      *
-     * @return integer
+     * @return int
      */
     public function getResultatObtenu()
     {

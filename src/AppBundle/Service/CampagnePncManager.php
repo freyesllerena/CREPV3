@@ -5,33 +5,40 @@ namespace AppBundle\Service;
 use AppBundle\Entity\CampagnePnc;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Bundle\TwigBundle\TwigEngine;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use AppBundle\Entity\Campagne;
 use AppBundle\Entity\CampagneRlc;
 use AppBundle\Entity\CampagneBrhp;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 class CampagnePncManager extends CampagneManager
 {
-    /* @var $repository CampagnePncRepository */
-    protected $repository;
-
     /* @var $campagneRlcManager CampagneRlcManager */
     protected $campagneRlcManager;
 
-    public function init(
+    protected $tokenStorage;
+
+    protected $em;
+
+    /* @var $repository CampagnePncRepository */
+    protected $repository;
+
+    public function __construct(
         PersonneManager $personneManager,
         CampagneRlcManager $campagneRlcManager,
-        TokenStorage $jetonRegistre,
+        TokenStorageInterface $tokenStorage,
         AppMailer $mailer,
-        TwigEngine $templating
+        EngineInterface $templating,
+        EntityManagerInterface $entityManager
     ) {
-        $this->repository = $this->em->getRepository('AppBundle:CampagnePnc');
         $this->personneManager = $personneManager;
         $this->campagneRlcManager = $campagneRlcManager;
-        $this->jetonRegistre = $jetonRegistre;
+        $this->tokenStorage = $tokenStorage;
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->em = $entityManager;
+        $this->repository = $this->em->getRepository('AppBundle:CampagnePnc');
     }
 
     /**
@@ -46,7 +53,8 @@ class CampagnePncManager extends CampagneManager
         $campagnePnc->setOuvertePar($this->getUser());
 
         // faire un flush ici, pour que l'information soit récupérée rapidement si cette fonction est appellée via une commande asynchrone
-        $this->sauvegarder($campagnePnc);
+        $this->em->persist($campagnePnc);
+        $this->em->flush();
 
         $perimetresRlc = $campagnePnc->getPerimetresRlc();
 
@@ -56,7 +64,8 @@ class CampagnePncManager extends CampagneManager
 
         $this->campagneRlcManager->creer($campagnePnc);
 
-        $this->sauvegarder($campagnePnc);
+        $this->em->persist($campagnePnc);
+        $this->em->flush();
 
         $this->mailer->notifierOuvrirCampagnePnc($campagnePnc);
     }
@@ -88,7 +97,8 @@ class CampagnePncManager extends CampagneManager
         $campagnePnc->setDateCloture(new \DateTime());
 
         //Mise à jour du statut de la campagne pour l'affiche au niveau IHM soit correct
-        $this->sauvegarder($campagnePnc);
+        $this->em->persist($campagnePnc);
+        $this->em->flush();
 
         // Récupérer toutes les campagnes rlc de la campagne pnc pour les clôturer
         $campagnesRlc = $this->em->getRepository('AppBundle:CampagneRlc')->findByCampagnePnc($campagnePnc);
@@ -108,7 +118,9 @@ class CampagnePncManager extends CampagneManager
             }
         }
 
-        $this->sauvegarder($campagnePnc);
+        $this->em->persist($campagnePnc);
+        $this->em->flush();
+        
         $this->mailer->notifierCloturerCampagnePnc($campagnePnc);
     }
 
@@ -121,7 +133,9 @@ class CampagnePncManager extends CampagneManager
         $campagnePnc->setDateOuverture(new \DateTime());
         $campagnePnc->setOuvertePar($this->getUser());
 
-        $this->sauvegarder($campagnePnc);
+        $this->em->persist($campagnePnc);
+        $this->em->flush();
+        
         $this->mailer->notifierRouvrirCampagne($campagnePnc);
     }
 
@@ -131,7 +145,8 @@ class CampagnePncManager extends CampagneManager
         $campagnePnc->setDateFermeture(new \DateTime());
 
         // faire un flush ici, pour que l'information soit récupérée rapidement si cette fonction est appellée via une commande asynchrone
-        $this->sauvegarder($campagnePnc);
+        $this->em->persist($campagnePnc);
+        $this->em->flush();
 
         // Récupérer toutes les campagnes rlc de la campagne pnc pour les fermer
         $campagnesRlc = $this->em->getRepository('AppBundle:CampagneRlc')->findByCampagnePnc($campagnePnc);
@@ -151,13 +166,15 @@ class CampagnePncManager extends CampagneManager
             }
         }
 
-        $this->sauvegarder($campagnePnc);
+        $this->em->persist($campagnePnc);
+        $this->em->flush();
+        
         $this->mailer->notifierFermerCampagnePnc($campagnePnc);
     }
 
     protected function getUser()
     {
-        return $this->jetonRegistre->getToken()->getUser();
+        return $this->tokenStorage->getToken()->getUser();
     }
 
     public function diffuser(CampagnePnc $campagnePnc)

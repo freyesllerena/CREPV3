@@ -2,15 +2,30 @@
 
 namespace AppBundle\Service\ModelesCrep;
 
-use AppBundle\Service\BaseManager;
 use AppBundle\Entity\CampagneBrhp;
 use AppBundle\Util\Util;
 use AppBundle\Entity\ModeleCrep;
 use AppBundle\Twig\AppExtension;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use AppBundle\Service\ConstanteManager;
 
-class CrepEddManager extends BaseManager
+class CrepEddManager
 {
-    protected $modeleCrep = 'AppBundle\Entity\Crep\CrepEdd\CrepEdd';
+	protected $em;
+	
+	protected $session;
+	
+	protected $kernelRootDir;
+	
+	protected $modeleCrep = 'AppBundle\Entity\Crep\CrepEdd\CrepEdd';
+
+    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session, ConstanteManager $constanteManager)
+    {
+    	$this->em = $entityManager;
+    	$this->session = $session;
+    	$this->kernelRootDir = $constanteManager->getKernelRootDir();
+    }
 
     public function exporterFormations(CampagneBrhp $campagneBrhp, ModeleCrep $modeleCrep, \ZipArchive $zip)
     {
@@ -24,6 +39,7 @@ class CrepEddManager extends BaseManager
 
         $zip->addFile($result[0], $sousDossier.'/Formations_suivies.csv');
         $zip->addFile($result[1], $sousDossier.'/Formations_sollicitees.csv');
+
         return $zip;
     }
 
@@ -31,7 +47,7 @@ class CrepEddManager extends BaseManager
     private function exportFormationsSuivies(CampagneBrhp $campagneBrhp)
     {
         // Repository des formations suivies N-1
-        $formationSuivieRepository = $this->em->getRepository("AppBundle:FormationSuivie");
+        $formationSuivieRepository = $this->em->getRepository('AppBundle:FormationSuivie');
 
         $formationsSuivies = $formationSuivieRepository->exportFormations($campagneBrhp, $this->modeleCrep);
 
@@ -43,7 +59,7 @@ class CrepEddManager extends BaseManager
         fputs($handle, "\xEF\xBB\xBF");
 
         // Nom des colonnes du CSV
-        fputcsv($handle, array('Matricule', 'Email', 'Civilité', 'Nom', 'Prénom', 'Catégorie', 'Corps', 'Grade', 'Affectation','Année', 'Libellé de la formation', 'Durée','Commentaires', 'Date signature définitive du CREP', 'Date refus signature du CREP'), ';');
+        fputcsv($handle, array('Matricule', 'Email', 'Civilité', 'Nom', 'Prénom', 'Catégorie', 'Corps', 'Grade', 'Affectation', 'Année', 'Libellé de la formation', 'Durée', 'Commentaires', 'Date signature définitive du CREP', 'Date refus signature du CREP'), ';');
 
         // Champs
         foreach ($formationsSuivies as $formation) {
@@ -75,7 +91,7 @@ class CrepEddManager extends BaseManager
     private function exportFormationsSollicitees(CampagneBrhp $campagneBrhp)
     {
         // Repository des formations sollicitees
-        $formationSolliciteRepository = $this->em->getRepository("AppBundle:FormationDemandeeAgent");
+        $formationSolliciteRepository = $this->em->getRepository('AppBundle:FormationDemandeeAgent');
 
         $formationsSuivies = $formationSolliciteRepository->exportFormations($campagneBrhp, $this->modeleCrep);
 
@@ -87,7 +103,7 @@ class CrepEddManager extends BaseManager
         fputs($handle, "\xEF\xBB\xBF");
 
         // Nom des colonnes du CSV
-        fputcsv($handle, array('Matricule', 'Email', 'Civilité', 'Nom', 'Prénom', 'Catégorie', 'Corps', 'Grade', 'Affectation','Priorité', 'Libellé de la formation', 'Typologie','DIF', 'Date signature définitive du CREP', 'Date refus signature du CREP'), ';');
+        fputcsv($handle, array('Matricule', 'Email', 'Civilité', 'Nom', 'Prénom', 'Catégorie', 'Corps', 'Grade', 'Affectation', 'Priorité', 'Libellé de la formation', 'Typologie', 'DIF', 'Date signature définitive du CREP', 'Date refus signature du CREP'), ';');
 
         $originesFormations = [
                 0 => 'Formation proposée par l\'administration',

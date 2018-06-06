@@ -10,6 +10,8 @@ use AppBundle\Entity\Utilisateur;
 use AppBundle\Entity\Rlc;
 use AppBundle\Security\PerimetreBrhpVoter;
 use AppBundle\Entity\Brhp;
+use AppBundle\Service\PerimetreBrhpManager;
+use AppBundle\Entity\UniteOrganisationnelle;
 
 /**
  * PerimetreBrhp controller.
@@ -28,7 +30,7 @@ class PerimetreBrhpController extends Controller
         $utilisateur = $this->getUser();
 
         $selectedRole = $this->get('session')->get('selectedRole');
-        
+
         if ('ROLE_ADMIN' === $selectedRole) {
             $perimetreBrhps = $em->getRepository('AppBundle:PerimetreBrhp')->findAll();
         } elseif ('ROLE_BRHP' === $selectedRole) {
@@ -66,9 +68,12 @@ class PerimetreBrhpController extends Controller
         $utilisateur = $this->getUser();
         $ministere = $utilisateur->getMinistere();
 
-        $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
-
-        $perimetresRlc = $rlc->getPerimetresRlc();
+        if ($utilisateur->hasRole('ROLE_ADMIN')) {
+            $perimetresRlc = $em->getRepository('AppBundle:PerimetreRlc')->findAll();
+        } else {
+            $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
+            $perimetresRlc = $rlc->getPerimetresRlc();
+        }
 
         $unitesOrganisationnellesOrphelines = $em->getRepository('AppBundle:UniteOrganisationnelle')->getUnitesOrganisationnellesSansPerimetreBrhp($ministere);
 
@@ -103,7 +108,7 @@ class PerimetreBrhpController extends Controller
      *
      * @Security("has_role('ROLE_RLC')")
      */
-    public function editAction(Request $request, PerimetreBrhp $perimetreBrhp)
+    public function editAction(Request $request, PerimetreBrhp $perimetreBrhp, PerimetreBrhpManager $perimetreBrhpManager)
     {
         // Voter
         $this->denyAccessUnlessGranted(PerimetreBrhpVoter::MODIFIER, $perimetreBrhp);
@@ -113,9 +118,12 @@ class PerimetreBrhpController extends Controller
         $em = $this->getDoctrine()->getManager();
         $utilisateur = $this->getUser();
 
-        $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
-
-        $perimetresRlc = $rlc->getPerimetresRlc();
+        if ($utilisateur->hasRole('ROLE_ADMIN')) {
+            $perimetresRlc = $em->getRepository('AppBundle:PerimetreRlc')->findAll();
+        } else {
+            $rlc = $em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
+            $perimetresRlc = $rlc->getPerimetresRlc();
+        }
 
         $ministere = $perimetreBrhp->getPerimetreRlc()->getMinistere();
 
@@ -130,9 +138,7 @@ class PerimetreBrhpController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $perimtreBrhpManager = $this->get('app.perimetre_brhp_manager');
-
-            $perimtreBrhpManager->save($perimetreBrhp, $anciennesUos);
+            $perimetreBrhpManager->save($perimetreBrhp, $anciennesUos);
 
             $this->get('session')->getFlashBag()->set('notice', 'Périmètre BRHP modifié !');
 
@@ -177,6 +183,15 @@ class PerimetreBrhpController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+            	
+            	// Suppression de la relation UO <-> Périmètre BRHP
+            	$uos = $perimetreBrhp->getUnitesOrganisationnelles();
+            	
+            	/* @var $uo UniteOrganisationnelle */
+            	foreach ($uos as $uo){
+            		$uo->setPerimetreBrhp(null);
+            	}
+            	
                 $em = $this->getDoctrine()->getManager();
                 $em->remove($perimetreBrhp);
                 $em->flush();

@@ -22,8 +22,14 @@
         <th scope="row">Périmètres BRHP</th>
           <td>
           	<ul class="list-unstyled project_files">
-              {% for perimetreBrhp in campagneRlc.perimetresBrhp %}
-                 <li><a href="{{ path('perimetre_brhp_show', {'id': perimetreBrhp.id}) }}">{{ perimetreBrhp.libelle }}</a></li>
+              {% for campagneBrhp in campagnesBrhp %}
+                 <li>
+                 	{% if campagneBrhp.statut == constant('AppBundle\\EnumTypes\\EnumStatutCampagne::OUVERTE') %}
+                 		<span class="label label-success">ouverte</span>
+                 	{% endif %}
+                 	<a href="{{ path('perimetre_brhp_show', {'id': campagneBrhp.perimetreBrhp.id}) }}">{{ campagneBrhp.perimetreBrhp.libelle }}</a>
+                 </li>
+              	 
               {% endfor %}
           	</ul>
           </td>

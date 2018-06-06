@@ -99,7 +99,13 @@ agent_campagne_pnc_server_processing:
         evaluable: '\d+'
         sansShd: '\d+'
         sansPerimetre: '\d+'
-                
+
+agent_campagne_admin_min_server_processing:
+    path:     /server_processing_campagne_admin_min/{campagnePnc}
+    defaults: { _controller: "AppBundle:Agent:serverProcessingCampagneAdminMin" }
+    requirements:
+        campagnePnc: '\d+'
+                        
 agent_campagne_pnc_sans_perimetre_server_processing:
     path:     /server_processing_campagne_pnc_sans_perimetre/{campagnePnc}/{campagneRlc}/{campagneBrhp}
     defaults: { _controller: "AppBundle:Agent:serverProcessingCampagnePncSansPerimetre", campagneRlc: null, campagneBrhp: null }
@@ -124,11 +130,10 @@ agent_sans_perimetre_brhp_server_processing:
         campagneBrhp: '\d+'    
         
 agent_campagne_rlc_server_processing:
-    path:     /server_processing_campagne_rlc/{campagneRlc}/{perimetreBrhp}/{evaluable}/{sansShd}/{sansPerimetre}/{onglet}
+    path:     /server_processing_campagne_rlc/{campagneRlc}/{evaluable}/{sansShd}/{sansPerimetre}/{onglet}
     defaults: { _controller: "AppBundle:Agent:serverProcessingCampagneRlc" }
     requirements:
         campagneRlc: '\d+'
-        perimetreBrhp: '\d+'
         evaluable: '\d+'
         sansShd: '\d+'
         sansPerimetre: '\d+'

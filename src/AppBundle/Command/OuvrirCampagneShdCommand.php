@@ -7,13 +7,29 @@ namespace AppBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use AppBundle\Service\CampagneBrhpManager;
 use AppBundle\Entity\CampagneBrhp;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
 
-class OuvrirCampagneShdCommand extends ContainerAwareCommand
+class OuvrirCampagneShdCommand extends Command
 {
+    protected $campagneBrhpManager;
+
+    protected $tokenStorage;
+
+    protected $em;
+
+    public function __construct(CampagneBrhpManager $campagneBrhpManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
+    {
+    	parent::__construct();
+        $this->campagneBrhpManager = $campagneBrhpManager;
+        $this->tokenStorage = $tokenStorage;
+        $this->em = $entityManager;
+    }
+
     protected function configure()
     {
         $this
@@ -34,23 +50,18 @@ class OuvrirCampagneShdCommand extends ContainerAwareCommand
             '',
         ]);
 
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
         /* @var $campagneBrhp CampagneBrhp */
-        $campagneBrhp = $em->getRepository('AppBundle:CampagneBrhp')->find($campagneId);
+        $campagneBrhp = $this->em->getRepository('AppBundle:CampagneBrhp')->find($campagneId);
 
         /* @var $utilisateur Utilisateur */
-        $utilisateur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurId);
-
-        /* @var $campagneBrhpManager CampagneBrhpManager */
-        $campagneBrhpManager = $this->getContainer()->get('app.campagne_brhp_manager');
+        $utilisateur = $this->em->getRepository('AppBundle:Utilisateur')->find($utilisateurId);
 
         // enregistrement de l'utilisateur courant dans le token_storage
         $token = new UsernamePasswordToken($utilisateur, null, 'main', $utilisateur->getRoles());
-        $tokenStorage = $this->getContainer()->get('security.token_storage');
-        $tokenStorage->setToken($token);
 
-        $campagneBrhpManager->ouvrirShd($campagneBrhp);
+        $this->tokenStorage->setToken($token);
+
+        $this->campagneBrhpManager->ouvrirShd($campagneBrhp);
 
         $output->writeln('Campagne ouverte: '.$campagneBrhp->getLibelle());
     }

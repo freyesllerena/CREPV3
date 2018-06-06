@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use AppBundle\Entity\CampagneRlc;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CampagneRlcVoter extends Voter
 {
@@ -32,7 +35,7 @@ class CampagneRlcVoter extends Voter
 
     const AJOUTER_AGENT = 'ajouter_agent_campagne_rlc';
 
-    public function __construct($decisionManager, EntityManager $em, Session $session)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
         $this->em = $em;
         $this->decisionManager = $decisionManager;

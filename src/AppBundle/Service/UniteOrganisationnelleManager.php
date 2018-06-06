@@ -4,9 +4,17 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\UniteOrganisationnelle;
 use AppBundle\Repository\UniteOrganisationnelleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
-class UniteOrganisationnelleManager extends BaseManager
+class UniteOrganisationnelleManager
 {
+    protected $em;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
     public function creer(UniteOrganisationnelle $uo)
     {
         /* @var $uoExistante UniteOrganisationnelle */

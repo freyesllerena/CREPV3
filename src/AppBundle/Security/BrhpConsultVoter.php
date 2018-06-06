@@ -5,10 +5,11 @@ namespace AppBundle\Security;
 use AppBundle\Entity\BrhpConsult;
 use AppBundle\Entity\Rlc;
 use AppBundle\Entity\Utilisateur;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class BrhpConsultVoter extends Voter
 {
@@ -25,7 +26,7 @@ class BrhpConsultVoter extends Voter
     const EDIT = 'edit_brhp_consult';
     const DELETE = 'delete_brhp_consult';
 
-    public function __construct($decisionManager, EntityManager $em)
+    public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->decisionManager = $decisionManager;

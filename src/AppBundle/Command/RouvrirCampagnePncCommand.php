@@ -7,13 +7,29 @@ namespace AppBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use AppBundle\Service\CampagnePncManager;
 use AppBundle\Entity\CampagnePnc;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
 
-class RouvrirCampagnePncCommand extends ContainerAwareCommand
+class RouvrirCampagnePncCommand extends Command
 {
+    protected $campagnePncManager;
+
+    protected $tokenStorage;
+
+    protected $em;
+
+    public function __construct(CampagnePncManager $campagnePncManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
+    {
+    	parent::__construct();
+        $this->campagnePncManager = $campagnePncManager;
+        $this->tokenStorage = $tokenStorage;
+        $this->em = $entityManager;
+    }
+
     protected function configure()
     {
         $this
@@ -34,23 +50,18 @@ class RouvrirCampagnePncCommand extends ContainerAwareCommand
             '',
         ]);
 
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
         /* @var $campagnePnc CampagnePnc */
-        $campagnePnc = $em->getRepository('AppBundle:CampagnePnc')->find($campagneId);
+        $campagnePnc = $this->em->getRepository('AppBundle:CampagnePnc')->find($campagneId);
 
         /* @var $utilisateur Utilisateur */
-        $utilisateur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurId);
-
-        /* @var $campagnePncManager CampagnePncManager */
-        $campagnePncManager = $this->getContainer()->get('app.campagne_pnc_manager');
+        $utilisateur = $this->em->getRepository('AppBundle:Utilisateur')->find($utilisateurId);
 
         // enregistrement de l'utilisateur courant dans le token_storage
         $token = new UsernamePasswordToken($utilisateur, null, 'main', $utilisateur->getRoles());
-        $tokenStorage = $this->getContainer()->get('security.token_storage');
-        $tokenStorage->setToken($token);
 
-        $campagnePncManager->rouvrir($campagnePnc);
+        $this->tokenStorage->setToken($token);
+
+        $this->campagnePncManager->rouvrir($campagnePnc);
 
         $output->writeln('Campagne rouverte: '.$campagnePnc->getLibelle());
     }
