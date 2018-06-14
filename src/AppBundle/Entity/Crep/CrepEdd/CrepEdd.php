@@ -587,7 +587,7 @@ class CrepEdd extends Crep
      * @ORM\OneToMany(targetEntity="CrepEddFormationSuivie", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid
      */
-    protected $crepEddformationsSuivies;
+    protected $formationsSuivies;
 
     /**
      * @var text
@@ -1999,8 +1999,8 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $appreciationGenerale
+     * @param $appreciationGenerale
+     * @return $this
      */
     public function setAppreciationGenerale($appreciationGenerale)
     {
@@ -2018,8 +2018,8 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $evolutionIndemnitaire
+     * @param $evolutionIndemnitaire
+     * @return $this
      */
     public function setEvolutionIndemnitaire($evolutionIndemnitaire)
     {

@@ -26,12 +26,8 @@ class FormationSuivieType extends AbstractType
         ))
             ->add('annee', null, ['attr' => ['class' => 'fieldCollection']])
             ->add('type', null, ['attr' => ['class' => 'fieldCollection']])
-            ->add('libelle', null, ['attr' => ['class' => 'fieldCollection']])
-            ->add('commentaires', null, [
-                'attr' => ['maxlength' => '4096',
-                            'class' => 'fieldCollection', ],
-                'required' => false, ])
-            ;
+            ->add('libelle', null, ['attr' => ['maxlength' => '200', 'class' => 'fieldCollection'] ])
+            ->add('commentaires', null, ['attr' => ['maxlength' => '200', 'class' => 'fieldCollection', ],'required' => false, ]);
     }
 
     /**

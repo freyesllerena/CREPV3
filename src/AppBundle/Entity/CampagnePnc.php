@@ -10,7 +10,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * CampagnePnc.
- *
+ * @ORM\Table(	indexes = {	@ORM\Index(columns={"annee_evaluee"}),
+ * 							@ORM\Index(columns={"libelle"})
+ * 				}
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CampagnePncRepository")
  * @UniqueEntity(fields={"libelle", "ministere", "anneeEvaluee"}, errorPath="libelle", message="Ce libellé existe déjà en base")
  */

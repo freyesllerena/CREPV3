@@ -8,15 +8,15 @@ use AppBundle\Entity\CompetenceTransverse;
 use AppBundle\Entity\GenericEntity;
 
 /**
- * CrepMcc02PotentielEvolution
+ * CrepMcc02AutresPotentielEvolution
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02PotentielEvolutionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02AutresPotentielEvolutionRepository")
  */
-class CrepMcc02PotentielEvolution extends Competence
+class CrepMcc02AutresPotentielEvolution extends Competence
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="CrepMcc02", inversedBy="potentielsEvolutions")
+     * @ORM\ManyToOne(targetEntity="CrepMcc02", inversedBy="autresPotentielsEvolutions")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $crep;
@@ -35,9 +35,8 @@ class CrepMcc02PotentielEvolution extends Competence
     /**
      * Set crep
      *
-     * @param CrepMcc02 $crep
-     *
-     * @return CrepMcc02PotentielEvolution
+     * @param CrepMcc02|null $crep
+     * @return $this
      */
     public function setCrep(CrepMcc02 $crep = null)
     {

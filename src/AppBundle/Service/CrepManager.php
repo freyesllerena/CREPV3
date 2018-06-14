@@ -36,6 +36,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use AppBundle\Service\ConstanteManager;
 use Symfony\Component\Templating\EngineInterface;
+use AppBundle\Service\ModelesCrep\CrepScl02Manager;
 
 class CrepManager
 {
@@ -75,6 +76,8 @@ class CrepManager
 
     protected $crepMcc02Manager;
 
+    protected $crepScl02Manager;
+
     public function __construct(
             EntityManagerInterface $entityManager,
             TokenStorageInterface $tokenStorage,
@@ -93,7 +96,8 @@ class CrepManager
             CrepMso3Manager $crepMso3Manager,
             CrepMj01Manager $crepMj01Manager,
             CrepMcc02Manager $crepMcc02Manager,
-            CrepEddManager $crepEddManager
+            CrepEddManager $crepEddManager,
+            CrepScl02Manager $crepScl02Manager
             ) {
     	
         $this->em = $entityManager;
@@ -114,6 +118,7 @@ class CrepManager
         $this->crepMj01Manager = $crepMj01Manager;
         $this->crepMcc02Manager = $crepMcc02Manager;
         $this->crepEddManager = $crepEddManager;
+        $this->crepScl02Manager = $crepScl02Manager;
 
         $this->modelesCrepManagers = [
                 'CrepMindef01' => $this->crepMindef01Manager,
@@ -125,6 +130,7 @@ class CrepManager
                 'CrepMj01' => $this->crepMj01Manager,
                 'CrepMcc02' => $this->crepMcc02Manager,
                 'CrepEdd' => $this->crepEddManager,
+                'CrepScl02' => $this->crepScl02Manager,
         ];
     }
 

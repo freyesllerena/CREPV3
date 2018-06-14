@@ -15,12 +15,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CrepEddFormationSuivie extends FormationSuivie
 {
     /**
-     * @ORM\ManyToOne(targetEntity="CrepEdd", inversedBy="crepEddFormationsSuivies")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $crep;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable = true)

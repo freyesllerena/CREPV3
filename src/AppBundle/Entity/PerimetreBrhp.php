@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * PerimetreBrhp.
  *
- * @ORM\Table(name="perimetre_brhp")
+ * @ORM\Table(name="perimetre_brhp", indexes = { @ORM\Index(columns={"libelle"}) })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PerimetreBrhpRepository")
  * @UniqueEntity(fields={"libelle", "perimetreRlc"},
  * 				errorPath="libelle",

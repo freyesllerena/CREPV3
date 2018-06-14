@@ -382,7 +382,11 @@ class AgentRepository extends EntityRepository
             $preparedQuery = $qb->getQuery();
         }
 
-        return $preparedQuery->getResult();
+        $preparedQuery->useResultCache(true, 10);
+        
+        $result = $preparedQuery->getResult();
+        
+        return $result;
     }
 
     /**

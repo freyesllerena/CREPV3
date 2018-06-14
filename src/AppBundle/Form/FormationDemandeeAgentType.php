@@ -37,7 +37,7 @@ class FormationDemandeeAgentType extends AbstractType
                     'attr' => ['class' => 'fieldCollection'], ])
 
             ->add('libelle', null, [
-                    'attr' => ['class' => 'fieldCollection'], ])
+                    'attr' => ['maxlength' => '200', 'class' => 'fieldCollection'] ])
 
             ->add('code', null, [
                     'attr' => ['class' => 'fieldCollection'], ])

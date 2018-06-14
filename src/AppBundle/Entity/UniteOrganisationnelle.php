@@ -9,7 +9,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * UniteOrganisationnelle.
  *
- * @ORM\Table(name="unite_organisationnelle")
+ * @ORM\Table(name="unite_organisationnelle", indexes = {	@ORM\Index(columns={"libelle"}),
+ * 															@ORM\Index(columns={"code"}),
+ * 															@ORM\Index(columns={"supprime"})
+ * 							}
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UniteOrganisationnelleRepository")
  * @UniqueEntity(fields={"code", "ministere", "supprime"},
  * 				errorPath="code",

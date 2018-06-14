@@ -723,21 +723,21 @@ class CrepMcc02 extends Crep
     protected $observationsObjectifsPasses;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT1", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $formationsT1;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT2", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
     protected $formationsT2;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMcc02FormationT3", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3", mappedBy="crep", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"id" = "ASC"})
      * @Assert\Valid
      */
@@ -1142,11 +1142,11 @@ class CrepMcc02 extends Crep
     /**
      * Add formationsT1.
      *
-     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1
+     * @param CrepMcc02FormationT1 $formationsT1
      *
-     * @return CrepMcc02
+     * @return $this
      */
-    public function addFormationsT1(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1)
+    public function addFormationsT1(CrepMcc02FormationT1 $formationsT1)
     {
         $this->formationsT1[] = $formationsT1;
 
@@ -1158,9 +1158,9 @@ class CrepMcc02 extends Crep
     /**
      * Remove formationsT1.
      *
-     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1
+     * @param CrepMcc02FormationT1 $formationsT1
      */
-    public function removeFormationsT1(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT1 $formationsT1)
+    public function removeFormationsT1(CrepMcc02FormationT1 $formationsT1)
     {
         $this->formationsT1->removeElement($formationsT1);
 
@@ -1180,11 +1180,11 @@ class CrepMcc02 extends Crep
     /**
      * Add formationsT2.
      *
-     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2
+     * @param CrepMcc02FormationT2 $formationsT2
      *
-     * @return CrepMcc02
+     * @return $this
      */
-    public function addFormationsT2(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2)
+    public function addFormationsT2(CrepMcc02FormationT2 $formationsT2)
     {
         $this->formationsT2[] = $formationsT2;
 
@@ -1196,9 +1196,9 @@ class CrepMcc02 extends Crep
     /**
      * Remove formationsT2.
      *
-     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2
+     * @param CrepMcc02FormationT2 $formationsT2
      */
-    public function removeFormationsT2(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT2 $formationsT2)
+    public function removeFormationsT2(CrepMcc02FormationT2 $formationsT2)
     {
         $this->formationsT2->removeElement($formationsT2);
 
@@ -1218,11 +1218,11 @@ class CrepMcc02 extends Crep
     /**
      * Add formationsT3.
      *
-     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3
+     * @param CrepMcc02FormationT3 $formationsT3
      *
-     * @return CrepMcc02
+     * @return $this
      */
-    public function addFormationsT3(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3)
+    public function addFormationsT3(CrepMcc02FormationT3 $formationsT3)
     {
         $this->formationsT3[] = $formationsT3;
 
@@ -1234,9 +1234,9 @@ class CrepMcc02 extends Crep
     /**
      * Remove formationsT3.
      *
-     * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3
+     * @param CrepMcc02FormationT3 $formationsT3
      */
-    public function removeFormationsT3(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02FormationT3 $formationsT3)
+    public function removeFormationsT3(CrepMcc02FormationT3 $formationsT3)
     {
         $this->formationsT3->removeElement($formationsT3);
 
@@ -1255,7 +1255,7 @@ class CrepMcc02 extends Crep
 
 
     /**
-     *
+     * Actualisation de données Shd
      */
     public function actualiserDonneesShd()
     {
@@ -1277,7 +1277,7 @@ class CrepMcc02 extends Crep
     }
 
     /**
-     *
+     * Confidentialité des champs Shd
      */
     public function confidentialisationChampsShd()
     {
@@ -1369,7 +1369,7 @@ class CrepMcc02 extends Crep
     }
 
     /**
-     *
+     * Confidentialité des champs Agent
      */
     public function confidentialisationChampsAgent()
     {

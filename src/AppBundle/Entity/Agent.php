@@ -12,7 +12,14 @@ use AppBundle\EnumTypes\EnumStatutValidationAgent;
 /**
  * Agent.
  *
- * @ORM\Table(name="agent", indexes={ @ORM\Index(columns={"email"})})
+ * @ORM\Table(name="agent", indexes = {	@ORM\Index(columns={"email"}),
+ * 										@ORM\Index(columns={"civilite"}),
+ * 										@ORM\Index(columns={"nom"}),
+ * 										@ORM\Index(columns={"prenom"}),
+ * 										@ORM\Index(columns={"dtype"}),
+ * 										@ORM\Index(columns={"evaluable"})
+ * 							}
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AgentRepository")
  * @UniqueEntity(
  *     fields={"email", "campagnePnc"},

@@ -79,8 +79,11 @@ class CrepRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $qb->setParameter('CAMPAGNE', $campagne);
-
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        
+        // Mise en cache pendant 30 secondes
+        $query = $qb->getQuery()->useResultCache(true, 30);
+        $result = (int) $query->getSingleScalarResult();
+        return $result;
     }
 
 //     /**

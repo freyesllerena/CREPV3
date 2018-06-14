@@ -33,6 +33,7 @@ class FormationSuivie extends GenericEntity
      *
      * @ORM\Column(type="string")
      *
+     * @Assert\NotBlank(message="Le libellé est obligatoire")
      * @Assert\Length(
      *    min = 1,
      *    max = 200,
@@ -44,7 +45,7 @@ class FormationSuivie extends GenericEntity
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\Length(
      *    min = 1,

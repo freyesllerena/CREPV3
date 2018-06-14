@@ -7,6 +7,7 @@ use AppBundle\Entity\Crep;
 use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
 use TCPDF_STATIC;
 use AppBundle\Entity\Crep\CrepScl\CrepScl;
+use AppBundle\Entity\Crep\CrepScl02\CrepScl02;
 use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
 use AppBundle\Entity\Crep\CrepAc\CrepAc;
 use AppBundle\Entity\Crep\CrepMcc\CrepMcc;
@@ -58,6 +59,13 @@ class AppPdf extends TCPDF
         				<td style="width:30%; border:1px #000000 solid;" align="center">Date d\'application : 01-08-2014</td>
             		    <td style="width:15%; border:1px #000000 solid;" align="center">page : '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
             		    <td style="width:20%; border:1px #000000 solid;" align="center">Référence : IN-RH-07</td>
+            		  </tr>
+            	  </table>';
+        } elseif ($crep instanceof CrepScl02 ) { // CrepScl02
+
+            $this->footer = '<table>
+            		  <tr>
+            		    <td style="width:100%;" align="center">Page '.$this->getAliasNumPage().' sur '.$this->getAliasNbPages().'</td>
             		  </tr>
             	  </table>';
         } elseif ($crep instanceof CrepMinefAbc) { // CrepMinefAbc
@@ -140,6 +148,26 @@ class AppPdf extends TCPDF
 									<div style="font-size:5pt">&nbsp;</div>
 								  	<span style="font-size:10.0pt;">
 											<b>UD-SCL</b>
+								  	</span>
+								</td>
+							</tr>
+						</table>';
+
+            $this->header = $htmlHeader;
+        } elseif ($crep instanceof CrepScl02 ) { // CrepScl02
+
+            $htmlHeader = '<table cellpadding="5" style="border:1px #000000 solid;padding:2px;font-size: 11.0pt;">
+							<tr>
+								<td align="center" width="82%" style="border:1px #000000 solid;">
+									<div style="font-size:5pt">&nbsp;</div>
+							  		<span style="font-size:10.0pt;">
+							  			<b>COMPTE-RENDU D\'ENTRETIEN PROFESSIONNEL</b>		 
+							  		</span>
+								</td>
+								<td align="center" width="18%" style="border:1px #000000 solid;">
+									<div style="font-size:5pt">&nbsp;</div>
+								  	<span style="font-size:10.0pt;">
+											<b>RHU.FOR.19.V2</b>
 								  	</span>
 								</td>
 							</tr>

@@ -87,12 +87,6 @@ class CrepMcc02Formation extends GenericEntity
     protected $echeance;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CrepMcc02", inversedBy="formationsSuivies")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $crep;
-
-    /**
      * Set libelle.
      *
      * @param string $libelle
@@ -282,28 +276,5 @@ class CrepMcc02Formation extends GenericEntity
     public function getEcheance()
     {
         return $this->echeance;
-    }
-
-    /**
-     * Get crep.
-     *
-     * @return CrepMcc02
-     */
-    public function getCrep()
-    {
-        return $this->crep;
-    }
-
-    /**
-     * Set crep.
-     *
-     * @param CrepMcc02|null $crep
-     * @return $this
-     */
-    public function setCrep(CrepMcc02 $crep = null)
-    {
-        $this->crep = $crep;
-
-        return $this;
     }
 }

@@ -31,6 +31,11 @@ class FormationDemandeeAgent extends FormationDemandee
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank(message="Le libellé est obligatoire")
+     * @Assert\Length(
+     *    min = 1,
+     *    max = 200,
+     *    minMessage = "Le libellé de la formation doit contenir au moins {{ limit }} caractère",
+     *    maxMessage = "Le libellé de la formation doit contenir au plus {{ limit }} caractères")
      */
     protected $libelle;
 

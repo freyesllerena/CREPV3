@@ -10,7 +10,11 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * Document.
  *
- * @ORM\Table(name="document")
+ * @ORM\Table(name="document", indexes = {	@ORM\Index(columns={"nom"}),
+ * 											@ORM\Index(columns={"discr"})
+ * 								}
+ * )
+ * 
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DocumentRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")

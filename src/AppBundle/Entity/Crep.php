@@ -11,7 +11,10 @@ use AppBundle\EnumTypes\EnumStatutCrep;
 /**
  * Crep.
  *
- * @ORM\Table(name="crep")
+ * @ORM\Table(name="crep", indexes = {  @ORM\Index(columns={"statut"}),
+ * 										@ORM\Index(columns={"dtype"})
+ * 							}
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  */
@@ -908,7 +911,7 @@ abstract class Crep extends GenericEntity
 //
 //        return $this;
 //    }
-
+//
 //    /**
 //     * @param FormationFuture $formation
 //     */
@@ -917,7 +920,7 @@ abstract class Crep extends GenericEntity
 //        $this->formationsFutures->removeElement($formation);
 //        $formation->setCrep(null);
 //    }
-
+//
 //    /**
 //     * Get formationsFutures
 //     *

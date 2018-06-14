@@ -5,7 +5,6 @@ namespace AppBundle\Entity\Crep\CrepMcc02;
 use AppBundle\Entity\Competence;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\GenericEntity;
-use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02Competence;
 
 /**
  * CrepMcc02CompetenceAction
