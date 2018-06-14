@@ -1,0 +1,59 @@
+{% form_theme form 'crep/crepScl02/Form/collections.form.html.twig' %}
+
+<h5><strong> Formation suivies : </strong></h5>
+
+<div class="row" id="formationsSuiviesCollection"
+     data-prototype="{{ form_widget(form.formationsSuivies.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width:98%">Intitulé de la formation</th>
+                <th style="width:2%" class="text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formationSuivie in form.formationsSuivies %}
+                {{ form_widget(formationSuivie, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsSuivies pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<h5><strong> Formation à envisager : </strong></h5>
+
+<div class="row" id="formationsDemandeesAgentCollection"
+     data-prototype="{{ form_widget(form.formationsDemandeesAgent.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width:98%">Intitulé de la formation</th>
+                <th style="width:2%" class="text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formation in form.formationsDemandeesAgent %}
+                {{ form_widget(formation, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsDemandeesAgent pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

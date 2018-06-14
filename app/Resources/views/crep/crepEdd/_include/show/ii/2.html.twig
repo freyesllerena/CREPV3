@@ -14,7 +14,7 @@
                 {% for objectif in crep.objectifsEvaluesCollectifs %}
                     <tr>
                         <td>{{ objectif.libelle|nl2br }}</td>
-                        <td>{{ objectif.resultatObtenu|echelleObjectifEvalueCrepEdd }}</td>
+                        <td class="text-center">{{ objectif.resultatObtenu|echelleObjectifEvalueCrepEdd }}</td>
                         <td>{{ objectif.resultat|nl2br }}</td>
                     </tr>
                 {% endfor %}
@@ -27,7 +27,6 @@
                     </tr>
                 {% endfor %}
             {% endif %}
-
 
             </tbody>
         </table>
@@ -49,7 +48,7 @@
                 {% for objectif in crep.objectifsEvaluesIndividuels %}
                     <tr>
                         <td>{{ objectif.libelle|nl2br }}</td>
-                        <td>{{ objectif.resultatObtenu|echelleObjectifEvalueCrepAc }}</td>
+                        <td class="text-center">{{ objectif.resultatObtenu|echelleObjectifEvalueCrepAc }}</td>
                         <td>{{ objectif.resultat|nl2br }}</td>
                     </tr>
                 {% endfor %}

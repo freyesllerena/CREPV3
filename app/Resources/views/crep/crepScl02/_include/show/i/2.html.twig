@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width:50%">Définition de l'objectif futur</th>
+                <th style="width:50%">Perspectives d'amélioration des résultats professionnels</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.objectifsFuturs is empty %}
+                {% for i in 0..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for objectifFutur in crep.objectifsFuturs %}
+                    <tr>
+                        <td>{{ objectifFutur.libelle | nl2br }}</td>
+                        <td>{{ objectifFutur.observationsEventuelles | nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+

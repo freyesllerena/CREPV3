@@ -34,7 +34,10 @@
     }
     .bordered-left-rigth {
         border-left: 1px #000000 solid;
-        border-right: 1px #000000 solid;"
+        border-right: 1px #000000 solid;
+    }
+    .bordered-left {
+        border-left: 1px #000000 solid;
     }
     .bordered-top {
         border-top: 1px #000000 solid;
@@ -51,7 +54,7 @@
 <table>
     <tr>
         <td width="34%">
-            <img src="{{ asset('bundles/framework/images/logo_mcc02.jpg') }}" alt="MCC02" width="80" height="148">
+            <img src="{{ asset('images/logo_mcc02.jpg') }}" alt="MCC02" width="80" height="148">
         </td>
     </tr>
 </table>
@@ -312,31 +315,58 @@
         <th colspan="2" class="bordered bg-full strong-th" width="34%">Réalisation</th>
         <th class="bordered bg-full strong-th" width="35%">Commentaires</th>
     </tr>
+
     {% if crep.objectifsEvalues | length > 0 %}
 
         {% for key, objectif in crep.objectifsEvalues %}
-            {% set echelleEvaluation = ['&#9744;', '&#9744;', '&#9744;', '&#9744;'] %}
-            {% set echelleEvaluation = echelleEvaluation|merge({(objectif.resultatObtenu): '&#9745;'}) %}
             <tr>
-                <td class="bordered">{{ objectif.libelle | nl2br }}</td>
-                <td  width="29%" class="bordered">
+                <td class="bordered" width="31%">{{ objectif.libelle | nl2br }}</td>
+                <td class="bordered" width="34%">
                     <table class="text-center">
-                        <tr><td width="85%">Atteint</td></tr>
-                        <tr><td width="85%">Partiellement atteint</td></tr>
-                        <tr><td width="85%">Non atteint</td></tr>
-                        <tr><td width="85%">Partiellement atteint</td></tr>
+                        <tr>
+                            <td width="80%" >Atteint</td>
+                            <td class="bordered-left" width="20%">
+                                {% if objectif.resultatObtenu == 0 %}
+                                    &#9745;
+                                {% else %}
+                                    &#9744;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="80%">Partiellement atteint</td>
+                            <td class="bordered-left" width="20%">
+                                {% if objectif.resultatObtenu == 1 %}
+                                    &#9745;
+                                {% else %}
+                                    &#9744;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="80%">Non atteint</td>
+                            <td class="bordered-left" width="20%">
+                                {% if objectif.resultatObtenu == 2 %}
+                                    &#9745;
+                                {% else %}
+                                    &#9744;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="80%">Partiellement atteint</td>
+                            <td class="bordered-left" width="20%">
+                                {% if objectif.resultatObtenu == 3 %}
+                                    &#9745;
+                                {% else %}
+                                    &#9744;
+                                {% endif %}
+                            </td>
+                        </tr>
                     </table>
                 </td>
 
-                <td width="5%" class="bordered">
-                    <table>
-                        <tr><td>{{ echelleEvaluation[0] | raw }}</td></tr>
-                        <tr><td>{{ echelleEvaluation[1] | raw }}</td></tr>
-                        <tr><td>{{ echelleEvaluation[2] | raw }}</td></tr>
-                        <tr><td>{{ echelleEvaluation[3] | raw }}</td></tr>
-                    </table>
-                </td>
-                <td class="bordered">{{ objectif.resultat | nl2br }}</td>
+                <td class="bordered" width="35%">{{ objectif.resultat | nl2br }}</td>
             </tr>
         {% endfor %}
 

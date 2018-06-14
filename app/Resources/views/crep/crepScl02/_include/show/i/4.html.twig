@@ -1,0 +1,58 @@
+<h5><strong> Formations suivies : </strong></h5>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Intitulé de la formation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.formationsSuivies is empty %}
+                {% for i in 0..2 %}
+                    <tr>
+                        <td><br></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for formationSuivie in crep.formationsSuivies %}
+                    <tr>
+                        <td>{{ formationSuivie.libelle | nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h5><strong> Formations à envisager : </strong></h5>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Intitulé de la formation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.formationsDemandeesAgent is empty %}
+                {% for i in 0..2 %}
+                    <tr>
+                        <td><br></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for formationDemandeeAgent in crep.formationsDemandeesAgent %}
+                    <tr>
+                        <td>{{ formationDemandeeAgent.libelle | nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            </tbody>
+        </table>
+    </div>
+</div>

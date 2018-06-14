@@ -1,0 +1,642 @@
+<style>
+    body {
+        font-size: 7.5pt;
+    }
+
+    strong {
+        font-size: 9pt;
+    }
+
+    .bg-full {
+        background-color: #d1d1d1;
+    }
+</style>
+
+    {% set itemsNbMois = ['1 mois', '2 mois', '3 mois'] %}
+
+<!-- page 1 -->
+<div>
+    <table>
+        <tr>
+            <th width="5%"><br></th>
+            <th width="7%"><strong>Nom :</strong></th>
+            <td width="35%">{{ crep.nomUsage | upper }}</td>
+            <th width="12%"><strong>Prénom :</strong></th>
+            <td width="35%">{{ crep.prenom | title }}</td>
+        </tr>
+    </table>
+    <table>
+        <tr><td><br></td></tr>
+        <tr align="center">
+            <td><strong style="font-size: 12px;">ANNÉE : {% if crep.dateEntretien or crep.refusEntretienProfessionnel %}{{ anneeEvaluee }}{% endif %}</strong></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="7"><strong>Situation de l'agent</strong></th>
+        </tr>
+        <tr>
+            <th style="width:25%">Nom :</th>
+            <td style="width:25%">{{ crep.nomUsage | upper }}</td>
+            <td style="width:8%"></td>
+            <th style="width:12%">Prénom :</th>
+            <td colspan="3" style="width:15%">{{ crep.prenom | title }}</td>
+        </tr>
+        <tr>
+            <th style="width:25%">Date de naissance :</th>
+            <td colspan="6">{% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th style="width:25%">Grade :</th>
+            <td colspan="6">{{ crep.grade }}</td>
+        </tr>
+        <tr>
+            <th style="width:25%">Échelon :</th>
+            <td style="width:33%">{{ crep.echelon }}</td>
+            <th style="width:12%">Rang :</th>
+            <td style="width:30%">{{ crep.rang }}</td>
+        </tr>
+        <tr>
+            <th style="width:25%">Service d'affectation :</th>
+            <td colspan="6">{{ crep.directionAffectation }}</td>
+        </tr>
+        <tr>
+            <th style="width:25%">Échelon terminal :</th>
+            <td colspan="6">{% if crep.echelonTerminal %}&#9745;{% else %}&#9744;{% endif %}</td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="4"><strong>Tenue de l'entretien professionnel</strong></th>
+        </tr>
+        <tr>
+            <th style="width:36%">Date de l'entretien professionnel :</th>
+            <td style="width:14%">{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}</td>
+            <th colspan="2" style="width:50%">Si l'entretien n'a pas eu lieu, motif :</th>
+        </tr>
+        <tr>
+            <td style="width:50%"></td>
+            <td style="width:50%" colspan="2">{% if crep.refusEntretienProfessionnel %}{{ crep.motifRefusEntretien | nl2br }}{% endif %}</td>
+        </tr>
+        <tr>
+            <td colspan="4"><br></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th style="border:1px #000000 solid;"><strong>Fonctions exercées </strong></th>
+        </tr>
+        <tr>
+            <td>{% if crep.descriptionFonctions %}{{ crep.descriptionFonctions | nl2br }}<br><br><br><br><br><br>
+                {% else %}
+                    <br><br><br><br><br><br><br><br>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<br>
+<table cellpading="5">
+    <tr>
+        <td style="width:5%"></td><td style="width:95%;"><h4 style="font-size: 11px;">THEMES ABORDES AU COURS DE L'ENTRETIEN PROFESSIONNEL :</h4></td>
+    </tr>
+</table>
+<br>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+            <tr>
+                <th style="border:1px #000000 solid;"><strong>Résultats professionnels obtenus au regard des objectifs
+                        assignés et des conditions d’organisation et de fonctionnement du service</strong></th>
+            </tr>
+            <tr>
+                <th class="bg-full" style="width:50%;border:1px #dddddd solid;font-size: 8pt;">Rappel de l'objectif assigné</th>
+                <th class="bg-full" style="width:50%;border:1px #dddddd solid;font-size: 8pt;">Résultats professionnels obtenus</th>
+            </tr>
+        {% if crep.objectifsEvalues is empty %}
+            {% for i in 0..2 %}
+                <tr>
+                    <td><br><br></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            {% for objectif in crep.objectifsEvalues %}
+                <tr>
+                    <td style="border:1px #dddddd solid;">{{ objectif.libelle | nl2br }}</td>
+                    <td style="border:1px #dddddd solid;">{{ objectif.resultat | nl2br }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+</div>
+
+<!-- page 2 -->
+<div style="page-break-before:always;"></div>
+<div>
+    <table>
+        <tr>
+            <th width="5%"><br></th>
+            <th width="7%"><strong>Nom :</strong></th>
+            <td width="35%">{{ crep.nomUsage | upper }}</td>
+            <th width="12%"><strong>Prénom :</strong></th>
+            <td width="35%">{{ crep.prenom | title }}</td>
+        </tr>
+    </table>
+</div>
+<br>
+
+<div>
+    <table  cellpadding="5" style="border:1px #000000 solid;">
+            <tr>
+                <th style="border:1px #000000 solid;"><strong>Objectifs assignés pour l'année à venir et perspectives
+                        d'amélioration des résultats professionnels </strong></th>
+            </tr>
+            <tr>
+                <th class="bg-full" style="width:50%;border:1px #dddddd solid;font-size: 8pt;">Définition de l'objectif futur</th>
+                <th class="bg-full" style="width:50%;border:1px #dddddd solid;font-size: 8pt;">Perspectives d'amélioration des résultats
+                        professionnels</th>
+            </tr>
+        {% if crep.objectifsFuturs is empty %}
+            {% for i in 0..1 %}
+                <tr >
+                    <td ><br><br></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            {% for objectifFutur in crep.objectifsFuturs %}
+                <tr>
+                    <td style="border:1px #dddddd solid;">{{ objectifFutur.libelle | nl2br }}</td>
+                    <td style="border:1px #dddddd solid;">{{ objectifFutur.observationsEventuelles | nl2br }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+</div>
+
+<div>
+    <table style="border:1px #000000 solid;">
+        <tr>
+            <th style="border:1px #000000 solid;"><strong>Acquis de l'expérience professionnelle : </strong></th>
+        </tr>
+        <tr>
+            <td>{% if crep.acquisExperiencePro %}{{ crep.acquisExperiencePro | nl2br }}<br><br>{% else %}<br><br><br><br>{% endif %}</td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table style="border:1px #000000 solid;">
+        <tr>
+            <th style="border:1px #000000 solid;"><strong>Besoins de formation : </strong>(se reporter
+                au CREFAC)
+            </th>
+        </tr>
+        <tr>
+            <td>Formations suivies :
+                <ul>
+                    {% if crep.formationsSuivies is empty %}
+                    {% else %}
+                        {% for formationSuivie in crep.formationsSuivies %}
+                            <li>{{ formationSuivie.libelle | nl2br }}</li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+
+                <br>Formations à envisager :
+                <ul>
+                    {% if crep.formationsDemandeesAgent is empty %}
+                    {% else %}
+                        {% for formationDemandee in crep.formationsDemandeesAgent %}
+                            <li>{{ formationDemandee.libelle | nl2br }}</li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table style="border:1px #000000 solid;">
+        <tr>
+            <td style="border:1px #000000 solid;"><strong>Perspectives d'évolution en termes de carrière et de mobilité</strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="border:1px #000000 solid;">
+                Carrière : <p>{% if crep.typeEvolutionCarriere %}{{ crep.typeEvolutionCarriere | nl2br }}<br><br>{% else %}<br><br>{% endif %}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="border:1px #000000 solid;">
+                Perspectives d’accès au grade supérieur pour les fonctionnaires ayant atteint depuis au moins 3 ans le dernier échelon du grade d’entrée dans la fonction publique :
+                <p>{% if crep.perspectivesEvolutionFonction %}{{ crep.perspectivesEvolutionFonction | nl2br }}<br><br>{% else %}<br><br>{% endif %}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="border:1px #000000 solid;">
+                Mobilité : <p>{% if crep.typeMobilite %}{{ crep.typeMobilite | nl2br }}<br><br>{% else %}<br><br>{% endif %}</p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table style="border:1px #000000 solid;">
+        <tr>
+            <th style="border:1px #000000 solid;"><strong>Autres points abordés à l'initiative :</strong></th>
+        </tr>
+        <tr>
+            <td style="width:15%;">Du SHD :</td>
+            <td style="width:85%;">{% if crep.autresPointsAbordesShd %}{{ crep.autresPointsAbordesShd|nl2br }}<br><br>{% else %}<br><br>{% endif %}</td>
+        </tr>
+
+        <tr>
+            <td style="width:15%;">De l'agent :</td>
+            <td style="width:85%;">{% if crep.autresPointsAbordesAgent %}{{ crep.autresPointsAbordesAgent|nl2br }}<br><br>{% else %}<br><br>{% endif %}</td>
+        </tr>
+
+    </table>
+</div>
+
+
+<!-- page 3 -->
+<div style="page-break-before:always;"></div>
+
+<table>
+    <tr>
+        <th width="5%"><br></th>
+        <th width="7%"><strong>Nom :</strong></th>
+        <td width="35%">{{ crep.nomUsage | upper }}</td>
+        <th width="12%"><strong>Prénom :</strong></th>
+        <td width="35%">{{ crep.prenom | title }}</td>
+    </tr>
+</table>
+
+<br>
+
+<br>
+<table cellpading="5">
+    <tr>
+        <td style="width:5%"></td><td style="width:95%;"><h4 style="font-size: 11px;">APPRECIATION DE LA VALEUR PROFESSIONNELLE ET DE LA MANIÈRE DE SERVIR DE L’AGENT </h4></td>
+    </tr>
+</table>
+<br>
+
+<div>
+    <table cellpadding="1" style="border:1px #000000 solid;font-size:7.5pt;">
+        <tr>
+            <th width="50%"></th>
+            <th width="12%" style="text-align: center;border:1px #000000 solid;font-weight: bold;">Insuffisant</th>
+            <th width="9%" style="text-align: center;border:1px #000000 solid;font-weight: bold;">Moyen</th>
+            <th width="9%" style="text-align: center;border:1px #000000 solid;font-weight: bold;">Bon</th>
+            <th width="10%" style="text-align: center;border:1px #000000 solid;font-weight: bold;">Très bon</th>
+            <th width="10%" style="text-align: center;border:1px #000000 solid;font-weight: bold;">Excellent</th>
+        </tr>
+
+        {% for competenceTransverse in crep.competencesTransverses %}
+            {% if competenceTransverse.typeCompetence == 'Générale' %}
+                <tr>
+                    <th style="font-weight: bold;">{{ competenceTransverse.libelle }} :</th>
+                    {% for index in 0..4 %}
+                        <td style="text-align: center;border:1px #000000 solid;">
+                            {% if competenceTransverse.niveauAcquis is not null %}
+                                {% if competenceTransverse.niveauAcquis == loop.index0 %}<strong>X</strong>{% endif %}
+                            {% else %}
+                                <br><br>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+        <tr>
+            <th style="font-weight: bold;"><br/><br/>Pour les agents exerçant des fonctions d’encadrement :</th>
+            <td colspan="5" style="text-align: center;border:1px #000000 solid;background-color:#EEEEEE;"></td>
+        </tr>
+
+        {% for competenceTransverse in crep.competencesTransverses %}
+            {% if competenceTransverse.typeCompetence == 'Encadrement' %}
+                <tr>
+                    <td> - {{ competenceTransverse.libelle }} :</td>
+                    {% for index in 0..4 %}
+                        <td style="text-align: center;border:1px #000000 solid;">
+                            {% if competenceTransverse.niveauAcquis is not null %}
+                                {% if competenceTransverse.niveauAcquis == loop.index0 %}<strong>X</strong>{% endif %}
+                            {% else %}
+                                <br><br>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th><strong>Appréciation générale :</strong></th>
+        </tr>
+        <tr>
+            <td>{% if crep.appreciationLitteraleShd | nl2br %}{{ crep.appreciationLitteraleShd | nl2br }}<br><br><br><br><br><br>
+                {% else %}
+                    {% for index in 0..7 %}
+                        <br><br>
+                    {% endfor %}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="3"><strong>Signature du supérieur hiérarchique direct</strong></th>
+        </tr>
+        <tr>
+            <td style="width:10%">Nom :</td>
+            <td style="width:30%">{% if crep.dateVisaShd %}{{ crep.shdSignataire | identite }}{% endif %}</td>
+            <td style="width:14%">Signature :</td>
+            <td style="width:46%">{% if crep.dateVisaShd %}CREP signé de manière dématérialisée<br>{{ crep.shdSignataire | identite }}<br>le {{ crep.dateVisaShd|date('d/m/Y H:i') }}
+                {% endif %}</td>
+        </tr>
+        <tr>
+            <td style="width:10%">Date :</td>
+            <td style="width:30%">{% if crep.dateVisaShd %}{{ crep.dateVisaShd|date('d/m/Y H:i') }}{% endif %}</td>
+            <td style="width:50%">
+                <br><br>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="3" style="border:1px #000000 solid;">
+        <tr>
+            <th>
+                <strong>Date de communication du compte-rendu à l'agent :</strong>
+                {% if crep.dateVisaShd %}{{ crep.dateVisaShd|date('d/m/Y H:i') }}{% endif %}
+            </th>
+        </tr>
+    </table>
+    <table>
+            <tr>
+                <td width="2%"></td>
+                <td width="98%"><small>A compter de cette date, l’agent dispose d’un délai de 15 jours pour signer le compte-rendu et y apposer ses
+                        éventuelles observations.
+                    </small></td>
+            </tr>
+    </table>
+</div>
+
+
+<!-- page 4 -->
+<div style="page-break-before:always;"></div>
+<table>
+    <tr>
+        <th width="5%"><br></th>
+        <th width="7%"><strong>Nom :</strong></th>
+        <td width="35%">{{ crep.nomUsage | upper }}</td>
+        <th width="12%"><strong>Prénom :</strong></th>
+        <td width="35%">{{ crep.prenom | title }}</td>
+    </tr>
+</table>
+
+<br>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="4" style="border:1px #000000 solid;"><strong>Expression de l'agent : </strong>
+            </th>
+        </tr>
+        <tr>
+            <td colspan="4">{% if crep.observationsVisaAgent %}{{ crep.observationsVisaAgent|nl2br }}
+                    <br><br><br><br>
+                    {% else %}
+                    {% for index in 0..4 %}
+                        <br><br>
+                    {% endfor %}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 8%">Date :</td>
+            <td colspan="3" style="width: 92%">{% if crep.agent and not crep.agent.sansAh %}
+                    {% if crep.dateVisaAgent %}
+                        {{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+                    {% elseif crep.dateRefusVisa %}
+                        {{ crep.dateRefusVisa|date('d/m/Y H:i') }}
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="3" style="border:1px #000000 solid;">
+        <tr>
+            <th><strong style="font-size: 8pt;">Date de retour du compte-rendu au SHD pour transmission à l'autorité hiérarchique :</strong>
+                {% if crep.agent and crep.agent.ah %}
+                    {% if crep.dateRefusVisa %}
+                        Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
+                    {% elseif crep.dateVisaAgent %}
+                        {{ crep.datevisaagent|date('d/m/y h:i') }}
+                    {% endif %}
+                {% endif %}
+            </th>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="2" style="text-align: center;border:1px #000000 solid;"><strong>Visa de l'autorité hiérarchique:</strong></th>
+        </tr>
+        <tr>
+            <td style="width:15%">Observation :</td>
+            <td style="width:85%">{% if crep.observationsAh and crep.agent and crep.agent.ah %}{{ crep.observationsAh | nl2br }}<br><br>{% else %}<br><br>{% endif %}</td>
+        </tr>
+
+        <tr>
+            {% if crep.ahSignataire and crep.agent and crep.agent.ah %}
+                <td style="width:10%">Nom :</td><td style="width:30%">{{ crep.ahSignataire | identite }}</td>
+                <td style="width:14%">Qualité :</td><td style="width:46%">{{ crep.qualiteAh }}</td>
+            {% else %}
+                <td colspan="2" style="width:40%">Nom :</td>
+                <td colspan="2" style="width:60%">Qualité :</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td style="width:10%">Date :</td><td style="width:30%">{% if crep.dateVisaAh and crep.agent and crep.agent.ah %}{{ crep.dateVisaAh|date('d/m/Y H:i') }}{% endif %}</td>
+            <td style="width:14%">Signature :</td><td style="width:46%">{% if crep.agent and crep.agent.sansAh %}<span style="color: red">L'agent est déclaré comme étant <strong>"sans N+2"</strong>. L'étape de la signature du N+2 est donc <strong>supprimée</strong>.</span>
+                {% elseif crep.dateVisaAh %}CREP signé de manière dématérialisée<br>{{ crep.ahSignataire | identite }}<br>le {{ crep.dateVisaAh | date('d/m/Y H:i') }}
+                {% else %}
+                    <br/><br/>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="3" style="border:1px #000000 solid;">
+        <tr>
+            <th>
+                <strong>Date de notification à l'agent : </strong>
+
+                {% if crep.agent and crep.agent.ah and crep.dateVisaAh %}
+                    {{ crep.dateVisaAh|date('d/m/Y H:i') }}
+                {% elseif crep.agent and crep.agent.sansAh and crep.agent.shd and crep.dateVisaShd %}
+                    {{ crep.dateVisaShd|date('d/m/Y H:i') }}
+                {% endif %}
+            </th>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="4" style="border:1px #000000 solid;"><strong>Signature de l'agent</strong></th>
+        </tr>
+        <tr>
+            <td style="width:10%">Nom :</td>
+            <td style="width:30%">
+                {% if crep.dateNotification or crep.dateRefusNotification %}
+                    {{ crep.agent.civilite|capitalize }} {{ crep.prenom|title }} {{ crep.nomUsage|capitalize }}
+                {% endif %}
+            </td>
+            <td style="width:14%">Signature :</td>
+            <td style="width:46%">{% if crep.dateNotification %}CREP signé de manière dématérialisée<br>{{ crep.agent.civilite | title }} {{ crep.prenom | title }} {{ crep.nomUsage | upper }}<br>le {{ crep.dateNotification|date('d/m/Y H:i') }}{% elseif crep.dateRefusNotification %}<span style="color: red">Refus de signature du CREP notifié acté le {{ crep.dateRefusNotification|date('d/m/Y H:i') }}</span>{% endif %}</td>
+        </tr>
+        <tr>
+            <td style="width:10%">Date :</td>
+            <td colspan="3" style="width:90%" {% if crep.dateRefusNotification  %} style="color: red" {% endif %}>
+                {% if crep.dateNotification %}
+                    {{ crep.dateNotification|date('d/m/Y H:i') }}
+                {% elseif crep.dateRefusNotification %}
+                    {{ crep.dateRefusNotification|date('d/m/Y H:i') }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"><br></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td width="2%"></td>
+            <td width="98%"><small>La signature atteste que l'agent a pris connaissance du compte rendu et de la décision d’attribution de
+                    réductions-majorations d’ancienneté (hors échelons terminaux) mais ne vaut pas approbation.<br><br>L'agent dispose d'un délai de 15 jours pour exercer <strong><u>un recours hiérarchique auprès de l'autorité
+                            hiérarchique</u>.</strong> La décision de l'autorité hiérarchique doit intervenir dans le délai de 15
+                    jours.<br><br>L'agent dispose d'un délai de 30 jours à compter de la réponse de l'autorité hiérarchique <strong><u>pour saisir
+                            la CAP</u>.</strong>
+                </small>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- page 5 -->
+<div style="page-break-before:always;"></div>
+
+<table>
+    <tr>
+        <th width="5%"><br></th>
+        <th width="7%"><strong>Nom :</strong></th>
+        <td width="35%">{{ crep.nomUsage | upper }}</td>
+        <th width="12%"><strong>Prénom :</strong></th>
+        <td width="35%">{{ crep.prenom | title }}</td>
+    </tr>
+</table>
+
+<br>
+
+<div style="font-size:9.5pt;"><strong>Recours hiérarchique auprès de l’autorité hiérarchique</strong></div>
+
+<div>
+    <table cellpadding="2" style="border:1px #000000 solid;">
+        <tr>
+            <th>
+                <strong>Date du recours de l’agent auprès de l'autorité hiérarchique (sur lettre jointe) : </strong>
+            </th>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="2">Réponse de l’autorité hiérarchique au recours de l’agent :</th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                {% for index in 0..10 %}
+                    <br><br>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td style="width:50%">Nom : </td>
+            <td style="width:50%">Signature</td>
+        </tr>
+        <tr>
+            <td style="width:50%">Qualité : </td>
+            <td style="width:50%"></td>
+        </tr>
+        <tr>
+            <td style="width:50%">Date : </td>
+            <td style="width:50%"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><br></td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <table cellpadding="5" style="border:1px #000000 solid;">
+        <tr>
+            <th colspan="3" style="border:1px #000000 solid;font-size:8.0pt;"><strong>Signature de l'agent</strong></th>
+        </tr>
+        <tr>
+            <td style="width:20%">Nom :</td>
+            <td style="width:30%"> </td>
+            <td style="width:50%">Signature :</td>
+        </tr>
+        <tr>
+            <td style="width:20%">Date :</td>
+            <td style="width:30%"></td>
+            <td style="width:50%">
+                <br><br>
+            </td>
+        </tr>
+    </table>
+    <small>
+        L'agent dispose d'un délai de 30 jours à compter de la réponse de l'autorité hiérarchique <strong><u>pour saisir
+                la CAP</u>.</strong>
+    </small>
+</div>

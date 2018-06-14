@@ -18,7 +18,7 @@
 <!-- page 1 -->
 <body>
 <p align="center">
-    <img src="{{ asset('bundles/framework/images/Logo_republique.png') }}" alt="EDD" width="100">
+    <img src="{{ asset('images/tmp/Logo_republique.png') }}" alt="EDD" width="100">
     <br>
 
 <table>
@@ -70,6 +70,9 @@
     <tr>
         <td width="25%">Direction/Service :</td>
         <td colspan="3" width="75%">{{ crep.direction }}</td>
+    </tr>
+    <tr>
+        <td width="100%" colspan="4"></td>
     </tr>
     <tr>
         <td width="25%">Corps/cadre d’emplois d'origine :</td>
@@ -405,14 +408,14 @@
              <tr>
                 <td width="4%"></td>
                 <td width="68%">- Renvoi à un document annexe (lettre de mission ou d’objectifs) :
-                    {% if crep.docAnnexeObjectifsAvenir == 1 %}
+                    {% if crep.docAnnexeObjectifsAvenir == 1 and crep.docAnnexeObjectifsAvenir is not empty %}
                         &#9745; oui
                     {% else %}
                         &#9744; oui
                     {% endif %}
                 </td>
                 <td width="28%">
-                    {% if crep.docAnnexeObjectifsAvenir == 0 %}
+                    {% if crep.docAnnexeObjectifsAvenir == 0 and crep.docAnnexeObjectifsAvenir is not empty%}
                         &#9745; non
                     {% else %}
                         &#9744; non
