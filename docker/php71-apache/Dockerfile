@@ -1,5 +1,20 @@
 FROM adrianharabula/php7-with-oci8
 
+RUN apt-get update
+
+# Install APCu
+RUN pecl install apcu
+RUN echo "extension=apcu.so" > /usr/local/etc/php/conf.d/apcu.ini
+
+# Install calendar
+RUN docker-php-ext-install calendar
+
+# Install opcache
+RUN docker-php-ext-install opcache
+
+# Install PECL extensions
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
 
 RUN a2enmod proxy_fcgi
 
