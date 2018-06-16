@@ -768,7 +768,7 @@
             <td width="17%"><u>Poste occupé</u> :</td>
             <td width="40%">{{ crep.posteOccupe }}</td>
             <td width="21%"><u>Depuis le</u> :</td>
-            <td width="21%">{{ crep.dateEntreePosteOccupe }}</td>
+            <td width="21%">{{ crep.dateEntreePosteOccupe | date('d/m/Y') }}</td>
         </tr>
     </table>
 </div>

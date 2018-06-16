@@ -1,0 +1,22 @@
+{% extends "crep/crepMj02/mj02.base.html.twig" %}
+{#{% block accueil %} {% endblock %}#}
+{#{% block campagne %} active {% endblock %}#}
+{% block content %}
+
+    {{ block('alertAhNonIdentifie') }}
+    {{ block('alertDebutEntretien') }}
+    {{ block('alertRefusVisa') }}
+    {{ block('alertRecours') }}
+    {{ block('alertRefusNotification') }}
+    {{ block('renvoyerAh') }}
+    {{ block('renvoyerAgent') }}
+
+    <div class="form-horizontal">
+        {{ parent() }}
+	</div>
+    {{ block('boutons_actions') }}
+{% endblock content %}
+
+{% block i01 %}
+    {% include 'crep/crepMj02/_include/show/0/1.html.twig' %}
+{% endblock i01 %}

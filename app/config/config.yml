@@ -8,7 +8,6 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: fr
-    files_directory: "%kernel.root_dir%/../web/uploads/listes"
 
 framework:
     #esi:             ~
@@ -87,11 +86,12 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-#        metadata_cache_driver: apcu
-#        query_cache_driver: apcu
-#        result_cache_driver: apcu
-#        second_level_cache:
-#            enabled: true
+        auto_mapping: true
+        metadata_cache_driver: apcu
+        query_cache_driver: apcu
+        result_cache_driver: apcu
+        second_level_cache:
+            enabled: true
 
 # Swiftmailer Configuration
 
@@ -178,10 +178,10 @@ monolog:
             path:               "%kernel.logs_dir%/auth.log"
             level:              info
             channels:           security
-                        
- 
+
+
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
     filters:
-        cssrewrite: ~       
+        cssrewrite: ~

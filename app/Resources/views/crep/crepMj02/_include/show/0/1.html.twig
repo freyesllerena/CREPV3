@@ -1,0 +1,98 @@
+<br/>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.agent.nomNaissance | upper }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom marital </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomMarital | upper }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.agent.prenom | upper }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12">Situation administrative </label>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if crep.agent.titulaire == true %}checked="checked"{% endif %}
+                >&nbsp;&nbsp;Titulaire
+            </label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if crep.agent.titulaire is not null and crep.agent.titulaire == false %}checked="checked"{% endif %}
+                >&nbsp;&nbsp;Non titulaire
+            </label>
+        </div>
+
+
+
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Corps </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.corps }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Grade </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.grade }}
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Fonction </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}</div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Occupée depuis </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.dateEntreePosteOccupe %}{{ crep.dateEntreePosteOccupe | date('m/Y') }}{% endif %}</div>
+    </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12">Activité d’encadrement </label>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if crep.activiteEncadrement == true %}checked="checked"{% endif %}
+                >
+                &nbsp;&nbsp;Oui
+            </label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if crep.activiteEncadrement is not null and crep.activiteEncadrement == false %}checked="checked"{% endif %}
+                >&nbsp;&nbsp;Non
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>
