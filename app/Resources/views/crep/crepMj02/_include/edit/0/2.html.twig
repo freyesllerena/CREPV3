@@ -1,0 +1,36 @@
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_6.html.twig' %}
+<br/>
+
+<div class="row">
+    {{ form_row(form.nomNaissanceShd, { 'label': "Nom de famille"}) }}
+    {{ form_row(form.nomMaritalShd, { 'label': "Nom marital" }) }}
+</div>
+
+<div class="row">
+      {{ form_row(form.prenomShd, { 'label': "Prénom"}) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.posteOccupeShd, { 'label': "Fonction" }) }}
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>
+        {{ form_row(form.directionShd, { 'label': "DIR" } ) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
+        {{ form_row(form.departementShd, { 'label': "DT" } ) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
+        {{ form_row(form.serviceShd, { 'label': "Service" } ) }}
+    </div>
+</div>

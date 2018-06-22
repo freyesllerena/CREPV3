@@ -98,7 +98,8 @@ class BrhpConsultManager
         if ($utilisateur) {
             $utilisateur->setCivilite($brhpConsult->getCivilite())
                         ->setNom($brhpConsult->getNom())
-                        ->setPrenom($brhpConsult->getPrenom());
+                        ->setPrenom($brhpConsult->getPrenom())
+            			->setTitre($brhpConsult->getTitre());
         }
 
         $nouveauxPerimetres = $brhpConsult->getPerimetresBrhp()->toArray();

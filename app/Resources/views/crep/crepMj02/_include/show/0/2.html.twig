@@ -1,0 +1,75 @@
+<br/>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomNaissanceShd }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom marital </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.nomMaritalShd }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {{ crep.prenomShd | title }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Fonction </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.posteOccupeShd %}{{ crep.posteOccupeShd }}{% endif %}</div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <label>&nbsp;&nbsp;DIR :</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+            {{ crep.directionShd }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <label>&nbsp;&nbsp;DT :</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+            {{ crep.departementShd }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <label>&nbsp;&nbsp;Service :</label>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+            {{ crep.serviceShd }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+</div>

@@ -30,7 +30,7 @@ use AppBundle\EnumTypes\EnumStatutValidationAgent;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\HasLifecycleCallbacks
  */
-class Agent extends Personne
+class Agent extends Personne implements PersonneInterface
 {
     /**
      * @var Utilisateur
@@ -267,7 +267,7 @@ class Agent extends Personne
     protected $campagnePnc;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Agent")
+     * @ORM\ManyToOne(targetEntity="Agent", cascade={"persist"})
      */
     protected $shd;
 

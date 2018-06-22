@@ -49,9 +49,17 @@ class Document extends GenericEntity
     /**
      * @Assert\File(maxSize="12M",
      * 				mimeTypes={"application/vnd.ms-excel", "text/plain", "text/csv", "application/pdf", "application/msword", "application/vnd.oasis.opendocument.text", "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.ms-powerpoint", "application/vnd.oasis.opendocument.presentation", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
-     * 			 	mimeTypesMessage="Le fichier chargé est corrompu.",  groups={"Default"})
+     * 			 	mimeTypesMessage="Le fichier chargé est corrompu.", 
+     * 				disallowEmptyMessage="Les fichiers vides ne sont pas autorisés",
+     * 				groups={"Default"}
+     * )
      *
-     * @Assert\File(maxSize="12M", mimeTypes={"application/pdf"}, mimeTypesMessage="Le fichier chargé est corrompu",  groups={"chargement_crep_pdf"})
+     * @Assert\File(maxSize="12M", 
+     * 				mimeTypes={"application/pdf"}, 
+     * 				mimeTypesMessage="Le fichier chargé est corrompu",  
+     * 				disallowEmptyMessage="Les fichiers vides ne sont pas autorisés",
+     * 				groups={"chargement_crep_pdf"}
+     * )
      *
      * @ Assert\NotBlank(message = "Champ obligatoire")
      */

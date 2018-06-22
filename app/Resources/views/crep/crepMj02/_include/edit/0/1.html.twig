@@ -1,0 +1,79 @@
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_6.html.twig' %}
+
+<br/>
+
+<div class="row">
+    {{ form_row(form.nomNaissance, { 'label': "Nom de famille"}) }}
+    {{ form_row(form.nomMarital, { 'label': "Nom marital" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.prenom, { 'label': "Prénom"}) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.titulaire, {'label': "Situation administrative", 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.corps, { 'label': "Corps" }) }}
+    {{ form_row(form.grade, { 'label': "Grade" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.posteOccupe, { 'label': "Fonction" }) }}
+    {{ form_row(form.dateEntreePosteOccupe, { 'label': "Occupée depuis" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.activiteEncadrement, {'label': "Activité d’encadrement", 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
+    {{ form_row(form.nbAgentsEncadres, { 'label': "Nombre total d’agents à encadrer :" }) }}
+</div>
+
+<div class="row">
+    <dib class="col-md-6 col-sm-6 col-xs-12"></dib>
+    {{ form_row(form.nbAgentsEncadresA, { 'label': "dont agents de catégorie A" } ) }}
+</div>
+
+<div class="row">
+    <dib class="col-md-6 col-sm-6 col-xs-12"></dib>
+    {{ form_row(form.nbAgentsEncadresB, { 'label': "dont agents de catégorie B" } ) }}
+</div>
+
+<div class="row">
+    <dib class="col-md-6 col-sm-6 col-xs-12"></dib>
+    {{ form_row(form.nbAgentsEncadresC, { 'label': "dont agents de catégorie C" } ) }}
+</div>
+
+<div class="row">
+    <dib class="col-md-6 col-sm-6 col-xs-12"></dib>
+    {{ form_row(form.nbAgentsEncadresC, { 'label': "dont agents de catégorie C" } ) }}
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>
+        {{ form_row(form.direction, { 'label': "DIR" } ) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
+        {{ form_row(form.departement, { 'label': "DT" } ) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
+        {{ form_row(form.service, { 'label': "Service" } ) }}
+    </div>
+</div>
+
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <span>* mentions obligatoires</span>
+    </div>
+</div>
+<br><br>

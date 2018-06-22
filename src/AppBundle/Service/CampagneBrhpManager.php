@@ -138,4 +138,15 @@ class CampagneBrhpManager
     public function getCampagnesBrhpByCampagneRlc(CampagneRlc $campagneRlc){
     	return $this->repository->getCampagnesBrhpByCampagneRlc($campagneRlc);
     }
+    
+    /**
+     * Sauvegarder l'entité.
+     *
+     * @param Campagne $campagne
+     */
+    public function sauvegarder(CampagneBrhp $campagneBrhp)
+    {
+    	$this->em->persist($campagneBrhp);
+    	$this->em->flush();
+    }
 }

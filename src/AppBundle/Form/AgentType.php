@@ -250,6 +250,7 @@ class AgentType extends AbstractType
                             'disabled' => $disabled,
                         ]
                 )
+                ->add('titre', null, ['required' => false, 'disabled' => $disabled])
                 ->add('nom', null, ['required' => false, 'disabled' => $disabled])
                 ->add('prenom', null, ['required' => false, 'disabled' => $disabled]);
 

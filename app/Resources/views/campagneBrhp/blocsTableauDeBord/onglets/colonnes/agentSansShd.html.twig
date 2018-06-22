@@ -4,7 +4,7 @@
 					 <br/>
 					 Pour cela, rendez-vous à la fiche de l’agent accessible depuis le bouton <strong><i class=\"fa fa-edit\"></i></strong>." %}
 		
-	{% if not agent.shd %}
+	{% if agent.evaluable and not agent.shd %}
 	    <td>
 	    	<div align="center">
 	    		<i class="fa fa-exclamation-triangle orange" data-placement="auto" data-toggle="popover-warning" title="N+1 non renseigné" data-content="{{ message }}" data-trigger="hover"></i>

@@ -1,0 +1,29 @@
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_12.html.twig' %}
+<br>
+<div class="row">
+    {{ form_row(form.motifAbsenceEntretien, { 'label': "Si l’évaluation ne peut être assurée par le N+1 (indiquer les raisons) :"}) }}
+</div>
+
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <span>* mentions obligatoires</span>
+    </div>
+</div>
+<br><br>
+<div class="row">
+    {{ form_row(form.motifAbsenceAgent, { 'label': "L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) :"}) }}
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-7 col-sm-7 col-xs-12 pull-left">
+        <label>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) : </label>
+    </div>
+    <div class="col-md-5 col-sm-5 col-xs-12 pull-left">
+        {{ form_row(form.motifAbsenceAgent, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
+    </div>
+</div>
+
+<div class="row">
+    {{ form_row(form.dateEntretien, { 'label': "Date de l’entretien professionnel " }) }}
+</div>

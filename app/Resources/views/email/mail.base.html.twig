@@ -1,10 +1,10 @@
 {# Définir la couleur dans les mails (rouge pour les refus de signature et l'échec du chargement du fichier d'injection, orange pour les retours de CREP ... etc) #}
 {% if classColorEmail is defined %}
-	{% if class == 'danger' %}
+	{% if classColorEmail == 'danger' %}
 		{% set color = '#e74c3c' %}
-	{% elseif class == 'warning'  %}
+	{% elseif classColorEmail == 'warning'  %}
 		{% set color = '#f0ad4e' %}
-	{% elseif class == 'success' %}
+	{% elseif classColorEmail == 'success' %}
 		{% set color = '#1ab394' %}
 	{% endif %}
 

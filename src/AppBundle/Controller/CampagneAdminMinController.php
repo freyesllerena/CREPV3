@@ -112,8 +112,11 @@ class CampagneAdminMinController extends Controller
             return $this->redirectToRoute('campagne_admin_min_index');
         }
 
-        $template = 'campagneAdminMin/upload.html.twig';
-
+        if($campagnePnc->getEnCoursDeChargementDuFichierAgent()){
+        	$template = 'campagneAdminMin/enCoursDeChargementDuFichierAgent.html.twig';
+        }else{
+        	$template = 'campagneAdminMin/upload.html.twig';
+        }
         $maquette = $this->getMaquetteByMinistere($this->getUser());
 
         return $this->render($template, array(

@@ -17,6 +17,7 @@ use AppBundle\Service\CrepManager;
 use AppBundle\Entity\CampagnePnc;
 use AppBundle\Form\RechercheCampagneRlcType;
 use AppBundle\Service\CampagneBrhpManager;
+use AppBundle\Entity\CampagneBrhp;
 
 /**
  * CampagneRlc controller.
@@ -62,6 +63,15 @@ class CampagneRlcController extends Controller
         // Récupérer les modèles de CREP actifs du ministère
         $modelesCrep = $modeleCrepRepository->getModelesCrep($ministere, true);
 
+        $informationsPerimetresBrhp = [];
+        
+        foreach ($campagneRlc->getPerimetresBrhp() as $perimetreBrhp){
+        	$informationsPerimetresBrhp[] = [ 	'perimetreBrhp' => $perimetreBrhp, 
+        										'campagneBrhp' => $em->getRepository('AppBundle:CampagneBrhp')->getCampagneBrhp($campagneRlc->getCampagnePnc(), $perimetreBrhp)
+        	];
+        }
+        
+        
         //On redirige vers la vue tableau de bord que si le fichier d'agents a été diffusé par l'admin ministériel
         if ($campagneRlc->getCampagnePnc()->getDiffusee()) {
             $historiqueIndicateurs = $campagneRlcManager->getHistoriqueIndicateurs($campagneRlc);
@@ -90,6 +100,7 @@ class CampagneRlcController extends Controller
             return $this->render($template, array(
                 'campagneRlc' => $campagneRlc,
             	'campagnesBrhp' => $campagnesBrhp,
+            	'informationsPerimetresBrhp' => $informationsPerimetresBrhp,
                 'indicateurs' => $indicateurs,
                 'historiqueIndicateurs' => $historiqueIndicateurs,
                 'ouvrir_form' => $ouvrirForm->createView(),
@@ -101,6 +112,8 @@ class CampagneRlcController extends Controller
 
         return $this->render('campagneRlc/show.html.twig', array(
                 'campagneRlc' => $campagneRlc,
+        		'campagnesBrhp' => [],
+        		'informationsPerimetresBrhp' => $informationsPerimetresBrhp,
                 'ouvrir_form' => $ouvrirForm->createView(),
                 'rouvrir_form' => $rouvrirForm->createView(),
                 'modelesCrep' => $modelesCrep,
@@ -133,8 +146,6 @@ class CampagneRlcController extends Controller
         ));
 
         $editForm->handleRequest($request);
-
-        $campagneRlc = $campagneRlcManager->verfierDocuments($campagneRlc);
 
         /* @var $campagneRlcDuFormulaire CampagneRlc */
         $campagneRlcDuFormulaire = $editForm->getData();

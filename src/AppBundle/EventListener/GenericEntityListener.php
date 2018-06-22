@@ -46,14 +46,16 @@ class GenericEntityListener
         // Log de l'action de modification
         if($utilisateur){
         	$entity->setModifiePar($utilisateur);
-        	$entity->setDateModification(new \DateTime('now'));
         }
+        
+        $entity->setDateModification(new \DateTime('now'));
         
         // Log de l'action de création
         if (null === $entity->getId() && $utilisateur) {
             $entity->setCreePar($utilisateur);
-            $entity->setDateCreation(new \DateTime('now'));
         }
+        
+        $entity->setDateCreation(new \DateTime('now'));
     }
 
     public function prePersist(LifecycleEventArgs $args)

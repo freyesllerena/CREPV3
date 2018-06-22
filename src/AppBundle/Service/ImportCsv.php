@@ -17,12 +17,14 @@ use AppBundle\Entity\Formation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use AppBundle\Service\ConstanteManager;
+use AppBundle\Entity\ModeleCrep;
 
 class ImportCsv
 {
     private $entete = [
         'matricule',
         'civilite',
+    	'titre',
         'nom de famille',
         'nom usuel',
         'nom marital',
@@ -52,7 +54,8 @@ class ImportCsv
         'adresse mail ah',
         'agent evaluable',
         'motif non evaluation',
-        'code UO',
+        'code uo',
+    	'modele crep'
     ];
 
     private $enteteOrganisation = [
@@ -142,6 +145,17 @@ class ImportCsv
 
         $uosIndexees = $this->em->getRepository('AppBundle:UniteOrganisationnelle')->getOrganisation($campagnePnc->getMinistere());
 
+        // Récupération des modèles de CREP du ministère
+        $modelesCrep = $this->em->getRepository('AppBundle:ModeleCrep')->getModelesCrep($campagnePnc->getMinistere(), true);
+        $modelesCrepIndexes = [];
+        $listeModelesCrep = '';
+        
+        /* @var $modeleCrep ModeleCrep */ 
+        foreach ($modelesCrep as $modeleCrep){
+        	$modelesCrepIndexes[mb_strtolower($modeleCrep->getTypeEntity())] = $modeleCrep;
+        	$listeModelesCrep .=  $modeleCrep->getTypeEntity().', ';
+        }
+
         /* @var $campagneRlcRepository CampagneRlcRepository */
         $campagneRlcRepository = $this->em->getRepository('AppBundle:CampagneRlc');
 
@@ -216,6 +230,7 @@ class ImportCsv
             $agent
             ->setMatricule($row['matricule'])
             ->setCivilite($row['civilite'])
+            ->setTitre($row['titre'])
             ->setNomNaissance($row['nom de famille'])
             ->setNom($row['nom usuel'])
             ->setNomMarital($row['nom marital'])
@@ -229,16 +244,16 @@ class ImportCsv
             ->setDateEntreeGrade($row['date entree dans le grade'])
             ->setEchelon($row['echelon'])
             ->setDateEntreeEchelon($row['date entree dans echelon'])
-             ->setGradeEmploi($row['grade emploi'])
-             ->setDateEntreeGradeEmploi($row['date entree dans le grade emploi'])
-             ->setEtablissement($row['etablissement'])
-             ->setDepartement($row['departement'])
+            ->setGradeEmploi($row['grade emploi'])
+            ->setDateEntreeGradeEmploi($row['date entree dans le grade emploi'])
+            ->setEtablissement($row['etablissement'])
+            ->setDepartement($row['departement'])
             ->setAffectation($row['affectation sigle'])
             ->setAffectationClairAgent($row['affectation clair'])
             ->setPosteOccupe($row['poste occupe'])
             ->setDateEntreePosteOccupe($row['date entree dans le poste occupe'])
             ->setCodeSirh1($row['code poste 1'])
-             ->setCodeSirh2($row['code poste 2'])
+            ->setCodeSirh2($row['code poste 2'])
             ->setCapitalDif($row['capital dif'])
             ->setCapitalDifMobilisable($row['capital dif mobilisable'])
             ->setEmailShd($row['adresse mail shd'])
@@ -286,6 +301,20 @@ class ImportCsv
                 }
             }
 
+            // Rattahement du modèle de CREP
+            if ($row['modele crep']) {
+            	$index = mb_strtolower($row['modele crep']);
+            	if (isset($modelesCrepIndexes[$index])) {
+            		/* @var $modeleCrep ModeleCrep */
+            		$modeleCrep = $modelesCrepIndexes[$index];
+            		$agent->setModeleCrep($modeleCrep);
+            	} else {
+            		$contientErreurs = true;
+            		$erreursUos[$ligne] = ['agent' => $agent, 'message' => 'Modèle de CREP "'.$row['modele crep'].'" non valide, veuillez renseigner un des modèles suivants : '.$listeModelesCrep];
+            		++$nbErreurs;
+            	}
+            }
+            
             // Validation de l'agent, et récupération des erreurs
             /* @var $erreurs ConstraintViolationList */
             $erreurs = $this->validator->validate($agent, null, ['importCSV']);

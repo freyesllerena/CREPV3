@@ -39,8 +39,8 @@ class CrepMj02 extends Crep
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
-     *    minMessage = "Le nom de naissance doit faire au moins {{ limit }} caractères",
-     *    maxMessage = "Le nom de naissance ne doit pas faire plus de {{ limit }} caractères"
+     *    minMessage = "Le nom de famille doit faire au moins {{ limit }} caractères",
+     *    maxMessage = "Le nom de famille ne doit pas faire plus de {{ limit }} caractères"
      * )
      */
     protected $nomNaissance;
@@ -50,8 +50,8 @@ class CrepMj02 extends Crep
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
-     *    minMessage = "Le nom de naissance doit faire au moins {{ limit }} caractères",
-     *    maxMessage = "Le nom de naissance ne doit pas faire plus de {{ limit }} caractères"
+     *    minMessage = "Le nom marital doit faire au moins {{ limit }} caractères",
+     *    maxMessage = "Le nom marital ne doit pas faire plus de {{ limit }} caractères"
      * )
      */
     protected $nomMarital;
@@ -131,139 +131,194 @@ class CrepMj02 extends Crep
      */
     protected $activiteEncadrement;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $titulaire;
 
-//    /**
-//     * @ORM\Column(type="string")
-//     * @Assert\Length(
-//     *    max = 255,
-//     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-//     * )
-//     */
-//    protected $direction;
-//
-//    /**
-//     * @ORM\Column(type="string")
-//     * @Assert\Length(
-//     *    max = 255,
-//     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-//     * )
-//     */
-//    protected $departement;
-//
-//    /**
-//     * @ORM\Column(type="string")
-//     * @Assert\Length(
-//     *    max = 255,
-//     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
-//     * )
-//     */
-//    protected $service;
-//
-//    /**
-//     * @var int
-//     *
-//     * @ORM\Column(type="integer")
-//     * @Assert\Range(
-//     *      min = 0,
-//     *      max = 1000,
-//     *      minMessage = "Valeur non valide",
-//     *      maxMessage = "Valeur non valide",
-//     *      invalidMessage= "Valeur non valide",
-//     * )
-//     */
-//    protected $nbAgentsEncadresA;
-//
-//    /**
-//     * @var int
-//     *
-//     * @ORM\Column(type="integer")
-//     * @Assert\Range(
-//     *      min = 0,
-//     *      max = 1000,
-//     *      minMessage = "Valeur non valide",
-//     *      maxMessage = "Valeur non valide",
-//     *      invalidMessage= "Valeur non valide",
-//     * )
-//     */
-//    protected $nbAgentsEncadresB;
-//
-//    /**
-//     * @var int
-//     *
-//     * @ORM\Column(type="integer")
-//     * @Assert\Range(
-//     *      min = 0,
-//     *      max = 1000,
-//     *      minMessage = "Valeur non valide",
-//     *      maxMessage = "Valeur non valide",
-//     *      invalidMessage= "Valeur non valide",
-//     * )
-//     */
-//    protected $nbAgentsEncadresC;
-//
-//    /**
-//     * @var int
-//     *
-//     * @ORM\Column(type="integer")
-//     * @Assert\Range(
-//     *      min = 0,
-//     *      max = 1000,
-//     *      minMessage = "Valeur non valide",
-//     *      maxMessage = "Valeur non valide",
-//     *      invalidMessage= "Valeur non valide",
-//     * )
-//     */
-//    protected $nbAgentsEncadres;
-//
-//    /**
-//     * @var boolean
-//     *
-//     * @ORM\Column(type="boolean", nullable=true)
-//     *
-//     */
-//    protected $activiteEncadrement;
-//
-//    /**
-//     * @var \DateTime
-//     *
-//     * @ORM\Column(type="date", nullable=true)
-//     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
-//     */
-//    protected $dateEntreePosteOccupe;
-//
-//    /**
-//     * @ORM\Column(type="string")
-//     * @Assert\Length(
-//     *    min = 2,
-//     *    max = 50,
-//     *    minMessage = "Le nom d'usage doit faire au moins {{ limit }} caractères",
-//     *    maxMessage = "Le nom d'usage ne doit pas faire plus de {{ limit }} caractères"
-//     * )
-//     */
-//    protected $nomNaissanceShd;
-//
-//    /**
-//     * @ORM\Column(type="string")
-//     * @Assert\Length(
-//     *    min = 2,
-//     *    max = 50,
-//     *    minMessage = "Le nom d'usage doit faire au moins {{ limit }} caractères",
-//     *    maxMessage = "Le nom d'usage ne doit pas faire plus de {{ limit }} caractères"
-//     * )
-//     */
-//    protected $nomMaritalShd;
-//
-//    /**
-//     * @ORM\Column(type="string")
-//     * @Assert\Length(
-//     *    min = 2,
-//     *    max = 50,
-//     *    minMessage = "Le prénom doit faire au moins {{ limit }} caractères",
-//     *    maxMessage = "Le prénom ne doit pas faire plus de {{ limit }} caractères"
-//     * )
-//     */
-//    protected $prenomShd;
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $direction;
 
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $departement;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $service;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $directionShd;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $departementShd;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $serviceShd;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 1000,
+     *      minMessage = "Valeur non valide",
+     *      maxMessage = "Valeur non valide",
+     *      invalidMessage= "Valeur non valide",
+     * )
+     */
+    protected $nbAgentsEncadresA;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 1000,
+     *      minMessage = "Valeur non valide",
+     *      maxMessage = "Valeur non valide",
+     *      invalidMessage= "Valeur non valide",
+     * )
+     */
+    protected $nbAgentsEncadresB;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 1000,
+     *      minMessage = "Valeur non valide",
+     *      maxMessage = "Valeur non valide",
+     *      invalidMessage= "Valeur non valide",
+     * )
+     */
+    protected $nbAgentsEncadresC;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 1000,
+     *      minMessage = "Valeur non valide",
+     *      maxMessage = "Valeur non valide",
+     *      invalidMessage= "Valeur non valide",
+     * )
+     */
+    protected $nbAgentsEncadres;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(
+     *    min = 2,
+     *    max = 50,
+     *    minMessage = "Le nom d'usage doit faire au moins {{ limit }} caractères",
+     *    maxMessage = "Le nom d'usage ne doit pas faire plus de {{ limit }} caractères"
+     * )
+     */
+    protected $nomNaissanceShd;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(
+     *    min = 2,
+     *    max = 50,
+     *    minMessage = "Le nom marital doit faire au moins {{ limit }} caractères",
+     *    maxMessage = "Le nom marital ne doit pas faire plus de {{ limit }} caractères"
+     * )
+     */
+    protected $nomMaritalShd;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    min = 2,
+     *    max = 50,
+     *    minMessage = "Le prénom doit faire au moins {{ limit }} caractères",
+     *    maxMessage = "Le prénom ne doit pas faire plus de {{ limit }} caractères"
+     * )
+     */
+    protected $prenomShd;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $posteOccupeShd;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $motifAbsenceEntretien;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $motifAbsenceAgent;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     */
+    protected $dateEntretien;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    min = 2,
+     *    max = 50,
+     *    minMessage = "Le nom d'usage doit faire au moins {{ limit }} caractères",
+     *    maxMessage = "Le nom d'usage ne doit pas faire plus de {{ limit }} caractères"
+     * )
+     */
+    protected $nomUsageShd;
 
 
     // ############################################################################################################
@@ -272,23 +327,33 @@ class CrepMj02 extends Crep
     {
         $this->initialiserParent($agent, $em);
 
-
+        $defaultNomAgent = ($agent->getNom())? $agent->getNom() : $agent->getNomNaissance();
+        $this->setNomNaissance($defaultNomAgent);
+        $this->setNomMarital($agent->getNomMarital());
         $this->setPrenom($agent->getPrenom());
-        $this->setNomNaissance($this->getNomNaissance());
-        $this->setNomMarital($this->getNomMarital());
+
+        $this->setTitulaire($agent->isTitulaire());
 
         $this->setCorps($this->getCorps());
         $this->setGrade($this->getGrade());
 
 
+        if ($agent->getShd()) {
+            $this->setPrenomShd($agent->getShd()->getPrenom());
+            $this->setNomNaissanceShd($agent->getShd()->getNomNaissance());
+            $this->setNomMarital($agent->getShd()->getNomMarital());
+//            $this->setCorpsShd($agent->getShd()->getCorps());
+//            $this->setGradeShd($agent->getShd()->getGrade());
+            $this->setPosteOccupeShd($agent->getShd()->getPosteOccupe());
+//            $this->setDateEntreePosteOccupeShd($agent->getShd()->getDateEntreePosteOccupe());
+        }
 
     }
 
-
-//    public function __construct()
-//    {
-//        parent::init();
-//    }
+    public function __construct()
+    {
+        parent::init();
+    }
 
     /**
      * @return the string
@@ -321,7 +386,7 @@ class CrepMj02 extends Crep
     /**
      * @param $nomNaissance
      *
-     * @return CrepMj01
+     * @return $this
      */
     public function setNomNaissance($nomNaissance)
     {
@@ -330,10 +395,7 @@ class CrepMj02 extends Crep
         return $this;
     }
 
-
     /**
-     * Méthode appelée lors d'un rattachement d'un nouveau N+1.
-     *
      * Actualisation de données Shd
      */
     public function actualiserDonneesShd()
@@ -342,18 +404,23 @@ class CrepMj02 extends Crep
 
         if ($shd) {
             $this
-                ->setNomNaissanceShd($shd->getNom())
-                ->setPrenomShd($shd->getPrenom());
-//                ->setPosteOccupeShd($shd->getPosteOccupe())
+                ->setNomNaissanceShd($shd->getNomNaissance())
+//                ->setNomMarital($shd->getNomMarital())
+                ->setPrenomShd($shd->getPrenom())
+                ->setPosteOccupeShd($shd->getPosteOccupe());
 //                ->setAffectationShd($shd->getAffectation());
         } else {
             $this
-//                ->setNomUsageShd(null)
-                ->setPrenomShd(null);
-            //                ->setPosteOccupeShd(null)
-//                ->setAffectationShd(null);
+                ->setNomNaissanceShd(null)
+                ->setPrenomShd(null)
+                ->setPosteOccupeShd(null)
+                ->setAffectationShd(null);
         }
     }
+
+
+
+
 
 
     public function confidentialisationChampsShd()
@@ -377,19 +444,27 @@ class CrepMj02 extends Crep
     }
 
     /**
-     * @return mixed
-     */
-    public function getNomMarital()
-    {
-        return $this->nomMarital;
-    }
-
-    /**
-     * @param mixed $nomMarital
+     * Set nomMarital.
+     *
+     * @param string $nomMarital
+     *
+     * @return $this
      */
     public function setNomMarital($nomMarital)
     {
         $this->nomMarital = $nomMarital;
+
+        return $this;
+    }
+
+    /**
+     * Get nomMarital.
+     *
+     * @return string
+     */
+    public function getNomMarital()
+    {
+        return $this->nomMarital;
     }
 
     /**
@@ -406,6 +481,25 @@ class CrepMj02 extends Crep
     public function setPrenom($prenom)
     {
         $this->prenom = $prenom;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getTitulaire()
+    {
+        return $this->titulaire;
+    }
+
+    /**
+     * @param $titulaire
+     * @return $this
+     */
+    public function setTitulaire($titulaire)
+    {
+        $this->titulaire = $titulaire;
+
+        return $this;
     }
 
     /**
@@ -607,19 +701,33 @@ class CrepMj02 extends Crep
     /**
      * @return mixed
      */
-    public function getNomNaissanceSdh()
+    public function getNomNaissanceShd()
     {
         return $this->nomNaissanceShd;
     }
 
     /**
-     * @param $nomNaissanceShd
-     * @return $this
+     * @param mixed $nomNaissanceShd
      */
     public function setNomNaissanceShd($nomNaissanceShd)
     {
         $this->nomNaissanceShd = $nomNaissanceShd;
-        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNomMaritalShd()
+    {
+        return $this->nomMaritalShd;
+    }
+
+    /**
+     * @param mixed $nomMaritalShd
+     */
+    public function setNomMaritalShd($nomMaritalShd)
+    {
+        $this->nomMaritalShd = $nomMaritalShd;
     }
 
     /**
@@ -638,5 +746,117 @@ class CrepMj02 extends Crep
     {
         $this->prenomShd = $prenomShd;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosteOccupeShd()
+    {
+        return $this->posteOccupeShd;
+    }
+
+    /**
+     * @param string $posteOccupeShd
+     */
+    public function setPosteOccupeShd($posteOccupeShd)
+    {
+        $this->posteOccupeShd = $posteOccupeShd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDirectionShd()
+    {
+        return $this->directionShd;
+    }
+
+    /**
+     * @param mixed $directionShd
+     */
+    public function setDirectionShd($directionShd)
+    {
+        $this->directionShd = $directionShd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDepartementShd()
+    {
+        return $this->departementShd;
+    }
+
+    /**
+     * @param mixed $departementShd
+     */
+    public function setDepartementShd($departementShd)
+    {
+        $this->departementShd = $departementShd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServiceShd()
+    {
+        return $this->serviceShd;
+    }
+
+    /**
+     * @param mixed $serviceShd
+     */
+    public function setServiceShd($serviceShd)
+    {
+        $this->serviceShd = $serviceShd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMotifAbsenceEntretien()
+    {
+        return $this->motifAbsenceEntretien;
+    }
+
+    /**
+     * @param mixed $motifAbsenceEntretien
+     */
+    public function setMotifAbsenceEntretien($motifAbsenceEntretien)
+    {
+        $this->motifAbsenceEntretien = $motifAbsenceEntretien;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMotifAbsenceAgent()
+    {
+        return $this->motifAbsenceAgent;
+    }
+
+    /**
+     * @param mixed $motifAbsenceAgent
+     */
+    public function setMotifAbsenceAgent($motifAbsenceAgent)
+    {
+        $this->motifAbsenceAgent = $motifAbsenceAgent;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateEntretien()
+    {
+        return $this->dateEntretien;
+    }
+
+    /**
+     * @param \DateTime $dateEntretien
+     */
+    public function setDateEntretien($dateEntretien)
+    {
+        $this->dateEntretien = $dateEntretien;
     }
 }

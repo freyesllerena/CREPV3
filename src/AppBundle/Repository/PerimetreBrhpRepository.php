@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Rlc;
 use AppBundle\Entity\Ministere;
 use AppBundle\Entity\PerimetreRlc;
+use AppBundle\Entity\PerimetreBrhp;
 
 /**
  * PerimetreBrhpRepository.
@@ -13,7 +14,7 @@ use AppBundle\Entity\PerimetreRlc;
  * repository methods below.
  */
 class PerimetreBrhpRepository extends \Doctrine\ORM\EntityRepository
-{
+{	
     public function getPerimetresBrhpByRlc(Rlc $rlc)
     {
         $result = [];
@@ -22,7 +23,7 @@ class PerimetreBrhpRepository extends \Doctrine\ORM\EntityRepository
         foreach ($rlc->getPerimetresRlc() as $perimetreRlc) {
             $result = array_merge($result, $perimetreRlc->getPerimetresBrhp()->toArray());
         }
-
+		
         return $result;
 
         /*

@@ -57,7 +57,6 @@ class CampagneBrhpController extends Controller
                 $campagneBrhp->addDocument($ancienDocument);
             }
 
-            $campagneBrhp = $campagneBrhpManager->verfierDocuments($campagneBrhp);
             $campagneBrhpManager->sauvegarder($campagneBrhp);
             $this
                 ->get('session')

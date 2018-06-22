@@ -108,7 +108,7 @@ class Technique
      *
      * @return Technique
      */
-    public function setCrepMindef01(\AppBundle\Entity\CrepMindef01 $crepMindef01 = null)
+    public function setCrepMindef01(CrepMindef01 $crepMindef01 = null)
     {
         $this->crepMindef01 = $crepMindef01;
 

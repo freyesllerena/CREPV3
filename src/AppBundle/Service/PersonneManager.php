@@ -129,6 +129,7 @@ class PersonneManager
                 $nouvelUtilisateur = new Utilisateur();
                 $nouvelUtilisateur
                     ->setCivilite($personne->getCivilite())
+                    ->setTitre($personne->getTitre())
                     ->setPrenom($personne->getPrenom())
                     ->setNom($personne->getNom())
                     ->setEmail($personne->getEmail())

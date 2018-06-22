@@ -2,6 +2,7 @@
 
 namespace AppBundle\Util;
 
+use AppBundle\Entity\PersonneInterface;
 class Util
 {
     /**
@@ -127,5 +128,32 @@ class Util
         }
 
         return true;
+    }
+    
+    public static function identite(PersonneInterface $personne)
+    {
+    	// Si la personne n'a pas de nom, on retourne son adresse email
+    	if(!$personne->getNom()){
+    		return $personne->getEmail();
+    	}
+    	 
+    	$result = '';
+    	 
+    	// On retourne soit le titre s'il y en a un, soit la civilité
+    	if($personne->getTitre()){
+    		$result .= self::twig_title($personne->getTitre()). ' ';
+    	}elseif ($personne->getCivilite()){
+    		$result .= self::twig_title($personne->getCivilite()). ' ';
+    	}
+    
+    	if($personne->getPrenom()){
+    		$result .= self::twig_title($personne->getPrenom()). ' ';
+    	}
+    	 
+    	if($personne->getNom()){
+    		$result .= self::twig_upper($personne->getNom());
+    	}
+    	 
+    	return $result;
     }
 }

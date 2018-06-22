@@ -75,7 +75,6 @@ class CampagnePncController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $campagnePnc = $campagnePncManager->verfierDocuments($campagnePnc);
 
             $flashbagMessage = 'Campagne PNC \"'.$campagnePnc->getLibelle().'\" créée !';
 
@@ -261,8 +260,6 @@ class CampagnePncController extends Controller
             foreach ($nouveauxDocuments as $nouveauDocument) {
                 $campagnePnc->addDocument($nouveauDocument);
             }
-
-            $campagnePnc = $campagnePncManager->verfierDocuments($campagnePnc);
 
             $nouveauxPerimetresRlc = array_diff(
                $campagnePncDuFormulaire->getPerimetresRlc()->getValues(),

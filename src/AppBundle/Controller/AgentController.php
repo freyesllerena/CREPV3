@@ -562,14 +562,14 @@ class AgentController extends Controller
 
             $output['data'][] = [
                     'id' => $agent->getId(),
-                    'agent' => htmlspecialchars(Util::twig_capitalize($agent->getCivilite()).' '.Util::twig_capitalize($agent->getPrenom()).' '.Util::twig_upper($agent->getNom())),
+                    'agent' => htmlspecialchars(Util::identite($agent)),
                     'email' => htmlspecialchars(Util::twig_lower($agent->getEmail())),
                     'perimetreBrhp' => htmlspecialchars($agent->getPerimetreBrhp() ? $agent->getPerimetreBrhp()->getLibelle() : ''),
                     'perimetreRlc' => htmlspecialchars($agent->getPerimetreRlc() ? $agent->getPerimetreRlc()->getLibelle() : ''),
                     'affectation' => htmlspecialchars($agent->getAffectation()),
                     'uniteOrganisationnelle' => htmlspecialchars($agent->getUniteOrganisationnelle() ? $agent->getUniteOrganisationnelle()->getCode().' : '.$agent->getUniteOrganisationnelle()->getLibelle() : ''),
-                    'shd' => $agent->getShd() ? htmlspecialchars(AppExtension::identite($agent->getShd())) : $this->render('campagneBrhp/blocsTableauDeBord/onglets/colonnes/agentSansShd.html.twig', array('agent' => $agent))->getContent(),
-                    'ah' => $agent->getAh() ? htmlspecialchars(AppExtension::identite($agent->getAh())) : $this->render('campagneBrhp/blocsTableauDeBord/onglets/colonnes/agentSansAh.html.twig', array('agent' => $agent))->getContent(),
+                    'shd' => $agent->getShd() ? htmlspecialchars(Util::identite($agent->getShd())) : $this->render('campagneBrhp/blocsTableauDeBord/onglets/colonnes/agentSansShd.html.twig', array('agent' => $agent))->getContent(),
+                    'ah' => $agent->getAh() ? htmlspecialchars(Util::identite($agent->getAh())) : $this->render('campagneBrhp/blocsTableauDeBord/onglets/colonnes/agentSansAh.html.twig', array('agent' => $agent))->getContent(),
                     'evaluable' => $agent->getEvaluable() ? 'Oui' : 'Non',
                     'motif_non_evaluation' => htmlspecialchars($agent->getMotifNonEvaluation()),
                     'MODIFIER' => $this->isGranted(AgentVoter::MODIFIER, $agent),

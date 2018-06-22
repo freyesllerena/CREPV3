@@ -64,14 +64,29 @@ class TraiterFichierAgentsCommand extends Command
             $uploadeDocument = $campagnePnc->getDocPopulation();
             $campagnePnc->setDocPopulation(null);
             $this->em->remove($uploadeDocument);
+
+            // Dans tous les cas on met le flag enCoursDeChargementDuFichierAgent à false après la fin du script asynchrone
+            $campagnePnc->setEnCoursDeChargementDuFichierAgent(false);
+            $this->em->flush();
+            
+            ob_start();
+            var_dump($retour);
+            $errors = ob_get_clean();
+            
+            $output->writeln('KO : Erreur du chargement du fichier d\'agents sur la campagne : '.$campagnePnc->getId());
+            $output->writeln($errors);
+            
         } elseif (true == $retour) { // $retour == true signifie que le fichier d'agent a été correctement chargée
             $this->appMailer->notifierFinChargementPopulation($campagnePnc, true);
+            
+            // Dans tous les cas on met le flag enCoursDeChargementDuFichierAgent à false après la fin du script asynchrone
+            $campagnePnc->setEnCoursDeChargementDuFichierAgent(false);
+            $this->em->flush();
+            $output->writeln('OK : Fin du chargement du fichier d\'agents sur la campagne : '.$campagnePnc->getId());
         }
 
-        // Dans tous les cas on met le flag enCoursDeChargementDuFichierAgent à false après la fin du script asynchrone
-        $campagnePnc->setEnCoursDeChargementDuFichierAgent(false);
-        $this->em->flush();
 
-        $output->writeln('Fin du chargement du fichier d\'agents sur la campagne : '.$retour.' '.$campagnePnc->getId());
+
+        
     }
 }

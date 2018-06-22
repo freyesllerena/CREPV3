@@ -97,7 +97,8 @@ class BrhpManager
         if ($utilisateur) {
             $utilisateur->setCivilite($brhp->getCivilite())
                         ->setNom($brhp->getNom())
-                        ->setPrenom($brhp->getPrenom());
+                        ->setPrenom($brhp->getPrenom())
+            			->setTitre($brhp->getTitre());
         }
 
         $nouveauxPerimetres = $brhp->getPerimetresBrhp()->toArray();

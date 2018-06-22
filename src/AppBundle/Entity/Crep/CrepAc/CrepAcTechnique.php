@@ -120,7 +120,7 @@ class CrepAcTechnique
      *
      * @return Technique
      */
-    public function setCrepAc(\AppBundle\Entity\CrepAc $crepAc = null)
+    public function setCrepAc(CrepAc $crepAc = null)
     {
         $this->crepAc = $crepAc;
 

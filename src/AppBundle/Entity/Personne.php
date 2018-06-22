@@ -12,7 +12,7 @@ use AppBundle\Util\Util;
  *
  * @ORM\MappedSuperclass
  */
-abstract class Personne extends GenericEntity
+abstract class Personne extends GenericEntity implements PersonneInterface
 {
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -20,6 +20,18 @@ abstract class Personne extends GenericEntity
      */
     protected $civilite;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $titre;
+    
     /**
      * @ORM\Column(type="string", nullable=true)
      * @Assert\NotBlank(message = "Nom usuel obligatoire")
@@ -67,6 +79,18 @@ abstract class Personne extends GenericEntity
         return $this;
     }
 
+    public function getTitre()
+    {
+    	return $this->titre;
+    }
+    
+    public function setTitre($titre)
+    {
+    	$this->titre = $titre;
+    
+    	return $this;
+    }
+    
     public function getNom()
     {
         return $this->nom;

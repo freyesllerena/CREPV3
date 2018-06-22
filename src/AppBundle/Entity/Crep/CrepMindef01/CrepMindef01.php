@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Entity\Crep\CrepMindef01;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +21,9 @@ use AppBundle\Entity\Crep;
 use AppBundle\Entity\MobiliteFonctionnelle;
 use AppBundle\Entity\MobiliteGeographique;
 use AppBundle\Entity\MobiliteExterne;
+use AppBundle\Entity\Crep\CrepMindef01\AutreDomaine;
+use AppBundle\Entity\Crep\CrepMindef01\Technique;
+
 
 /**
  * CrepMindef01.
@@ -2068,7 +2070,7 @@ class CrepMindef01 extends Crep
      *
      * @return CrepMindef01
      */
-    public function addTechnique(\AppBundle\Entity\Technique $techniques)
+    public function addTechnique(Technique $techniques)
     {
         $this->techniques[] = $techniques;
         $techniques->setCrepMindef01($this);
@@ -2081,7 +2083,7 @@ class CrepMindef01 extends Crep
      *
      * @param \AppBundle\Entity\Technique $technique
      */
-    public function removeTechnique(\AppBundle\Entity\Technique $techniques)
+    public function removeTechnique(Technique $techniques)
     {
         $this->techniques->removeElement($techniques);
         $techniques->setCrepMindef01(null);
@@ -2104,7 +2106,7 @@ class CrepMindef01 extends Crep
      *
      * @return CrepMindef01
      */
-    public function addAutresDomaine(\AppBundle\Entity\AutreDomaine $autreDomaine)
+    public function addAutresDomaine(AutreDomaine $autreDomaine)
     {
         $this->autresDomaines[] = $autreDomaine;
         $autreDomaine->setCrepMindef01($this);
@@ -2117,7 +2119,7 @@ class CrepMindef01 extends Crep
      *
      * @param \AppBundle\Entity\AutreDomaine $autresDomaine
      */
-    public function removeAutresDomaine(\AppBundle\Entity\AutreDomaine $autresDomaine)
+    public function removeAutresDomaine(AutreDomaine $autresDomaine)
     {
         $this->autresDomaines->removeElement($autresDomaine);
         $autresDomaine->setCrepMindef01(null);

@@ -14,6 +14,8 @@ use AppBundle\Entity\Crep\CrepMindef\CrepMindef;
 use AppBundle\Entity\Crep\CrepAc\CrepAc;
 use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
 use AppBundle\Entity\Crep\CrepEdd\CrepEdd;
+use AppBundle\Entity\Agent;
+use AppBundle\Entity\PersonneInterface;
 
 class AppExtension extends \Twig_Extension
 {
@@ -579,28 +581,9 @@ class AppExtension extends \Twig_Extension
         return $resultat;
     }
 
-    public static function identite($objet)
+    public static function identite(PersonneInterface $personne)
     {
-        $resultat = '';
-
-        if ($objet instanceof Utilisateur) {
-            /* @var $utilisateur Utilisateur */
-            $utilisateur = $objet;
-            $resultat = Util::twig_title($utilisateur->getCivilite().' '.$utilisateur->getPrenom()).' '.Util::twig_upper($utilisateur->getNom());
-        }
-
-        if ($objet instanceof Personne) {
-            /* @var $personne Personne */
-            $personne = $objet;
-
-            if ($personne->getNom()) {
-                $resultat = Util::twig_title($personne->getCivilite().' '.$personne->getPrenom()).' '.Util::twig_upper($personne->getNom());
-            } else {
-                $resultat = $personne->getEmail();
-            }
-        }
-
-        return $resultat;
+    	return Util::identite($personne);
     }
 
     public function escapeJs($html)
@@ -679,5 +662,32 @@ class AppExtension extends \Twig_Extension
     public function allNiveauPotentielEvolutionCrepMcc02()
     {
         return CrepMcc02::$niveauPotentielEvolution;
+    }
+
+    /**
+     * Retourne une chaine sous forme 
+     * M. Jeans MARTIN
+     * Dr. Jean Paul DE LA RUE
+     * Maître Frank DU MAINE
+     * @param Agent $agent
+     */
+    private function identitePersonne(Agent $agent){
+    	$result = '';
+    		 
+    	if($agent->getTitre()){
+    		$result .= Util::twig_title($agent->getTitre());
+    	}elseif ($agent->getCivilite()){
+    		$result .= Util::twig_title($agent->getCivilite());
+    	}
+
+    	if($agent->getPrenom()){
+    		$result .= ' '.Util::twig_title($agent->getPrenom());
+    	}
+    	
+    	if($agent->getNom()){
+    		$result .= ' '.Util::twig_upper($agent->getNom());
+    	}
+    	
+    	return $result;
     }
 }

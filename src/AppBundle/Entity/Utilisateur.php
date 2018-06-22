@@ -26,7 +26,7 @@ use AppBundle\Util\Util;
  *      )
  * })
  */
-class Utilisateur extends BaseUser implements GenericEntityInterface
+class Utilisateur extends BaseUser implements GenericEntityInterface, PersonneInterface
 {
     /**
      * @ORM\Id
@@ -63,6 +63,18 @@ class Utilisateur extends BaseUser implements GenericEntityInterface
      */
     protected $civilite = '';
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $titre;
+    
     /**
      * @ORM\Column(type="integer", name="nb_connexion_ko", nullable=true)
      */
@@ -123,9 +135,9 @@ class Utilisateur extends BaseUser implements GenericEntityInterface
     public function __construct()
     {
         parent::__construct();
-//     	$this->setPlainPassword($this->generatePassword());
         $this->nbConnexionKO = 0;
         $this->locked = false;
+        $this->setPasswordRequestedAt(new \DateTime());
     }
 
     /**
@@ -168,6 +180,18 @@ class Utilisateur extends BaseUser implements GenericEntityInterface
         return $this->civilite;
     }
 
+    public function getTitre()
+    {
+    	return $this->titre;
+    }
+    
+    public function setTitre($titre)
+    {
+    	$this->titre = $titre;
+    
+    	return $this;
+    }
+    
     /**
      * Get nbConnexionKO.
      *

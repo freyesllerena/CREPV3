@@ -103,6 +103,7 @@ class RlcManager
             // On lui ajoute le rôle RLC
             $utilisateur->addRole('ROLE_RLC');
             $utilisateur->setCivilite($rlc->getCivilite());
+            $utilisateur->setTitre($rlc->getTitre());
             $utilisateur->setNom($rlc->getNom());
             $utilisateur->setPrenom($rlc->getPrenom());
 

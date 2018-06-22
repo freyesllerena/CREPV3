@@ -53,6 +53,7 @@ class UtilisateurManager
         //pour la dev
         if ($this->defaultPassword) {
             $utilisateur->setPlainPassword($this->defaultPassword);
+            $utilisateur->setPasswordRequestedAt(new \DateTime());
             $utilisateur->setEnabled(true);
         }
 
@@ -87,6 +88,7 @@ class UtilisateurManager
     {
         // Mettre à jour les données utilisateur
         $utilisateur->setCivilite($agent->getCivilite())
+        			->setTitre($agent->getTitre())
                     ->setNom($agent->getNom())
                     ->setPrenom($agent->getPrenom());
 
@@ -118,6 +120,8 @@ class UtilisateurManager
                     $utilisateur->setPlainPassword(null);
                     $utilisateur->setPassword(null);
                 }
+                
+                $utilisateur->setPasswordRequestedAt(new \DateTime());
 
                 // Renvoyer le mail de confirmation de création de compte
                 $this->mailer->sendConfirmationEmailMessage($utilisateur);
@@ -140,6 +144,7 @@ class UtilisateurManager
             $nouvelUtilisateur = new Utilisateur();
             $nouvelUtilisateur
             ->setCivilite($agent->getCivilite())
+            ->setTitre($agent->getTitre())
             ->setPrenom($agent->getPrenom())
             ->setNom($agent->getNom())
             ->setEmail($agent->getEmail())
@@ -153,6 +158,8 @@ class UtilisateurManager
 
             $agent->setUtilisateur($nouvelUtilisateur);
 
+            $nouvelUtilisateur->setPasswordRequestedAt(new \DateTime());
+            
             $this->em->persist($nouvelUtilisateur);
             // 			$this->em->persist($agent);
 

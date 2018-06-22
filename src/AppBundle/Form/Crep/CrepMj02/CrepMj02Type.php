@@ -12,8 +12,11 @@ namespace AppBundle\Form\Crep\CrepMj02;
 
 use AppBundle\Entity\Crep;
 use AppBundle\Form\Crep\CrepType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CrepMj02Type extends CrepType
 {
@@ -29,7 +32,7 @@ class CrepMj02Type extends CrepType
 
         parent::buildForm($builder, $options);
 
-        $ministere = $crep->getAgent()->getCampagnePnc()->getMinistere();
+//        $ministere = $crep->getAgent()->getCampagnePnc()->getMinistere();
         $tableauNotesAgent = [];
 
         for($i=1 ; $i<=20 ; $i++){
@@ -38,13 +41,82 @@ class CrepMj02Type extends CrepType
 
         $builder
             ->add('nomNaissance', null, ['required' => true])
-            ->add('prenom')
+            ->add('nomMarital', null, ['required' => false])
+            ->add('prenom', null, ['required' => true])
+
+            ->add('titulaire', ChoiceType::class, [
+                'choices' => [
+                    'Titulaire' => 1,
+                    'Non titulaire' => 0,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
 
             ->add('grade', null, ['required' => false])
             ->add('corps', null, ['required' => false])
-//            ->add('posteOccupe', null, ['required' => false])
-//            ->add('affectation', null, ['required' => false])
 
+            ->add('posteOccupe', null, ['required' => true])
+            ->add('dateEntreePosteOccupe',
+                DateType::class,
+                array(
+                    'label' => false,
+                    'widget' => 'single_text',
+                    'input'  => 'datetime',
+                    'format' => 'dd/MM/yyyy',
+                    'required' => false,
+                )
+            )
+            ->add('activiteEncadrement', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => 1,
+                    'Non' => 0,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
+
+            ->add('nbAgentsEncadres', null, ['required' => false])
+            ->add('nbAgentsEncadresA', null, ['required' => false])
+            ->add('nbAgentsEncadresB', null, ['required' => false])
+            ->add('nbAgentsEncadresC', null, ['required' => false])
+            ->add('direction', null, ['required' => false])
+            ->add('departement', null, ['required' => false])
+            ->add('service', null, ['required' => false])
+
+            ->add('nomNaissanceShd', null, ['required' => true])
+            ->add('nomMaritalShd', null, ['required' => false])
+
+            ->add('prenomShd', null, ['required' => true])
+            ->add('posteOccupeShd', null, ['required' => true])
+
+            ->add('directionShd', null, ['required' => false])
+            ->add('departementShd', null, ['required' => false])
+            ->add('serviceShd', null, ['required' => false])
+
+            ->add('motifAbsenceEntretien', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('motifAbsenceAgent', ChoiceType::class, [
+                'choices' => [
+                    'non activité (durée de l\'absence)' => 0,
+                    'congés' => 1,
+                    'autres' => 2,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
+            ->add('dateEntretien',
+                DateType::class,
+                array(
+                    'label' => false,
+                    'widget' => 'single_text',
+                    'input'  => 'datetime',
+                    'format' => 'dd/MM/yyyy',
+                    'required' => false,
+                )
+            )
         ;
     }
 

@@ -1069,7 +1069,7 @@ class CrepMcc02 extends Crep
         $this->initialiserParent($agent, $em);
 
         $this->setPrenom($agent->getPrenom());
-        $defaultNomAgent = $agent->getNom() ?? $agent->getNomNaissance();
+        $defaultNomAgent = ($agent->getNom())? $agent->getNom() : $agent->getNomNaissance();
         $this->setNomUsage($defaultNomAgent);
 
         $this->setDateNaissance($agent->getDateNaissance());
@@ -1079,7 +1079,7 @@ class CrepMcc02 extends Crep
         $defaultNomShd = null;
         if ($agent->getShd()) {
             $this->setPrenomShd($agent->getShd()->getPrenom());
-            $defaultNomShd = $agent->getShd()->getNom() ?? $agent->getShd()->getNomNaissance();
+            $defaultNomShd = ($agent->getShd()->getNom())?  $agent->getShd()->getNom() : $agent->getShd()->getNomNaissance();
             $this->setNomUsageShd($defaultNomShd);
             $this->setCorpsShd($agent->getShd()->getCorps());
             $this->setGradeShd($agent->getShd()->getGrade());
