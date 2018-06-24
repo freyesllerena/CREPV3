@@ -31,6 +31,9 @@
     {% include 'crep/crepMj02/_include/edit/0/3.html.twig' %}
 {% endblock i03 %}
 
+{% block i1 %}
+    {% include 'crep/crepMj02/_include/edit/1/1.html.twig' %}
+{% endblock i1 %}
 
 
 
@@ -40,85 +43,6 @@
     <script src="{{ asset('js/chained.js') }}"></script>
     <script type="text/javascript">
 
-        $(document).ready(function() {
-
-            // Agent titulaire et agent non titulaire
-            var libelleCorps = $("#crep_mj02_corps");
-            var libelleGrade = $("#crep_mj02_grade");
-
-            isCacheBloc(libelleCorps, libelleGrade);
-
-            if ($("#crep_mj02_titulaire_0") && $("#crep_mj02_titulaire_1")) {
-                if ($("#crep_mj02_titulaire_0").attr('checked')) {
-                    isCacheBloc(libelleCorps, libelleGrade, false);
-                }
-            }
-
-            $("#crep_mj02_titulaire_0").on('ifChanged', function(){
-                isCacheBloc(libelleCorps, libelleGrade, false);
-            });
-
-            $("#crep_mj02_titulaire_1").on('ifChanged', function(){
-                isCacheBloc(libelleCorps, libelleGrade);
-                libelleCorps.val('');
-                libelleGrade.val('');
-            });
-
-            // Activité d'encdrement
-            var nbEncadres = $("#crep_mj02_nbAgentsEncadres");
-            var nbEncadresA = $("#crep_mj02_nbAgentsEncadresA");
-            var nbEncadresB = $("#crep_mj02_nbAgentsEncadresB");
-            var nbEncadresC = $("#crep_mj02_nbAgentsEncadresC");
-
-            isCacheBloc(nbEncadres, nbEncadresA);
-            isCacheBloc(nbEncadresB, nbEncadresC);
-
-            if ($("#crep_mj02_activiteEncadrement_0") && $("#crep_mj02_activiteEncadrement_1")) {
-                if ($("#crep_mj02_activiteEncadrement_0").attr('checked')) {
-                    isCacheBloc(nbEncadres, nbEncadresA, false);
-                    isCacheBloc(nbEncadresB, nbEncadresC, false);
-                }
-            }
-
-            $("#crep_mj02_activiteEncadrement_0").on('ifChanged', function(){
-                isCacheBloc(nbEncadres, nbEncadresA, false);
-                isCacheBloc(nbEncadresB, nbEncadresC, false);
-            });
-
-            $("#crep_mj02_activiteEncadrement_1").on('ifChanged', function(){
-                isCacheBloc(nbEncadres, nbEncadresA);
-                isCacheBloc(nbEncadresB, nbEncadresC);
-                nbEncadres.val('');
-                nbEncadresA.val('');
-                nbEncadresB.val('');
-                nbEncadresC.val('');
-            });
-
-        });
-
-        //Fonction permettant de cacher ou non un bloc selon un choix de button radio
-        function isCacheBloc(id1, id2 = false, isHide = true){
-            var label1 = id1.parent().parent().find('label');
-            if (id2) {
-                var label2 = id2.parent().parent().find('label');
-            }
-
-            if (isHide) {
-                label1.hide();
-                id1.hide();
-                if (id2) {
-                    label2.hide();
-                    id2.hide();
-                }
-            }else {
-                label1.show();
-                id1.show();
-                if (id2) {
-                    label2.show();
-                    id2.show();
-                }
-            }
-        }
 
 
     </script>

@@ -12,7 +12,9 @@ namespace AppBundle\Form\Crep\CrepMj02;
 
 use AppBundle\Entity\Crep;
 use AppBundle\Form\Crep\CrepType;
+use AppBundle\Form\ObjectifEvalueType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,10 +30,12 @@ class CrepMj02Type extends CrepType
     {
         /** @var Crep\CrepMj02\CrepMj02 $crep */
         $crep = $builder->getData();
+        $options['echelleObjectifEvalue'] = $crep::$echelleObjectifEvalue;
         $options['ministere'] = $crep->getAgent()->getCampagnePnc()->getMinistere();
 
         parent::buildForm($builder, $options);
 
+        $echelleObjectifEvalue = $options['echelleObjectifEvalue'];
 //        $ministere = $crep->getAgent()->getCampagnePnc()->getMinistere();
         $tableauNotesAgent = [];
 
@@ -116,6 +120,18 @@ class CrepMj02Type extends CrepType
                     'format' => 'dd/MM/yyyy',
                     'required' => false,
                 )
+            )
+
+            ->add(
+                'objectifsEvalues',
+                CollectionType::class,
+                [
+                    'entry_type' => ObjectifEvalueType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['echelleObjectifEvalue' => $echelleObjectifEvalue],
+                ]
             )
         ;
     }

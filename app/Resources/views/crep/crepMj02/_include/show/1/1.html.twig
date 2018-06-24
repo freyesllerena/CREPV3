@@ -1,0 +1,70 @@
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center" style='width:"60%"'>Rappel de l’objectif de l’année écoulée assigné à l’agent</th>
+                <th class="text-center" style='min-width:"100px";width:"10%"'>Degré de réalisation de cet  objectif</th>
+                <th class="text-center" style='width:"30%"'>Commentaires</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.objectifsEvalues.toArray() == null %}
+                    <tr>
+                        <td></td>
+                        <td>
+                            <i class="fa fa-square-o"></i> Atteint <br>
+                            <i class="fa fa-square-o"></i> Partiellement <br>
+                            <i class="fa fa-square-o"></i> Non atteint <br>
+                            <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                        </td>
+                        <td>
+                            <div>
+                                <label>selon l’agent :</label>
+                            </div>
+                            <div>
+                                <label>selon le supérieur :</label>
+                            </div>
+                        </td>
+                    </tr>
+            {% else %}
+                {% for objectif in crep.objectifsEvalues %}
+                    <tr>
+                        <td>{{ objectif.libelle | nl2br }}</td>
+                        <td>
+                            {% if objectif.resultatObtenu == 0 %}
+                                <i class="fa fa-check-square-o"></i> Atteint <br>
+                                <i class="fa fa-square-o"></i> Partiellement <br>
+                                <i class="fa fa-square-o"></i> Non atteint <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                            {% elseif objectif.resultatObtenu == 1 %}
+                                <i class="fa fa-square-o"></i> Atteint <br>
+                                <i class="fa fa-check-square-o"></i> Partiellement <br>
+                                <i class="fa fa-square-o"></i> Non atteint <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                            {% elseif objectif.resultatObtenu == 2 %}
+                                <i class="fa fa-square-o"></i> Atteint <br>
+                                <i class="fa fa-square-o"></i> Partiellement <br>
+                                <i class="fa fa-check-square-o"></i> Non atteint <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                            {% elseif objectif.resultatObtenu == 3 %}
+                                <i class="fa fa-square-o"></i> Atteint <br>
+                                <i class="fa fa-square-o"></i> Partiellement <br>
+                                <i class="fa fa-square-o"></i> Non atteint <br>
+                                <i class="fa fa-check-square-o"></i> Devenu sans objet <br>
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {{ objectif.indicateurs | nl2br }}
+                            {{ objectif.resultat | nl2br }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+{% form_theme form 'crep/crepMj02/Form/collections.form.html.twig' %}
+
+<div class="row" id="objectifsEvaluesCollection" data-prototype="{{ form_widget(form.objectifsEvalues.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Objectifs <span style="color:red;">*</span></th>
+                <th class="text-center" width="180px">Réalisation</th>
+                <th class="text-center">Commentaires</th>
+                <th width="100px"><br></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in form.objectifsEvalues %}
+                {{ form_widget(objectif) }}
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

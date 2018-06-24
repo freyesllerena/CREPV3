@@ -23,6 +23,13 @@ use AppBundle\Util\Converter;
  */
 class CrepMj02 extends Crep
 {
+    public static $echelleObjectifEvalue = [
+        'Atteint' => 0,
+        'Partiellement' => 1,
+        'Non atteint' => 2,
+        'Devenu sans objet' => 3,
+    ];
+
     /**
      * @ORM\Column(type="string")
      * @Assert\Length(
