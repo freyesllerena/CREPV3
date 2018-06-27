@@ -1,0 +1,50 @@
+{% use "Form/App_bootstrap_3_horizontal_layout.html.twig" %}
+
+{% block _crep_mj02_objectifsEvalues_entry_widget %}
+    <tr>
+        <td>{{ form_row(form.libelle, {'label': false, 'attr': {'class': 'fieldCollection', 'style': 'width:
+        200%; min-height: 130px;'}}) }}
+        </td>
+        <td>{{ form_row(form.resultatObtenu, {
+                'label': false,
+                'attr': {'class': 'fieldCollection', 'style': 'min-width: 165px;'},
+                'required': false})
+            }}
+        </td>
+        <td>
+            {{ form_label(form.indicateurs, 'selon l\’agent :', {
+                'label_attr': {'style': 'width: 158%;text-align: left;'},
+                'required': false
+            }) }}
+            {{ form_row(form.indicateurs, {
+                'attr': {'class': 'fieldCollection', 'style': 'width: 225%; min-height: 70px;'},
+                'required': false})
+            }}
+            {{ form_label(form.indicateurs, 'selon le supérieur :', {
+                'label_attr': {'style': 'width: 158%;text-align: left;'},
+                'required': false
+            }) }}
+            {{ form_row(form.resultat, {
+                'attr': {'class': 'fieldCollection', 'style': 'width: 225%; min-height: 70px;'},
+                'required': false})
+            }}
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{###################### Fin collecions ################################}
+
+{# Redéfinition du bloc from_errors aligner à gauche les erreurs de validation, en ajoutant style="text-align: left;"   #}
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        <div class="has-error">
+            {%- for error in errors -%}
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+                </div>
+            {%- endfor -%}
+        </div>
+
+    {%- endif %}
+{%- endblock form_errors %}

@@ -1,0 +1,36 @@
+{% extends 'index.base.html.twig' %}
+{% import "macro/app.html.twig" as macro %}
+
+{% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block frameTitle %}Campagnes{% endblock frameTitle %}
+{% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
+{% block pageTitle %}Campagnes{% endblock pageTitle %}
+
+
+{% block content %}
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+        		<div class="x_panel panel_green">
+					<div class="x_title">
+                    	<h2>Chargement de la population d'agents<small></small></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    	</ul>
+                    	<div class="clearfix"></div>
+                  	</div>
+                  
+              		<div class="x_content">
+                    	<h5>
+                    		<strong>
+                    			Chargement en cours ...<br>
+                    			Veuillez recharger la page ultérieurement.<br>
+                    		</strong>
+                    	</h5>
+					</div>
+				</div><!--/. x_panel panel_green -->
+   			</div>
+		</div>
+   
+{% endblock content%}

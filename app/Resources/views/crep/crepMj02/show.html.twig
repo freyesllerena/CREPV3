@@ -1,6 +1,6 @@
 {% extends "crep/crepMj02/mj02.base.html.twig" %}
-{#{% block accueil %} {% endblock %}#}
-{#{% block campagne %} active {% endblock %}#}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
 {% block content %}
 
     {{ block('alertAhNonIdentifie') }}
@@ -30,5 +30,10 @@
 {% endblock i03 %}
 
 {% block i1 %}
-    {% include 'crep/crepMj02/_include/show/1/1.html.twig' %}
+ 
+    {% include 'crep/crepMj02/_include/show/i/1.html.twig' %}
 {% endblock i1 %}
+
+{% block i2 %}
+    {% include 'crep/crepMj02/_include/show/ii/1.html.twig' %}
+{% endblock i2 %}

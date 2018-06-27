@@ -121,7 +121,6 @@ class CrepMj02Type extends CrepType
                     'required' => false,
                 )
             )
-
             ->add(
                 'objectifsEvalues',
                 CollectionType::class,

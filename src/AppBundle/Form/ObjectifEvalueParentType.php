@@ -30,7 +30,7 @@ class ObjectifEvalueParentType extends AbstractType
                             'maxlength' => '4096',
                     ),
             ))
-            ->add('resultat', null, array(
+            ->add('resultat', TextareaType::class, array(
                     'attr' => array(
                             'class' => 'fieldCollection',
                             'maxlength' => '4096',

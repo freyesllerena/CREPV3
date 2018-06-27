@@ -23,39 +23,15 @@ class CrepMcc02FormationType extends AbstractType
         )
             ->add('commentaires')
             ->add('demandeeAgent', CheckboxType::class, [
-//                'choices' => [
-//                    'Oui' => 1,
-//                    'Non' => 0,
-//                ],
-////                'expanded' => false,
-//                'multiple' => false,
                 'required' => false,
             ])
             ->add('avisShd', CheckboxType::class, [
-//                'choices' => [
-//                    'Oui' => 1,
-//                    'Non' => 0,
-//                ],
-//                'expanded' => false,
-//                'multiple' => false,
                 'required' => false,
             ])
             ->add('propositionAh', CheckboxType::class, [
-//                'choices' => [
-//                    'Oui' => 1,
-//                    'Non' => 0,
-//                ],
-//                'expanded' => false,
-//                'multiple' => false,
                 'required' => false,
             ])
             ->add('cpf', CheckboxType::class, [
-//                'choices' => [
-//                    'Oui' => 1,
-//                    'Non' => 0,
-//                ],
-//                'expanded' => false,
-//                'multiple' => false,
                 'required' => false,
             ])
             ->add('echeance', ChoiceType::class, [

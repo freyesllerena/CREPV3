@@ -1,0 +1,119 @@
+<br>
+{% set globalObjectifs00 = false %}
+{% set globalObjectifs01 = false %}
+{% set globalObjectifs02 = false %}
+{% set globalObjectifs03 = false %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 50%">Rappel de l’objectif de l’année écoulée assigné à l’agent</th>
+                <th class="text-center" style="width: 20%">Degré de réalisation de cet  objectif</th>
+                <th class="text-center" style="width: 20%">Commentaires</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.objectifsEvalues.toArray() == null %}
+                    <tr>
+                        <td></td>
+                        <td>
+                            <i class="fa fa-square-o"></i> Atteint <br>
+                            <i class="fa fa-square-o"></i> Partiellement <br>
+                            <i class="fa fa-square-o"></i> Non atteint <br>
+                            <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                        </td>
+                        <td>
+                            <div>
+                                <label>selon l’agent :</label>
+                            </div>
+                            <div>
+                                <label>selon le supérieur :</label>
+                            </div>
+                        </td>
+                    </tr>
+            {% else %}
+                {% for objectif in crep.objectifsEvalues %}
+                    <tr>
+                        <td>{{ objectif.libelle | nl2br }}</td>
+                        <td>
+                            {% if objectif.resultatObtenu == 0 %}
+                                <i class="fa fa-check-square-o"></i> Atteint <br>
+                                <i class="fa fa-square-o"></i> Partiellement <br>
+                                <i class="fa fa-square-o"></i> Non atteint <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                                {% set globalObjectifs00 = true %}
+                            {% elseif objectif.resultatObtenu == 1 %}
+                                <i class="fa fa-square-o"></i> Atteint <br>
+                                <i class="fa fa-check-square-o"></i> Partiellement <br>
+                                <i class="fa fa-square-o"></i> Non atteint <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                                {% set globalObjectifs01 = true %}
+                            {% elseif objectif.resultatObtenu == 2 %}
+                                <i class="fa fa-square-o"></i> Atteint <br>
+                                <i class="fa fa-square-o"></i> Partiellement <br>
+                                <i class="fa fa-check-square-o"></i> Non atteint <br>
+                                <i class="fa fa-square-o"></i> Devenu sans objet <br>
+                                {% set globalObjectifs02 = true %}
+                            {% elseif objectif.resultatObtenu == 3 %}
+                                <i class="fa fa-square-o"></i> Atteint <br>
+                                <i class="fa fa-square-o"></i> Partiellement <br>
+                                <i class="fa fa-square-o"></i> Non atteint <br>
+                                <i class="fa fa-check-square-o"></i> Devenu sans objet <br>
+                                {% set globalObjectifs03 = true %}
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            <label>selon l’agent :</label>
+                            {{ objectif.indicateurs | nl2br }}<br>
+                            <label>selon le supérieur :</label>
+                            {{ objectif.resultat | nl2br }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label class="col-md-5 col-sm-5 col-xs-12">Globalement, les objectifs sont :</label>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-2 col-sm-2 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if globalObjectifs00 %}checked="checked"{% endif %}
+                >&nbsp;&nbsp;Atteints
+            </label>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if globalObjectifs01 %}checked="checked"{% endif %}
+                >&nbsp;&nbsp;Partiellement
+            </label>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if globalObjectifs02 %}checked="checked"{% endif %}
+                >&nbsp;&nbsp;Non atteints
+            </label>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                       {% if globalObjectifs03 %}checked="checked"{% endif %}
+                >&nbsp;&nbsp;Devenus sans objet
+            </label>
+        </div>
+    </div>
+</div>
