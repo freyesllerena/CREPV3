@@ -1,6 +1,13 @@
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-    
 crep:
     resource: "@AppBundle/Resources/config/routing.yml"
     prefix:   /
+
+# Surcharge de la route fos_user_resetting_reset pour rediriger vers l'accueil
+# Si le token n'existe pas
+utilisateur_resetting_reset:
+    path:     /resetting/reset/{token}
+    defaults: { _controller: "AppBundle:Resetting:reset" }
+    methods:  [GET, POST]
+            
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"    

@@ -7,11 +7,15 @@ use Knp\Snappy\Pdf;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Entity\Crep;
-use AppBundle\Entity\CrepMindef01;
 use TCPDF;
 use Doctrine\ORM\Tools\SchemaTool;
 use AppBundle\Entity\ModeleCrep;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Utilisateur;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 //CREP7\vendor\tecnickcom\tcpdf\examples\tcpdf_include.php
 //require_once('C:\Users\kben-daali-adc\Applications\XAMPP7\htdocs\CREP7\vendor\tecnickcom\tcpdf\examples\tcpdf_include.php');
@@ -307,5 +311,15 @@ class DefaultController extends Controller
         //============================================================+
         // END OF FILE
         //============================================================+
+    }
+    
+    /**
+     * @ Cache(lastModified="utilisateur.getDateModification()", Etag="utilisateur.getId() ~ utilisateur.getDateModification().getTimestamp()")
+     */
+    public function cacheAction(Request $request, Utilisateur $utilisateur, EntityManagerInterface $em){
+    	$time = $em->getRepository('AppBundle:Utilisateur')->test();
+    	return new Response($time);
+    	
+    	return $this->render('vide.html.twig');
     }
 }

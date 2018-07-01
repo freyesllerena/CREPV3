@@ -14,6 +14,7 @@ use AppBundle\Entity\Brhp;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use AppBundle\Entity\CampagneBrhp;
 
 class CampagnePncVoter extends Voter
 {
@@ -230,10 +231,14 @@ class CampagnePncVoter extends Voter
 
     private function peutSupprimerPopulation(CampagnePnc $campagnePnc, Utilisateur $utilisateur, $roleUtilisateurSession)
     {
-        if (!$campagnePnc->getDiffusee()
-            && in_array($roleUtilisateurSession, ['ROLE_ADMIN', 'ROLE_ADMIN_MIN'])) {
-            return true;
-        }
+    	// On compte le nombre de campagnes BRHP ayant un statut différent de CREEE
+    	// Si une des campagnes Brhp a déjà été ouverte aux N+1 
+    	//  => le fichier de popultaion ne peut plus être supprimé
+    	$nbCampgnesBrhp = $this->em->getRepository(CampagneBrhp::class)->countCampagnesByNotStatut($campagnePnc, EnumStatutCampagne::CREEE);
+    	
+    	if($nbCampgnesBrhp == 0 && in_array($roleUtilisateurSession, ['ROLE_ADMIN', 'ROLE_ADMIN_MIN'])){
+    		return true;
+    	}
 
         return false;
     }

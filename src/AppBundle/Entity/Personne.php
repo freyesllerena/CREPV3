@@ -16,7 +16,9 @@ abstract class Personne extends GenericEntity implements PersonneInterface
 {
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Choice(choices = {"m.", "mme"}, message = "Civilité non valide. Valeurs acceptées : 'M.', 'Mme'")
+     * @Assert\Choice(	choices = {"m.", "mme"}, 
+     * 					message = "La civilité n'est pas valide. Valeurs acceptées : 'M.', 'Mme'"
+     * )
      */
     protected $civilite;
 
@@ -27,7 +29,7 @@ abstract class Personne extends GenericEntity implements PersonneInterface
      *
      * @Assert\Length(
      *      max = 30,
-     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     *      maxMessage = "Le titre de l'agent doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $titre;
@@ -39,7 +41,7 @@ abstract class Personne extends GenericEntity implements PersonneInterface
      *      min = 2,
      *      max = 50,
      *      minMessage = "Le nom doit faire au moins {{ limit }} caractères",
-     *      maxMessage = "Le nom ne doit pas faire plus de {{ limit }} caractères"
+     *      maxMessage = "Le nom ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $nom; // nom usuel
@@ -51,18 +53,27 @@ abstract class Personne extends GenericEntity implements PersonneInterface
      *      min = 2,
      *      max = 50,
      *      minMessage = "Le prénom doit faire au moins {{ limit }} caractères",
-     *      maxMessage = "Le prénom ne doit pas faire plus de {{ limit }} caractères"
+     *      maxMessage = "Le prénom ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $prenom;
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Email obligatoire", groups={"Default", "importCSV"})
+     * 
+     * @Assert\NotBlank(message = "Email obligatoire"
+     * )
+     * 
      * @Assert\Email(
      *     message = "{{ value }} n'est pas un email valide",
-     *     checkMX = false,
-     *     groups={"Default", "importCSV"}
+     *     checkMX = false
+     * )
+     * 
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 100,
+     *      minMessage = "L'email doit faire au moins {{ limit }} caractères",
+     *      maxMessage = "L'email ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $email;
@@ -74,8 +85,10 @@ abstract class Personne extends GenericEntity implements PersonneInterface
 
     public function setCivilite($civilite)
     {
-        $this->civilite = $civilite ? strtolower($civilite) : $civilite;
-
+    	if ($civilite) {
+    		$this->civilite = strtolower($civilite);
+    	}
+    	
         return $this;
     }
 
@@ -122,15 +135,15 @@ abstract class Personne extends GenericEntity implements PersonneInterface
 
     public function setEmail($email)
     {
-        if ($email) {
-            $this->email = strtolower($email);
-        }
-
+         if ($email) {
+             $this->email = strtolower($email);
+         }
+        
         return $this;
     }
 
     /**
-     * @Assert\Callback (groups={"Default", "importCSV"})
+     * @Assert\Callback ()
      */
     public function validatePersonne(ExecutionContextInterface $context, $payload)
     {

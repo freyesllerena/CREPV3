@@ -334,18 +334,20 @@ class CampagneBrhpController extends Controller
         //On récupère l'ensemble des agents ayant un CREP finalisé pour un rôle (BRHP, N+1 ou N+2) donné
         $agentsAyantCrepFinalise = $agentRepository->getAgentsAyantCrepFinalise($campagneBrhp, $role, $evaluateur);
 
-        $zip = $crepManager->exporterCrepsFinalises($agentsAyantCrepFinalise);
+        return $crepManager->exporterCrepsFinalises($agentsAyantCrepFinalise);
+        
+//         $zip = $crepManager->exporterCrepsFinalises($agentsAyantCrepFinalise);
 
-        $response = new Response(file_get_contents($zip));
+//         $response = new Response(file_get_contents($zip));
 
-        // adding headers
-        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Export_CREPs_finalises.zip');
-        $response->headers->set('Content-Type', 'application/zip; charset=utf-8');
-        $response->headers->set('Pragma', 'public');
-        $response->headers->set('Content-Disposition', $dispositionHeader);
-        $response->headers->set('Set-Cookie', 'fileDownload=true; path=/');
+//         // adding headers
+//         $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Export_CREPs_finalises.zip');
+//         $response->headers->set('Content-Type', 'application/zip; charset=utf-8');
+//         $response->headers->set('Pragma', 'public');
+//         $response->headers->set('Content-Disposition', $dispositionHeader);
+//         $response->headers->set('Set-Cookie', 'fileDownload=true; path=/');
 
-        return $response;
+//         return $response;
     }
 
     /**

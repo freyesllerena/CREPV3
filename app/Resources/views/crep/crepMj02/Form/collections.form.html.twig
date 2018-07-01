@@ -2,8 +2,13 @@
 
 {% block _crep_mj02_objectifsEvalues_entry_widget %}
     <tr>
-        <td>{{ form_row(form.libelle, {'label': false, 'attr': {'class': 'fieldCollection', 'style': 'width:
-        200%; min-height: 130px;'}}) }}
+        <td>{{ form_row(form.libelle, {
+                'label': false,
+                'attr': {
+                    'class': 'fieldCollection',
+                    'style': 'width: 200%; min-height: 130px;'}
+                })
+            }}
         </td>
         <td>{{ form_row(form.resultatObtenu, {
                 'label': false,
@@ -27,6 +32,44 @@
             {{ form_row(form.resultat, {
                 'attr': {'class': 'fieldCollection', 'style': 'width: 225%; min-height: 70px;'},
                 'required': false})
+            }}
+        </td>
+        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+    </tr>
+{% endblock %}
+
+{% block _crep_mj02_competencesJudiciaires_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
+{% block _crep_mj02_competencesEncadrements_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
+{% block _crep_mj02_objectifsFuturs_entry_widget %}
+    <tr>
+        <td>{{ form_row(form.libelle, {
+                'label': false,
+                'attr': {
+                    'class': 'fieldCollection',
+                    'style': 'width: 200%;'}
+                })
+            }}
+        </td>
+        <td>{{ form_row(form.echeance, {
+                'label': false,
+                'attr': {'class': 'fieldCollection'}}) }}
+        </td>
+        <td>{{ form_row(form.indicateurs, {
+                'label': false,
+                'attr': {
+                    'class': 'fieldCollection',
+                    'style': 'width: 200%;'}
+                })
             }}
         </td>
         <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>

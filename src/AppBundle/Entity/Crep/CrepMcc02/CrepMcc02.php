@@ -608,7 +608,7 @@ class CrepMcc02 extends Crep
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA")
      */
     protected $dateEntreePosteOccupe;
 

@@ -43,12 +43,8 @@
                 
                 <div class="x_content row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h2>1.1 Bilan des objectifs de l’année écoulée</h2>
                         {% block i1 %}
                         {% endblock i1 %}
-                        <h3>1.2 Appréciation globale sur la réalisation des objectifs de l’année écoulée</h3>
-                        {% block i2 %}
-                        {% endblock i2 %}
                     </div>
                 </div>
             </div>
@@ -69,17 +65,94 @@
                 <div class="x_content row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <h2>2.1 Critères généraux d’appréciation des agents de la protection judicaire de la jeunesse</h2>
-                        <h3>Dans quelle mesure l’agent a-t-il satisfait aux exigences suivantes ? </h3>
+                        <h4>Dans quelle mesure l’agent a-t-il satisfait aux exigences suivantes ? </h4>
                         {% block ii1 %}
                         {% endblock ii1 %}
-                        {#<h3>1.2 Appréciation globale sur la réalisation des objectifs de l’année écoulée</h3>#}
-                        {#{% block i2 %}#}
-                        {#{% endblock i2 %}#}
+                        <h3>2.2 Critères d’appréciation propres aux agents ayant des fonctions d’encadrement</h3>
+                        {% block ii2 %}
+                        {% endblock ii2 %}
+                        <h3>2.3 Observations sur l’ensemble des critères évalués au 2.1 et/ou 2.2</h3>
+                        {% block ii3 %}
+                        {% endblock ii3 %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>III. OBJECTIFS ASSIGNÉS À L’AGENT POUR L’ANNÉE A VENIR</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        {% block iii1 %}
+                        {% endblock iii1 %}
+                        {% block iii2 %}
+                        {% endblock iii2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>IV. ACQUIS DE L’EXPÉRIENCE PROFESSIONNELLE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        {% block iv1 %}
+                        {% endblock iv1 %}
+                        {% block iv2 %}
+                        {% endblock iv2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>V. PERSPECTIVES D’ÉVOLUTION PROFESSIONNELLE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h2>5.1 Capacité à remplir ou à occuper des fonctions d’un niveau supérieur :</h2>
+                        {% block v1 %}
+                        {% endblock v1 %}
+                        <h2>5.2 Mobilité fonctionnelle ou géographique envisagée  par l’agent :</h2>
+                        {% block v2 %}
+                        {% endblock v2 %}
+                        <h2>5.3 Souhait de l’agent de rencontrer un Conseiller mobilité et carrière ?</h2>
+                        {% block v3 %}
+                        {% endblock v3 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 
     

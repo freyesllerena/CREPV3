@@ -39,11 +39,12 @@ parameters:
     app.session_timeout: @@APPLI_SESSION_TIMEOUT@@ # en secondes
     
     fichier.certificat: '/produit/httpd-esteve/docroot/ESTEVE/install/certificat/certificat.crt'
-    app.maxFileSize: 12 # Taille maximale des fichiers uploades en Mo
+    app.maxFileSize: 60 # Taille maximale des fichiers uploades en Mo
     app.default_password: @@APPLI_DEFAULT_PASSWORD@@
     app.encoders.algorithm: @@APPLI_ENCODERS_ALGORITHM@@
     app.bcrypt_cost: @@APPLI_BCRYPT_COST@@
     app.rep_scripts: '@@HTTP_REP_EXPLOIT_AS@@/scripts'
     app.cookie_secure: true
     app.cookie_httponly: true
+    framework.session.handler_id: session.handler.native_file   # session.handler.native_file ou snc_redis.session.handler
     

@@ -23,6 +23,7 @@ class AppKernel extends Kernel
         	new WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle(),
         	new Tetranz\Select2EntityBundle\TetranzSelect2EntityBundle(),
         	new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+        	new Snc\RedisBundle\SncRedisBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

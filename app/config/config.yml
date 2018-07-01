@@ -27,7 +27,7 @@ framework:
     trusted_hosts:   ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
+        handler_id:  "%framework.session.handler_id%"
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
         cookie_lifetime:    0 # durée max d'activité / cookie_lifetime: 0 => cookie expiré à  la fermeture du navigateur
         gc_maxlifetime: 36000 # (10 heures en seconde) gc sera remis à zéro à chaque activité de l'utilisateur
@@ -86,12 +86,11 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-        auto_mapping: true
-        metadata_cache_driver: apcu
-        query_cache_driver: apcu
-        result_cache_driver: apcu
-        second_level_cache:
-            enabled: true
+#        metadata_cache_driver: apcu
+#        query_cache_driver: apcu
+#        result_cache_driver: apcu
+#        second_level_cache:
+#            enabled: true
 
 # Swiftmailer Configuration
 
@@ -128,7 +127,7 @@ fos_user:
 #        mailer: fos_user.mailer.default
         mailer: AppBundle\Service\AppMailer
     resetting:
-        token_ttl: 3600
+        token_ttl: 604800 # duree de vie du token 604800 = 1 semaine
         form:
             validation_groups:  [ResetPassword, Default]
         email:

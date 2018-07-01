@@ -9,6 +9,7 @@
 
 namespace AppBundle\Entity\Crep\CrepMj02;
 
+use AppBundle\Entity\ObjectifFutur;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Agent;
@@ -28,6 +29,15 @@ class CrepMj02 extends Crep
         'Partiellement' => 1,
         'Non atteint' => 2,
         'Devenu sans objet' => 3,
+    ];
+
+    public static $niveauCompetence = [
+        'Excellent' => 0,
+        'Très bon' => 1,
+        'Bon' => 2,
+        'Convenable' => 3,
+        'Insuffisant' => 4,
+        'Très insuffisant' => 5,
     ];
 
     /**
@@ -126,7 +136,7 @@ class CrepMj02 extends Crep
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA")
      */
     protected $dateEntreePosteOccupe;
 
@@ -198,7 +208,6 @@ class CrepMj02 extends Crep
      * )
      */
     protected $serviceShd;
-
 
     /**
      * @var int
@@ -312,7 +321,7 @@ class CrepMj02 extends Crep
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA")
      */
     protected $dateEntretien;
 
@@ -326,6 +335,102 @@ class CrepMj02 extends Crep
      * )
      */
     protected $nomUsageShd;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMj02\CrepMj02CompetenceJudiciaire", mappedBy="crep",
+     *     cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $competencesJudiciaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMj02\CrepMj02CompetenceEncadrement", mappedBy="crep",
+     *     cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $competencesEncadrements;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $observationsShd;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(type="text")
+     *
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $observationsAgentNotif;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $objectifsService;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $acquisExperiencePro;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     *
+     */
+    protected $vae;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
+     */
+    protected $commentaireVae;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $capacitesDecisions;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $souhaitEntretienCarriere;
 
 
     // ############################################################################################################
@@ -355,11 +460,43 @@ class CrepMj02 extends Crep
 //            $this->setDateEntreePosteOccupeShd($agent->getShd()->getDateEntreePosteOccupe());
         }
 
+        // Initialisatiuon des compétences liées à la protection judiciaire de la jeuness
+        $competenceJudiciaire = new CrepMj02CompetenceJudiciaire();
+        $competenceJudiciaire->setLibelle('Capacité à s’adapter aux exigences du poste et au contexte professionnel');
+        $this->addCompetencesJudiciaire($competenceJudiciaire);
+        $competenceJudiciaire = new CrepMj02CompetenceJudiciaire();
+        $competenceJudiciaire->setLibelle('Participation à la vie institutionnelle et implication dans les projets du service');
+        $this->addCompetencesJudiciaire($competenceJudiciaire);
+        $competenceJudiciaire = new CrepMj02CompetenceJudiciaire();
+        $competenceJudiciaire->setLibelle('Autonomie et sens de l’organisation');
+        $this->addCompetencesJudiciaire($competenceJudiciaire);
+        $competenceJudiciaire = new CrepMj02CompetenceJudiciaire();
+        $competenceJudiciaire->setLibelle('Capacité à travailler en équipe et capacité à coopérer avec les partenaires professionnels');
+        $this->addCompetencesJudiciaire($competenceJudiciaire);
+        $competenceJudiciaire = new CrepMj02CompetenceJudiciaire();
+        $competenceJudiciaire->setLibelle('Contribution à l’action éducative');
+        $this->addCompetencesJudiciaire($competenceJudiciaire);
+        $competenceJudiciaire = new CrepMj02CompetenceJudiciaire();
+        $competenceJudiciaire->setLibelle('Autre élément d’appréciation, le cas échéant (exemples : délégation spécifique, assistant ou conseiller de prévention en matière de santé, sécurité au travail, tuteur…)');
+        $this->addCompetencesJudiciaire($competenceJudiciaire);
+
+        // Initialisatiuon des compétences liées à l'encadrement
+        $competenceEncadrement = new CrepMj02CompetenceEncadrement();
+        $competenceEncadrement->setLibelle('Pilotage de la politique de la direction de la protection judiciaire de la jeunesse ou suivi de son application dans les services et établissements');
+        $this->addCompetencesEncadrement($competenceEncadrement);
+        $competenceEncadrement = new CrepMj02CompetenceEncadrement();
+        $competenceEncadrement->setLibelle('Contribution à la bonne organisation du service et participation à la politique des ressources humaines');
+        $this->addCompetencesEncadrement($competenceEncadrement);
+        $competenceEncadrement = new CrepMj02CompetenceEncadrement();
+        $competenceEncadrement->setLibelle('Qualités managériales et relationnelles');
+        $this->addCompetencesEncadrement($competenceEncadrement);
     }
 
     public function __construct()
     {
         parent::init();
+        $this->competencesJudiciaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->competencesEncadrements = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -426,13 +563,21 @@ class CrepMj02 extends Crep
     }
 
 
-
-
-
-
     public function confidentialisationChampsShd()
     {
-        // TODO: Implement confidentialisationChampsShd() method.
+        /** @var CrepMj02CompetenceJudiciaire $competenceJudiciaire */
+        foreach ($this->competencesJudiciaires as $competenceJudiciaire) {
+            $competenceJudiciaire->setNiveauAcquis(null);
+        }
+        /** @var CrepMj02CompetenceEncadrement $competenceEncadrement */
+        foreach ($this->competencesEncadrements as $competenceEncadrement) {
+            $competenceEncadrement->setNiveauAcquis(null);
+        }
+        /** @var  ObjectifFutur $objectif */
+        foreach ($this->getObjectifsFuturs() as $objectif) {
+            $this->removeObjectifsFutur($objectif);
+        }
+        $this->setMobiliteGeographique(null);
     }
 
     public function confidentialisationChampsAgent()
@@ -866,4 +1011,208 @@ class CrepMj02 extends Crep
     {
         $this->dateEntretien = $dateEntretien;
     }
+
+    /**
+     * Add competenceJudiciaire
+     *
+     * @param CrepMj02CompetenceJudiciaire $competenceJudiciaire
+     *
+     * @return CrepMj02
+     */
+    public function addCompetencesJudiciaire(CrepMj02CompetenceJudiciaire $competenceJudiciaire)
+    {
+        $this->competencesJudiciaires[] = $competenceJudiciaire;
+        $competenceJudiciaire->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove competenceJudiciaire
+     *
+     * @param CrepMj02CompetenceJudiciaire $competenceJudiciaire
+     */
+    public function removeCompetencesJudiciaire(CrepMj02CompetenceJudiciaire $competenceJudiciaire)
+    {
+        $this->competencesJudiciaires->removeElement($competenceJudiciaire);
+        $competenceJudiciaire->setCrep(null);
+    }
+
+    /**
+     * Get competencesJudiciaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompetencesJudiciaires()
+    {
+        return $this->competencesJudiciaires;
+    }
+
+    /**
+     * Add competenceEncadrement
+     *
+     * @param CrepMj02CompetenceEncadrement $competenceEncadrement
+     *
+     * @return CrepMj02
+     */
+    public function addCompetencesEncadrement(CrepMj02CompetenceEncadrement $competenceEncadrement)
+    {
+        $this->competencesEncadrements[] = $competenceEncadrement;
+        $competenceEncadrement->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove competenceEncadrement
+     *
+     * @param CrepMj02CompetenceEncadrement $competenceEncadrement
+     */
+    public function removeCompetencesEncadrement(CrepMj02CompetenceEncadrement $competenceEncadrement)
+    {
+        $this->competencesEncadrements->removeElement($competenceEncadrement);
+        $competenceEncadrement->setCrep(null);
+    }
+
+    /**
+     * Get competencesEncadrements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompetencesEncadrements()
+    {
+        return $this->competencesEncadrements;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObservationsAgentNotif()
+    {
+        return $this->observationsAgentNotif;
+    }
+
+    /**
+     * @param $observationsAgentNotif
+     * @return $this
+     */
+    public function setObservationsAgentNotif($observationsAgentNotif)
+    {
+        $this->observationsAgentNotif = $observationsAgentNotif;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObservationsShd()
+    {
+        return $this->observationsShd;
+    }
+
+    /**
+     * @param string $observationsShd
+     */
+    public function setObservationsShd($observationsShd)
+    {
+        $this->observationsShd = $observationsShd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectifsService()
+    {
+        return $this->objectifsService;
+    }
+
+    /**
+     * @param string $objectifsService
+     */
+    public function setObjectifsService($objectifsService)
+    {
+        $this->objectifsService = $objectifsService;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAcquisExperiencePro()
+    {
+        return $this->acquisExperiencePro;
+    }
+
+    /**
+     * @param string $acquisExperiencePro
+     */
+    public function setAcquisExperiencePro($acquisExperiencePro)
+    {
+        $this->acquisExperiencePro = $acquisExperiencePro;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVae()
+    {
+        return $this->vae;
+    }
+
+    /**
+     * @param bool $vae
+     */
+    public function setVae($vae)
+    {
+        $this->vae = $vae;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommentaireVae()
+    {
+        return $this->commentaireVae;
+    }
+
+    /**
+     * @param string $commentaireVae
+     */
+    public function setCommentaireVae($commentaireVae)
+    {
+        $this->commentaireVae = $commentaireVae;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCapacitesDecisions()
+    {
+        return $this->capacitesDecisions;
+    }
+
+    /**
+     * @param string $capacitesDecisions
+     */
+    public function setCapacitesDecisions($capacitesDecisions)
+    {
+        $this->capacitesDecisions = $capacitesDecisions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSouhaitEntretienCarriere()
+    {
+        return $this->souhaitEntretienCarriere;
+    }
+
+    /**
+     * @param bool $souhaitEntretienCarriere
+     */
+    public function setSouhaitEntretienCarriere($souhaitEntretienCarriere)
+    {
+        $this->souhaitEntretienCarriere = $souhaitEntretienCarriere;
+    }
+
 }

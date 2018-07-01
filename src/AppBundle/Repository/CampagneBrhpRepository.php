@@ -210,4 +210,24 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+    
+    /**
+     * @return nombre de camapgnes Brhp ayant le statut différent de celui passé en paramètre
+     * @param CampagnePnc $campagnePnc
+     * @param EnumStatutCampagne $statut
+     */
+    public function countCampagnesByNotStatut(CampagnePnc $campagnePnc, $statut){
+
+    	$qb = $this->createQueryBuilder('campagneBrhp');
+    	
+    	$qb->select('COUNT(campagneBrhp.id)')
+    	->leftJoin('campagneBrhp.campagneRlc', 'campagneRlc')
+    	->leftJoin('campagneRlc.campagnePnc', 'campagnePnc')
+    	->where('campagnePnc = :CAMPAGNE_PNC')
+    	->andWhere('campagneBrhp.statut <> :STATUT')
+    	->setParameter('STATUT', $statut)
+    	->setParameter('CAMPAGNE_PNC', $campagnePnc);
+    	
+    	return $qb->getQuery()->getSingleScalarResult();
+    }
 }

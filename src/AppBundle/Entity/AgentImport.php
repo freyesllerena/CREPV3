@@ -18,8 +18,12 @@ class AgentImport extends Agent
      * @ORM\Column(type="string", nullable=true)
      * @Assert\Email(
      *     message = "Email N+1 : {{ value }} n'est pas un email valide.",
-     *     checkMX = false,
-     *     groups={"importCSV", "Default"}
+     *     checkMX = false
+     * )
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "L'adresse email du N+1 ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $emailShd;
@@ -30,8 +34,12 @@ class AgentImport extends Agent
      * @ORM\Column(name="email_ah", type="string", nullable=true)
      * @Assert\Email(
      *     message = "Email N+2 : {{ value }} n'est pas un email valide.",
-     *     checkMX = false,
-     *     groups={"importCSV", "Default"}
+     *     checkMX = false
+     * )
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "L'adresse email du N+2 ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $emailAh;
@@ -53,7 +61,7 @@ class AgentImport extends Agent
     public function setEmailShd($emailShd)
     {
         $this->emailShd = $emailShd ? strtolower($emailShd) : $emailShd;
-
+        
         return $this;
     }
 
@@ -76,10 +84,10 @@ class AgentImport extends Agent
      */
     public function setEmailAh($emailAh)
     {
-        if ($emailAh) {
-            $this->emailAh = strtolower($emailAh);
-        }
-
+         if ($emailAh) {
+             $this->emailAh = strtolower($emailAh);
+         }
+        
         return $this;
     }
 
@@ -94,10 +102,24 @@ class AgentImport extends Agent
     }
 
     /**
-     * @Assert\Callback(groups={"importCSV", "Default"})
+     * @Assert\Callback()
      */
     public function validateAgentImport(ExecutionContextInterface $context)
     {
+    	// Un agent ne peut pas s'autoévaluer : son adresse mail ne doit pas appraître sur la colonne adresse mail du N+1 de la même ligne
+    	if ($this->getEmail() && $this->getEmailShd() && $this->getEmail() == $this->getEmailShd()) {
+    		$context->buildViolation('Un agent ne peut pas s\'autoévaluer')
+    		->atPath('shd')
+    		->addViolation();
+    	}
+    	
+    	// Un agent ne peut pas s'autoévaluer : son adresse mail ne doit pas appraître sur la colonne adresse mail du N+2 de la même ligne
+    	if ($this->getEmail() && $this->getEmailAh() && $this->getEmail() == $this->getEmailAh()) {
+    		$context->buildViolation('Un agent ne peut pas s\'autoévaluer')
+    		->atPath('shd')
+    		->addViolation();
+    	}
+    	
         if ($this->emailShd && !Util::validerEmail($this->emailShd)) {
             $context->buildViolation('L\'email du N+1 n\'est pas valide')
                 ->atPath('emailShd')

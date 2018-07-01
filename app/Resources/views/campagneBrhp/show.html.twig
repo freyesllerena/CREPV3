@@ -162,7 +162,7 @@
 	 
 {% endblock content %}
 
-{############## onglets ##############}
+{# ############# onglets ############# #}
 {% block block_shd %} 
 	{% include 'campagneBrhp/blocsTableauDeBord/onglets/shd.html.twig' %}
 {% endblock block_shd %}
@@ -523,22 +523,22 @@
 
 
 		//Afficher une modal "traitement en cours" au clique sur "exporter les creps"
-		$(function () {
-		    $("#download_link").on("click", function () {
-		   
-		        $("#downloadingModal").modal({backdrop: 'static', keyboard: false});
+// 		$(function () {
+// 		    $("#download_link").on("click", function () {
+
+// 		        $("#downloadingModal").modal({backdrop: 'static', keyboard: false});
 		        
-		        $.fileDownload($(this).prop('href'), {
-		            successCallback: function (url) {
-		                $("#downloadingModal").modal('hide');
-		            },
-		           failCallback: function (responseHtml, url) {
-		                $("#downloadingModal").modal('hide');
-		            }
-		        });
-		        return false; //this is critical to stop the click event which will trigger a normal file download!
-		    });
-		});
+// 		        $.fileDownload($(this).prop('href'), {
+// 		            successCallback: function (url) {
+// 		                $("#downloadingModal").modal('hide');
+// 		            },
+// 		           failCallback: function (responseHtml, url) {
+// 		                $("#downloadingModal").modal('hide');
+// 		            }
+// 		        });
+// 		        return false; //this is critical to stop the click event which will trigger a normal file download!
+// 		    });
+// 		});
 
 
 		<!-- Select2 -->        

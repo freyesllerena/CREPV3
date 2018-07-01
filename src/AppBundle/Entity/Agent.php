@@ -24,13 +24,13 @@ use AppBundle\EnumTypes\EnumStatutValidationAgent;
  * @UniqueEntity(
  *     fields={"email", "campagnePnc"},
  *     errorPath="email",
- *     groups={"importCSV"},
+ *     groups={"AjoutManuel"},
  *     message="Cet agent existe déjà dans cette campagne, veuillez contacter l'instance supérieure"
  * )
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\HasLifecycleCallbacks
  */
-class Agent extends Personne implements PersonneInterface
+class Agent extends Personne
 {
     /**
      * @var Utilisateur
@@ -42,6 +42,11 @@ class Agent extends Personne implements PersonneInterface
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "Le matricule de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $matricule;
 
@@ -49,6 +54,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "Le nom de famille de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $nomNaissance;
 
@@ -56,6 +66,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "Le nom marital de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $nomMarital;
 
@@ -63,8 +78,13 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date de naissance non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV"})
-     * @Assert\LessThanOrEqual(value = "today", message = "La date de naissance ne peut pas être supérieure à la date du jour", groups={"importCSV"})
+     * @Assert\DateTime(	format="d/m/Y", 
+     * 						message = "Date de naissance non valide. Le format attendu est JJ/MM/AAAA"
+     * )
+     * 
+     * @Assert\LessThanOrEqual(	value = "today", 
+     * 							message = "La date de naissance ne peut pas être supérieure à la date du jour"
+     * )
      */
     protected $dateNaissance;
 
@@ -77,6 +97,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "Le corps de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $corps;
 
@@ -84,7 +109,9 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le corps non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", 
+     * 					message = "Date d'entrée dans le corps non valide. Le format attendu est JJ/MM/AAAA"
+     * )
      */
     protected $dateEntreeCorps;
 
@@ -92,6 +119,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "Le grade de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $grade;
 
@@ -99,13 +131,20 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le grade non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", 
+     * 					message = "Date d'entrée dans le grade non valide. Le format attendu est JJ/MM/AAAA"
+     * )
      */
     protected $dateEntreeGrade;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=30, nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "L'échelon de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $echelon;
 
@@ -113,7 +152,8 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans l'échelon non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans l'échelon non valide. Le format attendu est JJ/MM/AAAA"
+     * )
      */
     protected $dateEntreeEchelon;
 
@@ -121,6 +161,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "Le grade d'emploi de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $gradeEmploi;
 
@@ -128,17 +173,29 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le grade d'emploi non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", 
+     * 					message = "Date d'entrée dans le grade d'emploi non valide. Le format attendu est JJ/MM/AAAA"
+     * )
      */
     protected $dateEntreeGradeEmploi;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "L'établissement de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $etablissement;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "Le département de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $departement;
 
@@ -146,6 +203,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "L'affectation sigle de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $affectation;
 
@@ -153,6 +215,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "L'affectation claire de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $affectationClairAgent;
 
@@ -160,6 +227,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 250,
+     *      maxMessage = "Le poste occupé de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $posteOccupe;
 
@@ -167,7 +239,9 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", 
+     * 					message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA"
+     * )
      */
     protected $dateEntreePosteOccupe;
 
@@ -175,6 +249,16 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "Le matricule de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "Le code poste 1 de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $codeSirh1; //Pour le mindef, ce code correspond au code Alliance
 
@@ -182,6 +266,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "Le code poste 2 de l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $codeSirh2; //Pour le mindef, ce code correspond au code CREDO
 
@@ -192,10 +281,9 @@ class Agent extends Personne implements PersonneInterface
      * @Assert\Range(
      *      min = 0,
      *      max = 1000,
-     *      minMessage = "Cette valeur n'est pas valide.",
-     *      maxMessage = "Cette valeur n'est pas valide.",
-     *      invalidMessage = "Cette valeur n'est pas valide.",
-     *      groups={"importCSV", "Default"}
+     *      minMessage = "Le capital CPF n'est pas valide.",
+     *      maxMessage = "Le capital CPF n'est pas valide.",
+     *      invalidMessage = "Le capital CPF n'est pas valide."
      * )
      */
     protected $capitalDif;
@@ -207,10 +295,9 @@ class Agent extends Personne implements PersonneInterface
      * @Assert\Range(
      *      min = 0,
      *      max = 1000,
-     *      minMessage = "Cette valeur n'est pas valide.",
-     *      maxMessage = "Cette valeur n'est pas valide.",
-     *      invalidMessage = "Cette valeur n'est pas valide.",
-     *      groups={"importCSV", "Default"}
+     *      minMessage = "Le capital CPF mobilisable n'est pas valide.",
+     *      maxMessage = "Le capital CPF mobilisable n'est pas valide.",
+     *      invalidMessage = "Le capital CPF mobilisable n'est pas valide."
      * )
      */
     protected $capitalDifMobilisable;
@@ -233,10 +320,10 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(name="motif_non_evaluation", type="text", nullable=true)
-     *
+     * 
      * @Assert\Length(
-     *      max = 256,
-     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     *      max = 250,
+     *      maxMessage = "Le motif de non évaluation ne doit pas dépasser {{ limit }} caractères"
      * )
      */
     protected $motifNonEvaluation;
@@ -280,6 +367,11 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     * 
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "La catégorie l'agent ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $categorieAgent;
 
@@ -287,7 +379,9 @@ class Agent extends Personne implements PersonneInterface
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Choice(choices = {"rattachement validé","rattachement rejeté", "rattachement en attente de validation"}, message = "Statut non valide. Valeurs acceptées : 'rattachement validé','rattachement rejeté', 'rattachement en attente de validation'")
+     * @Assert\Choice(	choices = {"rattachement validé", "rattachement rejeté", "rattachement en attente de validation"}, 
+     * 					message = "Statut non valide. Valeurs acceptées : 'rattachement validé','rattachement rejeté', 'rattachement en attente de validation'"
+     * )
      */
     protected $statutValidation;
 
@@ -300,7 +394,9 @@ class Agent extends Personne implements PersonneInterface
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Choice(choices = {"Mauvais rattachement N+1", "Mauvais rattachement N+2","Autre"}, message = "Statut non valide. Valeurs acceptées : 'Mauvais rattachement N+1', 'Mauvais rattachement N+2','Autre'")
+     * @Assert\Choice(	choices = {"Mauvais rattachement N+1", "Mauvais rattachement N+2","Autre"}, 
+     * 					message = "Statut non valide. Valeurs acceptées : 'Mauvais rattachement N+1', 'Mauvais rattachement N+2','Autre'"
+     * )
      */
     protected $erreurSignalee;
 
@@ -372,7 +468,9 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée au ministère non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format = "d/m/Y", 
+     * 					message = "Date d'entrée au ministère non valide. Le format attendu est JJ/MM/AAAA"
+     * )
      */
     protected $dateEntreeMinistere;
 
@@ -380,7 +478,9 @@ class Agent extends Personne implements PersonneInterface
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\Choice(choices = {"cdi", "cdd", "titulaire", null}, message = "Type de contrat non valide. Les valeurs possibles sont : 'CDI', 'CDD', 'Titulaire'", groups={"importCSV", "Default"})
+     * @Assert\Choice(	choices = {"cdi", "cdd", "titulaire", null}, 
+     * 					message = "Type de contrat non valide. Les valeurs possibles sont : 'CDI', 'CDD', 'Titulaire'"
+     * )
      */
     protected $contrat;
 
@@ -388,7 +488,9 @@ class Agent extends Personne implements PersonneInterface
      * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date de début du contrat non valide. Le format attendu est JJ/MM/AAAA", groups={"importCSV", "Default"})
+     * @Assert\DateTime(format="d/m/Y", 
+     * 					message = "Date de début du contrat non valide. Le format attendu est JJ/MM/AAAA"
+     * )
      */
     protected $dateDebutContrat;
 
@@ -1065,7 +1167,7 @@ class Agent extends Personne implements PersonneInterface
     }
 
     /**
-     * @Assert\Callback(groups={"importCSV", "Default"})
+     * @Assert\Callback()
      */
     public function validateAgent(ExecutionContextInterface $context)
     {

@@ -11,8 +11,11 @@ namespace AppBundle\Form\Crep\CrepMj02;
 
 
 use AppBundle\Entity\Crep;
+use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02CompetenceEncadrementType;
+use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02CompetenceJudiciaireType;
 use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\ObjectifEvalueType;
+use AppBundle\Form\ObjectifFuturType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -132,6 +135,77 @@ class CrepMj02Type extends CrepType
                     'entry_options' => ['echelleObjectifEvalue' => $echelleObjectifEvalue],
                 ]
             )
+            ->add('competencesJudiciaires',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMj02CompetenceJudiciaireType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'by_reference' => false,
+                ]
+            )
+            ->add('competencesEncadrements',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMj02CompetenceEncadrementType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'by_reference' => false,
+                ]
+            )
+            ->add('observationsShd', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('observationsAgentNotif', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('objectifsService', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('objectifsFuturs',
+                CollectionType::class,
+                [
+                    'entry_type' => ObjectifFuturType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ]
+            )
+            ->add('acquisExperiencePro', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('vae', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => 1,
+                    'Non' => 0,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
+
+            ->add(
+                'souhaitEntretienCarriere', ChoiceType::class, [
+                    'choices' => [
+                        'Oui' => true,
+                        'Non' => false,
+                    ],
+                    'expanded' => true,
+                    'placeholder' => null,
+                    'required' => false,
+                    'multiple' => false,
+                    'disabled' => false,
+                ]
+            )
+
+            ->add('commentaireVae', null, ['required' => false])
+            ->add('capacitesDecisions', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
         ;
     }
 

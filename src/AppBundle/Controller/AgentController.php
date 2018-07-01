@@ -72,7 +72,7 @@ class AgentController extends Controller
 
         $unitesOrganisationnelles = $campagneBrhp->getPerimetreBrhp()->getUnitesOrganisationnelles();
 
-        $form = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('importCSV'),
+        $form = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('Default', 'AjoutManuel'),
                                                                         'unitesOrganisationnelles' => $unitesOrganisationnelles,
                                                                         'roleUtilisateur' => 'ROLE_BRHP',
                                                                         ]);
@@ -110,7 +110,7 @@ class AgentController extends Controller
 
         $perimetresBrhp = $campagneRlc->getPerimetresBrhp();
 
-        $form = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('importCSV'),
+        $form = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('Default', 'AjoutManuel'),
                                                                         'perimetresBrhp' => $perimetresBrhp,
                                                                         'roleUtilisateur' => 'ROLE_RLC',
                                                                         ]);
@@ -161,7 +161,7 @@ class AgentController extends Controller
 
         $perimetresRlc = $campagnePnc->getPerimetresRlc();
 
-        $form = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('importCSV'),
+        $form = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('Default', 'AjoutManuel'),
                                                                         'roleUtilisateur' => 'ROLE_PNC',
                                                                         'perimetresRlc' => $perimetresRlc,
                                                                         ]);
@@ -229,7 +229,7 @@ class AgentController extends Controller
 
         $perimetresRlc = $agent->getCampagnePnc()->getPerimetresRlc();
 
-        $editForm = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('importCSV', 'agent_edit'),
+        $editForm = $this->createForm('AppBundle\Form\AgentType', $agent, ['validation_groups' => array('Default', 'AjoutManuel'),
                                                                            'unitesOrganisationnelles' => $unitesOrganisationnelles,
                                                                            'perimetresBrhp' => $perimetresBrhp,
                                                                            'perimetresRlc' => $perimetresRlc,

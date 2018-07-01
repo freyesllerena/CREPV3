@@ -243,7 +243,7 @@ class CrepMcc02Type extends CrepType
             ->add('souhaitEvolutionCarriere', null, ['required' => false])
             ->add('mobilitePoste', CrepMcc02MobilitePosteType::class, ['required' => false])
 
-            ->add('mobiliteGeographique', CrepMcc02MobiliteGeographiqueType::class, ['required' => false])
+            ->add('Encadrement', CrepMcc02EncadrementType::class, ['required' => false])
 
             ->add('evolutionProfessionnelleEnvisagee', TextareaType::class, [
                 'attr' => ['maxlength' => '4096'],

@@ -37,6 +37,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use AppBundle\Service\ConstanteManager;
 use Symfony\Component\Templating\EngineInterface;
 use AppBundle\Service\ModelesCrep\CrepScl02Manager;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use ZipStream\ZipStream;
+use Symfony\Component\Debug\Exception\ContextErrorException;
 
 class CrepManager
 {
@@ -500,49 +503,105 @@ class CrepManager
 
     public function exporterCrepsFinalises($agentsAyantCrepFinalise)
     {
-        $zip = new \ZipArchive();
+    	$streamedResponse = new StreamedResponse(function() use($agentsAyantCrepFinalise)
+    	{
+    		$opt = array(
+    				'comment' => 'Crep finalisés.',
+    				'content_type' => 'application/octet-stream'
+    		);
+    		
+    		$zip = new ZipStream('Export_CREPs_finalises.zip', $opt);
+    		
+    		/* @var $agent Agent */
+    		foreach ($agentsAyantCrepFinalise as $agent) {
+    			if ($agent->getCrep()->getCrepPapier()) {
+    				// CREPs papier
+    				$crepPath = $agent->getCrep()->getCrepPapier()->getAbsolutePath();
+    			} else {
+    				// CREPs finalisés dans ESTEVE
+    				$crepPath = $agent->getCrep()->getCrepPdf()->getAbsolutePath();
+    			}
+    			
+    			$sousDossier = 'Autre';
+    			
+    			if ($agent->getCorps()) {
+    				// remplacement des caractères suivants par "_" : \/:*?"<>|
+    				// explication
+    				// 		[] 		=> tous les caractères entre crochets
+    				// 		\\\\ 	=> le caractère \
+    				// 		\/ 		=> le caractère /
+    				//		:		=> le caractère :
+    				//		*		=> le caractère *
+    				//		?		=> le caractère ?
+    				//		\"		=> le caractère "
+    				//		<		=> le caractère <
+    				//		>		=> le caractère >
+    				//		|		=> le caractère |
+    			
+    				$sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $agent->getCorps());
+    			}
 
-        $zipName = $this->kernelRootDir.'/../var/tmp/';
-        $zipName .= 'Documents_'.time().$this->session->getId().'.zip';
-
-        $zip->open($zipName, \ZipArchive::CREATE);
-
-        /* @var $agent Agent */
-        foreach ($agentsAyantCrepFinalise as $agent) {
-            if ($agent->getCrep()->getCrepPapier()) {
-                // CREPs papier
-                $crepPath = $agent->getCrep()->getCrepPapier()->getAbsolutePath();
-            } else {
-                // CREPs finalisés dans ESTEVE
-                $crepPath = $agent->getCrep()->getCrepPdf()->getAbsolutePath();
-            }
-
-            $sousDossier = 'Autre';
-            if ($agent->getCorps()) {
-                // remplacement des caractères suivants par "_" : \/:*?"<>|
-                // explication
-                // 		[] 		=> tous les caractères entre crochets
-                // 		\\\\ 	=> le caractère \
-                // 		\/ 		=> le caractère /
-                //		:		=> le caractère :
-                //		*		=> le caractère *
-                //		?		=> le caractère ?
-                //		\"		=> le caractère "
-                //		<		=> le caractère <
-                //		>		=> le caractère >
-                //		|		=> le caractère |
-
-                $sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $agent->getCorps());
-            }
-
-            $zip->addFile($crepPath, $sousDossier.'/'.$agent->getCrep()->getPdfFileName());
-        }
-
-        $zip->close();
-
-        return $zipName;
+    			try {			
+    				$streamRead = fopen($crepPath, 'r');
+    				$zip->addFileFromStream($sousDossier.'/'.$agent->getCrep()->getPdfFileName(), $streamRead);
+    			}catch (ContextErrorException $e ){
+    				// TODO : logger une erreur sur l'ouverture du fichier CREP
+    			}
+    		}
+    		
+    		$zip->finish();
+    	});
+    	
+    	return $streamedResponse;
     }
 
+    
+    public function exporterCrepsFinalises_old($agentsAyantCrepFinalise)
+    {
+    	$zip = new \ZipArchive();
+    
+    	$zipName = $this->kernelRootDir.'/../var/tmp/';
+    	$zipName .= 'Documents_'.time().$this->session->getId().'.zip';
+    
+    	$zip->open($zipName, \ZipArchive::CREATE);
+    
+    	/* @var $agent Agent */
+    	foreach ($agentsAyantCrepFinalise as $agent) {
+    		if ($agent->getCrep()->getCrepPapier()) {
+    			// CREPs papier
+    			$crepPath = $agent->getCrep()->getCrepPapier()->getAbsolutePath();
+    		} else {
+    			// CREPs finalisés dans ESTEVE
+    			$crepPath = $agent->getCrep()->getCrepPdf()->getAbsolutePath();
+    		}
+    
+    		$sousDossier = 'Autre';
+    		if ($agent->getCorps()) {
+    			// remplacement des caractères suivants par "_" : \/:*?"<>|
+    			// explication
+    			// 		[] 		=> tous les caractères entre crochets
+    			// 		\\\\ 	=> le caractère \
+    			// 		\/ 		=> le caractère /
+    			//		:		=> le caractère :
+    			//		*		=> le caractère *
+    			//		?		=> le caractère ?
+    			//		\"		=> le caractère "
+    			//		<		=> le caractère <
+    			//		>		=> le caractère >
+    			//		|		=> le caractère |
+    
+    			$sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $agent->getCorps());
+    		}
+    
+    		$zip->addFile($crepPath, $sousDossier.'/'.$agent->getCrep()->getPdfFileName());
+    	}
+    
+    	$zip->close();
+    
+    	return $zipName;
+    }
+    
+    
     public function supprimerCrep(Crep $crep)
     {
         $crep->getAgent()->setCrep(null);

@@ -147,7 +147,7 @@ class CampagneAdminMinController extends Controller
      *
      * @param CampagnePnc $campagnePnc
      */
-    public function supprimerPopulationAction(Request $request, CampagnePnc $campagnePnc, DocumentManager $documentManager)
+    public function supprimerPopulationAction(Request $request, CampagnePnc $campagnePnc, CampagnePncManager $campagnePncManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagnePncVoter::SUPPRIMER_POPULATION, $campagnePnc);
@@ -156,23 +156,8 @@ class CampagneAdminMinController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            // supprimer les agents de la campagne
-            $em->getRepository('AppBundle:Agent')->deleteAgentByCampagnePnc($campagnePnc);
-
-            /* @var $document Document */
-            $document = $campagnePnc->getDocPopulation();
-
-            if ($document) {
-                $documentManager->deleteDocuments(array($document));
-            }
-
-            $campagnePnc->setDocPopulation(null);
-
-            $em->persist($campagnePnc);
-            $em->flush();
-
+        	$campagnePncManager->supprimerPopulation($campagnePnc);
+        	
             $this->get('session')
             ->getFlashBag()
             ->set('notice', 'Votre population a été supprimée avec succès !')

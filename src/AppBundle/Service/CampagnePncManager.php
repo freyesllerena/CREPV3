@@ -23,6 +23,8 @@ class CampagnePncManager extends CampagneManager
 
     /* @var $repository CampagnePncRepository */
     protected $repository;
+    
+    protected $documentManager;
 
     public function __construct(
         PersonneManager $personneManager,
@@ -30,7 +32,8 @@ class CampagnePncManager extends CampagneManager
         TokenStorageInterface $tokenStorage,
         AppMailer $mailer,
         EngineInterface $templating,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+    	DocumentManager $documentManager
     ) {
         $this->personneManager = $personneManager;
         $this->campagneRlcManager = $campagneRlcManager;
@@ -38,6 +41,7 @@ class CampagnePncManager extends CampagneManager
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->em = $entityManager;
+        $this->documentManager = $documentManager;
         $this->repository = $this->em->getRepository('AppBundle:CampagnePnc');
     }
 
@@ -196,5 +200,23 @@ class CampagnePncManager extends CampagneManager
     public function getHistoriqueIndicateurs(CampagnePnc $campagnePnc)
     {
         return $this->em->getRepository("AppBundle:Statistiques\StatCampagnePnc")->getHistoriqueIndicateurs($campagnePnc);
+    }
+    
+    public function supprimerPopulation(CampagnePnc $campagnePnc){
+    	// supprimer les agents de la campagne
+    	$this->em->getRepository('AppBundle:Agent')->deleteAgentByCampagnePnc($campagnePnc);
+    	
+    	/* @var $document Document */
+    	$document = $campagnePnc->getDocPopulation();
+    	
+    	if ($document) {
+    		$this->documentManager->deleteDocuments(array($document));
+    	}
+    	
+    	$campagnePnc->setDocPopulation(null);
+    	$campagnePnc->setDiffusee(false);
+    	
+    	$this->em->persist($campagnePnc);
+    	$this->em->flush();
     }
 }
