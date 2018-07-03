@@ -347,4 +347,27 @@ class CampagneRlcController extends Controller
                 'em' => $this->getDoctrine()->getManager(),
         ));
     }
+    
+    /**
+     * Exporter l'ensemble des CREPs finalisés.
+     *
+     * @Security("has_role('ROLE_RLC')")
+     *
+     * @param CampagneRlc $campagneRlc
+     * 
+     * @Security("has_role('ROLE_RLC')")
+     */
+    public function exporterCrepsFinalisesAction(Request $request, CampagneRlc $campagneRlc, CrepManager $crepManager)
+    {
+    	// Voter
+    	$this->denyAccessUnlessGranted(CampagneRlcVoter::EXPORTER_CREPS_FINALISES, $campagneRlc);
+    
+    	/* @var $agentRepository AgentRepository */
+    	$agentRepository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agent');
+    
+    	//On récupère l'ensemble des agents ayant un CREP finalisé pour un rôle (BRHP, N+1 ou N+2) donné
+    	$tableauDonneesAgentsCreps = $agentRepository->getAgentsAyantCrepFinalise($campagneRlc, 'ROLE_RLC', null);
+    
+    	return $crepManager->exporterCrepsFinalises($tableauDonneesAgentsCreps);
+    }
 }

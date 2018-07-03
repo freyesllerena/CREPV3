@@ -37,4 +37,10 @@ campagne_rlc_rouvrir :
     defaults: { _controller: "AppBundle:CampagneRlc:rouvrir" }
     methods:  PUT
     requirements:
-        id: '\d+'    
+        id: '\d+'   
+        
+campagne_rlc_exporter_creps_finalises:
+    path:     /exporter-creps-finalises/{campagneRlc}
+    defaults: { _controller: "AppBundle:CampagneRlc:exporterCrepsFinalises" }
+    requirements:
+        campagne: '\d+'

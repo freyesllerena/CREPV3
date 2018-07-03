@@ -43,8 +43,12 @@
                 
                 <div class="x_content row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1.1 Bilan des objectifs de l’année écoulée</h3>
                         {% block i1 %}
                         {% endblock i1 %}
+                        <h3>1.2 Appréciation globale sur la réalisation des objectifs de l’année écoulée</h3>
+                        {% block i2 %}
+                        {% endblock i2 %}
                     </div>
                 </div>
             </div>
@@ -152,7 +156,50 @@
             </div>
         </div>
     </div>
-    
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VI. FORMATION : BILAN ET BESOINS</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        {% block vi1 %}
+                        {% endblock vi1 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VII. APPRÉCIATION GÉNÉRALE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h2>7.1 Niveau d’appréciation générale</h2>
+                        {% block vii1 %}
+                        {% endblock vii1 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
     

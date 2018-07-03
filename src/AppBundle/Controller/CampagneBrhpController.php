@@ -313,8 +313,6 @@ class CampagneBrhpController extends Controller
     /**
      * Exporter l'ensemble des CREPs finalisés.
      *
-     * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
-     *
      * @param CampagneBrhp $campagneBrhp
      */
     public function exporterCrepsFinalisesAction(Request $request, CampagneBrhp $campagneBrhp, CrepManager $crepManager)
@@ -335,19 +333,6 @@ class CampagneBrhpController extends Controller
         $agentsAyantCrepFinalise = $agentRepository->getAgentsAyantCrepFinalise($campagneBrhp, $role, $evaluateur);
 
         return $crepManager->exporterCrepsFinalises($agentsAyantCrepFinalise);
-        
-//         $zip = $crepManager->exporterCrepsFinalises($agentsAyantCrepFinalise);
-
-//         $response = new Response(file_get_contents($zip));
-
-//         // adding headers
-//         $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Export_CREPs_finalises.zip');
-//         $response->headers->set('Content-Type', 'application/zip; charset=utf-8');
-//         $response->headers->set('Pragma', 'public');
-//         $response->headers->set('Content-Disposition', $dispositionHeader);
-//         $response->headers->set('Set-Cookie', 'fileDownload=true; path=/');
-
-//         return $response;
     }
 
     /**

@@ -11,6 +11,7 @@ namespace AppBundle\Form\Crep\CrepMj02;
 
 
 use AppBundle\Entity\Crep;
+use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02AppreciationGeneraleType;
 use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02CompetenceEncadrementType;
 use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02CompetenceJudiciaireType;
 use AppBundle\Form\Crep\CrepType;
@@ -153,6 +154,15 @@ class CrepMj02Type extends CrepType
                     'by_reference' => false,
                 ]
             )
+            ->add('appreciationsGenerales',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMj02AppreciationGeneraleType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'by_reference' => false,
+                ]
+            )
             ->add('observationsShd', TextareaType::class, [
                 'attr' => ['maxlength' => '4096'],
                 'required' => false
@@ -206,6 +216,28 @@ class CrepMj02Type extends CrepType
                 'attr' => ['maxlength' => '4096'],
                 'required' => false
             ])
+            ->add(
+                'objectifsEvalues',
+                CollectionType::class,
+                [
+                    'entry_type' => ObjectifEvalueType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['echelleObjectifEvalue' => $echelleObjectifEvalue],
+                ]
+            )
+            ->add(
+                'objectifsEvaluesGlobaux',
+                CollectionType::class,
+                [
+                    'entry_type' => ObjectifEvalueType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['echelleObjectifEvalue' => $echelleObjectifEvalue],
+                ]
+            )
         ;
     }
 

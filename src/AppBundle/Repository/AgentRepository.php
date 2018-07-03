@@ -727,34 +727,48 @@ class AgentRepository extends EntityRepository
     /**
      * Renvoie l'ensemble des agents ayant un CREP finalisé pour un rôle donné.
      */
-    public function getAgentsAyantCrepFinalise(CampagneBrhp $campagne, $role, $evaluateur)
-    {
-        $qb = $this->createQueryBuilder('agent')
-        ->leftJoin('agent.crep', 'crep')
-        ->where('agent.campagneBrhp = :CAMPAGNE')
-        ->andWhere('crep.statut IN (:STATUTS)');
-
-        if ('ROLE_SHD' == $role) {
-            $qb->andWhere('agent.shd = :SHD')
-            ->setParameter('SHD', $evaluateur);
-        } elseif ('ROLE_AH' == $role) {
-            $qb->andWhere('agent.ah = :AH')
-            ->setParameter('AH', $evaluateur);
-        }
-
-        $qb->setParameter('CAMPAGNE', $campagne)
-        ->setParameter('STATUTS', array(EnumStatutCrep::NOTIFIE_AGENT,
-                                        EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
-                                        EnumStatutCrep::CAS_ABSENCE,
-        ));
-
-        return $qb->getQuery()->getResult();
+    public function getAgentsAyantCrepFinalise(Campagne $campagne, $role, $evaluateur=null)
+    {	
+    	
+    	$qb = $this->createQueryBuilder('agent');
+    	$qb
+    	->select('agent.id agent_id, agent.matricule agent_matricule, agent.corps agent_corps')
+ 		->addSelect('crep.id crep_id, crepPdf.path crepPdf_path, crepPdf.nom crepPdf_nom, crepPapier.path crepPapier_path')
+    	->leftJoin('agent.crep', 'crep')
+    	->leftJoin('crep.crepPdf', 'crepPdf')
+    	->leftJoin('crep.crepPapier', 'crepPapier');
+    	
+    	if ($campagne instanceof campagneRlc) {
+    		$qb->andwhere('agent.campagneRlc = :CAMPAGNE');
+    	} elseif ($campagne instanceof CampagneBrhp) {
+    		$qb->andWhere('agent.campagneBrhp = :CAMPAGNE');
+    	}
+    	
+    	$qb->setParameter('CAMPAGNE', $campagne)
+    	->andWhere('crep.statut IN (:STATUTS)');
+    	
+    	if ('ROLE_SHD' == $role) {
+    		$qb->andWhere('agent.shd = :SHD')
+    		->setParameter('SHD', $evaluateur);
+    	} elseif ('ROLE_AH' == $role) {
+    		$qb->andWhere('agent.ah = :AH')
+    		->setParameter('AH', $evaluateur);
+    	}
+    	
+    	$qb->setParameter('CAMPAGNE', $campagne)
+    	->setParameter('STATUTS', array(EnumStatutCrep::NOTIFIE_AGENT,
+    			EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
+    			EnumStatutCrep::CAS_ABSENCE,
+    	));
+    	
+    	$reslut = $qb->getQuery()->getScalarResult();
+    	return $reslut;
     }
 
     /**
      * Renvoie le nombre d'agents ayant un CREP finalisé pour un rôle donné.
      */
-    public function getNbAgentsAyantCrepFinalise(CampagneBrhp $campagne, $role, $evaluateur)
+    public function getNbAgentsAyantCrepFinalise(Campagne $campagne, $role, $evaluateur)
     {
         $qb = $this->createQueryBuilder('agent')
         ->select('COUNT(agent)')

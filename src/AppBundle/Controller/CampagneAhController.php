@@ -47,7 +47,7 @@ class CampagneAhController extends Controller
         // On récupère la liste des agents du AH
         $agentsAh = $em->getRepository('AppBundle:Agent')->getAgentsByAh($ah, $campagneAh);
 
-        $indicateurs = $crepManager->calculIndicateurs($campagneAh, null, null, $ah);
+        $indicateurs = $crepManager->calculIndicateurs($campagneAh, null, null, null, $ah);
 
         $template = 'campagneAh/show.html.twig';
 

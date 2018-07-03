@@ -54,6 +54,8 @@ class CrepManager
     protected $templating;
     
     protected $session;
+    
+    protected $em;
 
     protected $kernelRootDir;
     
@@ -501,30 +503,35 @@ class CrepManager
         }
     }
 
-    public function exporterCrepsFinalises($agentsAyantCrepFinalise)
-    {
-    	$streamedResponse = new StreamedResponse(function() use($agentsAyantCrepFinalise)
+    /**
+     * Methode qui permet d'exporter les CREP PDF sous forme de flux http (stream)
+     * 
+     * @param array $tableauDonneesAgentsCreps tableau qui contient les données agents et creps
+     */
+    public function exporterCrepsFinalises($tableauDonneesAgentsCreps)
+    {    	
+    	$streamedResponse = new StreamedResponse(function() use($tableauDonneesAgentsCreps)
     	{
-    		$opt = array(
-    				'comment' => 'Crep finalisés.',
-    				'content_type' => 'application/octet-stream'
-    		);
-    		
-    		$zip = new ZipStream('Export_CREPs_finalises.zip', $opt);
+    		$zip = new ZipStream('Export_CREPs_finalises.zip');
+    		$crepNom = "";
     		
     		/* @var $agent Agent */
-    		foreach ($agentsAyantCrepFinalise as $agent) {
-    			if ($agent->getCrep()->getCrepPapier()) {
+    		foreach ($tableauDonneesAgentsCreps as $donneeAgentCrep) {
+    			if ($donneeAgentCrep['crepPapier_path']) {
     				// CREPs papier
-    				$crepPath = $agent->getCrep()->getCrepPapier()->getAbsolutePath();
+    				/* @var $crep Crep */
+    				$crep = $this->em->getRepository(Crep::class)->find($donneeAgentCrep['crep_id']);
+    				$crepPath = $crep->getCrepPapier()->getAbsolutePath();
+    				$crepNom = $crep->getPdfFileName();
     			} else {
     				// CREPs finalisés dans ESTEVE
-    				$crepPath = $agent->getCrep()->getCrepPdf()->getAbsolutePath();
+    				$crepPath = __DIR__.'/../../../web/documents/'.$donneeAgentCrep['crepPdf_path'];
+    				$crepNom = $donneeAgentCrep['crepPdf_nom'];
     			}
     			
     			$sousDossier = 'Autre';
     			
-    			if ($agent->getCorps()) {
+    			if ($donneeAgentCrep['agent_corps']) {
     				// remplacement des caractères suivants par "_" : \/:*?"<>|
     				// explication
     				// 		[] 		=> tous les caractères entre crochets
@@ -538,12 +545,12 @@ class CrepManager
     				//		>		=> le caractère >
     				//		|		=> le caractère |
     			
-    				$sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $agent->getCorps());
+    				$sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $donneeAgentCrep['agent_corps']);
     			}
 
     			try {			
     				$streamRead = fopen($crepPath, 'r');
-    				$zip->addFileFromStream($sousDossier.'/'.$agent->getCrep()->getPdfFileName(), $streamRead);
+    				$zip->addFileFromStream($sousDossier.'/'.$crepNom, $streamRead);
     			}catch (ContextErrorException $e ){
     				// TODO : logger une erreur sur l'ouverture du fichier CREP
     			}
@@ -554,53 +561,6 @@ class CrepManager
     	
     	return $streamedResponse;
     }
-
-    
-    public function exporterCrepsFinalises_old($agentsAyantCrepFinalise)
-    {
-    	$zip = new \ZipArchive();
-    
-    	$zipName = $this->kernelRootDir.'/../var/tmp/';
-    	$zipName .= 'Documents_'.time().$this->session->getId().'.zip';
-    
-    	$zip->open($zipName, \ZipArchive::CREATE);
-    
-    	/* @var $agent Agent */
-    	foreach ($agentsAyantCrepFinalise as $agent) {
-    		if ($agent->getCrep()->getCrepPapier()) {
-    			// CREPs papier
-    			$crepPath = $agent->getCrep()->getCrepPapier()->getAbsolutePath();
-    		} else {
-    			// CREPs finalisés dans ESTEVE
-    			$crepPath = $agent->getCrep()->getCrepPdf()->getAbsolutePath();
-    		}
-    
-    		$sousDossier = 'Autre';
-    		if ($agent->getCorps()) {
-    			// remplacement des caractères suivants par "_" : \/:*?"<>|
-    			// explication
-    			// 		[] 		=> tous les caractères entre crochets
-    			// 		\\\\ 	=> le caractère \
-    			// 		\/ 		=> le caractère /
-    			//		:		=> le caractère :
-    			//		*		=> le caractère *
-    			//		?		=> le caractère ?
-    			//		\"		=> le caractère "
-    			//		<		=> le caractère <
-    			//		>		=> le caractère >
-    			//		|		=> le caractère |
-    
-    			$sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $agent->getCorps());
-    		}
-    
-    		$zip->addFile($crepPath, $sousDossier.'/'.$agent->getCrep()->getPdfFileName());
-    	}
-    
-    	$zip->close();
-    
-    	return $zipName;
-    }
-    
     
     public function supprimerCrep(Crep $crep)
     {

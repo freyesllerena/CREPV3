@@ -46,7 +46,7 @@ class CampagneBrhpVoter extends Voter
     const VALIDER_AGENT = 'valider_agent_campagne_brhp';
     const AJOUTER_AGENT = 'ajouter_agent_campagne_brhp';
     const EXPORTER_FORMATIONS = 'exporter_formations_campagne_brhp';
-    const EXPORTER_CREPS_FINALISES = 'exporter_creps_finalises';
+    const EXPORTER_CREPS_FINALISES = 'exporter_creps_finalises_campagne_brhp';
 
     public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {

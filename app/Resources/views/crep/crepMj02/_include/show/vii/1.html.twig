@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        (Qualification du niveau global de l’agent en se fondant sur les résultats obtenus au regard des objectifs fixés et de la manière de servir).
+    </div>
+</div>
+<br>
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        
+        {% for key, competence in crep.appreciationsGenerales %}
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>
+                    <input type="checkbox" class="flat" disabled="disabled"
+                           {% if competence.niveauAcquis == 0 and competence.niveauAcquis is not null %}
+                               checked="checked"
+                           {% endif %}
+                    >&nbsp;&nbsp;Excellent
+                </label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>
+                    <input type="checkbox" class="flat" disabled="disabled"
+                           {% if competence.niveauAcquis == 1 %}checked="checked"{% endif %}
+                    >&nbsp;&nbsp;Très bon
+                </label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>
+                    <input type="checkbox" class="flat" disabled="disabled"
+                           {% if competence.niveauAcquis == 2 %}checked="checked"{% endif %}
+                    >&nbsp;&nbsp;Bon
+                </label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>
+                    <input type="checkbox" class="flat" disabled="disabled"
+                           {% if competence.niveauAcquis == 3 %}checked="checked"{% endif %}
+                    >&nbsp;&nbsp;Convenable
+                </label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>
+                    <input type="checkbox" class="flat" disabled="disabled"
+                           {% if competence.niveauAcquis == 4 %}checked="checked"{% endif %}
+                    >&nbsp;&nbsp;Insuffisant
+                </label>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12">
+                <label>
+                    <input type="checkbox" class="flat" disabled="disabled"
+                           {% if competence.niveauAcquis == 5 %}checked="checked"{% endif %}
+                    >&nbsp;&nbsp;Très insuffisant
+                </label>
+            </div>
+        {% endfor %}
+        
+    </div>
+</div>

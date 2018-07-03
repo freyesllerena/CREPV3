@@ -1,0 +1,21 @@
+{% form_theme form 'crep/crepMj02/Form/collections.form.html.twig' %}
+
+<br>
+{#{{ dump(appreciationsGenerales) }}#}
+<div class="row">
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        <table class="table table-bordered">
+            <tbody>
+
+            {% for competence in form.appreciationsGenerales %}
+                <tr>
+                    {{ form_widget(competence) }}
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    {#</div>#}
+</div>
+<br>
+<br>

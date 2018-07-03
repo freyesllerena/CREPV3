@@ -32,8 +32,8 @@ class CampagneRlcVoter extends Voter
     const OUVRIR = 'ouvrir_campagne_rlc';
     const ROUVRIR = 'rouvrir_campagne_rlc';
     const SUPPRIMER_DOCUMENT = 'supprimer_document_campagne_rlc';
-
     const AJOUTER_AGENT = 'ajouter_agent_campagne_rlc';
+    const EXPORTER_CREPS_FINALISES = 'exporter_creps_finalises_campagne_rlc';
 
     public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
@@ -52,6 +52,7 @@ class CampagneRlcVoter extends Voter
             self::ROUVRIR,
             self::SUPPRIMER_DOCUMENT,
             self::AJOUTER_AGENT,
+        	self::EXPORTER_CREPS_FINALISES,
         ))) {
             return false;
         }
@@ -101,6 +102,8 @@ class CampagneRlcVoter extends Voter
                 return $this->peutSupprimerDocument($campagneRlc, $utilisateur);
             case self::AJOUTER_AGENT:
                 return $this->peutAjouterAgent($campagneRlc, $utilisateur);
+            case self::EXPORTER_CREPS_FINALISES:
+                return $this->peutExporterCrepsFinalises($campagneRlc, $utilisateur);                
         }
 
         throw new \LogicException("Erreur de logique dans CampagneRlcVoter : type d'accès ".$attribute.' non géré !');
@@ -217,5 +220,35 @@ class CampagneRlcVoter extends Voter
         }
 
         return false;
+    }
+    
+    // Exporter l'ensemble des CREPs finalisés par le RLC
+    private function peutExporterCrepsFinalises(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
+    {
+    	/* @var $roleUtilisateurSession Role */
+    	$roleUtilisateurSession = $this->session->get('selectedRole');
+    	
+    	if('ROLE_RLC' == $roleUtilisateurSession){
+    		
+    		/* @var $agentRepository AgentRepository */
+    		$agentRepository = $this->em->getRepository('AppBundle:Agent');
+    
+    		$nbAgentsAyantCrepFinalise = $agentRepository->getNbAgentsAyantCrepFinalise($campagneRlc, $roleUtilisateurSession, null);
+    
+    		//S'il n'y a pas de CREPs finalisés retourner false
+    		if ($nbAgentsAyantCrepFinalise > 0) {
+				//On récupère le RLC de l'utilisateur
+				/** @var $rlc Rlc */
+				$rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
+	    
+	    		// Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le RLC
+	    		if ($rlc->getPerimetresRlc()->contains($campagneRlc->getPerimetreRlc())) {
+	    			return true;
+	    		}
+    		}
+    	}
+    
+    	// Dans tous les autres cas, on refuse l'accès
+    	return false;
     }
 }

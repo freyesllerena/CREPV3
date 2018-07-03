@@ -432,6 +432,24 @@ class CrepMj02 extends Crep
      */
     protected $souhaitEntretienCarriere;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMj02\CrepMj02AppreciationGenerale", mappedBy="crep",
+     *     cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $appreciationsGenerales;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CrepMj02ObjectifEvalueGlobal", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $objectifsEvaluesGlobaux;
+
+
+
+
 
     // ############################################################################################################
 
@@ -490,6 +508,11 @@ class CrepMj02 extends Crep
         $competenceEncadrement = new CrepMj02CompetenceEncadrement();
         $competenceEncadrement->setLibelle('Qualités managériales et relationnelles');
         $this->addCompetencesEncadrement($competenceEncadrement);
+
+        // Initialisatiuon d appreciations generales
+        $appreciationGenerale = new CrepMj02AppreciationGenerale();
+        $appreciationGenerale->setLibelle('Niveau d’appréciation générale');
+        $this->addAppreciationsGenerale($appreciationGenerale);
     }
 
     public function __construct()
@@ -497,6 +520,8 @@ class CrepMj02 extends Crep
         parent::init();
         $this->competencesJudiciaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesEncadrements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->appreciationsGenerales = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->objectifsEvaluesGlobaux = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -578,6 +603,10 @@ class CrepMj02 extends Crep
             $this->removeObjectifsFutur($objectif);
         }
         $this->setMobiliteGeographique(null);
+        /** @var CrepMj02AppreciationGenerale $appreciationGenerale */
+        foreach ($this->appreciationsGenerales as $appreciationGenerale) {
+            $appreciationGenerale->setNiveauAcquis(null);
+        }
     }
 
     public function confidentialisationChampsAgent()
@@ -1215,4 +1244,78 @@ class CrepMj02 extends Crep
         $this->souhaitEntretienCarriere = $souhaitEntretienCarriere;
     }
 
+    /**
+     * Add appreciationGenerale
+     *
+     * @param CrepMj02AppreciationGenerale $appreciationGenerale
+     *
+     * @return CrepMj02
+     */
+    public function addAppreciationsGenerale(CrepMj02AppreciationGenerale $appreciationGenerale)
+    {
+        $this->appreciationsGenerales[] = $appreciationGenerale;
+        $appreciationGenerale->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove appreciationGenerale
+     *
+     * @param CrepMj02AppreciationGenerale $appreciationGenerale
+     */
+    public function removeAppreciationsGenerale(CrepMj02AppreciationGenerale $appreciationGenerale)
+    {
+        $this->appreciationsGenerales->removeElement($appreciationGenerale);
+        $appreciationGenerale->setCrep(null);
+    }
+
+    /**
+     * Get appreciationsGenerales
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAppreciationsGenerales()
+    {
+        return $this->appreciationsGenerales;
+    }
+
+
+
+
+    /**
+     * Add objectifsEvaluesGlobal.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMj02\CrepMj02ObjectifEvalueGlobal $objectifsEvalueGlobal
+     *
+     * @return Crep
+     */
+    public function addObjectifsEvaluesGlobal($objectifsEvalueGlobal)
+    {
+        $this->objectifsEvaluesGlobaux[] = $objectifsEvalueGlobal;
+        $objectifsEvalueGlobal->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove objectifsEvalueGlobal.
+     *
+     * @param \AppBundle\Entity\Crep\CrepMj02\CrepMj02ObjectifEvalueGlobal $objectifsEvalueGlobal
+     */
+    public function removeObjectifsEvaluesGlobal($objectifsEvalueGlobal)
+    {
+        $this->objectifsEvaluesGlobaux->removeElement($objectifsEvalueGlobal);
+        $objectifsEvalueGlobal->setCrep(null);
+    }
+
+    /**
+     * Get objectifsEvaluesGlobaux.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getObjectifsEvaluesGlobaux()
+    {
+        return $this->objectifsEvaluesGlobaux;
+    }
 }

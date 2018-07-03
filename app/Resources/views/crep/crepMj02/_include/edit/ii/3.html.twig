@@ -1,0 +1,11 @@
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_12.html.twig' %}
+<br>
+<div class="row">
+    {{ form_row(form.observationsShd, { 'label': 'Observations éventuelles du supérieur hiérarchique direct :','attr': {'maxlength': '4096'}}) }}
+</div>
+<br>
+<br>
+<div class="row">
+    {{ form_row(form.observationsAgentNotif, { 'label': 'Observations éventuelles de l’agent :','attr': {'maxlength': '4096'}}) }}
+</div>
+<br>
