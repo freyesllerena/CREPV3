@@ -18,6 +18,7 @@ use AppBundle\Entity\CampagnePnc;
 use AppBundle\Form\RechercheCampagneRlcType;
 use AppBundle\Service\CampagneBrhpManager;
 use AppBundle\Entity\CampagneBrhp;
+use AppBundle\Entity\Agent;
 
 /**
  * CampagneRlc controller.
@@ -351,8 +352,6 @@ class CampagneRlcController extends Controller
     /**
      * Exporter l'ensemble des CREPs finalisés.
      *
-     * @Security("has_role('ROLE_RLC')")
-     *
      * @param CampagneRlc $campagneRlc
      * 
      * @Security("has_role('ROLE_RLC')")
@@ -370,4 +369,22 @@ class CampagneRlcController extends Controller
     
     	return $crepManager->exporterCrepsFinalises($tableauDonneesAgentsCreps);
     }
+    
+    
+    
+    /**
+     * Exporter l'ensemble de la population
+     *
+     * @param CampagneRlc $campagneRlc
+     *
+     * @Security("has_role('ROLE_RLC')")
+     */
+    public function exporterPopulationAction(Request $request, CampagneRlc $campagneRlc, CampagneRlcManager $campagneRlcManager)
+    {
+    	// Voter
+    	$this->denyAccessUnlessGranted(CampagneRlcVoter::EXPORTER_POPULATION, $campagneRlc);
+    
+    	return $campagneRlcManager->exporterPopulation($campagneRlc);
+    }
+    
 }

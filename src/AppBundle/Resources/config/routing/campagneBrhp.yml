@@ -51,3 +51,9 @@ campagne_brhp_exporter_creps_finalises:
     defaults: { _controller: "AppBundle:CampagneBrhp:exporterCrepsFinalises" }
     requirements:
         campagne: '\d+'
+       
+campagne_brhp_exporter_population:
+    path:     /exporter-population/{campagneBrhp}
+    defaults: { _controller: "AppBundle:CampagneBrhp:exporterPopulation" }
+    requirements:
+        campagne: '\d+'       

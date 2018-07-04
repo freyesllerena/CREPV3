@@ -28,8 +28,12 @@
           	 	{% set  campagneBrhp = informationPerimetresBrhp['campagneBrhp'] %}
 
 				<li>
-					{% if campagneBrhp and campagneBrhp.statut == constant('AppBundle\\EnumTypes\\EnumStatutCampagne::OUVERTE') %}
-						<span class="label label-success">ouverte</span>
+					{% if not campagneBrhp %}
+						<span class="label label-warning">En attente d'ouverture</span>
+          	 		{% elseif campagneBrhp and campagneBrhp.statut == constant('AppBundle\\EnumTypes\\EnumStatutCampagne::OUVERTE') %}
+						<span class="label label-success">Ouverte</span>
+					{% elseif campagneBrhp and campagneBrhp.statut == constant('AppBundle\\EnumTypes\\EnumStatutCampagne::CLOTUREE') %}
+						<span class="label label-info">Clôturée</span>
 					{% endif %}
 					<a href="{{ path('perimetre_brhp_show', {'id': perimetreBrhp.id}) }}">{{ perimetreBrhp.libelle }}</a>
 				</li>
@@ -84,7 +88,7 @@
 			</td>
 		</tr>
     	<tr>
-			<th scope="row">Formulaire CREP vierge</th>
+			<th scope="row">Modèles de CREP</th>
 			<td>
                 <ul class="list-unstyled project_files">
                     {% for modeleCrep in modelesCrep %}

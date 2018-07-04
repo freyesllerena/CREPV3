@@ -34,6 +34,7 @@ use AppBundle\Twig\AppExtension;
 use AppBundle\Entity\Document;
 use AppBundle\Service\DocumentManager;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Agent controller.
@@ -699,24 +700,29 @@ class AgentController extends Controller
     /*
      * La fonction renvoie au crep de l'agent s'il en a un. Sinon, elle renvoie à un écran demandant au N+1 de choisir un modèle de crep pour l'agent.
      */
-    public function checkCrepAgentAction(Request $request, Agent $agent, CrepManager $crepManager)
+    public function checkCrepAgentAction(Request $request, Agent $agent, CrepManager $crepManager, EntityManagerInterface $em)
     {
-        /* @var $crep Crep */
-        $crep = $agent->getCrep();
-
-        if ($crep) {
-            $this->denyAccessUnlessGranted(CrepVoter::VOIR, $crep);
-
-            return $this->redirectToRoute('crep_show', ['id' => $crep->getId()]);
+        if ($agent->getCrep()) {
+            return $this->redirectToRoute('crep_show', ['id' => $agent->getCrep()->getId()]);
         }
 
+        if($agent->getModeleCrep()){
+        	$crep = $crepManager->creer($agent, $agent->getModeleCrep());
+        	
+        	$em->persist($crep);
+        	$em->flush();
+        	
+        	return $this->redirectToRoute('crep_show', ['id' => $crep->getId()]);
+        }
+        
+        // TODO : Afficher un message au N+1 l'invitant à se rapprocher de son BRHP 
+        // pour sélectionner le modèlme de CREP de l'agent
+        
         $this->denyAccessUnlessGranted(AgentVoter::CHOISIR_CREP, $agent);
 
         // Si l'agent ne possède pas encore un CREP
         /* @var $ministere Ministere */
         $ministere = $this->getUser()->getMinistere();
-
-        $em = $this->getDoctrine()->getManager();
 
         /* @var $modeleCrepRepository  ModeleCrepRepository */
         $modeleCrepRepository = $em->getRepository('AppBundle:ModeleCrep');

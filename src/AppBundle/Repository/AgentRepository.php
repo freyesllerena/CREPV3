@@ -923,20 +923,36 @@ class AgentRepository extends EntityRepository
         }
     }
 
-    public function exportDonneesAgents(CampagnePnc $campagnePnc)
+    public function exportDonneesAgents(Campagne $campagne)
     {
         $qb = $this->createQueryBuilder('agent');
         $qb
-        ->select('agent.matricule, agent.civilite, agent.nomNaissance, agent.nom, agent.nomMarital, agent.prenom')
+        ->select('agent.matricule, agent.civilite, agent.titre, agent.nomNaissance, agent.nom, agent.nomMarital, agent.prenom')
         ->addSelect('agent.email, agent.dateNaissance, agent.categorieAgent, agent.corps, agent.dateEntreeCorps')
         ->addSelect('agent.grade, agent.dateEntreeGrade, agent.echelon, agent.dateEntreeEchelon, agent.gradeEmploi, agent.dateEntreeGradeEmploi')
         ->addSelect('agent.etablissement, agent.departement, agent.affectation, agent.affectationClairAgent, agent.posteOccupe')
         ->addSelect('agent.dateEntreePosteOccupe, agent.codeSirh1, agent.codeSirh2, agent.capitalDif, agent.capitalDifMobilisable')
-        ->addSelect('shd.email as shd_email, ah.email as ah_email, agent.evaluable, agent.motifNonEvaluation, agent.codeUo')
+        ->addSelect('shd.civilite as shd_civilite, shd.titre as shd_titre, shd.prenom as shd_prenom, shd.nom as shd_nom, shd.email as shd_email')
+        ->addSelect('ah.civilite as ah_civilite, ah.titre as ah_titre, ah.prenom as ah_prenom, ah.nom as ah_nom, ah.email as ah_email')
+        ->addSelect('agent.evaluable, agent.motifNonEvaluation, agent.codeUo, agent.statutValidation')
+        ->addSelect('perimetreBrhp.libelle as perimetreBrhp_libelle, crep.statut as crep_statut')
         ->leftJoin('agent.shd', 'shd')
         ->leftJoin('agent.ah', 'ah')
-        ->where('agent.campagnePnc = :CAMPAGNE_PNC')
-        ->setParameter('CAMPAGNE_PNC', $campagnePnc);
+        ->leftJoin('agent.perimetreBrhp', 'perimetreBrhp')
+        ->leftJoin('agent.crep', 'crep')
+        ->orderBy('agent.nom')
+        ->addOrderBy('agent.prenom');
+        
+        if($campagne instanceof CampagnePnc){
+        	$qb->where('agent.campagnePnc = :CAMPAGNE');
+        }elseif ($campagne instanceof CampagneRlc){
+        	$qb->where('agent.campagneRlc = :CAMPAGNE');
+        }elseif ($campagne instanceof CampagneBrhp){
+        	$qb->where('agent.campagneBrhp = :CAMPAGNE');
+        }
+        
+        $qb->setParameter('CAMPAGNE', $campagne);
+        
         $reslut = $qb->getQuery()->getScalarResult();
 
         return $reslut;

@@ -227,50 +227,58 @@
 		        "searchDelay": 500,
 				"dom": 'l<"pull-right"<"pull-right"B>>tipr',
 		        "buttons": [
-		            {
-                        extend: 'csv',
-                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
-                        title: 'Ma population',
-                        fieldSeparator: ';',
-                        exportOptions: {
-                        	columns: [ 0, 1, 2, 3, 4, 5, 6 ], // colonnes concernées par l'export
-                        	modifier: {
-                                selected: true
-                            },
-                            format: {
-                                body: function ( data, column, row, node ) {
-                                                // Suppression des espaces
-                                                data = data.trim();
+{#
+// 					{
+//                         extend: 'csv',
+//                         text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+//                         title: 'Ma population',
+//                         fieldSeparator: ';',
+//                         exportOptions: {
+//                         	columns: [ 0, 1, 2, 3, 4, 5, 6 ], // colonnes concernées par l'export
+//                         	modifier: {
+//                                 selected: true
+//                             },
+//                             format: {
+//                                 body: function ( data, column, row, node ) {
+//                                                 // Suppression des espaces
+//                                                 data = data.trim();
 
-                                                // Gestion de l'export de la colonne N+1
-                                                if(column === 2){
-                                                	return formatColonneShd( data, column, row, node );
-                                                }
+//                                                 // Gestion de l'export de la colonne N+1
+//                                                 if(column === 2){
+//                                                 	return formatColonneShd( data, column, row, node );
+//                                                 }
                                                 
-                                                // Gestion de l'export de la colonne N+2
-                                                if(column === 3){
-                                                	return formatColonneAh( data, column, row, node );
-                                                }
+//                                                 // Gestion de l'export de la colonne N+2
+//                                                 if(column === 3){
+//                                                 	return formatColonneAh( data, column, row, node );
+//                                                 }
 
-                                                // Gestion de l'export de la colonne statut de validation
-                                                if(column === 5){
-                                                	return formatColonneStatutValidation( data, column, row, node );
-                                                }
+//                                                 // Gestion de l'export de la colonne statut de validation
+//                                                 if(column === 5){
+//                                                 	return formatColonneStatutValidation( data, column, row, node );
+//                                                 }
                                                 
-                                                // Gestion de l'export de la colonne statut d'avancement du CREP
-                                                if(column === 6){
-                                                	return formatColonneStatutAvancement( data, column, row, node );
-                                                }
+//                                                 // Gestion de l'export de la colonne statut d'avancement du CREP
+//                                                 if(column === 6){
+//                                                 	return formatColonneStatutAvancement( data, column, row, node );
+//                                                 }
                                                 
-                                                return data;
-                                }
-                            }
-                        }
-                    },
+//                                                 return data;
+//                                 }
+//                             }
+//                         }
+//                     },
+#}                    
                     {
                     	extend: 'colvis',
                     	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
                     	columns: [ 1, 2, 3, 4, 5, 6 ]  // colonnes pouvant être masquées
+                    },
+                    {
+                    	text: '<i class="fa fa-file-excel-o" title="Exporter en CSV"></i>',
+                    	action: function ( e, dt, button, config ) {
+                            window.location = '{{ path('campagne_brhp_exporter_population', { 'campagneBrhp': campagneBrhp.id }) }}';
+                          }
                     }
 		        ],
 				"order": [[ 0, "asc" ]],
@@ -303,31 +311,33 @@
 				        "sAjaxDataProp": "data",
 						"dom": 'l<"pull-right"<"pull-right"B>>tipr',
 				        "buttons": [
-				            {
-		                        extend: 'csv',
-		                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
-		                        title: 'Agents sans N+1',
-		                        fieldSeparator: ';',
-		                        exportOptions: {
-		                        	columns: [ 0, 1, 2], // colonnes concernées par l'export
-		                        	modifier: {
-		                                selected: true
-		                            },
-		                            format: {
-		                                body: function ( data, column, row, node ) {
-		                                                // Suppression des espaces
-		                                                data = data.trim();
+{#
+// 							{
+// 		                        extend: 'csv',
+// 		                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+// 		                        title: 'Agents sans N+1',
+// 		                        fieldSeparator: ';',
+// 		                        exportOptions: {
+// 		                        	columns: [ 0, 1, 2], // colonnes concernées par l'export
+// 		                        	modifier: {
+// 		                                selected: true
+// 		                            },
+// 		                            format: {
+// 		                                body: function ( data, column, row, node ) {
+// 		                                                // Suppression des espaces
+// 		                                                data = data.trim();
 
-		                                                // Gestion de l'export de la colonne N+1
-		                                                if(column === 2){
-		                                                	return formatColonneAh( data, column, row, node );
-		                                                }
+// 		                                                // Gestion de l'export de la colonne N+1
+// 		                                                if(column === 2){
+// 		                                                	return formatColonneAh( data, column, row, node );
+// 		                                                }
 
-		                                                return data;
-		                                }
-		                            }
-		                        }
-		                    },
+// 		                                                return data;
+// 		                                }
+// 		                            }
+// 		                        }
+// 		                    },
+#}		                    
 		                    {
 		                    	extend: 'colvis',
 		                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
@@ -364,36 +374,38 @@
 				        "sAjaxDataProp": "data",
 						"dom": 'l<"pull-right"<"pull-right"B>>tipr',
 				        "buttons": [
-				            {
-		                        extend: 'csv',
-		                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
-		                        title: 'Agents sans périmètre BRHP',
-		                        fieldSeparator: ';',
-		                        exportOptions: {
-		                        	columns: [ 0, 1, 2, 3, 4], // colonnes concernées par l'export
-		                        	modifier: {
-		                                selected: true
-		                            },
-		                            format: {
-		                                body: function ( data, column, row, node ) {
-		                                                // Suppression des espaces
-		                                                data = data.trim();
+{#
+// 							{
+// 		                        extend: 'csv',
+// 		                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+// 		                        title: 'Agents sans périmètre BRHP',
+// 		                        fieldSeparator: ';',
+// 		                        exportOptions: {
+// 		                        	columns: [ 0, 1, 2, 3, 4], // colonnes concernées par l'export
+// 		                        	modifier: {
+// 		                                selected: true
+// 		                            },
+// 		                            format: {
+// 		                                body: function ( data, column, row, node ) {
+// 		                                                // Suppression des espaces
+// 		                                                data = data.trim();
 
-		                                                // Gestion de l'export de la colonne N+1
-		                                                if(column === 3){
-		                                                	return formatColonneShd( data, column, row, node );
-		                                                }
+// 		                                                // Gestion de l'export de la colonne N+1
+// 		                                                if(column === 3){
+// 		                                                	return formatColonneShd( data, column, row, node );
+// 		                                                }
 		                                                
-		                                                // Gestion de l'export de la colonne N+2
-		                                                if(column === 4){
-		                                                	return formatColonneAh( data, column, row, node );
-		                                                }
+// 		                                                // Gestion de l'export de la colonne N+2
+// 		                                                if(column === 4){
+// 		                                                	return formatColonneAh( data, column, row, node );
+// 		                                                }
 
-		                                                return data;
-		                                }
-		                            }
-		                        }
-		                    },
+// 		                                                return data;
+// 		                                }
+// 		                            }
+// 		                        }
+// 		                    },
+#}		                    
 		                    {
 		                    	extend: 'colvis',
 		                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
@@ -431,41 +443,43 @@
 				        "sAjaxDataProp": "data",
 						"dom": 'l<"pull-right"<"pull-right"B>>tipr',
 				        "buttons": [
-				            {
-		                        extend: 'csv',
-		                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
-		                        title: 'Crep',
-		                        fieldSeparator: ';',
-		                        exportOptions: {
-		                        	columns: [ 0, 1, 2, 3, 4 ], // colonnes concernées par l'export
-		                        	modifier: {
-		                                selected: true
-		                            },
-		                            format: {
-		                                body: function ( data, column, row, node ) {
-		                                                // Suppression des espaces
-		                                                data = data.trim();
+{#
+// 							{
+// 		                        extend: 'csv',
+// 		                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+// 		                        title: 'Crep',
+// 		                        fieldSeparator: ';',
+// 		                        exportOptions: {
+// 		                        	columns: [ 0, 1, 2, 3, 4 ], // colonnes concernées par l'export
+// 		                        	modifier: {
+// 		                                selected: true
+// 		                            },
+// 		                            format: {
+// 		                                body: function ( data, column, row, node ) {
+// 		                                                // Suppression des espaces
+// 		                                                data = data.trim();
 
-		                                                // Gestion de l'export de la colonne N+1
-		                                                if(column === 2){
-		                                                	return formatColonneShd( data, column, row, node );
-		                                                }
+// 		                                                // Gestion de l'export de la colonne N+1
+// 		                                                if(column === 2){
+// 		                                                	return formatColonneShd( data, column, row, node );
+// 		                                                }
 		                                                
-		                                                // Gestion de l'export de la colonne N+2
-		                                                if(column === 3){
-		                                                	return formatColonneAh( data, column, row, node );
-		                                                }
+// 		                                                // Gestion de l'export de la colonne N+2
+// 		                                                if(column === 3){
+// 		                                                	return formatColonneAh( data, column, row, node );
+// 		                                                }
 		                                                
-		                                                // Gestion de l'export de la colonne statut d'avancement du CREP
-		                                                if(column === 4){
-		                                                	return formatColonneStatutAvancement( data, column, row, node );
-		                                                }
+// 		                                                // Gestion de l'export de la colonne statut d'avancement du CREP
+// 		                                                if(column === 4){
+// 		                                                	return formatColonneStatutAvancement( data, column, row, node );
+// 		                                                }
 		                                                
-		                                                return data;
-		                                }
-		                            }
-		                        }
-		                    },
+// 		                                                return data;
+// 		                                }
+// 		                            }
+// 		                        }
+// 		                    },
+#}		                    
 		                    {
 		                    	extend: 'colvis',
 		                    	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',

@@ -1,0 +1,20 @@
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_12.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <em>
+            (Cette appréciation littérale doit venir expliquer de façon précise, complète et objective l’appréciation
+            générale pour permettre à l’agent évalué de comprendre le jugement porté sur sa valeur professionnelle et sa manière de servir ainsi que ses points forts et ceux restant à améliorer)
+        </em>
+    </div>
+</div>
+<div class="row">
+    {{ form_row(form.appreciationLitteraleShd, { 'label': false }) }}
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6 col-md-offset-1 col-sm-6 col-xs-12">
+        {{ form_row(form.dureeEntretien, { 'label': "Durée de l'entretien" }) }}
+    </div>
+</div>
+<br>

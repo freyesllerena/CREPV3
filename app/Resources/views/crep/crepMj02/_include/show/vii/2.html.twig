@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <em>
+            (Cette appréciation littérale doit venir expliquer de façon précise, complète et objective l’appréciation
+            générale pour permettre à l’agent évalué de comprendre le jugement porté sur sa valeur professionnelle et sa manière de servir ainsi que ses points forts et ceux restant à améliorer)
+        </em>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dd class="well well-xs">
+                {{ crep.appreciationLitteraleShd | nl2br }}
+            </dd>
+        </dl>
+    </div>
+</div>
+<br>
+{% if crep.refusEntretienProfessionnel %}
+    <div class="row">
+        <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+            <i class="fa fa-check-square-o"></i> L'agent <strong>a refusé</strong> de participer à l'entretien professionnel.
+            <br/><br/>
+        </div>
+    </div>
+{% else %}
+    {#<div class="row">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<dl class="dl-horizontal m-t-md">#}
+                {#<dt>Date de l'entretien</dt>#}
+                {#<dd>{% if crep.dateEntretien %}{{ crep.dateEntretien|date('d/m/Y') }}{% endif %}</dd>#}
+            {#</dl>#}
+        {#</div>#}
+    {#</div>#}
+    
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Durée de l'entretien </dt>
+                <dd>{{ crep.dureeEntretien}}</dd>
+            </dl>
+        </div>
+    </div>
+
+{% endif %}

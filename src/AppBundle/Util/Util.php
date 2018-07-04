@@ -3,6 +3,8 @@
 namespace AppBundle\Util;
 
 use AppBundle\Entity\PersonneInterface;
+use AppBundle\EnumTypes\EnumStatutValidationAgent;
+use AppBundle\EnumTypes\EnumStatutCrep;
 class Util
 {
     /**
@@ -131,29 +133,94 @@ class Util
     }
     
     public static function identite(PersonneInterface $personne)
+    {	 
+    	return self::identiteAgent(
+    			$personne->getCivilite(), 
+    			$personne->getTitre(), 
+    			$personne->getPrenom(), 
+    			$personne->getNom(), 
+    			$personne->getEmail()
+    	);
+    }
+    
+    public static function identiteAgent($civilite, $titre, $prenom, $nom, $email)
     {
     	// Si la personne n'a pas de nom, on retourne son adresse email
-    	if(!$personne->getNom()){
-    		return $personne->getEmail();
-    	}
-    	 
-    	$result = '';
-    	 
-    	// On retourne soit le titre s'il y en a un, soit la civilité
-    	if($personne->getTitre()){
-    		$result .= self::twig_title($personne->getTitre()). ' ';
-    	}elseif ($personne->getCivilite()){
-    		$result .= self::twig_title($personne->getCivilite()). ' ';
+    	if(!$nom){
+    		return $email;
     	}
     
-    	if($personne->getPrenom()){
-    		$result .= self::twig_title($personne->getPrenom()). ' ';
+    	$result = '';
+    
+    	// On retourne soit le titre s'il y en a un, soit la civilité
+    	if($titre){
+    		$result .= self::twig_title($titre). ' ';
+    	}elseif ($civilite){
+    		$result .= self::twig_title($civilite). ' ';
     	}
-    	 
-    	if($personne->getNom()){
-    		$result .= self::twig_upper($personne->getNom());
+    
+    	if($prenom){
+    		$result .= self::twig_title($prenom). ' ';
     	}
-    	 
+    
+    	if($nom){
+    		$result .= self::twig_upper($nom);
+    	}
+    
     	return $result;
     }
+    
+    public static function formatEvaluable($evaluable){
+    	if(true === $evaluable || '1' == $evaluable){
+    		return 'Oui';
+    	}
+    	
+    	if(false === $evaluable || '0' == $evaluable){
+    		return 'Non';
+    	}
+    	
+    	return '';
+    }
+    
+    public static function formatStatutValidation($statutValidation){
+    	switch ($statutValidation){
+    		case EnumStatutValidationAgent::EN_COURS:
+    			return 'Rattachement en attente de validation';
+    		case EnumStatutValidationAgent::VALIDE:
+    			return 'Rattachement validé';
+    		case EnumStatutValidationAgent::ERREUR_SIGNALEE:
+    			return "Erreur signalée";
+    		case EnumStatutValidationAgent::REJETE:
+    			return "Rattachement rejeté";
+    	}
+    	return '';
+    }
+    
+    public static function formatStatutCrep($statutCrep){
+    	switch ($statutCrep){
+    		case EnumStatutCrep::CREE:
+    			return 'Etape 1/5 : Créé';
+    		case EnumStatutCrep::MODIFIE_SHD:
+    			return 'Etape 1/5 : En cours de rédaction';
+    		case EnumStatutCrep::SIGNE_SHD:
+    			return 'Etape 2/5 : Signé N+1';
+    		case EnumStatutCrep::VISE_AGENT:
+    			return 'Etape 3/5 : Visé agent';
+    		case EnumStatutCrep::REFUS_VISA_AGENT:
+    			return 'Etape 3/5 : Refus visa agent';
+    		case EnumStatutCrep::SIGNE_AH:
+    			return 'Etape 4/5 : Signé N+2';
+    		case EnumStatutCrep::NOTIFIE_AGENT:
+    			return 'Etape 5/5 : Signé agent';
+    		case EnumStatutCrep::REFUS_NOTIFICATION_AGENT:
+    			return 'Etape 5/5 : Refus signature agent';
+    		case EnumStatutCrep::CAS_ABSENCE:
+    			return 'Etape 5/5 : CREP en cas d\'absence de l\'agent';
+    		case EnumStatutCrep::REFUS_EP:
+    			return 'Etape 5/5 : Refus entretien professionnel';
+    	}
+    	
+    	return 'Etape 0/5 : En attente d\'initialisation';
+    }
+    
 }

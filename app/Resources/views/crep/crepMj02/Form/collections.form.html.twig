@@ -84,32 +84,7 @@
     {% endfor %}
 {% endblock %}
 
-
-
-
-
-{% block _crep_mj02_objectifsEvaluesGlobaux_entry_widget %}
-    <tr>
-        <td>{{ form_row(form.libelle, {
-                'label': false,
-                'attr': {
-                    'class': 'fieldCollection',
-                    'style': 'width: 200%; min-height: 130px;'}
-            })
-            }}
-        </td>
-        <td>{{ form_row(form.resultatObtenu, {
-                'label': false,
-                'attr': {'class': 'fieldCollection', 'style': 'min-width: 165px;'},
-                'required': false})
-            }}
-        </td>
-        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
-    </tr>
-{% endblock %}
-
-
-{###################### Fin collecions ################################}
+{# Fin collecions #}
 
 {# Redéfinition du bloc from_errors aligner à gauche les erreurs de validation, en ajoutant style="text-align: left;"   #}
 {% block form_errors -%}

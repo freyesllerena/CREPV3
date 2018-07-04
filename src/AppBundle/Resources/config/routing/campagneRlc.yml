@@ -44,3 +44,9 @@ campagne_rlc_exporter_creps_finalises:
     defaults: { _controller: "AppBundle:CampagneRlc:exporterCrepsFinalises" }
     requirements:
         campagne: '\d+'
+
+campagne_rlc_exporter_population:
+    path:     /exporter-population/{campagneRlc}
+    defaults: { _controller: "AppBundle:CampagneRlc:exporterPopulation" }
+    requirements:
+        campagne: '\d+'

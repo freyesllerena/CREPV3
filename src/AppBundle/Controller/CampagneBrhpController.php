@@ -349,4 +349,19 @@ class CampagneBrhpController extends Controller
                 'em' => $this->getDoctrine()->getManager(),
         ));
     }
+    
+    /**
+     * Exporter l'ensemble de la population
+     *
+     * @param CampagneBrhp $campagneBrhp
+     *
+     * @Security("has_role('ROLE_BRHP')")
+     */
+    public function exporterPopulationAction(Request $request, CampagneBrhp $campagneBrhp, CampagneBrhpManager $campagneBrhpManager)
+    {
+    	// Voter
+    	$this->denyAccessUnlessGranted(CampagneBrhpVoter::EXPORTER_POPULATION, $campagneBrhp);
+    
+    	return $campagneBrhpManager->exporterPopulation($campagneBrhp);
+    }
 }

@@ -31,6 +31,13 @@ class CrepMj02 extends Crep
         'Devenu sans objet' => 3,
     ];
 
+    public static $globalObjectifEvalue = [
+        'Atteints' => 0,
+        'Partiellement' => 1,
+        'Non atteints' => 2,
+        'Devenus sans objet' => 3,
+    ];
+
     public static $niveauCompetence = [
         'Excellent' => 0,
         'Très bon' => 1,
@@ -364,7 +371,7 @@ class CrepMj02 extends Crep
     protected $observationsShd;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -441,14 +448,34 @@ class CrepMj02 extends Crep
     protected $appreciationsGenerales;
 
     /**
-     * @ORM\OneToMany(targetEntity="CrepMj02ObjectifEvalueGlobal", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
-     * @ORM\OrderBy({"id" = "ASC"})
-     * @Assert\Valid
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true, length=4096)
      */
-    protected $objectifsEvaluesGlobaux;
+    protected $contexteResultats;
 
+    /**
+     * @var text
+     *
+     * @ORM\Column(type="text")
+     *
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )     *
+     */
+    protected $appreciationLitteraleShd;
 
-
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=30)
+     *
+     * @Assert\Length(
+     *      max = 25,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $dureeEntretien;
 
 
     // ############################################################################################################
@@ -521,7 +548,6 @@ class CrepMj02 extends Crep
         $this->competencesJudiciaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesEncadrements = new \Doctrine\Common\Collections\ArrayCollection();
         $this->appreciationsGenerales = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->objectifsEvaluesGlobaux = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -545,7 +571,7 @@ class CrepMj02 extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getNomNaissance()
     {
@@ -573,17 +599,18 @@ class CrepMj02 extends Crep
 
         if ($shd) {
             $this
-                ->setNomNaissanceShd($shd->getNomNaissance())
+                ->setNomNaissanceShd($shd->getNomNaissance());
 //                ->setNomMarital($shd->getNomMarital())
-                ->setPrenomShd($shd->getPrenom())
-                ->setPosteOccupeShd($shd->getPosteOccupe());
+//                ->setPrenomShd($shd->getPrenom())
+//                ->setPosteOccupeShd($shd->getPosteOccupe());
 //                ->setAffectationShd($shd->getAffectation());
         } else {
             $this
                 ->setNomNaissanceShd(null)
-                ->setPrenomShd(null)
-                ->setPosteOccupeShd(null)
-                ->setAffectationShd(null);
+//                ->setPrenomShd(null)
+//                ->setPosteOccupeShd(null)
+//                ->setAffectationShd(null)
+            ;
         }
     }
 
@@ -607,6 +634,8 @@ class CrepMj02 extends Crep
         foreach ($this->appreciationsGenerales as $appreciationGenerale) {
             $appreciationGenerale->setNiveauAcquis(null);
         }
+        $this->setAppreciationLitteraleShd(null);
+        $this->setDureeEntretien(null);
     }
 
     public function confidentialisationChampsAgent()
@@ -1280,42 +1309,58 @@ class CrepMj02 extends Crep
         return $this->appreciationsGenerales;
     }
 
-
-
-
     /**
-     * Add objectifsEvaluesGlobal.
+     * Set contexteResultats
      *
-     * @param \AppBundle\Entity\Crep\CrepMj02\CrepMj02ObjectifEvalueGlobal $objectifsEvalueGlobal
-     *
-     * @return Crep
+     * @param $contexteResultats
+     * @return $this
      */
-    public function addObjectifsEvaluesGlobal($objectifsEvalueGlobal)
+    public function setContexteResultats($contexteResultats)
     {
-        $this->objectifsEvaluesGlobaux[] = $objectifsEvalueGlobal;
-        $objectifsEvalueGlobal->setCrep($this);
+        $this->contexteResultats = $contexteResultats;
 
         return $this;
     }
 
     /**
-     * Remove objectifsEvalueGlobal.
+     * Get contexteResultats
      *
-     * @param \AppBundle\Entity\Crep\CrepMj02\CrepMj02ObjectifEvalueGlobal $objectifsEvalueGlobal
+     * @return string
      */
-    public function removeObjectifsEvaluesGlobal($objectifsEvalueGlobal)
+    public function getContexteResultats()
     {
-        $this->objectifsEvaluesGlobaux->removeElement($objectifsEvalueGlobal);
-        $objectifsEvalueGlobal->setCrep(null);
+        return $this->contexteResultats;
     }
 
     /**
-     * Get objectifsEvaluesGlobaux.
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return string
      */
-    public function getObjectifsEvaluesGlobaux()
+    public function getAppreciationLitteraleShd()
     {
-        return $this->objectifsEvaluesGlobaux;
+        return $this->appreciationLitteraleShd;
+    }
+
+    /**
+     * @param string $appreciationLitteraleShd
+     */
+    public function setAppreciationLitteraleShd($appreciationLitteraleShd)
+    {
+        $this->appreciationLitteraleShd = $appreciationLitteraleShd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDureeEntretien()
+    {
+        return $this->dureeEntretien;
+    }
+
+    /**
+     * @param string $dureeEntretien
+     */
+    public function setDureeEntretien($dureeEntretien)
+    {
+        $this->dureeEntretien = $dureeEntretien;
     }
 }

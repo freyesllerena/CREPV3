@@ -209,42 +209,50 @@
                 ],
 				"dom": 'l<"pull-right"<"pull-right"B>>tipr',
 		        "buttons": [
-		            {
-                        extend: 'csv',
-                        text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
-						title: 'Ma population',
-                        fieldSeparator: ';',
-                        exportOptions: {
-                        	columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ], // colonnes concernées par l'export
-                        	modifier: {
-                                selected: true
-                            },
-                            format: {
-                                body: function ( data, column, row, node ) {
-                                                // Suppression des espaces
-                                                data = data.trim();
+{#
+// 					{
+// 		            	extend: 'csv',
+//                         text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+// 						title: 'Ma population',
+//                         fieldSeparator: ';',
+//                         exportOptions: {
+//                         	columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ], // colonnes concernées par l'export
+//                         	modifier: {
+//                                 selected: true
+//                             },
+//                             format: {
+//                                 body: function ( data, column, row, node ) {
+//                                                 // Suppression des espaces
+//                                                 data = data.trim();
 
-                                                // Gestion de l'export de la colonne statut de validation
-                                                if(column === 6){
-                                                	return formatColonneStatutValidation( data, column, row, node );
-                                                }
+//                                                 // Gestion de l'export de la colonne statut de validation
+//                                                 if(column === 6){
+//                                                 	return formatColonneStatutValidation( data, column, row, node );
+//                                                 }
 
-                                                // Gestion de l'export de la colonne statut d'avancement du CREP
-                                                if(column === 7){
-                                                	return formatColonneStatutAvancement( data, column, row, node );
-                                                }
+//                                                 // Gestion de l'export de la colonne statut d'avancement du CREP
+//                                                 if(column === 7){
+//                                                 	return formatColonneStatutAvancement( data, column, row, node );
+//                                                 }
                                                 
-                                                return data;
-                                }
-                            }
+//                                                 return data;
+//                                 }
+//                             }
 
                             
-                        }
-                    },
+//                         }
+//                     },
+#}
                     {
                     	extend: 'colvis',
                     	text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
                     	columns: [ 1, 2, 3, 4, 5, 6, 7, 8 ]  // colonnes pouvant être masquées
+                    },
+                    {
+                    	text: '<i class="fa fa-file-excel-o" title="Exporter en CSV"></i>',
+                    	action: function ( e, dt, button, config ) {
+                            window.location = '{{ path('campagne_rlc_exporter_population', { 'campagneRlc': campagneRlc.id }) }}';
+                          }
                     }
 		        ],
 		        "columns":[ 
@@ -280,18 +288,20 @@
                                       ],
 	                   "dom": 'l<"pull-right"<"pull-right"B>>tipr',
 	                   "buttons": [
-		                               {
-		                                   extend: 'csv',
-		                                   text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
-		                                   title: 'Agents sans N+1',
-		                                   fieldSeparator: ';',
-		                                   exportOptions: {
-			                                   columns: [ 0, 1, 2, 3, 4 ], // colonnes concernées par l'export
-			                                   modifier: {
-				                                   selected: true
-				                                   }
-		                                   }
-	                                   },
+{#
+// 									{
+// 		                                   extend: 'csv',
+// 		                                   text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+// 		                                   title: 'Agents sans N+1',
+// 		                                   fieldSeparator: ';',
+// 		                                   exportOptions: {
+// 			                                   columns: [ 0, 1, 2, 3, 4 ], // colonnes concernées par l'export
+// 			                                   modifier: {
+// 				                                   selected: true
+// 				                                   }
+// 		                                   }
+// 	                                   },
+#}	                                   
 	                                   {
 		                                   extend: 'colvis',
 		                                   text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',
@@ -328,18 +338,20 @@
                                       ],
 	                    "dom": 'l<"pull-right"<"pull-right"B>>tipr',
                	        "buttons": [
-	                                   {
-	                                       extend: 'csv',
-               	                           text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
-               	                           title: 'Agents sans périmètre RLC',
-               	                           fieldSeparator: ';',
-               	                           exportOptions: {
-               		                           columns: [ 0, 1, 2, 3, 4, 5 ], // colonnes concernées par l'export
-               		                           modifier: {
-               			                          selected: true
-               			                       }
-               	                           }
-                                       },
+{#	
+// 									{
+// 	                                       extend: 'csv',
+//                	                           text: '<i class="fa fa-file-excel-o" title="Exporter la page courante en CSV"></i>',
+//                	                           title: 'Agents sans périmètre RLC',
+//                	                           fieldSeparator: ';',
+//                	                           exportOptions: {
+//                		                           columns: [ 0, 1, 2, 3, 4, 5 ], // colonnes concernées par l'export
+//                		                           modifier: {
+//                			                          selected: true
+//                			                       }
+//                	                           }
+//                                        },
+#}                                       
                                        {
                	                           extend: 'colvis',
                	                           text: '<i class="fa fa-columns" title="Afficher / masque des colonnes"></i>',

@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use AppBundle\Entity\Agent;
 
 class CampagneRlcVoter extends Voter
 {
@@ -34,6 +35,7 @@ class CampagneRlcVoter extends Voter
     const SUPPRIMER_DOCUMENT = 'supprimer_document_campagne_rlc';
     const AJOUTER_AGENT = 'ajouter_agent_campagne_rlc';
     const EXPORTER_CREPS_FINALISES = 'exporter_creps_finalises_campagne_rlc';
+    const EXPORTER_POPULATION = 'exporter_population_campagne_rlc';
 
     public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
@@ -53,6 +55,7 @@ class CampagneRlcVoter extends Voter
             self::SUPPRIMER_DOCUMENT,
             self::AJOUTER_AGENT,
         	self::EXPORTER_CREPS_FINALISES,
+        	self::EXPORTER_POPULATION
         ))) {
             return false;
         }
@@ -103,7 +106,9 @@ class CampagneRlcVoter extends Voter
             case self::AJOUTER_AGENT:
                 return $this->peutAjouterAgent($campagneRlc, $utilisateur);
             case self::EXPORTER_CREPS_FINALISES:
-                return $this->peutExporterCrepsFinalises($campagneRlc, $utilisateur);                
+                return $this->peutExporterCrepsFinalises($campagneRlc, $utilisateur);
+            case self::EXPORTER_POPULATION:
+            	return $this->peutExporterPopulation($campagneRlc, $utilisateur);
         }
 
         throw new \LogicException("Erreur de logique dans CampagneRlcVoter : type d'accès ".$attribute.' non géré !');
@@ -251,4 +256,26 @@ class CampagneRlcVoter extends Voter
     	// Dans tous les autres cas, on refuse l'accès
     	return false;
     }
+
+    // Exporter l'ensemble des agent de la campagne RLC par le RLC
+    private function peutExporterPopulation(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
+    {
+    	/** @var $rlc Rlc */
+    	$rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
+    	
+        if (in_array($campagneRlc->getStatut(), array(
+                EnumStatutCampagne::INITIALISEE,
+                EnumStatutCampagne::CREEE,
+                EnumStatutCampagne::OUVERTE,
+        		EnumStatutCampagne::CLOTUREE,
+        		EnumStatutCampagne::FERMEE,
+            ))
+            && $rlc && in_array($campagneRlc->getPerimetreRlc(), $rlc->getPerimetresRlc()->toArray())) {
+            return true;
+        }
+
+        // Dans tous les autres cas, on refuse l'accès
+        return false;
+    }
+    
 }

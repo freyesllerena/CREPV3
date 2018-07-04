@@ -47,6 +47,7 @@ class CampagneBrhpVoter extends Voter
     const AJOUTER_AGENT = 'ajouter_agent_campagne_brhp';
     const EXPORTER_FORMATIONS = 'exporter_formations_campagne_brhp';
     const EXPORTER_CREPS_FINALISES = 'exporter_creps_finalises_campagne_brhp';
+    const EXPORTER_POPULATION = 'exporter_population_campagne_brhp';
 
     public function __construct(AccessDecisionManagerInterface $decisionManager, EntityManagerInterface $em, SessionInterface $session)
     {
@@ -71,6 +72,7 @@ class CampagneBrhpVoter extends Voter
             self::AJOUTER_AGENT,
             self::EXPORTER_FORMATIONS,
             self::EXPORTER_CREPS_FINALISES,
+        	self::EXPORTER_POPULATION,
         ))) {
             return false;
         }
@@ -139,6 +141,8 @@ class CampagneBrhpVoter extends Voter
                 return $this->peutExporterFormations($campagneBrhp, $utilisateur);
             case self::EXPORTER_CREPS_FINALISES:
                 return $this->peutExporterCrepsFinalises($campagneBrhp, $utilisateur, $roleUtilisateurSession);
+            case self::EXPORTER_POPULATION:
+                return $this->peutExporterPopulation($campagneBrhp, $utilisateur);
         }
 
         throw new \LogicException("Erreur de logique dans CampagneBrhpVoter : type d'accès ".$attribute.' non géré !');
@@ -435,5 +439,27 @@ class CampagneBrhpVoter extends Voter
 
         // Dans tous les autres cas, on refuse l'accès
         return false;
+    }
+    
+    
+    // Exporter l'ensemble des agent de la campagne BRHP par le BRHP
+    private function peutExporterPopulation(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
+    {
+    	/** @var $brhp Brhp */
+    	$brhp = $this->em->getRepository(Brhp::class)->findOneByUtilisateur($utilisateur);
+    	 
+    	if (in_array($campagneBrhp->getStatut(), array(
+    			EnumStatutCampagne::INITIALISEE,
+    			EnumStatutCampagne::CREEE,
+    			EnumStatutCampagne::OUVERTE,
+    			EnumStatutCampagne::CLOTUREE,
+    			EnumStatutCampagne::FERMEE,
+    	))
+    			&& $brhp && in_array($campagneBrhp->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
+    				return true;
+    			}
+    
+    			// Dans tous les autres cas, on refuse l'accès
+    			return false;
     }
 }

@@ -35,12 +35,13 @@ class CrepMj02Type extends CrepType
         /** @var Crep\CrepMj02\CrepMj02 $crep */
         $crep = $builder->getData();
         $options['echelleObjectifEvalue'] = $crep::$echelleObjectifEvalue;
+        $options['globalObjectifEvalue'] = $crep::$globalObjectifEvalue;
         $options['ministere'] = $crep->getAgent()->getCampagnePnc()->getMinistere();
 
         parent::buildForm($builder, $options);
 
         $echelleObjectifEvalue = $options['echelleObjectifEvalue'];
-//        $ministere = $crep->getAgent()->getCampagnePnc()->getMinistere();
+        $globalObjectifEvalue = $options['globalObjectifEvalue'];
         $tableauNotesAgent = [];
 
         for($i=1 ; $i<=20 ; $i++){
@@ -227,17 +228,15 @@ class CrepMj02Type extends CrepType
                     'entry_options' => ['echelleObjectifEvalue' => $echelleObjectifEvalue],
                 ]
             )
-            ->add(
-                'objectifsEvaluesGlobaux',
-                CollectionType::class,
+            ->add('contexteResultats', ChoiceType::class,
                 [
-                    'entry_type' => ObjectifEvalueType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'by_reference' => false,
-                    'entry_options' => ['echelleObjectifEvalue' => $echelleObjectifEvalue],
-                ]
-            )
+                    'choices' => $globalObjectifEvalue,
+                    'required' => false,
+                ])
+            ->add('appreciationLitteraleShd', null, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false, ])
+            ->add('dureeEntretien', null, ['attr' => ['maxlength' => '30'], 'required' => false])
         ;
     }
 

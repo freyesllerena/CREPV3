@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use AppBundle\Entity\CampagnePnc;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use AppBundle\Util\Util;
 
 class CampagneBrhpManager
 {
@@ -148,5 +150,44 @@ class CampagneBrhpManager
     {
     	$this->em->persist($campagneBrhp);
     	$this->em->flush();
+    }
+    
+    public function exporterPopulation(CampagneBrhp $campagneBrhp)
+    {
+    	$streamedResponse = new StreamedResponse(function() use($campagneBrhp)
+    	{
+    		/* @var $agentRepository AgentRepository */
+    		$agentRepository = $this->em->getRepository(Agent::class);
+    
+    		$donneesAgents = $agentRepository->exportDonneesAgents($campagneBrhp);
+    
+    		$handle = fopen('php://output', 'r+');
+    
+    		// UTF-8 BOM pour qu'il soit correctement lisible par Excel
+    		fputs($handle, "\xEF\xBB\xBF");
+    
+    		// Nom des colonnes du CSV
+    		fputcsv($handle, array('Agent', 'Affectation', 'N+1', 'N+2', 'Evaluable', 'Statut', 'Avancement du CREP'), ';');
+    
+    
+    		foreach ($donneesAgents as $donneesAgent){
+    			fputcsv($handle, [
+    					Util::identiteAgent($donneesAgent['civilite'], $donneesAgent['titre'], $donneesAgent['prenom'], $donneesAgent['nom'], $donneesAgent['email']),
+    					$donneesAgent['affectation'],
+    					Util::identiteAgent($donneesAgent['shd_civilite'], $donneesAgent['shd_titre'], $donneesAgent['shd_prenom'], $donneesAgent['shd_nom'], $donneesAgent['shd_email']),
+    					Util::identiteAgent($donneesAgent['ah_civilite'], $donneesAgent['ah_titre'], $donneesAgent['ah_prenom'], $donneesAgent['ah_nom'], $donneesAgent['ah_email']),
+    					Util::formatEvaluable($donneesAgent['evaluable']),
+    					'1' == $donneesAgent['evaluable'] ? Util::formatStatutValidation($donneesAgent['statutValidation']) : '',
+    					'1' == $donneesAgent['evaluable'] ? Util::formatStatutCrep($donneesAgent['crep_statut']) : ''
+    			], ';');
+    		}
+    
+    		fclose($handle);
+    	});
+    	 
+    	$streamedResponse->headers->set('Content-Type', 'application/force-download');
+    	$streamedResponse->headers->set('Content-Disposition','attachment; filename="export.csv"');
+    	 
+    	return $streamedResponse;
     }
 }

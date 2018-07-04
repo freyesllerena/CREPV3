@@ -1,4 +1,5 @@
 <br>
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <label class="col-md-5 col-sm-5 col-xs-12">Globalement, les objectifs sont :</label>
@@ -9,28 +10,36 @@
         <div class="col-md-2 col-sm-2 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                        {#{% if globalObjectifs00 %}checked="checked"{% endif %}#}
+                        {% if crep.contexteResultats == '0' and crep.contexteResultats is not null %}
+                            checked="checked"
+                        {% endif %}
                 >&nbsp;&nbsp;Atteints
             </label>
         </div>
         <div class="col-md-2 col-sm-2 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                        {#{% if globalObjectifs01 %}checked="checked"{% endif %}#}
+                        {% if crep.contexteResultats == '1' %}
+                            checked="checked"
+                        {% endif %}
                 >&nbsp;&nbsp;Partiellement
             </label>
         </div>
         <div class="col-md-2 col-sm-2 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                        {#{% if globalObjectifs02 %}checked="checked"{% endif %}#}
+                        {% if crep.contexteResultats == '2' %}
+                            checked="checked"
+                        {% endif %}
                 >&nbsp;&nbsp;Non atteints
             </label>
         </div>
         <div class="col-md-2 col-sm-2 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                        {#{% if globalObjectifs03 %}checked="checked"{% endif %}#}
+                        {% if crep.contexteResultats == '3' %}
+                            checked="checked"
+                        {% endif %}
                 >&nbsp;&nbsp;Devenus sans objet
             </label>
         </div>

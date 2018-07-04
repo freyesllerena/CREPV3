@@ -13,6 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use AppBundle\Util\Util;
 
 class CampagneRlcManager extends CampagneManager
 {
@@ -190,4 +192,46 @@ class CampagneRlcManager extends CampagneManager
     {
         return $this->em->getRepository("AppBundle:Statistiques\StatCampagneRlc")->getHistoriqueIndicateurs($campagneRlc);
     }
+    
+    public function exporterPopulation(CampagneRlc $campagneRlc)
+    {
+    	$streamedResponse = new StreamedResponse(function() use($campagneRlc)
+    	{
+    		/* @var $agentRepository AgentRepository */
+    		$agentRepository = $this->em->getRepository(Agent::class);
+    		
+    		$donneesAgents = $agentRepository->exportDonneesAgents($campagneRlc);
+    		
+    		$handle = fopen('php://output', 'r+');
+    		
+    		// UTF-8 BOM pour qu'il soit correctement lisible par Excel
+    		fputs($handle, "\xEF\xBB\xBF");
+    		
+    		// Nom des colonnes du CSV
+    		fputcsv($handle, array('Agent', 'Périmètre BRHP', 'N+1', 'N+2', 'Affectation', 'Evaluable', 'Statut', 'Avancement du CREP'), ';');
+    		
+    				
+    		foreach ($donneesAgents as $donneesAgent){
+    			fputcsv($handle, [
+    					Util::identiteAgent($donneesAgent['civilite'], $donneesAgent['titre'], $donneesAgent['prenom'], $donneesAgent['nom'], $donneesAgent['email']),
+    					$donneesAgent['perimetreBrhp_libelle'],
+    					Util::identiteAgent($donneesAgent['shd_civilite'], $donneesAgent['shd_titre'], $donneesAgent['shd_prenom'], $donneesAgent['shd_nom'], $donneesAgent['shd_email']),
+    					Util::identiteAgent($donneesAgent['ah_civilite'], $donneesAgent['ah_titre'], $donneesAgent['ah_prenom'], $donneesAgent['ah_nom'], $donneesAgent['ah_email']),
+    					$donneesAgent['affectation'],
+    					Util::formatEvaluable($donneesAgent['evaluable']),
+    					'1' == $donneesAgent['evaluable'] ? Util::formatStatutValidation($donneesAgent['statutValidation']) : '',
+    					'1' == $donneesAgent['evaluable'] ? Util::formatStatutCrep($donneesAgent['crep_statut']) : ''
+    			], ';');
+    		}
+    		
+    		fclose($handle);
+    	});
+    	
+    	$streamedResponse->headers->set('Content-Type', 'application/force-download');
+    	$streamedResponse->headers->set('Content-Disposition','attachment; filename="export.csv"');
+    	
+    	return $streamedResponse;
+    }
+    
+    
 }
