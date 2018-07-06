@@ -549,6 +549,23 @@ class CrepAc extends Crep
     {
         $this->initialiserParent($agent, $em);
 
+        $dernierCrep = $em->getRepository(Crep::class)->getDernierCrep($agent);
+        
+        // Reprise des données du CREP N-1
+        if($dernierCrep && $dernierCrep instanceof $this){
+        
+        	// Reprise des formations
+        	foreach ($dernierCrep->getFormationsDemandeesAgent() as $formation){
+        		$formationSuivie = new FormationAcSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsAcSuivy($formationSuivie);
+        	}
+        
+        	// Reprise des fonctions exercees
+        	$this->setDescriptionFonctions($dernierCrep->getDescriptionFonctions());
+        }
+        
         //Initialisation du référentiel des contraintes du poste
         $this->addContraintesPoste(new CrepAcContraintePoste('Besoin d’accompagnement des agents aux missions de la structure'));
         $this->addContraintesPoste(new CrepAcContraintePoste('Relations avec des partenaires extérieurs'));

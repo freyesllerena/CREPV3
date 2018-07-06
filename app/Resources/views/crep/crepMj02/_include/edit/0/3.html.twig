@@ -10,18 +10,20 @@
     </div>
 </div>
 <br><br>
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_3.html.twig' %}
 <div class="row">
-    {{ form_row(form.motifAbsenceAgent, { 'label': "L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) :"}) }}
+    <label>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au
+    cours de la
+    période de référence (motifs) :</label>
 </div>
-<br>
+<div class="row">
+    {{ form_row(form.motifAbsenceAgent, {'label': false, 'label_attr': {'class' : 'radio-inline',
+        'style':'text-align:rigth;'}}) }}
+</div>
+
 
 <div class="row">
-    <div class="col-md-7 col-sm-7 col-xs-12 pull-left">
-        <label>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) : </label>
-    </div>
-    <div class="col-md-5 col-sm-5 col-xs-12 pull-left">
-        {{ form_row(form.motifAbsenceAgent, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
-    </div>
+    {{ form_row(form.motifAbsenceAgent, { 'label': " L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) :" }) }}
 </div>
 
 <div class="row">

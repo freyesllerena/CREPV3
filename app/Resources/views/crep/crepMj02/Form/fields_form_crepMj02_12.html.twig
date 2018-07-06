@@ -1,0 +1,22 @@
+{% use "Form/App_bootstrap_3_layout.html.twig" %}
+
+{# Pour que le champ de saisie prenne toute la ligne#}
+{% block form_row -%}
+    <td>
+        {{- parent() -}}
+    </td>
+{%- endblock form_row %}
+
+{# Redéfinition du bloc from_errors aligner à gauche les erreurs de validation, en ajoutant style="text-align: left;"   #}
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        <div class="has-error">
+            {%- for error in errors -%}
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+                </div>
+            {%- endfor -%}
+        </div>
+    
+    {%- endif %}
+{%- endblock form_errors %}

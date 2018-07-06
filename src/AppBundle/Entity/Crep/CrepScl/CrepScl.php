@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Crep;
 use AppBundle\Entity\Agent;
+use AppBundle\Entity\FormationSuivie;
 
 /**
  * CrepScl.
@@ -217,6 +218,26 @@ class CrepScl extends Crep
     {
         $this->initialiserParent($agent, $em);
 
+        $dernierCrep = $em->getRepository(Crep::class)->getDernierCrep($agent);
+        
+        // Reprise des données du CREP N-1
+        if($dernierCrep && $dernierCrep instanceof $this){
+        
+        	// Reprise des formations
+        	foreach ($dernierCrep->getFormationsDemandeesAgent() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	
+        	// Reprise des fonctions exercees
+        	$this->setDescriptionFonctions($dernierCrep->getDescriptionFonctions());
+        	
+        	// Reprise des acquis de l'expérience professionnelle
+        	$this->setAcquisExperiencePro($dernierCrep->getAcquisExperiencePro());
+        }
+        
         $this->addCompetencesTransverse(new CrepSclCompetenceTransverse("Connaissances professionnelles dans l'emploi occupé", 'Générale'));
         $this->addCompetencesTransverse(new CrepSclCompetenceTransverse('Compétences personnelles', 'Générale'));
         $this->addCompetencesTransverse(new CrepSclCompetenceTransverse('Sens du service public', 'Générale'));

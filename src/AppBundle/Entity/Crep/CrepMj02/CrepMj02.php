@@ -455,7 +455,7 @@ class CrepMj02 extends Crep
     protected $contexteResultats;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -477,8 +477,14 @@ class CrepMj02 extends Crep
      */
     protected $dureeEntretien;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $formationsEffecuees;
 
-    // ############################################################################################################
+
 
     public function initialiser(Agent $agent, $em)
     {
@@ -551,7 +557,7 @@ class CrepMj02 extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getNomUsage()
     {
@@ -614,7 +620,9 @@ class CrepMj02 extends Crep
         }
     }
 
-
+    /**
+     * Confidentialisation des champs pour la session du SHD
+     */
     public function confidentialisationChampsShd()
     {
         /** @var CrepMj02CompetenceJudiciaire $competenceJudiciaire */
@@ -636,11 +644,14 @@ class CrepMj02 extends Crep
         }
         $this->setAppreciationLitteraleShd(null);
         $this->setDureeEntretien(null);
+
+        $this->setDateVisaShd(null);
+        $this->setShdSignataire(null);
     }
 
     public function confidentialisationChampsAgent()
     {
-        // TODO: Implement confidentialisationChampsAgent() method.
+        $this->setObservationsVisaAgent(null);
     }
 
     public function confidentialisationChampsAgentAvantNotification()
@@ -1363,4 +1374,22 @@ class CrepMj02 extends Crep
     {
         $this->dureeEntretien = $dureeEntretien;
     }
+
+    /**
+     * @return bool
+     */
+    public function isFormationsEffecuees()
+    {
+        return $this->formationsEffecuees;
+    }
+
+    /**
+     * @param bool $formationsEffecuees
+     */
+    public function setFormationsEffecuees($formationsEffecuees)
+    {
+        $this->formationsEffecuees = $formationsEffecuees;
+    }
+
+
 }

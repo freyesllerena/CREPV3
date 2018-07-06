@@ -23,6 +23,7 @@ use AppBundle\Entity\MobiliteGeographique;
 use AppBundle\Entity\MobiliteExterne;
 use AppBundle\Entity\Crep\CrepMindef01\AutreDomaine;
 use AppBundle\Entity\Crep\CrepMindef01\Technique;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 /**
@@ -539,6 +540,41 @@ class CrepMindef01 extends Crep
     {
         $this->initialiserParent($agent, $em);
 
+        $dernierCrep = $em->getRepository(Crep::class)->getDernierCrep($agent);
+        
+        // Reprise des données du CREP N-1
+        if($dernierCrep && $dernierCrep instanceof $this){
+
+        	foreach ($dernierCrep->getFormationsAVenir() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	
+        	foreach ($this->getFormationsDemandeesAdministration() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        	
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	
+        	foreach ($this->getFormationsReglementaires() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	
+        	foreach ($this->getFormationsDemandeesAgent() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        }
+        
+        
         $this->addEmplois(new Emploi());
         $this->addEmplois(new Emploi());
         $this->addEmplois(new Emploi());
@@ -554,69 +590,69 @@ class CrepMindef01 extends Crep
         ->findByModeleCrep(Util::getClassName($this));
 
         // Reprise des données de l'année 2016 pour l'année 2017
-        if (2017 == $agent->getCampagnePnc()->getAnneeEvaluee()) {
-            // Récupération des objectifs futurs 2016
-            $objectifsFuturs2016 = $em
-            ->getRepository('AppBundle:RepriseMINDEF2016\ObjectifFutur2016')
-            ->findByEmail($agent->getEmail());
+//         if (2017 == $agent->getCampagnePnc()->getAnneeEvaluee()) {
+//             // Récupération des objectifs futurs 2016
+//             $objectifsFuturs2016 = $em
+//             ->getRepository('AppBundle:RepriseMINDEF2016\ObjectifFutur2016')
+//             ->findByEmail($agent->getEmail());
 
-            // Récupération des formations à venir 2016
-            $formationsAVenir2016 = $em
-            ->getRepository('AppBundle:RepriseMINDEF2016\FormationAVenir2016')
-            ->findByEmail($agent->getEmail());
+//             // Récupération des formations à venir 2016
+//             $formationsAVenir2016 = $em
+//             ->getRepository('AppBundle:RepriseMINDEF2016\FormationAVenir2016')
+//             ->findByEmail($agent->getEmail());
 
-            // Récupération des formations demandées administration 2016
-            $formationsDemandeesAdministration2016 = $em
-            ->getRepository('AppBundle:RepriseMINDEF2016\FormationDemandeeAdministration2016')
-            ->findByEmail($agent->getEmail());
+//             // Récupération des formations demandées administration 2016
+//             $formationsDemandeesAdministration2016 = $em
+//             ->getRepository('AppBundle:RepriseMINDEF2016\FormationDemandeeAdministration2016')
+//             ->findByEmail($agent->getEmail());
 
-            // Récupération des formations réglementaires 2016
-            $formationsReglementaires2016 = $em
-            ->getRepository('AppBundle:RepriseMINDEF2016\FormationReglementaire2016')
-            ->findByEmail($agent->getEmail());
+//             // Récupération des formations réglementaires 2016
+//             $formationsReglementaires2016 = $em
+//             ->getRepository('AppBundle:RepriseMINDEF2016\FormationReglementaire2016')
+//             ->findByEmail($agent->getEmail());
 
-            // Récupération des formations demandées par l'agent en 2016
-            $formationsDemandeesAgent2016 = $em
-            ->getRepository('AppBundle:RepriseMINDEF2016\FormationDemandeeAgent2016')
-            ->findByEmail($agent->getEmail());
+//             // Récupération des formations demandées par l'agent en 2016
+//             $formationsDemandeesAgent2016 = $em
+//             ->getRepository('AppBundle:RepriseMINDEF2016\FormationDemandeeAgent2016')
+//             ->findByEmail($agent->getEmail());
 
-            /* @var $objectif ObjectifFutur2016 */
-            foreach ($objectifsFuturs2016 as $objectif) {
-                $objectif2017 = new ObjectifEvalue();
-                $objectif2017->setLibelle($objectif->getLibelle())
-                            ->setResultatObtenu($this::$echelleObjectifEvalue['Atteint']);
+//             /* @var $objectif ObjectifFutur2016 */
+//             foreach ($objectifsFuturs2016 as $objectif) {
+//                 $objectif2017 = new ObjectifEvalue();
+//                 $objectif2017->setLibelle($objectif->getLibelle())
+//                             ->setResultatObtenu($this::$echelleObjectifEvalue['Atteint']);
 
-                $this->addObjectifsEvalue($objectif2017);
-            }
+//                 $this->addObjectifsEvalue($objectif2017);
+//             }
 
-            /* @var $formation FormationAVenir */
-            foreach ($formationsAVenir2016 as $formation) {
-                $formationSuivie = new FormationSuivie();
-                $formationSuivie->setLibelle($formation->getLibelle());
-                $this->addFormationsSuivy($formationSuivie);
-            }
+//             /* @var $formation FormationAVenir */
+//             foreach ($formationsAVenir2016 as $formation) {
+//                 $formationSuivie = new FormationSuivie();
+//                 $formationSuivie->setLibelle($formation->getLibelle());
+//                 $this->addFormationsSuivy($formationSuivie);
+//             }
 
-            /* @var $formation FormationDemandeeAdministration */
-            foreach ($formationsDemandeesAdministration2016 as $formation) {
-                $formationSuivie = new FormationSuivie();
-                $formationSuivie->setLibelle($formation->getLibelle());
-                $this->addFormationsSuivy($formationSuivie);
-            }
+//             /* @var $formation FormationDemandeeAdministration */
+//             foreach ($formationsDemandeesAdministration2016 as $formation) {
+//                 $formationSuivie = new FormationSuivie();
+//                 $formationSuivie->setLibelle($formation->getLibelle());
+//                 $this->addFormationsSuivy($formationSuivie);
+//             }
 
-            /* @var $formation FormationReglementaire */
-            foreach ($formationsReglementaires2016 as $formation) {
-                $formationSuivie = new FormationSuivie();
-                $formationSuivie->setLibelle($formation->getLibelle());
-                $this->addFormationsSuivy($formationSuivie);
-            }
+//             /* @var $formation FormationReglementaire */
+//             foreach ($formationsReglementaires2016 as $formation) {
+//                 $formationSuivie = new FormationSuivie();
+//                 $formationSuivie->setLibelle($formation->getLibelle());
+//                 $this->addFormationsSuivy($formationSuivie);
+//             }
 
-            /* @var $formation FormationDemandeeAgent */
-            foreach ($formationsDemandeesAgent2016 as $formation) {
-                $formationSuivie = new FormationSuivie();
-                $formationSuivie->setLibelle($formation->getLibelle());
-                $this->addFormationsSuivy($formationSuivie);
-            }
-        }
+//             /* @var $formation FormationDemandeeAgent */
+//             foreach ($formationsDemandeesAgent2016 as $formation) {
+//                 $formationSuivie = new FormationSuivie();
+//                 $formationSuivie->setLibelle($formation->getLibelle());
+//                 $this->addFormationsSuivy($formationSuivie);
+//             }
+//         }
         // Fin de la partie reprise des données de l'année 2016 pour l'année 2017
 
         /// Valable pour XP ///

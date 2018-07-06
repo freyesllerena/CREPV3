@@ -1,5 +1,27 @@
-{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_6.html.twig' %}
+{% form_theme form 'crep/crepMj02/Form/fields_form_crepMj02_12.html.twig' %}
 
 <div class="row">
-    {{ form_row(form.contexteResultats) }}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Niveau d'appréciation</th>
+                <th class="text-center" width="100px">Atteints</th>
+                <th class="text-center" width="100px">Partiellement</th>
+                <th class="text-center" width="100px">Non atteints</th>
+                <th class="text-center" width="100px">Devenus sans objet</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    Appréciation globale sur la réalisation des objectifs de l’année écoulée
+                </td>
+                {% for resultat in form.contexteResultats %}
+                    <td class="text-center">{{ form_row(resultat, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

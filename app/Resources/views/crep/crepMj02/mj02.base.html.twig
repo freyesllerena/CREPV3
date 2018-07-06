@@ -46,7 +46,7 @@
                         <h3>1.1 Bilan des objectifs de l’année écoulée</h3>
                         {% block i1 %}
                         {% endblock i1 %}
-                        <h3>1.2 Appréciation globale sur la réalisation des objectifs de l’année écoulée</h3>
+                        <h3>1.2 Appréciation globale</h3>
                         {% block i2 %}
                         {% endblock i2 %}
                     </div>
@@ -142,13 +142,10 @@
                 
                 <div class="x_content row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h2>5.1 Capacité à remplir ou à occuper des fonctions d’un niveau supérieur :</h2>
                         {% block v1 %}
                         {% endblock v1 %}
-                        <h2>5.2 Mobilité fonctionnelle ou géographique envisagée  par l’agent :</h2>
                         {% block v2 %}
                         {% endblock v2 %}
-                        <h2>5.3 Souhait de l’agent de rencontrer un Conseiller mobilité et carrière ?</h2>
                         {% block v3 %}
                         {% endblock v3 %}
                     </div>
@@ -197,6 +194,27 @@
                         <h2>7.2 Appréciation littérale globale</h2>
                         {% block vii2 %}
                         {% endblock vii2 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>VIII. COMMUNICATION DU COMPTE RENDU D’ENTRETIEN</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        {% block viii1 %}
+                        {% endblock viii1 %}
                     </div>
                 </div>
             </div>

@@ -15,6 +15,7 @@ use AppBundle\Entity\Crep\CrepMso3\CrepMso3;
 use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 use AppBundle\Entity\Crep\CrepEdd\CrepEdd;
+use AppBundle\Entity\Crep\CrepMj02\CrepMj02;
 
 class AppPdf extends TCPDF
 {
@@ -113,6 +114,14 @@ class AppPdf extends TCPDF
 	                    		  		</tr>
             	         			</table>
 	    						</small>';
+        } elseif ($crep instanceof CrepMj02) {
+            $this->footer = '
+    								<table>
+	                    		  		<tr>
+	    									<td align="right" style="font-size: large">'.$this->getAliasNumPage().'</td>
+	                    		  		</tr>
+            	         			</table>
+	    						';
         } else {
             $this->footer = ' <font color="red">Footer à définir dans AppBundle\Util\AppPdf.php</font>';
         }
@@ -187,6 +196,8 @@ class AppPdf extends TCPDF
         } elseif ($crep instanceof CrepMcc02) {
             $this->header = '';
         } elseif ($crep instanceof CrepEdd) {
+            $this->header = '';
+        } elseif ($crep instanceof CrepMj02) {
             $this->header = '';
         } else {
             $this->header = ' <font color="red">Header à définir dans AppBundle\Util\AppPdf.php</font>';

@@ -646,6 +646,76 @@ class CrepMso3 extends Crep
     {
         $this->initialiserParent($agent, $em);
 
+        $dernierCrep = $em->getRepository(Crep::class)->getDernierCrep($agent);
+        
+        // Reprise des données du CREP N-1
+        if($dernierCrep && $dernierCrep instanceof $this){
+        
+        	// Reprise des formations
+        	foreach ($dernierCrep->getFormationsT1() as $formation){
+        		$formationSuivie = new CrepMso3FormationN1();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsN1($formationSuivie);
+        	}
+        	
+        	foreach ($dernierCrep->getFormationsT2() as $formation){
+        		$formationSuivie = new CrepMso3FormationN1();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsN1($formationSuivie);
+        	}
+        	
+        	foreach ($dernierCrep->getFormationsT3() as $formation){
+        		$formationSuivie = new CrepMso3FormationN1();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsN1($formationSuivie);
+        	}
+        	
+        	foreach ($dernierCrep->getFormationsPreparationConcours() as $formation){
+        		$formationSuivie = new CrepMso3FormationN1();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsN1($formationSuivie);
+        	}
+        	
+        	foreach ($dernierCrep->getFormationsAutres() as $formation){
+        		$formationSuivie = new CrepMso3FormationN1();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsN1($formationSuivie);
+        	}
+        	
+        	// Reprise des fonctions exercees
+        	$this->setFonctionsExercees($dernierCrep->getFonctionsExercees());
+        	
+        	// Reprise des compétences
+        	foreach ($dernierCrep->getCompetencesMisesEnOeuvre() as $ancienneCompetence){
+        		$nouvelleCompetence = new CrepMso3CompetenceMiseEnOeuvre();
+        		$nouvelleCompetence->setLibelle($ancienneCompetence->getLibelle());
+        		$nouvelleCompetence->setNiveau($ancienneCompetence->getNiveau());
+        		
+        		$this->addCompetencesMisesEnOeuvre($nouvelleCompetence);
+        	}
+        	
+        	foreach ($dernierCrep->getSavoirsFaireAgent() as $ancienneSavoirFaire){
+        		$nouveauSavoirFaire = new CrepMso3SavoirFaireAgent();
+        		$nouveauSavoirFaire->setLibelle($ancienneSavoirFaire->getLibelle());
+        		$nouveauSavoirFaire->setNiveau($ancienneSavoirFaire->getNiveau());
+        	
+        		$this->addSavoirsFaireAgent($nouveauSavoirFaire);
+        	}
+        	
+        	foreach ($dernierCrep->getQualitesRelationnellesAgent() as $ancienneQualiteRelationnelle){
+        		$nouvelleQualiteRelationnelle = new CrepMso3QualiteRelationnelleAgent();
+        		$nouvelleQualiteRelationnelle->setLibelle($ancienneQualiteRelationnelle->getLibelle());
+        		$nouvelleQualiteRelationnelle->setNiveau($ancienneQualiteRelationnelle->getNiveau());
+        		 
+        		$this->addQualitesRelationnellesAgent($nouvelleQualiteRelationnelle);
+        	}       	
+        }
+        
         $this->setPrenom($agent->getPrenom())
             ->setNomUsage($agent->getNom())
             ->setDateNaissance($agent->getDateNaissance())

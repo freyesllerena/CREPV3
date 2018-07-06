@@ -4,19 +4,9 @@ namespace AppBundle\Form\Crep\CrepMcc02;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-//use AppBundle\Form\CrepType;
-use AppBundle\Form\Crep\CrepType;
-use AppBundle\Form\ObjectifEvalueType;
-use AppBundle\Form\Crep\CrepMcc02\Competences\CrepMcc02CompetenceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-//use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationSolliciteeType;
-//use AppBundle\Form\Crep\CrepMcc02\Formations\CrepMcc02FormationEnvisageeType;
+
 
 
 class CrepMcc02AgentType extends AbstractType

@@ -16,6 +16,7 @@ use AppBundle\Repository\AgentRepository;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use AppBundle\Entity\BrhpConsult;
 
 class CampagneBrhpVoter extends Voter
 {
@@ -445,19 +446,40 @@ class CampagneBrhpVoter extends Voter
     // Exporter l'ensemble des agent de la campagne BRHP par le BRHP
     private function peutExporterPopulation(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-    	/** @var $brhp Brhp */
-    	$brhp = $this->em->getRepository(Brhp::class)->findOneByUtilisateur($utilisateur);
-    	 
-    	if (in_array($campagneBrhp->getStatut(), array(
-    			EnumStatutCampagne::INITIALISEE,
-    			EnumStatutCampagne::CREEE,
-    			EnumStatutCampagne::OUVERTE,
-    			EnumStatutCampagne::CLOTUREE,
-    			EnumStatutCampagne::FERMEE,
-    	))
-    			&& $brhp && in_array($campagneBrhp->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
-    				return true;
-    			}
+    	$roleUtilisateurSession = $this->session->get('selectedRole');
+    	
+    	if('ROLE_BRHP' == $roleUtilisateurSession){
+	    	/** @var $brhp Brhp */
+	    	$brhp = $this->em->getRepository(Brhp::class)->findOneByUtilisateur($utilisateur);
+	    	 
+	    	if (in_array($campagneBrhp->getStatut(), array(
+	    			EnumStatutCampagne::INITIALISEE,
+	    			EnumStatutCampagne::CREEE,
+	    			EnumStatutCampagne::OUVERTE,
+	    			EnumStatutCampagne::CLOTUREE,
+	    			EnumStatutCampagne::FERMEE,
+	    	))
+	    			&& $brhp && in_array($campagneBrhp->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
+	    				return true;
+	    			}
+    	}
+    	
+    	if('ROLE_BRHP_CONSULT' == $roleUtilisateurSession){
+    		/** @var $brhpConsult BrhpConsult */
+    		$brhpConsult = $this->em->getRepository(BrhpConsult::class)->findOneByUtilisateur($utilisateur);
+    		 
+    		if (in_array($campagneBrhp->getStatut(), array(
+    				EnumStatutCampagne::INITIALISEE,
+    				EnumStatutCampagne::CREEE,
+    				EnumStatutCampagne::OUVERTE,
+    				EnumStatutCampagne::CLOTUREE,
+    				EnumStatutCampagne::FERMEE,
+    		))
+    				&& $brhpConsult && in_array($campagneBrhp->getPerimetreBrhp(), $brhpConsult->getPerimetresBrhp()->toArray())) {
+    					return true;
+    				}
+    	}
+    	
     
     			// Dans tous les autres cas, on refuse l'accès
     			return false;

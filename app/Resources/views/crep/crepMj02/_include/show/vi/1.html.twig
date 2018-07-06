@@ -1,6 +1,26 @@
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        La partie relative à la formation est impérativement abordée lors de l’entretien professionnel et le formulaire de la page 8 du présent document doit être complété.
+<div class="row form-group">
+    <label class="col-md-6 col-sm-6 col-xs-12">
+        L’agent a-t-il effectué des formations au cours des trois dernières années ?
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-2 col-sm-2 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                        {% if  crep.formationsEffecuees == true and crep.formationsEffecuees is not null %}
+                            checked="checked"
+                        {% endif %}
+                >&nbsp;&nbsp;Oui
+            </label>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                        {% if crep.formationsEffecuees == false and crep.formationsEffecuees is not null %}
+                            checked="checked"
+                        {% endif %}
+                >&nbsp;&nbsp;Non
+            </label>
+        </div>
     </div>
 </div>
 <br>

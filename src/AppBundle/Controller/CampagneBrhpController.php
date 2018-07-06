@@ -355,7 +355,7 @@ class CampagneBrhpController extends Controller
      *
      * @param CampagneBrhp $campagneBrhp
      *
-     * @Security("has_role('ROLE_BRHP')")
+     * @Security("has_role('ROLE_BRHP') or has_role('ROLE_BRHP_CONSULT')")
      */
     public function exporterPopulationAction(Request $request, CampagneBrhp $campagneBrhp, CampagneBrhpManager $campagneBrhpManager)
     {

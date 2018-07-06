@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label>Le supérieur hiérarchique a remis à l’agent le compte rendu de l’entretien professionnel : le  </label>
+        {% if crep.dateVisaShd %}
+            {{ crep.dateVisaShd|date('d/m/Y H:i') }}
+        {% endif %}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label>Observations éventuelles de l’agent : </label>
+        <em>
+            L’agent dispose d’un délai de 10 jours francs à partir de la communication du compte rendu d’entretien professionnel pour formuler, le cas échéant, ses observations.
+        </em>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dd class="well well-xs">
+            {{ crep.observationsVisaAgent | nl2br }}
+        </dd>
+    </div>
+</div>

@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use AppBundle\Util\Util;
 use AppBundle\Entity\Crep;
 use AppBundle\Entity\Agent;
+use AppBundle\Entity\FormationSuivie;
 
 /**
  * CrepMcc.
@@ -1454,6 +1455,56 @@ class CrepMcc extends Crep
     public function initialiser(Agent $agent, $em)
     {
         $this->initialiserParent($agent, $em);
+        
+        $dernierCrep = $em->getRepository(Crep::class)->getDernierCrep($agent);
+        
+        // Reprise des données du CREP N-1
+        if($dernierCrep && $dernierCrep instanceof $this){
+        	 
+        	// Reprise des formations
+        	foreach ($dernierCrep->getFormationsAdaptationPosteTravail() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+
+        	foreach ($dernierCrep->getFormationsEvolutionMetiers() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+
+        	foreach ($dernierCrep->getFormationsDevQualifs() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	
+        	foreach ($dernierCrep->getFormationsPrepaConcoursExamens() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	
+        	foreach ($dernierCrep->getFormationsAutresActions() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	 
+        	// Reprise des fonctions exercees
+        	$this->setDescriptionPosteMission($dernierCrep->getDescriptionPosteMission());
+        	 
+        	// Reprise des acquis de l'expérience professionnelle
+        	$this->setAcquisExperiencePro($dernierCrep->getAcquisExperiencePro());
+        }
+        
+        
         $this->setNomPatronymique($agent->getNomNaissance());
         $this->setNomUsage($agent->getNom());
         $this->setPrenom($agent->getPrenom());

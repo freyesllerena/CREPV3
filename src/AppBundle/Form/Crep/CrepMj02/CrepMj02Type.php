@@ -109,12 +109,14 @@ class CrepMj02Type extends CrepType
             ])
             ->add('motifAbsenceAgent', ChoiceType::class, [
                 'choices' => [
-                    'non activité (durée de l\'absence)' => 0,
-                    'congés' => 1,
-                    'autres' => 2,
+                    'Non activité (durée de l\'absence)' => 0,
+                    'Congés' => 1,
+                    'Autres' => 2,
                 ],
+                'placeholder' => false,
                 'expanded' => true,
                 'multiple' => false,
+                'required' => false
             ])
             ->add('dateEntretien',
                 DateType::class,
@@ -231,12 +233,25 @@ class CrepMj02Type extends CrepType
             ->add('contexteResultats', ChoiceType::class,
                 [
                     'choices' => $globalObjectifEvalue,
-                    'required' => false,
+                    'placeholder' => false,
+                    'expanded' => true,
+                    'multiple' => false,
+                    'required' => false
                 ])
             ->add('appreciationLitteraleShd', null, [
                 'attr' => ['maxlength' => '4096'],
                 'required' => false, ])
             ->add('dureeEntretien', null, ['attr' => ['maxlength' => '30'], 'required' => false])
+            ->add('formationsEffecuees', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => 1,
+                    'Non' => 0,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'placeholder' => false,
+                'required' => false
+            ])
         ;
     }
 

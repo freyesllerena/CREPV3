@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use AppBundle\Util\Util;
 use AppBundle\Entity\Crep;
 use AppBundle\Entity\Agent;
+use AppBundle\Entity\FormationSuivie;
 
 /**
  * CrepMinefAbc.
@@ -449,6 +450,26 @@ class CrepMinefAbc extends Crep
     public function initialiser(Agent $agent, $em)
     {
         $this->initialiserParent($agent, $em);
+        
+        $dernierCrep = $em->getRepository(Crep::class)->getDernierCrep($agent);
+        
+        // Reprise des données du CREP N-1
+        if($dernierCrep && $dernierCrep instanceof $this){
+        	
+        	// Reprise des formations
+        	foreach ($dernierCrep->getFormationsDemandeesAgent() as $formation){
+        		$formationSuivie = new FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        	
+        		$this->addFormationsSuivy($formationSuivie);
+        	}
+        	
+        	// Reprise des fonctions exercees
+        	$this->setDescriptionFonctions($dernierCrep->getDescriptionFonctions());
+        	
+        	// Reprise des acquis de l'expérience professionnelle
+        	$this->setAcquisExperiencePro($dernierCrep->getAcquisExperiencePro());
+        }
 
         $transverses = $em
         ->getRepository('AppBundle:CompetenceTransverse')

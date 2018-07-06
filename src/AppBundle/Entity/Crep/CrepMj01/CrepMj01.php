@@ -1771,6 +1771,28 @@ class CrepMj01 extends Crep
     {
         $this->initialiserParent($agent, $em);
 
+        $dernierCrep = $em->getRepository(Crep::class)->getDernierCrep($agent);
+        
+        // Reprise des données du CREP N-1
+        if($dernierCrep && $dernierCrep instanceof $this){
+        
+        	// Reprise des formations
+        	foreach ($dernierCrep->getFormationsEnvisagees() as $formation){
+        		$formationSuivie = new CrepMj01FormationSuivie();
+        		$formationSuivie->setLibelle($formation->getLibelle());
+        		 
+        		$this->addCrepMj01FormationsSuivy($formation);
+        	}
+        	
+        	// Reprise des fonctions exercees
+        	$this->setDescriptionFonctions($dernierCrep->getDescriptionFonctions());
+        	
+        	// Reprise des acquis de l'expérience professionnelle
+        	$this->setConnaissancesInstitution($dernierCrep->getConnaissancesInstitution());
+        	$this->setConnaissancesProfessionnelles($dernierCrep->getConnaissancesProfessionnelles());
+        	$this->setExperienceEncadrement($dernierCrep->getExperienceEncadrement());
+        }
+        
         $this->setNomUsage($agent->getNom());
         $this->setNomNaissance($agent->getNomNaissance());
         $this->setPrenom($agent->getPrenom());

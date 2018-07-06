@@ -35,7 +35,17 @@
     					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
     	                    {{ uo.libelle }}
     					</div>	
-    				</div>	
+    				</div>
+					<div class="row">
+    					<div class="col-md-3 col-sm-3 col-xs-12">
+    						<label class="control-label pull-right label-xs">Périmètre BRHP</label>
+    					</div>
+    					<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
+    						{% if uo.perimetreBrhp %}
+    	                    	{{ uo.perimetreBrhp.libelle }}
+    	                    {% endif %}
+    					</div>	
+    				</div>	    				
 {# 					<div class="row">#}
 {#     					<div class="col-md-3 col-sm-3 col-xs-12">#}
 {#     						<label class="control-label pull-right label-xs">UO mère</label>#}
