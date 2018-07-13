@@ -14,6 +14,8 @@ use AppBundle\Entity\Crep;
 use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02AppreciationGeneraleType;
 use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02CompetenceEncadrementType;
 use AppBundle\Form\Crep\CrepMj02\Competences\CrepMj02CompetenceJudiciaireType;
+use AppBundle\Form\Crep\CrepMj02\Formations\CrepMj02FormationAnneeAvenirType;
+use AppBundle\Form\Crep\CrepMj02\Formations\CrepMj02FormationAnneeEcouleeType;
 use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\ObjectifEvalueType;
 use AppBundle\Form\ObjectifFuturType;
@@ -37,9 +39,11 @@ class CrepMj02Type extends CrepType
         $options['echelleObjectifEvalue'] = $crep::$echelleObjectifEvalue;
         $options['globalObjectifEvalue'] = $crep::$globalObjectifEvalue;
         $options['ministere'] = $crep->getAgent()->getCampagnePnc()->getMinistere();
+        $options['anneeEvaluee']  = $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee();
 
         parent::buildForm($builder, $options);
 
+        $ministere = $crep->getAgent()->getCampagnePnc()->getMinistere();
         $echelleObjectifEvalue = $options['echelleObjectifEvalue'];
         $globalObjectifEvalue = $options['globalObjectifEvalue'];
         $tableauNotesAgent = [];
@@ -242,7 +246,7 @@ class CrepMj02Type extends CrepType
                 'attr' => ['maxlength' => '4096'],
                 'required' => false, ])
             ->add('dureeEntretien', null, ['attr' => ['maxlength' => '30'], 'required' => false])
-            ->add('formationsEffecuees', ChoiceType::class, [
+            ->add('formationsEffectuees', ChoiceType::class, [
                 'choices' => [
                     'Oui' => 1,
                     'Non' => 0,
@@ -252,6 +256,42 @@ class CrepMj02Type extends CrepType
                 'placeholder' => false,
                 'required' => false
             ])
+//            ->add(
+//                'formationsSuivies',
+//                CollectionType::class,
+//                [
+//                    'entry_type' => CrepMj02FormationSuivieType::class,
+//                    'allow_add' => true,
+//                    'allow_delete' => true,
+//                    'by_reference' => false,
+//                    'entry_options' => [
+//                        'ministere' => $ministere,
+//                        'anneeEvaluation' => $options['anneeEvaluee'],
+//                    ],
+//                ]
+//            )
+            ->add(
+                'formationsAnneeEcoulee',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMj02FormationAnneeEcouleeType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
+                ]
+            )
+            ->add(
+                'formationsAnneeAvenir',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepMj02FormationAnneeAvenirType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
+                ]
+            )
         ;
     }
 

@@ -7,10 +7,17 @@
 {% endif %}
 
 <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-                <dl class="dl-horizontal m-t-md">
-                        <dt>Observations</dt>
-                        <dd>{{ form_row(form.observationsVisaAgent, {'label':false, 'attr': {'maxlength': '4096', 'class':class}}) }}</dd>
-                </dl>
-        </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Visa</dt>
+            <dd>
+                {% if crep.dateVisaAgent %}
+                    {{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+                {% endif %}
+            </dd>
+            <dd><br></dd>
+            <dt>Observations</dt>
+            <dd>{{ form_row(form.observationsVisaAgent, {'label':false, 'attr': {'maxlength': '4096', 'class':class}}) }}</dd>
+        </dl>
+    </div>
 </div>

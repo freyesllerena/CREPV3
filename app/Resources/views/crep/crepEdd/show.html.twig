@@ -2,72 +2,72 @@
 {% block accueil %} {% endblock %}
 {% block campagne %} active {% endblock %}
 
-{% block organisation %} {%endblock %}
+{% block organisation %} {% endblock %}
 
 {% block frameTitle %}CREP{% endblock frameTitle %}
 
 {% block pageIcon %}fa fa-file-text-o{% endblock pageIcon %}
-{% block pageTitle %}CREP de {{crep.agent.civilite | title}} {{crep.prenom | title}} {{crep.nomUsage | upper}}{% endblock pageTitle %}
+{% block pageTitle %}CREP de {{ crep.agent.civilite | title }} {{ crep.prenom | title }} {{ crep.nomUsage | upper }}{% endblock pageTitle %}
 
 {% block content %}
-    
- 	{{ block('alertAhNonIdentifie') }}
-	{{ block('alertDebutEntretien') }}
+
+    {{ block('alertAhNonIdentifie') }}
+    {{ block('alertDebutEntretien') }}
     {{ block('alertRefusVisa') }}
     {{ block('alertRecours') }}
     {{ block('alertRefusNotification') }}
     {{ block('renvoyerAh') }}
     {{ block('renvoyerAgent') }}
-    
-	<div class="form-horizontal">
+
+    <div class="form-horizontal">
         {{ parent() }}
-	</div>
-	{{ block('boutons_actions') }}
+    </div>
+    {{ block('boutons_actions') }}
 {% endblock content %}
 
 {% block i01 %}
-	{% include 'crep/crepEdd/_include/show/0/1.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/0/1.html.twig' %}
 {% endblock i01 %}
 
 {% block i02 %}
-	{% include 'crep/crepEdd/_include/show/0/2.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/0/2.html.twig' %}
 {% endblock i02 %}
 
 {% block i1_1 %}
-	{% include 'crep/crepEdd/_include/show/i/1_1.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/i/1.1.html.twig' %}
 {% endblock i1_1 %}
 
 {% block i1_2 %}
-    {% include 'crep/crepEdd/_include/show/i/1_2.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/i/1.2.html.twig' %}
 {% endblock i1_2 %}
 
 {% block i2 %}
-	{% include 'crep/crepEdd/_include/show/i/2.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/i/2.html.twig' %}
 {% endblock i2 %}
 
 {% block i3 %}
-	{% include 'crep/crepEdd/_include/show/i/3.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/i/3.html.twig' %}
 {% endblock i3 %}
 
 {% block i4 %}
-	{% include 'crep/crepEdd/_include/show/i/4.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/i/4.html.twig' %}
 {% endblock i4 %}
 
-{% block ii1_1 %}
-	{% include 'crep/crepEdd/_include/show/ii/1.1.html.twig' %}
-{% endblock ii1_1 %}
-
-{% block ii1_2 %}
-    {% include 'crep/crepEdd/_include/show/ii/1.2.html.twig' %}
-{% endblock ii1_2 %}
+{% block ii1 %}
+    {% include 'crep/crepEdd/_include/show/ii/1.html.twig' %}
+{% endblock ii1 %}
 
 {% block ii2 %}
-	{% include 'crep/crepEdd/_include/show/ii/2.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/ii/2.html.twig' %}
 {% endblock ii2 %}
 
 {% block ii3 %}
-	{% include 'crep/crepEdd/_include/show/ii/3.html.twig' %}
+    {% include 'crep/crepEdd/_include/show/ii/3.html.twig' %}
 {% endblock ii3 %}
+
+{% block ii4 %}
+    {% include 'crep/crepEdd/_include/show/ii/4.html.twig' %}
+{% endblock ii4 %}
 
 {% block iii1 %}
     {% include 'crep/crepEdd/_include/show/iii/1.html.twig' %}
@@ -118,9 +118,13 @@
     {% include 'crep/crepEdd/_include/show/iv/1.2.4.html.twig' %}
 {% endblock iv1_2_4 %}
 
-{% block iv2 %}
-    {% include 'crep/crepEdd/_include/show/iv/2.html.twig' %}
-{% endblock iv2 %}
+{% block iv_2_1 %}
+    {% include 'crep/crepEdd/_include/show/iv/2.1.html.twig' %}
+{% endblock iv_2_1 %}
+
+{% block iv_2_2 %}
+    {% include 'crep/crepEdd/_include/show/iv/2.2.html.twig' %}
+{% endblock iv_2_2 %}
 
 {% block v1_1 %}
     {% include 'crep/crepEdd/_include/show/v/1.1.html.twig' %}
@@ -176,11 +180,12 @@
 
 {% block alertRefusVisa %}
     {% if (crep.dateRefusVisa) and (crep.statut not in [constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD'),
-                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::VISE_AGENT'),
-                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::NOTIFIE_AGENT'),
-                                                        constant('AppBundle\\EnumTypes\\EnumStatutCrep::REFUS_NOTIFICATION_AGENT')]) %}
+        constant('AppBundle\\EnumTypes\\EnumStatutCrep::VISE_AGENT'),
+        constant('AppBundle\\EnumTypes\\EnumStatutCrep::NOTIFIE_AGENT'),
+        constant('AppBundle\\EnumTypes\\EnumStatutCrep::REFUS_NOTIFICATION_AGENT')]) %}
         <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <strong>Refus de visa</strong> du CREP par l'agent acté le <strong>{{ crep.dateRefusVisa|date('d/m/Y à H:i') }}</strong>
+            <strong>Refus de visa</strong> du CREP par l'agent acté le
+            <strong>{{ crep.dateRefusVisa|date('d/m/Y à H:i') }}</strong>
         </div>
     {% endif %}
 {% endblock alertRefusVisa %}
@@ -188,7 +193,8 @@
  {% block alertRefusNotification %}
      {% if crep.dateRefusNotification %}
          <div class="alert alert-danger alert-dismissible fade in" role="alert">
-             <strong>Refus de l'agent de signer</strong> le CREP notifié acté le <strong>{{ crep.dateRefusNotification|date('d/m/Y à H:i') }}</strong>
+             <strong>Refus de l'agent de signer</strong> le CREP notifié acté le
+             <strong>{{ crep.dateRefusNotification|date('d/m/Y à H:i') }}</strong>
          </div>
      {% endif %}
  {% endblock alertRefusNotification %}

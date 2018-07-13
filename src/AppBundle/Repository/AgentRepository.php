@@ -164,25 +164,6 @@ class AgentRepository extends EntityRepository
         $qb->getQuery()->execute();
     }
 
-    public function getAgentByEmail($email, $campagne)
-    {
-        $qb = $this->createQueryBuilder('a');
-        $qb->where('a.email = :EMAIL');
-
-        if ($campagne instanceof CampagnePnc) {
-            $qb->andWhere('a.campagnePnc = :CAMPAGNE');
-        } elseif ($campagne instanceof CampagneRlc) {
-            $qb->andWhere('a.campagneRlc = :CAMPAGNE');
-        } elseif ($campagne instanceof CampagneBrhp) {
-            $qb->andWhere('a.campagneBrhp = :CAMPAGNE');
-        }
-
-        $qb->setParameter('EMAIL', $email)
-        ->setParameter('CAMPAGNE', $campagne);
-
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
     public function getAgentsByAh(Agent $ah, $campagneBrhp)
     {
         $qb = $this->createQueryBuilder('a')
@@ -366,7 +347,6 @@ class AgentRepository extends EntityRepository
                 		      when crep.statut = '".EnumStatutCrep::SIGNE_AH."' then 6 
                 		      when crep.statut = '".EnumStatutCrep::NOTIFIE_AGENT."' then 7 
                     		  when crep.statut = '".EnumStatutCrep::REFUS_NOTIFICATION_AGENT."' then 8 
-                    		  when crep.statut = '".EnumStatutCrep::CAS_ABSENCE."' then 9
                     		  when crep.statut = '".EnumStatutCrep::REFUS_EP."' then 10 
 		                      ELSE ".$ordreStatutNull.' END) as HIDDEN crep_statut');
 
@@ -677,10 +657,6 @@ class AgentRepository extends EntityRepository
                 $qb->andWhere('crep.statut = :STATUT ');
                 $qb->setParameter('STATUT', EnumStatutCrep::REFUS_NOTIFICATION_AGENT);
                 break;
-            case '8':
-                $qb->andWhere('crep.statut = :STATUT ');
-                $qb->setParameter('STATUT', EnumStatutCrep::CAS_ABSENCE);
-                break;
         }
     }
 
@@ -758,7 +734,6 @@ class AgentRepository extends EntityRepository
     	$qb->setParameter('CAMPAGNE', $campagne)
     	->setParameter('STATUTS', array(EnumStatutCrep::NOTIFIE_AGENT,
     			EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
-    			EnumStatutCrep::CAS_ABSENCE,
     	));
     	
     	$reslut = $qb->getQuery()->getScalarResult();
@@ -787,7 +762,6 @@ class AgentRepository extends EntityRepository
         $qb->setParameter('CAMPAGNE', $campagne)
         ->setParameter('STATUTS', array(EnumStatutCrep::NOTIFIE_AGENT,
                                         EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
-                                        EnumStatutCrep::CAS_ABSENCE,
         ));
 
         return $qb->getQuery()->getSingleScalarResult();
@@ -810,16 +784,16 @@ class AgentRepository extends EntityRepository
         return $qb->getQuery()->getScalarResult();
     }
 
-    public function isAh($emailAh, CampagneBrhp $campagneBrhp)
+    public function isAh(Utilisateur $utilisateur, CampagneBrhp $campagneBrhp)
     {
         $qb = $this->createQueryBuilder('agent');
 
         $qb->innerJoin('agent.ah', 'ah')
         ->select('ah.id')
         ->where('agent.campagneBrhp = :CAMPAGNE_BRHP')
-        ->andWhere('ah.email = :EMAIL_AH')
+        ->andWhere('ah.utilisateur = :UTILISATEUR')
         ->setParameter('CAMPAGNE_BRHP', $campagneBrhp)
-        ->setParameter('EMAIL_AH', $emailAh)
+        ->setParameter('UTILISATEUR', $utilisateur)
         ->setMaxResults(1);
 
         $result = $qb->getQuery()->getScalarResult();
@@ -936,10 +910,12 @@ class AgentRepository extends EntityRepository
         ->addSelect('ah.civilite as ah_civilite, ah.titre as ah_titre, ah.prenom as ah_prenom, ah.nom as ah_nom, ah.email as ah_email')
         ->addSelect('agent.evaluable, agent.motifNonEvaluation, agent.codeUo, agent.statutValidation')
         ->addSelect('perimetreBrhp.libelle as perimetreBrhp_libelle, crep.statut as crep_statut')
+        ->addSelect('modeleCrep.typeEntity as agent_modeleCrep')
         ->leftJoin('agent.shd', 'shd')
         ->leftJoin('agent.ah', 'ah')
         ->leftJoin('agent.perimetreBrhp', 'perimetreBrhp')
         ->leftJoin('agent.crep', 'crep')
+        ->leftJoin('agent.modeleCrep', 'modeleCrep')
         ->orderBy('agent.nom')
         ->addOrderBy('agent.prenom');
         
@@ -1022,4 +998,17 @@ class AgentRepository extends EntityRepository
 
         return $result;
     }
+    
+    public function getAgentByUser(Utilisateur $utilisateur, CampagnePnc $campagnePnc)
+    {
+    	$qb = $this->createQueryBuilder('a');
+    	$qb->where('a.utilisateur = :UTILISATEUR')
+    	->andWhere('a.campagnePnc = :CAMPAGNE_PNC');
+    	
+    	$qb->setParameter('UTILISATEUR', $utilisateur)
+    	->setParameter('CAMPAGNE_PNC', $campagnePnc);
+    
+    	return $qb->getQuery()->getOneOrNullResult();
+    }
+    
 }

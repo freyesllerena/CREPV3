@@ -214,8 +214,6 @@ class Util
     			return 'Etape 5/5 : Signé agent';
     		case EnumStatutCrep::REFUS_NOTIFICATION_AGENT:
     			return 'Etape 5/5 : Refus signature agent';
-    		case EnumStatutCrep::CAS_ABSENCE:
-    			return 'Etape 5/5 : CREP en cas d\'absence de l\'agent';
     		case EnumStatutCrep::REFUS_EP:
     			return 'Etape 5/5 : Refus entretien professionnel';
     	}

@@ -5,28 +5,21 @@
     {% include 'crep/crepEdd/_include/show/i/4.html.twig' %}
 {% endblock i4 %}
 
-{#{% block v1_1 %}#}
-    {#{% include 'crep/crepEdd/_include/show/v/1.1.html.twig' %}#}
-{#{% endblock v1_1 %}#}
-
 {% block v2 %}
     {% include 'crep/crepEdd/_include/show/v/2.html.twig' %}
 {% endblock v2 %}
 
-{% block iv2 %}
-    {% include 'crep/crepEdd/_include/show/iv/2.html.twig' %}
-{% endblock iv2 %}
+{% block iv_2_1 %}
+    {% include 'crep/crepEdd/_include/show/iv/2.1.html.twig' %}
+{% endblock iv_2_1 %}
+
+{% block iv_2_2 %}
+    {% include 'crep/crepEdd/_include/show/iv/2.2.html.twig' %}
+{% endblock iv_2_2 %}
 
 {% block viii2 %}
     {% include 'crep/crepEdd/_include/show/viii/2.html.twig' %}
 {% endblock viii2 %}
-
-
-{#{% block i4AvecTitre %}{% endblock i4AvecTitre %}#}
-
-{#{% block iv2AvecTitre %}{% endblock iv2AvecTitre %}#}
-
-{#{% block v2AvecTitre %}{% endblock v2AvecTitre %}#}
 
 {% block circuitDeValidation %}
 
@@ -43,22 +36,22 @@
 
                 <div class="x_content row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h3>1.Signature du supérieur hiérarchique direct ayant conduit l’entretien</h3>
+                        <h3>1. Signature du supérieur hiérarchique direct ayant conduit l’entretien</h3>
 
-                            {% include 'crep/crepEdd/_include/edit/viii/1.html.twig' %}
+                        {% include 'crep/crepEdd/_include/show/viii/1.html.twig' %}
 
-                        <h3>2.Observations éventuelles de l’agent</h3>
+                        <h3>2. Visa et observations éventuelles de l’agent</h3>
 
-                            {% include 'crep/crepEdd/_include/show/viii/2.html.twig' %}
+                        {% include 'crep/crepEdd/_include/show/viii/2.html.twig' %}
 
-                        <h3>3.Visa et observations éventuelles de l’autorité hiérarchique (N+2)</h3>
+                        <h3>3. Visa et observations éventuelles de l’autorité hiérarchique (N+2)</h3>
 
 
-                            {% include 'crep/crepEdd/_include/show/viii/3.html.twig' %}
+                        {% include 'crep/crepEdd/_include/show/viii/3.html.twig' %}
 
                         <h3>4.Signature de l’agent </h3>
 
-                            {% include 'crep/crepEdd/_include/show/viii/4.html.twig' %}
+                        {% include 'crep/crepEdd/_include/show/viii/4.html.twig' %}
 
                         <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                             La signature de l’agent vaut notification du présent document (et non approbation de

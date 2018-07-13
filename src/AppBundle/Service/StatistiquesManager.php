@@ -44,7 +44,6 @@ class StatistiquesManager
             ->setNbCrepRefusNotifAgent($indicateurs['nbCrepRefusNotification'])
             ->setNbCrepModifiesShd($indicateurs['nbCrepModifieShd'])
             ->setNbCrepRefusVisaAgent($indicateurs['nbCrepRefusVisas'])
-            ->setNbCrepCasAbsence($indicateurs['nbCrepCasAbsence'])
             ->setNbCrepNonRenseignes($indicateurs['nbCrepNonRenseignes']);
 
             $this->em->persist($statCampagnePnc);
@@ -70,7 +69,6 @@ class StatistiquesManager
             ->setNbCrepRefusNotifAgent($indicateurs['nbCrepRefusNotification'])
             ->setNbCrepModifiesShd($indicateurs['nbCrepModifieShd'])
             ->setNbCrepRefusVisaAgent($indicateurs['nbCrepRefusVisas'])
-            ->setNbCrepCasAbsence($indicateurs['nbCrepCasAbsence'])
             ->setNbCrepNonRenseignes($indicateurs['nbCrepNonRenseignes']);
 
             $this->em->persist($statCampagneRlc);
@@ -96,7 +94,6 @@ class StatistiquesManager
             ->setNbCrepRefusNotifAgent($indicateurs['nbCrepRefusNotification'])
             ->setNbCrepModifiesShd($indicateurs['nbCrepModifieShd'])
             ->setNbCrepRefusVisaAgent($indicateurs['nbCrepRefusVisas'])
-            ->setNbCrepCasAbsence($indicateurs['nbCrepCasAbsence'])
             ->setNbCrepNonRenseignes($indicateurs['nbCrepNonRenseignes']);
 
             $this->em->persist($statCampagneBrhp);

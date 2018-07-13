@@ -1,11 +1,13 @@
 {% form_theme form 'crep/crepEdd/Form/collections.form.html.twig' %}
 
-<div class="row" id="autresCompetencesTransversesRequisesCollection" data-prototype="{{ form_widget(form.autresCompetencesTransversesRequises.vars.prototype)|e('html_attr') }}">
+<div class="row" id="autresCompetencesTransversesRequisesCollection"
+     data-prototype="{{ form_widget(form.autresCompetencesTransversesRequises.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th style="width: 30%">Autres connaissances spécifiques éventuellement requises sur le poste<sup>2</sup></th>
+                <th style="width: 30%" class="text-center">Autres connaissances spécifiques éventuellement requises sur
+                    le poste<sup>2</sup></th>
                 <th style="width: 15%" class="text-center">Exceptionnelle<sup>1</sup></th>
                 <th style="width: 10%" class="text-center">Forte</th>
                 <th style="width: 10%" class="text-center">Assez forte</th>
@@ -17,7 +19,7 @@
             <tbody>
             {% for autreCompetenceRequise in form.autresCompetencesTransversesRequises %}
                 {{ form_widget(autreCompetenceRequise) }}
-            {%  endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>

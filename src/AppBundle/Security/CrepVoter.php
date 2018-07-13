@@ -237,7 +237,7 @@ class CrepVoter extends Voter
             $brhp = $this->em->getRepository('AppBundle:Brhp')->findOneByUtilisateur($utilisateur);
 
             // Si le CREP est finalisé
-            if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT], EnumStatutCrep::CAS_ABSENCE)) {
+            if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT])) {
                 // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP
                 if ($brhp->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
                     return true;
@@ -250,7 +250,7 @@ class CrepVoter extends Voter
             $brhpConsult = $this->em->getRepository('AppBundle:BrhpConsult')->findOneByUtilisateur($utilisateur);
 
             // Si le CREP est finalisé
-            if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT], EnumStatutCrep::CAS_ABSENCE)) {
+            if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT])) {
                 // Si le périmètre de la campagne fait partie de la liste des périmètre gérés par le BRHP Consult
                 if ($brhpConsult->getPerimetresBrhp()->contains($crep->getAgent()->getCampagneBrhp()->getPerimetreBrhp())) {
                     return true;
@@ -265,7 +265,7 @@ class CrepVoter extends Voter
             // Si l'agent est dans un des périmètres gérés par le RLC
             if ($rlc && in_array($crep->getAgent()->getPerimetreRlc(), $rlc->getPerimetresRlc()->toArray())) {
                 // Si le CREP est finalisé
-                if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT, EnumStatutCrep::CAS_ABSENCE])) {
+                if (in_array($crep->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT])) {
                     return true;
                 }
             }
@@ -507,10 +507,6 @@ class CrepVoter extends Voter
             if (EnumStatutCrep::REFUS_NOTIFICATION_AGENT == $crep->getStatut() && in_array($crep->getAgent()->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
                 return true;
             }
-
-            if (EnumStatutCrep::CAS_ABSENCE == $crep->getStatut() && in_array($crep->getAgent()->getPerimetreBrhp(), $brhp->getPerimetresBrhp()->toArray())) {
-                return true;
-            }
         }
         // Dans tous les autres cas, on refuse l'accès
         return false;
@@ -569,7 +565,8 @@ class CrepVoter extends Voter
             if ('ROLE_SHD' === $roleUtilisateurSession) {
                 if (EnumStatutCrep::SIGNE_SHD == $crep->getStatut()
                     && $crep->getShd()
-                    && $crep->getShd()->getUtilisateur()->getId() == $utilisateur->getId()) {
+                    && $crep->getShd()->getUtilisateur()->getId() == $utilisateur->getId()
+                	&& null === $crep->getDateConsultationAgent()) {
                     return true;
                 }
             }
@@ -631,7 +628,6 @@ class CrepVoter extends Voter
                 [
                                                 EnumStatutCrep::NOTIFIE_AGENT,
                                                 EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
-                                                EnumStatutCrep::CAS_ABSENCE,
                                               ]
                             )
                 ) {
@@ -659,7 +655,6 @@ class CrepVoter extends Voter
     		if ( in_array($crep->getStatut(), [
     				EnumStatutCrep::NOTIFIE_AGENT,
     				EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
-    				EnumStatutCrep::CAS_ABSENCE,
     				]
     			)
     		){
@@ -710,13 +705,12 @@ class CrepVoter extends Voter
                             EnumStatutCampagne::CLOTUREE,
                         ]
                 )
-                // On ne peut déclarer en recours que sur les crep finalisés (signés définitivement, refus de signature, et cas d'absence)
+                // On ne peut déclarer en recours que sur les crep finalisés (signés définitivement, refus de signature)
                 && in_array(
                     $crep->getStatut(),
                         [
                                 EnumStatutCrep::NOTIFIE_AGENT,
                                 EnumStatutCrep::REFUS_NOTIFICATION_AGENT,
-                                EnumStatutCrep::CAS_ABSENCE,
                         ]
         )) {
             // Le BRHP est habilité à déclarer un recours

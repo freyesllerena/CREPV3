@@ -17,8 +17,8 @@
                 <td>{{ form_row(form.nbBureauxDirection) }}</td>
                 <td>{{ form_row(form.nbCadresEncadresA) }}</td>
                 <td>{{ form_row(form.nbTotalAgentsEncadres) }}</td>
-                <td>{{ form_row(form.presenceAdjoints, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:right;'}}) }}</td>
-                <td>{{ form_widget(form.observationsEffectifs) }}</td>
+                <td class="text-center">{{ form_row(form.presenceAdjoints, {'label': false}) }}</td>
+                <td>{{ form_row(form.observationsEffectifs, {'label':false, 'attr': {'maxlength': '4090'}}) }}</td>
             </tr>
             </tbody>
         </table>

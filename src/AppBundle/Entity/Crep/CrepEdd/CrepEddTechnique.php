@@ -25,7 +25,7 @@ class CrepEddTechnique extends Competence
      * Set crep.
      *
      *
-     * @return Technique
+     * @return $crep
      */
     public function setCrep($crep)
     {
@@ -40,17 +40,5 @@ class CrepEddTechnique extends Competence
     public function getCrep()
     {
         return $this->crep;
-    }
-
-    /**
-     * @Assert\Callback
-     */
-    public function validate(ExecutionContextInterface $context)
-    {
-        if($this->libelle !== null && $this->niveauAcquis === null){
-            $context->buildViolation("Le niveau de la connaissance est obligatoire")
-                ->atPath('libelle')
-                ->addViolation();
-        }
     }
 }

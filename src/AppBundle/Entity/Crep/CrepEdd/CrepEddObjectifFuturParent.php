@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Crep\CrepEdd;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Objectif;
 
 /**
@@ -18,6 +19,8 @@ class CrepEddObjectifFuturParent extends Objectif
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Length(max = 200, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $echeance;
 
@@ -25,13 +28,15 @@ class CrepEddObjectifFuturParent extends Objectif
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Assert\Length(max = 4090, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $observationsEventuelles;
 
     /**
      * Set echeance.
      *
-     * @return ObjectifFutur
+     * @return $echeance
      */
     public function setEcheance($echeance)
     {
@@ -49,7 +54,7 @@ class CrepEddObjectifFuturParent extends Objectif
     }
 
     /**
-     * @return the string
+     * @return   string
      */
     public function getObservationsEventuelles()
     {
@@ -57,8 +62,9 @@ class CrepEddObjectifFuturParent extends Objectif
     }
 
     /**
-     * @param
-     *            $observationsEventuelles
+     * Set observationsEventuelles
+     *
+     * return $observationsEventuelles
      */
     public function setObservationsEventuelles($observationsEventuelles)
     {

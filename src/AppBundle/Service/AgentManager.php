@@ -22,6 +22,7 @@ use AppBundle\Util\Util;
 use Doctrine\ORM\EntityManagerInterface;
 use AppBundle\Service\ConstanteManager;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AgentManager
 {
@@ -174,7 +175,7 @@ class AgentManager
             $agentRepository = $this->em->getRepository('AppBundle:Agent');
 
             /* @var $shd Agent */
-            $shd = $agentRepository->getAgentByEmail($utilisateur->getEmail(), $agent->getCampagnePnc());
+            $shd = $agentRepository->getAgentByUser($utilisateur, $agent->getCampagnePnc());
 
             $agent->setShd($shd);
         }
@@ -358,8 +359,7 @@ class AgentManager
         if ($crep
                 && EnumStatutCrep::CREE != $crep->getStatut()
                 && EnumStatutCrep::NOTIFIE_AGENT != $crep->getStatut()
-                && EnumStatutCrep::REFUS_NOTIFICATION_AGENT != $crep->getStatut()
-                && EnumStatutCrep::CAS_ABSENCE != $crep->getStatut()) {
+                && EnumStatutCrep::REFUS_NOTIFICATION_AGENT != $crep->getStatut()) {
             $crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
 
             //Annulation de la signature du N+1
@@ -431,68 +431,74 @@ class AgentManager
         $agentRepository->rattacherAgentsAUnBrhp($uoEnPlus);
     }
 
-    public function exporterFichierAgents(CampagnePnc $campagnePnc)
+    public function exportAgents(CampagnePnc $campagnePnc)
     {
-        /* @var $agentRepository AgentRepository */
-        $agentRepository = $this->em->getRepository('AppBundle:Agent');
-
-        $donneesAgents = $agentRepository->exportDonneesAgents($campagnePnc);
-
-        $filePath = $this->kernelRootDir.'/../var/tmp/'.uniqid().$this->session->getId();
-
-        $handle = fopen($filePath, 'w+');
-
-        // UTF-8 BOM pour qu'il soit correctement lisible par Excel
-        fputs($handle, "\xEF\xBB\xBF");
-
-        // Nom des colonnes du CSV
-        fputcsv($handle, array('Matricule', 'Civilite', 'Nom de famille', 'Nom usuel', 'Nom marital', 'Prenom', 'Adresse mail',
-                'Date de naissance', 'Categorie', 'Corps', 'Date entree dans le corps', 'Grade', 'Date entree dans le grade', 'Echelon',
-                'Date entree dans echelon', 'Grade emploi', 'Date entree dans le grade emploi', 'Etablissement', 'Departement',
-                'Affectation sigle', 'Affectation clair', 'Poste occupe', 'Date entree dans le poste occupe', 'Code poste 1',
-                'Code poste 2', 'Capital DIF', 'Capital DIF mobilisable', 'Adresse mail SHD', 'Adresse mail AH', 'Agent evaluable',
-                'Motif non evaluation', 'Code UO', ), ';');
-
-        //Champs
-        foreach ($donneesAgents as $donneeAgent) {
-            fputcsv($handle, array(
-                    $donneeAgent['matricule'],
-                    Util::twig_title($donneeAgent['civilite']),
-                    $donneeAgent['nomNaissance'],
-                    $donneeAgent['nom'],
-                    $donneeAgent['nomMarital'],
-                    $donneeAgent['prenom'],
-                    $donneeAgent['email'],
-                    $donneeAgent['dateNaissance'] ? date('d/m/Y', strtotime($donneeAgent['dateNaissance'])) : '',
-                    $donneeAgent['categorieAgent'],
-                    $donneeAgent['corps'],
-                    $donneeAgent['dateEntreeCorps'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeCorps'])) : '',
-                    $donneeAgent['grade'],
-                    $donneeAgent['dateEntreeGrade'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeGrade'])) : '',
-                    $donneeAgent['echelon'],
-                    $donneeAgent['dateEntreeEchelon'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeEchelon'])) : '',
-                    $donneeAgent['gradeEmploi'],
-                    $donneeAgent['dateEntreeGradeEmploi'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeGradeEmploi'])) : '',
-                    $donneeAgent['etablissement'],
-                    $donneeAgent['departement'],
-                    $donneeAgent['affectation'],
-                    $donneeAgent['affectationClairAgent'],
-                    $donneeAgent['posteOccupe'],
-                    $donneeAgent['dateEntreePosteOccupe'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreePosteOccupe'])) : '',
-                    $donneeAgent['codeSirh1'],
-                    $donneeAgent['codeSirh2'],
-                    $donneeAgent['capitalDif'],
-                    $donneeAgent['capitalDifMobilisable'],
-                    $donneeAgent['shd_email'],
-                    $donneeAgent['ah_email'],
-                    $donneeAgent['evaluable'] ? 'Oui' : 'Non',
-                    $donneeAgent['motifNonEvaluation'],
-                    $donneeAgent['codeUo'],
-            ), ';');
-        }
-
-        fclose($handle);
-
-        return $filePath;
+    	$streamedResponse = new StreamedResponse(function() use($campagnePnc)
+    	{
+    		/* @var $agentRepository AgentRepository */
+    		$agentRepository = $this->em->getRepository(Agent::class);
+    		
+    		$donneesAgents = $agentRepository->exportDonneesAgents($campagnePnc);
+    		
+    		$handle = fopen('php://output', 'r+');
+    		
+    		// UTF-8 BOM pour qu'il soit correctement lisible par Excel
+    		fputs($handle, "\xEF\xBB\xBF");
+    		
+    		// Nom des colonnes du CSV
+    		fputcsv($handle, array('Matricule', 'Civilite', 'Titre', 'Nom de famille', 'Nom usuel', 'Nom marital', 'Prenom', 'Adresse mail',
+    				'Date de naissance', 'Categorie', 'Corps', 'Date entree dans le corps', 'Grade', 'Date entree dans le grade', 'Echelon',
+    				'Date entree dans echelon', 'Grade emploi', 'Date entree dans le grade emploi', 'Etablissement', 'Departement',
+    				'Affectation sigle', 'Affectation clair', 'Poste occupe', 'Date entree dans le poste occupe', 'Code poste 1',
+    				'Code poste 2', 'Capital CPF', 'Capital CPF mobilisable', 'Adresse mail SHD', 'Adresse mail AH', 'Agent evaluable',
+    				'Motif non evaluation', 'Code UO', 'Modele CREP' ), ';');
+    		
+    		//Champs
+    		foreach ($donneesAgents as $donneeAgent) {
+    			fputcsv($handle, array(
+    					$donneeAgent['matricule'],
+    					Util::twig_title($donneeAgent['civilite']),
+    					$donneeAgent['titre'],
+    					$donneeAgent['nomNaissance'],
+    					$donneeAgent['nom'],
+    					$donneeAgent['nomMarital'],
+    					$donneeAgent['prenom'],
+    					$donneeAgent['email'],
+    					$donneeAgent['dateNaissance'] ? date('d/m/Y', strtotime($donneeAgent['dateNaissance'])) : '',
+    					$donneeAgent['categorieAgent'],
+    					$donneeAgent['corps'],
+    					$donneeAgent['dateEntreeCorps'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeCorps'])) : '',
+    					$donneeAgent['grade'],
+    					$donneeAgent['dateEntreeGrade'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeGrade'])) : '',
+    					$donneeAgent['echelon'],
+    					$donneeAgent['dateEntreeEchelon'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeEchelon'])) : '',
+    					$donneeAgent['gradeEmploi'],
+    					$donneeAgent['dateEntreeGradeEmploi'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreeGradeEmploi'])) : '',
+    					$donneeAgent['etablissement'],
+    					$donneeAgent['departement'],
+    					$donneeAgent['affectation'],
+    					$donneeAgent['affectationClairAgent'],
+    					$donneeAgent['posteOccupe'],
+    					$donneeAgent['dateEntreePosteOccupe'] ? date('d/m/Y', strtotime($donneeAgent['dateEntreePosteOccupe'])) : '',
+    					$donneeAgent['codeSirh1'],
+    					$donneeAgent['codeSirh2'],
+    					$donneeAgent['capitalDif'],
+    					$donneeAgent['capitalDifMobilisable'],
+    					$donneeAgent['shd_email'],
+    					$donneeAgent['ah_email'],
+    					$donneeAgent['evaluable'] ? 'Oui' : 'Non',
+    					$donneeAgent['motifNonEvaluation'],
+    					$donneeAgent['codeUo'],
+     					$donneeAgent['agent_modeleCrep'],
+    			), ';');
+    		
+    		}
+    		fclose($handle);
+    	});
+    	 
+    	$streamedResponse->headers->set('Content-Type', 'application/force-download');
+    	$streamedResponse->headers->set('Content-Disposition','attachment; filename="Extraction_donnees_agents.csv"');
+    	 
+    	return $streamedResponse;
     }
 }

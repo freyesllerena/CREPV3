@@ -878,7 +878,7 @@ class AppMailer extends Mailer implements FOSMailerInterface
             throw new \Exception('Type de campagne inconnu !');
         }
 
-        $subject = 'ESTEVE : '.$campagne->getLibelle().' rouverte';
+        $subject = $campagne->getLibelle().' rouverte';
         $template = 'email/campagnePnc/reouvertureCampagne.html.twig';
 
         foreach ($destinataires as $destinataire) {
@@ -1091,7 +1091,7 @@ class AppMailer extends Mailer implements FOSMailerInterface
         $template = 'email/chargementFichierPopulation/';
         $template .= $succesChargement ? 'succesLecture.html.twig' : 'echecLecture.html.twig';
 
-        $subject = 'ESTEVE : '.$campagnePnc->getLibelle().' : ';
+        $subject = $campagnePnc->getLibelle().' : ';
         $subject .= $succesChargement ? 'Chargement du fichier d\'agents' : 'Échec du chargement du fichier d\'agents';
 
         /*@var $perimetres PerimetreBrhp */

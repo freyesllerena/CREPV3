@@ -41,7 +41,7 @@ class CampagneAgentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         /* @var $agent Agent */
-        $agent = $em->getRepository('AppBundle:Agent')->getAgentByEmail($this->getUser()->getEmail(), $campagne);
+        $agent = $em->getRepository('AppBundle:Agent')->getAgentByUser($this->getUser(), $campagne->getCampagnePnc());
 
         /* @var $ministere Ministere */
         $ministere = $this->getUser()->getMinistere();

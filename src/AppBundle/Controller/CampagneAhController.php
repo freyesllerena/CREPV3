@@ -42,7 +42,7 @@ class CampagneAhController extends Controller
 
         // On récupère le AH de l'Utilisateur courant
         /* @var $ah Agent */
-        $ah = $agentRepository->getAgentByEmail($this->getUser()->getEmail(), $campagneAh->getCampagnePnc());
+        $ah = $agentRepository->getAgentByUser($this->getUser(), $campagneAh->getCampagnePnc());
 
         // On récupère la liste des agents du AH
         $agentsAh = $em->getRepository('AppBundle:Agent')->getAgentsByAh($ah, $campagneAh);

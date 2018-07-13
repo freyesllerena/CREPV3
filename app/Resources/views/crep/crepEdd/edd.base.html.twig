@@ -36,7 +36,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>I - FONCTIONS EXERCEES</h2>
+                        <h2>I - FONCTIONS EXERCÉES</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a><i class="fa fa-chevron-down"></i></a></li>
                         </ul>
@@ -80,7 +80,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>II - BILAN DE L'ANNEE ECOULEE</h2>
+                        <h2>II - BILAN DE L'ANNÉE ÉCOULÉE</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a><i class="fa fa-chevron-up"></i></a></li>
                         </ul>
@@ -89,23 +89,25 @@
 
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h3>1. Contexte de l’année écoulée</h3>
+                            <h3>1. Lettre de mission ou d’objectifs de l'année écoulée </h3>
 
-                            {% block ii1_1 %}
-                            {% endblock ii1_1 %}
+                            {% block ii1 %}
+                            {% endblock ii1 %}
 
-                            {% block ii1_2 %}
-                            {% endblock ii1_2 %}
-
-                            <h3>2. Bilan et réalisation des objectifs de l'année écoulée</h3>
+                            <h3>2. Contexte de l’année écoulée (organisation et fonctionnement du service)</h3>
 
                             {% block ii2 %}
                             {% endblock ii2 %}
 
-                            <h3>3. Autres dossiers ou travaux sur lesquels l’agent s’est investi en cours d’année</h3>
+                            <h3>3. Bilan et réalisation des objectifs de l’année écoulée</h3>
 
                             {% block ii3 %}
                             {% endblock ii3 %}
+
+                            <h3>4. Autres dossiers ou travaux sur lesquels l’agent s’est investi en cours d’année </h3>
+
+                            {% block ii4 %}
+                            {% endblock ii4 %}
                         </div>
                     </div>
                 </div>
@@ -117,7 +119,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>III - OBJECTIFS DE L'AGENT POUR L'ANNEE A VENIR</h2>
+                        <h2>III - OBJECTIFS DE L'AGENT POUR L'ANNÉE A VENIR</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a><i class="fa fa-chevron-up"></i></a></li>
                         </ul>
@@ -145,7 +147,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>IV - EXPERIENCE PROFESSIONNELLE : EVALUATION DES ACQUIS</h2>
+                        <h2>IV - EXPÉRIENCE PROFESSIONNELLE : ÉVALUATION DES ACQUIS</h2>
 
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a><i class="fa fa-chevron-up"></i></a></li>
@@ -199,7 +201,7 @@
 
                             <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                                 <strong><sup>1</sup></strong> Au total, le nombre de croix figurant dans la colonne «
-                                exceptionnelle » de ces 3 tableaux
+                                exceptionnelle » de ces 4 tableaux
                                 ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit être motivée dans la
                                 colonne « observations».
                                 <br>
@@ -216,12 +218,16 @@
                                 <h3>2. Compétences détenues non requises sur le poste actuellement occupé (à remplir par
                                     l’agent)<sup>3</sup></h3>
 
-                                {% block iv2 %}
-                                {% endblock iv2 %}
+                                {% block iv_2_1 %}
+                                {% endblock iv_2_1 %}
+
+                                {% block iv_2_2 %}
+                                {% endblock iv_2_2 %}
 
                                 <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                                     <strong><sup>3</sup></strong> L’identification de ces compétences pourra s’appuyer
-                                    sur celles recensées par le dictionnaire interministériel des compétences des métiers de l’Etat.
+                                    sur celles recensées par le dictionnaire interministériel des compétences des
+                                    métiers de l’Etat.
                                 </p>
 
                             {% endblock iv2AvecTitre %}
@@ -236,7 +242,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>V - PERSPECTIVES D'EVOLUTION PROFESSIONNELLE DE L'AGENT</h2>
+                        <h2>V - PERSPECTIVES D'ÉVOLUTION PROFESSIONNELLE DE L'AGENT</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a><i class="fa fa-chevron-up"></i></a></li>
                         </ul>
@@ -302,7 +308,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2>VII - APPRECIATIONS GENERALES</h2>
+                        <h2>VII - APPRÉCIATIONS GÉNÉRALES</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a><i class="fa fa-chevron-up"></i></a></li>
                         </ul>
@@ -341,30 +347,25 @@
 
                         <div class="x_content row">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <h3>1.Signature du supérieur hiérarchique direct ayant conduit l’entretien</h3>
+                                <h3>1. Signature du supérieur hiérarchique direct ayant conduit l’entretien</h3>
 
                                 {% block viii1 %}
                                 {% endblock viii1 %}
 
-                                <h3>2.Observations éventuelles de l’agent</h3>
+                                <h3>2. Visa et observations éventuelles de l’agent</h3>
 
                                 {% block viii2 %}
                                 {% endblock viii2 %}
 
-                                <h3>3.Visa et observations éventuelles de l’autorité hiérarchique (N+2)</h3>
+                                <h3>3. Visa et observations éventuelles de l’autorité hiérarchique (N+2)</h3>
 
                                 {% block viii3 %}
                                 {% endblock viii3 %}
 
-                                <h3>4.Signature de l’agent </h3>
+                                <h3>4. Signature de l’agent </h3>
 
                                 {% block viii4 %}
                                 {% endblock viii4 %}
-
-                                {#<h3>5. Signature de l'agent</h3>#}
-
-                                {#{% block viii5 %}#}
-                                {#{% endblock viii5 %}#}
 
                                 <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                                     La signature de l’agent vaut notification du présent document (et non approbation de
@@ -412,8 +413,11 @@
 
 
         {% endblock circuitDeValidation %}
+
     </div>
 {% endblock content %}
+
+
 
 {% block javascripts %}
     {{ parent() }}

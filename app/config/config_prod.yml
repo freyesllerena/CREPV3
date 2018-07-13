@@ -8,17 +8,3 @@ doctrine:
         result_cache_driver: apcu
         second_level_cache:
             enabled: true
-
-
-snc_redis:
-    clients:
-        default:
-            type: predis
-            alias: default
-            dsn: redis://127.0.0.1
-    session:
-        client: default
-        prefix: session_esteve_               
-    profiler_storage:
-        client: default
-        ttl: 3600

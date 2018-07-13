@@ -194,7 +194,7 @@ class AgentVoter extends Voter
 
             // Si l'utilisateur a un role BRHP, on fait une condition sur les périmètres uniquement.
             // Il n'est pas nécessaire de vérifier le statut, car un crep papier ne peut avoir que 3 statuts de toutes manières
-            // (notifié agent, cas d'absence, refus de notification de l'agent)
+            // (notifié agent, refus de notification de l'agent)
 
             if ('ROLE_BRHP' === $roleUtilisateurSession || 'ROLE_BRHP_CONSULT' === $roleUtilisateurSession) {
                 /** @var $brhp Brhp */
@@ -241,7 +241,7 @@ class AgentVoter extends Voter
                 return false;
             }
 
-            if ($agent->getCrep() && in_array($agent->getCrep()->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::CAS_ABSENCE, EnumStatutCrep::REFUS_NOTIFICATION_AGENT])) {
+            if ($agent->getCrep() && in_array($agent->getCrep()->getStatut(), [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT])) {
                 return false;
             }
 
@@ -336,7 +336,7 @@ class AgentVoter extends Voter
                 && !in_array($agent->getCampagneBrhp()->getStatut(), array(EnumStatutCampagne::CLOTUREE, EnumStatutCampagne::FERMEE))) {
                 //On récupère l'agent de l'utilisateur (N+1)
                 /** @var $shd Agent */
-                $shd = $this->em->getRepository('AppBundle:Agent')->getAgentByEmail($utilisateur->getEmail(), $agent->getCampagnePnc());
+                $shd = $this->em->getRepository('AppBundle:Agent')->getAgentByUser($utilisateur, $agent->getCampagnePnc());
 
                 //On vérifie si l'utilisateur est bien le N+1 de l'agent à modifier
                 if ($agent->getShd() == $shd) {
@@ -429,7 +429,7 @@ class AgentVoter extends Voter
             else {
                 //On récupère l'agent de l'utilisateur (N+1)
                 /** @var $shd Agent */
-                $shd = $this->em->getRepository('AppBundle:Agent')->getAgentByEmail($utilisateur->getEmail(), $agent->getCampagnePnc());
+                $shd = $this->em->getRepository('AppBundle:Agent')->getAgentByUser($utilisateur, $agent->getCampagnePnc());
 
                 if ($shd) {
                     return true;
@@ -543,7 +543,7 @@ class AgentVoter extends Voter
                    && !in_array($agent->getCampagneBrhp()->getStatut(), array(EnumStatutCampagne::CLOTUREE, EnumStatutCampagne::FERMEE))) {
                 //On récupère l'agent de l'utilisateur (N+1)
                 /** @var $shd Agent */
-                $shd = $this->em->getRepository('AppBundle:Agent')->getAgentByEmail($utilisateur->getEmail(), $agent->getCampagnePnc());
+                $shd = $this->em->getRepository('AppBundle:Agent')->getAgentByUser($utilisateur, $agent->getCampagnePnc());
 
                 if ($agent->getShd() == $shd) {
                     $crep = $agent->getCrep();
@@ -555,8 +555,7 @@ class AgentVoter extends Voter
 
                     // Si l'agent a un crep qui n'est pas à un état final, il est détachable
                     if (EnumStatutCrep::NOTIFIE_AGENT != $crep->getStatut()
-                    && EnumStatutCrep::REFUS_NOTIFICATION_AGENT != $crep->getStatut()
-                    && EnumStatutCrep::CAS_ABSENCE != $crep->getStatut()) {
+                    && EnumStatutCrep::REFUS_NOTIFICATION_AGENT != $crep->getStatut()) {
                         return true;
                     }
                 }

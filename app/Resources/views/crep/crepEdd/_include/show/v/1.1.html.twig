@@ -1,61 +1,43 @@
 <div class="row project_detail">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <strong>{% if crep.souhaitEvolutionCarriere %}<i class="fa fa-check-square-o"></i>{% else %}<i
-                    class="fa fa-square-o"></i>{% endif %} Carrière</strong> <i>(projet professionnel…) </i>
-
-        <br/>
-
-        {% if crep.souhaitEvolutionCarriere %}
+        <strong>Carrière</strong> <i>(projet professionnel…) </i>
+        <br><br>
+        {% if crep.typeEvolutionCarriere %}
             <p class="well well-xs">{{ crep.typeEvolutionCarriere|nl2br }}</p>
         {% endif %}
     </div>
 </div>
 
-<br/>
+<br>
 
 <div class="row project_detail">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <strong>{% if crep.souhaitMobilite %}<i class="fa fa-check-square-o"></i>{% else %}<i
-                    class="fa fa-square-o"></i>{% endif %} Mobilité</strong> <i>(souhait de mobilité, fonctionnelle
+        <strong>Mobilité</strong> <i>(souhait de mobilité, fonctionnelle
             et/ou géographique)</i>
-
-        <br/>
-
-        {% if crep.souhaitMobilite %}
+        <br><br>
+        {% if crep.typeMobilite %}
             <p class="well well-xs">{{ crep.typeMobilite|nl2br }}</p>
         {% endif %}
     </div>
 </div>
 
-<br/>
+<br>
 
 <div class="row project_detail">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <strong>{% if crep.souhaitEntretienCarriere %}<i class="fa fa-check-square-o"></i>{% else %}<i
-                    class="fa fa-square-o"></i>{% endif %} L’agent souhaite-il bénéficier d’un entretien avec un conseiller carrière ?</strong>
+        <strong>L’agent souhaite-il bénéficier d’un entretien avec un conseiller carrière ?</strong>
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.souhaitEntretienCarriere %}checked="checked"{% endif %}>
+        </label>
+        Oui
+        &nbsp;&nbsp;
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.souhaitEntretienCarriere is not null and not crep.souhaitEntretienCarriere %}checked="checked"{% endif %}>
+        </label>
+        Non
     </div>
 </div>
 
-<br/>
-
-{#<div class="row project_detail">#}
-    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-        {#<strong>{% if crep.apptitudeNiveauSup %}<i class="fa fa-check-square-o"></i>{% else %}<i#}
-                    {#class="fa fa-square-o"></i>{% endif %} Aptitude à exercer des fonctions de niveau supérieur</strong>#}
-    {#</div>#}
-{#</div>#}
-
-{#<br/>#}
-
-{#<div class="row form-group">#}
-    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-        {#<label>Observations éventuelles du supérieur hiérarchique direct sur ces perspectives d’évolution#}
-            {#professionnelle</label>#}
-
-        {#<div class="col-md-12 col-sm-12 col-xs-12 well well-xs">#}
-            {#{{ crep.observationShdEvolution|nl2br }}#}
-        {#</div>#}
-    {#</div>#}
-{#</div>#}
-
-{#<br/>#}
+<br>

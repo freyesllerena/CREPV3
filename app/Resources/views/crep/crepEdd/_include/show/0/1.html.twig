@@ -2,7 +2,11 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Civilité </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.civilite | capitalize }}
+            {% if crep.civilite is not empty %}
+                {{ crep.civilite|capitalize }}
+            {% elseif crep.agent.civilite is not empty %}
+                {{ crep.agent.civilite|capitalize }}
+            {% endif %}
         </div>
     </div>
 </div>
@@ -11,78 +15,102 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.prenom|title }}
+            {% if crep.prenom is not empty %}
+                {{ crep.prenom|title }}
+            {% elseif crep.agent.prenom is not empty %}
+                {{ crep.agent.prenom|capitalize }}
+            {% endif %}
         </div>
     </div>
-
 
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.nomUsage|upper }}
+            {% if crep.nomUsage is not empty %}
+                {{ crep.nomUsage|upper }}
+            {% elseif crep.agent.nom is not empty %}
+                {{ crep.agent.nom|upper }}
+            {% endif %}
         </div>
     </div>
-
 </div>
 
 <div class="row form-group">
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Date de naissance </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {% if crep.dateNaissance %}{{ crep.dateNaissance | date('d/m/Y') }}{% endif %}
+            {% if crep.dateNaissance is not empty %}
+                {{ crep.dateNaissance | date('d/m/Y') }}
+            {% elseif crep.agent.dateNaissance is not empty %}
+                {{ crep.agent.dateNaissance | date('d/m/Y') }}
+            {% endif %}
         </div>
     </div>
-</div>
 
-
-<div class="row form-group">
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Emploi occupé </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.posteOccupeAgent }}
-        </div>
-    </div>
-
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Échelon </label>
-        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.echelon }}
+            {% if crep.posteOccupeAgent is not empty %}
+                {{ crep.posteOccupeAgent }}
+            {% elseif crep.agent.posteOccupe is not empty %}
+                {{ crep.agent.posteOccupe }}
+            {% endif %}
         </div>
     </div>
 </div>
 
+
 <div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Échelon </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.echelon is not empty %}
+                {{ crep.echelon }}
+            {% elseif crep.agent.echelon is not empty %}
+                {{ crep.agent.echelon }}
+            {% endif %}
+        </div>
+    </div>
+
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Direction/ Service </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
             {{ crep.direction }}
         </div>
     </div>
-
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Corps/ cadre d’emplois d'origine </label>
-        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.corps }}
-        </div>
-    </div>
-
 </div>
 
 <div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Corps/ cadre d’emplois d'origine </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.corps is not empty %}
+                {{ crep.corps }}
+            {% elseif crep.agent.corps is not empty %}
+                {{ crep.agent.corps }}
+            {% endif %}
+        </div>
+    </div>
 
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Grade d’origine </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.grade }}
+            {% if crep.grade is not empty %}
+                {{ crep.grade }}
+            {% elseif crep.agent.grade is not empty %}
+                {{ crep.agent.grade }}
+            {% endif %}
         </div>
     </div>
+</div>
 
+
+<div class="row form-group">
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Echelon d'origine </label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Échelon d'origine </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
             {{ crep.echelonOrigine }}
         </div>
     </div>
 </div>
-
 <br/>

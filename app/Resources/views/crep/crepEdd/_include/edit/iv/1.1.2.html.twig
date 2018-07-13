@@ -1,6 +1,22 @@
 {% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
 
-    <label>Observations</label>
-    {{ form_widget(form.observationsCompetencesTransversesRequises,{'attr': {'maxlength': '4096'}}) }}
+<label>Observations sur les connaissances professionnelles requises sur le poste</label>
+<div class="row">
+    {% set classeCaExceptionnelle = 'col-md-12 col-sm-12 col-xs-12' %}
+    {% for errorIndex, error in errors %}
+        {% if (error.messageParameters['cause_observation_competences_requises'] is defined and error.messageParameters['cause_observation_competences_requises'] == "errorObservationsCompetencesRequises" ) %}
+            {% set classeCaExceptionnelle = 'col-md-12 col-sm-12 col-xs-12 has-error' %}
+            <div class="has-error">
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError">
+                        <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
 
-<br/>
+    <div class="{{ classeCaExceptionnelle }} row">
+        {{ form_row(form.observationsCompetencesTransversesRequises,{'label': false, 'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>
+<br>

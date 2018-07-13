@@ -14,7 +14,6 @@
 {% set  nbCrepNonRenseignes = indicateurs["nbCrepNonRenseignes"] %}
 {% set  nbCrepModifieShd = indicateurs["nbCrepModifieShd"] %}
 {% set  nbCrepRefusVisas = indicateurs["nbCrepRefusVisas"] %}
-{% set  nbCrepCasAbsence = indicateurs["nbCrepCasAbsence"] %}
 {% set  nbTotalRecours = indicateurs["nbTotalRecours"] %}
 {% set  nbRecoursHierarchique = indicateurs["nbRecoursHierarchique"] %}
 {% set  nbRecoursEnCAP = indicateurs["nbRecoursEnCAP"] %}
@@ -73,7 +72,7 @@
         {% endif %}   
 
         $(document).ready(function () {
-        	{{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification, nbCrepCasAbsence) }}
+        	{{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification) }}
         });
     </script>
 

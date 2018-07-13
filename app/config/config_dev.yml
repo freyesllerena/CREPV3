@@ -15,3 +15,4 @@ web_profiler:
 
 assetic:
     use_controller: false
+    

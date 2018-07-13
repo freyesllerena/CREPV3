@@ -42,7 +42,7 @@ class TraiterFichierAgentsCommand extends Command
         $campagneId = $input->getArgument('campagne_id');
 
         $output->writeln([
-            'Chargement du fichier d\'agents sur la campagne id='.$campagneId.
+            'Chargement du fichier d\'agents sur la campagne id='.$campagneId,
             '====================================================',
             '',
         ]);
@@ -85,8 +85,10 @@ class TraiterFichierAgentsCommand extends Command
             $output->writeln('OK : Fin du chargement du fichier d\'agents sur la campagne : '.$campagnePnc->getId());
         }
 
-
-
-        
+        $output->writeln([
+        		'Fin du chargement du fichier d\'agents sur la campagne id='.$campagneId,
+        		'==============================================================',
+        		'',
+        ]);
     }
 }

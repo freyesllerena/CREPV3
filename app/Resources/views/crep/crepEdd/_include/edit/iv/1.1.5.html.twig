@@ -1,12 +1,13 @@
 {% form_theme form 'crep/crepEdd/Form/collections.form.html.twig' %}
 
 
-<div class="row" id="CrepEddTechniquesCollection" data-prototype="{{ form_widget(form.techniques.vars.prototype)|e('html_attr') }}">
+<div class="row" id="CrepEddTechniquesCollection"
+     data-prototype="{{ form_widget(form.techniques.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th style="width: 30%">Techniques</th>
+                <th style="width: 30%" class="text-center">Connaissances techniques</th>
                 <th style="width: 15%" class="text-center">Exceptionnelle<sup>1</sup></th>
                 <th style="width: 10%" class="text-center">Forte</th>
                 <th style="width: 10%" class="text-center">Assez forte</th>
@@ -18,7 +19,7 @@
             <tbody>
             {% for technique in form.techniques %}
                 {{ form_widget(technique) }}
-            {%  endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>

@@ -77,14 +77,14 @@
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-            <div class="profile">
+            <div class="profile clearfix">
               <div class="profile_pic">
               	  {% if app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MONSIEUR')%}
-                  	 <img src="{{ asset('images/homme.png') }}" alt="" class="img-circle profile_img">
+                  	 <img src="{{ asset('images/homme128.png') }}" alt="homme" class="img-circle profile_img">
                   {% elseif app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MADAME') %}
-                  	 <img src="{{ asset('images/femme.png') }}" alt="" class="img-circle profile_img">
+                  	 <img src="{{ asset('images/femme128.png') }}" alt="femme" class="img-circle profile_img">
                   {% else %}
-                  	 <img src="{{ asset('images/user.png') }}" alt="" class="img-circle profile_img">
+                  	 <img src="{{ asset('images/user128.png') }}" alt="utilisateur" class="img-circle profile_img">
                   {% endif %}
               </div>
               <div class="profile_info">
@@ -336,6 +336,9 @@
 	    $(".select2_single").select2();
 
 	  </script>
+	  
+	<!-- PIWIK -->
+
 	    <!-- /Autosize -->
 
 

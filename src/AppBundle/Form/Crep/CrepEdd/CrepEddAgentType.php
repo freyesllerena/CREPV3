@@ -5,6 +5,7 @@ namespace AppBundle\Form\Crep\CrepEdd;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use AppBundle\Form\Crep\CrepType;
 
 class CrepEddAgentType extends CrepType
@@ -16,9 +17,10 @@ class CrepEddAgentType extends CrepType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('commentaireAgentFonction', null, [
-                                'attr' => ['maxlength' => '4096'],
-                                'required' => false, ])
+            ->add('commentaireAgentFonction', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
             ->add(
                 'competencesTransversesDetenues',
                 CollectionType::class,
@@ -30,16 +32,18 @@ class CrepEddAgentType extends CrepType
                                     'by_reference' => false,
                                 ]
             )
-
-            ->add('observationsCompetencesTransversesDetenues', null, [
-                'required' => false, ])
-
-            ->add('commentaireAgentEvolution', null, [
-                                'attr' => ['maxlength' => '4096'],
-                                'required' => false, ])
-
-            ->add('observationsVisaAgent', null, [
-                                'attr' => ['maxlength' => '4096'], ])
+            ->add('observationsCompetencesTransversesDetenues', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('commentaireAgentEvolution', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
+            ->add('observationsVisaAgent', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false
+            ])
         ;
     }
 

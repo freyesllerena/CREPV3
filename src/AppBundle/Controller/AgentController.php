@@ -304,7 +304,7 @@ class AgentController extends Controller
             $agentRepository = $em->getRepository('AppBundle:Agent');
 
             /* @var $shd Agent */
-            $shd = $agentRepository->getAgentByEmail($utilisateur->getEmail(), $agent->getCampagnePnc());
+            $shd = $agentRepository->getAgentByUser($utilisateur, $agent->getCampagnePnc());
 
             $agent->setCampagneBrhp($campagneBrhp);
 

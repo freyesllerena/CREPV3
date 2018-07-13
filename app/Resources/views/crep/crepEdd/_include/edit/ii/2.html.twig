@@ -1,59 +1,8 @@
-{% form_theme form 'crep/crepEdd/Form/collections.form.html.twig' %}
-
-<div class="row" id="CrepEddObjectifsEvaluesCollectifsCollection" data-prototype="{{ form_widget(form.objectifsEvaluesCollectifs.vars.prototype)|e('html_attr') }}">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="text-center">Objectifs d’ordre collectif<span style="color:red;">&nbsp;*</span></th>
-                <th style="width: 16%" class="text-center">Réalisation</th>
-                <th style="width: 38%">Commentaires</th>
-                <th style="width: 6%"></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for objectif in form.objectifsEvaluesCollectifs %}
-                {{ form_widget(objectif) }}
-            {%  endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
+{% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
 
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <button class="btn btn-primary add_collection_link CrepEddOjectifsEvaluesCollectifs pull-right">
-            <i class="fa fa-plus"></i> Ajouter
-        </button>
-    </div>
+    {{ form_row(form.contexteObjectifsPasses, {'label':false, 'attr': {'maxlength': '4096'}}) }}
 </div>
 
-<br/>
+<br>
 
-<div class="row" id="objectifsEvaluesIndividuelsCollection" data-prototype="{{ form_widget(form.objectifsEvaluesIndividuels.vars.prototype)|e('html_attr') }}">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="text-center" style="width: 40%">Objectifs d’ordre individuel<span style="color:red;">&nbsp;*</span></th>
-                <th style="width: 16%" class="text-center">Réalisation</th>
-                <th style="width: 38%">Commentaires</th>
-                <th style="width: 6%"></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for objectif in form.objectifsEvaluesIndividuels %}
-                {{ form_widget(objectif) }}
-            {%  endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <button class="btn btn-primary add_collection_link CrepEddObjectifsEvaluesIndividuels pull-right">
-            <i class="fa fa-plus"></i> Ajouter
-        </button>
-    </div>
-</div>

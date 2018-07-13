@@ -1,7 +1,7 @@
 {% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
 
-            <dt>Observations</dt>
-            <dd>{{ form_widget(form.observationsAh, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}</dd>
+<dt>Observations</dt>
+<dd>{{ form_widget(form.observationsAh, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}</dd>
 
 {% if crep.agent and not crep.agent.sansAh %}
     <div class="row">

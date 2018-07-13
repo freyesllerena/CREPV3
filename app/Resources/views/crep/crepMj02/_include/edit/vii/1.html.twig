@@ -1,21 +1,35 @@
 {% form_theme form 'crep/crepMj02/Form/collections.form.html.twig' %}
 
 <br>
-{#{{ dump(appreciationsGenerales) }}#}
-<div class="row">
-    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-        <table class="table table-bordered">
-            <tbody>
 
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Niveau d'appréciation</th>
+                <th class="text-center" width="100px">Excellent</th>
+                <th class="text-center" width="100px">Très bon</th>
+                <th class="text-center" width="100px">Bon</th>
+                <th class="text-center" width="100px">Convenable</th>
+                <th class="text-center" width="100px">Insuffisant</th>
+                <th class="text-center" width="100px">Très insuffisant</th>
+            </tr>
+            </thead>
+            <tbody>
+            
             {% for competence in form.appreciationsGenerales %}
                 <tr>
+                    <td>
+                        {{ crep.appreciationsGenerales[loop.index0].libelle }}
+                    </td>
                     {{ form_widget(competence) }}
                 </tr>
             {% endfor %}
-
+            
             </tbody>
         </table>
-    {#</div>#}
+    </div>
 </div>
 <br>
 <br>

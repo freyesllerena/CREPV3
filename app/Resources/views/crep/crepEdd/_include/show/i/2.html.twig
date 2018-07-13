@@ -2,22 +2,24 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th style="width: 15%" class="text-center">Nombre de services, sous-directions et bureaux dans la structure</th>
-                    <th style="width: 15%" class="text-center">Nombre de cadres A encadrés</th>
-                    <th style="width: 15%" class="text-center">Nombre total d’agents encadrés</th>
-                    <th style="width: 15%" class="text-center">Présence d’un (ou d’) adjoint(s)</th>
-                    <th style="width: 40%" class="text-center">Observations particulières</th>
-                </tr>
+            <tr>
+                <th style="width: 15%" class="text-center">Nombre de services, sous-directions et bureaux dans la
+                    structure
+                </th>
+                <th style="width: 15%" class="text-center">Nombre de cadres A encadrés</th>
+                <th style="width: 15%" class="text-center">Nombre total d’agents encadrés</th>
+                <th style="width: 15%" class="text-center">Présence d’un (ou d’) adjoint(s)</th>
+                <th style="width: 40%" class="text-center">Observations particulières</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center">{{ crep.nbBureauxDirection }}<br></td>
-                    <td class="text-center">{{ crep.nbCadresEncadresA }}</td>
-                    <td class="text-center">{{ crep.nbTotalAgentsEncadres }}</td>
-                    <td class="text-center">{{ crep.presenceAdjoints|ouiNon }}</td>
-                    <td class="text-center">{{ crep.observationsEffectifs|nl2br }}</td>
-                </tr>
+            <tr>
+                <td class="text-center">{{ crep.nbBureauxDirection }}<br></td>
+                <td class="text-center">{{ crep.nbCadresEncadresA }}</td>
+                <td class="text-center">{{ crep.nbTotalAgentsEncadres }}</td>
+                <td class="text-center">{{ crep.presenceAdjoints|ouiNon }}</td>
+                <td>{{ crep.observationsEffectifs|nl2br }}</td>
+            </tr>
             </tbody>
         </table>
     </div>

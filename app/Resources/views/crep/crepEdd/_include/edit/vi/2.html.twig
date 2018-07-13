@@ -1,14 +1,15 @@
 {% form_theme form 'crep/crepEdd/Form/collections.form.html.twig' %}
 
-<div class="row" id="formationsSuiviesCollection" data-prototype="{{ form_widget(form.formationsSuivies.vars.prototype)|e('html_attr') }}">
+<div class="row" id="formationsSuiviesCollection"
+     data-prototype="{{ form_widget(form.formationsSuivies.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th width="130px" class="text-center">Année</th>
-                <th>Intitulé de la formation</th>
+                <th class="text-center">Intitulé de la formation</th>
                 <th style="width: 15%" class="text-center">Durée</th>
-                <th style="width: 19%">Commentaires (appréciation, bilan, suites)</th>
+                <th style="width: 19%" class="text-center">Commentaires (appréciation, bilan, suites)</th>
                 <th style="width: 6%"></th>
             </tr>
             </thead>

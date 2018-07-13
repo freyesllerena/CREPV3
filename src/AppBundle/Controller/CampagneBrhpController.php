@@ -301,7 +301,7 @@ class CampagneBrhpController extends Controller
         $response = new Response(file_get_contents($zip));
 
         // adding headers
-        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Export_Formaions.zip');
+        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Export_Formations.zip');
         $response->headers->set('Content-Type', 'application/zip; charset=utf-8');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Content-Disposition', $dispositionHeader);
@@ -326,8 +326,8 @@ class CampagneBrhpController extends Controller
         /* @var $agentRepository AgentRepository */
         $agentRepository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Agent');
 
-        //l'avaluateur est soit le N+1 ou le N+2
-        $evaluateur = $agentRepository->getAgentByEmail($this->getUser()->getEmail(), $campagneBrhp->getCampagnePnc());
+        //l'evaluateur est soit le N+1 ou le N+2
+        $evaluateur = $agentRepository->getAgentByUser($this->getUser(), $campagneBrhp->getCampagnePnc());
 
         //On récupère l'ensemble des agents ayant un CREP finalisé pour un rôle (BRHP, N+1 ou N+2) donné
         $agentsAyantCrepFinalise = $agentRepository->getAgentsAyantCrepFinalise($campagneBrhp, $role, $evaluateur);

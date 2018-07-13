@@ -63,7 +63,8 @@ class CrepEddManager
 
         // Champs
         foreach ($formationsSuivies as $formation) {
-            fputcsv($handle, array(
+            if (!is_null($formation['c_dateNotification']) || !is_null($formation['c_dateRefusNotification'])) {
+                fputcsv($handle, array(
                     $formation['a_matricule'],
                     $formation['a_email'],
                     Util::twig_title($formation['a_civilite']),
@@ -79,7 +80,8 @@ class CrepEddManager
                     $formation['f_commentaires'],
                     $formation['c_dateNotification'],
                     $formation['c_dateRefusNotification'],
-            ), ';');
+                ), ';');
+            }
         }
 
         fclose($handle);
@@ -118,8 +120,8 @@ class CrepEddManager
             } else {
                 $dif = 'Non';
             }
-
-            fputcsv($handle, array(
+            if (!is_null($formation['c_dateNotification']) || !is_null($formation['c_dateRefusNotification'])) {
+                fputcsv($handle, array(
                     $formation['a_matricule'],
                     $formation['a_email'],
                     Util::twig_title($formation['a_civilite']),
@@ -133,10 +135,10 @@ class CrepEddManager
                     $formation['f_libelle'],
                     AppExtension::selectTypologieFormationCrepEdd($formation['f_typologie']),
                     AppExtension::ouiNon($formation['f_dif']),
-//                    null !== $formation['f_origine'] ? $originesFormations[$formation['f_origine']] : '',
                     $formation['c_dateNotification'],
                     $formation['c_dateRefusNotification'],
-            ), ';');
+                ), ';');
+            }
         }
 
         fclose($handle);

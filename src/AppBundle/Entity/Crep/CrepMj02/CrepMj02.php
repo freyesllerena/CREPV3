@@ -9,12 +9,14 @@
 
 namespace AppBundle\Entity\Crep\CrepMj02;
 
+use AppBundle\Entity\FormationSuivie;
 use AppBundle\Entity\ObjectifFutur;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Agent;
 use AppBundle\Entity\Crep;
 use AppBundle\Util\Converter;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 /**
@@ -482,7 +484,25 @@ class CrepMj02 extends Crep
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $formationsEffecuees;
+    protected $formationsEffectuees;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMj02\CrepMj02FormationAnneeEcoulee",
+     *     mappedBy="crep",
+     *     orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $formationsAnneeEcoulee;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepMj02\CrepMj02FormationAnneeAvenir",
+     *     mappedBy="crep",
+     *     orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $formationsAnneeAvenir;
 
 
 
@@ -554,6 +574,8 @@ class CrepMj02 extends Crep
         $this->competencesJudiciaires = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competencesEncadrements = new \Doctrine\Common\Collections\ArrayCollection();
         $this->appreciationsGenerales = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formationsAnneeEcoulee = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formationsAnneeAvenir = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -627,15 +649,15 @@ class CrepMj02 extends Crep
     {
         /** @var CrepMj02CompetenceJudiciaire $competenceJudiciaire */
         foreach ($this->competencesJudiciaires as $competenceJudiciaire) {
-            $competenceJudiciaire->setNiveauAcquis(null);
+            $competenceJudiciaire->removeCompetencesJudiciaire($competenceJudiciaire);
         }
         /** @var CrepMj02CompetenceEncadrement $competenceEncadrement */
         foreach ($this->competencesEncadrements as $competenceEncadrement) {
-            $competenceEncadrement->setNiveauAcquis(null);
+            $competenceEncadrement->removeCompetencesEncadrements($competenceEncadrement);
         }
-        /** @var  ObjectifFutur $objectif */
-        foreach ($this->getObjectifsFuturs() as $objectif) {
-            $this->removeObjectifsFutur($objectif);
+        /** @var  ObjectifFutur $objectifFutur */
+        foreach ($this->getObjectifsFuturs() as $objectifFutur) {
+            $this->removeObjectifsFutur($objectifFutur);
         }
         $this->setMobiliteGeographique(null);
         /** @var CrepMj02AppreciationGenerale $appreciationGenerale */
@@ -645,8 +667,11 @@ class CrepMj02 extends Crep
         $this->setAppreciationLitteraleShd(null);
         $this->setDureeEntretien(null);
 
-        $this->setDateVisaShd(null);
-        $this->setShdSignataire(null);
+        $this->setDateVisaShd(null)
+             ->setShdSignataire(null);
+
+        $this->getFormationsAnneeEcoulee()->clear();
+        $this->getFormationsAnneeAvenir()->clear();
     }
 
     public function confidentialisationChampsAgent()
@@ -662,6 +687,7 @@ class CrepMj02 extends Crep
     public function confidentialisationChampsAh()
     {
         // TODO: Implement confidentialisationChampsAh() method.
+        $this->setObservationsVisaAgent(null);
     }
 
     /**
@@ -1378,18 +1404,107 @@ class CrepMj02 extends Crep
     /**
      * @return bool
      */
-    public function isFormationsEffecuees()
+    public function isFormationsEffectuees()
     {
-        return $this->formationsEffecuees;
+        return $this->formationsEffectuees;
     }
 
     /**
-     * @param bool $formationsEffecuees
+     * @param bool $formationsEffectuees
      */
-    public function setFormationsEffecuees($formationsEffecuees)
+    public function setFormationsEffectuees($formationsEffectuees)
     {
-        $this->formationsEffecuees = $formationsEffecuees;
+        $this->formationsEffectuees = $formationsEffectuees;
+    }
+
+    /**
+     * Add formationsAnneeEcoulee.
+     *
+     * @param CrepMj02FormationAnneeEcoulee $formationsAnneeEcoulee
+     *
+     * @return $this
+     */
+    public function addFormationsAnneeEcoulee($formationsAnneeEcoulee)
+    {
+        $this->formationsAnneeEcoulee[] = $formationsAnneeEcoulee;
+
+        $formationsAnneeEcoulee->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove formationsAnneeEcoulee.
+     *
+     * @param CrepMj02FormationAnneeEcoulee $formationsAnneeEcoulee
+     */
+    public function removeFormationsAnneeEcoulee($formationsAnneeEcoulee)
+    {
+        $this->formationsAnneeEcoulee->removeElement($formationsAnneeEcoulee);
+
+        $formationsAnneeEcoulee->setCrep(null);
+    }
+
+    /**
+     * Get formationsAnneeEcoulee.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFormationsAnneeEcoulee()
+    {
+        return $this->formationsAnneeEcoulee;
+    }
+
+    /**
+     * Add formationsAnneeAvenir.
+     *
+     * @param CrepMj02FormationAnneeAvenir $formationsAnneeAvenir
+     *
+     * @return $this
+     */
+    public function addFormationsAnneeAvenir($formationsAnneeAvenir)
+    {
+        $this->formationsAnneeAvenir[] = $formationsAnneeAvenir;
+
+        $formationsAnneeAvenir->setCrep($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove formationsAnneeAvenir.
+     *
+     * @param CrepMj02FormationAnneeAvenir $formationsAnneeAvenir
+     */
+    public function removeFormationsAnneeAvenir($formationsAnneeAvenir)
+    {
+        $this->formationsAnneeAvenir->removeElement($formationsAnneeAvenir);
+
+        $formationsAnneeAvenir->setCrep(null);
+    }
+
+    /**
+     * Get formationsAnneeAvenir.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFormationsAnneeAvenir()
+    {
+        return $this->formationsAnneeAvenir;
     }
 
 
+
+
+
+    /**
+     * Validation sur CrepMj02
+     *
+     * @Assert\Callback
+     * @param ExecutionContextInterface $context
+     */
+    public function validateCrepMj02(ExecutionContextInterface $context)
+    {
+
+    }
 }

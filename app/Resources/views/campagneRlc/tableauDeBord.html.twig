@@ -16,7 +16,6 @@
 {% set  nbCrepNonRenseignes = indicateurs["nbCrepNonRenseignes"] %}
 {% set  nbCrepModifieShd = indicateurs["nbCrepModifieShd"] %}
 {% set  nbCrepRefusVisas = indicateurs["nbCrepRefusVisas"] %}
-{% set  nbCrepCasAbsence = indicateurs["nbCrepCasAbsence"] %}
 {% set  nbTotalRecours = indicateurs["nbTotalRecours"] %}
 {% set  nbRecoursHierarchique = indicateurs["nbRecoursHierarchique"] %}
 {% set  nbRecoursEnCAP = indicateurs["nbRecoursEnCAP"] %}
@@ -169,7 +168,7 @@
         {% endif %}
         
         $(document).ready(function() {
-            {{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification, nbCrepCasAbsence) }}
+            {{ macro.graphiqueAvancement('canvasDoughnut', nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification) }}
 
             {{ macro.historiqueAvancement('canvasLine', historiqueIndicateurs) }}
          });
@@ -374,17 +373,33 @@
         }
 
         <!-- Select2 -->        
-	       $(document).ready(function() {
-             // Gestion de l'affichage ou pas de l'icone filtre
-             var filtresPerimetresBrhp = document.getElementById("recherche_campagne_rlc_perimetresBrhp").selectedOptions.length;
-             var filtresCategories = document.getElementById("recherche_campagne_rlc_categories").selectedOptions.length;
-             var filtresAffectations = document.getElementById("recherche_campagne_rlc_affectations").selectedOptions.length;
-             var filtresCorps = document.getElementById("recherche_campagne_rlc_corps").selectedOptions.length;
+			$(document).ready(function() {
+			// Gestion de l'affichage ou pas de l'icone filtre
+			var filtresPerimetresBrhp = 0;
+			var filtresCategories = 0;
+			var filtresAffectations = 0;
+			var filtresCorps = 0;
+             
+			if(document.getElementById("recherche_campagne_rlc_perimetresBrhp").selectedOptions){
+				filtresPerimetresBrhp = document.getElementById("recherche_campagne_rlc_perimetresBrhp").selectedOptions.length;
+			}
+             
+			if(document.getElementById("recherche_campagne_rlc_categories").selectedOptions){
+				filtresCategories = document.getElementById("recherche_campagne_rlc_categories").selectedOptions.length;
+			}
+             
+			if(document.getElementById("recherche_campagne_rlc_affectations").selectedOptions){
+				filtresAffectations = document.getElementById("recherche_campagne_rlc_affectations").selectedOptions.length;
+			}
 
-             if(filtresPerimetresBrhp + filtresCategories + filtresAffectations + filtresCorps > 0){
-	               document.getElementById('icone_filter').style.display = 'inline-block';
-             }
-	            // Fin de gestion de l'affichage ou pas de l'icone filtre
+			if(document.getElementById("recherche_campagne_rlc_corps").selectedOptions){
+				filtresCorps = document.getElementById("recherche_campagne_rlc_corps").selectedOptions.length
+			};
+
+			if(filtresPerimetresBrhp + filtresCategories + filtresAffectations + filtresCorps > 0){
+				document.getElementById('icone_filter').style.display = 'inline-block';
+			}
+			// Fin de gestion de l'affichage ou pas de l'icone filtre
         
 	            $("#recherche_campagne_rlc_perimetresBrhp").select2({
 	                placeholder: "Périmètres BRHP ...",

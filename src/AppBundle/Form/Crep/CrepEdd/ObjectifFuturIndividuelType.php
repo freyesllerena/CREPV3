@@ -15,11 +15,6 @@ class ObjectifFuturIndividuelType extends ObjectifFuturParentType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-
-        $builder->add('indicateurs', null, [
-            'attr' => ['class' => 'fieldCollection',
-                'maxlength' => '4096', ], ])
-                ;
     }
 
     /**

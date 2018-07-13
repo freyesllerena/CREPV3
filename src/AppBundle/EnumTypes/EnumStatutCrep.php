@@ -16,7 +16,6 @@ class EnumStatutCrep extends GeneriqueEnum
     const SIGNE_AH = '06 signé AH';
     const NOTIFIE_AGENT = '07 notifié agent';
     const REFUS_NOTIFICATION_AGENT = '08 refus notification agent';
-    const CAS_ABSENCE = '09 crep en cas absence';
     const REFUS_EP = '10 refus EP';
 
     protected $name = 'enum_statut_crep';
@@ -30,7 +29,6 @@ class EnumStatutCrep extends GeneriqueEnum
         self::SIGNE_AH,
         self::NOTIFIE_AGENT,
         self::REFUS_NOTIFICATION_AGENT,
-        self::CAS_ABSENCE,
         self::REFUS_EP,
     );
 }

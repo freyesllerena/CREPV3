@@ -7,7 +7,6 @@ use AppBundle\Entity\CampagneBrhp;
 use AppBundle\Entity\CampagneRlc;
 use AppBundle\EnumTypes\EnumStatutCampagne;
 use AppBundle\Repository\AgentRepository;
-use Doctrine\Tests\Common\DataFixtures\TestEntity\User;
 use AppBundle\Entity\Campagne;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

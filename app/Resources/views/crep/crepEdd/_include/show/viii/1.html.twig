@@ -3,19 +3,22 @@
         <dl class="dl-horizontal m-t-md">
             <dt>Nom</dt>
             <dd>
-                {% if crep.nomUsageShd %}
-                    {{ crep.nomUsageShd }}
+                {% if crep.dateVisaShd %}
+                    {% if crep.nomUsageShd %}
+                        {{ crep.nomUsageShd }}
+                    {% endif %}
                 {% endif %}
             </dd>
-            <br>
+            <dd><br></dd>
             <dt>Prénom</dt>
             <dd>
-            {% if crep.prenomShd %}
-                {{ crep.prenomShd }}
-            {% endif %}
+                {% if crep.dateVisaShd %}
+                    {% if crep.prenomShd %}
+                        {{ crep.prenomShd }}
+                    {% endif %}
+                {% endif %}
             </dd>
         </dl>
-        <br>
     </div>
 </div>
 

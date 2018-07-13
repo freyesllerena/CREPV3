@@ -84,6 +84,14 @@
     {% include 'crep/crepMj02/_include/edit/vi/1.html.twig' %}
 {% endblock vi1 %}
 
+{% block vi2 %}
+    {% include 'crep/crepMj02/_include/edit/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vi3 %}
+    {% include 'crep/crepMj02/_include/edit/vi/3.html.twig' %}
+{% endblock vi3 %}
+
 {% block vii1 %}
     {% include 'crep/crepMj02/_include/edit/vii/1.html.twig' %}
 {% endblock vii1 %}
@@ -107,7 +115,272 @@
             // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
             // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
             var crepCollections = new Crep.Collections();
+
+            // Titulaire
+            var crep_mj02_corps = $("#crep_mj02_corps");
+            var crep_mj02_grade = $("#crep_mj02_grade");
+
+            if ($("#crep_mj02_titulaire_0") && $("#crep_mj02_titulaire_1")) {
+                if ($("#crep_mj02_titulaire_0").attr('checked')) {
+                    isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
+                } else {
+                    isCacheBloc(crep_mj02_corps, crep_mj02_grade);
+                }
+            }
+
+            $("#crep_mj02_titulaire_0").on('ifChanged', function(){
+                isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
+            });
+
+            $("#crep_mj02_titulaire_1").on('ifChanged', function(){
+                isCacheBloc(crep_mj02_corps, crep_mj02_grade);
+                crep_mj02_corps.val('');
+                crep_mj02_grade.val('');
+            });
+
+            // Activité encadrement
+            var crep_mj02_nbAgentsEncadres = $("#crep_mj02_nbAgentsEncadres");
+            var crep_mj02_nbAgentsEncadresA = $("#crep_mj02_nbAgentsEncadresA");
+            var crep_mj02_nbAgentsEncadresB = $("#crep_mj02_nbAgentsEncadresB");
+            var crep_mj02_nbAgentsEncadresC = $("#crep_mj02_nbAgentsEncadresC");
+
+            if ($("#crep_mj02_activiteEncadrement_0") && $("#crep_mj02_activiteEncadrement_1")) {
+                if ($("#crep_mj02_activiteEncadrement_0").attr('checked')) {
+                    isCacheBloc(crep_mj02_nbAgentsEncadres, crep_mj02_nbAgentsEncadresA, false);
+                    isCacheBloc(crep_mj02_nbAgentsEncadresB, crep_mj02_nbAgentsEncadresC, false);
+                } else {
+                    isCacheBloc(crep_mj02_nbAgentsEncadres, crep_mj02_nbAgentsEncadresA);
+                    isCacheBloc(crep_mj02_nbAgentsEncadresB, crep_mj02_nbAgentsEncadresC);
+                    crep_mj02_nbAgentsEncadres.val('');
+                    crep_mj02_nbAgentsEncadresA.val('');
+                    crep_mj02_nbAgentsEncadres.val('');
+                    crep_mj02_nbAgentsEncadresB.val('');
+                    crep_mj02_nbAgentsEncadresC.val('');
+                }
+            }
+
+            $("#crep_mj02_activiteEncadrement_0").on('ifChanged', function(){
+                isCacheBloc(crep_mj02_nbAgentsEncadres, crep_mj02_nbAgentsEncadresA, false);
+                isCacheBloc(crep_mj02_nbAgentsEncadresB, crep_mj02_nbAgentsEncadresC, false);
+            });
+
+            $("#crep_mj02_activiteEncadrement_1").on('ifChanged', function(){
+
+                isCacheBloc(crep_mj02_nbAgentsEncadres, crep_mj02_nbAgentsEncadresA);
+                isCacheBloc(crep_mj02_nbAgentsEncadresB, crep_mj02_nbAgentsEncadresC);
+                crep_mj02_nbAgentsEncadres.val('');
+                crep_mj02_nbAgentsEncadresA.val('');
+                crep_mj02_nbAgentsEncadres.val('');
+                crep_mj02_nbAgentsEncadresB.val('');
+                crep_mj02_nbAgentsEncadresC.val('');
+            });
+            
+            //Fonction permettant de cacher ou non un bloc selon un choix de button radio
+            function isCacheBloc(id1, id2 = false, isHide = true){
+                var label1 = id1.parent().parent().find('label');
+                if (id2) {
+                    var label2 = id2.parent().parent().find('label');
+                }
+
+                if (isHide) {
+                    label1.hide();
+                    id1.hide();
+                    if (id2) {
+                        label2.hide();
+                        id2.hide();
+                    }
+                }else {
+                    label1.show();
+                    id1.show();
+                    if (id2) {
+                        label2.show();
+                        id2.show();
+                    }
+                }
+            }
+
+            // Suivie ?
+            var motifNonSuivie = $("#motifNonSuivie");
+
+            if ($("#crep_mj02_formationsAnneeEcoulee_0_suivie_0") && $("#crep_mj02_formationsAnneeEcoulee_0_suivie_1")) {
+                if ($("#crep_mj02_formationsAnneeEcoulee_0_suivie_0").attr('checked')) {
+                    isCacheBloc02(motifNonSuivie, false);
+                } else {
+                    isCacheBloc02(motifNonSuivie);
+                }
+            }
+
+            $("#crep_mj02_formationsAnneeEcoulee_0_suivie_0").on('ifChanged', function(){
+                isCacheBloc02(motifNonSuivie);
+                motifNonSuivie.val('');
+            });
+
+            $("#crep_mj02_formationsAnneeEcoulee_0_suivie_1").on('ifChanged', function(){
+                isCacheBloc02(motifNonSuivie, false);
+            });
+            
+            //Fonction permettant de cacher ou non un bloc selon un choix de button radio
+            function isCacheBloc02(id1, isHide = true){
+
+                if (isHide) {
+
+                }else {
+
+                }
+            }
+            
         });
-    
+
+        
+
+        var Crep = Crep || {};
+        Crep.CollectionsMj02 = CollectionsMj02;
+
+        $(function() {
+            var crepCollectionsMj02 = new Crep.CollectionsMj02();
+        });
+
+        /**
+         * Classe Collections
+         * classe permettant la génération de collection pour
+         * tous type de formulaire
+         *
+         * @param {Dom} containerCollection est votre balise ou id qui contient le data-prototype
+         * @param {String} containerCollection est votre balise ou id qui contient le data-prototype
+         */
+        function CollectionsMj02 () {
+
+            var collectionsPrototypes = $('div.row[data-prototype]');
+            var collectionCount = collectionsPrototypes.length, i;
+
+            $('.btn.remove-from-collection_mj02').on('click', function (e) {
+                e.preventDefault();
+                remove(this);
+                $('#btnAddObjectifsPasses').show();
+                $('#btnAddObjectifsFuturs').show();
+            });
+
+            for (i = 0; i < collectionCount; i++) {
+                // definir l'index de départ avec le nombre d'élément présent dans la collection
+                var collection = $(collectionsPrototypes[i]);
+                var index = collection.find("table > tbody > tr").length;
+                collection.data('index', index);
+                var button = findAddButton(collectionsPrototypes[i]);
+                if (button != null) {
+                    button.on('click', function (e) {
+                        e.preventDefault();
+                        add(this);
+                        // Récupérer l'id de la div qui contient la table du prototype
+                        divTableId = $(this).parent().parent().prev().attr('id');
+                        // Récupérer la dernière ligne ajoutée
+                        lastTr = $("#" + divTableId + " > div > table > tbody > tr:last");
+                        autoCompleteFormation();
+                        miseEnformeChamps(lastTr);
+                    });
+                }
+            }
+        }
+
+        function add(element) {
+            elementCollectionPrototype =  $(element)
+                .parent() // remonte au premier noeud parent
+                .parent() // remonte au second noeud parent
+                .prev();   // prend le précédent noeud frère
+            table = elementCollectionPrototype.find("table");
+
+            if (table.length > 0) {
+                prototype = elementCollectionPrototype.data('prototype');
+                index = elementCollectionPrototype.data('index');
+                _form = prototype.replace(/__name__/g, index);
+                elementCollectionPrototype.data('index', index + 1);
+                tbody = table.find("tbody");
+                tbody.append(_form);
+                //EligibleDif
+                input = $('tr:last input.dif', tbody);
+                select = $('tr:last input.eligible-dif', tbody);
+                eligibleDifformationAjout(input, select);
+                divElement = $(element).parent().parent().parent().parent().parent().parent().closest('tr');
+                //Mettre à jour l'ensemble des id et name des éléments du prototype
+                miseAjourIndex(divElement, tbody);
+                elementCollectionPrototype.on('click', '.btn.remove-from-collection_mcc02', function(e) {
+                    e.preventDefault();
+                    remove(this, tbody);
+                });
+            }
+        }
+
+        function remove(element, tbody) {
+            //Récupérer la div (collection) à supprimer
+            divElement = $(element).parent().parent().parent().parent().parent().parent().closest('tr');
+            divElement.remove();
+            miseAjourIndex(divElement, tbody);
+        }
+
+        function miseAjourIndex(tbody) {
+            newIndex = 0;
+            //On met à jour les id pour ne pas avoir de décalage entre eux (ex: si on supprime un proto,
+            //on remet les index depuis 0, 1, 2 ... au lieu de 0,2,6...) pour ne pas avoir de problème avec l'affichage des erreurs validators
+            $(divElement, tbody).each(function () {
+                $('td:not(:last)', $(this)).each(function () {
+                    element = $(this).find('.fieldCollection');
+                    //Récupérer le name à mettre à jour
+                    nomAMettreAJour = element.attr('name');
+                    //S'il n'y a pas de name donc c'est le bouton remove du prototype, on ne fait rien
+                    if(typeof nomAMettreAJour !== 'undefined'){
+                        tab = nomAMettreAJour.split('[');
+                        //Reconstruire le name avec le nouvel indice
+                        tab[1] = '[' + tab[1];
+                        tab[2] = '[' + newIndex +']';
+                        tab[3] = '[' + tab[3];
+                        //newName = tab[0] + tab[1] + tab[2] + tab[3]
+                        newName = tab.join("");
+                        element.attr('name' , newName);
+                        //Reconstruire l'id
+                        tabId = element.attr('id').split('_');
+                        //On récupère l'index qui est l'avant dernier élement
+                        tabId[ tabId.length - 2 ] = newIndex;
+                        newId = tabId.join("_");
+                        element.attr('id' , newId);
+                    }
+                });
+                newIndex++;
+            })
+        }
+
+        /*
+         * Fonction qui reçoit un élément <tr> et applique une mise en forme sur les icheck, datePicker et select2 sur ses champs
+         * @param tr : element
+         *
+         */
+        function miseEnformeChamps(tr) {
+            // Mise en forme des boutons radio et des checkBox en icheck
+            tr.iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green'
+            });
+        }
+
+
+        // crud composants entité
+        // prototype fonction CREP
+        /**
+         * Permet de recupérer le button ajouter associé au prototype
+         *
+         *  "<button class="btn btn-primary add_collection_mcc02_link competencesPostes pull-right">"
+         *  "       <i class="fa fa-plus"></i> Ajouter
+         *  "</button>"
+         *
+         * @param {HTMLDivElement} container la div containant le container
+         * @return {HTMLDivElement}  retourne le bouton
+         */
+        function findAddButton(container) {
+            var btn = $(container)
+                .next()
+                .find("button.add_collection_mj02_link");
+
+            return (btn.length > 0) ? btn : null;
+        }
+        
+        
     </script>
 {% endblock javascripts %}

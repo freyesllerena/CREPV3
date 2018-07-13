@@ -21,6 +21,13 @@ class CrepEddAutreCompetenceManageriale extends Competence
      */
     protected $crep;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $niveauRequis;
+
     public function getCrep()
     {
         return $this->crep;
@@ -36,12 +43,16 @@ class CrepEddAutreCompetenceManageriale extends Competence
     /**
      * @Assert\Callback
      */
-    public function validate(ExecutionContextInterface $context)
+    public function getNiveauRequis()
     {
-        if($this->libelle !== null && $this->niveauAcquis === null){
-            $context->buildViolation("Le niveau de la connaissance est obligatoire")
-                ->atPath('libelle')
-                ->addViolation();
-        }
+        return $this->niveauRequis;
+    }
+
+    /**
+     * @param int $niveauRequis
+     */
+    public function setNiveauRequis($niveauRequis)
+    {
+        $this->niveauRequis = $niveauRequis;
     }
 }

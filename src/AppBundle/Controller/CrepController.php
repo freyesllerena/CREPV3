@@ -19,6 +19,8 @@ use AppBundle\Entity\CampagnePnc;
 use AppBundle\Security\ModeleCrepVoter;
 use AppBundle\Twig\AppExtension;
 use AppBundle\Service\CrepConfidentialisationManager;
+use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\EnumTypes\EnumStatutCampagne;
 
 /**
  * Class CrepController
@@ -35,11 +37,20 @@ class CrepController extends Controller
      *
      * @return Response
      */
-    public function showAction(Crep $crep, CrepConfidentialisationManager $crepConfidentialisationManager)
+    public function showAction(Crep $crep, CrepConfidentialisationManager $crepConfidentialisationManager, EntityManagerInterface $em)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::VOIR, $crep);
 
+        // Si l'utilisateur est l'agent et qu'il consulte son CREP pour la première fois
+        // On enregistre la date de consultation
+        if(EnumStatutCrep::SIGNE_SHD == $crep->getStatut() 
+        		&& $crep->getAgent()->getUtilisateur() === $this->getUser() 
+        		&& null === $crep->getDateConsultationAgent()){
+        	$crep->setDateConsultationAgent(new \DateTime());
+        	$em->flush();
+        }
+        
         $repertoireVuesCrep = lcfirst(Util::getClassName($crep));
 
         $reinitialiserForm = $this->createReinitialiserForm($crep);
@@ -192,7 +203,7 @@ class CrepController extends Controller
                 ->set('notice', "CREP signé et transmis à l'agent !")
         ;
 
-        return $this->redirectToRoute('crep_show', array('id' => $crep->getId()));
+        return $this->redirectToRoute('campagne_shd_show', array('id' => $crep->getAgent()->getCampagneBrhp()->getId()));
     }
 
     /**
@@ -240,7 +251,7 @@ class CrepController extends Controller
                 ->set('notice', "CREP signé et transmis à l'agent !")
         ;
 
-        return $this->redirectToRoute('crep_show', array('id' => $crep->getId()));
+        return $this->redirectToRoute('campagne_ah_show', array('id' => $crep->getAgent()->getCampagneBrhp()->getId()));
     }
 
     /**

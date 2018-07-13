@@ -1,21 +1,23 @@
 {% form_theme form 'crep/crepEdd/Form/collections.form.html.twig' %}
 
-<div class="row" id="CrepEddObjectifsFutursCollectifsCollection" data-prototype="{{ form_widget(form.objectifsFutursCollectifs.vars.prototype)|e('html_attr') }}">
+<div class="row" id="CrepEddObjectifsFutursCollectifsCollection"
+     data-prototype="{{ form_widget(form.objectifsFutursCollectifs.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th style="width: 30%">Objectifs d’ordre collectif</th>
+                <th style="width: 30%" class="text-center">Objectifs d’ordre collectif<span
+                            style="color:red;">&nbsp;*</span></th>
                 <th style="width: 16%" class="text-center">Échéance</th>
-                <th style="width: 24%">Indicateurs</th>
-                <th style="width: 24%">Observations éventuelles</th>
+                <th style="width: 24%" class="text-center">Indicateurs</th>
+                <th style="width: 24%" class="text-center">Observations éventuelles</th>
                 <th style="width: 6%"></th>
             </tr>
             </thead>
             <tbody>
             {% for objectif in form.objectifsFutursCollectifs %}
                 {{ form_widget(objectif) }}
-            {%  endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>
@@ -31,22 +33,24 @@
 
 <br/>
 
-<div class="row" id="CrepEddObjectifsFutursIndividuelsCollection" data-prototype="{{ form_widget(form.objectifsFutursIndividuels.vars.prototype)|e('html_attr') }}">
+<div class="row" id="CrepEddObjectifsFutursIndividuelsCollection"
+     data-prototype="{{ form_widget(form.objectifsFutursIndividuels.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th style="width: 30%">Objectifs d’ordre individuel</th>
+                <th style="width: 30%" class="text-center">Objectifs d’ordre individuel<span
+                            style="color:red;">&nbsp;*</span></th>
                 <th style="width: 16%" class="text-center">Échéance</th>
-                <th style="width: 24%">Indicateurs</th>
-                <th style="width: 24%">Observations éventuelles</th>
+                <th style="width: 24%" class="text-center">Indicateurs</th>
+                <th style="width: 24%" class="text-center">Observations éventuelles</th>
                 <th style="width: 6%"></th>
             </tr>
             </thead>
             <tbody>
             {% for objectif in form.objectifsFutursIndividuels %}
                 {{ form_widget(objectif) }}
-            {%  endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>

@@ -24,7 +24,7 @@ class CrepEdd extends Crep
     protected $civilite;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank(message = "Nom obligatoire")
      * @Assert\Length(
      *    min = 2,
@@ -36,7 +36,7 @@ class CrepEdd extends Crep
     protected $nomUsage;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank(message = "Prénom obligatoire")
      * @Assert\Length(
      *    min = 2,
@@ -102,13 +102,6 @@ class CrepEdd extends Crep
      */
     protected $corps;
 
-    // 	/**
-    // 	 * @var string
-    // 	 *
-    // 	 * @ORM\Column(type="string", nullable=true)
-    // 	 */
-    // 	protected $cadreEmploi;
-
     /**
      * @var string
      *
@@ -129,7 +122,7 @@ class CrepEdd extends Crep
     protected $civiliteShd;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank(message = "Prénom obligatoire")
      * @Assert\Length(
      *    min = 2,
@@ -141,7 +134,7 @@ class CrepEdd extends Crep
     protected $prenomShd;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      * @Assert\NotBlank(message = "Nom obligatoire")
      * @Assert\Length(
      *    min = 2,
@@ -174,7 +167,7 @@ class CrepEdd extends Crep
     protected $dateEntreePosteOccupeShd;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -201,7 +194,12 @@ class CrepEdd extends Crep
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
+     *
+     * @Assert\Length(
+     *      max = 200,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $groupeFonctions;
 
@@ -255,7 +253,7 @@ class CrepEdd extends Crep
     protected $presenceAdjoints;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -281,7 +279,7 @@ class CrepEdd extends Crep
     protected $autresContraintesPostes;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -310,7 +308,7 @@ class CrepEdd extends Crep
     protected $docAnnexeBilan;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -336,7 +334,7 @@ class CrepEdd extends Crep
     protected $objectifsEvaluesIndividuels;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -355,7 +353,7 @@ class CrepEdd extends Crep
     protected $docAnnexeObjectifsAvenir;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -388,7 +386,7 @@ class CrepEdd extends Crep
     protected $competencesTransversesRequises;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", name="obs_comp_trans_requises")
      *
@@ -407,7 +405,7 @@ class CrepEdd extends Crep
     protected $autresCompetencesTransversesRequises;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", name="obs_aut_comp_transverses")
      *
@@ -432,7 +430,7 @@ class CrepEdd extends Crep
     protected $techniques;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -451,7 +449,7 @@ class CrepEdd extends Crep
     protected $competencesManageriales;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", name="obs_comp_manageriales")
      *
@@ -470,7 +468,7 @@ class CrepEdd extends Crep
     protected $autresCompetencesManageriales;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", name="obs_aut_comp_manageriales")
      *
@@ -489,7 +487,7 @@ class CrepEdd extends Crep
     protected $competencesTransversesDetenues;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", name="obs_comp_trans_detenues")
      *
@@ -501,14 +499,19 @@ class CrepEdd extends Crep
     protected $observationsCompetencesTransversesDetenues;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="text")
+     *
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )     *
      */
     protected $souhaitEvolutionCarriere;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -520,14 +523,7 @@ class CrepEdd extends Crep
     protected $typeEvolutionCarriere;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $souhaitMobilite;
-
-    /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -546,6 +542,18 @@ class CrepEdd extends Crep
     protected $souhaitEntretienCarriere;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     *
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )     *
+     */
+    protected $souhaitMobilite;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=true)
@@ -553,7 +561,7 @@ class CrepEdd extends Crep
     protected $apptitudeNiveauSup;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -565,7 +573,7 @@ class CrepEdd extends Crep
     protected $observationShdEvolution;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", name="comm_agent_evolution")
      *
@@ -590,7 +598,7 @@ class CrepEdd extends Crep
     protected $formationsSuivies;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -619,11 +627,97 @@ class CrepEdd extends Crep
      */
     protected $motifAbsenceEntretien;
 
+    public function __construct()
+    {
+        parent::init();
+
+        $this->contraintesPostes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->autresContraintesPostes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->objectifsEvaluesCollectifs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->objectifsEvaluesIndividuels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->objectifsFutursCollectifs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->objectifsFutursIndividuels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->competencesTransversesRequises = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->autresCompetencesTransversesRequises = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->techniques = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->competencesManageriales = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->autresCompetencesManageriales = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->competencesTransversesDetenues = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formationsSuivies = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function initialiser(Agent $agent, $em)
+    {
+        //Initialisation du référentiel des contraintes du poste
+        $this->addContraintesPostes(new CrepEddContraintePoste('Besoin d’accompagnement des agents aux missions de la structure'));
+        $this->addContraintesPostes(new CrepEddContraintePoste('Relations avec des partenaires extérieurs'));
+        $this->addContraintesPostes(new CrepEddContraintePoste('Tâches de gestion lourdes'));
+        $this->addContraintesPostes(new CrepEddContraintePoste('Délais impératifs'));
+        $this->addContraintesPostes(new CrepEddContraintePoste('Gestion des ressources humaines'));
+        $this->addContraintesPostes(new CrepEddContraintePoste('Gestion budgétaire et comptable'));
+
+        // Initialisation du référentiel connaissances professionnelles requises sur le poste
+        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Juridique'));
+        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Budgétaires et financières'));
+        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Ressources humaines'));
+        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Internationales et européennes'));
+
+        //Initialisation du référentiel compétences managériales
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à décider en situation complexe'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Implication personnelle et engagement'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Adaptabilité'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Contrôle de soi et exemplarité comportementale'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Force de conviction'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à conduire le changement'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Ecoute'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à développer les compétences et à déléguer'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à communiquer'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à coopérer avec l’environnement'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à conseiller'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Sens de l’intérêt général'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à développer une vision stratégique et à anticiper'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Ouverture d’esprit et capacité à se remettre en question'));
+        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Imagination et goût pour l’innovation'));
+
+        $this->initialiserParent($agent, $em);
+        $this->setNomUsage($agent->getNom());
+        $this->setPrenom($agent->getPrenom());
+        $this->setDateNaissance($agent->getDateNaissance());
+        $this->setGrade($agent->getGrade());
+        $this->setCorps($agent->getCorps());
+        $this->setEchelon($agent->getEchelon());
+        $this->setPosteOccupeAgent($agent->getPosteOccupe());
+        $this->setDirection($agent->getAffectation());
+
+        $shd = $this->getAgent()->getShd();
+        if ($shd) {
+            $this
+                ->setNomUsageShd($shd->getNom())
+                ->setPrenomShd($shd->getPrenom())
+                ->setPosteOccupeShd($shd->getPosteOccupe());
+        } else {
+            $this
+                ->setNomUsageShd(null)
+                ->setPrenomShd(null)
+                ->setPosteOccupeShd(null);
+        }
+    }
+
+    /**
+     *
+     * @return string
+     */
     public function getCivilite()
     {
         return $this->civilite;
     }
 
+    /**
+     *
+     * @param $civilite
+     *
+     * @return $civilite
+     */
     public function setCivilite($civilite)
     {
         $this->civilite = $civilite ? strtolower($civilite) : $civilite;
@@ -631,14 +725,18 @@ class CrepEdd extends Crep
         return $this;
     }
 
+    /**
+     * @return   string
+     */
     public function getNomUsage()
     {
         return $this->nomUsage;
     }
 
     /**
-     * @param
-     *            $nomUsage
+     * @param $nomUsage
+     *
+     * @return $nomUsage
      */
     public function setNomUsage($nomUsage)
     {
@@ -648,15 +746,17 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the unknown_type
+     *
+     * @return   string
      */
     public function getPrenom()
     {
         return $this->prenom;
     }
-
     /**
-     * @param unknown_type $prenom
+     * @param $prenom
+     *
+     * @return $prenom
      */
     public function setPrenom($prenom)
     {
@@ -666,7 +766,8 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the DateTime
+     *
+     * @return \DateTime
      */
     public function getDateNaissance()
     {
@@ -675,6 +776,8 @@ class CrepEdd extends Crep
 
     /**
      * @param \DateTime $dateNaissance
+     *
+     * @return $dateNaissance
      */
     public function setDateNaissance($dateNaissance)
     {
@@ -728,7 +831,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the string
+     * Get echelon
+     *
+     * @return   string
      */
     public function getEchelon()
     {
@@ -736,8 +841,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $echelon
+     * @param   $echelon
+     *
+     * @return  $echelon
      */
     public function setEchelon($echelon)
     {
@@ -746,11 +852,19 @@ class CrepEdd extends Crep
         return $this;
     }
 
+    /**
+     * @return   string
+     */
     public function getDirection()
     {
         return $this->direction;
     }
 
+    /**
+     * @param $direction
+     *
+     * @return $direction
+     */
     public function setDirection($direction)
     {
         $this->direction = $direction;
@@ -807,7 +921,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the string
+     * Get echelonOrigine
+     *
+     * @return   string
      */
     public function getEchelonOrigine()
     {
@@ -815,8 +931,8 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $echelonOrigine
+     * @param   $echelonOrigine
+     * return   $echelonOrigine
      */
     public function setEchelonOrigine($echelonOrigine)
     {
@@ -825,11 +941,19 @@ class CrepEdd extends Crep
         return $this;
     }
 
+    /**
+     * @return   string
+     */
     public function getCiviliteShd()
     {
         return $this->civiliteShd;
     }
 
+    /**
+     * @param $prenom
+     *
+     * @return $civiliteShd
+     */
     public function setCiviliteShd($civiliteShd)
     {
         $this->civiliteShd = $civiliteShd ? strtolower($civiliteShd) : $civiliteShd;
@@ -838,7 +962,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the unknown_type
+     * @return   string
      */
     public function getPrenomShd()
     {
@@ -846,7 +970,10 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param unknown_type $prenomShd
+     *
+     * @param $prenomShd
+     *
+     * @return $prenomShd
      */
     public function setPrenomShd($prenomShd)
     {
@@ -855,14 +982,18 @@ class CrepEdd extends Crep
         return $this;
     }
 
+    /**
+     * @return   string
+     */
     public function getNomUsageShd()
     {
         return $this->nomUsageShd;
     }
 
     /**
-     * @param
-     *            $nomUsageShd
+     * @param  $nomUsageShd
+     *
+     * @return $nomUsageShd
      */
     public function setNomUsageShd($nomUsageShd)
     {
@@ -896,7 +1027,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDateEntreePosteOccupeShd()
     {
@@ -914,7 +1045,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the text
+     * @return   string
      */
     public function getDescriptionFonctions()
     {
@@ -922,8 +1053,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $descriptionFonctions
+     * @param  $descriptionFonctions
+     *
+     * @return $descriptionFonctions
      */
     public function setDescriptionFonctions($descriptionFonctions)
     {
@@ -933,7 +1065,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDatePriseFonctions()
     {
@@ -951,7 +1083,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the string
+     * @return   string
      */
     public function getGroupeFonctions()
     {
@@ -959,8 +1091,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $groupeFonctions
+     * @param  $groupeFonctions
+     *
+     * @return $groupeFonctions
      */
     public function setGroupeFonctions($groupeFonctions)
     {
@@ -970,7 +1103,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the integer
+     * @return  integer
      */
     public function getNbBureauxDirection()
     {
@@ -978,8 +1111,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $nbBureauxDirection
+     * @param  $nbBureauxDirection
+     *
+     * @return $nbBureauxDirection
      */
     public function setNbBureauxDirection($nbBureauxDirection)
     {
@@ -989,7 +1123,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the integer
+     * @return  integer
      */
     public function getNbCadresEncadresA()
     {
@@ -997,8 +1131,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $nbCadresEncadresA
+     * @param  $nbCadresEncadresA
+     *
+     * @return $nbCadresEncadresA
      */
     public function setNbCadresEncadresA($nbCadresEncadresA)
     {
@@ -1008,7 +1143,8 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the integer
+     *
+     * @return  integer
      */
     public function getNbTotalAgentsEncadres()
     {
@@ -1016,8 +1152,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $nbTotalAgentsEncadres
+     * @param  $nbTotalAgentsEncadres
+     *
+     * @return $nbTotalAgentsEncadres
      */
     public function setNbTotalAgentsEncadres($nbTotalAgentsEncadres)
     {
@@ -1027,7 +1164,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return   boolean
      */
     public function getPresenceAdjoints()
     {
@@ -1035,8 +1172,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $presenceAdjoints
+     * @param   $presenceAdjoints
+     *
+     * @return  $presenceAdjoints
      */
     public function setPresenceAdjoints($presenceAdjoints)
     {
@@ -1046,7 +1184,8 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the text
+     *
+     * @return   string
      */
     public function getObservationsEffectifs()
     {
@@ -1054,8 +1193,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $observationsEffectifs
+     * @param  $observationsEffectifs
+     *
+     * @return $observationsEffectifs
      */
     public function setObservationsEffectifs($observationsEffectifs)
     {
@@ -1115,10 +1255,11 @@ class CrepEdd extends Crep
         return $this;
     }
 
+
     /**
      * Remove autreContraintePoste.
      *
-     * @param \AppBundle\Entity\CrepEddAutreContraintePoste $contraintePoste
+     * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddAutreContraintePoste $contraintePoste
      */
     public function removeAutresContraintesPoste(\AppBundle\Entity\Crep\CrepEdd\CrepEddAutreContraintePoste $contraintePoste)
     {
@@ -1185,7 +1326,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return   boolean
      */
     public function getDocAnnexeBilan()
     {
@@ -1193,8 +1334,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $docAnnexeBilan
+     * @param   $docAnnexeBilan
+     *
+     * @return  $docAnnexeBilan
      */
     public function setDocAnnexeBilan($docAnnexeBilan)
     {
@@ -1204,7 +1346,8 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the text
+     *
+     * @return   string
      */
     public function getContexteObjectifsPasses()
     {
@@ -1212,8 +1355,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $contexteObjectifsPasses
+     * @param   $contexteObjectifsPasses
+     *
+     * @return  $contexteObjectifsPasses
      */
     public function setContexteObjectifsPasses($contexteObjectifsPasses)
     {
@@ -1227,7 +1371,7 @@ class CrepEdd extends Crep
      *
      * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifEvalueCollectif $objectifsEvalueCollectif
      *
-     * @return Crep
+     * @return CrepEdd
      */
     public function addObjectifsEvaluesCollectif(\AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifEvalueCollectif $objectifsEvalueCollectif)
     {
@@ -1261,9 +1405,9 @@ class CrepEdd extends Crep
     /**
      * Add objectifsEvalueIndividuel.
      *
-     * @param \AppBundle\Entity\ObjectifEvalueIndividuel $objectifsEvalueIndividuel
+     * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifEvalueIndividuel $objectifsEvalueIndividuel
      *
-     * @return Crep
+     * @return CrepEdd
      */
     public function addObjectifsEvaluesIndividuel(\AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifEvalueIndividuel $objectifsEvalueIndividuel)
     {
@@ -1276,7 +1420,7 @@ class CrepEdd extends Crep
     /**
      * Remove objectifsEvalueIndividuel.
      *
-     * @param \AppBundle\Entity\ObjectifEvalueIndividuel $objectifsEvalueIndividuel
+     * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifEvalueIndividuel $objectifsEvalueIndividuel
      */
     public function removeObjectifsEvaluesIndividuel(\AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifEvalueIndividuel $objectifsEvalueIndividuel)
     {
@@ -1295,16 +1439,18 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the text
+     * @return   string
      */
     public function getAutresDossiers()
     {
         return $this->autresDossiers;
     }
 
+
     /**
-     * @param
-     *            $autresDossiers
+     * @param   $autresDossiers
+     *
+     * @return  $autresDossiers
      */
     public function setAutresDossiers($autresDossiers)
     {
@@ -1314,7 +1460,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return   boolean
      */
     public function getDocAnnexeObjectifsAvenir()
     {
@@ -1322,8 +1468,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $docAnnexeObjectifsAvenir
+     * @param   $docAnnexeObjectifsAvenir
+     *
+     * @return  $docAnnexeObjectifsAvenir
      */
     public function setDocAnnexeObjectifsAvenir($docAnnexeObjectifsAvenir)
     {
@@ -1333,7 +1480,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the text
+     * @return       string
      */
     public function getContexteObjectifsAvenir()
     {
@@ -1341,8 +1488,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $contexteObjectifsAvenir
+     * @param   $contexteObjectifsAvenir
+     *
+     * @return  $contexteObjectifsAvenir
      */
     public function setContexteObjectifsAvenir($contexteObjectifsAvenir)
     {
@@ -1356,7 +1504,7 @@ class CrepEdd extends Crep
      *
      * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifFuturCollectif $objectifsFuturCollectif
      *
-     * @return Crep
+     * @return CrepEdd
      */
     public function addObjectifsFutursCollectif(\AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifFuturCollectif $objectifsFuturCollectif)
     {
@@ -1392,7 +1540,7 @@ class CrepEdd extends Crep
      *
      * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifFuturIndividuel $objectifsFuturIndividuel
      *
-     * @return Crep
+     * @return CrepEdd
      */
     public function addObjectifsFutursIndividuel(\AppBundle\Entity\Crep\CrepEdd\CrepEddObjectifFuturIndividuel $objectifsFuturIndividuel)
     {
@@ -1485,7 +1633,7 @@ class CrepEdd extends Crep
     /**
      * Add autresCompetencesTransverseRequise.
      *
-     * @param \AppBundle\Entity\CrepEddAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
+     * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
      *
      * @return CrepEdd
      */
@@ -1500,7 +1648,7 @@ class CrepEdd extends Crep
     /**
      * Remove autresCompetencesTransverseRequise.
      *
-     * @param \AppBundle\Entity\CrepEddAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
+     * @param \AppBundle\Entity\Crep\CrepEdd\CrepEddAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
      */
     public function removeAutresCompetencesTransversesRequise(\AppBundle\Entity\Crep\CrepEdd\CrepEddAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise)
     {
@@ -1767,6 +1915,7 @@ class CrepEdd extends Crep
         return $this->observationsCompetencesTransversesDetenues;
     }
 
+
     /**
      * Set observationsCompetencesTransversesDetenues.
      *
@@ -1782,26 +1931,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
-     */
-    public function getSouhaitEvolutionCarriere()
-    {
-        return $this->souhaitEvolutionCarriere;
-    }
-
-    /**
-     * @param
-     *            $souhaitEvolutionCarriere
-     */
-    public function setSouhaitEvolutionCarriere($souhaitEvolutionCarriere)
-    {
-        $this->souhaitEvolutionCarriere = $souhaitEvolutionCarriere;
-
-        return $this;
-    }
-
-    /**
-     * @return the text
+     * @return   boolean
      */
     public function getTypeEvolutionCarriere()
     {
@@ -1809,8 +1939,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $typeEvolutionCarriere
+     * @param   $typeEvolutionCarriere
+     *
+     * @return  $typeEvolutionCarriere
      */
     public function setTypeEvolutionCarriere($typeEvolutionCarriere)
     {
@@ -1820,26 +1951,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
-     */
-    public function getSouhaitMobilite()
-    {
-        return $this->souhaitMobilite;
-    }
-
-    /**
-     * @param
-     *            $souhaitMobilite
-     */
-    public function setSouhaitMobilite($souhaitMobilite)
-    {
-        $this->souhaitMobilite = $souhaitMobilite;
-
-        return $this;
-    }
-
-    /**
-     * @return the text
+     * @return   boolean
      */
     public function getTypeMobilite()
     {
@@ -1847,8 +1959,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $typeMobilite
+     * @param   $typeMobilite
+     *
+     * @return  $typeMobilite
      */
     public function setTypeMobilite($typeMobilite)
     {
@@ -1858,7 +1971,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return   boolean
      */
     public function getSouhaitEntretienCarriere()
     {
@@ -1866,8 +1979,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $souhaitEntretienCarriere
+     * @param   $souhaitEntretienCarriere
+     *
+     * @return  $souhaitEntretienCarriere
      */
     public function setSouhaitEntretienCarriere($souhaitEntretienCarriere)
     {
@@ -1877,7 +1991,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return   boolean
      */
     public function getApptitudeNiveauSup()
     {
@@ -1885,8 +1999,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $apptitudeNiveauSup
+     * @param   $apptitudeNiveauSup
+     *
+     * @return  $apptitudeNiveauSup
      */
     public function setApptitudeNiveauSup($apptitudeNiveauSup)
     {
@@ -1896,7 +2011,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the text
+     * @return   string
      */
     public function getObservationShdEvolution()
     {
@@ -1904,8 +2019,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $observationShdEvolution
+     * @param   $observationShdEvolution
+     *
+     * @return  $observationShdEvolution
      */
     public function setObservationShdEvolution($observationShdEvolution)
     {
@@ -1915,7 +2031,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the text
+     * @return   string
      */
     public function getCommentaireAgentEvolution()
     {
@@ -1923,8 +2039,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $commentaireAgentEvolution
+     * @param   $commentaireAgentEvolution
+     *
+     * @return  $commentaireAgentEvolution
      */
     public function setCommentaireAgentEvolution($commentaireAgentEvolution)
     {
@@ -1934,7 +2051,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return   boolean
      */
     public function getDocAnnexeBesoinsFormation()
     {
@@ -1942,8 +2059,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param
-     *            $docAnnexeBesoinsFormation
+     * @param   $docAnnexeBesoinsFormation
+     *
+     * @return  $docAnnexeBesoinsFormation
      */
     public function setDocAnnexeBesoinsFormation($docAnnexeBesoinsFormation)
     {
@@ -1952,46 +2070,8 @@ class CrepEdd extends Crep
         return $this;
     }
 
-
-//    /**
-//     * Add formationsSuivy.
-//     *
-//     * @param \AppBundle\Entity\FormationSuivie $formationsSuivy
-//     *
-//     * @return Crep
-//     */
-//    public function addFormationsSuivy(\AppBundle\Entity\FormationSuivie $formationsSuivy)
-//    {
-//        $this->formationsSuivies[] = $formationsSuivy;
-//        $formationsSuivy->setCrep($this);
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Remove formationsSuivy.
-//     *
-//     * @param \AppBundle\Entity\FormationSuivie $formationsSuivy
-//     */
-//    public function removeFormationsSuivy(\AppBundle\Entity\FormationSuivie $formationsSuivy)
-//    {
-//        $this->formationsSuivies->removeElement($formationsSuivy);
-//        $formationsSuivy->setCrep(null);
-//    }
-//
-//    /**
-//     * Get formationsSuivies.
-//     *
-//     * @return \Doctrine\Common\Collections\Collection
-//     */
-//    public function getFormationsSuivies()
-//    {
-//        return $this->formationsSuivies;
-//    }
-
-
     /**
-     * @return text
+     * @return string
      */
     public function getAppreciationGenerale()
     {
@@ -1999,8 +2079,9 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @param $appreciationGenerale
-     * @return $this
+     * @param   $appreciationGenerale
+     *
+     * @return  $appreciationGenerale
      */
     public function setAppreciationGenerale($appreciationGenerale)
     {
@@ -2010,7 +2091,7 @@ class CrepEdd extends Crep
     }
 
     /**
-     * @return the integer
+     * @return   integer
      */
     public function getEvolutionIndemnitaire()
     {
@@ -2019,7 +2100,8 @@ class CrepEdd extends Crep
 
     /**
      * @param $evolutionIndemnitaire
-     * @return $this
+     *
+     * @return $evolutionIndemnitaire
      */
     public function setEvolutionIndemnitaire($evolutionIndemnitaire)
     {
@@ -2029,24 +2111,24 @@ class CrepEdd extends Crep
     }
 
     public static $selectTypologieFormation = [
-            'Adaptation immédiate au poste de travail (T1)' => 0,
-            'Evolution prévisible du métier (T2)' => 1,
-            'Développement ou acquisition de nouvelles compétences s’inscrivant dans un projet professionnel (T3)' => 2,
+        'Adaptation immédiate au poste de travail (T1)' => 0,
+        'Evolution prévisible du métier (T2)' => 1,
+        'Développement ou acquisition de nouvelles compétences s’inscrivant dans un projet professionnel (T3)' => 2,
     ];
 
     public static $echelleObjectifEvalue = [
-            'Atteint' => 0,
-            'Partiellement Atteint' => 1,
-            'Non atteint' => 2,
-            'Devenu sans objet' => 3,
+        'Atteint' => 0,
+        'Partiellement Atteint' => 1,
+        'Non atteint' => 2,
+        'Devenu sans objet' => 3,
     ];
 
     public static $echelleNiveauDifficulte = [
-            'Faibles' => 0,
-            'Moyennes' => 1,
-            'Fortes' => 2,
-            'Très fortes' => 3,
-            'Non pertinent' => 4,
+        'Faibles' => 0,
+        'Moyennes' => 1,
+        'Fortes' => 2,
+        'Très fortes' => 3,
+        'Non pertinent' => 4,
     ];
 
     /**
@@ -2064,133 +2146,13 @@ class CrepEdd extends Crep
      *
      * @param string $motifAbsenceEntretien
      *
-     * @return $this
+     * @return $motifAbsenceEntretien
      */
     public function setMotifAbsenceEntretien($motifAbsenceEntretien)
     {
         $this->motifAbsenceEntretien = $motifAbsenceEntretien;
 
         return $this;
-    }
-
-    /**
-     * Get observationsShdObjectifsEvalues.
-     *
-     * @return string
-     */
-    public function getObservationsShdObjectifsEvalues()
-    {
-        return $this->observationsShdObjectifsEvalues;
-    }
-
-    /**
-     * Set observationsShdObjectifsEvalues.
-     *
-     * @param string $observationsShdObjectifsEvalues
-     *
-     * @return CrepMj01
-     */
-    public function setObservationsShdObjectifsEvalues($observationsShdObjectifsEvalues)
-    {
-        $this->observationsShdObjectifsEvalues = $observationsShdObjectifsEvalues;
-
-        return $this;
-    }
-
-    /**
-     * Get observationsAgentObjectifsEvalues.
-     *
-     * @return string
-     */
-    public function getObservationsAgentObjectifsEvalues()
-    {
-        return $this->observationsAgentObjectifsEvalues;
-    }
-
-    /**
-     * Set observationsAgentObjectifsEvalues.
-     *
-     * @param string $observationsAgentObjectifsEvalues
-     *
-     * @return CrepMj01
-     */
-    public function setObservationsAgentObjectifsEvalues($observationsAgentObjectifsEvalues)
-    {
-        $this->observationsAgentObjectifsEvalues = $observationsAgentObjectifsEvalues;
-
-        return $this;
-    }
-
-    public function __construct()
-    {
-        parent::init();
-        $this->objectifsEvaluesCollectifs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->objectifsEvaluesIndividuels = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->objectifsFutursCollectifs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->objectifsFutursIndividuels = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function initialiser(Agent $agent, $em)
-    {
-        //Initialisation du référentiel des contraintes du poste
-        $this->addContraintesPostes(new CrepEddContraintePoste('Besoin d’accompagnement des agents aux missions de la structure'));
-        $this->addContraintesPostes(new CrepEddContraintePoste('Relations avec des partenaires extérieurs'));
-        $this->addContraintesPostes(new CrepEddContraintePoste('Tâches de gestion lourdes'));
-        $this->addContraintesPostes(new CrepEddContraintePoste('Délais impératifs'));
-        $this->addContraintesPostes(new CrepEddContraintePoste('Gestion des ressources humaines'));
-        $this->addContraintesPostes(new CrepEddContraintePoste('Gestion budgétaire et comptable'));
-
-        //test
-        //$objectif=new CrepEddObjectifEvalueCollectif();
-        //$objectif->setLibelle("obj1");
-        //$objectif->setResultatObtenu(1);
-        //$this->addObjectifsEvaluesCollectif($objectif);
-
-        // Initialisation du référentiel connaissances professionnelles requises sur le poste
-        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Juridique'));
-        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Budgétaires et financières'));
-        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Ressources humaines'));
-        $this->addCompetencesTransversesRequise(new CrepEddCompetenceTransverseRequise('Internationales et européennes'));
-
-        //Initialisation du référentiel compétences managériales
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à décider en situation complexe'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Implication personnelle et engagement'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Adaptabilité'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Contrôle de soi et exemplarité comportementale'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Force de conviction'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à conduire le changement'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Ecoute'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à développer les compétences et à déléguer'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à communiquer'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à coopérer avec l’environnement'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à conseiller'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Sens de l’intérêt général'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Capacité à développer une vision stratégique et à anticiper'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Ouverture d’esprit et capacité à se remettre en question'));
-        $this->addCompetencesManageriale(new CrepEddCompetenceManageriale('Imagination et goût pour l’innovation'));
-
-        $this->initialiserParent($agent, $em);
-        $this->setNomUsage($agent->getNom());
-        $this->setPrenom($agent->getPrenom());
-        $this->setDateNaissance($agent->getDateNaissance());
-        $this->setGrade($agent->getGrade());
-        $this->setCorps($agent->getCorps());
-        $this->setEchelon($agent->getEchelon());
-        $this->setPosteOccupeAgent($agent->getPosteOccupe());
-        $this->setDirection($agent->getAffectation());
-
-        $shd = $this->getAgent()->getShd();
-        if ($shd) {
-            $this
-                ->setNomUsageShd($shd->getNom())
-                ->setPrenomShd($shd->getPrenom())
-                ->setPosteOccupeShd($shd->getPosteOccupe());
-        } else {
-            $this
-                ->setNomUsageShd(null)
-                ->setPrenomShd(null)
-                ->setPosteOccupeShd(null);
-        }
     }
 
     public function actualiserDonneesShd()
@@ -2202,7 +2164,7 @@ class CrepEdd extends Crep
     {
         if ($this->agent->getMatricule()) {
             $anneeEvaluation = $this->agent->getCampagnePnc()->getAnneeEvaluee();
-            $filename = $this->agent->getMatricule().'_'.strtoupper(Converter::convertStringToProgressio($this->nomUsage)).'_CREP'.$anneeEvaluation.'.pdf';
+            $filename = $this->agent->getMatricule() . '_' . strtoupper(Converter::convertStringToProgressio($this->nomUsage)) . '_CREP' . $anneeEvaluation . '.pdf';
         } else {
             $this->agent->getPdfFileName();
         }
@@ -2212,19 +2174,128 @@ class CrepEdd extends Crep
 
     public function confidentialisationChampsShd()
     {
-        $this->setDescriptionFonctions(null);
+        $this->setDescriptionFonctions(null)
+            ->setDatePriseFonctions(null)
+            ->setGroupeFonctions(null)
+            ->setNbBureauxDirection(null)
+            ->setNbCadresEncadresA(null)
+            ->setNbTotalAgentsEncadres(null)
+            ->setPresenceAdjoints(null)
+            ->setObservationsEffectifs(null);
 
-        /* @var $objectif ObjectifEvalue */
-        foreach ($this->getObjectifsEvalues() as $objectif) {
-            $this->removeObjectifsEvalue($objectif);
+        /** @var $contraintesPoste CrepEddContraintePoste  */
+        foreach ($this->getContraintesPostes() as $contraintesPoste) {
+            $this->removeContraintesPoste($contraintesPoste);
         }
 
-        $this->setMotifAbsenceEntretien(null)
-            ->setObservationsShdObjectifsEvalues(null);
+        /** @var $autresContraintesPoste CrepEddAutreContraintePoste */
+        foreach ($this->getAutresContraintesPostes() as $autresContraintesPoste) {
+            $this->removeAutresContraintesPoste($autresContraintesPoste);
+        }
+
+        $this->setDocAnnexeBilan(null);
+        $this->setContexteObjectifsPasses(null);
+
+        /** @var $objectifsEvaluesCollectif CrepEddObjectifEvalueCollectif */
+        foreach ($this->getObjectifsEvaluesCollectifs() as $objectifsEvaluesCollectif) {
+            $this->removeObjectifsEvaluesCollectif($objectifsEvaluesCollectif);
+        }
+
+        /** @var $objectifsEvaluesIndividuel CrepEddObjectifEvalueIndividuel */
+        foreach ($this->getObjectifsEvaluesIndividuels() as $objectifsEvaluesIndividuel) {
+            $this->removeObjectifsEvaluesIndividuel($objectifsEvaluesIndividuel);
+        }
+
+        /** @var $objectifsEvaluesCollectif CrepEddObjectifEvalueCollectif */
+        foreach ($this->getObjectifsEvaluesCollectifs() as $objectifsEvaluesCollectif) {
+            $this->removeObjectifsEvaluesCollectif($objectifsEvaluesCollectif);
+        }
+
+        $this->setAutresDossiers(null)
+            ->setDocAnnexeObjectifsAvenir(null)
+            ->setContexteObjectifsAvenir(null)
+            ->setMotifAbsenceEntretien(null);
+
+        /** @var $objectifsFutursCollectif CrepEddObjectifFuturCollectif */
+        foreach ($this->getObjectifsFutursCollectifs() as $objectifsFutursCollectif) {
+            $this->removeObjectifsFutursCollectif($objectifsFutursCollectif);
+        }
+
+        /** @var $objectifsFutursIndividuel CrepEddObjectifFuturIndividuel */
+        foreach ($this->getObjectifsFutursIndividuels() as $objectifsFutursIndividuel) {
+            $this->removeObjectifsFutursIndividuel($objectifsFutursIndividuel);
+        }
+
+        /** @var $competencesTransversesRequise CrepEddCompetenceTransverseRequise */
+        foreach ($this->getCompetencesTransversesRequises() as $competencesTransversesRequise) {
+            $this->removeCompetencesTransversesRequise($competencesTransversesRequise);
+        }
+
+        /** @var $competencesTransversesRequise CrepEddCompetenceTransverseRequise */
+        foreach ($this->getCompetencesTransversesRequises() as $competencesTransversesRequise) {
+            $this->removeCompetencesTransversesRequise($competencesTransversesRequise);
+        }
+
+        /** @var $autresCompetencesTransversesRequise CrepEddAutreCompetenceTransverseRequise */
+        foreach ($this->getAutresCompetencesTransversesRequises() as $autresCompetencesTransversesRequise) {
+            $this->removeAutresCompetencesTransversesRequise($autresCompetencesTransversesRequise);
+        }
+
+        /** @var $technique CrepEddTechnique */
+        foreach ($this->getTechniques() as $technique) {
+            $this->removeTechnique($technique);
+        }
+
+        /** @var $competencesManageriale CrepEddCompetenceManageriale */
+        foreach ($this->getCompetencesManageriales() as $competencesManageriale) {
+            $this->removeCompetencesManageriale($competencesManageriale);
+        }
+
+        /** @var $autresCompetencesManageriale CrepEddAutreCompetenceManageriale */
+        foreach ($this->getAutresCompetencesManageriales() as $autresCompetencesManageriale) {
+            $this->removeAutresCompetencesManageriale($autresCompetencesManageriale);
+        }
+
+        $this->setObservationsCompetencesTransversesRequises(null)
+            ->setObservationsAutresCompetencesTransversesRequises(null)
+            ->setObservationsTechniques(null)
+            ->setObservationsCompetencesManageriales(null)
+            ->setObservationsAutresCompetencesManageriales(null)
+            ->setTypeEvolutionCarriere(null)
+            ->setTypeMobilite(null)
+            ->setSouhaitEntretienCarriere(null)
+            ->setApptitudeNiveauSup(null)
+            ->setObservationShdEvolution(null)
+            ->setDocAnnexeBesoinsFormation(null);
+
+        /** @var $formationsSuivie CrepEddFormationSuivie */
+        foreach ($this->getFormationsSuivies() as $formationsSuivie) {
+            $this->removeFormationsSuivy($formationsSuivie);
+        }
+
+        /** @var $formationsDemandeesAgent FormationDemandeeAgent */
+        foreach ($this->getFormationsDemandeesAgent() as $formationsDemandeesAgent) {
+            $this->removeFormationsDemandeesAgent($formationsDemandeesAgent);
+        }
+
+        $this->setAppreciationGenerale(null)
+            ->setEvolutionIndemnitaire(null);
+
+
     }
 
     public function confidentialisationChampsAgent()
     {
+        $this->setCommentaireAgentFonction(null)
+            ->setCommentaireAgentEvolution(null);
+
+        $this->setObservationsCompetencesTransversesDetenues(null)
+            ->setObservationsVisaAgent(null);
+
+        /** @var $competencesTransversesDetenue CrepEddCompetenceTransverseDetenue */
+        foreach ($this->getCompetencesTransversesDetenues() as $competencesTransversesDetenue) {
+            $this->removeCompetencesTransversesDetenue($competencesTransversesDetenue);
+        }
     }
 
     public function confidentialisationChampsAgentAvantNotification()
@@ -2243,37 +2314,43 @@ class CrepEdd extends Crep
     {
         // Cette variable calucle le nombre de compétences (requises, professionnelles et manageriales) dont le niveau acquis est exceptionnelle
         $nbCompetenceNiveauExceptionnelle = 0;
-        /* @var $competenceRequise CrepEddCompetenceTransverseRequise  */
+        $isErrorObservationCompetencesRequises = false;
+        $isErrorObservationAutresCompetencesRequises = false;
+        $isErrorObservationCompetencesTechniques = false;
+        $isErrorObservationCompetencesManageriales = false;
+        $isErrorObservationAutresCompetencesManageriales = false;
+
+        /* @var $competenceRequise CrepEddCompetenceTransverseRequise */
         foreach ($this->competencesTransversesRequises as $competenceRequise) {
             if (null !== $competenceRequise->getNiveauAcquis()
                 && 0 == $competenceRequise->getNiveauAcquis()) {
                 ++$nbCompetenceNiveauExceptionnelle;
+                if (!$this->observationsCompetencesTransversesRequises) {
+                    $isErrorObservationCompetencesRequises = true;
+                }
             }
         }
 
-        /* @var $autreCompetenceRequise CrepEddAutreCompetenceTransverseRequise  */
+        /* @var $autreCompetenceRequise CrepEddAutreCompetenceTransverseRequise */
         foreach ($this->autresCompetencesTransversesRequises as $autreCompetenceRequise) {
             if ($autreCompetenceRequise->getLibelle()
                 && null !== $autreCompetenceRequise->getNiveauAcquis()
                 && 0 == $autreCompetenceRequise->getNiveauAcquis()) {
                 ++$nbCompetenceNiveauExceptionnelle;
+                if (!$this->observationsAutresCompetencesTransversesRequises) {
+                    $isErrorObservationAutresCompetencesRequises = true;
+                }
             }
         }
 
-        /* @var $competenceManageriale CrepEddCompetenceManageriale  */
+        /* @var $competenceManageriale CrepEddCompetenceManageriale */
         foreach ($this->competencesManageriales as $competenceManageriale) {
             if (null !== $competenceManageriale->getNiveauAcquis()
                 && 0 == $competenceManageriale->getNiveauAcquis()) {
                 ++$nbCompetenceNiveauExceptionnelle;
-            }
-        }
-
-        /* @var $autreCompetenceManageriale CrepEddAutreCompetenceManagerialeExclu  */
-        foreach ($this->autresCompetencesManageriales as $autreCompetenceManageriale) {
-            if ($autreCompetenceManageriale->getLibelle()
-                && null !== $autreCompetenceManageriale->getNiveauAcquis()
-                && 0 == $autreCompetenceManageriale->getNiveauAcquis()) {
-                ++$nbCompetenceNiveauExceptionnelle;
+                if (!$this->observationsCompetencesManageriales) {
+                    $isErrorObservationCompetencesManageriales = true;
+                }
             }
         }
 
@@ -2283,6 +2360,9 @@ class CrepEdd extends Crep
                 && null !== $technique->getNiveauAcquis()
                 && 0 == $technique->getNiveauAcquis()) {
                 ++$nbCompetenceNiveauExceptionnelle;
+                if (!$this->observationsTechniques) {
+                    $isErrorObservationCompetencesTechniques = true;
+                }
             }
         }
 
@@ -2290,6 +2370,46 @@ class CrepEdd extends Crep
         if ($nbCompetenceNiveauExceptionnelle > 5) {
             $context->buildViolation('Le nombre de coches figurant dans la colonne "Exceptionnelle" des tableaux de cette rubrique ne doit pas dépasser 5')
                 ->setParameter('cause', 'nbCompetenceNiveauExceptionnelle')
+                ->addViolation();
+        }
+
+        /*  *****   VALIDATION Compétences requises: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($isErrorObservationCompetencesRequises) {
+
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
+                ->setParameter('cause_observation_competences_requises', 'errorObservationsCompetencesRequises')
+                ->addViolation();
+        }
+
+        /*  *****   VALIDATION Autres Compétences requises: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($isErrorObservationAutresCompetencesRequises) {
+
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
+                ->setParameter('cause_observation_autres_competences_requises', 'errorObservationsAutresCompetencesRequises')
+                ->addViolation();
+        }
+
+        /*  *****   VALIDATION  Compétences techniques: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($isErrorObservationCompetencesTechniques) {
+
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
+                ->setParameter('cause_observation_competences_techniques', 'errorObservationsCompetencesTechniques')
+                ->addViolation();
+        }
+
+        /*  *****   VALIDATION  Compétences manageriales: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($isErrorObservationCompetencesManageriales) {
+
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
+                ->setParameter('cause_observation_competences_manageriales', 'errorObservationsCompetencesManageriales')
+                ->addViolation();
+        }
+
+        /*  *****   VALIDATION  Compétences autres manageriales: Si l'observation est vide et qu'au moins 1e niveau acquis Exceptionnel est coché  ***** */
+        if ($isErrorObservationAutresCompetencesManageriales) {
+
+            $context->buildViolation('   L\'observation ayant un niveau exceptionnel doit être motivée')
+                ->setParameter('cause_observation_autres_competences_manageriales', 'errorObservationsAutresCompetencesManageriales')
                 ->addViolation();
         }
 

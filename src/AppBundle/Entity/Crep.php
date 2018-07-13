@@ -371,6 +371,14 @@ abstract class Crep extends GenericEntity
      * @Assert\Valid
      */
     protected $recours;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date(message = "Date non valide")
+     */
+    protected $dateConsultationAgent;
 
     abstract public function initialiser(Agent $agent, $em);
 
@@ -1478,5 +1486,31 @@ abstract class Crep extends GenericEntity
 		return false;
 	}
  
+	
+	/**
+	 * Get dateConsultationAgent
+	 *
+	 * @return \DateTime
+	 */
+	public function getDateConsultationAgent()
+	{
+		return $this->dateConsultationAgent;
+	}
+	
+	/**
+	 * Set dateConsultationAgent
+	 *
+	 * @param \DateTime $dateConsultationAgent
+	 *
+	 * @return Crep
+	 */
+	public function setDateConsultationAgent($dateConsultationAgent)
+	{
+		$this->dateConsultationAgent = $dateConsultationAgent;
+	
+		return $this;
+	}
+	
+
 }
 

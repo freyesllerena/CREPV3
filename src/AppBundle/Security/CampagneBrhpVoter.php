@@ -231,12 +231,10 @@ class CampagneBrhpVoter extends Voter
 
     private function peutAhVoir(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        // FIXME : les ah sont selectionnés en se basant sur leur adresse email ce qui est une erreur
-        // Il faudrait se baser sur leur compte utilisateur
         /* @var $agentRepository AgentRepository */
         $agentRepository = $this->em->getRepository('AppBundle:Agent');
 
-        if ($agentRepository->isAh($utilisateur->getEmail(), $campagneBrhp)) {
+        if ($agentRepository->isAh($utilisateur, $campagneBrhp)) {
             return true;
         }
 
@@ -263,7 +261,7 @@ class CampagneBrhpVoter extends Voter
     {
         /* @var $agentRepository AgentRepository */
         $agentRepository = $this->em->getRepository('AppBundle:Agent');
-        $agent = $agentRepository->getAgentByEmail($utilisateur->getEmail(), $campagneBrhp);
+        $agent = $agentRepository->getAgentByUser($utilisateur, $campagneBrhp->getCampagnePnc());
 
         // Si l'utilisateur n'est pas présent dans la campagne Brhp
         if ($agent) {
@@ -399,7 +397,7 @@ class CampagneBrhpVoter extends Voter
         $agentRepository = $this->em->getRepository('AppBundle:Agent');
 
         //l'avaluateur est soit le N+1 ou le N+2
-        $evaluateur = $agentRepository->getAgentByEmail($utilisateur->getEmail(), $campagne->getCampagnePnc());
+        $evaluateur = $agentRepository->getAgentByUser($utilisateur, $campagne->getCampagnePnc());
 
         $nbAgentsAyantCrepFinalise = $agentRepository->getNbAgentsAyantCrepFinalise($campagne, $roleUtilisateurSession, $evaluateur);
 

@@ -3,8 +3,8 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th style="width: 30%">Compétences professionnelles managériales</th>
-                <th style="width: 10%" class="text-center">Exceptionnelle</th>
+                <th style="width: 30%" class="text-center">Compétences professionnelles managériales</th>
+                <th style="width: 10%" class="text-center">Exceptionnelle<sup>1</sup></th>
                 <th style="width: 10%" class="text-center">Forte</th>
                 <th style="width: 10%" class="text-center">Assez forte</th>
                 <th style="width: 10%" class="text-center">A développer</th>
@@ -12,85 +12,33 @@
             </tr>
             </thead>
             <tbody>
-            {% for competence in crep.competencesManageriales %}
-                <tr>
-                    <td>
-                        {{ competence.libelle }}
-                    </td>
-                    {% for index in 0..4 %}
-                        <td class="text-center">{{ competence.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
+            {% if crep.competencesManageriales is not empty %}
+                {% for competence in crep.competencesManageriales %}
+                    <tr>
+                        <td>
+                            {{ competence.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+                            <td class="text-center">{{ competence.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 0..1 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>
 </div>
-
-{#<div class="row">#}
-    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-        {#<dl class="m-t-md">#}
-            {#<dt>Observations</dt>#}
-            {#<dd class="well well-xs">#}
-                {#{{ crep.observationsCompetencesManageriales | nl2br }}#}
-            {#</dd>#}
-        {#</dl>#}
-    {#</div>#}
-{#</div>#}
-
-{#<br/>#}
-
-{#<div class="row">#}
-    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-        {#<table class="table table-bordered">#}
-            {#<thead>#}
-            {#<tr>#}
-                {#<th style="width: 30%">Autres compétences éventuellement démontrées par l’agent</th>#}
-                {#<th style="width: 10%" class="text-center">Exceptionnelle*</th>#}
-                {#<th style="width: 10%" class="text-center">Forte</th>#}
-                {#<th style="width: 10%" class="text-center">Assez forte</th>#}
-                {#<th style="width: 10%" class="text-center">A développer</th>#}
-                {#<th style="width: 10%" class="text-center">Non pertinent</th>#}
-            {#</tr>#}
-            {#</thead>#}
-            {#<tbody>#}
-
-            {#{% if crep.autresCompetencesManageriales is not empty %}#}
-                {#{% for autresCompetencesManageriales in crep.autresCompetencesManageriales %}#}
-                    {#<tr>#}
-                        {#<td>#}
-                            {#{{ autresCompetencesManageriales.libelle }}#}
-                        {#</td>#}
-                        {#{% for index in 0..4 %}#}
-                            {#<td class="text-center">{{ autresCompetencesManageriales.niveauAcquis|iconCheck(loop.index0)|raw }}</td>#}
-                        {#{% endfor %}#}
-                    {#</tr>#}
-                {#{% endfor %}#}
-            {#{% else %}#}
-                {#{% for i in 1..2%}#}
-                    {#<tr>#}
-                        {#{% for index in 0..5 %}#}
-                            {#<td><br></td>#}
-                        {#{% endfor %}#}
-                    {#</tr>#}
-                {#{% endfor %}#}
-            {#{% endif %}#}
-            {#</tbody>#}
-        {#</table>#}
-    {#</div>#}
-{#</div>#}
-
-{#<div class="row">#}
-    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-        {#<dl class="m-t-md">#}
-            {#<dt>Observations</dt>#}
-            {#<dd class="well well-xs">#}
-                {#{{ crep.observationsAutresCompetencesManageriales | nl2br }}#}
-            {#</dd>#}
-        {#</dl>#}
-    {#</div>#}
-{#</div>#}
-
 
 
 

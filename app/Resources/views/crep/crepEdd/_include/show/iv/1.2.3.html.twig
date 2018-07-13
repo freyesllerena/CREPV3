@@ -1,11 +1,9 @@
-
-
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th style="width: 30%">Autres compétences éventuellement démontrées par l’agent</th>
+                <th style="width: 30%" class="text-center">Autres compétences éventuellement démontrées par l’agent</th>
                 <th style="width: 10%" class="text-center">Exceptionnelle*</th>
                 <th style="width: 10%" class="text-center">Forte</th>
                 <th style="width: 10%" class="text-center">Assez forte</th>
@@ -27,7 +25,7 @@
                     </tr>
                 {% endfor %}
             {% else %}
-                {% for i in 1..2%}
+                {% for i in 1..2 %}
                     <tr>
                         {% for index in 0..5 %}
                             <td><br></td>

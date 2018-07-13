@@ -1,14 +1,17 @@
 <div class="row form-group">
 
-	<div class="col-md-6 col-sm-6 col-xs-12">
-    	<label class="control-label col-md-3 col-sm-3 col-xs-12">Civilité </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Civilité </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.civiliteShd }}
+            {% if crep.agent.shd.civilite is not empty %}
+                {{ crep.agent.shd.civilite|capitalize }}
+            {% elseif crep.civiliteShd is not empty %}
+                {{ crep.civiliteShd|capitalize }}
+            {% endif %}
         </div>
-
     </div>
 
- </div>
+</div>
 
 <div class="row form-group">
 
@@ -16,16 +19,24 @@
 
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.prenomShd|title }}
+            {% if crep.prenomShd is not empty %}
+                {{ crep.prenomShd|title }}
+            {% elseif crep.agent.shd.prenom is not empty %}
+                {{ crep.agent.shd.prenom|title }}
+            {% endif %}
         </div>
     </div>
 
-	<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-md-6 col-sm-6 col-xs-12">
 
-		<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom </label>
-		<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-	        {{ crep.nomUsageShd|upper }}
-		</div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.nomUsageShd is not empty %}
+                {{ crep.nomUsageShd|upper }}
+            {% elseif crep.agent.shd.nom is not empty %}
+                {{ crep.agent.shd.nom|upper }}
+            {% endif %}
+        </div>
 
     </div>
 
@@ -33,20 +44,28 @@
 
 <div class="row form-group">
 
-	<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Poste occupé </label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-            {{ crep.posteOccupeShd }}
+            {% if crep.posteOccupeShd is not empty %}
+                {{ crep.posteOccupeShd }}
+            {% elseif crep.agent.shd.posteOccupe is not empty %}
+                {{ crep.agent.shd.posteOccupe }}
+            {% endif %}
         </div>
 
     </div>
 
-	<div class="col-md-6 col-sm-6 col-xs-12">
+    <div class="col-md-6 col-sm-6 col-xs-12">
 
-		<label class="control-label col-md-3 col-sm-3 col-xs-12">Depuis le </label>
-		<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-			{% if crep.dateEntreePosteOccupeShd %}{{ crep.dateEntreePosteOccupeShd | date('d/m/Y') }}{% endif %}
-		</div>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Depuis le </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateEntreePosteOccupeShd is not empty %}
+                {{ crep.dateEntreePosteOccupeShd| date('d/m/Y') }}
+            {% elseif crep.agent.shd.dateEntreePosteOccupe is not empty %}
+                {{ crep.agent.shd.dateEntreePosteOccupe| date('d/m/Y') }}
+            {% endif %}
+        </div>
 
     </div>
 

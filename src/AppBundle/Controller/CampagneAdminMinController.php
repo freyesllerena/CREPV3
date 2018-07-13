@@ -49,6 +49,11 @@ class CampagneAdminMinController extends Controller
         //Voter
         $this->denyAccessUnlessGranted(CampagnePncVoter::VOIR, $campagnePnc);
 
+        // Si un chargement est en cours, on affiche la vue demandant d'attendre la fin du charegemnt
+        if($campagnePnc->getEnCoursDeChargementDuFichierAgent()){
+        	return $this->render('campagneAdminMin/enCoursDeChargementDuFichierAgent.html.twig');
+        }
+        
         $repository = $this->getDoctrine()->getRepository('AppBundle:Agent');
         $nbAgents = $repository->countAgentsByCampagne($campagnePnc);
 
@@ -272,22 +277,11 @@ class CampagneAdminMinController extends Controller
      *
      * @param CampagnePnc $campagnePnc
      */
-    public function getFichierAgentsDepuisAgentAction(CampagnePnc $campagnePnc, Request $request, AgentManager $agentManager)
+    public function exportAgentsAction(CampagnePnc $campagnePnc, Request $request, AgentManager $agentManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CampagnePncVoter::EXTRAIRE_DONNEES_AGENTS, $campagnePnc);
 
-        $fichier = $agentManager->exporterFichierAgents($campagnePnc);
-
-        $response = new Response(file_get_contents($fichier));
-
-        // adding headers
-        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Extraction_donnees_agents.csv');
-        $response->headers->set('Content-Type', 'application/excel; charset=utf-8');
-        $response->headers->set('Pragma', 'public');
-        $response->headers->set('Content-Disposition', $dispositionHeader);
-        $response->headers->set('Set-Cookie', 'fileDownload=true; path=/');
-
-        return $response;
+        return $agentManager->exportAgents($campagnePnc);
     }
 }

@@ -1,67 +1,9 @@
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th style="width: 50%">Objectifs d’ordre collectif</th>
-                <th style="width: 15%" class="text-center">Réalisation</th>
-                <th style="width: 35%">Commentaires</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if crep.objectifsEvaluesCollectifs is not empty %}
+<div class="row form-group">
+    <label>Contexte de l’année écoulée (organisation et fonctionnement du service)</label>
 
-                {% for objectif in crep.objectifsEvaluesCollectifs %}
-                    <tr>
-                        <td>{{ objectif.libelle|nl2br }}</td>
-                        <td class="text-center">{{ objectif.resultatObtenu|echelleObjectifEvalueCrepEdd }}</td>
-                        <td>{{ objectif.resultat|nl2br }}</td>
-                    </tr>
-                {% endfor %}
-            {% else %}
-                {% for i in 1..2 %}
-                    <tr>
-                        <td><br></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
-
-            </tbody>
-        </table>
+    <div class="col-md-12 col-sm-12 col-xs-12 well well-xs">
+        {{ crep.contexteObjectifsPasses|nl2br }}
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th style="width: 50%">Objectifs d’ordre individuel</th>
-                <th style="width: 15%" class="text-center">Réalisation</th>
-                <th style="width: 35%">Commentaires</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if crep.objectifsEvaluesIndividuels is not empty %}
-                {% for objectif in crep.objectifsEvaluesIndividuels %}
-                    <tr>
-                        <td>{{ objectif.libelle|nl2br }}</td>
-                        <td class="text-center">{{ objectif.resultatObtenu|echelleObjectifEvalueCrepAc }}</td>
-                        <td>{{ objectif.resultat|nl2br }}</td>
-                    </tr>
-                {% endfor %}
-            {% else %}
-                {% for i in 1..2 %}
-                    <tr>
-                        <td><br></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
-            </tbody>
-        </table>
-    </div>
-</div>
+<br/>

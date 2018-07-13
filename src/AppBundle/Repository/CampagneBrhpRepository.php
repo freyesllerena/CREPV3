@@ -106,12 +106,12 @@ class CampagneBrhpRepository extends \Doctrine\ORM\EntityRepository
         $qb->leftjoin('c.agents', 'agent')
            ->leftJoin('c.campagneRlc', 'campagneRlc')
            ->leftJoin('campagneRlc.campagnePnc', 'campagnePnc')
-           ->where('agent.email = :EMAIL_AGENT')
+           ->where('agent.utilisateur = :UTILISATEUR')
            ->andWhere('c.statut NOT IN (:STATUTS)')
            ->andWhere('agent.evaluable = :EVALUABLE')
            ->addOrderBy('campagnePnc.anneeEvaluee', 'DESC')
            ->addOrderBy('campagnePnc.libelle', 'ASC')
-           ->setParameter('EMAIL_AGENT', $utilisateurCourant->getEmail())
+           ->setParameter('UTILISATEUR', $utilisateurCourant)
            ->setParameter('STATUTS', array(EnumStatutCampagne::INITIALISEE, EnumStatutCampagne::CREEE))
            ->setParameter('EVALUABLE', true);
 

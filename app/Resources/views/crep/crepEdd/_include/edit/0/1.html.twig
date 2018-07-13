@@ -6,31 +6,21 @@
 
 <div class="row">
     {{ form_row(form.prenom, { 'label': "Prénom" }) }}
-
+    {{ form_row(form.nomUsage, { 'label': "Nom" }) }}
 </div>
 
 <div class="row">
-    {{ form_row(form.nomUsage, { 'label': "Nom d'usage" }) }}
     {{ form_row(form.dateNaissance, { 'label': "Date de naissance" }) }}
-</div>
-
-
-<div class="row">
     {{ form_row(form.posteOccupeAgent, { 'label': "Emploi occupé" }) }}
 </div>
 
 <div class="row">
-    {{ form_row(form.echelon, { 'label': "Echelon" }) }}
-</div>
-<div class="row">
+    {{ form_row(form.echelon, { 'label': "Échelon" }) }}
     {{ form_row(form.direction, { 'label': "Direction/ Service" }) }}
 </div>
 
 <div class="row">
     {{ form_row(form.corps, { 'label': "Corps/ cadre d'emplois d'origine" }) }}
-</div>
-
-<div class="row">
     {{ form_row(form.grade, { 'label': "Grade d'origine" }) }}
 </div>
 

@@ -7,8 +7,8 @@
             <dd>
                 {% if crep.dateRefusVisa %}
                     Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
-                {% elseif crep.dateVisaAgent %}
-                    {{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+                {% elseif crep.dateNotification %}
+                    {{ crep.dateNotification|date('d/m/Y H:i') }}
                 {% endif %}
             </dd>
         </dl>

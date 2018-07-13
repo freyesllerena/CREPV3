@@ -83,6 +83,7 @@ class RechercheCampagnePncType extends AbstractType
         $resolver->setDefaults(array(
             'campagnePnc' => null,
             'em' => null,
+         	'translation_domain' => false,	// Afin de de ne pas avoir d'erreur de traduction
         ));
     }
 }

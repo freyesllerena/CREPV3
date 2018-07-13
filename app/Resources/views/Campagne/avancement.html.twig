@@ -27,14 +27,15 @@
 					<td><i class="fa fa-square purple"></i>Visé par l'agent</td>
 					<td>{{ ((nbCrepVisesAgent / nbCrep) * 100) | round(1, 'floor') }}%</td>
 				</tr>
-				<tr>
-					<td><i class="fa fa-square crepRefusVisa"></i>Refus de visa</td>
-					<td>{{ ((nbCrepRefusVisas /	nbCrep) * 100) | round(1, 'floor') }}%</td>
-				</tr>
+
 			</table>
 		</div>
 		<div class="col-md-6 col-xs-12" style="min-width: 280px;">
 			<table class="tile_info" style="min-width: 280px;">
+				<tr>
+					<td><i class="fa fa-square crepRefusVisa"></i>Refus de visa</td>
+					<td>{{ ((nbCrepRefusVisas /	nbCrep) * 100) | round(1, 'floor') }}%</td>
+				</tr>			
 				<tr>
 					<td><i class="fa fa-square orange"></i>Signé par le N+2</td>
 					<td>{{ ((nbCrepSignesAh / nbCrep) * 100) | round(1, 'floor') }}%</td>
@@ -46,10 +47,6 @@
 				<tr>
 					<td><i class="fa fa-square crepRefusNotification"></i>Refus de signature définitive</td>
 					<td>{{ ((nbRefusNotification / nbCrep) * 100) | round(1, 'floor') }}%</td>
-				</tr>
-				<tr>
-					<td><i class="fa fa-square crepCasAbsence"></i>Cas d'absence de l'agent</td>
-					<td>{{ ((nbCrepCasAbsence / nbCrep) * 100) | round(1, 'floor') }}%</td>
 				</tr>
 			</table>
 		</div>

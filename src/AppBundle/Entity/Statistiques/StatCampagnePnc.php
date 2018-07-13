@@ -98,13 +98,6 @@ class StatCampagnePnc
      */
     protected $nbCrepRefusNotifAgent;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    protected $nbCrepCasAbsence;
-
     public function __construct()
     {
         $this->dateStat = new \DateTime();
@@ -334,30 +327,6 @@ class StatCampagnePnc
     public function getNbCrepRefusNotifAgent()
     {
         return $this->nbCrepRefusNotifAgent;
-    }
-
-    /**
-     * Set nbCrepCasAbsence.
-     *
-     * @param int $nbCrepCasAbsence
-     *
-     * @return StatCampagnePnc
-     */
-    public function setNbCrepCasAbsence($nbCrepCasAbsence)
-    {
-        $this->nbCrepCasAbsence = $nbCrepCasAbsence;
-
-        return $this;
-    }
-
-    /**
-     * Get nbCrepCasAbsence.
-     *
-     * @return int
-     */
-    public function getNbCrepCasAbsence()
-    {
-        return $this->nbCrepCasAbsence;
     }
 
     /**

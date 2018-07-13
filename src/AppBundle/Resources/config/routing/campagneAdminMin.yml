@@ -39,9 +39,9 @@ campagne_admin_fichier_population:
     requirements:
         id: '\d+'
         
-campagne_admin_extraction_fichier_agents_depuis_agent:
-    path:     /{id}/fichier-agents-depuis-agent
-    defaults: { _controller: "AppBundle:CampagneAdminMin:getFichierAgentsDepuisAgent" }
+campagne_admin_export_agentst:
+    path:     /{id}/export-agents
+    defaults: { _controller: "AppBundle:CampagneAdminMin:exportAgents" }
     methods:  [GET]
     requirements:
         id: '\d+'

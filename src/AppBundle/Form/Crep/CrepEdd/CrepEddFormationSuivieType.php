@@ -2,13 +2,11 @@
 
 namespace AppBundle\Form\Crep\CrepEdd;
 
-use Symfony\Component\Form\AbstractType;
 use AppBundle\Form\FormationSuivieType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormTypeInterface;
 
 
 class CrepEddFormationSuivieType extends FormationSuivieType
@@ -26,8 +24,6 @@ class CrepEddFormationSuivieType extends FormationSuivieType
         $builder
 
             ->remove('date')
-            ->remove('type')
-
             ->add('annee', ChoiceType::class, [
                 'choices' => [
                     $anneeEvaluee => $anneeEvaluee,
@@ -38,8 +34,8 @@ class CrepEddFormationSuivieType extends FormationSuivieType
                 'attr' => ['class' => 'fieldCollection'],
                 'placeholder' => '',
             ])
-            ->add('libelle2', null, ['attr' => ['class' => 'fieldCollection']])
-            ->add('duree', null, ['attr' => ['class' => 'fieldCollection']])
+            ->add('type', null, ['attr' => ['maxlength' => '10','class' => 'fieldCollection']])
+            ->add('commentaires', TextareaType::class, ['attr' => ['maxlength' => '200','class' => 'fieldCollection']])
         ;
     }
 

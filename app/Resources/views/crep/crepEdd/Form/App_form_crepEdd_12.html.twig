@@ -3,9 +3,9 @@
 
 {# Pour que le champ de saisie prenne toute la ligne#}
 {% block form_row -%}
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		{{- parent() -}}
-	</div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{- parent() -}}
+    </div>
 {%- endblock form_row %}
 
 
@@ -15,7 +15,20 @@
     {{- parent() -}}
 {%- endblock form_label %}
 
-
-
 {# Pour avoir le label sur toute la ligne#}
 {%- block form_label_class2 -%}control-label col-md-12 col-sm-12 col-xs-12{%- endblock form_label_class2 -%}
+
+# Redéfinition du bloc from_errors aligner à gauche les erreurs de validation, en ajoutant style="text-align: left;"   #}
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        <div class="has-error">
+            {%- for error in errors -%}
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError"><i
+                                class="fa fa-times-circle"></i> {{ error.message }}</label>
+                </div>
+            {%- endfor -%}
+        </div>
+
+    {%- endif %}
+{%- endblock form_errors %}

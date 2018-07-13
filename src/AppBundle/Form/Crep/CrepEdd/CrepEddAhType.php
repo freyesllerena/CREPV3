@@ -4,6 +4,7 @@ namespace AppBundle\Form\Crep\CrepEdd;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use AppBundle\Form\Crep\CrepType;
 
 class CrepEddAhType extends CrepType
@@ -14,8 +15,10 @@ class CrepEddAhType extends CrepType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('observationsAh', null, [
-                                'attr' => ['maxlength' => '4096'], ]);
+        $builder->add('observationsAh', TextareaType::class, [
+            'attr' => ['maxlength' => '4096'],
+            'required' => false
+        ]);
     }
 
     /**

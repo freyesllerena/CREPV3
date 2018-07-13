@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CrepEddObjectifFuturIndividuel extends CrepEddObjectifFuturParent
 {
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -30,7 +30,7 @@ class CrepEddObjectifFuturIndividuel extends CrepEddObjectifFuturParent
     protected $crep;
 
     /**
-     * @return the text
+     * @return  string
      */
     public function getIndicateurs()
     {
@@ -38,8 +38,9 @@ class CrepEddObjectifFuturIndividuel extends CrepEddObjectifFuturParent
     }
 
     /**
-     * @param
-     *            $indicateurs
+     * @param   $indicateurs
+     *
+     * @return  $indicateurs
      */
     public function setIndicateurs($indicateurs)
     {

@@ -2,35 +2,48 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th>Contraintes</th>
-                    <th style="width: 10%" class="text-center">Faibles</th>
-                    <th style="width: 10%" class="text-center">Moyennes</th>
-                    <th style="width: 10%" class="text-center">Fortes</th>
-                    <th style="width: 10%" class="text-center">Très fortes</th>
-                    <th style="width: 10%" class="text-center">Non pertinent</th>
-                    <th style="width: 25%" class="text-center">Expliciter</th>
-                </tr>
+            <tr>
+                <th class="text-center">Contraintes</th>
+                <th style="width: 10%" class="text-center">Faibles</th>
+                <th style="width: 10%" class="text-center">Moyennes</th>
+                <th style="width: 10%" class="text-center">Fortes</th>
+                <th style="width: 10%" class="text-center">Très fortes</th>
+                <th style="width: 10%" class="text-center">Non pertinent</th>
+                <th style="width: 25%" class="text-center">Expliciter</th>
+            </tr>
             </thead>
             <tbody>
+            {% if crep.contraintesPostes is not empty %}
                 {% for contraintePoste in crep.contraintesPostes %}
                     <tr>
                         <td>
                             {{ contraintePoste.libelle }}
                         </td>
                         {% for index in 0..4 %}
-                        	<td class="text-center">{{ contraintePoste.niveauDifficulte|iconCheck(loop.index0)|raw }}</td>
+                            <td class="text-center">{{ contraintePoste.niveauDifficulte|iconCheck(loop.index0)|raw }}</td>
                         {% endfor %}
                         <td>
-                        	{{ contraintePoste.observations|nl2br }}
+                            {{ contraintePoste.observations|nl2br }}
                         </td>
                     </tr>
                 {% endfor %}
+            {% else %}
+                {% for index in 0..1 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>
 </div>
-
 
 
 <div class="row">
@@ -38,7 +51,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Autres contraintes</th>
+                <th class="text-center">Autres contraintes</th>
                 <th style="width: 10%" class="text-center">Faibles</th>
                 <th style="width: 10%" class="text-center">Moyennes</th>
                 <th style="width: 10%" class="text-center">Fortes</th>
@@ -64,15 +77,15 @@
                     </tr>
                 {% endfor %}
             {% else %}
-                {% for i in 1..2 %}
+                {% for i in 0..1 %}
                     <tr>
                         <td><br></td>
-                        <td><br></td>
-                        <td><br></td>
-                        <td><br></td>
-                        <td><br></td>
-                        <td><br></td>
-                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 {% endfor %}
             {% endif %}

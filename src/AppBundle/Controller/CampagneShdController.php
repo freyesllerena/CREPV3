@@ -52,7 +52,7 @@ class CampagneShdController extends Controller
 
         // On récupère le SHD de l'Utilisateur courant
         /* @var $shd Agent */
-        $shd = $agentRepository->getAgentByEmail($this->getUser()->getEmail(), $campagneShd->getCampagnePnc());
+        $shd = $agentRepository->getAgentByUser($this->getUser(), $campagneShd->getCampagnePnc());
 
         // On récupère la liste des agents du N+1
         $agents = $agentRepository->getAgentsByShd($shd, $campagneShd);

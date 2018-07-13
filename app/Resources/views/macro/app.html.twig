@@ -161,7 +161,7 @@
 
 {% endmacro %} 
 
-{% macro graphiqueAvancement(id_canvas, nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification,  nbCrepCasAbsence) %}
+{% macro graphiqueAvancement(id_canvas, nbCrep, nbCrepNonRenseignes, nbCrepModifieShd, nbCrepSignesShd, nbCrepVisesAgent, nbCrepRefusVisas, nbCrepSignesAh, nbCrepNotifies, nbRefusNotification) %}
     		
 	var config = {
         			type: 'doughnut',
@@ -174,8 +174,7 @@
 				                        		'{{ nbCrepRefusVisas }}',
 				                        		'{{ nbCrepSignesAh }}',
 				                        		'{{ nbCrepNotifies }}',
-				                        		'{{ nbRefusNotification }}',
-				                        		'{{ nbCrepCasAbsence }}'
+				                        		'{{ nbRefusNotification }}'
                         				],
 				                        backgroundColor: [
 				                            "#50C1CF",
@@ -185,8 +184,7 @@
 				                            "#F08080",
 				                            "#F39C12",
 				                            "#1ABB9C",
-				                            "#d9534f",
-				                            "#777"
+				                            "#d9534f"
 				                        ],
             				}],
 				           	labels: [
@@ -197,8 +195,7 @@
 				                'Nombre de CREP "Refus de visa" ',
 				                'Nombre de CREP "Signé par le N+2" ',
 				                'Nombre de CREP "Signé définitivement par l\'agent" ',
-				                'Nombre de CREP "Refus de signature définitive" ',
-				                'Nombre de CREP "Cas d\'absence de l\'agent" '
+				                'Nombre de CREP "Refus de signature définitive" '
 				              ],
         			},
 			        options: {
@@ -241,8 +238,7 @@ function isInteger(num) {
 					'Refus de visa',
 					'Signés N+2',
 					'Signés définitivement',
-					'Refus de signature définitive',
-					'Absence agent'
+					'Refus de signature définitive'
     ];
     
     var backgroundColors = ["#50C1CF",
@@ -252,8 +248,7 @@ function isInteger(num) {
                             "#F08080",
                             "#F39C12",
                             "#1ABB9C",
-                            "#d9534f",
-                            "#777"];
+                            "#d9534f"];
                             
     var borderColors = [	"#50C1CF",
                             "#B0C4DE",
@@ -262,12 +257,11 @@ function isInteger(num) {
                             "#F08080",
                             "#F39C12",
                             "#1ABB9C",
-                            "#d9534f",
-                            "#777"];
+                            "#d9534f"];
     
     
     var labelsX = [];
-    var dataList = [[],[],[],[],[],[],[],[],[]];
+    var dataList = [[],[],[],[],[],[],[],[]];
     var nbCreps = 0;
     
 	{% for stat in historiqueIndicateurs %}
@@ -280,7 +274,6 @@ function isInteger(num) {
 		dataList[5].push({{ stat.nbCrepSignesAh }});
 		dataList[6].push({{ stat.nbCrepNotifiesAgent }});
 		dataList[7].push({{ stat.nbCrepRefusNotifAgent }});
-		dataList[8].push({{ stat.nbCrepCasAbsence }});
 		
 		{% if loop.last %}
 			nbCreps = {{ stat.nbCrep }}

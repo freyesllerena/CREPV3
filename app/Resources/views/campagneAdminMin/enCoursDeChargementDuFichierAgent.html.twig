@@ -1,7 +1,6 @@
 {% extends 'index.base.html.twig' %}
 {% import "macro/app.html.twig" as macro %}
 
-{% form_theme form 'Form/App_bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block frameTitle %}Campagnes{% endblock frameTitle %}
 {% block pageIcon %}fa fa-circle-o-notch{% endblock pageIcon %}
@@ -32,5 +31,27 @@
 				</div><!--/. x_panel panel_green -->
    			</div>
 		</div>
+		
+		<div class="modal fade in" role="dialog" style="display: block;">
+	    	<div class="modal-dialog modal-sm" style="top: 30%;">
+	      		<div class="modal-content">
+	        		<div align="center" class="modal-body">
+	          			<p>Traitement en cours</p>
+	          			<img alt="chargement ..." src="/images/ajax-loader-bar2.gif">
+	        		</div>
+	      		</div>
+	    	</div>
+	  	</div>
    
 {% endblock content%}
+
+{% block javascripts %}
+	{{ parent() }}
+	
+	<script type="text/javascript">
+		// Rechargement de la page toutes les 10 sec
+		setTimeout(function() {
+	       			window.location.href = window.location;
+	    			}, 10000);
+	</script>
+{% endblock javascripts %}

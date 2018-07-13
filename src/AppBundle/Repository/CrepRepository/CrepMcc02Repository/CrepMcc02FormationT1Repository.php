@@ -3,7 +3,6 @@
 namespace AppBundle\Repository\CrepRepository\CrepMcc02Repository;
 
 use AppBundle\Entity\CampagneBrhp;
-use AppBundle\EnumTypes\EnumStatutCrep;
 
 class CrepMcc02FormationT1Repository extends \Doctrine\ORM\EntityRepository
 {
@@ -22,16 +21,12 @@ class CrepMcc02FormationT1Repository extends \Doctrine\ORM\EntityRepository
 
         ->innerJoin('crep.agent', 'agent')
         ->where('agent.campagneBrhp = :CAMPAGNE_BRHP')
-//        ->andWhere('crep.statut IN(:STATUTS_CREPS_FINALISE)')
         ->andWhere('crep.crepPapier IS NULL')
         ->andWhere('crep INSTANCE OF '.$modeleCrep)
         ->orderBy('agent.nom')
         ->addOrderBy('agent.prenom')
         ->setParameter('CAMPAGNE_BRHP', $campagneBrhp);
-//        ->setParameter('STATUTS_CREPS_FINALISE', [EnumStatutCrep::NOTIFIE_AGENT, EnumStatutCrep::REFUS_NOTIFICATION_AGENT]);
-//        echo $qb->getQuery()->getSQL();
-//
-//        echo $qb->getQuery()->getParameters();die;
+
         $reslut = $qb->getQuery()->getScalarResult();
 
         return $reslut;

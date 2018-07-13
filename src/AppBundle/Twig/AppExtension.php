@@ -243,9 +243,6 @@ class AppExtension extends \Twig_Extension
             case EnumStatutCrep::REFUS_NOTIFICATION_AGENT:
                 $label = 'label-danger';
                 break;
-            case EnumStatutCrep::CAS_ABSENCE:
-                $label = 'label-default';
-                break;
             default:
                 $label = 'label-info';
         }
@@ -286,9 +283,6 @@ class AppExtension extends \Twig_Extension
             case EnumStatutCrep::REFUS_NOTIFICATION_AGENT:
                 $statut = 'Refus signature agent';
                 break;
-            case EnumStatutCrep::CAS_ABSENCE:
-                $statut = "CREP en cas d'absence de l'agent";
-                break;
         }
 
         return $statut;
@@ -322,9 +316,6 @@ class AppExtension extends \Twig_Extension
                 $avancementPourcentage = 0;
                 break;
             case EnumStatutCrep::REFUS_NOTIFICATION_AGENT:
-                $avancementPourcentage = 100;
-                break;
-            case EnumStatutCrep::CAS_ABSENCE:
                 $avancementPourcentage = 100;
                 break;
         }
@@ -365,9 +356,6 @@ class AppExtension extends \Twig_Extension
             case EnumStatutCrep::REFUS_NOTIFICATION_AGENT:
                 $etapeAvancement = '5/5';
                 break;
-            case EnumStatutCrep::CAS_ABSENCE:
-                $etapeAvancement = '5/5';
-                break;
         }
 
         return $etapeAvancement;
@@ -404,9 +392,6 @@ class AppExtension extends \Twig_Extension
                 break;
             case EnumStatutCrep::REFUS_NOTIFICATION_AGENT:
                 $couleur = 'bg-crepRefusNotification';
-                break;
-            case EnumStatutCrep::CAS_ABSENCE:
-                $couleur = 'bg-crepCasAbsence';
                 break;
         }
 

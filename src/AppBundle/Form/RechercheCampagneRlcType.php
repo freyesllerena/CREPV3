@@ -76,6 +76,7 @@ class RechercheCampagneRlcType extends AbstractType
         $resolver->setDefaults(array(
             'campagneRlc' => null,
             'em' => null,
+        	'translation_domain' => false,	// Afin de de ne pas avoir d'erreur de traduction
         ));
     }
 }

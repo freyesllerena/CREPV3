@@ -1,19 +1,16 @@
 {% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_6.html.twig' %}
 
 <div class="row">
-        {{ form_row(form.civiliteShd, { 'label': "Civilité" }) }}
+    {{ form_row(form.civiliteShd, { 'label': "Civilité" }) }}
 </div>
 
 <div class="row">
-        {{ form_row(form.prenomShd, { 'label': "Prénom" }) }}
+    {{ form_row(form.prenomShd, { 'label': "Prénom" }) }}
+    {{ form_row(form.nomUsageShd, { 'label': "Nom" }) }}
 </div>
 
 <div class="row">
-        {{ form_row(form.nomUsageShd, { 'label': "Nom" }) }}
-</div>
-
-<div class="row">
-        {{ form_row(form.posteOccupeShd, { 'label': "Poste occupé" }) }}
-        {{ form_row(form.dateEntreePosteOccupeShd, { 'label': "Depuis le"}) }}
+    {{ form_row(form.posteOccupeShd, { 'label': "Poste occupé" }) }}
+    {{ form_row(form.dateEntreePosteOccupeShd, { 'label': "Depuis le"}) }}
 </div>
 

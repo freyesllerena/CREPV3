@@ -21,16 +21,11 @@ class CrepEddCompetenceTransverseDetenue extends Competence
     protected $crep;
 
     /**
-     * @Assert\Callback
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
      */
-    public function validate(ExecutionContextInterface $context)
-    {
-        if (null !== $this->libelle && null === $this->niveauAcquis) {
-            $context->buildViolation('Le niveau de la compétence est obligatoire')
-            ->atPath('libelle')
-            ->addViolation();
-        }
-    }
+    protected $niveauRequis;
 
     public function getCrep()
     {
@@ -42,5 +37,21 @@ class CrepEddCompetenceTransverseDetenue extends Competence
         $this->crep = $crep;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNiveauRequis()
+    {
+        return $this->niveauRequis;
+    }
+
+    /**
+     * @param int $niveauRequis
+     */
+    public function setNiveauRequis($niveauRequis)
+    {
+        $this->niveauRequis = $niveauRequis;
     }
 }

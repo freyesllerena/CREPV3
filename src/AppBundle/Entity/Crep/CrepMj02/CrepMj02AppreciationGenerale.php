@@ -13,7 +13,6 @@ use AppBundle\Entity\Competence;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\GenericEntity;
 
-
 /**
  * Class CrepMj02AppreciationGenerale
  * @package AppBundle\Entity\Crep\CrepMj02

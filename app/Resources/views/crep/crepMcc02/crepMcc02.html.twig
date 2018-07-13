@@ -1328,7 +1328,11 @@
             <table cellpadding="3">
                 <tr>
                     <td width="12%">Nom :</td>
-                    <td width="88%">{{ crep.shdSignataire | identite }}</td>
+                    <td width="88%">
+                        {% if crep.shdSignataire %}
+                        {{ crep.shdSignataire | identite }}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td width="12%">Date :</td>

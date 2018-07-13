@@ -50,6 +50,12 @@
     {% endfor %}
 {% endblock %}
 
+{% block _crep_mj02_appreciationsGenerales_entry_widget %}
+    {%  for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection'}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
 {% block _crep_mj02_objectifsFuturs_entry_widget %}
     <tr>
         <td>{{ form_row(form.libelle, {
@@ -76,12 +82,120 @@
     </tr>
 {% endblock %}
 
-{% block _crep_mj02_appreciationsGenerales_entry_widget %}
-    {%  for key, child in form.niveauAcquis.children %}
-        <td>{{ form_widget(child, {'label': child.parent.children[key].vars.label, 'attr': {'class':
-                'iCheckCollection '}}) }}
+
+{% block _crep_mj02_formationsAnneeEcoulee_entry_widget %}
+    <tr>
+        <td>
+            <div class="text-right">
+                <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_libelle">Intitulé ou
+                    thématique de la formation<span style="color:red;"> *</span></label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.libelle, {'label': false}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_objectif">Objet de la formation</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.objectif, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_duree">Durée de la formation</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.duree, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_cpf">Mobilisation du DIF (Oui/Non)</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.cpf, {'label': false, 'label_attr': {'class' : 'radio-inline',
+                        'style':'text-align:left;'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_typologie">Cadre de la formation T1, T2 ou T3</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.typologie, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_suivie">Suivies (oui/non) motifs</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.suivie, {'label': false, 'label_attr': {'class' : 'radio-inline',
+                        'style':'text-align:left;'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                       for="crep_mj02_motifNonSuivie"></label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.motifNonSuivie, {'label': false, 'attr': {'class': 'formation-autocomplete',
+                        'id': 'motifNonSuivie'}}) }}
+                </div>
+            </div>
         </td>
-    {% endfor %}
+    </tr>
+{% endblock %}
+
+
+{% block _crep_mj02_formationsAnneeAvenir_entry_widget %}
+    <tr>
+        <td>
+            <div class="text-right">
+                <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_libelle">Intitulé ou
+                    thématique de la formation<span style="color:red;"> *</span></label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.libelle, {'label': false}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_objectif">Objet de la formation</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.objectif, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_duree">Durée de la formation</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.duree, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_cpf">Mobilisation du DIF (Oui/Non)</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.cpf, {'label': false, 'label_attr': {'class' : 'radio-inline',
+                        'style':'text-align:left;'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_typologie">Cadre de la formation T1, T2 ou T3</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.typologie, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_suivie">Suivies (oui/non) motifs</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.suivie, {'label': false, 'label_attr': {'class' : 'radio-inline',
+                        'style':'text-align:left;'} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                       for="crep_mj02_motifNonSuivie"></label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                    {{ form_row(form.motifNonSuivie, {'label': false, 'attr': {'class': 'formation-autocomplete',
+                        'id': 'motifNonSuivie'}}) }}
+                </div>
+            </div>
+        </td>
+    </tr>
 {% endblock %}
 
 {# Fin collecions #}

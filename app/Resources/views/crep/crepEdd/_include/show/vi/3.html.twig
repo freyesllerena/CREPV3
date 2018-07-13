@@ -4,9 +4,9 @@
             <thead>
             <tr>
                 <th class="text-center">Priorité</th>
-                <th>Intitulé de la formation</th>
-                <th>Type d’actions de formation</th>
-                <th class="text-center">DIF</th>
+                <th class="text-center">Intitulé de la formation</th>
+                <th class="text-center">Type d’actions de formation</th>
+                <th class="text-center">CPF</th>
             </tr>
             </thead>
             <tbody>
@@ -22,9 +22,11 @@
             {% else %}
                 {% for i in 1..2 %}
                     <tr>
-                        {% for i in 0..3 %}
-                            <td><br></td>
-                        {% endfor %}
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 {% endfor %}
             {% endif %}

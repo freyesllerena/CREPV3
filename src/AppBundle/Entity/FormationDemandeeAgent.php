@@ -48,6 +48,8 @@ class FormationDemandeeAgent extends FormationDemandee
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $typologie;
 
@@ -55,6 +57,8 @@ class FormationDemandeeAgent extends FormationDemandee
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
+
+     * @Assert\Length(max = 4096, maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères")
      */
     protected $code;
 

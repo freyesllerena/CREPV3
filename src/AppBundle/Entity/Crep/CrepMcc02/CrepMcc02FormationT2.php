@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
-use AppBundle\Entity\FormationFuture;
+use AppBundle\Entity\DemandeFormation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02FormationT2Repository")
  */
-class CrepMcc02FormationT2 extends FormationFuture
+class CrepMcc02FormationT2 extends DemandeFormation
 {
     /**
      * @ORM\ManyToOne(targetEntity="CrepMcc02", inversedBy="formationsT2")

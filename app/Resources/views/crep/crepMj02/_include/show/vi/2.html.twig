@@ -1,0 +1,50 @@
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center" width="25%">Intitulé ou thématique de la formation</th>
+                <th class="text-center" width="15%">Objet de la formation</th>
+                <th class="text-center" width="15%">Durée de la formation</th>
+                <th class="text-center" width="15%">Mobilisation du DIF (Oui/Non)</th>
+                <th class="text-center" width="15%">Cadre de la formation T1, T2 ou T3</th>
+                <th class="text-center" width="15%">Suivies (oui/non) motifs</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% if  crep.formationsAnneeEcoulee is not empty%}
+                {% for key, formation in crep.formationsAnneeEcoulee %}
+                    <tr>
+                        <td>{{ formation.libelle }}</td>
+                        <td>{{ formation.objectif }}</td>
+                        <td>{{ formation.duree }}</td>
+                        <td>{{ formation.cpf }}</td>
+                        <td>{{ formation.typologie }}</td>
+                        <td>
+                            {{ formation.suivie }}
+                            {{ formation.motifNonSuivie }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for index in 0..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    
+    </div>
+</div>
+<br>

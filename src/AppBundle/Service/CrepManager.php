@@ -231,6 +231,7 @@ class CrepManager
     {
         $crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
         $crep->setDateRenvoiAgent(new \DateTime());
+        $crep->setDateConsultationAgent(null);
         //Annulation de la signature du shd
         $crep->setShdSignataire(null);
         $crep->setDateVisaShd(null);
@@ -246,7 +247,8 @@ class CrepManager
     {
         $crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
         $crep->setDateRenvoiAh(new \DateTime());
-        $crep->setObservationsAh(null); // Suite au ticket INC0021806
+//        $crep->setObservationsAh(null); // Suite au ticket INC0021806
+        $crep->setDateConsultationAgent(null);
         //Annulation des actions de l'agent
         $crep->setDateVisaAgent(null);
         $crep->setDateRefusVisa(null);
@@ -351,8 +353,6 @@ class CrepManager
 
         $indicateurs['nbCrepRefusVisas'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::REFUS_VISA_AGENT), $shd, $ah, $categories, $affectations, $corps);
 
-        $indicateurs['nbCrepCasAbsence'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::CAS_ABSENCE), $shd, $ah, $categories, $affectations, $corps);
-
         $indicateurs['nbCrepNonRenseignes'] = $indicateurs['nbCrep']
                                             - $indicateurs['nbCrepSignesShd']
                                             - $indicateurs['nbCrepVisesAgent']
@@ -360,8 +360,7 @@ class CrepManager
                                             - $indicateurs['nbCrepNotifies']
                                             - $indicateurs['nbCrepRefusNotification']
                                             - $indicateurs['nbCrepModifieShd']
-                                            - $indicateurs['nbCrepRefusVisas']
-                                            - $indicateurs['nbCrepCasAbsence'];
+                                            - $indicateurs['nbCrepRefusVisas'];
 
         /************** Statistiques sur les recours **************/
 

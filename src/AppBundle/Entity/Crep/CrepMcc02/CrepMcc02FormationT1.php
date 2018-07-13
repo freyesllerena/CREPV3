@@ -2,15 +2,17 @@
 
 namespace AppBundle\Entity\Crep\CrepMcc02;
 
-use AppBundle\Entity\FormationFuture;
+use AppBundle\Entity\DemandeFormation;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
- * CompetenceAgent.
+ * Class CrepMcc02FormationT1
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepMcc02Repository\CrepMcc02FormationT1Repository")
+ * @package AppBundle\Entity\Crep\CrepMcc02
  */
-class CrepMcc02FormationT1 extends FormationFuture
+class CrepMcc02FormationT1 extends DemandeFormation
 {
     /**
      * @ORM\ManyToOne(targetEntity="CrepMcc02", inversedBy="formationsT1")
@@ -22,7 +24,7 @@ class CrepMcc02FormationT1 extends FormationFuture
      *
      * @param \AppBundle\Entity\Crep\CrepMcc02\CrepMcc02 $crep
      *
-     * @return FormationFuture
+     * @return DemandeFormation
      */
     public function setCrep(\AppBundle\Entity\Crep\CrepMcc02\CrepMcc02 $crep = null)
     {
