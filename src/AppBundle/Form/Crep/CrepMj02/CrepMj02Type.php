@@ -70,6 +70,7 @@ class CrepMj02Type extends CrepType
             ->add('corps', null, ['required' => false])
 
             ->add('posteOccupe', null, ['required' => true])
+
             ->add('dateEntreePosteOccupe',
                 DateType::class,
                 array(
@@ -80,6 +81,7 @@ class CrepMj02Type extends CrepType
                     'required' => false,
                 )
             )
+
             ->add('activiteEncadrement', ChoiceType::class, [
                 'choices' => [
                     'Oui' => 1,
@@ -215,6 +217,39 @@ class CrepMj02Type extends CrepType
                     'required' => false,
                     'multiple' => false,
                     'disabled' => false,
+
+
+
+
+
+////                    'years' => range(date('Y') - 5, date('Y') + 5),
+////                    'months' => range(1, 12),
+////                    'days' => range(1, 31),
+//                    'widget' => 'choice',
+//                    'input' => 'datetime',
+////                    'format' => $format,
+//                    'model_timezone' => null,
+//                    'view_timezone' => null,
+////                    'placeholder' => $placeholderDefault,
+//                    'html5' => true,
+//                    // Don't modify \DateTime classes by reference, we treat
+//                    // them like immutable value objects
+//                    'by_reference' => false,
+//                    'error_bubbling' => false,
+//                    // If initialized with a \DateTime object, FormType initializes
+//                    // this option to "\DateTime". Since the internal, normalized
+//                    // representation is not \DateTime, but an array, we need to unset
+//                    // this option.
+//                    'data_class' => null,
+////                    'compound' => $compound,
+//                    'choice_translation_domain' => false,
+
+
+
+
+
+
+
                 ]
             )
 

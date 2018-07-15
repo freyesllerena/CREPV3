@@ -92,6 +92,10 @@
     {% include 'crep/crepMj02/_include/edit/vi/3.html.twig' %}
 {% endblock vi3 %}
 
+{% block vi4 %}
+    {% include 'crep/crepMj02/_include/edit/vi/4.html.twig' %}
+{% endblock vi4 %}
+
 {% block vii1 %}
     {% include 'crep/crepMj02/_include/edit/vii/1.html.twig' %}
 {% endblock vii1 %}
@@ -104,11 +108,19 @@
     {% include 'crep/crepMj02/_include/edit/viii/1.html.twig' %}
 {% endblock viii1 %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" type="text/css" rel="stylesheet" />
+    {#<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">#}
+
+{% endblock stylesheets %}
 
 {% block javascripts %}
     {{ parent() }}
     {# 	<!-- chained -->#}
-     	<script src="{{ asset('js/chained.js') }}"></script>
+    <script src="{{ asset('js/chained.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -228,7 +240,13 @@
 
                 }
             }
-            
+
+            //
+            $('#datetimepicker9').datetimepicker({
+                viewMode: 'years',
+                format: 'MM/YYYY'
+            });
+           
         });
 
         

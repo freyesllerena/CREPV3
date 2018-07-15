@@ -62,30 +62,30 @@
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}</div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Occupée depuis </label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Occupée depuis (durée en mois / années)</label>
         <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.dateEntreePosteOccupe %}{{ crep.dateEntreePosteOccupe | date('m/Y') }}{% endif %}</div>
     </div>
 </div>
 <div class="row form-group">
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="col-md-5 col-sm-5 col-xs-12">Activité d’encadrement </label>
+        <label class="col-md-5 col-sm-5 col-xs-12">Activité d’encadrement  </label>
         <div class="col-md-2 col-sm-2 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                       {% if crep.activiteEncadrement == true and crep.activiteEncadrement is not empty %}checked="checked"{% endif %}
+                       {% if crep.activiteEncadrement == 1 and crep.activiteEncadrement is not null %}checked="checked"{% endif %}
                 >&nbsp;&nbsp;Oui
             </label>
         </div>
         <div class="col-md-5 col-sm-5 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                       {% if crep.activiteEncadrement is not empty and crep.activiteEncadrement == false %}checked="checked"{% endif %}
+                       {% if crep.activiteEncadrement == 0 and crep.activiteEncadrement is not null %}checked="checked"{% endif %}
                 >&nbsp;&nbsp;Non
             </label>
         </div>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre total d’agents à encadrer </label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre total d’agents à encadrer</label>
         <div class="col-md-3 col-sm-3 col-xs-12 well well-xs">
             {{ crep.nbAgentsEncadres }}
         </div>
@@ -161,8 +161,5 @@
     </div>
 </div>
 <div>
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <span>* mentions obligatoires</span>
-    </div>
 </div>
 <br><br>

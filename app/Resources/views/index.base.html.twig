@@ -82,7 +82,7 @@
               	  {% if app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MONSIEUR')%}
                   	 <img src="{{ asset('images/homme128.png') }}" alt="homme" class="img-circle profile_img">
                   {% elseif app.user.civilite ==  constant('AppBundle\\EnumTypes\\EnumCivilite::MADAME') %}
-                  	 <img src="{{ asset('images/femme128.png') }}" alt="femme" class="img-circle profile_img">
+                  	 {#<img src="{{ asset('images/femme128.png') }}" alt="femme" class="img-circle profile_img">#}
                   {% else %}
                   	 <img src="{{ asset('images/user128.png') }}" alt="utilisateur" class="img-circle profile_img">
                   {% endif %}
@@ -338,7 +338,22 @@
 	  </script>
 	  
 	<!-- PIWIK -->
+	{#{% if piwikSiteId %}#}
+	{#<script>#}
+		{#var _paq = _paq || [];#}
 
+		{#/* tracker methods like "setCustomDimension" should be called before "trackPageView" */#}
+  		{#_paq.push(['trackPageView']);#}
+  		{#_paq.push(['enableLinkTracking']);#}
+  		{#(function() {#}
+    		{#var u="{{ url('accueil') }}stats/";#}
+    		{#_paq.push(['setTrackerUrl', u+'piwik.php']);#}
+    		{#_paq.push(['setSiteId', '{{ piwikSiteId }}']);#}
+    		{#var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];#}
+    		{#g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);#}
+  		{#})();#}
+	{#</script>#}
+	 {#{% endif %} #}
 	    <!-- /Autosize -->
 
 

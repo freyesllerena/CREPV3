@@ -1,21 +1,13 @@
-{% form_theme form 'crep/crepMj02/Form/collections.form.html.twig' %}
-
-<div class="row" id="formationsAnneeEcouleeCollection" data-prototype="{{ form_widget(form.formationsAnneeEcoulee.vars.prototype)|e('html_attr') }}">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-bordered">
-            <tbody>
-            {% for formation in form.formationsAnneeEcoulee %}
-                {{ form_widget(formation) }}
-            {%  endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_12.html.twig' %}
 
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <button class="btn btn-primary add_collection_link formationsAnneeEcoulee pull-right">
-            <i class="fa fa-plus"></i> Ajouter
-        </button>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        {#<h3>Formation(s) suivie(s) et envisagée(s) par l’agent durant l’année écoulée et pour l’année à venir : </h3>#}
+        <em>(Indiquer les formations de manière chronologique, les intitulé(s) et leur durée(s)</em><br><br>
+        
+        <strong>T1</strong> : adaptation immédiate au poste de travail (missions actuelles imparties à l’agent)<br>
+        <strong>T2</strong> : adaptation à l’évolution prévisible des métiers (compétences acquises)<br>
+        <strong>T3</strong> : développement des compétences ou acquisition de nouvelles compétences (projet
+        professionnel)<br>
     </div>
 </div>

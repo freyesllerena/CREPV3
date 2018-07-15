@@ -62,6 +62,7 @@ class CrepMj02 extends Crep
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message = "Champ obligatoire")
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -84,7 +85,7 @@ class CrepMj02 extends Crep
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Prénom obligatoire")
+     * @Assert\NotBlank(message = "Champ obligatoire")
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -134,6 +135,7 @@ class CrepMj02 extends Crep
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message = "Champ obligatoire")
      * @Assert\Length(
      *    max = 255,
      *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
@@ -150,8 +152,9 @@ class CrepMj02 extends Crep
     protected $dateEntreePosteOccupe;
 
     /**
-     * @var boolean
+     * @var bool
      *
+     * @Assert\NotBlank(message = "Champ obligatoire")
      * @ORM\Column(type="boolean", nullable=true)
      *
      */
@@ -160,6 +163,7 @@ class CrepMj02 extends Crep
     /**
      * @var bool
      *
+     * @Assert\NotBlank(message = "Champ obligatoire")
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $titulaire;
@@ -509,24 +513,21 @@ class CrepMj02 extends Crep
     public function initialiser(Agent $agent, $em)
     {
         $this->initialiserParent($agent, $em);
-
         $defaultNomAgent = ($agent->getNom())? $agent->getNom() : $agent->getNomNaissance();
         $this->setNomNaissance($defaultNomAgent);
         $this->setNomMarital($agent->getNomMarital());
         $this->setPrenom($agent->getPrenom());
-
         $this->setTitulaire($agent->isTitulaire());
-
-        $this->setCorps($this->getCorps());
-        $this->setGrade($this->getGrade());
+        $this->setPosteOccupe($agent->getPosteOccupe());
+        $this->setDateEntreePosteOccupe($agent->getDateEntreePosteOccupe());
+        $this->setCorps($agent->getCorps());
+        $this->setGrade($agent->getGrade());
 
 
         if ($agent->getShd()) {
             $this->setPrenomShd($agent->getShd()->getPrenom());
             $this->setNomNaissanceShd($agent->getShd()->getNomNaissance());
             $this->setNomMarital($agent->getShd()->getNomMarital());
-//            $this->setCorpsShd($agent->getShd()->getCorps());
-//            $this->setGradeShd($agent->getShd()->getGrade());
             $this->setPosteOccupeShd($agent->getShd()->getPosteOccupe());
 //            $this->setDateEntreePosteOccupeShd($agent->getShd()->getDateEntreePosteOccupe());
         }
@@ -647,14 +648,8 @@ class CrepMj02 extends Crep
      */
     public function confidentialisationChampsShd()
     {
-        /** @var CrepMj02CompetenceJudiciaire $competenceJudiciaire */
-        foreach ($this->competencesJudiciaires as $competenceJudiciaire) {
-            $competenceJudiciaire->removeCompetencesJudiciaire($competenceJudiciaire);
-        }
-        /** @var CrepMj02CompetenceEncadrement $competenceEncadrement */
-        foreach ($this->competencesEncadrements as $competenceEncadrement) {
-            $competenceEncadrement->removeCompetencesEncadrements($competenceEncadrement);
-        }
+        $this->getCompetencesJudiciaires()->clear();
+        $this->getCompetencesEncadrements()->clear();
         /** @var  ObjectifFutur $objectifFutur */
         foreach ($this->getObjectifsFuturs() as $objectifFutur) {
             $this->removeObjectifsFutur($objectifFutur);
@@ -670,8 +665,33 @@ class CrepMj02 extends Crep
         $this->setDateVisaShd(null)
              ->setShdSignataire(null);
 
+        $this->setMotifAbsenceEntretien(null);
+
+        $this->setDirectionShd(null);
+        $this->setDepartementShd(null);
+        $this->setServiceShd(null);
+        $this->setMotifAbsenceEntretien(null);
+        $this->setMotifAbsenceAgent(null);
+        $this->setDateEntretien(null);
+        $this->getObjectifsEvalues()->clear();
+        $this->setContexteResultats(null);
+        $this->setObservationsShd(null);
+        $this->setObservationsAgentNotif(null);
+        $this->setObjectifsService(null);
+        $this->setAcquisExperiencePro(null);
+        $this->setVae(null);
+        $this->setCommentaireVae(null);
+        $this->setCapacitesDecisions(null);
+        $this->setMobiliteGeographique(null);
+        $this->setSouhaitEntretienCarriere(null);
+        $this->setFormationsEffectuees(null);
+
         $this->getFormationsAnneeEcoulee()->clear();
         $this->getFormationsAnneeAvenir()->clear();
+        $this->getAppreciationsGenerales ()->clear();
+        $this->setAppreciationLitteraleShd(null);
+        $this->setDureeEntretien(null);
+
     }
 
     public function confidentialisationChampsAgent()

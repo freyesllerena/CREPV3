@@ -1,5 +1,4 @@
 <br>
-
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         
@@ -16,8 +15,8 @@
             </thead>
             <tbody>
             
-            {% if  crep.formationsAnneeAvenir is not empty%}
-                {% for key, formation in crep.formationsAnneeAvenir %}
+            {% if  crep.formationsAnneeEcoulee is not empty%}
+                {% for key, formation in crep.formationsAnneeEcoulee %}
                     <tr>
                         <td>{{ formation.libelle }}</td>
                         <td>{{ formation.objectif }}</td>

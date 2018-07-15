@@ -22,8 +22,69 @@
 
 <div class="row">
     {{ form_row(form.posteOccupe, { 'label': "Fonction" }) }}
-    {{ form_row(form.dateEntreePosteOccupe, { 'label': "Occupée depuis" }) }}
+    {{ form_row(form.dateEntreePosteOccupe, { 'label': "Occupée depuis (durée en mois / années)" }) }}
+
+    {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#<div class="form-group">#}
+            {#<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_dateEntreePosteOccupe">#}
+                {#Occupée depuis (durée en mois / années)#}
+            {#</label>#}
+            {#<div class="col-md-9 col-sm-9 col-xs-12">#}
+                {#<div class="input-group">#}
+                    {##}
+                    {#<div class="input-group-addon"><i class="fa fa-calendar"></i></div>#}
+                    {#<input#}
+                            {#type="text"#}
+                            {#id="crep_mj02_dateEntreePosteOccupe"#}
+                            {#name="crep_mj02[dateEntreePosteOccupe]"#}
+                            {#placeholder="JJ/MM/AAAA"#}
+                            {#class="date-picker form-control active"#}
+                            {#value="21/10/2010"#}
+                    {#>#}
+
+
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+
+    {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#<div class="form-group">#}
+            {#<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_dateEntreePosteOccupe">#}
+                {#Occupée depuis (durée en mois / années)#}
+            {#</label>#}
+            {#<div class="col-md-9 col-sm-9 col-xs-12">#}
+
+                {#<div class='input-group date' id='datetimepicker9'>#}
+                    {#<span class="input-group-addon">#}
+                        {#<span class="glyphicon glyphicon-calendar"></span>#}
+                    {#</span>#}
+
+                    {#<input#}
+                            {#type="text"#}
+                            {#id="crep_mj02_dateEntreePosteOccupe"#}
+                            {#name="crep_mj02[dateEntreePosteOccupe]"#}
+                            {#placeholder="MM/AAAA"#}
+                            {#class="form-control active"#}
+                            {#value="{% if crep.dateEntreePosteOccupe %}{{ crep.dateEntreePosteOccupe | date('m/Y') }}{% endif %}"#}
+                    {#>#}
+
+                    {#<input#}
+                            {#type='text'#}
+                            {#class="form-control"#}
+                    {#/>#}
+                {#</div>#}
+
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+
 </div>
+
+{#https://eonasdan.github.io/bootstrap-datetimepicker/#}
+
 
 <div class="row">
     {{ form_row(form.activiteEncadrement, {'label': "Activité d’encadrement", 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}

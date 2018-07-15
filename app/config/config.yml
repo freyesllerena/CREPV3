@@ -184,3 +184,5 @@ assetic:
     use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
+#        sass:
+#            apply_to: ".scss$"
