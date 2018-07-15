@@ -77,7 +77,7 @@ class CrepMj02Type extends CrepType
                     'label' => false,
                     'widget' => 'single_text',
                     'input'  => 'datetime',
-                    'format' => 'dd/MM/yyyy',
+                    'format' => 'MM/yyyy',
                     'required' => false,
                 )
             )
