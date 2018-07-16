@@ -24,6 +24,8 @@
     {{ form_row(form.posteOccupe, { 'label': "Fonction" }) }}
     {#{{ form_row(form.dateEntreePosteOccupe, { 'label': "Occupée depuis (durée en mois / années)" }) }}#}
 
+    {#Référence bootstrap#:}
+    {#https://eonasdan.github.io/bootstrap-datetimepicker/#}
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="form-group">
             <label
@@ -50,9 +52,6 @@
         </div>
     </div>
 </div>
-
-{#https://eonasdan.github.io/bootstrap-datetimepicker/#}
-
 
 <div class="row">
     {{ form_row(form.activiteEncadrement, {'label': "Activité d’encadrement", 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}

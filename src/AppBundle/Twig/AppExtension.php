@@ -2,6 +2,7 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\Entity\Crep\CrepMj02\CrepMj02;
 use AppBundle\EnumTypes\EnumStatutCrep;
 use AppBundle\EnumTypes\EnumStatutValidationAgent;
 use AppBundle\Entity\Utilisateur;
@@ -141,6 +142,10 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('allNiveauPotentielEvolutionCrepMcc02', array(
                 $this,
                 'allNiveauPotentielEvolutionCrepMcc02'
+            )),
+            new \Twig_SimpleFilter('thematiquesFormationsCrepMj02', array(
+                $this,
+                'thematiquesFormationsCrepMj02',
             )),
         );
     }
@@ -674,5 +679,15 @@ class AppExtension extends \Twig_Extension
     	}
     	
     	return $result;
+    }
+
+
+    public function thematiquesFormationsCrepMj02($id)
+    {
+        if (null === $id) {
+            return '';
+        }
+
+        return array_flip(CrepMj02::$thematiquesFormationsCrepMj02)[$id];
     }
 }

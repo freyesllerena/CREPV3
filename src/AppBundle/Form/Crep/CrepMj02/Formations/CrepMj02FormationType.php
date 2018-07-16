@@ -10,8 +10,8 @@
 namespace AppBundle\Form\Crep\CrepMj02\Formations;
 
 
+use AppBundle\Entity\Crep\CrepMj02\CrepMj02;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,9 +26,17 @@ class CrepMj02FormationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libelle', null, ['label' => false,
+            ->add(
+                'libelle',
+                ChoiceType::class,
+                [
+                    'label' => false,
+                    'choices' => CrepMj02::$thematiquesFormationsCrepMj02,
+                    'expanded' => false,
+                    'multiple' => false,
+                    'attr' => ['style' => 'min-width: 280px;'],
                     'required' => false,
-                    'required' => false,
+                    'placeholder' => '',
                 ]
             )
             ->add('objectif', null, [

@@ -49,6 +49,12 @@ class CrepMj02 extends Crep
         'Très insuffisant' => 5,
     ];
 
+    public static $thematiquesFormationsCrepMj02 = [
+        'T1 : adaptation immédiate au poste de travail (missions actuelles imparties à l’agent)' => 0,
+        'T2 : adaptation à l’évolution prévisible des métiers (compétences acquises)' => 1,
+        'T3 : développement des compétences ou acquisition de nouvelles compétences (projet professionnel)' => 2,
+    ];
+
     /**
      * @ORM\Column(type="string")
      * @Assert\Length(
@@ -691,6 +697,7 @@ class CrepMj02 extends Crep
         $this->getAppreciationsGenerales ()->clear();
         $this->setAppreciationLitteraleShd(null);
         $this->setDureeEntretien(null);
+        $this->setObservationsVisaAgent(null);
 
     }
 
