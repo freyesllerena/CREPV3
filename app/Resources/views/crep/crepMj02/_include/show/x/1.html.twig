@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <span>
+            <strong>1. Recours hiérarchique</strong> : dans le délai de 15 jours francs à compter de la date de notification
+                du présent compte rendu, l’agent peut exercer un recours hiérarchique auprès de l’autorité hiérarchique (N+2, supérieur de l’évaluateur) afin d’obtenir la révision d’une partie ou de la totalité de son compte rendu d’entretien.
+            L’autorité hiérarchique notifie sa réponse dans un délai de 15 jours francs à compter de la date de réception de la demande de révision. Si elle ne répond pas, l’agent doit attendre 2 mois pour qu’une décision implicite de rejet soit formée. C’est à ce moment-là que l’agent pourra saisir la CAP.
+            <br><br>
+            <strong>2. Recours en CAP pour les fonctionnaires / CCP pour les agents contractuels</strong> : L’exercice du
+                recours en
+            CAP/CCP nécessite au préalable l’exercice du recours hiérarchique dans les conditions fixées par le paragraphe 1. L’agent peut saisir la CAP/CCP afin que celle-ci demande la révision du présent compte rendu à l’autorité hiérarchique dans un délai d’un mois à compter de la date de notification de la réponse formulée par l’autorité hiérarchique dans le cadre du recours.
+            <br><br>
+            <strong>3. Recours contentieux</strong> : dans le délai de 2 mois à compter de la date de notification du présent
+                compte rendu, l’agent peut également exercer un recours contentieux contre le présent compte rendu d’entretien auprès de la juridiction administrative compétente. L’exercice d’un recours hiérarchique ne constitue pas un préalable obligatoire. Si le recours hiérarchique est exercé, le délai de recours contentieux est prorogé.
+            <br><br>
+        </span>
+    </div>
+</div>
+<br>
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.recoursHierarchique == 1 and crep.recoursHierarchique is not null %}checked="checked"{% endif %}
+            >&nbsp;&nbsp;Un recours hiérarchique a été
+        </label>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.recoursCapCcp == 1 and crep.recoursCapCcp is not null %}checked="checked"{% endif %}
+            >&nbsp;&nbsp;Un recours en CAP CCP a été effectué.
+        </label>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <span>Date de notification du compte-rendu définitif :</span> le
+        <br><br>
+        <span>Signature de l’agent</span>
+    </div>
+</div>
+<br>

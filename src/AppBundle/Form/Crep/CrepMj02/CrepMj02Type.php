@@ -217,39 +217,6 @@ class CrepMj02Type extends CrepType
                     'required' => false,
                     'multiple' => false,
                     'disabled' => false,
-
-
-
-
-
-////                    'years' => range(date('Y') - 5, date('Y') + 5),
-////                    'months' => range(1, 12),
-////                    'days' => range(1, 31),
-//                    'widget' => 'choice',
-//                    'input' => 'datetime',
-////                    'format' => $format,
-//                    'model_timezone' => null,
-//                    'view_timezone' => null,
-////                    'placeholder' => $placeholderDefault,
-//                    'html5' => true,
-//                    // Don't modify \DateTime classes by reference, we treat
-//                    // them like immutable value objects
-//                    'by_reference' => false,
-//                    'error_bubbling' => false,
-//                    // If initialized with a \DateTime object, FormType initializes
-//                    // this option to "\DateTime". Since the internal, normalized
-//                    // representation is not \DateTime, but an array, we need to unset
-//                    // this option.
-//                    'data_class' => null,
-////                    'compound' => $compound,
-//                    'choice_translation_domain' => false,
-
-
-
-
-
-
-
                 ]
             )
 
@@ -291,20 +258,6 @@ class CrepMj02Type extends CrepType
                 'placeholder' => false,
                 'required' => false
             ])
-//            ->add(
-//                'formationsSuivies',
-//                CollectionType::class,
-//                [
-//                    'entry_type' => CrepMj02FormationSuivieType::class,
-//                    'allow_add' => true,
-//                    'allow_delete' => true,
-//                    'by_reference' => false,
-//                    'entry_options' => [
-//                        'ministere' => $ministere,
-//                        'anneeEvaluation' => $options['anneeEvaluee'],
-//                    ],
-//                ]
-//            )
             ->add(
                 'formationsAnneeEcoulee',
                 CollectionType::class,
@@ -327,6 +280,9 @@ class CrepMj02Type extends CrepType
                     'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
                 ]
             )
+
+            ->add('recoursHierarchique', null, ['required' => false])
+            ->add('recoursCapCcp', null, ['required' => false])
         ;
     }
 

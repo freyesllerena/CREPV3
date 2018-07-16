@@ -26,19 +26,12 @@ class CrepMj02FormationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
-                'libelle',
-                ChoiceType::class,
-                [
-                    'label' => false,
-                    'choices' => CrepMj02::$thematiquesFormationsCrepMj02,
-                    'expanded' => false,
-                    'multiple' => false,
-                    'attr' => ['style' => 'min-width: 280px;'],
-                    'required' => false,
-                    'placeholder' => '',
-                ]
-            )
+            ->add('libelle', null, array(
+                'attr' => array(
+                    'class' => 'fieldCollection',
+                    'maxlength' => '4096',
+                ),
+            ))
             ->add('objectif', null, [
                     'label' => false,
                     'required' => false,
@@ -59,12 +52,19 @@ class CrepMj02FormationType extends AbstractType
                 'placeholder' => false,
                 'required' => false
             ])
-            ->add('typologie', TextareaType::class, array(
-                'attr' => array(
-                    'class' => 'fieldCollection',
-                    'maxlength' => '4096',
-                ),
-            ))
+            ->add(
+                'typologie',
+                ChoiceType::class,
+                [
+                    'label' => false,
+                    'choices' => CrepMj02::$thematiquesFormationsCrepMj02,
+                    'expanded' => false,
+                    'multiple' => false,
+                    'attr' => ['style' => 'min-width: 280px;'],
+                    'required' => false,
+                    'placeholder' => '',
+                ]
+            )
             ->add('suivie', ChoiceType::class, [
                 'choices' => [
                     'Oui' => 1,

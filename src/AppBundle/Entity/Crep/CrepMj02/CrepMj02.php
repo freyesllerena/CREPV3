@@ -514,6 +514,19 @@ class CrepMj02 extends Crep
      */
     protected $formationsAnneeAvenir;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $recoursHierarchique;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $recoursCapCcp;
 
 
     public function initialiser(Agent $agent, $em)
@@ -1520,8 +1533,37 @@ class CrepMj02 extends Crep
         return $this->formationsAnneeAvenir;
     }
 
+    /**
+     * @return bool
+     */
+    public function isRecoursHierarchique()
+    {
+        return $this->recoursHierarchique;
+    }
 
+    /**
+     * @param bool $recoursHierarchique
+     */
+    public function setRecoursHierarchique($recoursHierarchique)
+    {
+        $this->recoursHierarchique = $recoursHierarchique;
+    }
 
+    /**
+     * @return bool
+     */
+    public function isRecoursCapCcp()
+    {
+        return $this->recoursCapCcp;
+    }
+
+    /**
+     * @param bool $recoursCapCcp
+     */
+    public function setRecoursCapCcp($recoursCapCcp)
+    {
+        $this->recoursCapCcp = $recoursCapCcp;
+    }
 
 
     /**

@@ -1,12 +1,30 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <label>Le supérieur hiérarchique a remis à l’agent le compte rendu de l’entretien professionnel : le  </label>
+        <label>Le supérieur hiérarchique a remis à l’agent le compte rendu de l’entretien professionnel :</label>
         {% if crep.dateVisaShd %}
-            {{ crep.dateVisaShd|date('d/m/Y H:i') }}
+            le&nbsp;{{ crep.dateVisaShd|date('d/m/Y H:i') }}
         {% endif %}
     </div>
 </div>
 <br>
+
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Nom :</dt>
+            <dd>
+                {% if crep.shdSignataire %}
+                    {{ crep.shdSignataire | identite }}
+                {% endif %}
+            </dd>
+        </dl>
+    </div>
+</div>
+<br/>
+
+
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <label>Observations éventuelles de l’agent : </label>
