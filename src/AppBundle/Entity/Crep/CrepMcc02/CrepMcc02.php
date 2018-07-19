@@ -177,7 +177,7 @@ class CrepMcc02 extends Crep
     protected $dateEntreePoste;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string @ORM\Column(type="string")
      * @Assert\Length(
      *    min = 2,
      *    max = 50,

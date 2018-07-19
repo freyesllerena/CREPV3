@@ -406,7 +406,36 @@
 
             return (btn.length > 0) ? btn : null;
         }
-        
-        
+
+        //Mcc02 autocomplete pour formation suivie - voir version globale : \app\Resources\views\crep\crep.base.html.twig
+        urlAjax = "{{ path('formation_ajax_search', {'ministere': crep.agent.campagnePnc.ministere.id}) }}";
+        // AutoComplete
+        autoCompleteFormation();
+
+        function autoCompleteFormation(){
+
+            $('.formation-autocomplete').autocomplete({
+                serviceUrl: urlAjax,
+                minChars: 3,
+                onSelect: function (suggestion) {
+                    var idLibelle = $(this).context.id;
+                    var result = idLibelle.split('_');
+                    var idDuree = result[0] + '_' + result[1] + '_' + result[2] + '_' + result[3] + '_duree';
+                    $("#"+idDuree).val(suggestion.duree);
+                }
+            });
+
+            $('.formation-autocomplete').change(function(){
+                if (!$(this).val()) {
+                    var idLibelle = $(this).context.id;
+                    var result = idLibelle.split('_');
+                    var idDuree = result[0] + '_' + result[1] + '_' + result[2] + '_' + result[3] + '_duree';
+                    $("#"+idDuree).val('');
+                }
+            });
+        }
+
+
+
     </script>
 {% endblock javascripts %}

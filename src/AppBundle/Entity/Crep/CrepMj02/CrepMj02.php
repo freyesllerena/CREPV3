@@ -327,7 +327,7 @@ class CrepMj02 extends Crep
     protected $posteOccupeShd;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $motifAbsenceEntretien;
 
@@ -345,7 +345,7 @@ class CrepMj02 extends Crep
     protected $dateEntretien;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string @ORM\Column(type="string")
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -647,9 +647,9 @@ class CrepMj02 extends Crep
 
         if ($shd) {
             $this
-                ->setNomNaissanceShd($shd->getNomNaissance());
+                ->setNomNaissanceShd($shd->getNomNaissance())
 //                ->setNomMarital($shd->getNomMarital())
-//                ->setPrenomShd($shd->getPrenom())
+                ->setPrenomShd($shd->getPrenom());
 //                ->setPosteOccupeShd($shd->getPosteOccupe());
 //                ->setAffectationShd($shd->getAffectation());
         } else {
@@ -678,7 +678,6 @@ class CrepMj02 extends Crep
         foreach ($this->appreciationsGenerales as $appreciationGenerale) {
             $appreciationGenerale->setNiveauAcquis(null);
         }
-        $this->setAppreciationLitteraleShd(null);
         $this->setDureeEntretien(null);
 
         $this->setDateVisaShd(null)

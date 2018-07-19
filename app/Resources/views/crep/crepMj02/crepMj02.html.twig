@@ -4,387 +4,444 @@
         text-align: center;
     }
     
-    .bordered {
-        border: 1px #000000 solid;
-    }
+    /*.bordered {*/
+        /*border: 1px #000000 solid;*/
+    /*}*/
     
-    .bg-full {
-        background-color: #E9E9E9;
+    .bordered-double {
+        border:1px double black;
     }
+    .title-crep {
+        font-size: 16px;
+    }
+    .font-small-crep {
+        font-size: 11px;
+    }
+    /*.bg-full {*/
+        /*background-color: #E9E9E9;*/
+    /*}*/
     
-    .strong-th {
-        font-weight: bold;
-    }
+    /*.strong-th {*/
+        /*font-weight: bold;*/
+    /*}*/
     
     body {
-        font-size: 12px;
+        font-size: 14px;
+        font-family: 'Times New Roman',serif;
     }
     
-    .cl-italic {
-        font-style: italic;
-    }
+    /*.cl-italic {*/
+        /*font-style: italic;*/
+    /*}*/
     
-    table.padding-mcc002 {
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
+    /*table.padding-mcc002 {*/
+        /*padding-top: 5px;*/
+        /*padding-bottom: 5px;*/
+    /*}*/
     
-    td.padding-mcc002 {
-        padding-bottom: 30px;
-    }
-    .bordered-left-rigth {
-        border-left: 1px #000000 solid;
-        border-right: 1px #000000 solid;
-    }
-    .bordered-left {
-        border-left: 1px #000000 solid;
-    }
-    .bordered-top {
-        border-top: 1px #000000 solid;
-    }
-    .bordered-bottom {
-        border-bottom: 1px #000000 solid;
-    }
+    /*td.padding-mcc002 {*/
+        /*padding-bottom: 30px;*/
+    /*}*/
+    /*.bordered-left-rigth {*/
+        /*border-left: 1px #000000 solid;*/
+        /*border-right: 1px #000000 solid;*/
+    /*}*/
+    /*.bordered-left {*/
+        /*border-left: 1px #000000 solid;*/
+    /*}*/
+    /*.bordered-top {*/
+        /*border-top: 1px #000000 solid;*/
+    /*}*/
+    /*.bordered-bottom {*/
+        /*border-bottom: 1px #000000 solid;*/
+    /*}*/
 
 </style>
 <!-- début -->
 
-<body>
-<div class="text-center" style="font-size: 14px;">
-    <strong>DIRECTION DE LA PROTECTION JUDICIAIRE DE LA JEUNESSE</strong>
-    <strong>_______________________________</strong>
-    <br><br>
-    <strong>COMPTE RENDU D’ENTRETIEN PROFESSIONNEL</strong>
-</div>
-
-<br>
-
-<div class="bordered text-center" style="font-size: 14px;">
-    <br/>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.nomNaissance | upper }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom marital </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.nomMarital | upper }}
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.prenom | upper }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="col-md-5 col-sm-5 col-xs-12">Situation administrative </label>
-            <div class="col-md-2 col-sm-2 col-xs-12">
-                <label>
-                    <input type="checkbox" class="flat" disabled="disabled"
-                           {% if crep.titulaire == 1 and crep.titulaire is not null %}checked="checked"{% endif %}
-                    >&nbsp;&nbsp;Titulaire
-                </label>
-            </div>
-            <div class="col-md-5 col-sm-5 col-xs-12">
-                <label>
-                    <input type="checkbox" class="flat" disabled="disabled"
-                           {% if crep.titulaire == 0 and crep.titulaire is not null %}checked="checked"{% endif %}
-                    >&nbsp;&nbsp;Non titulaire
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Corps </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.corps }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Grade </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.grade }}
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Fonction </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}</div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Occupée depuis </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.dateEntreePosteOccupe %}{{ crep.dateEntreePosteOccupe | date('m/Y') }}{% endif %}</div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="col-md-5 col-sm-5 col-xs-12">Activité d’encadrement </label>
-            <div class="col-md-2 col-sm-2 col-xs-12">
-                <label>
-                    <input type="checkbox" class="flat" disabled="disabled"
-                           {% if crep.activiteEncadrement == true and crep.activiteEncadrement is not empty %}checked="checked"{% endif %}
-                    >&nbsp;&nbsp;Oui
-                </label>
-            </div>
-            <div class="col-md-5 col-sm-5 col-xs-12">
-                <label>
-                    <input type="checkbox" class="flat" disabled="disabled"
-                           {% if crep.activiteEncadrement is not empty and crep.activiteEncadrement == false %}checked="checked"{% endif %}
-                    >&nbsp;&nbsp;Non
-                </label>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nombre total d’agents à encadrer </label>
-            <div class="col-md-3 col-sm-3 col-xs-12 well well-xs">
-                {{ crep.nbAgentsEncadres }}
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">dont agents de catégorie A </label>
-            <div class="col-md-3 col-sm-3 col-xs-12 well well-xs">
-                {{ crep.nbAgentsEncadresA }}
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">dont agents de catégorie B </label>
-            <div class="col-md-3 col-sm-3 col-xs-12 well well-xs">
-                {{ crep.nbAgentsEncadresB }}
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">dont agents de catégorie C </label>
-            <div class="col-md-3 col-sm-3 col-xs-12 well well-xs">
-                {{ crep.nbAgentsEncadresC }}
-            </div>
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>&nbsp;&nbsp;DIR :</label>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
-                {{ crep.direction }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>&nbsp;&nbsp;DT :</label>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
-                {{ crep.departement }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>&nbsp;&nbsp;Service :</label>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
-                {{ crep.service }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
+    <div class="text-center title-crep">
+        <strong>DIRECTION DE LA PROTECTION JUDICIAIRE DE LA JEUNESSE</strong><br>
+        <strong>_______________________</strong>
+        <br><br>
+        <strong>COMPTE RENDU D’ENTRETIEN PROFESSIONNEL</strong><br>
+        <strong>ANNÉE {% if crep.dateVIsaShd is not empty %} {{ anneeEvaluee }} {% endif %}</strong>
     </div>
     <div>
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <span>* mentions obligatoires</span>
-        </div>
+        <em>(Document à remettre à l’agent au moins 8 jours francs avant la date de l’entretien, <strong>accompagné de la
+                fiche de poste</strong>)</em>
     </div>
-    <br><br>
-    
-    
-    
-    
-    
-    <br/>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.nomNaissanceShd }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom marital </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.nomMaritalShd }}
-            </div>
-        </div>
+    <div class="bordered-double">
+        <br>
+        <table border="0" width="100%">
+            <tr>
+                <td colspan="4">
+                    <strong>AGENT ÉVALUÉ</strong>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>NOM DE FAMILLE*</strong> : {{ crep.nomNaissance | upper }}
+                </td>
+                <td colspan="2">
+                    <strong>NOM MARITAL </strong>: {{ crep.nomMarital | upper }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Prénom* </strong>: {{ crep.prenom | upper }}
+                </td>
+            </tr>
+        
+            <tr>
+                <td colspan="4">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Situation administrative* </strong>:
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% if crep.titulaire == 1 and crep.titulaire is not null %}
+                        &#9745;
+                    {% else %}
+                        &#9744;
+                    {% endif %}
+                    <label>&nbsp;&nbsp;Titulaire</label>
+                    <br>
+                </td>
+                <td>
+                    {% if crep.titulaire is not null and crep.titulaire == 0 %}
+                        &#9745;
+                    {% else %}
+                        &#9744;
+                    {% endif %}
+                    <label>&nbsp;&nbsp;Non titulaire</label>
+                </td>
+                <td colspan="2">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Pour les agents titulaires* </strong> :
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Corps </strong> : {{ crep.corps }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Grade </strong> : {{ crep.grade }}
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>Fonction*</strong> : {% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}
+                    <br>
+                </td>
+                <td colspan="2">
+                    <strong>occupée depuis (durée en mois / années)</strong> {% if crep.dateEntreePosteOccupe %}{{ crep.dateEntreePosteOccupe | date('m/Y') }}{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Activité d’encadrement* </strong>:
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% if crep.activiteEncadrement == 1 and crep.activiteEncadrement is not null %}
+                        &#9745;
+                    {% else %}
+                        &#9744;
+                    {% endif %}
+                    <label>&nbsp;&nbsp;OUI</label>
+                    <br>
+                </td>
+                <td>
+                    {% if crep.activiteEncadrement is not null and crep.activiteEncadrement == 0 %}
+                        &#9745;
+                    {% else %}
+                        &#9744;
+                    {% endif %}
+                    <label>&nbsp;&nbsp;NON</label>
+                </td>
+                <td colspan="2">
+                    <u>Nombre total d’agents à encadrer</u> : {{ crep.nbAgentsEncadres }}<br>
+                    -dont agents de catégorie A : {{ crep.nbAgentsEncadresA }}<br>
+                    -dont agents de catégorie B : {{ crep.nbAgentsEncadresB }}<br>
+                    -dont agents de catégorie C : {{ crep.nbAgentsEncadresC }}<br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Affectation* </strong>:
+                </td>
+                <td>
+                    &bull; DIR : {{ crep.direction }}<br>
+                    &bull; DT : {{ crep.departement }}<br>
+                    &bull; Service : {{ crep.service }}<br>
+                </td>
+                <td colspan="2">
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <em class="font-small-crep">* mentions obligatoires</em>
+                </td>
+            </tr>
+        </table>
     </div>
-    
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
-                {{ crep.prenomShd | title }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
+    <div class="bordered-double">
+        <table class="text-center" border="0" width="100%">
+            <tr>
+                <td colspan="4">
+                    <strong>ÉVALUATEUR</strong>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td colspan="2">
+                    <strong>NOM DE FAMILLE*</strong> : {{ crep.nomNaissanceShd | upper }}
+                </td>
+                <td colspan="2">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>NOM MARITAL </strong>: {{ crep.nomMaritalShd  | upper }}
+                    <br>
+                </td>
+                <td colspan="2">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Prénom* </strong>: {{ crep.prenomShd | upper }}
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>Fonction*</strong> : {% if crep.posteOccupeShd %}{{ crep.posteOccupeShd }}{% endif %}
+                    <br>
+                </td>
+                <td colspan="2">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Affectation* </strong>:
+                </td>
+                <td>
+                    &bull; DIR : {{ crep.directionShd  }}<br>
+                    &bull; DT : {{ crep.departementShd  }}<br>
+                    &bull; Service : {{ crep.serviceShd  }}<br>
+                </td>
+                <td colspan="2">
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>*Si l’évaluation ne peut être assurée par le N+1 </strong><em>(indiquer les raisons) :
+                    </em>{{ crep.motifAbsenceEntretien }}
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <em class="font-small-crep">* mentions obligatoires</em>
+                </td>
+            </tr>
+        </table>
     </div>
+    <!-- page 1 -->
     
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Fonction </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.posteOccupeShd %}{{ crep.posteOccupeShd }}{% endif %}</div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-    </div>
-    
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>&nbsp;&nbsp;DIR :</label>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
-                {{ crep.directionShd }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>&nbsp;&nbsp;DT :</label>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
-                {{ crep.departementShd }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
-            <div class="col-md-3 col-sm-3 col-xs-12">
-                <label>&nbsp;&nbsp;Service :</label>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-12 well well-xs">
-                {{ crep.serviceShd }}
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-        </div>
-    </div>
-    
-    
-    
-    
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <dl class="m-t-md">
-                <dt> Si l’évaluation ne peut être assurée par le N+1 (indiquer les raisons) : </dt>
-                <dd class="well well-xs">
-                    {{ crep.motifAbsenceEntretien | nl2br }}
-                </dd>
-            </dl>
-        </div>
-    </div>
-    <div>
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <span>* mentions obligatoires</span>
-        </div>
-    </div>
-    <br><br>
-    
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
-            <label>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) :</label>
-            &nbsp;&nbsp;
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.motifAbsenceAgent == 0 and crep.motifAbsenceAgent is not null %}
-                            checked="checked"
-                        {% endif %}
-                >
-            </label> non activité (durée de l'absence)&nbsp;&nbsp;
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.motifAbsenceAgent == 1 and crep.motifAbsenceAgent is not null %}
-                            checked="checked"
-                        {% endif %}
-                >
-            </label> congés&nbsp;&nbsp;
-            
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.motifAbsenceAgent == 2 and crep.motifAbsenceAgent is not null %}
-                            checked="checked"
-                        {% endif %}
-                >
-            </label> autres&nbsp;&nbsp;
-        </div>
-    </div>
-    
-    <div class="row form-group">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Date de l’entretien professionnel </label>
-            <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}</div>
-        </div>
-    </div>
-    
-    <br>
+    <div style="page-break-before:always;"></div>
+{#<div class="bordered text-center" style="font-size: 14px;">#}
+   {##}
+    {##}
+    {##}
+    {##}
+    {##}
+    {#<br/>#}
+    {#<div class="row form-group">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>#}
+            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">#}
+                {#{{ crep.nomNaissanceShd }}#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom marital </label>#}
+            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">#}
+                {#{{ crep.nomMaritalShd }}#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+    {##}
+    {#<div class="row form-group">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>#}
+            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">#}
+                {#{{ crep.prenomShd | title }}#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#</div>#}
+    {#</div>#}
+    {##}
+    {#<div class="row form-group">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Fonction </label>#}
+            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.posteOccupeShd %}{{ crep.posteOccupeShd }}{% endif %}</div>#}
+        {#</div>#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#</div>#}
+    {#</div>#}
+    {##}
+    {#<div class="row form-group">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>#}
+            {#<div class="col-md-3 col-sm-3 col-xs-12">#}
+                {#<label>&nbsp;&nbsp;DIR :</label>#}
+            {#</div>#}
+            {#<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">#}
+                {#{{ crep.directionShd }}#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="row form-group">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>#}
+            {#<div class="col-md-3 col-sm-3 col-xs-12">#}
+                {#<label>&nbsp;&nbsp;DT :</label>#}
+            {#</div>#}
+            {#<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">#}
+                {#{{ crep.departementShd }}#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="row form-group">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>#}
+            {#<div class="col-md-3 col-sm-3 col-xs-12">#}
+                {#<label>&nbsp;&nbsp;Service :</label>#}
+            {#</div>#}
+            {#<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">#}
+                {#{{ crep.serviceShd }}#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+        {#</div>#}
+    {#</div>#}
+    {##}
+    {##}
+    {##}
+    {##}
+    {#<div class="row">#}
+        {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+            {#<dl class="m-t-md">#}
+                {#<dt> Si l’évaluation ne peut être assurée par le N+1 (indiquer les raisons) : </dt>#}
+                {#<dd class="well well-xs">#}
+                    {#{{ crep.motifAbsenceEntretien | nl2br }}#}
+                {#</dd>#}
+            {#</dl>#}
+        {#</div>#}
+    {#</div>#}
+    {#<div>#}
+        {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+            {#<span>* mentions obligatoires</span>#}
+        {#</div>#}
+    {#</div>#}
+    {#<br><br>#}
+    {##}
+    {#<div class="row">#}
+        {#<div class="col-md-12 col-sm-12 col-xs-12 pull-left">#}
+            {#<label>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) :</label>#}
+            {#&nbsp;&nbsp;#}
+            {#<label>#}
+                {#<input type="checkbox" class="flat" disabled="disabled"#}
+                        {#{% if crep.motifAbsenceAgent == 0 and crep.motifAbsenceAgent is not null %}#}
+                            {#checked="checked"#}
+                        {#{% endif %}#}
+                {#>#}
+            {#</label> non activité (durée de l'absence)&nbsp;&nbsp;#}
+            {#<label>#}
+                {#<input type="checkbox" class="flat" disabled="disabled"#}
+                        {#{% if crep.motifAbsenceAgent == 1 and crep.motifAbsenceAgent is not null %}#}
+                            {#checked="checked"#}
+                        {#{% endif %}#}
+                {#>#}
+            {#</label> congés&nbsp;&nbsp;#}
+            {##}
+            {#<label>#}
+                {#<input type="checkbox" class="flat" disabled="disabled"#}
+                        {#{% if crep.motifAbsenceAgent == 2 and crep.motifAbsenceAgent is not null %}#}
+                            {#checked="checked"#}
+                        {#{% endif %}#}
+                {#>#}
+            {#</label> autres&nbsp;&nbsp;#}
+        {#</div>#}
+    {#</div>#}
+    {##}
+    {#<div class="row form-group">#}
+        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
+            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Date de l’entretien professionnel </label>#}
+            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}</div>#}
+        {#</div>#}
+    {#</div>#}
+    {##}
+    {#<br>#}
 
 
 
-</div>
+{#</div>#}
 
 
 
-<br/>
+{#<br/>#}
 
-<h4>4. ACQUIS DE L’EXPÉRIENCE PROFESSIONNELLE</h4>
+{#<h4>4. ACQUIS DE L’EXPÉRIENCE PROFESSIONNELLE</h4>#}
 
-<table cellpadding="5" style="font-size:10.0pt;">
-    <tr>
-        <td style="border:1px #000000 solid;">
-            {{ crep.acquisExperiencePro | nl2br }}
-            <br/>
-            <br/>
-        </td>
-    </tr>
-</table>
-
-<br/>
+{#<table cellpadding="5" style="font-size:10.0pt;">#}
+    {#<tr>#}
+        {#<td style="border:1px #000000 solid;">#}
+            {#{{ crep.acquisExperiencePro | nl2br }}#}
+            {#<br/>#}
+            {#<br/>#}
+        {#</td>#}
+    {#</tr>#}
+{#</table>#}

@@ -18,7 +18,8 @@
             {% if  crep.formationsAnneeAvenir is not empty%}
                 {% for key, formation in crep.formationsAnneeAvenir %}
                     <tr>
-                        <td>{{ formation.libelle|thematiquesFormationsCrepMj02 }}</td>
+                        {#<td>{{ formation.libelle|thematiquesFormationsCrepMj02 }}</td>#}
+                        <td>{{ formation.libelle }}</td>
                         <td>{{ formation.objectif }}</td>
                         <td>{{ formation.duree }}</td>
                         <td>{{ formation.cpf }}</td>

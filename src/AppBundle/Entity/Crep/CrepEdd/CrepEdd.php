@@ -122,7 +122,7 @@ class CrepEdd extends Crep
     protected $civiliteShd;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message = "Prénom obligatoire")
      * @Assert\Length(
      *    min = 2,
@@ -134,7 +134,7 @@ class CrepEdd extends Crep
     protected $prenomShd;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string @ORM\Column(type="string")
      * @Assert\NotBlank(message = "Nom obligatoire")
      * @Assert\Length(
      *    min = 2,

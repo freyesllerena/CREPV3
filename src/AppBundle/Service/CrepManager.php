@@ -25,6 +25,7 @@ use AppBundle\Service\ModelesCrep\CrepMso3Manager;
 use AppBundle\Entity\Crep\CrepMso3\CrepMso3;
 use AppBundle\Service\ModelesCrep\CrepMcc02Manager;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
+use AppBundle\Service\ModelesCrep\CrepMj02Manager;
 use AppBundle\Service\ModelesCrep\CrepMj01Manager;
 use AppBundle\Service\ModelesCrep\CrepEddManager;
 use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
@@ -83,6 +84,8 @@ class CrepManager
 
     protected $crepScl02Manager;
 
+    protected $crepMj02Manager;
+
     public function __construct(
             EntityManagerInterface $entityManager,
             TokenStorageInterface $tokenStorage,
@@ -102,7 +105,8 @@ class CrepManager
             CrepMj01Manager $crepMj01Manager,
             CrepMcc02Manager $crepMcc02Manager,
             CrepEddManager $crepEddManager,
-            CrepScl02Manager $crepScl02Manager
+            CrepScl02Manager $crepScl02Manager,
+            CrepMj02Manager $crepMj02Manager
             ) {
     	
         $this->em = $entityManager;
@@ -124,6 +128,7 @@ class CrepManager
         $this->crepMcc02Manager = $crepMcc02Manager;
         $this->crepEddManager = $crepEddManager;
         $this->crepScl02Manager = $crepScl02Manager;
+        $this->crepMj02Manager = $crepMj02Manager;
 
         $this->modelesCrepManagers = [
                 'CrepMindef01' => $this->crepMindef01Manager,
@@ -136,6 +141,7 @@ class CrepManager
                 'CrepMcc02' => $this->crepMcc02Manager,
                 'CrepEdd' => $this->crepEddManager,
                 'CrepScl02' => $this->crepScl02Manager,
+                'CrepMj02' => $this->crepMj02Manager,
         ];
     }
 
