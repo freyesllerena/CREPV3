@@ -50,9 +50,9 @@ class CrepMj02 extends Crep
     ];
 
     public static $thematiquesFormationsCrepMj02 = [
-        'T1 : adaptation immédiate au poste de travail (missions actuelles imparties à l’agent)' => 0,
-        'T2 : adaptation à l’évolution prévisible des métiers (compétences acquises)' => 1,
-        'T3 : développement des compétences ou acquisition de nouvelles compétences (projet professionnel)' => 2,
+        'T1 : adaptation immédiate au poste de travail (missions actuelles imparties à l’agent)' => 'T1 : adaptation immédiate au poste de travail (missions actuelles imparties à l’agent)',
+        'T2 : adaptation à l’évolution prévisible des métiers (compétences acquises)' => 'T2 : adaptation à l’évolution prévisible des métiers (compétences acquises)',
+        'T3 : développement des compétences ou acquisition de nouvelles compétences (projet professionnel)' => 'T3 : développement des compétences ou acquisition de nouvelles compétences (projet professionnel)',
     ];
 
     /**
