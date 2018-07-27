@@ -22,6 +22,7 @@ use AppBundle\Form\ObjectifFuturType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -91,10 +92,10 @@ class CrepMj02Type extends CrepType
                 'multiple' => false,
             ])
 
-            ->add('nbAgentsEncadres', null, ['required' => false])
-            ->add('nbAgentsEncadresA', null, ['required' => false])
-            ->add('nbAgentsEncadresB', null, ['required' => false])
-            ->add('nbAgentsEncadresC', null, ['required' => false])
+            ->add('nbAgentsEncadres', TextType::class, ['required' => false])
+            ->add('nbAgentsEncadresA', TextType::class, ['required' => false])
+            ->add('nbAgentsEncadresB', TextType::class, ['required' => false])
+            ->add('nbAgentsEncadresC', TextType::class, ['required' => false])
             ->add('direction', null, ['required' => false])
             ->add('departement', null, ['required' => false])
             ->add('service', null, ['required' => false])
@@ -109,11 +110,11 @@ class CrepMj02Type extends CrepType
             ->add('departementShd', null, ['required' => false])
             ->add('serviceShd', null, ['required' => false])
 
-            ->add('motifAbsenceEntretien', TextareaType::class, [
+            ->add('motifAbsenceEntretienShd', TextareaType::class, [
                 'attr' => ['maxlength' => '4096'],
                 'required' => false
             ])
-            ->add('motifAbsenceAgent', ChoiceType::class, [
+            ->add('motifAbsenceEntretien', ChoiceType::class, [
                 'choices' => [
                     'Non activité (durée de l\'absence)' => 0,
                     'Congés' => 1,
@@ -280,9 +281,19 @@ class CrepMj02Type extends CrepType
                     'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
                 ]
             )
-
-            ->add('recoursHierarchique', null, ['required' => false])
-            ->add('recoursCapCcp', null, ['required' => false])
+            ->add(
+                'typeAbsenceEntretien',
+                ChoiceType::class,
+                [
+                    'choices' => [
+                        "non activité (durée de l'absence)" => 0,
+                        'congés' => 1,
+                        'autres' => 2,
+                    ],
+                    'expanded' => true,
+                    'multiple' => false,
+                ]
+            )
         ;
     }
 

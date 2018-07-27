@@ -560,7 +560,7 @@ abstract class Crep extends GenericEntity
     /**
      * Set statut
      *
-     * @param enum_statut_crep $statut
+     * @param string $statut
      *
      * @return Crep
      */
@@ -574,7 +574,7 @@ abstract class Crep extends GenericEntity
     /**
      * Get statut
      *
-     * @return enum_statut_crep
+     * @return string
      */
     public function getStatut()
     {

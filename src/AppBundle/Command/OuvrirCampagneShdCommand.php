@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use AppBundle\Entity\Utilisateur;
 
 class OuvrirCampagneShdCommand extends Command
 {

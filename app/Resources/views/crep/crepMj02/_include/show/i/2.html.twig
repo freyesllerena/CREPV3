@@ -1,41 +1,92 @@
-<div class="row form-group">
+<div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <label class="col-md-4 col-sm-4 col-xs-12">Globalement, les objectifs sont :</label>
-        <div class="col-md-2 col-sm-2 col-xs-12">
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.contexteResultats == '0' and crep.contexteResultats is not null %}
-                            checked="checked"
-                        {% endif %}
-                >&nbsp;&nbsp;Atteints
-            </label>
-        </div>
-        <div class="col-md-2 col-sm-2 col-xs-12">
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.contexteResultats == '1' %}
-                            checked="checked"
-                        {% endif %}
-                >&nbsp;&nbsp;Partiellement
-            </label>
-        </div>
-        <div class="col-md-2 col-sm-2 col-xs-12">
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.contexteResultats == '2' %}
-                            checked="checked"
-                        {% endif %}
-                >&nbsp;&nbsp;Non atteints
-            </label>
-        </div>
-        <div class="col-md-2 col-sm-2 col-xs-12">
-            <label>
-                <input type="checkbox" class="flat" disabled="disabled"
-                        {% if crep.contexteResultats == '3' %}
-                            checked="checked"
-                        {% endif %}
-                >&nbsp;&nbsp;Devenus sans objet
-            </label>
-        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Niveau d'appréciation</th>
+                <th class="text-center" width="100px">Atteints</th>
+                <th class="text-center" width="100px">Partiellement</th>
+                <th class="text-center" width="100px">Non atteints</th>
+                <th class="text-center" width="100px">Devenus sans objet</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    Appréciation globale sur la réalisation des objectifs de l’année écoulée
+                </td>
+                <td class="text-center">
+                    <input type="checkbox" class="flat" disabled="disabled"
+                            {% if crep.contexteResultats == '0' and crep.contexteResultats is not null %}
+                                checked="checked"
+                            {% endif %}
+                    >
+                </td>
+                <td class="text-center">
+                    <input type="checkbox" class="flat" disabled="disabled"
+                            {% if crep.contexteResultats == '1' %}
+                                checked="checked"
+                            {% endif %}
+                    >
+                </td>
+                <td class="text-center">
+                    <input type="checkbox" class="flat" disabled="disabled"
+                            {% if crep.contexteResultats == '2' %}
+                                checked="checked"
+                            {% endif %}
+                    >
+                </td>
+                <td class="text-center">
+                    <input type="checkbox" class="flat" disabled="disabled"
+                            {% if crep.contexteResultats == '3' %}
+                                checked="checked"
+                            {% endif %}
+                    >
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+
+{#<div class="row form-group">#}
+    {#<div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#<label class="col-md-4 col-sm-4 col-xs-12">Globalement, les objectifs sont :</label>#}
+        {#<div class="col-md-2 col-sm-2 col-xs-12">#}
+            {#<label>#}
+                {#<input type="checkbox" class="flat" disabled="disabled"#}
+                        {#{% if crep.contexteResultats == '0' and crep.contexteResultats is not null %}#}
+                            {#checked="checked"#}
+                        {#{% endif %}#}
+                {#>&nbsp;&nbsp;Atteints#}
+            {#</label>#}
+        {#</div>#}
+        {#<div class="col-md-2 col-sm-2 col-xs-12">#}
+            {#<label>#}
+                {#<input type="checkbox" class="flat" disabled="disabled"#}
+                        {#{% if crep.contexteResultats == '1' %}#}
+                            {#checked="checked"#}
+                        {#{% endif %}#}
+                {#>&nbsp;&nbsp;Partiellement#}
+            {#</label>#}
+        {#</div>#}
+        {#<div class="col-md-2 col-sm-2 col-xs-12">#}
+            {#<label>#}
+                {#<input type="checkbox" class="flat" disabled="disabled"#}
+                        {#{% if crep.contexteResultats == '2' %}#}
+                            {#checked="checked"#}
+                        {#{% endif %}#}
+                {#>&nbsp;&nbsp;Non atteints#}
+            {#</label>#}
+        {#</div>#}
+        {#<div class="col-md-2 col-sm-2 col-xs-12">#}
+            {#<label>#}
+                {#<input type="checkbox" class="flat" disabled="disabled"#}
+                        {#{% if crep.contexteResultats == '3' %}#}
+                            {#checked="checked"#}
+                        {#{% endif %}#}
+                {#>&nbsp;&nbsp;Devenus sans objet#}
+            {#</label>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}

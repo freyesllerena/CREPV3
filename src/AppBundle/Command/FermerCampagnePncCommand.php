@@ -11,6 +11,7 @@ use AppBundle\Service\CampagnePncManager;
 use AppBundle\Entity\CampagnePnc;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Console\Command\Command;
+use AppBundle\Entity\Utilisateur;
 
 class FermerCampagnePncCommand extends Command
 {

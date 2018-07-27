@@ -62,7 +62,7 @@ abstract class GenericEntity implements GenericEntityInterface
      *
      * @param \DateTime $dateCreation
      *
-     * @return Campagne1
+     * @return GenericEntity
      */
     public function setDateCreation($dateCreation)
     {
@@ -86,7 +86,7 @@ abstract class GenericEntity implements GenericEntityInterface
      *
      * @param \DateTime $dateModification
      *
-     * @return Campagne1
+     * @return GenericEntity
      */
     public function setDateModification($dateModification)
     {

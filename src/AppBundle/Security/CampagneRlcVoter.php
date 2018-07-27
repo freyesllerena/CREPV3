@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use AppBundle\Entity\Agent;
+use AppBundle\Repository\AgentRepository;
 
 class CampagneRlcVoter extends Voter
 {
@@ -116,7 +117,7 @@ class CampagneRlcVoter extends Voter
 
     private function peutRouvrir(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
     {
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         /* @var $rlc Rlc */
@@ -173,7 +174,7 @@ class CampagneRlcVoter extends Voter
         /** @var $rlc Rlc */
         $rlc = $this->em->getRepository('AppBundle:Rlc')->findOneByUtilisateur($utilisateur);
 
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if (EnumStatutCampagne::CREEE == $campagneRlc->getStatut()
@@ -230,7 +231,7 @@ class CampagneRlcVoter extends Voter
     // Exporter l'ensemble des CREPs finalisés par le RLC
     private function peutExporterCrepsFinalises(CampagneRlc $campagneRlc, Utilisateur $utilisateur)
     {
-    	/* @var $roleUtilisateurSession Role */
+    	/* @var $roleUtilisateurSession string */
     	$roleUtilisateurSession = $this->session->get('selectedRole');
     	
     	if('ROLE_RLC' == $roleUtilisateurSession){

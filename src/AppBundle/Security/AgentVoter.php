@@ -118,7 +118,7 @@ class AgentVoter extends Voter
     {
         $utilisateur = $token->getUser();
 
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if (!$utilisateur instanceof Utilisateur) {

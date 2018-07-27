@@ -27,15 +27,15 @@ framework:
     trusted_hosts:   ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
+        handler_id:  "%framework.session.handler_id%"
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
-        cookie_lifetime:    0 # durée max d'activité / cookie_lifetime: 0 => cookie expiré à  la fermeture du navigateur
-        gc_maxlifetime: 36000 # (10 heures en seconde) gc sera remis à zéro à chaque activité de l'utilisateur
-        gc_probability:     1
-        gc_divisor:       1000
-        cookie_secure:    '%app.cookie_secure%'
-        cookie_httponly : '%app.cookie_httponly%'
-        metadata_update_threshold: 120
+#        cookie_lifetime:    0 # durée max d'activité / cookie_lifetime: 0 => cookie expiré à  la fermeture du navigateur
+#        gc_maxlifetime: 36000 # (10 heures en seconde) gc sera remis à zéro à chaque activité de l'utilisateur
+#        gc_probability:     1
+#        gc_divisor:       1000
+#        cookie_secure:    '%app.cookie_secure%'
+#        cookie_httponly : '%app.cookie_httponly%'
+#        metadata_update_threshold: 120
         
 #    serializer:
 #        cache: serializer.mapping.cache.apcu         
@@ -186,3 +186,19 @@ assetic:
         cssrewrite: ~
 #        sass:
 #            apply_to: ".scss$"
+
+snc_redis:
+#    clients:
+#        default:
+#            type: predis
+#            alias: default
+#            dsn: redis://%redis_address%
+#            logging: %kernel.debug%
+#        session:
+#            type: predis
+#            alias: session
+#            dsn: redis://%redis_address%/1
+#            logging: true
+#    session:
+#        client: session
+#        prefix: %project_name%

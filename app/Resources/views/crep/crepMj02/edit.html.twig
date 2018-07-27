@@ -32,6 +32,10 @@
     {% include 'crep/crepMj02/_include/edit/0/3.html.twig' %}
 {% endblock i03 %}
 
+{% block i04 %}
+    {% include 'crep/crepMj02/_include/edit/0/4.html.twig' %}
+{% endblock i04 %}
+
 {% block i1 %}
     {% include 'crep/crepMj02/_include/edit/i/1.html.twig' %}
 {% endblock i1 %}
@@ -51,6 +55,10 @@
 {% block ii3 %}
     {% include 'crep/crepMj02/_include/edit/ii/3.html.twig' %}
 {% endblock ii3 %}
+
+{% block ii4 %}
+    {% include 'crep/crepMj02/_include/edit/ii/4.html.twig' %}
+{% endblock ii4 %}
 
 {% block iii1 %}
     {% include 'crep/crepMj02/_include/edit/iii/1.html.twig' %}
@@ -116,18 +124,10 @@
     {% include 'crep/crepMj02/_include/edit/x/1.html.twig' %}
 {% endblock x %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" type="text/css" rel="stylesheet" />
-    {#<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">#}
-
-{% endblock stylesheets %}
-
 {% block javascripts %}
     {{ parent() }}
     {# 	<!-- chained -->#}
     <script src="{{ asset('js/chained.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
 
     <script type="text/javascript">
 
@@ -250,13 +250,13 @@
             }
 
             //
-            $('#datetimepicker9').datetimepicker({
+            $('#crep_mj02_dateEntreePosteOccupe').datetimepicker({
                 viewMode: 'years',
-                format: 'MM/YYYY'
+                format: 'MM/YYYY',
+                locale: 'fr'
             });
-           
-        });
 
+        });
         
 
         var Crep = Crep || {};

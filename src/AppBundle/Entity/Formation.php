@@ -61,7 +61,7 @@ class Formation extends GenericEntity
     private $ministere;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(type = "datetime")
      * @Assert\Date(message = "Date non valide")

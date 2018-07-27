@@ -1,14 +1,11 @@
-# This file is a 'template' of what your parameters.yml file should look like
-# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
-# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     database_driver:   oci8
-    database_host:     false
-    database_port:     ~
-    database_name:     (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=exax7-scan)(PORT=61100)) (ADDRESS=(PROTOCOL=TCP)(HOST=@@APPLI_DATABASE_HOST@@)(PORT=@@APPLI_DATABASE_PORT@@))(LOAD_BALANCE=yes)(CONNECT_DATA=(SERVICE_NAME=@@APPLI_DATABASE_NAME@@)(FAILOVER_MODE=(TYPE=SELECT)(METHOD=BASIC)(RETRIES=90)(DELAY=1))))
-    database_is_service: true
-    database_user:     @@APPLI_DATABASE_USER@@
-    database_password: @@APPLI_DATABASE_USER_PASSWORD@@
+    database_host:     172.18.0.2  # valeur de hostname -I du container oracle
+    database_port:     1521
+    database_service_name: xe
+    database_service:  true
+    database_user:     crep
+    database_password: crep
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
@@ -18,34 +15,34 @@ parameters:
     mailer_password:   ~
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            @@APPLI_SECRET@@
+    secret:            e374980448bda2e0cda9dd8fac8fc911f84d1c5b
     container.autowiring.strict_mode: true
-    mailer.from_address: noreply-esteve@cisirh.finances.gouv.fr
-    mailer.from_name: Administrateur %app.app_name%
+    mailer.from_address: noreply-crep@finances.gouv.fr
+    mailer.from_name: Administrateur CREP
 
-    app.connexion.nb_connexions_avant_blocage: @@APPLI_NB_CNX_AVANT_BLOCAGE@@
-    router.request_context.host: @@REQUEST_CONTEXTE_HOST@@
-    router.request_context.scheme: @@REQUEST_CONTEXTE_SCHEME@@
-    router.request_context.base_url: @@REQUEST_CONTEXTE_BASE_URL@@
+    app.connexion.nb_connexions_avant_blocage: 2
+
     app.company_name: CISIRH
-    app.app_name: ESTEVE
+    app.app_name: "ESTEVE"
     mailer.reply_address: "%mailer.from_address%"
-
     app.errors.from_email: noreply-eteve@cisirh.finances.gouv.fr
-    app.errors.to_email: @@APPLI_MAILS_INNOVATION@@
-    
-    app.environnement: @@APPLI_ENVIRONNEMENT@@
-    app.version: 3.0.0
-    app.session_timeout: @@APPLI_SESSION_TIMEOUT@@ # en secondes
-    
-    fichier.certificat: '/produit/httpd-esteve/docroot/ESTEVE/install/certificat/certificat.crt'
-    app.maxFileSize: 60 # Taille maximale des fichiers uploades en Mo
-    app.default_password: @@APPLI_DEFAULT_PASSWORD@@
-    app.encoders.algorithm: @@APPLI_ENCODERS_ALGORITHM@@
-    app.bcrypt_cost: @@APPLI_BCRYPT_COST@@
-    app.rep_scripts: '@@HTTP_REP_EXPLOIT_AS@@/scripts'
-    app.cookie_secure: true
+
+    app.errors.to_email: ['karim.ben-daali@finances.gouv.fr', 'naim.cheref@finances.gouv.fr', 'noureddine.madi@finances.gouv.fr', 'mouhoub.medjahed@prestataire.finances.gouv.fr']
+
+    app.environnement: for1
+    app.version: 2.0.0
+    app.session_timeout: 3600 # en secondes
+    app.duree_affichage_modal_timeout : 1800  # en secondes
+
+    app.delai_visa_mindef : 0
+    app.delai_visa_meem : 10
+
+    fichier.certificat: '/var/www/CREP3/install/certificat/certificat.crt'
+    app.maxFileSize: 12 # Taille maximale des fichiers uploades en Mo
+    app.default_password: Crep.2016
+    app.bcrypt_cost: 4
+    app.rep_scripts: ~
+    app.encoders.algorithm: bcrypt
+    app.cookie_secure: false
     app.cookie_httponly: true
     framework.session.handler_id: session.handler.native_file   # session.handler.native_file ou snc_redis.session.handler
-    piwik_site_id: @@PIWIK_SITE_ID@@
-        

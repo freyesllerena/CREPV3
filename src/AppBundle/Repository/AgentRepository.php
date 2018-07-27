@@ -307,10 +307,10 @@ class AgentRepository extends EntityRepository
 
     /**
      * @param Campagne $campagne
-     * @param unknown  $evaluable     : 0=non_evaluable, 1=evaluable, 2=(evaluable + non_evaluable)
-     * @param unknown  $sansShd       : 1=true, 0=false
-     * @param unknown  $sansPerimetre : 1=true, 0=false, 2=(true + false)
-     * @param unknown  $search        : chaine saisie dans le champ recherche
+     * @param int  $evaluable        : 0=non_evaluable, 1=evaluable, 2=(evaluable + non_evaluable)
+     * @param int  $sansShd          : 1=true, 0=false
+     * @param int  $sansPerimetre    : 1=true, 0=false, 2=(true + false)
+     * @param string  $search        : chaine saisie dans le champ recherche
      * @param number   $page
      * @param string   $max
      * @param string   $getResult
@@ -372,10 +372,10 @@ class AgentRepository extends EntityRepository
     /**
      * @param Campagne  $campagne
      * @param Perimetre $perimetre
-     * @param unknown   $evaluable     : 0=non_evaluable, 1=evaluable, 2=(evaluable + non_evaluable)
-     * @param unknown   $sansShd       : 1=true, 0=false, 2=Agents avec SHD
-     * @param unknown   $sansPerimetre : 1=true, 0=false
-     * @param unknown   $search        : chaine saisie dans le champ recherche
+     * @param int   $evaluable     : 0=non_evaluable, 1=evaluable, 2=(evaluable + non_evaluable)
+     * @param int   $sansShd       : 1=true, 0=false, 2=Agents avec SHD
+     * @param int   $sansPerimetre : 1=true, 0=false
+     * @param string   $search     : chaine saisie dans le champ recherche
      *
      * @return mixed
      */

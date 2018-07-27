@@ -90,7 +90,7 @@ class CampagneBrhpVoter extends Voter
     {
         $utilisateur = $token->getUser();
 
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         /* @var $campagneBrhp CampagneBrhp  */
@@ -151,7 +151,7 @@ class CampagneBrhpVoter extends Voter
 
     private function peutRouvrir(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         /* @var $brhp Brhp */
@@ -171,7 +171,7 @@ class CampagneBrhpVoter extends Voter
 
     private function peutModifier(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if ('ROLE_BRHP' == $roleUtilisateurSession) {
@@ -274,7 +274,7 @@ class CampagneBrhpVoter extends Voter
 
     private function peutOuvrirShd(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if ('ROLE_BRHP' !== $roleUtilisateurSession && 'ROLE_ADMIN' !== $roleUtilisateurSession) {
@@ -325,7 +325,7 @@ class CampagneBrhpVoter extends Voter
 
     private function peutValiderAgent(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if ('ROLE_SHD' == $roleUtilisateurSession && EnumStatutCampagne::OUVERTE == $campagneBrhp->getStatut()) {
@@ -338,7 +338,7 @@ class CampagneBrhpVoter extends Voter
 
     private function peutAjouterAgent(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if ('ROLE_BRHP' == $roleUtilisateurSession

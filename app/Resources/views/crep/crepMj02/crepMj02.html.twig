@@ -73,219 +73,211 @@
         <em>(Document à remettre à l’agent au moins 8 jours francs avant la date de l’entretien, <strong>accompagné de la
                 fiche de poste</strong>)</em>
     </div>
-    <div class="bordered-double">
-        <br>
-        <table border="0" width="100%">
-            <tr>
-                <td colspan="4">
-                    <strong>AGENT ÉVALUÉ</strong>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong>NOM DE FAMILLE*</strong> : {{ crep.nomNaissance | upper }}
-                </td>
-                <td colspan="2">
-                    <strong>NOM MARITAL </strong>: {{ crep.nomMarital | upper }}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>Prénom* </strong>: {{ crep.prenom | upper }}
-                </td>
-            </tr>
-        
-            <tr>
-                <td colspan="4">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>Situation administrative* </strong>:
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {% if crep.titulaire == 1 and crep.titulaire is not null %}
-                        &#9745;
-                    {% else %}
-                        &#9744;
-                    {% endif %}
-                    <label>&nbsp;&nbsp;Titulaire</label>
-                    <br>
-                </td>
-                <td>
-                    {% if crep.titulaire is not null and crep.titulaire == 0 %}
-                        &#9745;
-                    {% else %}
-                        &#9744;
-                    {% endif %}
-                    <label>&nbsp;&nbsp;Non titulaire</label>
-                </td>
-                <td colspan="2">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>Pour les agents titulaires* </strong> :
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>Corps </strong> : {{ crep.corps }}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>Grade </strong> : {{ crep.grade }}
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong>Fonction*</strong> : {% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}
-                    <br>
-                </td>
-                <td colspan="2">
-                    <strong>occupée depuis (durée en mois / années)</strong> {% if crep.dateEntreePosteOccupe %}{{ crep.dateEntreePosteOccupe | date('m/Y') }}{% endif %}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>Activité d’encadrement* </strong>:
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {% if crep.activiteEncadrement == 1 and crep.activiteEncadrement is not null %}
-                        &#9745;
-                    {% else %}
-                        &#9744;
-                    {% endif %}
-                    <label>&nbsp;&nbsp;OUI</label>
-                    <br>
-                </td>
-                <td>
-                    {% if crep.activiteEncadrement is not null and crep.activiteEncadrement == 0 %}
-                        &#9745;
-                    {% else %}
-                        &#9744;
-                    {% endif %}
-                    <label>&nbsp;&nbsp;NON</label>
-                </td>
-                <td colspan="2">
-                    <u>Nombre total d’agents à encadrer</u> : {{ crep.nbAgentsEncadres }}<br>
-                    -dont agents de catégorie A : {{ crep.nbAgentsEncadresA }}<br>
-                    -dont agents de catégorie B : {{ crep.nbAgentsEncadresB }}<br>
-                    -dont agents de catégorie C : {{ crep.nbAgentsEncadresC }}<br>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>Affectation* </strong>:
-                </td>
-                <td>
-                    &bull; DIR : {{ crep.direction }}<br>
-                    &bull; DT : {{ crep.departement }}<br>
-                    &bull; Service : {{ crep.service }}<br>
-                </td>
-                <td colspan="2">
-                    <br><br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <em class="font-small-crep">* mentions obligatoires</em>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="bordered-double">
-        <table class="text-center" border="0" width="100%">
-            <tr>
-                <td colspan="4">
-                    <strong>ÉVALUATEUR</strong>
-                </td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td colspan="2">
-                    <strong>NOM DE FAMILLE*</strong> : {{ crep.nomNaissanceShd | upper }}
-                </td>
-                <td colspan="2">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong>NOM MARITAL </strong>: {{ crep.nomMaritalShd  | upper }}
-                    <br>
-                </td>
-                <td colspan="2">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>Prénom* </strong>: {{ crep.prenomShd | upper }}
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong>Fonction*</strong> : {% if crep.posteOccupeShd %}{{ crep.posteOccupeShd }}{% endif %}
-                    <br>
-                </td>
-                <td colspan="2">
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <strong>Affectation* </strong>:
-                </td>
-                <td>
-                    &bull; DIR : {{ crep.directionShd  }}<br>
-                    &bull; DT : {{ crep.departementShd  }}<br>
-                    &bull; Service : {{ crep.serviceShd  }}<br>
-                </td>
-                <td colspan="2">
-                    <br><br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <strong>*Si l’évaluation ne peut être assurée par le N+1 </strong><em>(indiquer les raisons) :
-                    </em>{{ crep.motifAbsenceEntretien }}
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <em class="font-small-crep">* mentions obligatoires</em>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <table class="bordered-double">
+        <tr>
+            <td>
+                <table border="0" width="100%">
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>AGENT ÉVALUÉ</strong>
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>NOM DE FAMILLE*</strong> : {{ crep.nomNaissance | upper }}
+                        </td>
+                        <td colspan="2">
+                            <strong>NOM MARITAL </strong>: {{ crep.nomMarital | upper }}
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Prénom* </strong>: {{ crep.prenom | upper }}
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Situation administrative* </strong>:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if crep.titulaire == 1 and crep.titulaire is not null %}
+                                &#9745;
+                            {% else %}
+                                &#9744;
+                            {% endif %}
+                            <label>&nbsp;&nbsp;Titulaire</label>
+                        </td>
+                        <td>
+                            {% if crep.titulaire is not null and crep.titulaire == 0 %}
+                                &#9745;
+                            {% else %}
+                                &#9744;
+                            {% endif %}
+                            <label>&nbsp;&nbsp;Non titulaire</label>
+                        </td>
+                        <td colspan="2">
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Pour les agents titulaires* </strong> :
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Corps </strong> : {{ crep.corps }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Grade </strong> : {{ crep.grade }}
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>Fonction*</strong> : {% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}
+                        </td>
+                        <td colspan="2">
+                            <strong>occupée depuis (durée en mois / années)</strong> {% if crep.dateEntreePosteOccupe %}{{ crep.dateEntreePosteOccupe | date('m/Y') }}{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Activité d’encadrement* </strong>:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if crep.activiteEncadrement == 1 and crep.activiteEncadrement is not null %}
+                                &#9745;
+                            {% else %}
+                                &#9744;
+                            {% endif %}
+                            <label>&nbsp;&nbsp;OUI</label>
+                        </td>
+                        <td>
+                            {% if crep.activiteEncadrement is not null and crep.activiteEncadrement == 0 %}
+                                &#9745;
+                            {% else %}
+                                &#9744;
+                            {% endif %}
+                            <label>&nbsp;&nbsp;NON</label>
+                        </td>
+                        <td colspan="2">
+                            <u>Nombre total d’agents à encadrer</u> : {{ crep.nbAgentsEncadres }}<br>
+                            -dont agents de catégorie A : {{ crep.nbAgentsEncadresA }}<br>
+                            -dont agents de catégorie B : {{ crep.nbAgentsEncadresB }}<br>
+                            -dont agents de catégorie C : {{ crep.nbAgentsEncadresC }}<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Affectation* </strong>:
+                        </td>
+                        <td>
+                            &bull; DIR : {{ crep.direction }}<br>
+                            &bull; DT : {{ crep.departement }}<br>
+                            &bull; Service : {{ crep.service }}<br>
+                        </td>
+                        <td colspan="2">
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <em class="font-small-crep">* mentions obligatoires</em>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="bordered-double">
+        <tr>
+            <td>
+                <table class="text-center" border="0" width="100%">
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>ÉVALUATEUR</strong>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <strong>NOM DE FAMILLE*</strong> : {{ crep.nomNaissanceShd | upper }}
+                        </td>
+                        <td colspan="2">
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>NOM MARITAL </strong>: {{ crep.nomMaritalShd  | upper }}
+                        </td>
+                        <td colspan="2">
+                            <br>
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Prénom* </strong>: {{ crep.prenomShd | upper }}
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>Fonction*</strong> : {% if crep.posteOccupeShd %}{{ crep.posteOccupeShd }}{% endif %}
+                        </td>
+                        <td colspan="2">
+                            <br>
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td>
+                            <strong>Affectation* </strong>:
+                        </td>
+                        <td>
+                            &bull; DIR : {{ crep.directionShd  }}<br>
+                            &bull; DT : {{ crep.departementShd  }}<br>
+                            &bull; Service : {{ crep.serviceShd  }}<br>
+                        </td>
+                        <td colspan="2">
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>*Si l’évaluation ne peut être assurée par le N+1 </strong><em>(indiquer les raisons) :
+                            </em>{{ crep.motifAbsenceEntretienShd }}
+                        </td>
+                    </tr>
+                    <tr><td colspan="4"><br></td></tr>
+                    <tr>
+                        <td colspan="4">
+                            <em class="font-small-crep">* mentions obligatoires</em>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
     <!-- page 1 -->
     
     <div style="page-break-before:always;"></div>
@@ -379,7 +371,7 @@
             {#<dl class="m-t-md">#}
                 {#<dt> Si l’évaluation ne peut être assurée par le N+1 (indiquer les raisons) : </dt>#}
                 {#<dd class="well well-xs">#}
-                    {#{{ crep.motifAbsenceEntretien | nl2br }}#}
+                    {#{{ crep.motifAbsenceEntretienShd | nl2br }}#}
                 {#</dd>#}
             {#</dl>#}
         {#</div>#}
@@ -397,14 +389,14 @@
             {#&nbsp;&nbsp;#}
             {#<label>#}
                 {#<input type="checkbox" class="flat" disabled="disabled"#}
-                        {#{% if crep.motifAbsenceAgent == 0 and crep.motifAbsenceAgent is not null %}#}
+                        {#{% if crep.motifAbsenceEntretien == 0 and crep.motifAbsenceEntretien is not null %}#}
                             {#checked="checked"#}
                         {#{% endif %}#}
                 {#>#}
             {#</label> non activité (durée de l'absence)&nbsp;&nbsp;#}
             {#<label>#}
                 {#<input type="checkbox" class="flat" disabled="disabled"#}
-                        {#{% if crep.motifAbsenceAgent == 1 and crep.motifAbsenceAgent is not null %}#}
+                        {#{% if crep.motifAbsenceEntretien == 1 and crep.motifAbsenceEntretien is not null %}#}
                             {#checked="checked"#}
                         {#{% endif %}#}
                 {#>#}
@@ -412,7 +404,7 @@
             {##}
             {#<label>#}
                 {#<input type="checkbox" class="flat" disabled="disabled"#}
-                        {#{% if crep.motifAbsenceAgent == 2 and crep.motifAbsenceAgent is not null %}#}
+                        {#{% if crep.motifAbsenceEntretien == 2 and crep.motifAbsenceEntretien is not null %}#}
                             {#checked="checked"#}
                         {#{% endif %}#}
                 {#>#}

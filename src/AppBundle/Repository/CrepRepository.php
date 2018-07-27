@@ -57,12 +57,6 @@ class CrepRepository extends EntityRepository
         if ($campagne instanceof CampagneRlc) {
             $qb->andWhere('agent.campagneRlc = :CAMPAGNE');
 
-            /* @var $perimetre PerimetreRlc */
-//             if ($perimetre) {
-//                 $qb->leftJoin('agent.campagneBrhp', 'campagneBrhp')
-//                 ->andWhere('campagneBrhp.perimetreBrhp = :PERIMETRE_BRHP')
-//                 ->setParameter('PERIMETRE_BRHP', $perimetre);
-//             }
             $this->addFiltrePerimetresBrhp($qb, $perimetresBrhp);
         }
 

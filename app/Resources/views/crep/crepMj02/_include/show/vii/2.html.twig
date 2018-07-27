@@ -16,30 +16,15 @@
     </div>
 </div>
 <br>
+<div class="row">
 {% if crep.refusEntretienProfessionnel %}
-    <div class="row">
-        <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
-            <i class="fa fa-check-square-o"></i> L'agent <strong>a refusé</strong> de participer à l'entretien professionnel.
-            <br/><br/>
-        </div>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        <i class="fa fa-check-square-o"></i> L'agent <strong>a refusé</strong> de participer à l'entretien professionnel.
     </div>
 {% else %}
-    {#<div class="row">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<dl class="dl-horizontal m-t-md">#}
-                {#<dt>Date de l'entretien</dt>#}
-                {#<dd>{% if crep.dateEntretien %}{{ crep.dateEntretien|date('d/m/Y') }}{% endif %}</dd>#}
-            {#</dl>#}
-        {#</div>#}
-    {#</div>#}
-    
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <dl class="dl-horizontal m-t-md">
-                <dt>Durée de l'entretien </dt>
-                <dd>{{ crep.dureeEntretien}}</dd>
-            </dl>
-        </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Durée de l'entretien </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{{ crep.dureeEntretien}}</div>
     </div>
-
 {% endif %}
+</div>

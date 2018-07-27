@@ -327,14 +327,28 @@ class CrepMj02 extends Crep
     protected $posteOccupeShd;
 
     /**
+     * Motif d'abcense à l'entretien de l'agent
+     * @var string
+     *
      * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
     protected $motifAbsenceEntretien;
 
     /**
-     * @ORM\Column(type="string")
+     * Motif d'abcense à l'entretien du N+1
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
      */
-    protected $motifAbsenceAgent;
+    protected $motifAbsenceEntretienShd;
 
     /**
      * @var \DateTime
@@ -515,24 +529,17 @@ class CrepMj02 extends Crep
     protected $formationsAnneeAvenir;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="integer")
      */
-    protected $recoursHierarchique;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $recoursCapCcp;
+    protected $typeAbsenceEntretien;
 
 
     public function initialiser(Agent $agent, $em)
     {
         $this->initialiserParent($agent, $em);
-        $defaultNomAgent = ($agent->getNom())? $agent->getNom() : $agent->getNomNaissance();
+        $defaultNomAgent = ($agent->getNom()) ? $agent->getNom() : $agent->getNomNaissance();
         $this->setNomNaissance($defaultNomAgent);
         $this->setNomMarital($agent->getNomMarital());
         $this->setPrenom($agent->getPrenom());
@@ -681,7 +688,7 @@ class CrepMj02 extends Crep
         $this->setDureeEntretien(null);
 
         $this->setDateVisaShd(null)
-             ->setShdSignataire(null);
+            ->setShdSignataire(null);
 
         $this->setMotifAbsenceEntretien(null);
 
@@ -689,7 +696,7 @@ class CrepMj02 extends Crep
         $this->setDepartementShd(null);
         $this->setServiceShd(null);
         $this->setMotifAbsenceEntretien(null);
-        $this->setMotifAbsenceAgent(null);
+        $this->setMotifAbsenceEntretienShd(null);
         $this->setDateEntretien(null);
         $this->getObjectifsEvalues()->clear();
         $this->setContexteResultats(null);
@@ -706,16 +713,17 @@ class CrepMj02 extends Crep
 
         $this->getFormationsAnneeEcoulee()->clear();
         $this->getFormationsAnneeAvenir()->clear();
-        $this->getAppreciationsGenerales ()->clear();
+        $this->getAppreciationsGenerales()->clear();
         $this->setAppreciationLitteraleShd(null);
         $this->setDureeEntretien(null);
-        $this->setObservationsVisaAgent(null);
 
     }
 
     public function confidentialisationChampsAgent()
     {
         $this->setObservationsVisaAgent(null);
+        $this->setObservationsAgentNotif(null);
+
     }
 
     public function confidentialisationChampsAgentAvantNotification()
@@ -726,7 +734,6 @@ class CrepMj02 extends Crep
     public function confidentialisationChampsAh()
     {
         // TODO: Implement confidentialisationChampsAh() method.
-        $this->setObservationsVisaAgent(null);
     }
 
     /**
@@ -1117,17 +1124,17 @@ class CrepMj02 extends Crep
     /**
      * @return mixed
      */
-    public function getMotifAbsenceAgent()
+    public function getMotifAbsenceEntretienShd()
     {
-        return $this->motifAbsenceAgent;
+        return $this->motifAbsenceEntretienShd;
     }
 
     /**
-     * @param mixed $motifAbsenceAgent
+     * @param mixed $motifAbsenceEntretienShd
      */
-    public function setMotifAbsenceAgent($motifAbsenceAgent)
+    public function setMotifAbsenceEntretienShd($motifAbsenceEntretienShd)
     {
-        $this->motifAbsenceAgent = $motifAbsenceAgent;
+        $this->motifAbsenceEntretienShd = $motifAbsenceEntretienShd;
     }
 
     /**
@@ -1533,37 +1540,20 @@ class CrepMj02 extends Crep
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isRecoursHierarchique()
+    public function getTypeAbsenceEntretien()
     {
-        return $this->recoursHierarchique;
+        return $this->typeAbsenceEntretien;
     }
 
     /**
-     * @param bool $recoursHierarchique
+     * @param int $typeAbsenceEntretien
      */
-    public function setRecoursHierarchique($recoursHierarchique)
+    public function setTypeAbsenceEntretien($typeAbsenceEntretien)
     {
-        $this->recoursHierarchique = $recoursHierarchique;
+        $this->typeAbsenceEntretien = $typeAbsenceEntretien;
     }
-
-    /**
-     * @return bool
-     */
-    public function isRecoursCapCcp()
-    {
-        return $this->recoursCapCcp;
-    }
-
-    /**
-     * @param bool $recoursCapCcp
-     */
-    public function setRecoursCapCcp($recoursCapCcp)
-    {
-        $this->recoursCapCcp = $recoursCapCcp;
-    }
-
 
     /**
      * Validation sur CrepMj02
@@ -1573,6 +1563,33 @@ class CrepMj02 extends Crep
      */
     public function validateCrepMj02(ExecutionContextInterface $context)
     {
+        $isInsuffisant = false;
+        /*  *****   VALIDATION: competences insuffisant et très insuffisant   ***** */
+        /** @var CrepMj02CompetenceJudiciaire $competence */
+        foreach ($this->competencesJudiciaires as $competence) {
+            if (!is_null($competence->getNiveauAcquis())) {
+                if (is_null($this->getObservationsShd())) {
+                    if (self::$niveauCompetence ["Insuffisant"] === $competence->getNiveauAcquis() || self::$niveauCompetence ["Très insuffisant"] === $competence->getNiveauAcquis()) {
+                        $isInsuffisant = true;
+                    }
+                }
+            }
+        }
+        /** @var CrepMj02CompetenceEncadrement $competence */
+        foreach ($this->competencesEncadrements as $competence) {
+            if (!is_null($competence->getNiveauAcquis())) {
+                if (is_null($this->getObservationsShd())) {
+                    if (self::$niveauCompetence ["Insuffisant"] === $competence->getNiveauAcquis() || self::$niveauCompetence ["Très insuffisant"] === $competence->getNiveauAcquis()) {
+                        $isInsuffisant = true;
+                    }
+                }
+            }
+        }
 
+        if ($isInsuffisant) {
+            $context->buildViolation('Les observations éventuelles du supérieur hiérarchique direct sont obligatoires : ')
+                ->setParameter('cause_competance', 'niveau')
+                ->addViolation();
+        }
     }
 }

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
 class UtilisateurVoter extends Voter
 {
@@ -71,7 +72,7 @@ class UtilisateurVoter extends Voter
     {
         $utilisateurCourant = $token->getUser();
 
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if (!$utilisateurCourant instanceof Utilisateur) {

@@ -40,7 +40,7 @@ class Rlc extends Personne
     /**
      * Set utilisateur.
      *
-     * @param \Utilisateur $utilisateur
+     * @param Utilisateur $utilisateur
      *
      * @return Rlc
      */
@@ -54,7 +54,7 @@ class Rlc extends Personne
     /**
      * Get utilisateur.
      *
-     * @return \Utilisateur
+     * @return Utilisateur
      */
     public function getUtilisateur()
     {
@@ -64,7 +64,7 @@ class Rlc extends Personne
     /**
      * Set ministere.
      *
-     * @param \Ministere $ministere
+     * @param Ministere $ministere
      *
      * @return Rlc
      */
@@ -78,7 +78,7 @@ class Rlc extends Personne
     /**
      * Get ministere.
      *
-     * @return \Ministere
+     * @return Ministere
      */
     public function getMinistere()
     {

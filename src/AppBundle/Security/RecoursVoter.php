@@ -14,6 +14,7 @@ use AppBundle\EnumTypes\EnumTypeRecours;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
 class RecoursVoter extends Voter
 {
@@ -23,7 +24,7 @@ class RecoursVoter extends Voter
     protected $session;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

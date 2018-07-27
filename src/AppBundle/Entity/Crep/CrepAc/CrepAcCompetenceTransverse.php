@@ -26,7 +26,7 @@ class CrepAcCompetenceTransverse
     private $id;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -47,7 +47,7 @@ class CrepAcCompetenceTransverse
     protected $niveauAcquis;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -91,7 +91,7 @@ class CrepAcCompetenceTransverse
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getObservations()
     {
@@ -110,7 +110,7 @@ class CrepAcCompetenceTransverse
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getLibelle()
     {

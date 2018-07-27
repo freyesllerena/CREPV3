@@ -147,7 +147,7 @@ class CrepAc extends Crep
     protected $dateEntreePosteOccupeShd;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -222,7 +222,7 @@ class CrepAc extends Crep
     protected $presenceAdjoints;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -234,7 +234,7 @@ class CrepAc extends Crep
     protected $observationsEffectifs;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -253,7 +253,7 @@ class CrepAc extends Crep
     protected $docAnnexeBilan;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -265,7 +265,7 @@ class CrepAc extends Crep
     protected $contexteObjectifsPasses;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -284,7 +284,7 @@ class CrepAc extends Crep
     protected $docAnnexeObjectifsAvenir;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -372,7 +372,7 @@ class CrepAc extends Crep
     protected $souhaitEvolutionCarriere;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -391,7 +391,7 @@ class CrepAc extends Crep
     protected $souhaitMobilite;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -417,7 +417,7 @@ class CrepAc extends Crep
     protected $apptitudeNiveauSup;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -429,7 +429,7 @@ class CrepAc extends Crep
     protected $observationShdEvolution;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -448,7 +448,7 @@ class CrepAc extends Crep
     protected $docAnnexeBesoinsFormation;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -626,7 +626,7 @@ class CrepAc extends Crep
     /**
      * Add competencesTransverseProfessionnelle.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceTransverseProfessionnelle $competencesTransverseProfessionnelle
+     * @param CrepAcCompetenceTransverseProfessionnelle $competencesTransverseProfessionnelle
      *
      * @return CrepAc
      */
@@ -641,7 +641,7 @@ class CrepAc extends Crep
     /**
      * Remove competencesTransverseProfessionnelle.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceTransverseProfessionnelle $competencesTransverseProfessionnelle
+     * @param CrepAcCompetenceTransverseProfessionnelle $competencesTransverseProfessionnelle
      */
     public function removeCompetencesTransversesProfessionnelle(CrepAcCompetenceTransverseProfessionnelle $competencesTransverseProfessionnelle)
     {
@@ -661,7 +661,7 @@ class CrepAc extends Crep
     /**
      * Add autresCompetencesTransverseProfessionnelle.
      *
-     * @param \AppBundle\Entity\CrepAcAutreCompetenceTransverseProfessionnelle $autresCompetencesTransverseProfessionnelle
+     * @param CrepAcAutreCompetenceTransverseProfessionnelle $autresCompetencesTransverseProfessionnelle
      *
      * @return CrepAc
      */
@@ -676,7 +676,7 @@ class CrepAc extends Crep
     /**
      * Remove autresCompetencesTransverseProfessionnelle.
      *
-     * @param \AppBundle\Entity\CrepAcAutreCompetenceTransverseProfessionnelle $autresCompetencesTransverseProfessionnelle
+     * @param CrepAcAutreCompetenceTransverseProfessionnelle $autresCompetencesTransverseProfessionnelle
      */
     public function removeAutresCompetencesTransversesProfessionnelle(CrepAcAutreCompetenceTransverseProfessionnelle $autresCompetencesTransverseProfessionnelle)
     {
@@ -697,7 +697,7 @@ class CrepAc extends Crep
     /**
      * Add competencesTransverseRequise.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceTransverseRequise $competencesTransverseRequise
+     * @param CrepAcCompetenceTransverseRequise $competencesTransverseRequise
      *
      * @return CrepAc
      */
@@ -712,7 +712,7 @@ class CrepAc extends Crep
     /**
      * Remove competencesTransverseRequise.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceTransverseRequise $competencesTransverseRequise
+     * @param CrepAcCompetenceTransverseRequise $competencesTransverseRequise
      */
     public function removeCompetencesTransversesRequise(CrepAcCompetenceTransverseRequise $competencesTransverseRequise)
     {
@@ -732,7 +732,7 @@ class CrepAc extends Crep
     /**
      * Add autresCompetencesTransverseRequise.
      *
-     * @param \AppBundle\Entity\CrepAcAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
+     * @param CrepAcAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
      *
      * @return CrepAc
      */
@@ -747,7 +747,7 @@ class CrepAc extends Crep
     /**
      * Remove autresCompetencesTransverseRequise.
      *
-     * @param \AppBundle\Entity\CrepAcAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
+     * @param CrepAcAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise
      */
     public function removeAutresCompetencesTransversesRequise(CrepAcAutreCompetenceTransverseRequise $autresCompetencesTransverseRequise)
     {
@@ -768,7 +768,7 @@ class CrepAc extends Crep
     /**
      * Add competencesTransverseDetenue.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceTransverseDetenue $competencesTransverseDetenue
+     * @param CrepAcCompetenceTransverseDetenue $competencesTransverseDetenue
      *
      * @return CrepAc
      */
@@ -783,7 +783,7 @@ class CrepAc extends Crep
     /**
      * Remove competencesTransverseDetenue.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceTransverseDetenue $competencesTransverseDetenue
+     * @param CrepAcCompetenceTransverseDetenue $competencesTransverseDetenue
      */
     public function removeCompetencesTransversesDetenue(CrepAcCompetenceTransverseDetenue $competencesTransverseDetenue)
     {
@@ -804,7 +804,7 @@ class CrepAc extends Crep
     /**
      * Add competencesManageriale.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceManagerialeExclu $competencesManageriale
+     * @param CrepAcCompetenceManagerialeExclu $competencesManageriale
      *
      * @return CrepAc
      */
@@ -819,7 +819,7 @@ class CrepAc extends Crep
     /**
      * Remove competencesManageriale.
      *
-     * @param \AppBundle\Entity\CrepAcCompetenceManagerialeExclu $competencesManageriale
+     * @param CrepAcCompetenceManagerialeExclu $competencesManageriale
      */
     public function removeCompetencesManageriale(CrepAcCompetenceManagerialeExclu $competencesManageriale)
     {
@@ -839,7 +839,7 @@ class CrepAc extends Crep
     /**
      * Add autresCompetencesManageriale.
      *
-     * @param \AppBundle\Entity\CrepAcAutreCompetenceManagerialeExclu $autresCompetencesManageriale
+     * @param CrepAcAutreCompetenceManagerialeExclu $autresCompetencesManageriale
      *
      * @return CrepAc
      */
@@ -854,7 +854,7 @@ class CrepAc extends Crep
     /**
      * Remove autresCompetencesManageriale.
      *
-     * @param \AppBundle\Entity\CrepAcAutreCompetenceManagerialeExclu $autresCompetencesManageriale
+     * @param CrepAcAutreCompetenceManagerialeExclu $autresCompetencesManageriale
      */
     public function removeAutresCompetencesManageriale(CrepAcAutreCompetenceManagerialeExclu $autresCompetencesManageriale)
     {
@@ -873,7 +873,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getNomUsage()
     {
@@ -892,7 +892,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the unknown_type
+     * @return string
      */
     public function getPrenom()
     {
@@ -900,7 +900,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @param unknown_type $prenom
+     * @param string $prenom
      */
     public function setPrenom($prenom)
     {
@@ -910,7 +910,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDateNaissance()
     {
@@ -928,7 +928,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getGrade()
     {
@@ -947,7 +947,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getEchelon()
     {
@@ -966,7 +966,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCorps()
     {
@@ -985,7 +985,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCadreEmploi()
     {
@@ -1004,7 +1004,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getGradeEmploi()
     {
@@ -1023,7 +1023,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getEmploiFonctionnel()
     {
@@ -1042,7 +1042,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getAffectationSigle()
     {
@@ -1061,7 +1061,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getNomUsageShd()
     {
@@ -1080,7 +1080,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the unknown_type
+     * @return string
      */
     public function getPrenomShd()
     {
@@ -1088,7 +1088,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @param unknown_type $prenomShd
+     * @param string $prenomShd
      */
     public function setPrenomShd($prenomShd)
     {
@@ -1098,7 +1098,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCorpsShd()
     {
@@ -1117,7 +1117,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getGradeShd()
     {
@@ -1136,7 +1136,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getPosteOccupeShd()
     {
@@ -1155,7 +1155,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDateEntreePosteOccupeShd()
     {
@@ -1173,7 +1173,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getDescriptionFonctions()
     {
@@ -1192,7 +1192,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDatePriseFonctions()
     {
@@ -1210,7 +1210,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getGroupeFonctions()
     {
@@ -1229,7 +1229,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the integer
+     * @return integer
      */
     public function getNbBureauxDirection()
     {
@@ -1248,7 +1248,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the integer
+     * @return integer
      */
     public function getNbCadresEncadresA()
     {
@@ -1267,7 +1267,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the integer
+     * @return integer
      */
     public function getNbTotalAgentsEncadres()
     {
@@ -1286,7 +1286,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getPresenceAdjoints()
     {
@@ -1305,7 +1305,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getObservationsEffectifs()
     {
@@ -1324,7 +1324,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getCommentaireAgentFonction()
     {
@@ -1343,7 +1343,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getDocAnnexeBilan()
     {
@@ -1362,7 +1362,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getContexteObjectifsPasses()
     {
@@ -1381,7 +1381,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getAutresDossiers()
     {
@@ -1400,7 +1400,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getDocAnnexeObjectifsAvenir()
     {
@@ -1419,7 +1419,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getContexteObjectifsAvenir()
     {
@@ -1438,7 +1438,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getPosteOccupe()
     {
@@ -1457,7 +1457,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDateEntreePosteOccupe()
     {
@@ -1475,7 +1475,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getSouhaitEvolutionCarriere()
     {
@@ -1494,7 +1494,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getTypeEvolutionCarriere()
     {
@@ -1513,7 +1513,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getSouhaitMobilite()
     {
@@ -1532,7 +1532,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getTypeMobilite()
     {
@@ -1551,7 +1551,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getSouhaitEntretienCarriere()
     {
@@ -1570,7 +1570,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getApptitudeNiveauSup()
     {
@@ -1589,7 +1589,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getObservationShdEvolution()
     {
@@ -1608,7 +1608,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getCommAgentEvolution()
     {
@@ -1627,7 +1627,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getAppreciationGenerale()
     {
@@ -1646,7 +1646,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the integer
+     * @return integer
      */
     public function getEvolutionIndemnitaire()
     {
@@ -1665,7 +1665,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the integer
+     * @return integer
      */
     public function getPropositionAvancement()
     {
@@ -1684,7 +1684,7 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
     public function getDocAnnexeBesoinsFormation()
     {
@@ -1705,7 +1705,7 @@ class CrepAc extends Crep
     /**
      * Add contraintesPoste.
      *
-     * @param \AppBundle\Entity\CrepAcContraintePoste $contraintesPoste
+     * @param CrepAcContraintePoste $contraintesPoste
      *
      * @return CrepAc
      */
@@ -1720,7 +1720,7 @@ class CrepAc extends Crep
     /**
      * Remove contraintesPoste.
      *
-     * @param \AppBundle\Entity\CrepAcContraintePoste $contraintesPoste
+     * @param CrepAcContraintePoste $contraintesPoste
      */
     public function removeContraintesPoste(CrepAcContraintePoste $contraintesPoste)
     {
@@ -1741,7 +1741,7 @@ class CrepAc extends Crep
     /**
      * Add autresContraintesPoste.
      *
-     * @param \AppBundle\Entity\CrepAcAutreContraintePoste $autresContraintesPoste
+     * @param CrepAcAutreContraintePoste $autresContraintesPoste
      *
      * @return CrepAc
      */
@@ -1756,7 +1756,7 @@ class CrepAc extends Crep
     /**
      * Remove autresContraintesPoste.
      *
-     * @param \AppBundle\Entity\CrepAcAutreContraintePoste $autresContraintesPoste
+     * @param CrepAcAutreContraintePoste $autresContraintesPoste
      */
     public function removeAutresContraintesPoste(CrepAcAutreContraintePoste $autresContraintesPoste)
     {
@@ -1948,7 +1948,7 @@ class CrepAc extends Crep
     /**
      * Add objectifsEvalueCollectif.
      *
-     * @param \AppBundle\Entity\ObjectifEvalueCollectif $objectifsEvalueCollectif
+     * @param ObjectifEvalueCollectif $objectifsEvalueCollectif
      *
      * @return Crep
      */
@@ -2056,7 +2056,7 @@ class CrepAc extends Crep
     /**
      * Add objectifsFuturIndividuel.
      *
-     * @param \AppBundle\Entity\ObjectifFuturIndividuel $objectifsFuturIndividuel
+     * @param ObjectifFuturIndividuel $objectifsFuturIndividuel
      *
      * @return Crep
      */
@@ -2071,7 +2071,7 @@ class CrepAc extends Crep
     /**
      * Remove objectifsFuturIndividuel.
      *
-     * @param \AppBundle\Entity\ObjectifFuturIndividuel $objectifsFuturIndividuel
+     * @param ObjectifFuturIndividuel $objectifsFuturIndividuel
      */
     public function removeObjectifsFutursIndividuel(ObjectifFuturIndividuel $objectifsFuturIndividuel)
     {
@@ -2092,7 +2092,7 @@ class CrepAc extends Crep
     /**
      * Add technique.
      *
-     * @param \AppBundle\Entity\CrepAcTechnique $techniques
+     * @param CrepAcTechnique $techniques
      *
      * @return CrepAc
      */
@@ -2107,7 +2107,7 @@ class CrepAc extends Crep
     /**
      * Remove technique.
      *
-     * @param \AppBundle\Entity\CrepAcTechnique $techniques
+     * @param CrepAcTechnique $techniques
      */
     public function removeTechnique(CrepAcTechnique $techniques)
     {

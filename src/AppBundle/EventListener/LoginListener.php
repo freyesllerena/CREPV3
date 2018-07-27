@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class LoginListener
 {
-    /** @var \Symfony\Component\Security\Core\AuthorizationChecker */
+    /** @var AuthorizationCheckerInterface */
     private $authorizationChecker;
     /** @var \Doctrine\ORM\EntityManager */
     private $em;
@@ -32,7 +32,7 @@ class LoginListener
      * @param AuthorizationChecker $authorizationChecker
      * @param Doctrine             $doctrine
      * @param UserManager          $userManager
-     * @param Parametre_general    $nbConnexionsAvantBlocage
+     * @param int                  $nbConnexionsAvantBlocage
      */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, EntityManagerInterface $entityManager, UserManager $userManager, ConstanteManager $constanteManager)
     {

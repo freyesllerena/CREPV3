@@ -16,21 +16,21 @@
 
 <div class="row">
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>
-        {{ form_row(form.directionShd, { 'label': "DIR" } ) }}
+        <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Affectation :</label>
+            <div class="col-md-9 col-sm-9 col-xs-12"></div>
+        </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
-        {{ form_row(form.departementShd, { 'label': "DT" } ) }}
-    </div>
+    {{ form_row(form.directionShd, { 'label': "DIR" } ) }}
 </div>
 
 <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>
-        {{ form_row(form.serviceShd, { 'label': "Service" } ) }}
-    </div>
+    {{ form_row(form.departementShd, { 'label': "DT" } ) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.serviceShd, { 'label': "Service" } ) }}
 </div>

@@ -19,6 +19,7 @@ use AppBundle\Service\CrepManager;
 use AppBundle\Form\RechercheCampagnePncType;
 use AppBundle\Form\CampagnePncType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use AppBundle\Repository\ModeleCrepRepository;
 
 /**
  * CampagnePnc controller.

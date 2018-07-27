@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class FormationDispensee extends GenericEntity
 {
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(type="date", name="date_debut", nullable=true)
      */

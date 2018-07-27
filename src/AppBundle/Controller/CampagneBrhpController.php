@@ -16,6 +16,8 @@ use AppBundle\Service\CrepManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use AppBundle\Form\RechercheCampagneBrhpType;
+use AppBundle\Entity\Ministere;
+use AppBundle\Repository\ModeleCrepRepository;
 
 class CampagneBrhpController extends Controller
 {
@@ -142,7 +144,7 @@ class CampagneBrhpController extends Controller
     /**
      * Crée le formulaire de réouverture de la CampagneBrhp.
      *
-     * @param CampagneRlc $campagneBrhp
+     * @param CampagneBrhp $campagneBrhp
      *                                  L'entité CampagneBrhp
      *
      * @return \Symfony\Component\Form\Form Le formulaire
@@ -160,7 +162,7 @@ class CampagneBrhpController extends Controller
     /**
      * Rouvre une campagne Pnc.
      *
-     * @param CampagnePnc $campagnePnc
+     * @param CampagneBrhp $campagneBrhp
      * @Security("has_role('ROLE_BRHP')")
      */
     public function rouvrirAction(Request $request, CampagneBrhp $campagneBrhp, CampagneBrhpManager $campagneBrhpManager)

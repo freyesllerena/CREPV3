@@ -31,7 +31,7 @@ class AddPerimetresBrhpFieldListener implements EventSubscriberInterface
      * Rajoute un champ departement au formulaire.
      *
      * @param FormInterface $form
-     * @param Region|null   $region
+     * @param array|null   $region
      */
     private function addPerimetresBrhpForm(FormInterface $form, $perimetresRlc = [])
     {

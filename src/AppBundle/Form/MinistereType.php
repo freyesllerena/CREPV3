@@ -24,7 +24,7 @@ class MinistereType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
     public function setDefaultOptions(OptionsResolver $resolver)
     {

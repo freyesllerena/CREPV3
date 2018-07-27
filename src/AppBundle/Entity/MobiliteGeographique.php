@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Crep\CrepMindef\CrepMindef;
+use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
 
 /**
  * MobiliteGeographique.

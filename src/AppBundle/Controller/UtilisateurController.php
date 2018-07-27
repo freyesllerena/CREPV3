@@ -25,6 +25,7 @@ use AppBundle\Util\Util;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use AppBundle\Service\UtilisateurManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use AppBundle\Entity\Connexion;
 
 /**
  * Utilisateur controller.

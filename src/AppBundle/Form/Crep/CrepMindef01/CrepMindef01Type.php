@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use AppBundle\Form\Crep\CrepType;
 use AppBundle\Form\MotivationsMobiliteType;
 use AppBundle\Form\DemandeFormationProfessionnelleType;
+use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
 
 class CrepMindef01Type extends CrepType
 {

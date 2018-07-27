@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use AppBundle\Form\Crep\CrepType;
+use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
 
 class CrepMinefAbcType extends CrepType
 {

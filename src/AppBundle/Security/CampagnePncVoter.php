@@ -89,7 +89,7 @@ class CampagnePncVoter extends Voter
     {
         $utilisateur = $token->getUser();
 
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         /* @var $campagnePnc CampagnePnc  */

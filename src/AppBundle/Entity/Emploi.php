@@ -29,14 +29,14 @@ class Emploi extends GenericEntity
     protected $poste;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
      */
     protected $dateDebut;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(type="date", nullable=true)
      */

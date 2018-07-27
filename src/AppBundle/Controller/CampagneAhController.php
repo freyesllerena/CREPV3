@@ -9,6 +9,8 @@ use AppBundle\Entity\Agent;
 use AppBundle\Repository\AgentRepository;
 use AppBundle\Security\CampagneBrhpVoter;
 use AppBundle\Service\CrepManager;
+use AppBundle\Entity\Ministere;
+use AppBundle\Repository\ModeleCrepRepository;
 
 class CampagneAhController extends Controller
 {

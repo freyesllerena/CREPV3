@@ -13,10 +13,9 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Util\Util;
 use AppBundle\EnumTypes\EnumStatutCampagne;
-// use AppBundle\Entity\CrepMinefAbc;
+use AppBundle\Entity\CrepMinefAbc;
 // use AppBundle\Entity\CampagneBrhp;
-// use AppBundle\Entity\CrepMcc;
-// use AppBundle\Entity\Recours;
+use AppBundle\Entity\Recours;
 // use AppBundle\Entity\Rlc;
 // use AppBundle\EnumTypes\EnumTypeRecours;
 use AppBundle\EnumTypes\EnumTypeResultatRecours;
@@ -113,7 +112,7 @@ class CrepVoter extends Voter
     {
         $utilisateur = $token->getUser();
 
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if (!$utilisateur instanceof Utilisateur) {
@@ -760,7 +759,7 @@ class CrepVoter extends Voter
             $perimetresRlc = $rlc->getPerimetresRlc()->toArray();
 
             if (in_array($crep->getAgent()->getPerimetreRlc(), $perimetresRlc)) {
-                /* @var $recours Recours  */
+                /* @var $recours Recours */
                 foreach ($crep->getRecours() as $recours) {
                     // On peut supprimer un crep finalisé, s'il y a au moins un recours avec une décision non prise en compte
                     if (null !== $recours->getDecision() && !$recours->getDecisionPriseEnCompte()) {

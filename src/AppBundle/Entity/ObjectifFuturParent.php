@@ -51,7 +51,7 @@ class ObjectifFuturParent extends Objectif
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getObservationsEventuelles()
     {

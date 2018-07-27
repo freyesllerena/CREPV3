@@ -19,6 +19,9 @@ use AppBundle\Form\RechercheCampagneRlcType;
 use AppBundle\Service\CampagneBrhpManager;
 use AppBundle\Entity\CampagneBrhp;
 use AppBundle\Entity\Agent;
+use AppBundle\Entity\Ministere;
+use AppBundle\Repository\ModeleCrepRepository;
+use AppBundle\Repository\AgentRepository;
 
 /**
  * CampagneRlc controller.

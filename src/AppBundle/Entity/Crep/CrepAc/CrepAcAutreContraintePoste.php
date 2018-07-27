@@ -23,7 +23,7 @@ class CrepAcAutreContraintePoste extends ContraintePoste
     /**
      * Set crep.
      *
-     * @param \AppBundle\Entity\CrepAc $crep
+     * @param CrepAc $crep
      *
      * @return ContraintePoste
      */
@@ -37,7 +37,7 @@ class CrepAcAutreContraintePoste extends ContraintePoste
     /**
      * Get crep.
      *
-     * @return \AppBundle\Entity\CrepAc
+     * @return CrepAc
      */
     public function getCrep()
     {

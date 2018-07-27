@@ -16,7 +16,7 @@ interface GenericEntityInterface
      *
      * @param \DateTime $dateCreation
      *
-     * @return Campagne1
+     * @return GenericEntityInterface
      */
     public function setDateCreation($dateCreation);
 
@@ -32,7 +32,7 @@ interface GenericEntityInterface
      *
      * @param \DateTime $dateModification
      *
-     * @return Campagne1
+     * @return GenericEntityInterface
      */
     public function setDateModification($dateModification);
 

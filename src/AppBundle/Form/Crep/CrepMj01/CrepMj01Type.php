@@ -13,6 +13,7 @@ use AppBundle\Form\Crep\CrepMj01\Formations\CrepMj01FormationSuivieType;
 use AppBundle\Form\Crep\CrepMj01\Formations\CrepMj01FormationSolliciteeType;
 use AppBundle\Form\Crep\CrepMj01\Formations\CrepMj01FormationEnvisageeType;
 use AppBundle\Form\Crep\CrepType;
+use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
 
 class CrepMj01Type extends CrepType
 {

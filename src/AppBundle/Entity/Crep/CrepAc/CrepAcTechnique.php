@@ -44,7 +44,7 @@ class CrepAcTechnique
     protected $crepAc;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -70,7 +70,7 @@ class CrepAcTechnique
      *
      * @param int $niveauAcquis
      *
-     * @return Technique
+     * @return CrepAcTechnique
      */
     public function setNiveauAcquis($niveauAcquis)
     {
@@ -94,7 +94,7 @@ class CrepAcTechnique
      *
      * @param string $libelle
      *
-     * @return Technique
+     * @return CrepAcTechnique
      */
     public function setLibelle($libelle)
     {
@@ -116,9 +116,9 @@ class CrepAcTechnique
     /**
      * Set crepAc.
      *
-     * @param \AppBundle\Entity\CrepAc $crepAc
+     * @param CrepAc $crepAc
      *
-     * @return Technique
+     * @return CrepAcTechnique
      */
     public function setCrepAc(CrepAc $crepAc = null)
     {
@@ -130,7 +130,7 @@ class CrepAcTechnique
     /**
      * Get crepAc.
      *
-     * @return \AppBundle\Entity\CrepAc
+     * @return CrepAc
      */
     public function getCrepAc()
     {

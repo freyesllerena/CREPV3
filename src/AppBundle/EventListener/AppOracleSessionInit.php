@@ -4,6 +4,7 @@ namespace AppBundle\EventListener;
 
 use Doctrine\DBAL\Event\ConnectionEventArgs;
 use Doctrine\DBAL\Event\Listeners\OracleSessionInit as BaseOracleSessionInit;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
  * Custom OracleSessionInit.

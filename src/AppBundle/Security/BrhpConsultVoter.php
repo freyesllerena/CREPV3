@@ -17,7 +17,7 @@ class BrhpConsultVoter extends Voter
     protected $decisionManager;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

@@ -1,11 +1,11 @@
-<div class="row form-group">
-    <h2 class="col-md-6 col-sm-6 col-xs-12">5.2 Mobilité fonctionnelle ou géographique envisagée  par l’agent :</h2>
+<div class="row">
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="col-md-2 col-sm-2 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                    {% if crep.mobiliteGeographique is not empty %}
-                        {% if  crep.mobiliteGeographique.choix == true  %}
+                    {% if crep.mobiliteGeographique %}
+                        {% if  crep.mobiliteGeographique.choix == true and crep.mobiliteGeographique.choix is not
+                            null %}
                             checked="checked"
                         {% endif %}
                    {% endif %}
@@ -15,8 +15,9 @@
         <div class="col-md-5 col-sm-5 col-xs-12">
             <label>
                 <input type="checkbox" class="flat" disabled="disabled"
-                    {% if crep.mobiliteGeographique is not empty %}
-                        {% if crep.mobiliteGeographique.choix == false %}
+                    {% if crep.mobiliteGeographique %}
+                        {% if crep.mobiliteGeographique.choix == false and crep.mobiliteGeographique.choix is not
+                            null %}
                            checked="checked"
                         {% endif %}
                     {% endif %}
@@ -25,3 +26,5 @@
         </div>
     </div>
 </div>
+
+<br>

@@ -8,6 +8,7 @@ use AppBundle\Util\Converter;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\EnumTypes\EnumStatutValidationAgent;
+use AppBundle\Controller\AgentController;
 
 /**
  * Agent.
@@ -927,7 +928,7 @@ class Agent extends Personne
      *
      * @param string $affectationClairAgent
      *
-     * @return CrepMindef01
+     * @return Agent
      */
     public function setAffectationClairAgent($affectationClairAgent)
     {

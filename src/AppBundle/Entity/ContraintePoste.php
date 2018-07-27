@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ContraintePoste extends GenericEntity
 {
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -36,7 +36,7 @@ class ContraintePoste extends GenericEntity
     protected $niveauDifficulte;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -48,7 +48,7 @@ class ContraintePoste extends GenericEntity
     protected $observations;
 
     /**
-     * @return the string
+     * @return string
      */
     public function getLibelle()
     {
@@ -67,7 +67,7 @@ class ContraintePoste extends GenericEntity
     }
 
     /**
-     * @return the int
+     * @return int
      */
     public function getNiveauDifficulte()
     {
@@ -86,7 +86,7 @@ class ContraintePoste extends GenericEntity
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getObservations()
     {

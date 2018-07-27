@@ -25,7 +25,7 @@ class CrepAcCompetenceTransverseProfessionnelle extends CrepAcCompetenceTransver
     /**
      * Set crepAc.
      *
-     * @param \AppBundle\Entity\CrepAc $crepAc
+     * @param CrepAc $crepAc
      */
     public function setCrepAc(CrepAc $crepAc = null)
     {
@@ -37,7 +37,7 @@ class CrepAcCompetenceTransverseProfessionnelle extends CrepAcCompetenceTransver
     /**
      * Get crepAc.
      *
-     * @return \AppBundle\Entity\CrepAc
+     * @return CrepAc
      */
     public function getCrepAc()
     {

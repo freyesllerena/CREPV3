@@ -252,14 +252,14 @@
     <tr>
         <td width="5%"></td>
         <td width="67%">- Renvoi à un document annexe (lettre de mission ou d’objectifs) :
-            {% if crep.docAnnexeBilan == 1 and  crep.docAnnexeBilan is not empty %}
+            {% if crep.docAnnexeBilan == 1 and  crep.docAnnexeBilan is not null %}
             &#9745; oui
             {% else %}
             &#9744; oui
             {% endif %}
         </td>
         <td width="28%">
-            {% if crep.docAnnexeBilan == 0 and  crep.docAnnexeBilan is not empty %}
+            {% if crep.docAnnexeBilan == 0 and  crep.docAnnexeBilan is not null %}
                 &#9745; non
             {% else %}
                 &#9744; non
@@ -414,14 +414,14 @@
              <tr>
                 <td width="4%"></td>
                 <td width="68%">- Renvoi à un document annexe (lettre de mission ou d’objectifs) :
-                    {% if crep.docAnnexeObjectifsAvenir == 1 and crep.docAnnexeObjectifsAvenir is not empty %}
+                    {% if crep.docAnnexeObjectifsAvenir == 1 and crep.docAnnexeObjectifsAvenir is not null %}
                         &#9745; oui
                     {% else %}
                         &#9744; oui
                     {% endif %}
                 </td>
                 <td width="28%">
-                    {% if crep.docAnnexeObjectifsAvenir == 0 and crep.docAnnexeObjectifsAvenir is not empty%}
+                    {% if crep.docAnnexeObjectifsAvenir == 0 and crep.docAnnexeObjectifsAvenir is not null%}
                         &#9745; non
                     {% else %}
                         &#9744; non

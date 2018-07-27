@@ -17,6 +17,8 @@ use AppBundle\Form\StatutValidationAgentsType;
 use AppBundle\EnumTypes\EnumStatutValidationAgent;
 use AppBundle\Service\AgentManager;
 use Symfony\Component\Validator\Constraints\Valid;
+use AppBundle\Entity\Ministere;
+use AppBundle\Repository\ModeleCrepRepository;
 
 class CampagneShdController extends Controller
 {
@@ -117,7 +119,7 @@ class CampagneShdController extends Controller
         /* @var $ministere Ministere */
         $ministere = $this->getUser()->getMinistere();
 
-        /* @var $modeleCrepRepository  ModeleCrepRepository */
+        /* @var $modeleCrepRepository ModeleCrepRepository */
         $modeleCrepRepository = $em->getRepository('AppBundle:ModeleCrep');
         // Récupérer les modèles de CREP actifs du ministère
         $modelesCrep = $modeleCrepRepository->getModelesCrep($ministere, true);

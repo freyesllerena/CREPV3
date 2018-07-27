@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class FormationSuivie extends GenericEntity
 {
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(type="date", name="date_debut", nullable=true)
      */

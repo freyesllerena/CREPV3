@@ -1,11 +1,62 @@
 {% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_12.html.twig' %}
 <br>
+
+
+
 <div class="row">
-    {{ form_row(form.observationsShd, { 'label': 'Observations éventuelles du supérieur hiérarchique direct :','attr': {'maxlength': '4096'}}) }}
-</div>
-<br>
-<br>
-<div class="row">
-    {{ form_row(form.observationsAgentNotif, { 'label': 'Observations éventuelles de l’agent :','attr': {'maxlength': '4096'}}) }}
+
+
+    {% if 0 < errors | length %}
+
+        {% for errorIndex, error in errors %}
+
+            {% if (error.messageParameters['cause_competance'] is defined and error.messageParameters['cause_competance'] == "niveau" ) %}
+
+                <div class="has-error">
+                    <div class="col-md-12">
+                        <label class="control-label has-error" style="text-align: left;" for="inputError">
+                            <i class="fa fa-times-circle"></i> &nbsp;{{ error.message }}</label>
+                    </div>
+
+                    {{ form_row(form.observationsShd,
+                        {
+                            'label': false,
+                            'attr': {
+                            'maxlength': '4096',
+                            'placeholder': "(obligatoires en cas de niveau insuffisant/très insuffisant ou de baisse du niveau d’appréciation)",
+                        }
+                        })
+                    }}
+
+
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            {{ form_label(form.observationsShd, 'Observations éventuelles du supérieur hiérarchique direct :', {
+                'label_attr': {
+                    "style": "text-align: left; padding-left: 0px",
+                    "for": "crep_mj02_observationsShd"
+                }
+            }) }}
+
+        </div>
+        {{ form_row(form.observationsShd,
+            {
+                'label': false,
+                'attr': {
+                'maxlength': '4096',
+                'placeholder': "(obligatoires en cas de niveau insuffisant/très insuffisant ou de baisse du niveau d’appréciation)",
+            }
+            })
+        }}
+    {% endif %}
+
+
 </div>
 <br>

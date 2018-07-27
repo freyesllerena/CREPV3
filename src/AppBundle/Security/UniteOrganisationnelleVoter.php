@@ -10,6 +10,7 @@ use AppBundle\Entity\Ministere;
 use AppBundle\Repository\UniteOrganisationnelleRepository;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
 class UniteOrganisationnelleVoter extends Voter
 {
@@ -17,7 +18,7 @@ class UniteOrganisationnelleVoter extends Voter
     protected $decisionManager;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     protected $em;
 

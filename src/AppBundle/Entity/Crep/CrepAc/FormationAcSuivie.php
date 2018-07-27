@@ -16,7 +16,7 @@ use AppBundle\Entity\GenericEntity;
 class FormationAcSuivie extends GenericEntity
 {
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -39,7 +39,7 @@ class FormationAcSuivie extends GenericEntity
     protected $duree;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -58,9 +58,9 @@ class FormationAcSuivie extends GenericEntity
     /**
      * Set crep.
      *
-     * @param \AppBundle\Entity\CrepAc $crep
+     * @param CrepAc $crep
      *
-     * @return FormationSuivie
+     * @return FormationAcSuivie
      */
     public function setCrep(CrepAc $crep = null)
     {
@@ -72,7 +72,7 @@ class FormationAcSuivie extends GenericEntity
     /**
      * Get crep.
      *
-     * @return \AppBundle\Entity\CrepAc
+     * @return CrepAc
      */
     public function getCrep()
     {
@@ -80,7 +80,7 @@ class FormationAcSuivie extends GenericEntity
     }
 
     /**
-     * @return the date
+     * @return \DateTime
      */
     public function getAnnee()
     {
@@ -88,7 +88,7 @@ class FormationAcSuivie extends GenericEntity
     }
 
     /**
-     * @param date $annee
+     * @param int
      */
     public function setAnnee($annee)
     {
@@ -98,7 +98,7 @@ class FormationAcSuivie extends GenericEntity
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getLibelle()
     {
@@ -117,7 +117,7 @@ class FormationAcSuivie extends GenericEntity
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getDuree()
     {
@@ -136,7 +136,7 @@ class FormationAcSuivie extends GenericEntity
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getCommentaires()
     {

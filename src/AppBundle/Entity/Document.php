@@ -37,7 +37,7 @@ class Document extends GenericEntity
     protected $path;
 
     /**
-     * @var \Boolean
+     * @var boolean
      *
      * @ORM\Column(type="boolean")
      */

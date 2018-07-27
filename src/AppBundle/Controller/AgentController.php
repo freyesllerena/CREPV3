@@ -370,7 +370,7 @@ class AgentController extends Controller
      */
     private function generateUrlShowCampagneByRole(Agent $agent)
     {
-        /* @var $roleUtilisateurSession Role */
+        /* @var $roleUtilisateurSession string */
         $roleUtilisateurSession = $this->get('session')->get('selectedRole');
 
         switch ($roleUtilisateurSession) {

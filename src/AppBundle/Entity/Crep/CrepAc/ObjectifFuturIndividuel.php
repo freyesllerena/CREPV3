@@ -14,7 +14,7 @@ use AppBundle\Entity\ObjectifFuturParent;
 class ObjectifFuturIndividuel extends ObjectifFuturParent
 {
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -31,7 +31,7 @@ class ObjectifFuturIndividuel extends ObjectifFuturParent
     protected $crep;
 
     /**
-     * @return the text
+     * @return string
      */
     public function getIndicateurs()
     {

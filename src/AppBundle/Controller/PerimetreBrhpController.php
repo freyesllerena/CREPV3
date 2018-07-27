@@ -12,6 +12,7 @@ use AppBundle\Security\PerimetreBrhpVoter;
 use AppBundle\Entity\Brhp;
 use AppBundle\Service\PerimetreBrhpManager;
 use AppBundle\Entity\UniteOrganisationnelle;
+use AppBundle\Entity\BrhpConsult;
 
 /**
  * PerimetreBrhp controller.
