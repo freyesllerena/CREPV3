@@ -1,0 +1,32 @@
+<br>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Compétences liées à l'action</th>
+                <th class="text-center" width="100px">Exceptionnelle*</th>
+                <th class="text-center" width="100px">Forte</th>
+                <th class="text-center" width="100px">Assez forte</th>
+                <th class="text-center" width="100px">À développer</th>
+                <th class="text-center" width="100px">Non observée</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for key, competence in crep.competencesActions %}
+                <tr>
+                    <td>{{ competence.libelle }}</td>
+                    {% for index in 0..4 %}
+                        <td class="text-center">{{ competence.niveauAcquis|iconCheckReverse(loop.revindex0, 4)|raw }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

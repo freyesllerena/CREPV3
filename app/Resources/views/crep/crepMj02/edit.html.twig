@@ -36,6 +36,14 @@
     {% include 'crep/crepMj02/_include/edit/0/4.html.twig' %}
 {% endblock i04 %}
 
+{% block i05 %}
+    {% include 'crep/crepMj02/_include/edit/0/5.html.twig' %}
+{% endblock i05 %}
+
+{% block i06 %}
+    {% include 'crep/crepMj02/_include/edit/0/6.html.twig' %}
+{% endblock i06 %}
+
 {% block i1 %}
     {% include 'crep/crepMj02/_include/edit/i/1.html.twig' %}
 {% endblock i1 %}
@@ -132,6 +140,7 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
+            
             // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
             // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
             var crepCollections = new Crep.Collections();
@@ -219,6 +228,68 @@
                 }
             }
 
+            // Evenements motifs Absences:
+            // Champs à modifier leurs aspects
+            var dateEntretien = $("#crep_mj02_dateEntretien");
+            var motifsAbsence = $("#motifs-absence-entretien");
+            
+            var nonActivite = $('#crep_mj02_typeAbsenceEntretien_0');
+            var conges = $('#crep_mj02_typeAbsenceEntretien_1');
+            var autres = $('#crep_mj02_typeAbsenceEntretien_2');
+            var precision = $("#crep_mj02_motifAbsenceEntretien");
+            
+            
+            // Champs marquants l'evenement
+            var isAbsence = $("#crep_mj02_refusEntretienProfessionnel");
+
+            
+            // Traitement on chargement
+            if(isAbsence.attr('checked')) {
+                dateEntretien.val('');
+                dateEntretien.attr('disabled','disabled');
+                motifsAbsence.show();
+                precision.hide();
+                $('#label-presision').hide();
+            } else {
+                nonActivite.removeAttr("checked");
+                conges.removeAttr("checked");
+                autres.removeAttr("checked");
+                precision.val('');
+                motifsAbsence.hide();
+                $('#label-presision').hide();
+            }
+
+            // isAutres.on('click', function(){
+            //     console.log('helo');
+            //     // if(nonActivite.attr('checked')) {
+            //         nonActivite.parent().removeClass("checked");
+            //     // }
+            //     // if(conges.attr('checked')) {
+            //         conges.parent().removeClass("checked");
+            //     // }
+            //     // isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
+            // });
+
+
+            autres.on('ifChanged', function(){
+                // if($(this.id).attr('checked')) {
+                //     console.log(this.id;
+                // }
+
+                // precision.show();
+                // $('#label-presision').show();
+                // isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
+            });
+
+            // autres.on('ifChanged', function(){
+            //     precision.hide();
+            //     $('#label-presision').hide();
+            //     precision.val('');
+            //     precision.val('');
+            // });
+            
+            
+            
             // Suivie ?
             var motifNonSuivie = $("#motifNonSuivie");
 

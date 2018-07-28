@@ -1,0 +1,29 @@
+{% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_12.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_widget(form.refusEntretienProfessionnel, {
+            'label': "L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au
+            cours de la période de référence",
+            'label_attr':{
+                'class': 'checkbox-inline',
+                'style':'font-weight: bold;'
+            }
+        }) }}
+    </div>
+</div>
+<br>
+<div class="row" id="motifs-absence-entretien">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Motifs :</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            {{ form_row(form.typeAbsenceEntretien, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" id="label-presision">Précisions :</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            {{ form_row(form.motifAbsenceEntretien, {'label': false}) }}
+        </div>
+    </div>
+</div>

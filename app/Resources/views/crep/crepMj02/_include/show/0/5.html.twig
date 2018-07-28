@@ -1,0 +1,8 @@
+<br>
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Date de l’entretien professionnel </label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}</div>
+    </div>
+</div>
+<br>

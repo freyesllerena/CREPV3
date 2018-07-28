@@ -8,32 +8,4 @@
         </dl>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
-        <label>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) :</label>
-        <br>&nbsp;
-        <label>
-            <input type="checkbox" class="flat" disabled="disabled"
-                    {% if crep.motifAbsenceEntretien == 0 and crep.motifAbsenceEntretien is not null %}
-                        checked="checked"
-                    {% endif %}
-            >
-        </label> non activité (durée de l'absence)&nbsp;&nbsp;
-        <label>
-            <input type="checkbox" class="flat" disabled="disabled"
-                    {% if crep.motifAbsenceEntretien == 1 and crep.motifAbsenceEntretien is not null %}
-                        checked="checked"
-                    {% endif %}
-            >
-        </label> congés&nbsp;&nbsp;
 
-        <label>
-            <input type="checkbox" class="flat" disabled="disabled"
-                    {% if crep.motifAbsenceEntretien == 2 and crep.motifAbsenceEntretien is not null %}
-                        checked="checked"
-                    {% endif %}
-            >
-        </label> autres&nbsp;&nbsp;
-    </div>
-</div>
-<br>

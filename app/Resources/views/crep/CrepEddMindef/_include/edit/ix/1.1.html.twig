@@ -1,0 +1,67 @@
+{% form_theme form 'crep/crepEdd/Form/collections.form.html.twig' %}
+
+{% set competenceActionExceptionnelle = 'false' %}
+{% for competence in form.competencesActions %}
+    {% for rowCompetance in competence %}
+        {% if rowCompetance.vars.value == '0' %}
+            {% set competenceActionExceptionnelle = 'true' %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% set competenceRelationExceptionnelle = 'false' %}
+{% for competence in form.competencesRelations %}
+    {% for rowCompetance in competence %}
+        {% if rowCompetance.vars.value == '0' %}
+            {% set competenceRelationExceptionnelle = 'true' %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% set competenceSituationExceptionnelle = 'false' %}
+{% for competence in form.competencesSituations %}
+    {% for rowCompetance in competence %}
+        {% if rowCompetance.vars.value == '0' %}
+            {% set competenceSituationExceptionnelle = 'true' %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Compétences liées à l'action</th>
+                <th class="text-center" width="100px">Exceptionnelle*</th>
+                <th class="text-center" width="100px">Forte</th>
+                <th class="text-center" width="100px">Assez forte</th>
+                <th class="text-center" width="100px">À développer</th>
+                <th class="text-center" width="100px">Non observée</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for errorIndex, error in errors %}
+                {% if 'true' == competenceActionExceptionnelle %}
+                    {% if (error.messageParameters['cause'] is defined and error.messageParameters['cause'] == "nbrCompetenceNiveauExceptionnelle" ) %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <strong><i class="fa fa-warning"></i> {{ error.message }}</strong><br>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% for competence in form.competencesActions %}
+                <tr>
+                    <td>
+                        {{ crep.competencesActions[loop.index0].libelle }}
+                    </td>
+                    {{ form_widget(competence) }}
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>

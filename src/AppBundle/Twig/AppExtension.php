@@ -147,6 +147,10 @@ class AppExtension extends \Twig_Extension
                 $this,
                 'thematiquesFormationsCrepMj02',
             )),
+            new \Twig_SimpleFilter('typesAbsenceEntretienCrepMj02', array(
+                $this,
+                'typesAbsenceEntretienCrepMj02',
+            )),
         );
     }
 
@@ -689,5 +693,14 @@ class AppExtension extends \Twig_Extension
         }
 
         return array_flip(CrepMj02::$thematiquesFormationsCrepMj02)[$id];
+    }
+
+    public function typesAbsenceEntretienCrepMj02($id)
+    {
+        if (null === $id) {
+            return '';
+        }
+
+        return array_flip(CrepMj02::$typesAbsenceEntretienCrepMj02)[$id];
     }
 }

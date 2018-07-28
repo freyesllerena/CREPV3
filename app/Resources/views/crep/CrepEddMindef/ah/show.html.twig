@@ -1,0 +1,45 @@
+{% extends "crep/crepEdd/ah/show.html.twig" %}
+ {% block eddMindef %}
+     <div class="row">
+         <div class="col-md-12 col-sm-12 col-xs-12">
+             <div class="x_panel panel_green">
+                 <div class="x_title collapse-link" style="cursor:pointer">
+                     <h2>VIII - COMPÉTENCES MANAGÉRIALES
+                         (Inspecteurs civils , experts de haut niveau et directeurs de projet)
+                     </h2>
+                     <ul class="nav navbar-right panel_toolbox">
+                         <li><a><i class="fa fa-chevron-up"></i></a></li>
+                     </ul>
+                     <div class="clearfix"></div>
+                 </div>
+
+                 <div class="x_content row">
+                     <div class="col-md-12 col-sm-12 col-xs-12">
+                         <h3>1. Les compétences managériales démontrées par l’agent dans ses fonctions </h3>
+                         {% block ix01 %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/1.1.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/1.2.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/1.3.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/1.4.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/1.5.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/1.6.html.twig' %}
+                         {% endblock ix01 %}
+
+                         <h3>2. Les compétences autres que managériales démontrées par l’agent dans ses fonctions </h3>
+
+                         {% block ix02 %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/2.1.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/2.2.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/2.3.html.twig' %}
+                             {% include 'crep/crepEddMindef/_include/show/ix/2.4.html.twig' %}
+                         {% endblock ix02 %}
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ {% endblock eddMindef %}
+
+{% block titreCircuitValidation %}
+    <h2>IX - CIRCUIT DE VALIDATION</h2>
+{% endblock titreCircuitValidation %}

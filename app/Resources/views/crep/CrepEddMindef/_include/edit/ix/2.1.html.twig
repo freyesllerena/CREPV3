@@ -1,0 +1,34 @@
+{% form_theme form 'crep/crepEdd/Form/collections.form.html.twig' %}
+
+<div class="row" id="competencesRequisesCollection"
+     data-prototype="{{ form_widget(form.competencesRequises.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Compétences requises dans les fonctions (à compléter à partir de la fiche de poste)</th>
+                <th class="text-center" width="100px">Exceptionnelle</th>
+                <th class="text-center" width="100px">Forte</th>
+                <th class="text-center" width="100px">Assez forte</th>
+                <th class="text-center" width="100px">À développer</th>
+                <th class="text-center" width="100px">Non observée</th>
+                <th width="20px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, competence in form.competencesRequises %}
+                {{ form_widget(competence) }}
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

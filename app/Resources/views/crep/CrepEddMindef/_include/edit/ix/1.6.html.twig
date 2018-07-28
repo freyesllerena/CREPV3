@@ -1,0 +1,31 @@
+{% form_theme form 'crep/crepEdd/Form/App_form_crepEdd_12.html.twig' %}
+
+<label>Observations liées à l’intelligence des situations :</label>
+<div class="row">
+
+    {% set classeCsExceptionnelle = 'col-md-12 col-sm-12 col-xs-12' %}
+    {% for errorIndex, error in errors %}
+        {% if (error.messageParameters['cause_observation_situation'] is defined and error.messageParameters['cause_observation_situation'] == "errorObservationsCompetencesSituation" ) %}
+            {% set classeCsExceptionnelle = 'col-md-12 col-sm-12 col-xs-12 has-error' %}
+            <div class="has-error">
+                <div class="col-md-12">
+                    <label class="control-label has-error" style="text-align: left;" for="inputError">
+                        <i class="fa fa-times-circle"></i>{{ error.message }}</label>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="{{ classeCsExceptionnelle }} row">
+        {{ form_row(form.observationsCompetencesSituations, { 'label': false}) }}
+    </div>
+</div>
+<div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <span>
+            * Au total, le nombre de croix figurant dans la colonne « exceptionnelle » de ces 3 tableaux des compétences managériales ne doit pas dépasser 5. Chaque croix « exceptionnelle » doit être motivée dans la colonne « observations».
+        </span>
+    </div>
+</div>
+<br>
+<br>
+<br>

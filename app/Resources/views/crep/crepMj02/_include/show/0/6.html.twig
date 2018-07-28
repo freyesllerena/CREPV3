@@ -1,0 +1,48 @@
+<div class="row form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label>
+            <input type="checkbox" class="flat" disabled="disabled"
+                   {% if crep.refusEntretienProfessionnel == 1 and crep.refusEntretienProfessionnel is not null %}checked="checked"{% endif %}
+            >&nbsp;&nbsp;L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence
+        </label>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Motifs :</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                        {% if crep.typeAbsenceEntretien == 0 and crep.typeAbsenceEntretien is not null %}
+                            checked="checked"
+                        {% endif %}
+                >
+            </label> Non activité (durée de l'absence)
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                        {% if crep.typeAbsenceEntretien == 1 and crep.typeAbsenceEntretien is not null %}
+                            checked="checked"
+                        {% endif %}
+                >
+            </label> Congés
+            <label>
+                <input type="checkbox" class="flat" disabled="disabled"
+                        {% if crep.typeAbsenceEntretien == 2 and crep.typeAbsenceEntretien is not null %}
+                            checked="checked"
+                        {% endif %}
+                >
+            </label> Autres
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Précisions :</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <dl class="m-t-md">
+                <dd class="well well-xs">
+                    {{ crep.motifAbsenceEntretien | nl2br }}
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

@@ -26,6 +26,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use AppBundle\Entity\Crep\CrepMj02\CrepMj02;
 
 class CrepMj02Type extends CrepType
 {
@@ -66,12 +67,9 @@ class CrepMj02Type extends CrepType
                 'expanded' => true,
                 'multiple' => false,
             ])
-
             ->add('grade', null, ['required' => false])
             ->add('corps', null, ['required' => false])
-
             ->add('posteOccupe', null, ['required' => true])
-
             ->add('dateEntreePosteOccupe',
                 DateType::class,
                 array(
@@ -82,7 +80,6 @@ class CrepMj02Type extends CrepType
                     'required' => false,
                 )
             )
-
             ->add('activiteEncadrement', ChoiceType::class, [
                 'choices' => [
                     'Oui' => 1,
@@ -91,7 +88,6 @@ class CrepMj02Type extends CrepType
                 'expanded' => true,
                 'multiple' => false,
             ])
-
             ->add('nbAgentsEncadres', TextType::class, ['required' => false])
             ->add('nbAgentsEncadresA', TextType::class, ['required' => false])
             ->add('nbAgentsEncadresB', TextType::class, ['required' => false])
@@ -99,30 +95,19 @@ class CrepMj02Type extends CrepType
             ->add('direction', null, ['required' => false])
             ->add('departement', null, ['required' => false])
             ->add('service', null, ['required' => false])
-
             ->add('nomNaissanceShd', null, ['required' => true])
             ->add('nomMaritalShd', null, ['required' => false])
-
             ->add('prenomShd', null, ['required' => true])
             ->add('posteOccupeShd', null, ['required' => true])
-
             ->add('directionShd', null, ['required' => false])
             ->add('departementShd', null, ['required' => false])
             ->add('serviceShd', null, ['required' => false])
-
             ->add('motifAbsenceEntretienShd', TextareaType::class, [
                 'attr' => ['maxlength' => '4096'],
                 'required' => false
             ])
-            ->add('motifAbsenceEntretien', ChoiceType::class, [
-                'choices' => [
-                    'Non activité (durée de l\'absence)' => 0,
-                    'Congés' => 1,
-                    'Autres' => 2,
-                ],
-                'placeholder' => false,
-                'expanded' => true,
-                'multiple' => false,
+            ->add('motifAbsenceEntretien', TextareaType::class, [
+                'attr' => ['maxlength' => '4096'],
                 'required' => false
             ])
             ->add('dateEntretien',
@@ -206,7 +191,6 @@ class CrepMj02Type extends CrepType
                 'expanded' => true,
                 'multiple' => false,
             ])
-
             ->add(
                 'souhaitEntretienCarriere', ChoiceType::class, [
                     'choices' => [
@@ -220,7 +204,6 @@ class CrepMj02Type extends CrepType
                     'disabled' => false,
                 ]
             )
-
             ->add('commentaireVae', null, ['required' => false])
             ->add('capacitesDecisions', TextareaType::class, [
                 'attr' => ['maxlength' => '4096'],
@@ -281,19 +264,12 @@ class CrepMj02Type extends CrepType
                     'entry_options' => ['annee_evaluee' => $options['anneeEvaluee']],
                 ]
             )
-            ->add(
-                'typeAbsenceEntretien',
-                ChoiceType::class,
-                [
-                    'choices' => [
-                        "non activité (durée de l'absence)" => 0,
-                        'congés' => 1,
-                        'autres' => 2,
-                    ],
-                    'expanded' => true,
-                    'multiple' => false,
-                ]
-            )
+            ->add('typeAbsenceEntretien',
+                ChoiceType::class, [
+                'choices' => CrepMj02::$typesAbsenceEntretienCrepMj02,
+                'expanded' => true,
+                'multiple' => false,
+            ])
         ;
     }
 

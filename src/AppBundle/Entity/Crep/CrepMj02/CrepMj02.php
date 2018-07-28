@@ -55,6 +55,12 @@ class CrepMj02 extends Crep
         'T3 : développement des compétences ou acquisition de nouvelles compétences (projet professionnel)' => 'T3 : développement des compétences ou acquisition de nouvelles compétences (projet professionnel)',
     ];
 
+    public static $typesAbsenceEntretienCrepMj02 = [
+        'Non activité (durée de l\'absence)' => 0,
+        'Congés' => 1,
+        'Autres' => 2,
+    ];
+
     /**
      * @ORM\Column(type="string")
      * @Assert\Length(
