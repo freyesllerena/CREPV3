@@ -139,6 +139,19 @@
 
     <script type="text/javascript">
 
+
+        // Evenements motifs Absences:
+        // Champs à modifier leurs aspects
+        var dateEntretien = $("#crep_mj02_dateEntretien");
+        var motifsAbsence = $("#motifs-absence-entretien");
+        var nonActivite = $('#crep_mj02_typeAbsenceEntretien_0');
+        var conges = $('#crep_mj02_typeAbsenceEntretien_1');
+        var autres = $('#crep_mj02_typeAbsenceEntretien_2');
+        var precision = $("#crep_mj02_motifAbsenceEntretien");
+        // Champs marquants l'evenement
+        var isAbsence = $("#crep_mj02_refusEntretienProfessionnel");
+
+
         $(document).ready(function() {
             
             // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
@@ -228,28 +241,18 @@
                 }
             }
 
-            // Evenements motifs Absences:
-            // Champs à modifier leurs aspects
-            var dateEntretien = $("#crep_mj02_dateEntretien");
-            var motifsAbsence = $("#motifs-absence-entretien");
-            
-            var nonActivite = $('#crep_mj02_typeAbsenceEntretien_0');
-            var conges = $('#crep_mj02_typeAbsenceEntretien_1');
-            var autres = $('#crep_mj02_typeAbsenceEntretien_2');
-            var precision = $("#crep_mj02_motifAbsenceEntretien");
-            
-            
-            // Champs marquants l'evenement
-            var isAbsence = $("#crep_mj02_refusEntretienProfessionnel");
-
-            
-            // Traitement on chargement
+            // L'absence de l'agent lors du chargement de la page
             if(isAbsence.attr('checked')) {
                 dateEntretien.val('');
                 dateEntretien.attr('disabled','disabled');
                 motifsAbsence.show();
-                precision.hide();
-                $('#label-presision').hide();
+                if (autres.attr('checked')) {
+                    precision.show();
+                    $('#label-presision').show();
+                } else {
+                    precision.hide();
+                    $('#label-presision').hide();
+                }
             } else {
                 nonActivite.removeAttr("checked");
                 conges.removeAttr("checked");
@@ -257,40 +260,15 @@
                 precision.val('');
                 motifsAbsence.hide();
                 $('#label-presision').hide();
+                isAbsenceLabel = isAbsence.parent().parent().find('label');
+                isAbsenceLabel.removeClass('checked');
+                isAbsenceLabel.addClass('checked');
+                isAbsenceDiv = isAbsence.parent().parent().find('div');
+                isAbsenceDiv.removeClass('checked');
+                isAbsenceDiv.addClass('checked');
             }
-
-            // isAutres.on('click', function(){
-            //     console.log('helo');
-            //     // if(nonActivite.attr('checked')) {
-            //         nonActivite.parent().removeClass("checked");
-            //     // }
-            //     // if(conges.attr('checked')) {
-            //         conges.parent().removeClass("checked");
-            //     // }
-            //     // isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
-            // });
-
-
-            autres.on('ifChanged', function(){
-                // if($(this.id).attr('checked')) {
-                //     console.log(this.id;
-                // }
-
-                // precision.show();
-                // $('#label-presision').show();
-                // isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
-            });
-
-            // autres.on('ifChanged', function(){
-            //     precision.hide();
-            //     $('#label-presision').hide();
-            //     precision.val('');
-            //     precision.val('');
-            // });
             
-            
-            
-            // Suivie ?
+            // Formation suivie ?
             var motifNonSuivie = $("#motifNonSuivie");
 
             if ($("#crep_mj02_formationsAnneeEcoulee_0_suivie_0") && $("#crep_mj02_formationsAnneeEcoulee_0_suivie_1")) {
@@ -320,15 +298,127 @@
                 }
             }
 
-            //
+            // Format date mois
             $('#crep_mj02_dateEntreePosteOccupe').datetimepicker({
                 viewMode: 'years',
                 format: 'MM/YYYY',
                 locale: 'fr'
             });
-
         });
-        
+
+        /** absence de l'agent * */
+        isAbsence.on('ifChanged', function(){
+            statusCheckbox = isAbsence.parent().prevObject[0].checked;
+            if (statusCheckbox === true) {
+                dateEntretien.val('');
+                dateEntretien.attr('disabled','disabled');
+                motifsAbsence.show();
+                statusCheckbox = autres.parent().prevObject[0].checked;
+                if (statusCheckbox === true) {
+                    precision.show();
+                    $('#label-presision').show();
+                } else {
+                    precision.hide();
+                    $('#label-presision').hide();
+                    precision.val('');
+                }
+
+            } else {
+                dateEntretien.attr('disabled',false);
+                // nonActivite.removeAttr("checked");
+                statusCheckboxNonActivite = nonActivite.parent().prevObject[0].checked;
+                if (statusCheckboxNonActivite === true) {
+                    precision.val('');
+                    precision.hide();
+                    $('#label-presision').hide();
+                    nonActivite.removeAttr("checked");
+                    isNonActiviteDiv = nonActivite.parent();
+                    isNonActiviteDiv.removeClass("checked");
+                }
+
+                statusCheckboxConges = conges.parent().prevObject[0].checked;
+                if (statusCheckboxConges === true) {
+                    precision.val('');
+                    precision.hide();
+                    $('#label-presision').hide();
+                    conges.removeAttr("checked");
+                    isCongesDiv = conges.parent();
+                    isCongesDiv.removeClass("checked");
+                }
+
+                statusCheckboxAutres = autres.parent().prevObject[0].checked;
+                if (statusCheckboxAutres === true) {
+                    precision.val('');
+                    precision.hide();
+                    $('#label-presision').hide();
+                    autres.removeAttr("checked");
+                    isAutresDiv = autres.parent();
+                    isAutresDiv.removeClass("checked");
+                }
+
+                motifsAbsence.hide();
+                $('#label-presision').hide();
+                isAbsenceLabel = isAbsence.parent().parent().find('label');
+                isAbsenceLabel.removeClass('checked');
+                isAbsenceLabel.addClass('checked');
+                isAbsenceDiv = isAbsence.parent().parent().find('div');
+                isAbsenceDiv.removeClass('checked');
+                isAbsenceDiv.addClass('checked');
+            }
+        });
+
+
+        autres.on('ifChanged', function(){
+            statusCheckbox = autres.parent().prevObject[0].checked;
+            if (statusCheckbox === true) {
+                precision.show();
+                $('#label-presision').show();
+            }
+        });
+
+
+        nonActivite.on('ifChanged', function(){
+            statusCheckbox = nonActivite.parent().prevObject[0].checked;
+            if (statusCheckbox === true) {
+                precision.hide();
+                $('#label-presision').hide();
+                precision.val('');
+            }
+        });
+
+
+        conges.on('ifChanged', function(){
+            statusCheckbox = conges.parent().prevObject[0].checked;
+            if (statusCheckbox === true) {
+                precision.hide();
+                $('#label-presision').hide();
+                precision.val('');
+            }
+        });
+
+        /**
+         * Control si tout le groupe checkbox est false
+         *
+         * @param aItems
+         * @returns {boolean}
+         */
+        function isCheckboxChecked(aItems) {
+            var statutParentCheckbox = false;
+            for (var i = 0; i < aItems.length; i++) {
+                var htmlData = jQuery(  '#' + aItems[i].id  );
+                var isChecked = htmlData.find('input');
+
+                statusCheckbox = isChecked.prevObject[0].checked;
+                if (statusCheckbox === true) {
+                    statutParentCheckbox = true;
+                }
+            }
+
+            return statutParentCheckbox;
+        }
+
+
+        /**  Autres **/
 
         var Crep = Crep || {};
         Crep.CollectionsMj02 = CollectionsMj02;
