@@ -175,7 +175,7 @@
                             <u>Nombre total d’agents à encadrer</u> : {{ crep.nbAgentsEncadres }}<br>
                             -dont agents de catégorie A : {{ crep.nbAgentsEncadresA }}<br>
                             -dont agents de catégorie B : {{ crep.nbAgentsEncadresB }}<br>
-                            -dont agents de catégorie C : {{ crep.nbAgentsEncadresC }}<br>
+                            -dont agents de catégorie C : {{ crep.nbAgentsEncadresC }}
                         </td>
                     </tr>
                     <tr>
@@ -185,11 +185,9 @@
                         <td>
                             &bull; DIR : {{ crep.direction }}<br>
                             &bull; DT : {{ crep.departement }}<br>
-                            &bull; Service : {{ crep.service }}<br>
+                            &bull; Service : {{ crep.service }}
                         </td>
-                        <td colspan="2">
-                            <br>
-                        </td>
+                        <td colspan="2"></td>
                     </tr>
                     <tr>
                         <td colspan="4">
@@ -256,7 +254,7 @@
                         <td>
                             &bull; DIR : {{ crep.directionShd  }}<br>
                             &bull; DT : {{ crep.departementShd  }}<br>
-                            &bull; Service : {{ crep.serviceShd  }}<br>
+                            &bull; Service : {{ crep.serviceShd  }}
                         </td>
                         <td colspan="2">
                             <br>
@@ -268,7 +266,7 @@
                             </em>{{ crep.motifAbsenceEntretienShd }}
                         </td>
                     </tr>
-                    <tr><td colspan="4"><br></td></tr>
+                    <tr><td colspan="4"></td></tr>
                     <tr>
                         <td colspan="4">
                             <em class="font-small-crep">* mentions obligatoires</em>
@@ -278,9 +276,61 @@
             </td>
         </tr>
     </table>
+    <div class="text-left">
+        <<strong>>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent<br>
+            au cours de la période de référence (motifs) : </strong>
+    </div>
+    <br>
+    <table>
+        <tr>
+            <td width="290px">
+                {% if crep.typeAbsenceEntretien == 0 and crep.typeAbsenceEntretien is not null %}
+                    &#9745;
+                {% else %}
+                    &#9744;
+                {% endif %}
+                <label>non activité (durée de l'absence)</label>
+            </td>
+            <td>
+                {% if crep.typeAbsenceEntretien == 1 and crep.typeAbsenceEntretien is not null %}
+                    &#9745;
+                {% else %}
+                    &#9744;
+                {% endif %}
+                <label>congés</label>
+            </td>
+            <td colspan="3">
+                {% if crep.typeAbsenceEntretien == 2 and crep.typeAbsenceEntretien is not null %}
+                    &#9745;
+                {% else %}
+                    &#9744;
+                {% endif %}
+                <label>autres</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">{{ crep.motifAbsenceEntretien }}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td colspan="2"><u><stron>Date de l’entretien professionnel</stron></u> :</td>
+            <td>{{ crep.dateEntretien | date('d/m/Y') }}</td>
+        </tr>
+    </table>
     <!-- page 1 -->
     
     <div style="page-break-before:always;"></div>
+
+    {#<table class="bordered-double">#}
+        {#<tr>#}
+            {#<td>#}
+                {#sdfsdfdsfsdf#}
+            {#</td>#}
+        {#</tr>#}
+    {#</table>#}
 {#<div class="bordered text-center" style="font-size: 14px;">#}
    {##}
     {##}

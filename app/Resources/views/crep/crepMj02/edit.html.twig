@@ -396,29 +396,46 @@
             }
         });
 
+        radioUnchecked(nonActivite);
+        radioUnchecked(conges);
+        radioUncheckedAutres(autres);
+        
         /**
-         * Control si tout le groupe checkbox est false
+         * Permet de décocher des composants Radio - Bootstrap - Autres
          *
-         * @param aItems
-         * @returns {boolean}
          */
-        function isCheckboxChecked(aItems) {
-            var statutParentCheckbox = false;
-            for (var i = 0; i < aItems.length; i++) {
-                var htmlData = jQuery(  '#' + aItems[i].id  );
-                var isChecked = htmlData.find('input');
+        function radioUncheckedAutres(item) {
+            item.on('ifClicked', function(){
+                statusCheckbox = item.parent().prevObject[0].checked;
 
-                statusCheckbox = isChecked.prevObject[0].checked;
                 if (statusCheckbox === true) {
-                    statutParentCheckbox = true;
+                    isDiv = item.parent().parent().find('div');
+                    isDiv.removeClass('checked');
+                    item.attr('checked',false);
+                    precision.hide();
+                    $('#label-presision').hide();
+                    precision.val('');
                 }
-            }
-
-            return statutParentCheckbox;
+            });
         }
 
+        /**
+         * Permet de décocher des composants Radio - Bootstrap
+         *
+         */
+        function radioUnchecked(item) {
+            item.on('ifClicked', function(){
+                statusCheckbox = item.parent().prevObject[0].checked;
 
-        /**  Autres **/
+                if (statusCheckbox === true) {
+                    isDiv = item.parent().parent().find('div');
+                    isDiv.removeClass('checked');
+                    item.attr('checked',false);
+                }
+            });
+        }
+
+        /**  Autres evenements **/
 
         var Crep = Crep || {};
         Crep.CollectionsMj02 = CollectionsMj02;

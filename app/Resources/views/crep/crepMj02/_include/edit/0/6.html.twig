@@ -14,53 +14,12 @@
 </div>
 <br>
 <div class="row" id="motifs-absence-entretien">
-
-
-
-
     <div class="col-md-6 col-sm-6 col-xs-12">
-
-
-
-        {% if 0 < errors | length %}
-
-            {% for errorIndex, error in errors %}
-
-                {% if (error.messageParameters['cause_motif'] is defined and error.messageParameters['cause_motif'] == "absence" ) %}
-
-                    <div class="has-error">
-                        {#<div class="col-md-12">#}
-                            {#<label class="control-label col-md-3 col-sm-3 col-xs-12 has-error" style="text-align: left;" for="inputError">#}
-                                {#<i class="fa fa-times-circle"></i> &nbsp;{{ error.message }}</label>#}
-                        {#</div>#}
-                    {#</div>#}
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12 has-error" style="text-align: left;" for="inputError">
-                        <i class="fa fa-times-circle"></i> &nbsp;{{ error.message }}</label>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-                        {{ form_row(form.typeAbsenceEntretien, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
-                    </div>
-                    </div>
-                {% endif %}
-
-            {% endfor %}
-
-        {% else %}
-
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Motif :</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-                {{ form_row(form.typeAbsenceEntretien, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth:;'}}) }}
-            </div>
-
-        {% endif %}
-
-
-        {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Motifs :</label>#}
-        {#<div class="col-md-9 col-sm-9 col-xs-12">#}
-            {#{{ form_row(form.typeAbsenceEntretien, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}#}
-        {#</div>#}
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Motif :</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            {{ form_row(form.typeAbsenceEntretien, {'label': false, 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth:;'}}) }}
+        </div>
     </div>
-
-
 
     <div class="col-md-6 col-sm-6 col-xs-12">
         <label class="control-label col-md-3 col-sm-3 col-xs-12" id="label-presision">Précisions :</label>

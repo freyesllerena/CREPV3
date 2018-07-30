@@ -703,7 +703,7 @@
         <tr align="left" bgcolor="#D9D9D9">
             <th colspan="7" style="border:1px #000000 solid;"><strong>Autres compétences éventuellement démontrées par l’agent</strong></th>
         </tr>
-        {% for index in 0 %}
+        {% for index in 0..1 %}
             <tr align="center" bgcolor="#FFFFFF">
                 <td style="border:1px #000000 solid;"><br></td>
                 {% for index in 0..4 %}
@@ -711,7 +711,7 @@
                     </td>
                 {% endfor %}
                 {% if loop.index0 == 0 %}
-                    <td rowspan="1" style="border:1px #000000 solid;" align="left"></td>
+                    <td rowspan="2" style="border:1px #000000 solid;" align="left"></td>
                 {% endif %}
             </tr>
         {% endfor %}
@@ -736,10 +736,13 @@
 </table>
 
 {#<!-- page 6 -->#}
+{#
 <div style="page-break-before:always;"></div>
+#}
 <br>
 <br>
-
+<br>
+<br>
 <table>
     <tr>
         <td width="15%"></td>
@@ -1310,7 +1313,6 @@
         <td width="32%">
             {% if crep.dateNotification %}  {{ crep.dateNotification|date('d/m/Y H:i') }}
             {% elseif crep.dateRefusVisa %} Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
-            {% elseif crep.dateVisaAgent %}{{ crep.dateVisaAgent|date('d/m/Y H:i') }}
             {% endif %}
         </td>
         <td width="12%">Signature : </td>

@@ -269,7 +269,7 @@
                     listeCheckbox = allItems.find(':checkbox').first().siblings();
                     aItems = listeCheckbox.prevObject.prevObject.prevObject.prevObject.prevObject;
                 });
-                console.log(aItems);
+
                 // control statut sur tous les checkboxs
                 var parentStatut = isCheckboxChecked(aItems);
 
@@ -303,14 +303,12 @@
         autoCompleteFormation();
 
         function autoCompleteFormation(){
-            console.log('trtrtr');
+
             $('.formation-autocomplete').autocomplete({
                 serviceUrl: urlAjax,
                 minChars: 3,
                 onSelect: function (suggestion) {
-                    // var mcc02DureeFormation =  $(this).closest('td').next('td').next('td').find('input').show();
                     var mcc02DureeFormation =  $(this).parent().parent().parent().parent().closest('div').next('div').find('input').show();
-                    // console.log(mcc02DureeFormation);
                     mcc02DureeFormation.val(suggestion.duree);
                 }
             });

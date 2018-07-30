@@ -1383,11 +1383,13 @@
         <td width="32%">
             {% if crep.dateNotification %}  {{ crep.dateNotification|date('d/m/Y H:i') }}
             {% elseif crep.dateRefusVisa %} Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
-            {% elseif crep.dateVisaAgent %}{{ crep.dateVisaAgent|date('d/m/Y H:i') }}
             {% endif %}
         </td>
         <td width="12%">Signature : </td>
-        <td width="38%">{% if crep.dateNotification %}CREP signé de manière dématérialisée<br>{{ crep.agent.civilite | title }} {{ crep.prenom | title }} {{ crep.nomUsage | upper }}<br>le {{ crep.dateNotification|date('d/m/Y H:i') }}{% elseif crep.dateRefusNotification %}<span style="color: red">Refus de signature du CREP notifié acté le {{ crep.dateRefusNotification|date('d/m/Y H:i') }}</span>{% endif %}</td>
+        <td width="38%">{% if crep.dateNotification %}CREP signé de manière dématérialisée<br>
+                {{ crep.agent.civilite | title }} {{ crep.prenom | title }} {{ crep.nomUsage | upper }}<br>
+                le {{ crep.dateNotification|date('d/m/Y H:i') }}{% elseif crep.dateRefusNotification %}
+                <span style="color: red">Refus de signature du CREP notifié acté le {{ crep.dateRefusNotification|date('d/m/Y H:i') }}</span>{% endif %}</td>
     </tr>
     {% for i in 0..1 %}
         <tr><td><br></td></tr>

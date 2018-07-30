@@ -8,7 +8,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel panel_green">
                     <div class="x_title collapse-link" style="cursor:pointer">
-                        <h2><b>COMPTE-RENDU DE L'ENTRETIEN PROFESSIONNEL EMPLOI DE DIRECTION</b></h2>
+                        <h2>COMPTE-RENDU DE L'ENTRETIEN PROFESSIONNEL EMPLOI DE DIRECTION</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a><i class="fa fa-chevron-down"></i></a></li>
                         </ul>
@@ -17,12 +17,12 @@
 
                     <div class="x_content row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h3><U>1.entre l'agent :</U></h3>
+                            <h3>Entre l'agent :</h3>
 
                             {% block i01 %}
                             {% endblock i01 %}
 
-                            <h3><U>2.et son supérieur hiérarchique direct :</U></h3>
+                            <h3>Et son supérieur hiérarchique direct :</h3>
 
                             {% block i02 %}
                             {% endblock i02 %}
@@ -333,12 +333,25 @@
             </div>
         </div>
 
+        {% block eddMindef %}
+            {% block ix01 %}
+            {% endblock ix01 %}
+
+            {% block ix02 %}
+            {% endblock ix02 %}
+
+        {% endblock eddMindef %}
+
+
+
         {% block circuitDeValidation %}
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel panel_green">
                         <div class="x_title collapse-link" style="cursor:pointer">
+                            {% block titreCircuitValidation %}
                             <h2>VIII - CIRCUIT DE VALIDATION</h2>
+                            {% endblock titreCircuitValidation %}
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a><i class="fa fa-chevron-up"></i></a></li>
                             </ul>
@@ -413,6 +426,7 @@
 
 
         {% endblock circuitDeValidation %}
+
 
     </div>
 {% endblock content %}

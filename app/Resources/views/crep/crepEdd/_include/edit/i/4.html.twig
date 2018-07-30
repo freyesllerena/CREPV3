@@ -6,4 +6,4 @@
     {% set class = '' %}
 {% endif %}
 
-    {{ form_row(form.commentaireAgentFonction, {'label':false}) }}
+    {{ form_row(form.commentaireAgentFonction, {'label':false, 'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}
