@@ -1,10 +1,7 @@
 {% form_theme form 'crep/crepMj02/Form/App_form_crepMj02_12.html.twig' %}
+
 <br>
-
-
-
 <div class="row">
-
 
     {% if 0 < errors | length %}
 
@@ -28,8 +25,8 @@
                         })
                     }}
 
-
                 </div>
+
             {% endif %}
 
         {% endfor %}
@@ -46,6 +43,7 @@
             }) }}
 
         </div>
+
         {{ form_row(form.observationsShd,
             {
                 'label': false,
@@ -55,6 +53,7 @@
             }
             })
         }}
+
     {% endif %}
 
 
