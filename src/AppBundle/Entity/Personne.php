@@ -36,7 +36,7 @@ abstract class Personne extends GenericEntity implements PersonneInterface
     
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(message = "Nom usuel obligatoire")
+     * 
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
@@ -48,7 +48,7 @@ abstract class Personne extends GenericEntity implements PersonneInterface
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(message = "Prénom obligatoire")
+     * 
      * @Assert\Length(
      *      min = 2,
      *      max = 50,

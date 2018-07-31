@@ -1597,25 +1597,5 @@ class CrepMj02 extends Crep
                 ->setParameter('cause_competance', 'niveau')
                 ->addViolation();
         }
-
-        /** Control motifs d'absence  **/
-        $isTypeAbsence = false;
-        if ('1' == $this->getRefusEntretienProfessionnel()) {
-            if ('0' == $this->getTypeAbsenceEntretien()) {
-                $isTypeAbsence = true;
-            }
-            if ('1' == $this->getTypeAbsenceEntretien()) {
-                $isTypeAbsence = true;
-            }
-            if ('2' == $this->getTypeAbsenceEntretien()) {
-                $isTypeAbsence = true;
-            }
-
-            if (false === $isTypeAbsence) {
-                $context->buildViolation("Motif obligatoire ")
-                    ->setParameter('cause_motif', 'absence')
-                    ->addViolation();
-            }
-        }
     }
 }

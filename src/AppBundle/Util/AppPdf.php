@@ -98,6 +98,17 @@ class AppPdf extends TCPDF
 	                    		  		</tr>
             	         			</table>
 	    						</small>';
+        } elseif ($crep instanceof CrepMj02) {
+            $this->footer = '	<small>
+    								<table>
+	                    		  		<tr>
+	    						  			<td style="width:20%">NOM : '.$crep->getNomNaissance().'</td>
+	    						  			<td style="width:20%">PRÉNOM : '.$crep->getPrenom().'</td>
+	    						  			<td style="width:40%">CORPS : '.$crep->getCorps().'</td>
+	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+	                    		  		</tr>
+            	         			</table>
+	    						</small>';
         } elseif ($crep instanceof CrepMcc02) {
             $this->footer = '
     								<table>

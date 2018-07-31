@@ -33,9 +33,15 @@ class UtilisateurType extends AbstractType
             ->add('ministere', null)
             ->add('roles', ChoiceType::class, array(
                             'choices' => array(
-                                    'Administrateur' => 'ROLE_ADMIN',
-                                    'Administrateur ministériel' => 'ROLE_ADMIN_MIN',
-                                    'Pilote national de campagne' => 'ROLE_PNC',
+                                'Administrateur'                => 'ROLE_ADMIN',
+                                'Administrateur ministériel'    => 'ROLE_ADMIN_MIN',
+                                'Pilote national de campagne'   => 'ROLE_PNC',
+                                'Responsable local de campagne' => 'ROLE_RLC',
+                                'Acteur RH de proximité'        => 'ROLE_BRHP',
+                                'Acteur RH de proximité consultation' => 'ROLE_BRHP_CONSULT',
+                                'N+2'                           => 'ROLE_AH',
+                                'N+1'                           => 'ROLE_SHD',
+                                'Agent'                         => 'ROLE_AGENT'
                             ),
                             'expanded' => true,
                             'multiple' => true,
