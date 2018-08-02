@@ -605,15 +605,16 @@ class CrepController extends Controller
     {
         $classeCrep = Util::getClassName($crep);
 
-        if (in_array($crep->getStatut(), [
-                EnumStatutCrep::REFUS_VISA_AGENT,
-                EnumStatutCrep::VISE_AGENT,
-        ])) {
-            $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'AhType', $crep);
-        } elseif (EnumStatutCrep::SIGNE_SHD === $crep->getStatut()) {
-            $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'AgentType', $crep);
-        } else {
+        $role = $this->get('session')->get('selectedRole');
+
+        if($role === 'ROLE_SHD'){
             $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'Type', $crep);
+        }elseif ($role === 'ROLE_AGENT'){
+            $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'AgentType', $crep);
+        }elseif ($role === 'ROLE_AH') {
+            $editForm = $this->createForm('AppBundle\Form\Crep\\' . $classeCrep . '\\' . $classeCrep . 'AhType', $crep);
+        }else{
+            throw new \Exception("Le role de l'utilisarteur doit être ROLE_SHD, ROLE_AGENT ou ROLE_AH");
         }
 
         return $editForm;

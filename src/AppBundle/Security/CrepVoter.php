@@ -13,11 +13,13 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Util\Util;
 use AppBundle\EnumTypes\EnumStatutCampagne;
-use AppBundle\Entity\CrepMinefAbc;
-// use AppBundle\Entity\CampagneBrhp;
+use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
+//use AppBundle\Entity\CampagneBrhp;
+use AppBundle\Entity\Crep\CrepMcc\CrepMcc;
+use AppBundle\Entity\Crep\CrepMinefContract\CrepMinefContract;
 use AppBundle\Entity\Recours;
-// use AppBundle\Entity\Rlc;
-// use AppBundle\EnumTypes\EnumTypeRecours;
+use AppBundle\Entity\Rlc;
+
 use AppBundle\EnumTypes\EnumTypeResultatRecours;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -112,7 +114,7 @@ class CrepVoter extends Voter
     {
         $utilisateur = $token->getUser();
 
-        /* @var $roleUtilisateurSession string */
+        /* @var $roleUtilisateurSession Role */
         $roleUtilisateurSession = $this->session->get('selectedRole');
 
         if (!$utilisateur instanceof Utilisateur) {
@@ -320,15 +322,22 @@ class CrepVoter extends Voter
                 return true;
             }
 
-            //Si le modèle est de type CrepMinefAbc, l'agent peut compléter son CREP avant sa notification
+            //Si le modèle est de type CrepMinefAbc, l'agent peut compléter son CREP avant sa signature definitive
             if ($crep instanceof CrepMinefAbc && EnumStatutCrep::SIGNE_AH == $crep->getStatut() && $crep->getAgent()->getUtilisateur() == $utilisateur) {
                 return true;
             }
 
-            //Si le modèle est de type CrepMcc, l'agent peut compléter son CREP avant sa notification
+            //Si le modèle est de type CrepMcc, l'agent peut compléter son CREP avant sa signature definitive
             if ($crep instanceof CrepMcc && EnumStatutCrep::SIGNE_AH == $crep->getStatut() && $crep->getAgent()->getUtilisateur() == $utilisateur) {
                 return true;
+
             }
+
+            //Si le modèle est de type CrepMinefContract, l'agent peut compléter son CREP avant sa signature definitive
+            if ($crep instanceof CrepMinefContract && EnumStatutCrep::SIGNE_AH == $crep->getStatut() && $crep->getAgent()->getUtilisateur() == $utilisateur) {
+                return true;
+            }
+
         }
         // Dans tous les autres cas, on refuse l'accès
         return false;

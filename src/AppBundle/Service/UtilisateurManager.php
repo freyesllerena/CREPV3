@@ -131,7 +131,7 @@ class UtilisateurManager
         $this->em->flush();
     }
 
-    private function creerFromAgent(Agent $agent, $role, $flush = true)
+    private function creerFromAgent(Agent $agent, $role)
     {
         $ministere = $agent->getCampagnePnc()->getMinistere();
 
@@ -167,6 +167,8 @@ class UtilisateurManager
                 $nouvelUtilisateur->setConfirmationToken($token);
             }
 
+            $this->em->flush();
+            
             $this->mailer->sendConfirmationEmailMessage($nouvelUtilisateur);
         } else {
             // si l'entité "Utilisateur" n'est pas en relation avec l'entité "Personne"
@@ -183,9 +185,7 @@ class UtilisateurManager
                 $utilisateur->setRoles(array($role));
                 $utilisateur->setEnabled(true);
             }
-        }
-
-        if ($flush) {
+            
             $this->em->flush();
         }
     }

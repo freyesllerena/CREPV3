@@ -4,9 +4,9 @@
         text-align: center;
     }
     
-    /*.bordered {*/
-        /*border: 1px #000000 solid;*/
-    /*}*/
+    .bordered {
+        border: 1px #000000 solid;
+    }
     
     .bordered-double {
         border:1px double black;
@@ -20,13 +20,13 @@
     .font-small-crep {
         font-size: 11px;
     }
-    /*.bg-full {*/
-        /*background-color: #E9E9E9;*/
-    /*}*/
+    .bg-full {
+        background-color: #E9E9E9;
+    }
     
-    /*.strong-th {*/
-        /*font-weight: bold;*/
-    /*}*/
+    .strong-th {
+        font-weight: bold;
+    }
     
     body {
         font-size: 12px;
@@ -45,29 +45,32 @@
     /*td.padding-mcc002 {*/
         /*padding-bottom: 30px;*/
     /*}*/
-    /*.bordered-left-rigth {*/
-        /*border-left: 1px #000000 solid;*/
-        /*border-right: 1px #000000 solid;*/
-    /*}*/
-    /*.bordered-left {*/
-        /*border-left: 1px #000000 solid;*/
-    /*}*/
-    /*.bordered-top {*/
-        /*border-top: 1px #000000 solid;*/
-    /*}*/
-    /*.bordered-bottom {*/
-        /*border-bottom: 1px #000000 solid;*/
-    /*}*/
-
+    .bordered-left-rigth {
+        border-left: 1px #000000 solid;
+        border-right: 1px #000000 solid;
+    }
+    .bordered-left {
+        border-left: 1px #000000 solid;
+    }
+    .bordered-top {
+        border-top: 1px #000000 solid;
+    }
+    .bordered-bottom {
+        border-bottom: 1px #000000 solid;
+    }
+    .bordered-rigth {
+        border-right: 1px #000000 solid;
+    }
+    
 </style>
-<!-- début -->
+    <!-- Page 01 -->
 
     <div class="text-center title-crep">
         <strong>DIRECTION DE LA PROTECTION JUDICIAIRE DE LA JEUNESSE</strong><br>
         <strong>_______________________</strong>
         <br><br>
         <strong>COMPTE RENDU D’ENTRETIEN PROFESSIONNEL</strong><br>
-        <strong>ANNÉE {% if crep.dateVIsaShd is not empty %} {{ anneeEvaluee }} {% endif %}</strong>
+        <strong>ANNÉE  {{ anneeEvaluee }} </strong>
     </div>
     <div>
         <em>(Document à remettre à l’agent au moins 8 jours francs avant la date de l’entretien, <strong>accompagné de la
@@ -320,173 +323,366 @@
             <td>{{ crep.dateEntretien | date('d/m/Y') }}</td>
         </tr>
     </table>
-    <!-- page 1 -->
-    
+
+    <!-- page 02 -->
     <div style="page-break-before:always;"></div>
 
-    {#<table class="bordered-double">#}
-        {#<tr>#}
-            {#<td>#}
-                {#sdfsdfdsfsdf#}
-            {#</td>#}
-        {#</tr>#}
-    {#</table>#}
-{#<div class="bordered text-center" style="font-size: 14px;">#}
-   {##}
-    {##}
-    {##}
-    {##}
-    {##}
-    {#<br/>#}
-    {#<div class="row form-group">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom de famille </label>#}
-            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">#}
-                {#{{ crep.nomNaissanceShd }}#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Nom marital </label>#}
-            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">#}
-                {#{{ crep.nomMaritalShd }}#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-    {##}
-    {#<div class="row form-group">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Prénom </label>#}
-            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">#}
-                {#{{ crep.prenomShd | title }}#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-        {#</div>#}
-    {#</div>#}
-    {##}
-    {#<div class="row form-group">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Fonction </label>#}
-            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.posteOccupeShd %}{{ crep.posteOccupeShd }}{% endif %}</div>#}
-        {#</div>#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-        {#</div>#}
-    {#</div>#}
-    {##}
-    {#<div class="row form-group">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="text-right col-md-3 col-sm-3 col-xs-12">Affectation </label>#}
-            {#<div class="col-md-3 col-sm-3 col-xs-12">#}
-                {#<label>&nbsp;&nbsp;DIR :</label>#}
-            {#</div>#}
-            {#<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">#}
-                {#{{ crep.directionShd }}#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="row form-group">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>#}
-            {#<div class="col-md-3 col-sm-3 col-xs-12">#}
-                {#<label>&nbsp;&nbsp;DT :</label>#}
-            {#</div>#}
-            {#<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">#}
-                {#{{ crep.departementShd }}#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="row form-group">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="text-right col-md-3 col-sm-3 col-xs-12"> </label>#}
-            {#<div class="col-md-3 col-sm-3 col-xs-12">#}
-                {#<label>&nbsp;&nbsp;Service :</label>#}
-            {#</div>#}
-            {#<div class="col-md-6 col-sm-6 col-xs-12 well well-xs">#}
-                {#{{ crep.serviceShd }}#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-        {#</div>#}
-    {#</div>#}
-    {##}
-    {##}
-    {##}
-    {##}
-    {#<div class="row">#}
-        {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-            {#<dl class="m-t-md">#}
-                {#<dt> Si l’évaluation ne peut être assurée par le N+1 (indiquer les raisons) : </dt>#}
-                {#<dd class="well well-xs">#}
-                    {#{{ crep.motifAbsenceEntretienShd | nl2br }}#}
-                {#</dd>#}
-            {#</dl>#}
-        {#</div>#}
-    {#</div>#}
-    {#<div>#}
-        {#<div class="col-md-12 col-sm-12 col-xs-12">#}
-            {#<span>* mentions obligatoires</span>#}
-        {#</div>#}
-    {#</div>#}
-    {#<br><br>#}
-    {##}
-    {#<div class="row">#}
-        {#<div class="col-md-12 col-sm-12 col-xs-12 pull-left">#}
-            {#<label>L’entretien professionnel n’a pu se tenir en raison de la présence insuffisante de l’agent au cours de la période de référence (motifs) :</label>#}
-            {#&nbsp;&nbsp;#}
-            {#<label>#}
-                {#<input type="checkbox" class="flat" disabled="disabled"#}
-                        {#{% if crep.motifAbsenceEntretien == 0 and crep.motifAbsenceEntretien is not null %}#}
-                            {#checked="checked"#}
-                        {#{% endif %}#}
-                {#>#}
-            {#</label> non activité (durée de l'absence)&nbsp;&nbsp;#}
-            {#<label>#}
-                {#<input type="checkbox" class="flat" disabled="disabled"#}
-                        {#{% if crep.motifAbsenceEntretien == 1 and crep.motifAbsenceEntretien is not null %}#}
-                            {#checked="checked"#}
-                        {#{% endif %}#}
-                {#>#}
-            {#</label> congés&nbsp;&nbsp;#}
-            {##}
-            {#<label>#}
-                {#<input type="checkbox" class="flat" disabled="disabled"#}
-                        {#{% if crep.motifAbsenceEntretien == 2 and crep.motifAbsenceEntretien is not null %}#}
-                            {#checked="checked"#}
-                        {#{% endif %}#}
-                {#>#}
-            {#</label> autres&nbsp;&nbsp;#}
-        {#</div>#}
-    {#</div>#}
-    {##}
-    {#<div class="row form-group">#}
-        {#<div class="col-md-6 col-sm-6 col-xs-12">#}
-            {#<label class="control-label col-md-3 col-sm-3 col-xs-12">Date de l’entretien professionnel </label>#}
-            {#<div class="col-md-9 col-sm-9 col-xs-12 well well-xs">{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}</div>#}
-        {#</div>#}
-    {#</div>#}
-    {##}
-    {#<br>#}
+    <div class="text-center title-crep">
+        <strong>1. APPRÉCIATION DES RÉSULTATS PROFESSIONNELS</strong><br>
+
+        <br>
+        <strong>1.1 Bilan des objectifs de l’année écoulée</strong><br>
+    </div>
 
 
 
-{#</div>#}
+    <table cellpadding="5" style="font-size: 11px;">
+        <tr class="text-center">
+            <th class="bordered bg-full strong-th" width="37%">Rappel de l’objectif de l’année écoulée assigné à l’agent</th>
+            <th colspan="2" class="bordered bg-full strong-th" width="28%">Degré de réalisation de cet  objectif</th>
+            <th class="bordered bg-full strong-th" width="35%">Commentaires</th>
+        </tr>
 
+        {% if crep.objectifsEvalues | length > 0 %}
 
+            {% for key, objectif in crep.objectifsEvalues %}
+                <tr>
+                    <td rowspan="2" class="bordered" width="37%">{{ objectif.libelle | nl2br }}</td>
+                    <td rowspan="2" class="bordered" width="28%">
+                        
+                        <table class="text-left" cellpadding="2">
+                            <tr>
+                                <td>
+                                    {% if objectif.resultatObtenu == 0 %}
+                                        &#9745;
+                                    {% else %}
+                                        &#9744;
+                                    {% endif %}
+                                    atteint
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% if objectif.resultatObtenu == 1 %}
+                                        &#9745;
+                                    {% else %}
+                                        &#9744;
+                                    {% endif %}
+                                    partiellement atteint
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% if objectif.resultatObtenu == 2 %}
+                                        &#9745;
+                                    {% else %}
+                                        &#9744;
+                                    {% endif %}
+                                    non atteint
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% if objectif.resultatObtenu == 3 %}
+                                        &#9745;
+                                    {% else %}
+                                        &#9744;
+                                    {% endif %}
+                                    devenu sans objet
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="bordered" width="35%">
+                        <table>
+                            <tr>
+                                <td class="text-left">
+                                    <label>selon l’agent</label> :
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    {{ objectif.indicateurs | nl2br }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordered" width="35%">
+                        <table>
+                            <tr>
+                                <td class="text-left">
+                                    <label>selon le supérieur</label> :
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    {{ objectif.resultat | nl2br }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
 
-{#<br/>#}
+        {% else %}
+            {% for i in 0..2 %}
+                <tr>
+                    <td rowspan="2" class="bordered" width="37%"></td>
+                    <td rowspan="2" width="28%" class="bordered-bottom bordered-top bordered-rigth">
+                        <table class="text-left" cellpadding="2">
+                            <tr><td>&nbsp;&#9744;&nbsp;atteint</td></tr>
+                            <tr><td>&nbsp;&#9744;&nbsp;partiellement atteint</td></tr>
+                            <tr><td>&nbsp;&#9744;&nbsp;non atteint</td></tr>
+                            <tr><td>&nbsp;&#9744;&nbsp;devenu sans objet</td></tr>
+                        </table>
+                    </td>
+                    <td class="bordered" width="35%">
+                        selon l’agent :
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bordered" width="35%">
+                        selon le supérieur :
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
 
-{#<h4>4. ACQUIS DE L’EXPÉRIENCE PROFESSIONNELLE</h4>#}
+    <div class="text-center title-crep">
+        <br>
+        <strong>1.2 Appréciation globale sur la réalisation des objectifs de l’année écoulée</strong><br>
+    </div>
 
-{#<table cellpadding="5" style="font-size:10.0pt;">#}
-    {#<tr>#}
-        {#<td style="border:1px #000000 solid;">#}
-            {#{{ crep.acquisExperiencePro | nl2br }}#}
-            {#<br/>#}
-            {#<br/>#}
-        {#</td>#}
-    {#</tr>#}
-{#</table>#}
+    <table cellpadding="5" style="font-size: 11px;" class="bordered">
+        <tr>
+            <td colspan="4">
+                <u>Globalement, les objectifs sont</u> :
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% if crep.contexteResultats == '0' and crep.contexteResultats is not null %}
+                    &#9745;
+                {% else %}
+                    &#9744;
+                {% endif %}
+                <span>atteints</span>
+            </td>
+            <td>
+                {% if crep.contexteResultats == '1' and crep.contexteResultats is not null %}
+                    &#9745;
+                {% else %}
+                    &#9744;
+                {% endif %}
+                <span>partiellement</span>
+            </td>
+            <td>
+                {% if crep.contexteResultats == '2' and crep.contexteResultats is not null %}
+                    &#9745;
+                {% else %}
+                    &#9744;
+                {% endif %}
+                <span>non atteints</span>
+            </td>
+            <td>
+                {% if crep.contexteResultats == '3' and crep.contexteResultats is not null %}
+                    &#9745;
+                {% else %}
+                    &#9744;
+                {% endif %}
+                <span>devenus sans objet</span>
+            </td>
+        </tr>
+        <tr>
+            <td><br></td>
+        </tr>
+    </table>
+    <br><br>
+    <div class="text-center title-crep bordered-top">
+        <strong>2. CRITÈRES D’APPRÉCIATION DE LA VALEUR PROFESSIONNELLE DE L’AGENT</strong><br>
+        
+        <br>
+        <strong>2.1 Critères généraux d’appréciation des agents de la protection judicaire de la jeunesse</strong><br>
+        <em>Dans quelle mesure l’agent a-t-il satisfait aux exigences suivantes ? </em>
+    </div>
+
+    <!-- page 3 -->
+    <div style="page-break-before:always;"></div>
+
+    <table cellpadding="3" style="font-size: 11px;">
+        <tr class="text-center">
+            <th class="bordered strong-th" width="37%" ><em>Niveau d'appréciation</em></th>
+            <th class="bordered strong-th" width="10%">Excellent</th>
+            <th class="bordered strong-th" width="8%">Très bon</th>
+            <th class="bordered strong-th text-center" width="8%">Bon</th>
+            <th class="bordered strong-th" width="13%">Convenable</th>
+            <th class="bordered strong-th" width="12%">Insuffisant</th>
+            <th class="bordered strong-th" width="12%">Très insuffisant</th>
+        </tr>
+        {% for key, competence in crep.competencesJudiciaires %}
+            <tr class="text-center">
+                <td class="bordered" style="text-align: left">{{ competence.libelle }}</td>
+                {% for index in 0..5 %}
+                    {% set niveauAcquis = competence.niveauAcquis|iconCheckReverse(loop.revindex0, 5)|raw %}
+                    {% if niveauAcquis is not empty %}
+                        <td class="bordered">X</td>
+                    {% else %}
+                        <td class="bordered"><br></td>
+                    {% endif %}
+                {% endfor %}
+                {% if key == 0 %}
+                    <td class="text-center">{{ competence.niveauAcquis|iconCheckReverse(loop.revindex0, 5)|raw }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <div class="text-center title-crep">
+        <strong>2.2 Critères d’appréciation propres aux agents ayant des fonctions d’encadrement</strong>
+    </div>
+    <br>
+    <table cellpadding="3" style="font-size: 11px;">
+        <tr class="text-center">
+            <th class="bordered strong-th" width="37%" ><em>Niveau d'appréciation</em></th>
+            <th class="bordered strong-th" width="10%">Excellent</th>
+            <th class="bordered strong-th" width="8%">Très bon</th>
+            <th class="bordered strong-th text-center" width="8%">Bon</th>
+            <th class="bordered strong-th" width="13%">Convenable</th>
+            <th class="bordered strong-th" width="12%">Insuffisant</th>
+            <th class="bordered strong-th" width="12%">Très insuffisant</th>
+        </tr>
+        {% for key, competence in crep.competencesEncadrements %}
+            <tr class="text-center">
+                <td class="bordered" style="text-align: left">{{ competence.libelle }}</td>
+                {% for index in 0..5 %}
+                    {% set niveauAcquis = competence.niveauAcquis|iconCheckReverse(loop.revindex0, 5)|raw %}
+                    {% if niveauAcquis is not empty %}
+                        <td class="bordered">X</td>
+                    {% else %}
+                        <td class="bordered"><br></td>
+                    {% endif %}
+                {% endfor %}
+                {% if key == 0 %}
+                    <td class="text-center">{{ competence.niveauAcquis|iconCheckReverse(loop.revindex0, 5)|raw }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <div class="text-center title-crep">
+        <strong>2.3 Observations sur l’ensemble des critères évalués au 2.1 et/ou 2.2</strong>
+    </div>
+    <br>
+
+    <table cellpadding="2" style="font-size: 11px;" class="bordered">
+        <tr>
+            <td>
+                <u>Observations éventuelles du supérieur hiérarchique direct :</u> :
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left">
+                {% if crep.observationsShd is not null %}
+                    {{ crep.observationsShd | nl2br }}
+                {% else %}
+                    <em>(obligatoires en cas de niveau insuffisant/très insuffisant ou de baisse du niveau d’appréciation)</em>
+                    <br><br><br><br>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <table cellpadding="2" style="font-size: 11px;" class="bordered">
+        <tr>
+            <td>
+                <u>Observations éventuelles de l’agent :</u> :
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% if crep.observationsAgentNotif is not null %}
+                    {{ crep.observationsAgentNotif | nl2br }}
+                {% else %}
+                    <br><br><br><br><br>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <!-- page 4 -->
+    <div style="page-break-before:always;"></div>
+
+    <div class="text-center title-crep bordered-top">
+        <strong>3. OBJECTIFS ASSIGNÉS À L’AGENT POUR L’ANNÉE À VENIR</strong><br>
+        <br>
+    </div>
+    <br>
+    <table cellpadding="2" style="font-size: 11px;" class="bordered">
+        <tr>
+            <td>
+                <strong><u>Rappel des principaux objectifs du service pour l'année à venir </u> (en lien avec le projet de service) :</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% if crep.objectifsService is not null %}
+                    {{ crep.objectifsService | nl2br }}
+                {% else %}
+                    <br><br><br><br><br>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <br><br><br>
+    <table cellpadding="5" style="font-size: 11px;">
+        <tr class="text-center">
+            <th class="bordered strong-th" width="42%">DESCRIPTION DES<br>OBJECTIFS</th>
+            <th class="bordered strong-th" width="24%">DÉLAIS DE RÉALISATION</th>
+            <th class="bordered strong-th" width="34%">MOYENS MIS A DISPOSITION<br>DE L’AGENT</th>
+        </tr>
+        {% if crep.objectifsFuturs is empty %}
+            {% for index in 0..2 %}
+                <tr class="text-left">
+                    <td class="bordered"><br><br><br><br></td>
+                    <td class="bordered"></td>
+                    <td class="bordered"></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            {% for objectif in crep.objectifsFuturs %}
+                <tr class="text-left">
+                    <td class="bordered">{{ objectif.libelle | nl2br }}</td>
+                    <td class="bordered">{{ objectif.echeance | nl2br  }}</td>
+                    <td class="bordered">{{ objectif.indicateurs | nl2br  }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+    <br><br>
+    <div class="text-center title-crep bordered-top">
+        <strong>4. ACQUIS DE L’EXPÉRIENCE PROFESSIONNELLE</strong><br>
+    </div>
+    <div class="text-left">
+        <em>Ils sont appréciés, notamment, par rapport à la fiche de poste et au répertoire des métiers et
+            des<br>compétences.</em>
+    </div>
+    <br>
+    <table cellpadding="2" style="font-size: 11px;" class="bordered">
+        <tr>
+            <td>
+                <u>Les compétences et connaissances acquises sur le poste</u> :
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% if crep.acquisExperiencePro is not null %}
+                    {{ crep.acquisExperiencePro | nl2br }}
+                {% else %}
+                    <br><br><br><br><br>
+                {% endif %}
+            </td>
+        </tr>
+    </table>

@@ -29,7 +29,7 @@ class AppPdf extends TCPDF
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
-        $this->SetFont('helvetica', 'I', 8);
+        //$this->SetFont('helvetica', 'I', 8); // Le font style italic et autres doivent être gérés dans chaque CREP
 
         $this->writeHTML($this->footer);
     }
@@ -102,10 +102,16 @@ class AppPdf extends TCPDF
             $this->footer = '	<small>
     								<table>
 	                    		  		<tr>
-	    						  			<td style="width:20%">NOM : '.$crep->getNomNaissance().'</td>
-	    						  			<td style="width:20%">PRÉNOM : '.$crep->getPrenom().'</td>
-	    						  			<td style="width:40%">CORPS : '.$crep->getCorps().'</td>
-	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+	                    		  			<td style="width:10%;font-size: 9px;">CREP '.
+                $anneeEvaluation.'</td>
+	    						  			<td style="width:20%;font-size: 9px;">NOM : '
+                .$crep->getNomNaissance().'</td>
+	    						  			<td style="width:20%;font-size: 9px;font-style: normal;">Prénom : '.$crep->getPrenom().'</td>
+	    						  			<td style="width:40%;font-size: 9px;font-style: normal;">Corps : '.substr
+                ($crep->getCorps(), 0, 39).'...</td>
+	    									<td style="width:10%;font-size: 9px;font-style: normal;" align="right"> '
+                .$this->getAliasNumPage().'/'
+                .$this->getAliasNbPages().'</td>
 	                    		  		</tr>
             	         			</table>
 	    						</small>';

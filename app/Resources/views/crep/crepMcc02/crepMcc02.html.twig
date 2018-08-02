@@ -103,7 +103,7 @@
                 <h3>COMPTE RENDU</h3>
                 <h3>DE L’ENTRETIEN PROFESSIONNEL</h3>
                 <br>réalisé le : {% if crep.dateVIsaShd is not empty %} {{ crep.dateEntretien | date('d/m/Y') }} {% endif %}
-                <h4>au titre de l’année : {% if crep.dateVIsaShd is not empty %} {{ anneeEvaluee }} {% endif %}</h4>
+                <h4>au titre de l’année : {{ anneeEvaluee }}</h4>
             </div>
         </td>
         <td style="width: 2%"></td>
@@ -354,7 +354,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td width="80%">Partiellement atteint</td>
+                            <td width="80%">Devenu sans objet</td>
                             <td class="bordered-left" width="20%">
                                 {% if objectif.resultatObtenu == 3 %}
                                     &#9745;
@@ -379,7 +379,7 @@
                         <tr><td width="85%">Atteint</td></tr>
                         <tr><td width="85%">Partiellement atteint</td></tr>
                         <tr><td width="85%">Non atteint</td></tr>
-                        <tr><td width="85%">Partiellement atteint</td></tr>
+                        <tr><td width="85%">Devenu sans objet</td></tr>
                     </table>
                 </td>
 
