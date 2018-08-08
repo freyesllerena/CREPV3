@@ -463,7 +463,7 @@ class Agent extends Personne
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $titulaire = true;
+    protected $titulaire;
 
     /**
      * @var \DateTime

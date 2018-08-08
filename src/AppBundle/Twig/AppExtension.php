@@ -14,6 +14,7 @@ use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
 use AppBundle\Entity\Crep\CrepMindef\CrepMindef;
 use AppBundle\Entity\Crep\CrepAc\CrepAc;
 use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
+use AppBundle\Entity\Crep\CrepMinefContract\CrepMinefContract;
 use AppBundle\Entity\Crep\CrepEdd\CrepEdd;
 use AppBundle\Entity\Agent;
 use AppBundle\Entity\PersonneInterface;
@@ -82,6 +83,10 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('selectTypologieFormationCrepMinefAbc', array(
                 $this,
                 'selectTypologieFormationCrepMinefAbc',
+            )),
+            new \Twig_SimpleFilter('selectTypologieFormationCrepMinefContract', array(
+                $this,
+                'selectTypologieFormationCrepMinefContract',
             )),
             new \Twig_SimpleFilter('selectTypologieFormationCrepEdd', array(
                 $this,
@@ -468,6 +473,15 @@ class AppExtension extends \Twig_Extension
         }
 
         return array_flip(CrepMinefAbc::$selectTypologieFormation)[$typologieFormation];
+    }
+
+    public static function selectTypologieFormationCrepMinefContract($typologieFormation)
+    {
+        if (null === $typologieFormation) {
+            return '';
+        }
+
+        return array_flip(CrepMinefContract::$selectTypologieFormation)[$typologieFormation];
     }
 
     public function echelleObjectifEvalueCrepMcc02($objectifEvalue)

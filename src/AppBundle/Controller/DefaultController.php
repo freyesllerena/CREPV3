@@ -31,12 +31,12 @@ class DefaultController extends Controller
         $modele1 = new ModeleCrep();
         $modele1->setActif(1)->setCreePar($this->getUser());
         $modele1->setMinistere($ministere)->setLibelle('Modèle_mindef_01');
-        $modele1->setTypeEntity('AppBundle\Entity\CrepMindef01');
+        $modele1->setTypeEntity('AppBundle\Entity\Crep\CrepMindef01');
 
         $modele2 = new ModeleCrep();
         $modele2->setActif(1)->setCreePar($this->getUser());
         $modele2->setMinistere($ministere)->setLibelle('Modèle_mindef_02');
-        $modele2->setTypeEntity('AppBundle\Entity\CrepMindef01');
+        $modele2->setTypeEntity('AppBundle\Entity\Crep\CrepMindef01');
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($modele1);
@@ -64,7 +64,6 @@ class DefaultController extends Controller
         $metadatas = $em->getMetadataFactory()->getAllMetadata();
         $sqls = $schemaTool->getCreateSchemaSql($metadatas);
 
-        dump($sqls);
         $template = 'vide.html.twig';
 
         return $this->render($template);

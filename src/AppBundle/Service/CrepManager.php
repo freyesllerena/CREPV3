@@ -18,6 +18,7 @@ use AppBundle\Service\ModelesCrep\CrepMindef01Manager;
 use AppBundle\Service\ModelesCrep\CrepAcManager;
 use AppBundle\Service\ModelesCrep\CrepMccManager;
 use AppBundle\Service\ModelesCrep\CrepMinefAbcManager;
+use AppBundle\Service\ModelesCrep\CrepMinefContractManager;
 use AppBundle\Service\ModelesCrep\CrepSclManager;
 use AppBundle\Repository\RecoursRepository;
 use AppBundle\EnumTypes\EnumTypeRecours;
@@ -29,7 +30,7 @@ use AppBundle\Service\ModelesCrep\CrepMj02Manager;
 use AppBundle\Service\ModelesCrep\CrepMj01Manager;
 use AppBundle\Service\ModelesCrep\CrepEddManager;
 use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
-use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
+//use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
@@ -70,6 +71,8 @@ class CrepManager
 
     protected $crepMinefAbcManager;
 
+    protected $crepMinefContractManager;
+
     protected $crepSclManager;
 
     protected $crepMso3Manager;
@@ -87,28 +90,30 @@ class CrepManager
     protected $crepMj02Manager;
 
     public function __construct(
-            EntityManagerInterface $entityManager,
-            TokenStorageInterface $tokenStorage,
-            TCPDFController $tcpdf,
-            CrepConfidentialisationManager $confidentialisationManager,
-    		AppMailer $appMailer,
-            EngineInterface $templating,
-    		SessionInterface $session,
-    		ConstanteManager $constanteManager,
+        EntityManagerInterface $entityManager,
+        TokenStorageInterface $tokenStorage,
+        TCPDFController $tcpdf,
+        CrepConfidentialisationManager $confidentialisationManager,
+        AppMailer $appMailer,
+        EngineInterface $templating,
+        SessionInterface $session,
+        ConstanteManager $constanteManager,
 
-    		CrepMindef01Manager $crepMindef01Manager,
-            CrepAcManager $crepAcManager,
-            CrepMccManager $crepMccManager,
-            CrepMinefAbcManager $crepMinefAbcManager,
-            CrepSclManager $crepSclManager,
-            CrepMso3Manager $crepMso3Manager,
-            CrepMj01Manager $crepMj01Manager,
-            CrepMcc02Manager $crepMcc02Manager,
-            CrepEddManager $crepEddManager,
-            CrepScl02Manager $crepScl02Manager,
-            CrepMj02Manager $crepMj02Manager
-            ) {
-    	
+        CrepMindef01Manager $crepMindef01Manager,
+        CrepAcManager $crepAcManager,
+        CrepMccManager $crepMccManager,
+        CrepMinefAbcManager $crepMinefAbcManager,
+        CrepMinefContractManager $crepMinefContractManager,
+        CrepSclManager $crepSclManager,
+        CrepMso3Manager $crepMso3Manager,
+        CrepMj01Manager $crepMj01Manager,
+        CrepMcc02Manager $crepMcc02Manager,
+        CrepEddManager $crepEddManager,
+        CrepScl02Manager $crepScl02Manager,
+        CrepMj02Manager $crepMj02Manager
+    )
+    {
+
         $this->em = $entityManager;
         $this->tokenStorage = $tokenStorage;
         $this->tcpdf = $tcpdf;
@@ -122,6 +127,7 @@ class CrepManager
         $this->crepAcManager = $crepAcManager;
         $this->crepMccManager = $crepMccManager;
         $this->crepMinefAbcManager = $crepMinefAbcManager;
+        $this->crepMinefContractManager = $crepMinefContractManager;
         $this->crepSclManager = $crepSclManager;
         $this->crepMso3Manager = $crepMso3Manager;
         $this->crepMj01Manager = $crepMj01Manager;
@@ -131,17 +137,18 @@ class CrepManager
         $this->crepMj02Manager = $crepMj02Manager;
 
         $this->modelesCrepManagers = [
-                'CrepMindef01' => $this->crepMindef01Manager,
-                'CrepAc' => $this->crepAcManager,
-                'CrepMcc' => $this->crepMccManager,
-                'CrepMinefAbc' => $this->crepMinefAbcManager,
-                'CrepScl' => $this->crepSclManager,
-                'CrepMso3' => $this->crepMso3Manager,
-                'CrepMj01' => $this->crepMj01Manager,
-                'CrepMcc02' => $this->crepMcc02Manager,
-                'CrepEdd' => $this->crepEddManager,
-                'CrepScl02' => $this->crepScl02Manager,
-                'CrepMj02' => $this->crepMj02Manager,
+            'CrepMindef01' => $this->crepMindef01Manager,
+            'CrepAc' => $this->crepAcManager,
+            'CrepMcc' => $this->crepMccManager,
+            'CrepMinefAbc' => $this->crepMinefAbcManager,
+            'CrepMinefContract' => $this->crepMinefContractManager,
+            'CrepScl' => $this->crepSclManager,
+            'CrepMso3' => $this->crepMso3Manager,
+            'CrepMj01' => $this->crepMj01Manager,
+            'CrepMcc02' => $this->crepMcc02Manager,
+            'CrepEdd' => $this->crepEddManager,
+            'CrepScl02' => $this->crepScl02Manager,
+            'CrepMj02' => $this->crepMj02Manager,
         ];
     }
 
@@ -149,7 +156,7 @@ class CrepManager
     {
         $classe = $modeleCrep->getTypeEntity();
 
-        $classPath = 'AppBundle\Entity\Crep\\'.$classe.'\\'.$classe;
+        $classPath = 'AppBundle\Entity\Crep\\' . $classe . '\\' . $classe;
 
         $crep = new $classPath();
 
@@ -360,13 +367,13 @@ class CrepManager
         $indicateurs['nbCrepRefusVisas'] = $crepRepository->getNbCreps($campagne, $perimetresRlc, $perimetresBrhp, array(EnumStatutCrep::REFUS_VISA_AGENT), $shd, $ah, $categories, $affectations, $corps);
 
         $indicateurs['nbCrepNonRenseignes'] = $indicateurs['nbCrep']
-                                            - $indicateurs['nbCrepSignesShd']
-                                            - $indicateurs['nbCrepVisesAgent']
-                                            - $indicateurs['nbCrepSignesAh']
-                                            - $indicateurs['nbCrepNotifies']
-                                            - $indicateurs['nbCrepRefusNotification']
-                                            - $indicateurs['nbCrepModifieShd']
-                                            - $indicateurs['nbCrepRefusVisas'];
+            - $indicateurs['nbCrepSignesShd']
+            - $indicateurs['nbCrepVisesAgent']
+            - $indicateurs['nbCrepSignesAh']
+            - $indicateurs['nbCrepNotifies']
+            - $indicateurs['nbCrepRefusNotification']
+            - $indicateurs['nbCrepModifieShd']
+            - $indicateurs['nbCrepRefusVisas'];
 
         /************** Statistiques sur les recours **************/
 

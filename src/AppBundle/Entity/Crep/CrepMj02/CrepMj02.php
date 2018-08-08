@@ -357,14 +357,6 @@ class CrepMj02 extends Crep
     protected $motifAbsenceEntretienShd;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="date", nullable=true)
-     * @Assert\DateTime(format="d/m/Y", message = "Date d'entrée dans le poste non valide. Le format attendu est JJ/MM/AAAA")
-     */
-    protected $dateEntretien;
-
-    /**
      * @var string @ORM\Column(type="string")
      * @Assert\Length(
      *    min = 2,
@@ -554,13 +546,16 @@ class CrepMj02 extends Crep
         $this->setDateEntreePosteOccupe($agent->getDateEntreePosteOccupe());
         $this->setCorps($agent->getCorps());
         $this->setGrade($agent->getGrade());
-
+        $this->setDepartement($agent->getDepartement());
+        $this->setDirection($agent->getAffectation());
+        $this->setService($agent->getAffectationClairAgent());
 
         if ($agent->getShd()) {
             $this->setPrenomShd($agent->getShd()->getPrenom());
             $this->setNomNaissanceShd($agent->getShd()->getNomNaissance());
-            $this->setNomMarital($agent->getShd()->getNomMarital());
+            $this->setNomMaritalShd($agent->getShd()->getNomMarital());
             $this->setPosteOccupeShd($agent->getShd()->getPosteOccupe());
+            $this->setDepartementShd($agent->getShd()->getDepartement());
 //            $this->setDateEntreePosteOccupeShd($agent->getShd()->getDateEntreePosteOccupe());
         }
 
@@ -661,16 +656,17 @@ class CrepMj02 extends Crep
         if ($shd) {
             $this
                 ->setNomNaissanceShd($shd->getNomNaissance())
-//                ->setNomMarital($shd->getNomMarital())
-                ->setPrenomShd($shd->getPrenom());
-//                ->setPosteOccupeShd($shd->getPosteOccupe());
-//                ->setAffectationShd($shd->getAffectation());
+                ->setPrenomShd($shd->getPrenom())
+                ->setPosteOccupeShd($shd->getPosteOccupe())
+                ->setServiceShd(null)
+                ->setAffectationShd($shd->getAffectation())
+                ;
         } else {
             $this
                 ->setNomNaissanceShd(null)
-//                ->setPrenomShd(null)
-//                ->setPosteOccupeShd(null)
-//                ->setAffectationShd(null)
+                ->setPrenomShd(null)
+                ->setPosteOccupeShd(null)
+                ->setAffectationShd(null)
             ;
         }
     }
@@ -692,7 +688,7 @@ class CrepMj02 extends Crep
             $appreciationGenerale->setNiveauAcquis(null);
         }
         $this->setDureeEntretien(null);
-
+        $this->setDateEntretien(null);
         $this->setDateVisaShd(null)
             ->setShdSignataire(null);
 
@@ -1149,14 +1145,6 @@ class CrepMj02 extends Crep
     public function getDateEntretien()
     {
         return $this->dateEntretien;
-    }
-
-    /**
-     * @param \DateTime $dateEntretien
-     */
-    public function setDateEntretien($dateEntretien)
-    {
-        $this->dateEntretien = $dateEntretien;
     }
 
     /**

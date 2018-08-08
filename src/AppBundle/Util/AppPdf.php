@@ -9,6 +9,7 @@ use TCPDF_STATIC;
 use AppBundle\Entity\Crep\CrepScl\CrepScl;
 use AppBundle\Entity\Crep\CrepScl02\CrepScl02;
 use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
+use AppBundle\Entity\Crep\CrepMinefContract\CrepMinefContract;
 use AppBundle\Entity\Crep\CrepAc\CrepAc;
 use AppBundle\Entity\Crep\CrepMcc\CrepMcc;
 use AppBundle\Entity\Crep\CrepMso3\CrepMso3;
@@ -36,6 +37,9 @@ class AppPdf extends TCPDF
 
     public function initFooter(Crep $crep, $anneeEvaluation)
     {
+        $contentCordps = (strlen($crep->getCorps())>=39)? substr($crep->getCorps(), 0, 39).'...' : $crep->getCorps();
+        $truncateCorps = ($crep->getCorps())? $contentCordps : null;
+
         if ($crep instanceof CrepMindef01) {
             $this->footer = '<table>
             		  <tr>
@@ -75,6 +79,12 @@ class AppPdf extends TCPDF
                         		      <td style="width:100%" align="right">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
                         		  </tr>
                 	         </table>';
+        } elseif ($crep instanceof CrepMinefContract) { // CrepMinefContract
+            $this->footer = '<table>
+                        		  <tr>
+                        		      <td style="width:100%" align="right">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+                        		  </tr>
+                	         </table>';
         } elseif ($crep instanceof CrepAc) {
             $this->footer = '<table>
                     		  <tr>
@@ -100,15 +110,14 @@ class AppPdf extends TCPDF
 	    						</small>';
         } elseif ($crep instanceof CrepMj02) {
             $this->footer = '	<small>
-    								<table>
+    								<table style="color: grey">
 	                    		  		<tr>
 	                    		  			<td style="width:10%;font-size: 9px;">CREP '.
                 $anneeEvaluation.'</td>
 	    						  			<td style="width:20%;font-size: 9px;">NOM : '
                 .$crep->getNomNaissance().'</td>
 	    						  			<td style="width:20%;font-size: 9px;font-style: normal;">Prénom : '.$crep->getPrenom().'</td>
-	    						  			<td style="width:40%;font-size: 9px;font-style: normal;">Corps : '.substr
-                ($crep->getCorps(), 0, 39).'...</td>
+	    						  			<td style="width:40%;font-size: 9px;font-style: normal;">Corps : '.$truncateCorps.'</td>
 	    									<td style="width:10%;font-size: 9px;font-style: normal;" align="right"> '
                 .$this->getAliasNumPage().'/'
                 .$this->getAliasNbPages().'</td>
@@ -201,6 +210,8 @@ class AppPdf extends TCPDF
 
             $this->header = $htmlHeader;
         } elseif ($crep instanceof CrepMinefAbc) {
+            $this->header = '';
+        } elseif ($crep instanceof CrepMinefContract) {
             $this->header = '';
         } elseif ($crep instanceof CrepAc) {
             $this->header = '';
