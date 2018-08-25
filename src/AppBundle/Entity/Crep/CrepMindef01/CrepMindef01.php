@@ -1601,7 +1601,7 @@ class CrepMindef01 extends Crep
     /**
      * Remove competencesManageriale.
      *
-     * @param \AppBundle\Entity\CrepMindef01CompetenceManageriale $competencesManageriale
+     * @param CrepMindef01CompetenceManageriale $competencesManageriale
      */
     public function removeCompetencesManageriale(CrepMindef01CompetenceManageriale $competencesManageriale)
     {
@@ -1622,9 +1622,9 @@ class CrepMindef01 extends Crep
     /**
      * Add competencesTransverse.
      *
-     * @param \AppBundle\Entity\CrepMindef01CompetenceTransverse $competencesTransverse
+     * @param CrepMindef01CompetenceTransverse $competencesTransverse
      *
-     * @return CrepMindef01
+     * @return $this
      */
     public function addCompetencesTransverse(CrepMindef01CompetenceTransverse $competencesTransverse)
     {
@@ -1637,7 +1637,7 @@ class CrepMindef01 extends Crep
     /**
      * Remove competencesTransverse.
      *
-     * @param \AppBundle\Entity\CrepMindef01CompetenceTransverse $competencesTransverse
+     * @param CrepMindef01CompetenceTransverse $competencesTransverse
      */
     public function removeCompetencesTransverse(CrepMindef01CompetenceTransverse $competencesTransverse)
     {

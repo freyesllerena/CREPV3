@@ -598,7 +598,13 @@
 			</tr>
 			<tr>
 				<th width="12%" style="border:1px #E6E6FF solid;" bgcolor="#E6E6FF">Signature</th>
-				<td width="38%" style="border:1px #E6E6FF solid;" bgcolor="#ffffff"><br/><br/></td>
+				<td width="38%" style="border:1px #E6E6FF solid;" bgcolor="#ffffff">
+                    {% if crep.dateVisaShd %}
+						CREP signé de manière dématérialisée
+                    {% else %}
+						<br/><br/>
+                    {% endif %}
+				</td>
 				<td align="center" width="50%" style="border:1px #E6E6FF solid;" bgcolor="#ffffff">
             		Oui
                 	{% if crep.revisionGracieuse == 1 %}

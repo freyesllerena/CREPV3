@@ -105,9 +105,9 @@ class AutreDomaine
     /**
      * Set crepMindef01.
      *
-     * @param \AppBundle\Entity\CrepMindef01 $crepMindef01
+     * @param CrepMindef01|null $crepMindef01
      *
-     * @return AutreDomaine
+     * @return $this
      */
     public function setCrepMindef01(CrepMindef01 $crepMindef01 = null)
     {
@@ -119,7 +119,7 @@ class AutreDomaine
     /**
      * Get crepMindef01.
      *
-     * @return \AppBundle\Entity\CrepMindef01
+     * @return mixed
      */
     public function getCrepMindef01()
     {

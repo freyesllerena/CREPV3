@@ -171,7 +171,7 @@
                         : {% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}
                     </td>
                     <td colspan="2">
-                        <strong>occupée depuis</strong> <em>(durée en mois / années)</em>
+                        <strong>occupée depuis</strong> <em>(format en mois / années)</em>
                         {% if crep.dateEntreePosteOccupe %}
                             {{ crep.dateEntreePosteOccupe | date('m/Y') }}
                         {% else %}
@@ -667,7 +667,7 @@
 <table cellpadding="2" style="font-size: 11px;" class="bordered">
     <tr>
         <td>
-            <u>Observations éventuelles du supérieur hiérarchique direct :</u> :
+            <u>Observations éventuelles du supérieur hiérarchique direct</u> :
         </td>
     </tr>
     <tr>
@@ -686,13 +686,14 @@
 <table cellpadding="2" style="font-size: 11px;" class="bordered">
     <tr>
         <td>
-            <u>Observations éventuelles de l’agent :</u> :
+            <u>Observations éventuelles de l’agent</u> :
         </td>
     </tr>
     <tr>
         <td>
-            {% if crep.observationsAgentNotif is not null %}
-                {{ crep.observationsAgentNotif | nl2br }}
+            {% if crep.observationsAgentAppreciationsPortees is not null %}
+                {{ crep.observationsAgentAppreciationsPortees | nl2br }}
+                <br><br>
             {% else %}
                 <br><br><br><br><br>
             {% endif %}
@@ -737,7 +738,7 @@
     <tr class="text-center">
         <th class="bordered strong-th" width="42%">DESCRIPTION DES<br>OBJECTIFS</th>
         <th class="bordered strong-th" width="24%">DÉLAIS DE RÉALISATION</th>
-        <th class="bordered strong-th" width="34%">MOYENS MIS A DISPOSITION<br>DE L’AGENT</th>
+        <th class="bordered strong-th" width="34%">MOYENS MIS À DISPOSITION<br>DE L’AGENT</th>
     </tr>
     {% if crep.objectifsFuturs is empty %}
         {% for index in 0..2 %}
@@ -793,7 +794,7 @@
 <table>
     <tr class="text-left">
         <td colspan="6">
-            <label>L’agent souhaite-t-il entreprendre une démarche VAE ?</label>
+            <label>L’agent souhaite-t-il entreprendre une démarche VAE ? (Précisions)</label>
         </td>
     </tr>
     <tr>
@@ -1073,7 +1074,7 @@
 <table class="bordered" cellpadding="5" style="font-size: 11px;">
     <tr>
         <td>
-            <label>Durée de l'entretien </label>
+            <label>Durée de l'entretien :</label>
             {% if crep.refusEntretienProfessionnel %}
                 <i class="fa fa-check-square-o"></i> L'agent <strong>a
                 refusé</strong> de participer à l'entretien professionnel.
@@ -1103,9 +1104,9 @@
                     <td width="76%" style="font-size: 11px;">
                         <br><br><br>
                         <strong>Le supérieur hiérarchique a remis à l’agent le compte rendu de l’entretien</strong><br>
-                        <strong>professionnel :
+                        <strong>professionnel : le
                             {% if crep.dateVisaShd %}
-                                le&nbsp;{{ crep.dateVisaShd|date('d/m/Y H:i') }}
+                                &nbsp;{{ crep.dateVisaShd|date('d/m/Y H:i') }}
                             {% endif %}
                         </strong>
                     </td>
@@ -1400,7 +1401,7 @@
 
 <table class="bordered text-left" cellpadding="5" style="font-size: 12px;">
     <tr>
-        <td>&#9744;&nbsp;Un recours hiérarchique a été</td>
+        <td>&#9744;&nbsp;Un recours hiérarchique a été effectué</td>
     </tr>
     <tr>
         <td>&#9744;&nbsp;Un recours en CAP/ CCP a été effectué.</td>
@@ -1509,7 +1510,7 @@
                         : {% if crep.posteOccupe %}{{ crep.posteOccupe }}{% endif %}
                     </td>
                     <td colspan="2">
-                        <strong>occupée depuis</strong> <em>(durée en mois / années)</em>
+                        <strong>occupée depuis</strong> <em>(format en mois / années)</em>
                         {% if crep.dateEntreePosteOccupe %}
                             {{ crep.dateEntreePosteOccupe | date('m/Y') }}
                         {% else %}
@@ -1588,13 +1589,144 @@
             <strong>Formation(s) suivie(s) et envisagée(s) par l’agent durant l’année écoulée et pour l’année à</strong><br>
             <strong>venir</strong> : <em style="font-size: 10px;">(Indiquer les formations de manière chronologique, les intitulé(s) et leur durée(s)</em><br>
             <br>
-            <span style="font-size: 12px;">L’agent dispose d’un délai de 10 jours francs à partir de la communication du
-                compte rendu<br>
-                d’entretien professionnel pour formuler, le cas échéant, ses observations.</span><br><br>
+            <span style="font-size: 11px;"><strong>T1</strong> : adaptation immédiate au poste de travail (missions
+                actuelles imparties à l’agent)</span><br>
+            <span style="font-size: 11px;"><strong>T2</strong> : adaptation à l’évolution prévisible des métiers (compétences acquises)</span><br>
+            <span style="font-size: 11px;"><strong>T3</strong> : développement des compétences ou acquisition de nouvelles compétences (projet professionnel)</span>
+        </td>
+    </tr>
+</table>
+
+<table class="table table-bordered" border="1" cellpadding="5" style="font-size: 11px;">
+    <tr class="text-left">
+        <th class="bordered bg-full strong-th" colspan="6"><em>Formations demandées durant l’année écoulée</em></th>
+    </tr>
+    <tr class="text-center">
+        <th class="text-center strong-th" width="25%">Intitulé ou thématique de la formation</th>
+        <th class="text-center strong-th" width="15%">Objet de la formation</th>
+        <th class="text-center strong-th" width="15%">Durée de la formation</th>
+        <th class="text-center strong-th" width="15%">Mobilisation du DIF (Oui/Non)</th>
+        <th class="text-center strong-th" width="15%">Cadre de la formation<br>T1, T2 ou T3</th>
+        <th class="text-center strong-th" width="15%">Suivies (oui/non) motifs</th>
+    </tr>
+    
+    {% if  crep.formationsAnneeEcoulee is not empty%}
+        {% for key, formation in crep.formationsAnneeEcoulee %}
+            <tr>
+                <td>{{ formation.libelle }}</td>
+                <td>{{ formation.objectif }}</td>
+                <td>{{ formation.duree }}</td>
+                <td>
+                    {% if 1 == formation.cpf %}
+                        Oui
+                    {% endif %}
+                    {% if 0 == formation.cpf %}
+                        Non
+                    {% endif %}
+                </td>
+                <td>{{ formation.typologie }}</td>
+                <td>
+                    {{ formation.suivie }}
+                    {{ formation.motifNonSuivie }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        {% for index in 0..2 %}
+            <tr>
+                <td><br><br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+<table class="table table-bordered" border="1" cellpadding="5" style="font-size: 11px;">
+    <tr class="text-left">
+        <th class="bordered bg-full strong-th" colspan="6" ><em>Formations demandées pour l’année à venir</em></th>
+    </tr>
+
+    
+    {% if  crep.formationsAnneeAvenir is not empty%}
+        {% for key, formation in crep.formationsAnneeAvenir %}
+            <tr>
+                <td width="25%">{{ formation.libelle }}</td>
+                <td width="15%">{{ formation.objectif }}</td>
+                <td width="15%">{{ formation.duree }}</td>
+                <td width="15%">
+                    {% if 1 == formation.cpf %}
+                        Oui
+                    {% endif %}
+                    {% if 0 == formation.cpf %}
+                        Non
+                    {% endif %}
+                </td>
+                <td width="15%">{{ formation.typologie }}</td>
+                {% if 0 == key %}
+                    <td rowspan="3" width="15%">
+                        {{ formation.suivie }}
+                        {{ formation.motifNonSuivie }}
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    {% else %}
+        {% for index in 0..2 %}
+            <tr>
+                <td width="25%"><br><br></td>
+                <td width="15%"></td>
+                <td width="15%"></td>
+                <td width="15%"></td>
+                <td width="15%"></td>
+                {% if 0 == index %}
+                    <td rowspan="3" width="15%"></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    {% endif %}
+    
+</table>
+
+<table border="1" cellpadding="5" style="font-size: 11px;">
+    <tr>
+        <td>
+            <u style="font-size: 12px;">Observations éventuelles de l’agent :</u><br>
+        </td>
+        <td>
             {% if crep.observationsVisaAgent %}
                 {{ crep.observationsVisaAgent | nl2br }}
             {% else %}
-                <br><br><br><br><br><br><br>
+                <br><br><br><br>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+
+<table class="text-left" border="1" cellpadding="5" style="font-size: 12px;">
+    <tr>
+        <td width="33%"><span>Date de l’entretien de formation et signature de l’agent:</span><br></td>
+        <td width="17%">
+            {% if crep.agent and crep.agent.sansAh and crep.dateVisaShd %}
+                <span style="color: red">L'agent est déclaré comme étant <strong>"sans N+2"</strong>. L'étape de visa de l'agent est donc <strong>supprimée</strong>.</span>
+            {% elseif crep.dateVisaAgent %}
+                CREP signé de manière dématérialisée<br>
+                {{ crep.agent.civilite | title }} {{ crep.prenom | title }} {{ crep.nomNaissance | upper }}
+            {% elseif crep.dateRefusVisa %}
+                <span style="color: red">L'agent a refusé de viser son CREP.</span>
+            {% else %}
+                <br><br>
+            {% endif %}
+        </td>
+        <td width="50%"><br><span>Signature du supérieur hiérarchique direct :</span><br>
+            {% if crep.dateVisaShd %}
+                CREP signé de manière dématérialisée<br>
+                {{ crep.shdSignataire | identite }}<br>
+                le {{ crep.dateVisaShd|date('d/m/Y H:i') }}
+            {% else %}
+                <br><br><br>
             {% endif %}
         </td>
     </tr>

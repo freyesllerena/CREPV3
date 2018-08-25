@@ -175,10 +175,8 @@ class ModeleCrepController extends Controller
 
             // Initialiser un CREP à l'agent
             $crep = $crepManager->creer($agent, $modeleCrepChoisi);
-
             $em->persist($crep);
             $em->flush();
-
             return $this->redirectToRoute('crep_show', ['id' => $crep->getId()]);
         }
 

@@ -397,14 +397,13 @@ class CrepMj02 extends Crep
     /**
      * @var string
      *
-     * @ORM\Column(type="text")
-     *
+     * @ORM\Column(type="text", name="obs_agent_apprec_portees")
      * @Assert\Length(
      *      max = 4096,
      *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
      * )
      */
-    protected $observationsAgentNotif;
+    protected $observationsAgentAppreciationsPortees;
 
     /**
      * @var string
@@ -703,7 +702,6 @@ class CrepMj02 extends Crep
         $this->getObjectifsEvalues()->clear();
         $this->setContexteResultats(null);
         $this->setObservationsShd(null);
-        $this->setObservationsAgentNotif(null);
         $this->setObjectifsService(null);
         $this->setAcquisExperiencePro(null);
         $this->setVae(null);
@@ -724,7 +722,7 @@ class CrepMj02 extends Crep
     public function confidentialisationChampsAgent()
     {
         $this->setObservationsVisaAgent(null);
-        $this->setObservationsAgentNotif(null);
+        $this->setObservationsAgentAppreciationsPortees(null);
 
     }
 
@@ -1220,20 +1218,25 @@ class CrepMj02 extends Crep
     }
 
     /**
+     * Get observationsAgentAppreciationsPortees.
+     *
      * @return string
      */
-    public function getObservationsAgentNotif()
+    public function getObservationsAgentAppreciationsPortees()
     {
-        return $this->observationsAgentNotif;
+        return $this->observationsAgentAppreciationsPortees;
     }
 
     /**
-     * @param $observationsAgentNotif
-     * @return $this
+     * Set observationsAgentAppreciationsPortees.
+     *
+     * @param string $observationsAgentAppreciationsPortees
+     *
+     * @return CrepMj01
      */
-    public function setObservationsAgentNotif($observationsAgentNotif)
+    public function setObservationsAgentAppreciationsPortees($observationsAgentAppreciationsPortees)
     {
-        $this->observationsAgentNotif = $observationsAgentNotif;
+        $this->observationsAgentAppreciationsPortees = $observationsAgentAppreciationsPortees;
 
         return $this;
     }

@@ -149,19 +149,21 @@ class CrepController extends Controller
      */
     public function editAction(Request $request, Crep $crep)
     {
+//     	dump($crep);die;
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::EDIT, $crep);
         $role = $this->get('session')->get('selectedRole');
         $role = strtolower(str_replace('ROLE_', '', $role));
         $editForm = $this->createEditForm($crep);
         $editForm->handleRequest($request);
-
+      
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             if (EnumStatutCrep::CREE == $crep->getStatut()) {
                 $crep->setStatut(EnumStatutCrep::MODIFIE_SHD);
             }
+            
             $em->persist($crep);
             $em->flush();
             $flashbagMessage = 'Le CREP a bien été enregistré !';

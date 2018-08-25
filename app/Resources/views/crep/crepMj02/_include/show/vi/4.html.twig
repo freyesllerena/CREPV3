@@ -30,21 +30,25 @@
                             {% endif %}
                         </td>
                         <td>{{ formation.typologie }}</td>
-                        <td>
-                            {{ formation.suivie }}
-                            {{ formation.motifNonSuivie }}
-                        </td>
+                        {% if 0 == key %}
+                            <td rowspan="3" width="15%">
+                                {{ formation.suivie }}
+                                {{ formation.motifNonSuivie }}
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             {% else %}
                 {% for index in 0..2 %}
                     <tr>
-                        <td><br></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td width="25%"><br><br></td>
+                        <td width="15%"></td>
+                        <td width="15%"></td>
+                        <td width="15%"></td>
+                        <td width="15%"></td>
+                        {% if 0 == index %}
+                            <td rowspan="3" width="15%"></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             {% endif %}

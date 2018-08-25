@@ -104,7 +104,7 @@ class Technique
     /**
      * Set crepMindef01.
      *
-     * @param \AppBundle\Entity\CrepMindef01 $crepMindef01
+     * @param \AppBundle\Entity\Crep\CrepMindef01\ $crepMindef01
      *
      * @return Technique
      */
@@ -118,7 +118,7 @@ class Technique
     /**
      * Get crepMindef01.
      *
-     * @return \AppBundle\Entity\CrepMindef01
+     * @return \AppBundle\Entity\Crep\CrepMindef01\
      */
     public function getCrepMindef01()
     {

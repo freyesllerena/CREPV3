@@ -30,6 +30,7 @@ class CrepMj02AgentType extends AbstractType
 //            ->add('observationsAgentObjectifsEvalues', TextareaType::class, ['required' => false])
             ->add('observationsVisaAgent', null, [
                 'attr' => ['maxlength' => '4096'], ])
+            ->add('observationsAgentAppreciationsPortees', TextareaType::class, ['required' => false])
 //            ->add('observationsAgentProjetProfessionnel', TextareaType::class, [
 //                'attr' => ['maxlength' => '4096'],
 //                'required' => false

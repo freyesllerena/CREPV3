@@ -16,6 +16,7 @@ use AppBundle\Entity\Crep\CrepAc\CrepAc;
 use AppBundle\Entity\Crep\CrepMinefAbc\CrepMinefAbc;
 use AppBundle\Entity\Crep\CrepMinefContract\CrepMinefContract;
 use AppBundle\Entity\Crep\CrepEdd\CrepEdd;
+use AppBundle\Entity\Crep\CrepMso5\CrepMso5;
 use AppBundle\Entity\Agent;
 use AppBundle\Entity\PersonneInterface;
 
@@ -71,6 +72,10 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('echelleObjectifEvalueCrepEdd', array(
                 $this,
                 'echelleObjectifEvalueCrepEdd',
+            )),
+            new \Twig_SimpleFilter('echelleObjectifEvalueCrepMso5', array(
+                $this,
+                'echelleObjectifEvalueCrepMso5',
             )),
             new \Twig_SimpleFilter('echelleNiveauSameCrepMindef01', array(
                 $this,
@@ -446,6 +451,15 @@ class AppExtension extends \Twig_Extension
         }
 
         return array_flip(CrepEdd::$echelleObjectifEvalue)[$objectifEvalue];
+    }
+
+    public function echelleObjectifEvalueCrepMso5($objectifEvalue)
+    {
+        if (null === $objectifEvalue) {
+            return '';
+        }
+
+        return array_flip(CrepMso5::$echelleObjectifEvalue)[$objectifEvalue];
     }
 
     public static function echelleNiveauSameCrepMindef01($niveauSame)

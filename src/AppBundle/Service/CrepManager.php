@@ -23,14 +23,12 @@ use AppBundle\Service\ModelesCrep\CrepSclManager;
 use AppBundle\Repository\RecoursRepository;
 use AppBundle\EnumTypes\EnumTypeRecours;
 use AppBundle\Service\ModelesCrep\CrepMso3Manager;
-use AppBundle\Entity\Crep\CrepMso3\CrepMso3;
+use AppBundle\Service\ModelesCrep\CrepMso5Manager;
 use AppBundle\Service\ModelesCrep\CrepMcc02Manager;
-use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 use AppBundle\Service\ModelesCrep\CrepMj02Manager;
 use AppBundle\Service\ModelesCrep\CrepMj01Manager;
 use AppBundle\Service\ModelesCrep\CrepEddManager;
-use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
-//use AppBundle\Entity\Crep\CrepMindef01\CrepMindef01;
+use AppBundle\Service\ModelesCrep\CrepDgacManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
@@ -52,17 +50,17 @@ class CrepManager
     protected $confidentialisationManager;
 
     protected $appMailer;
-    
+
     protected $templating;
-    
+
     protected $session;
-    
+
     protected $em;
 
     protected $kernelRootDir;
-    
+
     protected $certificat;
-    
+
     protected $crepMindef01Manager;
 
     protected $crepAcManager;
@@ -77,6 +75,8 @@ class CrepManager
 
     protected $crepMso3Manager;
 
+    protected $crepMso5Manager;
+
     protected $modelesCrepManagers;
 
     protected $crepEddManager;
@@ -88,6 +88,8 @@ class CrepManager
     protected $crepScl02Manager;
 
     protected $crepMj02Manager;
+
+    protected $crepDgacManager;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -106,11 +108,13 @@ class CrepManager
         CrepMinefContractManager $crepMinefContractManager,
         CrepSclManager $crepSclManager,
         CrepMso3Manager $crepMso3Manager,
+        CrepMso5Manager $crepMso5Manager,
         CrepMj01Manager $crepMj01Manager,
         CrepMcc02Manager $crepMcc02Manager,
         CrepEddManager $crepEddManager,
         CrepScl02Manager $crepScl02Manager,
-        CrepMj02Manager $crepMj02Manager
+        CrepMj02Manager $crepMj02Manager,
+        CrepDgacManager $crepDgacManager
     )
     {
 
@@ -130,6 +134,7 @@ class CrepManager
         $this->crepMinefContractManager = $crepMinefContractManager;
         $this->crepSclManager = $crepSclManager;
         $this->crepMso3Manager = $crepMso3Manager;
+        $this->crepMso5Manager = $crepMso5Manager;
         $this->crepMj01Manager = $crepMj01Manager;
         $this->crepMcc02Manager = $crepMcc02Manager;
         $this->crepEddManager = $crepEddManager;
@@ -144,6 +149,7 @@ class CrepManager
             'CrepMinefContract' => $this->crepMinefContractManager,
             'CrepScl' => $this->crepSclManager,
             'CrepMso3' => $this->crepMso3Manager,
+            'CrepMso5' => $this->crepMso5Manager,
             'CrepMj01' => $this->crepMj01Manager,
             'CrepMcc02' => $this->crepMcc02Manager,
             'CrepEdd' => $this->crepEddManager,
@@ -451,8 +457,8 @@ class CrepManager
         $pdf->AddPage();
 
         $content = $this->templating->render($template, array(
-                'crep' => $crep,
-                'anneeEvaluee' => $anneeEvaluation,
+            'crep' => $crep,
+            'anneeEvaluee' => $anneeEvaluation,
         ));
 
         $pdf->writeHTML($content, true, false, true, false, '');
@@ -471,10 +477,10 @@ class CrepManager
 
             // informations à mettre dans le fichier PDF
             $info = array(
-                    'Name' => 'Expérimentation ESTEVE V2',
-                    'Location' => 'CISIRH',
-                    'Reason' => 'Expérimentation ESTEVE V2',
-                    'ContactInfo' => 'innovation.cisirh@finances.gouv.fr',
+                'Name' => 'Expérimentation ESTEVE V2',
+                'Location' => 'CISIRH',
+                'Reason' => 'Expérimentation ESTEVE V2',
+                'ContactInfo' => 'innovation.cisirh@finances.gouv.fr',
             );
 
             // signature du document
@@ -511,69 +517,69 @@ class CrepManager
                 exit(); // ce exit() est indispensable pour que le pdf ne soit pas modifié par des entêtes http après sa génération
                 break;
             default:
-                    throw new \Exception('Le paramètre $dist doit être égal à I, F ou D');
+                throw new \Exception('Le paramètre $dist doit être égal à I, F ou D');
         }
     }
 
     /**
      * Methode qui permet d'exporter les CREP PDF sous forme de flux http (stream)
-     * 
+     *
      * @param array $tableauDonneesAgentsCreps tableau qui contient les données agents et creps
      */
     public function exporterCrepsFinalises($tableauDonneesAgentsCreps)
-    {    	
-    	$streamedResponse = new StreamedResponse(function() use($tableauDonneesAgentsCreps)
-    	{
-    		$zip = new ZipStream('Export_CREPs_finalises.zip');
-    		$crepNom = "";
-    		
-    		/* @var $agent Agent */
-    		foreach ($tableauDonneesAgentsCreps as $donneeAgentCrep) {
-    			if ($donneeAgentCrep['crepPapier_path']) {
-    				// CREPs papier
-    				/* @var $crep Crep */
-    				$crep = $this->em->getRepository(Crep::class)->find($donneeAgentCrep['crep_id']);
-    				$crepPath = $crep->getCrepPapier()->getAbsolutePath();
-    				$crepNom = $crep->getPdfFileName();
-    			} else {
-    				// CREPs finalisés dans ESTEVE
-    				$crepPath = __DIR__.'/../../../web/documents/'.$donneeAgentCrep['crepPdf_path'];
-    				$crepNom = $donneeAgentCrep['crepPdf_nom'];
-    			}
-    			
-    			$sousDossier = 'Autre';
-    			
-    			if ($donneeAgentCrep['agent_corps']) {
-    				// remplacement des caractères suivants par "_" : \/:*?"<>|
-    				// explication
-    				// 		[] 		=> tous les caractères entre crochets
-    				// 		\\\\ 	=> le caractère \
-    				// 		\/ 		=> le caractère /
-    				//		:		=> le caractère :
-    				//		*		=> le caractère *
-    				//		?		=> le caractère ?
-    				//		\"		=> le caractère "
-    				//		<		=> le caractère <
-    				//		>		=> le caractère >
-    				//		|		=> le caractère |
-    			
-    				$sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $donneeAgentCrep['agent_corps']);
-    			}
+    {
+        $streamedResponse = new StreamedResponse(function() use($tableauDonneesAgentsCreps)
+        {
+            $zip = new ZipStream('Export_CREPs_finalises.zip');
+            $crepNom = "";
 
-    			try {			
-    				$streamRead = fopen($crepPath, 'r');
-    				$zip->addFileFromStream($sousDossier.'/'.$crepNom, $streamRead);
-    			}catch (ContextErrorException $e ){
-    				// TODO : logger une erreur sur l'ouverture du fichier CREP
-    			}
-    		}
-    		
-    		$zip->finish();
-    	});
-    	
-    	return $streamedResponse;
+            /* @var $agent Agent */
+            foreach ($tableauDonneesAgentsCreps as $donneeAgentCrep) {
+                if ($donneeAgentCrep['crepPapier_path']) {
+                    // CREPs papier
+                    /* @var $crep Crep */
+                    $crep = $this->em->getRepository(Crep::class)->find($donneeAgentCrep['crep_id']);
+                    $crepPath = $crep->getCrepPapier()->getAbsolutePath();
+                    $crepNom = $crep->getPdfFileName();
+                } else {
+                    // CREPs finalisés dans ESTEVE
+                    $crepPath = __DIR__.'/../../../web/documents/'.$donneeAgentCrep['crepPdf_path'];
+                    $crepNom = $donneeAgentCrep['crepPdf_nom'];
+                }
+
+                $sousDossier = 'Autre';
+
+                if ($donneeAgentCrep['agent_corps']) {
+                    // remplacement des caractères suivants par "_" : \/:*?"<>|
+                    // explication
+                    // 		[] 		=> tous les caractères entre crochets
+                    // 		\\\\ 	=> le caractère \
+                    // 		\/ 		=> le caractère /
+                    //		:		=> le caractère :
+                    //		*		=> le caractère *
+                    //		?		=> le caractère ?
+                    //		\"		=> le caractère "
+                    //		<		=> le caractère <
+                    //		>		=> le caractère >
+                    //		|		=> le caractère |
+
+                    $sousDossier = preg_replace('/[\\\\\/:*?\"<>|]/', '_', $donneeAgentCrep['agent_corps']);
+                }
+
+                try {
+                    $streamRead = fopen($crepPath, 'r');
+                    $zip->addFileFromStream($sousDossier.'/'.$crepNom, $streamRead);
+                }catch (ContextErrorException $e ){
+                    // TODO : logger une erreur sur l'ouverture du fichier CREP
+                }
+            }
+
+            $zip->finish();
+        });
+
+        return $streamedResponse;
     }
-    
+
     public function supprimerCrep(Crep $crep)
     {
         $crep->getAgent()->setCrep(null);

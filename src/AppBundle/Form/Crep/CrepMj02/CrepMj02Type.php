@@ -162,10 +162,6 @@ class CrepMj02Type extends CrepType
                 'attr' => ['maxlength' => '4096'],
                 'required' => false
             ])
-            ->add('observationsAgentNotif', TextareaType::class, [
-                'attr' => ['maxlength' => '4096'],
-                'required' => false
-            ])
             ->add('objectifsService', TextareaType::class, [
                 'attr' => ['maxlength' => '4096'],
                 'required' => false

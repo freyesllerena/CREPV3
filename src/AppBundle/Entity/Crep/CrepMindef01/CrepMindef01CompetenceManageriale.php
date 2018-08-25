@@ -84,9 +84,9 @@ class CrepMindef01CompetenceManageriale
     /**
      * Set crepMindef01.
      *
-     * @param \AppBundle\Entity\CrepMindef01 $crepMindef01
+     * @param CrepMindef01|null $crepMindef01
      *
-     * @return CrepMindef01CompetenceManageriale
+     * @return $this
      */
     public function setCrepMindef01(CrepMindef01 $crepMindef01 = null)
     {
@@ -98,7 +98,7 @@ class CrepMindef01CompetenceManageriale
     /**
      * Get crepMindef01.
      *
-     * @return \AppBundle\Entity\CrepMindef01
+     * @return mixed
      */
     public function getCrepMindef01()
     {

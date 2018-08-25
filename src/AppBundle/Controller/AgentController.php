@@ -736,7 +736,6 @@ class AgentController extends Controller
             $modeleCrep = $modelesCrepMinistere[0];
 
             $crep = $crepManager->creer($agent, $modeleCrep);
-
             $em->persist($crep);
             $em->flush();
 

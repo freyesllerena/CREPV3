@@ -139,7 +139,6 @@
 
     <script type="text/javascript">
 
-
         // Evenements motifs Absences:
         // Champs à modifier leurs aspects
         var dateEntretien = $("#crep_mj02_dateEntretien");
@@ -151,7 +150,6 @@
         // Champs marquants l'evenement
         var isAbsence = $("#crep_mj02_refusEntretienProfessionnel");
 
-
         $(document).ready(function() {
             
             // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
@@ -159,25 +157,27 @@
             var crepCollections = new Crep.Collections();
 
             // Titulaire
-            var crep_mj02_corps = $("#crep_mj02_corps");
-            var crep_mj02_grade = $("#crep_mj02_grade");
+            var corps = $("#crep_mj02_corps");
+            var grade = $("#crep_mj02_grade");
+            var titulaireOui = $("#crep_mj02_titulaire_0");
+            var titulaireNon = $("#crep_mj02_titulaire_1");
 
-            if ($("#crep_mj02_titulaire_0") && $("#crep_mj02_titulaire_1")) {
-                if ($("#crep_mj02_titulaire_0").attr('checked')) {
-                    isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
+            if (titulaireOui && titulaireNon) {
+                if (titulaireOui.attr('checked')) {
+                    isCacheBloc(corps, grade, false);
                 } else {
-                    isCacheBloc(crep_mj02_corps, crep_mj02_grade);
+                    isCacheBloc(corps, grade);
                 }
             }
 
-            $("#crep_mj02_titulaire_0").on('ifChanged', function(){
-                isCacheBloc(crep_mj02_corps, crep_mj02_grade, false);
+            titulaireOui.on('ifChanged', function(){
+                isCacheBloc(corps, grade, false);
             });
 
-            $("#crep_mj02_titulaire_1").on('ifChanged', function(){
-                isCacheBloc(crep_mj02_corps, crep_mj02_grade);
-                crep_mj02_corps.val('');
-                crep_mj02_grade.val('');
+            titulaireNon.on('ifChanged', function(){
+                isCacheBloc(corps, grade);
+                corps.val('');
+                grade.val('');
             });
 
             // Activité encadrement
@@ -207,7 +207,6 @@
             });
 
             $("#crep_mj02_activiteEncadrement_1").on('ifChanged', function(){
-
                 isCacheBloc(crep_mj02_nbAgentsEncadres, crep_mj02_nbAgentsEncadresA);
                 isCacheBloc(crep_mj02_nbAgentsEncadresB, crep_mj02_nbAgentsEncadresC);
                 crep_mj02_nbAgentsEncadres.val('');
@@ -268,36 +267,142 @@
                 isAbsenceDiv.addClass('checked');
             }
             
-            // Formation suivie ?
-            var motifNonSuivie = $("#motifNonSuivie");
+            // Formation suivie Oui/Non après saisie en base de données
+            var formationAnneeEcoulee = $("#formationsAnneeEcouleeCollection").find('table').find('tr');
 
-            if ($("#crep_mj02_formationsAnneeEcoulee_0_suivie_0") && $("#crep_mj02_formationsAnneeEcoulee_0_suivie_1")) {
-                if ($("#crep_mj02_formationsAnneeEcoulee_0_suivie_0").attr('checked')) {
-                    isCacheBloc02(motifNonSuivie, false);
-                } else {
-                    isCacheBloc02(motifNonSuivie);
+            for (var i = 0; i < formationAnneeEcoulee.length; i++) {
+                if ( $("#crep_mj02_formationsAnneeEcoulee_"+i+"_suivie_0")) {
+                    if ($("#crep_mj02_formationsAnneeEcoulee_" + i + "_suivie_0").attr('checked')) {
+                        $("#crep_mj02_formationsAnneeEcoulee_" + i + "_motifNonSuivie").parent().parent().find('label').hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_" + i + "_motifNonSuivie").hide();
+                    } else {
+                        $("#crep_mj02_formationsAnneeEcoulee_" + i + "_motifNonSuivie").parent().parent().find('label').show();
+                        $("#crep_mj02_formationsAnneeEcoulee_" + i + "_motifNonSuivie").show();
+                    }
+                }
+                
+                if ($("#crep_mj02_formationsAnneeEcoulee_"+i+"_suivie_1")) {
+                    if ( $("#crep_mj02_formationsAnneeEcoulee_"+i+"_suivie_1").attr('checked')) {
+                        $("#crep_mj02_formationsAnneeEcoulee_"+i+"_motifNonSuivie").parent().parent().find('label').show();
+                        $("#crep_mj02_formationsAnneeEcoulee_"+i+"_motifNonSuivie").show();
+                    } else {
+                        $("#crep_mj02_formationsAnneeEcoulee_"+i+"_motifNonSuivie").parent().parent().find('label').hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_"+i+"_motifNonSuivie").hide();
+                    }
                 }
             }
 
+            // Formation suivie Oui/Non après saisie en base de données et evenements Oui/Non
+            // 0
             $("#crep_mj02_formationsAnneeEcoulee_0_suivie_0").on('ifChanged', function(){
-                isCacheBloc02(motifNonSuivie);
-                motifNonSuivie.val('');
-            });
-
-            $("#crep_mj02_formationsAnneeEcoulee_0_suivie_1").on('ifChanged', function(){
-                isCacheBloc02(motifNonSuivie, false);
-            });
-            
-            //Fonction permettant de cacher ou non un bloc selon un choix de button radio
-            function isCacheBloc02(id1, isHide = true){
-
-                if (isHide) {
-
-                }else {
-
+                if ($("#crep_mj02_formationsAnneeEcoulee_0_suivie_0")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_0_suivie_0"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_0_motifNonSuivie").hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_0_motifNonSuivie").val('');
+                    }
                 }
-            }
+            });
+            $("#crep_mj02_formationsAnneeEcoulee_0_suivie_1").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_0_suivie_1")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_0_suivie_1"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_0_motifNonSuivie").show();
+                    }
+                }
+            });
+            // 1
+            $("#crep_mj02_formationsAnneeEcoulee_1_suivie_0").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_1_suivie_0")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_1_suivie_0"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_1_motifNonSuivie").hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_1_motifNonSuivie").val('');
+                    }
+                }
+            });
+            $("#crep_mj02_formationsAnneeEcoulee_1_suivie_1").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_1_suivie_1")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_1_suivie_1"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_1_motifNonSuivie").show();
+                    }
+                }
+            });
+            // 2
+            $("#crep_mj02_formationsAnneeEcoulee_2_suivie_0").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_2_suivie_0")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_2_suivie_0"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_2_motifNonSuivie").hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_2_motifNonSuivie").val('');
+                    }
+                }
+            });
+            $("#crep_mj02_formationsAnneeEcoulee_2_suivie_1").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_2_suivie_1")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_2_suivie_1"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_2_motifNonSuivie").show();
+                    }
+                }
+            });
+            // 3
+            $("#crep_mj02_formationsAnneeEcoulee_3_suivie_0").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_3_suivie_0")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_3_suivie_0"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_3_motifNonSuivie").hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_3_motifNonSuivie").val('');
+                    }
+                }
+            });
+            $("#crep_mj02_formationsAnneeEcoulee_3_suivie_1").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_3_suivie_1")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_3_suivie_1"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_3_motifNonSuivie").show();
+                    }
+                }
+            });
+            // 4
+            $("#crep_mj02_formationsAnneeEcoulee_4_suivie_0").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_4_suivie_0")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_4_suivie_0"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_4_motifNonSuivie").hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_4_motifNonSuivie").val('');
+                    }
+                }
+            });
+            $("#crep_mj02_formationsAnneeEcoulee_4_suivie_1").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_4_suivie_1")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_4_suivie_1"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_4_motifNonSuivie").show();
+                    }
+                }
+            });
+            // 5
+            $("#crep_mj02_formationsAnneeEcoulee_5_suivie_0").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_5_suivie_0")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_5_suivie_0"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_5_motifNonSuivie").hide();
+                        $("#crep_mj02_formationsAnneeEcoulee_5_motifNonSuivie").val('');
+                    }
+                }
+            });
+            $("#crep_mj02_formationsAnneeEcoulee_5_suivie_1").on('ifChanged', function(){
+                if ($("#crep_mj02_formationsAnneeEcoulee_5_suivie_1")) {
+                    var isChack0 = radioUnchecked($("#crep_mj02_formationsAnneeEcoulee_5_suivie_1"));
+                    if (isChack0 == undefined) {
+                        $("#crep_mj02_formationsAnneeEcoulee_5_motifNonSuivie").show();
+                    }
+                }
+            });
 
+            
             // Format date mois
             $('#crep_mj02_dateEntreePosteOccupe').datetimepicker({
                 viewMode: 'years',
@@ -305,7 +410,8 @@
                 locale: 'fr'
             });
         });
-
+        
+        
         /** absence de l'agent * */
         isAbsence.on('ifChanged', function(){
             statusCheckbox = isAbsence.parent().prevObject[0].checked;
@@ -453,7 +559,6 @@
          * @param {String} containerCollection est votre balise ou id qui contient le data-prototype
          */
         function CollectionsMj02 () {
-
             var collectionsPrototypes = $('div.row[data-prototype]');
             var collectionCount = collectionsPrototypes.length, i;
 
@@ -612,8 +717,6 @@
                 }
             });
         }
-
-
 
     </script>
 {% endblock javascripts %}

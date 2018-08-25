@@ -17,6 +17,8 @@ use AppBundle\Entity\Crep\CrepMj01\CrepMj01;
 use AppBundle\Entity\Crep\CrepMcc02\CrepMcc02;
 use AppBundle\Entity\Crep\CrepEdd\CrepEdd;
 use AppBundle\Entity\Crep\CrepMj02\CrepMj02;
+use AppBundle\Entity\Crep\CrepDgac\CrepDgac;
+use AppBundle\Entity\Crep\CrepMso5\CrepMso5;
 
 class AppPdf extends TCPDF
 {
@@ -37,9 +39,6 @@ class AppPdf extends TCPDF
 
     public function initFooter(Crep $crep, $anneeEvaluation)
     {
-        $contentCordps = (strlen($crep->getCorps())>=39)? substr($crep->getCorps(), 0, 39).'...' : $crep->getCorps();
-        $truncateCorps = ($crep->getCorps())? $contentCordps : null;
-
         if ($crep instanceof CrepMindef01) {
             $this->footer = '<table>
             		  <tr>
@@ -109,21 +108,20 @@ class AppPdf extends TCPDF
             	         			</table>
 	    						</small>';
         } elseif ($crep instanceof CrepMj02) {
-            $this->footer = '	<small>
-    								<table style="color: grey">
-	                    		  		<tr>
-	                    		  			<td style="width:10%;font-size: 9px;">CREP '.
-                $anneeEvaluation.'</td>
-	    						  			<td style="width:20%;font-size: 9px;">NOM : '
-                .$crep->getNomNaissance().'</td>
-	    						  			<td style="width:20%;font-size: 9px;font-style: normal;">Prénom : '.$crep->getPrenom().'</td>
-	    						  			<td style="width:40%;font-size: 9px;font-style: normal;">Corps : '.$truncateCorps.'</td>
-	    									<td style="width:10%;font-size: 9px;font-style: normal;" align="right"> '
-                .$this->getAliasNumPage().'/'
-                .$this->getAliasNbPages().'</td>
-	                    		  		</tr>
-            	         			</table>
-	    						</small>';
+            $contentCordps = (strlen($crep->getCorps()) >= 39) ? substr($crep->getCorps(), 0, 39) . '...' : $crep->getCorps();
+            $truncateCorps = ($crep->getCorps()) ? $contentCordps : null;
+            $this->footer =
+                '<small>
+                    <table style="color: grey">
+                        <tr>
+                            <td style="width:10%;font-size: 9px;">CREP ' . $anneeEvaluation . '</td>
+                            <td style="width:20%;font-size: 9px;">NOM : ' . $crep->getNomNaissance() . '</td>
+                            <td style="width:20%;font-size: 9px;font-style: normal;">Prénom : ' . $crep->getPrenom() . '</td>
+	    					<td style="width:40%;font-size: 9px;font-style: normal;">Corps : ' . $truncateCorps . '</td>
+	    					<td style="width:10%;font-size: 9px;font-style: normal;" align="right">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
+	                    </tr>
+            	    </table>
+            	 </small>';
         } elseif ($crep instanceof CrepMcc02) {
             $this->footer = '
     								<table>
@@ -148,6 +146,16 @@ class AppPdf extends TCPDF
 	                    		  		</tr>
             	         			</table>
 	    						';
+        } elseif ($crep instanceof CrepDgac) {
+            $this->footer = '
+    								<table>
+	                    		  		<tr>
+	    									<td align="right" style="font-size: large">'.$this->getAliasNumPage().'</td>
+	                    		  		</tr>
+            	         			</table>
+	    						';
+        } elseif ($crep instanceof CrepMso5) {
+            $this->footer = '';
         } else {
             $this->footer = ' <font color="red">Footer à définir dans AppBundle\Util\AppPdf.php</font>';
         }
@@ -161,7 +169,7 @@ class AppPdf extends TCPDF
         if ($crep instanceof CrepMindef01) {
             $this->header = '';
 
-        // set default header data
+            // set default header data
         } elseif ($crep instanceof CrepMcc) {
             $this->header = '';
         } elseif ($crep instanceof CrepScl) { // CrepScl
@@ -227,6 +235,25 @@ class AppPdf extends TCPDF
             $this->header = '';
         } elseif ($crep instanceof CrepMj02) {
             $this->header = '';
+        } elseif ($crep instanceof CrepDgac) {
+            $htmlHeader = '<small>
+    								<table>
+	                    		  		<tr>
+	    						  			<td style="width:20%">Nom : '.$crep->getNomUsage().'</td>
+	    						  			<td style="width:20%">Prénom : '.$crep->getPrenom().'</td>
+	    						  			<td style="width:40%">Corps : '.$crep->getCorps().'</td>
+ 	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+	                    		  		</tr>
+            	         			</table>
+	    						</small>';
+
+            $this->header = $htmlHeader;
+        } elseif ($crep instanceof CrepMso5) {
+            $this->header = '<table>
+            		  <tr align="right">
+            		      <td>'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+            		  </tr>
+            	  </table>';
         } else {
             $this->header = ' <font color="red">Header à définir dans AppBundle\Util\AppPdf.php</font>';
         }

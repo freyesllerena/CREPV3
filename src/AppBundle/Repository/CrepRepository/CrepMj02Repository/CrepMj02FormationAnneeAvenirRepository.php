@@ -26,7 +26,12 @@ class CrepMj02FormationAnneeAvenirRepository extends \Doctrine\ORM\EntityReposit
             ->addSelect('crep.dateNotification as c_dateNotification, crep.dateRefusNotification as c_dateRefusNotification')
 
             ->addSelect('formation.libelle as f_libelle')
-            ->addSelect('formation.commentaires as f_commentaires')
+            ->addSelect('formation.objectif as f_objectif')
+            ->addSelect('formation.duree as f_duree')
+            ->addSelect('formation.cpf as f_cpf')
+            ->addSelect('formation.typologie as f_typologie')
+            ->addSelect('formation.suivie as f_suivie')
+            ->addSelect('formation.motifNonSuivie as f_motifNonSuivie')
             ->addSelect('formation.demandeeAgent as f_demandeeAgent, formation.avisShd as f_avisShd, formation.propositionAh as f_propositionAh, formation.echeance as f_echeance ')
             ->innerJoin('formation.crep', 'crep')
 
