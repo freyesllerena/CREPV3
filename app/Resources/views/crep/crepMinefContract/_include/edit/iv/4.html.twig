@@ -1,0 +1,22 @@
+{% if crep.statut == constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_AH')
+    or (crep.agent.sansAh and crep.statut == constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD'))
+%}
+
+    {% if crep.statut == constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_AH') %}
+    	{% set class = 'champMisEnEvidence' %}
+    {% else %}
+    	{% set class = '' %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Observations</dt>
+                <dd>{{ form_widget(form.observationsVisaAgent, {'attr': {'maxlength': '4096', 'class':class}}) }}</dd>
+            </dl>
+        </div>
+    </div>
+    
+{% else %}
+	{% include 'crep/crepMinefContract/_include/show/iv/4.html.twig' %}
+{% endif %}

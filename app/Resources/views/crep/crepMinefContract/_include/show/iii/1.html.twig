@@ -1,0 +1,61 @@
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<strong>{% if crep.souhaitEvolutionCarriere %}
+				<input type="checkbox" class="flat" disabled="disabled" checked="checked">
+			{% else %}
+				<input type="checkbox" class="flat" disabled="disabled">
+			{% endif %}
+			Souhait d'évolution de carrière</strong> <i>(projet professionnel, promotion envisagée, souhait d’accéder à un poste de chef de secteur, d’adjoint, de chef de mission...)</i>
+		<br>
+		{% if crep.souhaitEvolutionCarriere %}
+			<br>
+			<p class="well well-xs">{{ crep.typeEvolutionCarriere|nl2br }}</p>
+		{% endif %}
+	</div>
+</div>
+
+<br>
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<strong>{% if crep.souhaitMobilite %}
+				<input type="checkbox" class="flat" disabled="disabled" checked="checked">
+			{% else %}
+				<input type="checkbox" class="flat" disabled="disabled">
+			{% endif %}
+			Souhait de mobilité</strong> <i>(souhait de mobilité fonctionnelle, géographique...)</i>
+		<br>
+		{% if crep.souhaitMobilite %}
+			<br>
+			<p class="well well-xs">{{ crep.typeMobilite|nl2br }}</p>
+		{% endif %}
+	</div>
+</div>
+
+<br>
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<strong>{% if crep.souhaitEntretienCarriere %}
+				<input type="checkbox" class="flat" disabled="disabled" checked="checked">
+			{% else %}
+				<input type="checkbox" class="flat" disabled="disabled">
+			{% endif %}
+			Souhait de l’agent de bénéficier d'un entretien pour évoquer ses perspectives de carrière et de mobilité</strong>
+		<br><br>
+
+		{% if crep.souhaitEntretienCarriere %}
+
+            <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+    	    	<strong><input type="checkbox" class="flat" disabled="disabled" checked="checked">{{ crep.typeEntretienCarriere | typeEntretienFilter }}</strong>
+            </div>
+            <br><br>
+			<div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        		<p class="title">Coordonnées <i>(mail, tel...)</i></p>
+        		<p class="well well-xs">{{ crep.coordonneesEntretien|nl2br }}</p>
+            </div>
+		{% endif %}
+	</div>
+</div>
+
+<br>

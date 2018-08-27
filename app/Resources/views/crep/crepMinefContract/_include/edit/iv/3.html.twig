@@ -1,0 +1,19 @@
+{% form_theme form 'crep/crepMinefContract/Form/collections.form.html.twig' %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Observations</dt>
+            <dd>{{ form_widget(form.observationsAh, {'label':false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <dt>Qualité (N+2)</dt>
+            <dd>{{ form_widget(form.qualiteAh, {'label': false,'attr': {'maxlength': '4096', 'class':'champMisEnEvidence'}}) }}</dd>
+        </dl>
+    </div>
+</div>

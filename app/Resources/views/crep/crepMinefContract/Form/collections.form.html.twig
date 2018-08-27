@@ -1,0 +1,91 @@
+{% use "Form/App_bootstrap_3_horizontal_layout.html.twig" %}
+
+
+{% block _crep_minef_contract_objectifsEvalues_entry_widget %}
+    <tr>
+        <td>{{ form_row(form.libelle, {'attr': {'maxlength': '4096'}}) }}</td>
+        <td>{{ form_row(form.resultat, {'attr': {'maxlength': '4096'}}) }}</td>
+        <td class="text-center">
+            <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block _crep_minef_contract_objectifsFuturs_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'attr': {'maxlength': '4096'}}) }}
+        </td>
+        <td>
+            {{ form_row(form.observationsEventuelles, {'attr': {'maxlength': '4096'}}) }}
+        </td>
+        <td class="text-center">
+            <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+        </td>
+    </tr>
+{% endblock %}
+
+
+{% block _crep_minef_contract_formationsSuivies_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+        </td>
+        <td class="text-center">
+            <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block _crep_minef_contract_formationsDemandeesAgent_entry_widget %}
+    <tr>
+        <td>
+            {{ form_row(form.priorite) }}
+        </td>
+
+        <td>
+            {{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+        </td>
+
+        <td>
+            {{ form_row(form.typologie, {'label':false, 'attr': {'class': 'fieldCollection eligible-dif'} }) }}
+        </td>
+
+        <td class="text-center">
+            {{ form_row(form.dif, {'label':false, 'attr': {'class': 'fieldCollection iCheckCollection dif'}}) }}
+        </td>
+
+        <td class="text-center">
+            <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block form_errors -%}
+    {% spaceless %}
+        {% if errors|length > 0 -%}
+            <div class="has-error">
+                {%- for error in errors -%}
+                    <div class="col-sm-12">
+                        <label class="control-label has-error" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+                    </div>
+                {%- endfor -%}
+
+            </div>
+        {%- endif -%}
+    {% endspaceless %}
+{%- endblock form_errors %}
+
+{% block _crep_minef_contract_competencesTransverses_entry_widget %}
+    {% for child in form.niveauAcquis.children %}
+        <td class="text-center">{{ form_row(child, {'label': false, 'attr': {'class': 'iCheckCollection '}}) }}</td>
+    {% endfor %}
+{% endblock %}
+
+{% block form_group_class -%}
+    {% if label == false %}
+        col-md-12 col-sm-12 col-xs-12
+    {% else %}
+        col-md-9 col-sm-9 col-xs-12
+    {% endif %}
+{% endblock form_group_class %}

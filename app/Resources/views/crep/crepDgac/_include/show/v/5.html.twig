@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th style="width: 30%"></th>
+					<th style="width: 7.5%" class="text-center">FAIBLE</th>
+					<th style="width: 7.5%" class="text-center">MOYEN</th>
+					<th style="width: 7.5%" class="text-center">FORT</th>
+					<th style="width: 7.5%" class="text-center">EXCELLENT</th>
+					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for competenceSynthese in crep.competencesSyntheses %}
+				<tr>
+					<td>{{ competenceSynthese.libelle }}</td> {% for index in 0..3 %}
+					<td class="text-center">{{
+						competenceSynthese.niveauRequis|iconCheck(loop.index0)|raw }}</td> {%
+					endfor %}
+					<td>{{ competenceSynthese.appreciation|nl2br }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+

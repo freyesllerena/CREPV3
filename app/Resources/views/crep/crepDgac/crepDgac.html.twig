@@ -1,0 +1,847 @@
+<style>
+    .text-center {
+        text-align: center;
+    }
+
+    .bordered {
+        border: 1px #000000 solid;
+    }
+
+    .bg-full {
+        background-color: #E9E9E9;
+    }
+
+    ul.demo {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        border: 1px solid black;
+    }
+
+    th {
+        border: 1px solid black;
+        font-size: 10px;
+    }
+
+    .radiobuttonchecked {
+        width: 5px;
+        height: 50px;
+        border: 1px yellow solid;
+        /*background-color:#880000;color:white;*/
+    }
+
+    td {
+        font-size: 8px;
+    }
+
+    .fullbordered {
+        border-left: 1px #000000 solid;
+        border-right: 1px #000000 solid;
+        border-top: 1px #000000 solid;
+        border-bottom: 1px #000000 solid;
+    }
+
+    .bordered-left {
+        border-left: 1px #000000 solid;
+    }
+
+    .bordered-top {
+        border-top: 1px #000000 solid;
+    }
+
+    .bordered-bottom {
+        border-bottom: 1px #000000 solid;
+    }
+
+    .bordered-right {
+        border-right: 1px #000000 solid;
+    }
+
+</style>
+
+
+<!-- page 1 -->
+
+<table>
+    <tr>
+        <th colspan="2">AGENT</th>
+        <th colspan="2">SUPERIEUR HIERARCHIQUE</th>
+    </tr>
+    <tr>
+        <td width="15%">Nom :</td>
+        <td width="35%" class="bordered-right">{{ crep.nomUsage | upper }}</td>
+        <td width="15%">Nom :</td>
+        <td width="35%">{{ crep.nomUsageShd | upper }}</td>
+    </tr>
+    <tr>
+        <td>Prénom :</td>
+        <td class="bordered-right">{{ crep.prenom | title }}</td>
+        <td>Prénom :</td>
+        <td>{{ crep.prenomShd | title }}</td>
+    </tr>
+    <tr>
+        <td>Corps :</td>
+        <td class="bordered-right">{{ crep.corps | title }}</td>
+        <td>Fonction :</td>
+        <td>{{ crep.fonctionExerceeShd | title }}</td>
+    </tr>
+    <tr>
+        <td>Grade :</td>
+        <td class="bordered-right">{{ crep.grade | title }}</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Matricule :</td>
+        <td class="bordered-right">{{ crep.matricule | title }}</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table><br><br>
+
+<font size="+2">
+    <div class="text-center">
+        <strong>
+            DIRECTION GENERALE DE L'AVIATION CIVILE<br>
+        </strong>
+        <br>
+        <strong>
+            COMPTE-RENDU DE L’ENTRETIEN PROFESSIONNEL<br>
+            REGARDS SUR L'ANNEE EVALUEE<br>
+            ANNEE : {{ crep.agent.campagnePnc.anneeEvaluee }}
+        </strong>
+    </div>
+</font><br><br>
+
+<div class="col-md-6 col-sm-6 col-xs-12">
+    Date de l'entretien :{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}<br><br>
+    Nom du Service : {{ crep.service }}<br>
+    Intitulé du poste : {{ crep.posteOccupe }}<br>
+</div>
+
+<font size="-2">
+    <table>
+        <strong>LE CONTEXTE</strong> <i>(politique, environnement, organisation, moyens, coopération interne ou externe,
+            etc...)</i><br>
+        {{ crep.contexteAnneeEcoulee|nl2br }}<br><br><br><br>
+    </table>
+    <br><br>
+
+    <table>
+        <tr>
+            <th class="text-center"><strong>MISSIONS ET ACTIVITÉS</strong></th>
+            <th class="text-center"><strong>ÉLÉMENTS OBSERVÉS</strong></th>
+        </tr>
+        <tr>
+            <td class="bordered-right">➔ Quelles sont les principales contributions attendues sur le poste ?<br>
+                {{ crep.descriptionPosteMission|nl2br }}</td>
+            <td><u>Par le supérieur hiérarchique :</u><br>
+                <i>La fiche de poste reflète-t-elle cette réalité ? Le contenu du poste a-t-il subi des modifications
+                    depuis le dernier entretien ? Contraintes liées au poste, à l'organisation, etc...</i><br>
+                {{ crep.elementsObservesShd|nl2br }}<br><br><u>Par l'agent :</u><br><i>La fiche de poste reflète-t-elle
+                    cette réalité ? Le contenu du poste a-t-il
+                    subi des modifications depuis le dernier entretien ? Contraintes liées au poste, à l'organisation,
+                    etc...</i><br>
+                {{ crep.elementsObservesAgent|nl2br }}</td>
+            <br><br>
+        </tr>
+    </table>
+</font><br><br>
+
+{#<font size="+1">#}
+<u><strong>COMPOSANTES DU POSTE :</strong></u>
+{#</font>#}
+<br><br>
+
+<font size="-2">
+    <table>
+        <tr>
+            <th class="text-center" width="25%"><strong>COMPOSANTES</strong></th>
+            <th class="text-center" width="15%"><strong>COMPOSANTE FAIBLE</strong></th>
+            <th class="text-center" width="15%"><strong>COMPOSANTE MOYENNE</strong></th>
+            <th class="text-center" width="15%"><strong>COMPOSANTE DOMINANTE</strong></th>
+            <th class="text-center" width="30%"><strong>OBSERVATIONS</strong></th>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">Activités ou compétences énoncées dans la fiche
+                de poste : détailler<br></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">Organisationnelle (du travail, de l'activité,
+                de réunion, d'agendas...)<br></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">Travail en équipe<br></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">Management<br></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">Conduite de projet<br></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid black;">Autres...<br></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px solid black;"></td>
+        </tr>
+    </table>
+</font><br>
+
+<!-- page 2 -->
+
+<div style="page-break-before:always;"></div>
+<table>
+    <tr>
+        <th><i>A - ATTEINTE DES OBJECTIFS ET ACTIONS CONDUITES</i></th>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th class="text-center"><strong>ÉLÉMENTS PRÉVUS</strong></th>
+        <th class="text-center"><strong>ÉLÉMENTS OBSERVÉS</strong></th>
+    </tr>
+    <tr>
+        <td height="100%" class="bordered-right"><strong>Objectifs
+                permanents</strong><br><br>{{ crep.elementsPermanents|nl2br }}
+            <br><br><strong>Objectifs particuliers</strong><br><br>{{ crep.elementsParticuliers|nl2br }}</td>
+        <td><u>Par le supérieur hiérarchique :</u><br>Quels sont les réalisations et les résultats obtenus par l'agent ?<br>{{ crep.resultatsObtenusParAgent|nl2br }}
+            <br><br>Y a-t-il des dossiers marquants non définis initialement (dans les objectifs de l'année écoulée
+            et/ou dans
+            la fiche de poste) dans lesquels l'agent s'est investi ?<br>{{ crep.resultatAutresActivites|nl2br }}<br><br><i>Difficultés
+                particulières (éventuelles)</i><br>{{ crep.obsShdObjectifsEvalues|nl2br }}<br><br></td>
+    </tr>
+    <tr>
+        <td height="0%"></td>
+        <td><u>Par l'agent :</u><br>Quels sont les réalisations et les résultats obtenus par l'agent
+            ?<br>{{ crep.resultatsObtenusParAgent|nl2br }}
+            <br><br>Y a-t-il des dossiers marquants non définis initialement (dans les objectifs de l'année écoulée
+            et/ou dans
+            la fiche de poste) dans lesquels l'agent s'est investi ?<br>{{ crep.resultatAutresActivites|nl2br }}<br><br><i>Difficultés
+                particulières (éventuelles)</i><br>{{ crep.obsShdObjectifsEvalues|nl2br }}<br><br></td>
+    </tr>
+</table>
+
+<!-- page 3 -->
+
+<div style="page-break-before:always;"></div>
+
+<font size="+2">
+    <table>
+        <tr>
+            <th><i>B - CONTRIBUTIONS AUX COMPETENCES COLLECTIVES ET AU FONCTIONNEMENT DU SERVICE</i></th>
+        </tr>
+    </table>
+</font><br><br>
+<font size="-2">
+    Formation reçue/donnée, participation au développement des compétences et connaissances, capacité à créer une
+    dynamique de groupe, capacité à s’insérer dans un groupe
+    (cf. guides de l’évalué ou du compte rendu) , force de proposition, communication, participation à des groupes de
+    travail stratégiques, vie sociale, intérim…
+</font><br><br>
+<table>
+    <tr>
+        <th class="text-center"><strong>ÉLÉMENTS PRÉVUS</strong></th>
+        <th class="text-center"><strong>ÉLÉMENTS OBSERVÉS</strong></th>
+    </tr>
+    <tr>
+        <td height="100%" class="bordered-right">{{ crep.obsCompetencesRequises|nl2br }}<br></td>
+        <td><u>Par le supérieur hiérarchique :</u><br>{{ crep.elementsObsCompShd|nl2br }}<br><br></td>
+    </tr>
+    <tr>
+        <td height="0%"></td>
+        <td><u>Par l'agent :</u>{{ crep.elementsObsCompAgent|nl2br }}<br><br></td>
+    </tr>
+</table><br><br>
+
+Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
+
+
+<!-- page 4 -->
+
+<div style="page-break-before:always;"></div>
+
+<font size="+3">
+    <table>
+        <tr>
+            <th><i>C – APPRÉCIATION DES CONNAISSANCES ET COMPÉTENCES PROFESSIONNELLES</i></th>
+        </tr>
+    </table>
+</font><br><br>
+
+<u>Degré d'acquisitions au regard des besoins sur le poste :</u><br><br>
+
+<table>
+    <tr>
+        <th class="text-center" width="25%"><strong>COMPOSANTES</strong></th>
+        <th class="text-center" width="15%"><strong>À DÉVELOPPER</strong></th>
+        <th class="text-center" width="15%"><strong>EN COURS D'ACQUISITION</strong></th>
+        <th class="text-center" width="15%"><strong>MAITRISÉE</strong></th>
+        <th class="text-center" width="30%"><strong>OBSERVATIONS</strong></th>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Activités ou compétences énoncées dans la fiche
+            de poste : détailler<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Organisationnelle (du travail, de l'activité,
+            de réunion, d'agendas...)<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Travail en équipe<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Management<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Conduite de projet<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Autres...<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+</table><br><br>
+
+<u>Pour les agents en situation de management :</u><br><br>
+
+<table>
+    <tr>
+        <th width="25%"></th>
+        <th class="text-center" width="21%">À DÉVELOPPER</th>
+        <th class="text-center" width="21%">MAÎTRISÉ</th>
+        <th class="text-center" width="33%">OBSERVATIONS</th>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Sens du travail en équipe<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Capacité à encadrer, déléguer, assurer le suivi des dossiers<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Aptitude à former des collaborateurs<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Aptitude aux responsabilités/prise de décision<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Sens de l'organisation<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Aptitude à la communication interne et externe<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Aptitude à la négociation/la médiation<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Sens des relations humaines<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+</table><br><br>
+
+<u>Synthèse sur la manière de servir :</u><br><br>
+
+<table>
+    <tr>
+        <th></th>
+        <th class="text-center" width="14%"><strong>FAIBLE</strong></th>
+        <th class="text-center" width="14%"><strong>MOYEN</strong></th>
+        <th class="text-center" width="14%"><strong>FORT</strong></th>
+        <th class="text-center" width="14%"><strong>EXCELLENT</strong></th>
+        <th class="text-center" width="30%"><strong>OBSERVATIONS</strong></th>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Maîtrise des techniques, des dossiers<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Efficacité<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Respect des délais<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Adaptation aux situations nouvelles<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Esprit d'initiative<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Implication<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+    <tr>
+        <td style="border: 1px solid black;">Autres qualités à mettre en évidence : citer<br></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+        <td style="border: 1px solid black;"></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th>Appréciaton générale :{{ crep.appreciationGenerale|nl2br }}</th>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th colspan="2">AGENT</th>
+        <th colspan="2">SUPERIEUR HIERARCHIQUE</th>
+    </tr>
+    <tr>
+        <td width="15%">Nom :</td>
+        <td width="35%" class="bordered-right">{{ crep.nomUsage | upper }}</td>
+        <td width="15%">Nom :</td>
+        <td width="35%">{{ crep.nomUsageShd | upper }}</td>
+    </tr>
+    <tr>
+        <td>Prénom :</td>
+        <td class="bordered-right">{{ crep.prenom | title }}</td>
+        <td>Prénom :</td>
+        <td>{{ crep.prenomShd | title }}</td>
+    </tr>
+    <tr>
+        <td>Corps :</td>
+        <td class="bordered-right">{{ crep.corps | title }}</td>
+        <td>Fonction :</td>
+        <td>{{ crep.fonctionExerceeShd | title }}</td>
+    </tr>
+    <tr>
+        <td>Grade :</td>
+        <td class="bordered-right">{{ crep.grade | title }}</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Matricule :</td>
+        <td class="bordered-right">{{ crep.matricule | title }}</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table><br><br>
+
+<!-- page 5 -->
+
+<div style="page-break-before:always;"></div>
+
+<font size="+2" class="text-center">
+    ENTRETIEN PROFESSIONNEL ANNEE 2017<br>
+    <strong>POUR L’ANNEE SUIVANTE 2018</strong>
+</font><br><br>
+
+<div class="col-md-6 col-sm-6 col-xs-12">
+    Date de l'entretien :{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}<br><br>
+    Nom du Service : {{ crep.service }}<br>
+    Intitulé du poste : {{ crep.posteOccupe }}<br>
+</div><br>
+
+<table>
+    <tr>
+        <th>CONTEXTE PRÉVISIBLE DE L'ANNÉE SUIVANTE<span style="font-size: 8px"><i>(politique, environnement, organisation, moyens, coopération interne
+                    ou externe, etc)</i></span>
+        </th>
+    </tr>
+    <tr>
+        <td>{{ crep.contextePrevisibleAnnee|nl2br }}<br><br></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th><i>A - OBJECTIFS</i></th>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th class="text-center">RÉSULTATS ATTENDUS</th>
+    </tr>
+    <tr>
+        <td>Objectifs permanents :<br><br>{{ crep.objectifsPermanentsAvenir|nl2br }}<br></td>
+    </tr>
+    <tr>
+        <td>Objectifs particuliers :<br><br>{{ crep.objectifsParticuliersAvenir|nl2br }}<br></td>
+    </tr>
+</table>
+
+<!-- page 6 -->
+
+<div style="page-break-before:always;"></div>
+
+<table>
+    <tr>
+        <th><i>B - CONTRIBUTIONS AUX COMPÉTENCES COLLECTIVES</i></th>
+    </tr>
+</table><br>
+
+<font size="8px">Pour les formations à recevoir, remplir obligatoirement la feuille prévue à cet effet (page
+    annexe).</font><br><br>
+
+<table>
+    <tr>
+        <th class="text-center">CONTRIBUTIONS PRÉVUES</th>
+    </tr>
+    <tr>
+        <td>{{ crep.contributionsCompPrevues|nl2br }}<br><br><br></td>
+    </tr>
+    <tr>
+        <td><strong><u>PERSPECTIVES D'ÉVOLUTION PROFESSIONNELLE :</u></strong><br><br></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <td class="bordered-right"><strong>Avis du supérieur hiérarchique sur les perspectives d'évolution<br><br><u>Mobilité
+                    professionnelle
+                    et/ou géographique :</u><br>{{ crep.mobilite|nl2br }}<br><br><u>Aptitude constatée à exercer des
+                    responsabilités supérieures :</u><br>{{ crep.priseDeResponsabilites|nl2br }}<br><br></strong></td>
+        <td><strong>Souhaits de l'agent sur les perspectives d'évolution<br>{{ crep.typeEvolutionCarriere|nl2br }}
+            </strong></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th colspan="13">Mobilité souhaitée par l'agent <font color="red">(boutons radios)</font></th>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="15"></td>
+        <td width="3%"></td>
+        <td width="26.6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="16%"></td>
+        <td width="3%"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="6%" class="bordered-right">&nbsp;Oui</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="15%">&nbsp;Dès que possible</td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="14%" class="bordered-right">&nbsp;Dans 2 ans</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="16%">&nbsp;Au sein du service</td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="25%" class="bordered-right">&nbsp;Dans le département (DDE, SN…)</td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="15"></td>
+        <td width="3%"></td>
+        <td width="26.6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="16%"></td>
+        <td width="3%"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="6%" class="bordered-right">&nbsp;Non</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="15%">&nbsp;Dans 1 an</td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="14%" class="bordered-right">&nbsp;Dans 3 ans ou +</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="16%">&nbsp;Hors inter région</td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="25%" class="bordered-right">&nbsp;Dans inter région (CIFP…)</td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="15"></td>
+        <td width="3%"></td>
+        <td width="26.6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="16%"></td>
+        <td width="3%"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="15"></td>
+        <td width="3%"></td>
+        <td width="26.6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="16%">&nbsp;Région</td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="25%" class="bordered-right">&nbsp;International</td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="6%"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="15"></td>
+        <td width="3%"></td>
+        <td width="26.6%" class="bordered-right"></td>
+        <td width="3%"></td>
+        <td width="3%"></td>
+        <td width="16%"></td>
+        <td width="3%"></td>
+        <td></td>
+    </tr>
+</table><br><br>
+
+NB : Il est rappelé que les agents qui le souhaitent peuvent évoquer ces questions en rencontrant un conseiller mobilité carrière.
+<i>(Plus d'informations sur Bravo Victor/vie pratique/mobilité)</i><br><br>
+
+Perspectives :<br>
+<table>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="21%">&nbsp;Temps partiel</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="20%">&nbsp;Disponibilité</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="20%">&nbsp;Détachement</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="21%">&nbsp;Congés de formation</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="20%">&nbsp;Concours</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="20%">&nbsp;CPA</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="21%">&nbsp;Retraite</td>
+        <td width="3%"></td>
+        <td width="3%" style="font-size: 4px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="20%">&nbsp;Autres</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <td style="font-size: 10px">Compte rendu notifié* à l'agent le :</td>
+    </tr>
+</table>
+
+<!-- page 7 -->
+
+<div style="page-break-before:always;"></div>
+
+<font size="+1">
+    <div class="text-center">
+        <strong>OBSERVATIONS ET SIGNATURES</strong>
+    </div>
+</font>
+
+(*l'agent dispose d'un délai de 10 jours à partir de la notification de ce compte rendu pour mettre ses observations et le signer)<br><br>
+
+<table>
+    <tr>
+        <th>
+            <strong>Observations de l'agent</strong>
+        </th>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td><br><br></td>
+    </tr>
+</table>

@@ -1,0 +1,31 @@
+{% form_theme form 'crep/crepMso5/Form/collections.form.html.twig' %}
+
+<div class="row" id="formationsT3Collection" data-prototype="{{ form_widget(form.formationsT3.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 55%" class="text-center">Formations liées au développement des qualifications ou l’acquisition de nouvelles qualifications  (T3)</th>
+                    <th style="width: 10%" class="text-center">Demande de l’agent (*)</th>
+                    <th style="width: 15%" class="text-center">Avis favorable du respon-sable hiérarchique (*)</th>
+                    <th style="width: 10%" class="text-center">Recours au CPF(*)</th>
+                    <th style="width: 10%" class="text-center">Échéance (année N, N +1)</th>
+                    <th width="5%" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for formation in form.formationsT3 %}
+                    {{ form_widget(formation) }}
+                {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsT3 pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

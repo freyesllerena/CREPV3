@@ -1,0 +1,15 @@
+{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_6.html.twig' %}
+
+<div class="row">{{ form_row(form.nomUsage, { 'label': "Nom" }) }} {{
+	form_row(form.prenom, { 'label': "Prénom" }) }}</div>
+
+
+<div class="row">{{ form_row(form.corps, { 'label': "Corps" }) }} {{
+	form_row(form.grade, { 'label': "Grade" }) }}</div>
+
+<div class="row">{{ form_row(form.matricule, { 'label': "Matricule" })
+	}} {{ form_row(form.service, { 'label': "Nom de service" }) }}</div>
+<div class="row">{{ form_row(form.posteOccupe, { 'label': "Intitulé du
+	poste" }) }}</div>
+
+<br>

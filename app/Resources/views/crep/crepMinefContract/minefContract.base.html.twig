@@ -1,0 +1,247 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block content %}
+
+<div class="crep">
+
+	<div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+            <div class="x_panel panel_green" >
+                <div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>IDENTIFICATION DE L'AGENT</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-down"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Situation de l’agent au 31 décembre {{ crep.agent.campagnePnc.anneeEvaluee }} </h3>
+
+                        {% block i01 %}
+                        {% endblock i01 %}
+
+                        <h3>2. Tenue de l’entretien professionnel</h3>
+
+                        {% block i02 %}
+                        {% endblock i02 %}
+                        
+                        <h3>3. Fonctions exercées</h3>
+
+                        {% block i03 %}
+                        {% endblock i03 %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>I - BILAN DE L'ANNÉE ÉCOULÉE</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Résultats professionnels obtenus en {{ crep.agent.campagnePnc.anneeEvaluee }} au regard des objectifs assignés et des conditions d’organisation et de fonctionnement du service</h3>
+
+                        {% block i1 %}
+                        {% endblock i1 %}
+
+                        <h3>2. Acquis de l’expérience professionnelle <i><small style="font-size: 13px">(à compléter par le supérieur hiérarchique direct)</small></i></h3>
+
+                        {% block i2 %}
+                        {% endblock i2 %}
+                        
+                        <h3>3. Pour les agents exerçant des fonctions d’encadrement</h3>
+
+                        {% block i3 %}
+                        {% endblock i3 %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green">
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>II - OBJECTIFS POUR L'ANNÉE {{ crep.agent.campagnePnc.anneeEvaluee+1 }}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            	
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Objectifs assignés pour l’année {{ crep.agent.campagnePnc.anneeEvaluee+1 }} et perspectives d’amélioration des résultats professionnels <small style="font-size: 13px">(en tenant compte si nécessaire des perspectives d’évolution des conditions d’organisation et de fonctionnement du service)</small></h3>
+
+                        {% block ii1 %}
+                        {% endblock ii1 %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel panel_green" >
+            	<div class="x_title collapse-link" style="cursor:pointer">
+                    <h2>III - PERSPECTIVES PROFESSIONNELLES</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="x_content row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h3>1. Perspectives d’évolution professionnelle en termes de carrière et de mobilité</h3>
+
+                        {% block iii1 %}
+                        {% endblock iii1 %}
+
+                        {% block iii1AvecCommentaireAgent %}
+                        	<h3>Commentaire de l'agent</h3>
+                        	
+                        	{% block iii1_commentaireAgent %}
+                            {% endblock iii1_commentaireAgent %}
+                            
+                        {% endblock iii1AvecCommentaireAgent %}
+                        
+                        <h3>2. Besoins de formation</h3>
+
+                        {% block iii2 %}
+                        {% endblock iii2 %}
+                        
+                        <h3>3. Formations à envisager</h3>
+
+                        {% block iii3 %}
+                        {% endblock iii3 %}
+                        
+                        <h3>4. Commentaire éventuel de l'agent relatif à ses besoins de formation</h3>
+    
+                        {% block iii4 %}
+                        {% endblock iii4 %}
+                        
+                        <h3>5. Autres points abordés lors de l’entretien</h3>
+
+                        {% block iii5 %}
+                        {% endblock iii5 %}
+                        
+                        <h3>6. Appréciation de la valeur professionnelle de l’agent</h3>
+
+                        {% block iii6 %}
+                        {% endblock iii6 %}
+                        
+                        
+{#                         Partie à décommenter pour la campagne de 2019#}
+
+{#                         <h3>7. Proposition d’attribution de réductions / majorations d’ancienneté <small style="font-size: 13px">(hors agents à l’échelon terminal de leur grade)</small></h3>#}
+
+{#                         <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">#}
+{#                         	<b><u>Attention</u></b> : A ne renseigner que pour les personnels appartenant aux corps des adjoints administratifs, adjoints techniques et ingénieurs-adjoints.<br>#}
+{# 						</p>#}
+						
+{#                         {% block iii7 %}#}
+{#                         {% endblock iii7 %}#}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block circuitDeValidation %}
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                	<div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>IV - CIRCUIT DE VALIDATION</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Signature du supérieur hiérarchique direct ayant conduit l'entretien professionnel (N+1)</h3>
+    
+                            {% block iv1 %}
+                            {% endblock iv1 %}
+    
+                            <h3>2. Expression et visa de l'agent</h3>
+    
+    	                    {% block iv2 %}
+                            {% endblock iv2 %}
+    
+                            <h3>3. Observations et visa de l'autorité hiérarchique (N+2)</h3>
+    
+                            {% block iv3 %}
+                            {% endblock iv3 %}
+    
+                            <h3>4. Observations et signature de l'agent<sup>2</sup></h3>
+    
+                            {% block iv4 %}
+                            {% endblock iv4 %}
+    
+                  			<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                  				<strong><sup>1</sup></strong> : En cas de désaccord sur le contenu du compte-rendu, il est préférable d’effectuer 
+                  				sans attendre une demande facultative de révision gracieuse du compte-rendu auprès du supérieur hiérarchique qui 
+                  				a réalisé l’entretien d’évaluation. L’agent dispose de quinze jours après communication par l’évaluateur du 
+                  				compte-rendu pour demander cette révision gracieuse. Sous réserve de laisser une trace écrite, les modalités de 
+                  				cette demande sont libres. Il ne s’agit en aucun cas d’un préalable indispensable à l’exercice des voies de recours 
+                  				mentionnées ci-après.
+                  				
+    							<br/><br/>
+    							
+    							<strong><sup>2</sup></strong> : La signature atteste que l’entretien a bien eu lieu et que l’agent a pris connaissance 
+      						   	de son contenu ainsi que des observations portées, le cas échéant, par l’autorité hiérarchique mais ne vaut 
+      						   	pas approbation.
+      						   	
+      						   	<br/><br/>
+    							
+                  				<strong><sup>3</sup></strong> : En cas de désaccord sur le contenu du compte-rendu, l’autorité hiérarchique (N+2) peut 
+                  				être saisie d’une demande de révision du compte-rendu dans un délai de quinze jours francs à compter de la 
+                  				date de notification à l’agent du  compte-rendu de l’entretien. L’autorité hiérarchique notifie sa réponse 
+                  				dans un délai de quinze jours francs à compter de la date de réception de la demande de révision du compte-rendu 
+                  				de l’entretien professionnel. Ce recours hiérarchique est un préalable indispensable à la saisine de la CAP 
+                  				qui peut se faire dans un délai d’un mois à compter de la date de notification de la réponse formulée par 
+                  				l’autorité hiérarchique dans le cadre du recours.
+                			</p>
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock circuitDeValidation %}
+    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+        <span align="center"><b>Mention droits d'accès aux fichiers et libertés</b></span>
+        <br/>
+        <span>« Les informations ci-dessus font l’objet d’une saisie informatique et d’un traitement automatisé de données à
+            caractère personnel. Conformément à la loi n° 78-17 du 6 janvier 1978 modifiée relative à l’informatique,
+            aux fichiers et aux libertés, ce traitement a été déclaré à la commission nationale de l’informatique et des
+            libertés. Les droits d’accès et de rectification prévus aux articles 39 et 40 de la loi précitée s’exercent
+            auprès du directeur du centre ministériel de gestion ou du sous-directeur de la gestion des personnels relevant
+            de l’administration centrale. »</span>
+    </p>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}

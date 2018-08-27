@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 50%" class="text-center">Objectifs d’ordre individuel</th>
+                <th style="width: 35%" class="text-center">Analyse des résultats et enseignements tirés</th>
+                <th style="width: 15%" class="text-center">Réalisation</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% if crep.objectifsEvaluesIndividuels is not empty %}
+                {% for objectif in crep.objectifsEvaluesIndividuels %}
+                    <tr>
+                        <td>{{ objectif.libelle|nl2br }}</td>
+                        <td>{{ objectif.resultat|nl2br }}</td>
+                        <td class="text-center">{{ objectif.resultatObtenu|echelleObjectifEvalueCrepMso5 }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 50%" class="text-center">Objectifs d’ordre collectif</th>
+                <th style="width: 35%" class="text-center">Analyse des résultats et enseignements tirés</th>
+                <th style="width: 15%" class="text-center">Réalisation</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% if crep.objectifsEvaluesCollectifs is not empty %}
+
+                {% for objectif in crep.objectifsEvaluesCollectifs %}
+                    <tr>
+                        <td>{{ objectif.libelle|nl2br }}</td>
+                        <td>{{ objectif.resultat|nl2br }}</td>
+                        <td class="text-center">{{ objectif.resultatObtenu|echelleObjectifEvalueCrepMso5 }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 50%" class="text-center">Autres objectifs</th>
+                <th style="width: 35%" class="text-center">Analyse des résultats et enseignements tirés</th>
+                <th style="width: 15%" class="text-center">Réalisation</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% if crep.autresObjectifsEvalues is not empty %}
+                {% for autreObjectif in crep.autresObjectifsEvalues %}
+                    <tr>
+                        <td>{{ autreObjectif.libelle|nl2br }}</td>
+                        <td>{{ autreObjectif.resultat|nl2br }}</td>
+                        <td class="text-center">{{ autreObjectif.resultatObtenu|echelleObjectifEvalueCrepMso5 }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

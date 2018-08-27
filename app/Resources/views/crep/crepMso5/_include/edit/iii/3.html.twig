@@ -1,0 +1,87 @@
+{% form_theme form 'crep/crepMso5/Form/collections.form.html.twig' %}
+
+<div class="row" id="objectifsFutursIndividuelsCollection"
+     data-prototype="{{ form_widget(form.objectifsFutursIndividuels.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 40%">Objectifs futurs d’ordre individuel<span
+                            style="color:red;">&nbsp;*</span></th>
+                <th style="width: 38%" class="text-center">Commentaires (résultats attendus, nature de l’objectif, moyens et appui nécessaires, échéance…)</th>
+                <th style="width: 6%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in form.objectifsFutursIndividuels %}
+                {{ form_widget(objectif) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link CrepMso5ObjectifsFutursIndividuels pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<div class="row" id="CrepMso5ObjectifsFutursCollectifsCollection"
+     data-prototype="{{ form_widget(form.objectifsFutursCollectifs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 38%" class="text-center">Objectifs futurs d’ordre collectif<span style="color:red;">&nbsp;*</span></th>
+                <th style="width: 38%" class="text-center">Commentaires (résultats attendus, nature de l’objectif, moyens et appui nécessaires, échéance…)</th>
+                <th style="width: 6%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in form.objectifsFutursCollectifs %}
+                {{ form_widget(objectif) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link CrepMso5OjectifsFutursCollectifs pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<div class="row" id="autresObjectifsFutursCollection"
+     data-prototype="{{ form_widget(form.autresObjectifsFuturs.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 40%">Autres objectifs futurs<span
+                            style="color:red;">&nbsp;*</span></th>
+                <th style="width: 38%" class="text-center">Commentaires (résultats attendus, nature de l’objectif, moyens et appui nécessaires, échéance…)</th>
+                <th style="width: 6%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectif in form.autresObjectifsFuturs %}
+                {{ form_widget(objectif) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link CrepmMso5AutresObjectifsFuturs pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

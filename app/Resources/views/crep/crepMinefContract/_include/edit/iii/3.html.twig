@@ -1,0 +1,41 @@
+{% form_theme form 'crep/crepMinefContract/Form/collections.form.html.twig' %}
+
+<div class="row" id="formationsDemandeesAgentCollection" data-prototype="{{ form_widget(form.formationsDemandeesAgent.vars.prototype)|e('html_attr') }}">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+            	<th nowrap class="text-center" width="95px">Priorité</th>
+            	<th width="400px">Intitulé de la formation</th>
+                <th>Type d’actions de formation</th>
+                <th class="text-center">CPF</th>
+                <th width="85px" class="text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formation in form.formationsDemandeesAgent %}
+                {{ form_widget(formation, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_link formationsDemandeesAgent pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>
+
+<br/>
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <p class="title">Autre (préparation aux concours ou examens professionnels, vae, bilan de compétences) </p>
+            {{ form_row(form.autresBesoinsFormation,{'label':false,'attr': {'maxlength': '4096'}}) }}
+        </dl>
+    </div>
+</div>

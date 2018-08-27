@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>Intitulé du poste</dt>
+            <dd class="well well-xs">
+                {% if crep.posteOccupeAgent %}{{ crep.posteOccupeAgent }}{% endif %}
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>Fonctions confiées à l'agent</dt>
+            <dd class="well well-xs">
+                {% if crep.fonctionsExercees %}{{ crep.fonctionsExercees }}{% endif %}
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="m-t-md">
+            <dt>Position dans la structure</dt>
+            <dd class="well well-xs">
+                {% if crep.postionDansStructure %}{{ crep.postionDansStructure }}{% endif %}
+            </dd>
+        </dl>
+    </div>
+</div>
+
+
+

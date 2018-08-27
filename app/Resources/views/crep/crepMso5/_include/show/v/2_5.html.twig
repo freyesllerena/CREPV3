@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 55%" class="text-center">Autres actions (VAE, bilan de compétence, congé de
+                    formation)
+                </th>
+                <th style="width: 10%" class="text-center">Demande de l'agent <strong>(*)</strong></th>
+                <th style="width: 15%" class="text-center">Avis du responsable hiérarchique <strong>(*)</strong></th>
+                <th style="width: 10%" class="text-center">Recours au CPF<strong>(*)</strong></th>
+                <th style="width: 10%" class="text-center">Échéance
+                    <small>(Année N, N+1)</small>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if  crep.formationsAutres is empty %}
+                {% for i in 0..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for formation in crep.formationsAutres %}
+                    <tr>
+                        <td>
+                            {{ formation.libelle }}
+                        </td>
+                        <td class="text-center">
+                            {{ formation.demandeeAgent|ouiNon }}
+                        </td>
+                        <td class="text-center">
+                            {{ formation.avisShd|ouiNon }}
+                        </td>
+                        <td class="text-center">
+                            {{ formation.cpf|ouiNon }}
+                        </td>
+                        <td class="text-center">
+                            {{ formation.echeance }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

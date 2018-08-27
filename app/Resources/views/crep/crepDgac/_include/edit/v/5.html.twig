@@ -1,0 +1,27 @@
+{% form_theme form 'crep/crepDgac/Form/collections.form.html.twig' %}
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th style="width: 30%"></th>
+					<th style="width: 7.5%" class="text-center">FAIBLE</th>
+					<th style="width: 7.5%" class="text-center">MOYEN</th>
+					<th style="width: 7.5%" class="text-center">FORT</th>
+					<th style="width: 7.5%" class="text-center">EXCELLENT</th>
+					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for competenceSynthese in form.competencesSyntheses %}
+				<tr>
+					<td>{{ crep.competencesSyntheses[loop.index0].libelle }}</td> {{
+					form_widget(competenceSynthese) }}
+				</tr>
+				{% endfor %}
+			</tbody>
+
+		</table>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th style="width: 30%"></th>
+					<th style="width: 10%" class="text-center">COMPOSANTE FAIBLE</th>
+					<th style="width: 10%" class="text-center">COMPOSANTE MOYENNE</th>
+					<th style="width: 10%" class="text-center">COMPOSANTE DOMINANTE</th>
+					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for composantePoste in crep.composantesPostes %}
+				<tr>
+					<td>{{ composantePoste.libelle }}</td> {% for index in 0..2 %}
+					<td class="text-center">{{
+						composantePoste.niveauRequis|iconCheck(loop.index0)|raw }}</td> {%
+					endfor %}
+					<td>{{ composantePoste.appreciation|nl2br }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>

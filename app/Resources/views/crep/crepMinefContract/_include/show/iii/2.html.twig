@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Libellé de la formation suivie au cours de l'année écoulée</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for formationSuivie in crep.formationsSuivies %}
+                <tr>
+                    <td>{{ formationSuivie.libelle | nl2br }}</td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<br/>

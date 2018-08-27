@@ -1,0 +1,229 @@
+{% extends "crep/crep.base.html.twig" %} {% block content %}
+
+<div class="crep">
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>IDENTIFICATION DES PARTIES PRENANTES</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-down"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<h3>1. Identification de l’agent</h3>
+
+						{% block i01 %} {% endblock i01 %}
+
+						<h3>2. Identification de l'évaluateur</h3>
+
+						{% block i02 %} {% endblock i02 %}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>I – CONTEXTE</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-up"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<h3>1. Le contexte</h3>
+
+						{% block i1 %} {% endblock i1 %} <br>
+
+						<h3>2. Missions et activités</h3>
+						{% block i2 %} {% endblock i2 %} <br>
+
+						<h3>3. Eléments observés</h3>
+						{% block i3 %} {% endblock i3 %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>II – COMPOSANTE DU POSTE</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-up"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">{% block ii1 %} {%
+						endblock ii1 %} {% block ii2 %} {% endblock ii2 %}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>III – ATTEINTES DES OBJECTIFS ET ACTIONS CONDUITES</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-up"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<h3>1. Elements prévus</h3>
+
+						{% block iii1 %} {% endblock iii1 %} <br>
+						<h3>2. Elements observés</h3>
+
+						{% block iii2 %} {% endblock iii2 %}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>IV – CONTRIBUTIONS AUX COMPÉTENCES COLLECTIVES ET AU
+						FONCTIONNEMENT DU SERVICE</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-up"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<i class="fa fa-info-circle" aria-hidden="true"></i> <i> Formation
+							reçue/donnée, participation au développement des compétences et
+							connaissances, capacité à créer une dynamique de groupe, capacité
+							à s'insérer dans un groupe (cf. guides de l'évalué ou du compte
+							rendu), force de proposition, communication, participation à des
+							groupes de travail stratégiques, vie sociale, intérim, etc.</i>
+					</div>
+				</div>
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<h3>1. Elements prévus</h3>
+
+						{% block iv1 %} {% endblock iv1 %} <br>
+						<h3>2. Elements observés</h3>
+
+						{% block iv2 %} {% endblock iv2 %}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>V – APPRÉCIATION DES CONNAISSANCES ET COMPÉTENCES
+						PROFESSIONNELLES</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-up"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+					<h3>1. Degré d'acquisition au regard des besoins sur le poste :</h3>
+					{% block v1 %} {% endblock v1 %} <br>
+					{% block v2 %} {% endblock v2 %}<br>
+					<h3>2. Pour les agents en situation de management :</h3>
+					{% block v3 %} {% endblock v3 %}<br>
+					{% block v4 %} {% endblock v4 %}<br>
+					<h3>3. Synthèse sur la manière de servir :</h3>
+					{% block v5 %} {% endblock v5 %}<br>
+					{% block v6 %} {% endblock v6 %}<br>
+					<h3>4. Appréciation générale :</h3>
+					{% block v7 %} {% endblock v7 %}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>VI – ENTRETIEN PROFESSIONNEL ANNÉE 2017 - OBJECTIFS POUR l'ANNÉE SUIVANTE 2018</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-up"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<h3>1. Contexte prévisible de l'année suivante</h3>
+						{% block vi1 %} {% endblock vi1 %} <br>
+						
+						<h3>2. Objectifs </h3>
+						{% block vi2 %} {% endblock vi2 %} <br>
+						
+						<h3>3. Contribution aux compétences collectives </h3>
+										<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<i class="fa fa-info-circle" aria-hidden="true"></i> <i> Pour les formations à recevoir, remplis obligatoirement la feuille prévue à cet effet (page annexe).</i>
+					</div>
+				</div>
+						{% block vi3 %} {% endblock vi3 %} <br>
+					
+					
+		
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel panel_green">
+				<div class="x_title collapse-link" style="cursor: pointer">
+					<h2>VII – ÉVALUATION DES FORMATIONS SUIVIES LORS DE L'ANNÉE ECOULÉE</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a><i class="fa fa-chevron-up"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="x_content row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+{# 					{% block ii1 %} {%#}
+{# 						endblock ii1 %} {% block ii2 %} {% endblock ii2 %}#}
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% endblock content %} {% block javascripts %} {{ parent() }} {%
+	endblock javascripts %}

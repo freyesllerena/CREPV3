@@ -1,0 +1,26 @@
+{% form_theme form 'crep/crepDgac/Form/collections.form.html.twig' %}
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th style="width: 30%"></th>
+					<th style="width: 10%" class="text-center">COMPOSANTE FAIBLE</th>
+					<th style="width: 10%" class="text-center">COMPOSANTE MOYENNE</th>
+					<th style="width: 10%" class="text-center">COMPOSANTE DOMINANTE</th>
+					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for composantePoste in form.composantesPostes %}
+				<tr>
+					<td>{{ crep.composantesPostes[loop.index0].libelle }}</td> {{
+					form_widget(composantePoste) }}
+				</tr>
+				{% endfor %}
+			</tbody>
+
+		</table>
+	</div>
+</div>

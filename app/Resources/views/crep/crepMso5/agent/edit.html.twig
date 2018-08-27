@@ -1,0 +1,17 @@
+{% extends "crep/crepMso5/show.html.twig" %}
+{# {% form_theme form 'crep/crepMj01/Form/App_form_crepMso3.html.twig' %}#}
+
+{% block boutons_actions %}
+{% endblock boutons_actions %}
+
+{% block viii3 %}
+    {% include 'crep/crepMso5/_include/edit/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+{% block content %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}

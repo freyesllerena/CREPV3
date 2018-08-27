@@ -1,0 +1,59 @@
+{% form_theme form 'crep/crepMso5/Form/App_form_crepMso5_12.html.twig' %}
+
+{% if crep.statut == constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD') %}
+    {% set class = 'champMisEnEvidence' %}
+{% else %}
+    {% set class = '' %}
+{% endif %}
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<dl class="dl-horizontal m-t-md">
+			<dt>Visa</dt>
+			<dd>
+                {% if crep.dateVisaAgent %}
+                    {{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+                {% endif %}
+			</dd>
+			<dd><br></dd>
+			<dt>Observations</dt>
+			<dd>{{ form_row(form.observationsVisaAgent, {'label':false, 'attr': {'maxlength': '4096', 'class':class}}) }}</dd>
+		</dl>
+	</div>
+</div>
+
+{% if crep.agent.sansAh %}
+	<div class="row">
+	    <div class="col-md-11 col-md-offset-1 col-sm-11 col-xs-12 ">
+			<span style="color: red">L'agent est déclaré comme étant <strong>"sans N+2"</strong>. L'étape de visa de l'agent est donc <strong>supprimée</strong>.</span>
+	    </div>
+	</div>
+	<br/>
+{% else %}
+	<div class="row">
+	    <div class="col-md-12 col-sm-12 col-xs-12">
+	        <dl class="dl-horizontal m-t-md">
+	            <dt>Nom</dt>
+	            <dd>
+	            	{% if crep.dateRefusVisa or crep.dateVisaAgent %}
+	                    {{ crep.agent.civilite|capitalize }} {{ crep.prenom|title }} {{ crep.nomUsage|upper }}
+	                {% endif %}
+	            </dd>
+	        </dl>
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="col-md-12 col-sm-12 col-xs-12">
+	        <dl class="dl-horizontal m-t-md">
+	            <dt>Date</dt>
+	            <dd>
+	                {% if crep.dateRefusVisa %}
+						Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
+	                {% elseif crep.dateVisaAgent %}
+	                	{{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+	                {% endif %}
+	            </dd>
+	        </dl>
+	    </div>
+	</div>
+{% endif %}

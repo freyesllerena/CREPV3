@@ -1,0 +1,27 @@
+{% extends "crep/crepMinefContract/show.html.twig" %}
+
+{% block boutons_actions %}{% endblock boutons_actions %}
+
+{% block iii1_commentaireAgent %}
+    {% include 'crep/crepMinefContract/_include/edit/iii/1_commentaireAgent.html.twig' %}
+{% endblock iii1_commentaireAgent %}
+
+{% block iv2 %}
+    {% include 'crep/crepMinefContract/_include/edit/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block iv4 %}
+    {% include 'crep/crepMinefContract/_include/edit/iv/4.html.twig' %}
+{% endblock iv4 %}
+
+{% block content %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    {{ parent() }}
+    {{ block('bouton_enregistrer') }}
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock content %}
+
+{% block alertRefusVisa %}{% endblock alertRefusVisa %}
+
+{% block alertRefusNotification %}{% endblock alertRefusNotification %}

@@ -1,0 +1,327 @@
+{% extends "crep/crep.base.html.twig" %}
+
+{% block content %}
+
+    <div class="crep">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>IDENTIFICATION DES PARTIES PRENANTES</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-down"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Identification de l’agent </h3>
+
+                            {% block i1 %}
+                            {% endblock i1 %}
+
+                            <h3>2. Identification de l'évaluateur</h3>
+
+                            {% block i2 %}
+                            {% endblock i2 %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>I – POSTE OCCUPÉ</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            {% block ii1 %}
+                            {% endblock ii1 %}
+
+                            {% block ii2 %}
+                            {% endblock ii2 %}
+
+                            {% block ii3 %}
+                            {% endblock ii3 %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>III - OBJECTIFS</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Bilan et réalisation des objectifs de l’année écoulée</h3>
+
+                            {% block iii1 %}
+                            {% endblock iii1 %}
+
+                            <h3>2. Appréciation globale sur l’activité et la réalisation des objectifs de l’année
+                                écoulée</h3>
+
+                            {% block iii2_1 %}
+                            {% endblock iii2_1 %}
+
+                            {% block iii2_2 %}
+                            {% endblock iii2_2 %}
+
+                            {% block iii2_3 %}
+                            {% endblock iii2_3 %}
+
+                            <h3>3. Objectifs pour l’année à venir</h3>
+
+                            {% block iii3 %}
+                            {% endblock iii3 %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>IV - COMPÉTENCES ET PERSPECTIVES PROFESSIONNELLES</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Compétences acquises</h3>
+
+                            {% block iv1 %}
+                            {% endblock iv1 %}
+
+                            <h3>2. Perspectives d’évolution professionnelle</h3>
+
+                            {% block iv2 %}
+                            {% endblock iv2 %}
+
+                            <h3>3. Compétences à acquérir ou à développer</h3>
+
+                            {% block iv3 %}
+                            {% endblock iv3 %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>V - FORMATION</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Formations suivies (année N-1 et N- 2) </h3>
+
+                            {% block v1 %}
+                            {% endblock v1 %}
+
+                            <h3>2. Recueil des besoins de formation (année N et N + 1) </h3>
+
+                            {% block v2_1 %}
+                            {% endblock v2_1 %}
+
+                            {% block v2_2 %}
+                            {% endblock v2_2 %}
+
+                            {% block v2_3 %}
+                            {% endblock v2_3 %}
+
+                            {% block v2_4 %}
+                            {% endblock v2_4 %}
+
+                            {% block v2_5 %}
+                            {% endblock v2_5 %}
+
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                (*) Porter une croix en cas de réponse positive. L’agent peut indiquer s’il souhaite
+                                exercer son CPF pour la formation envisagée. Les formations liées à une adaptation
+                                immédiate au poste de travail ne peuvent être imputées sur le CPF.<br>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>VI - VALEUR PROFESSIONNELLE</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Appréciation de la valeur professionnelle de l’agent</h3>
+
+                            {% block vi1 %}
+                            {% endblock vi1 %}
+
+                            <h3>2. Synthèse et conclusion de l’entretien professionnel</h3>
+
+                            {% block vi2 %}
+                            {% endblock vi2 %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>VII - OBSERVATIONS DU DIRECTEUR</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-up"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Appréciation du directeur</h3>
+
+                            {% block vii1 %}
+                            {% endblock vii1 %}
+
+                            <h3>2. Suites données à l’entretien (proposition de promotion,….)</h3>
+
+                            {% block vii2 %}
+                            {% endblock vii2 %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel panel_green">
+                    <div class="x_title collapse-link" style="cursor:pointer">
+                        <h2>VII - CIRCUIT DE VALIDATION</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a><i class="fa fa-chevron-down"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3>1. Date de l'entretien</h3>
+                            {% block viii1 %}
+                            {% endblock viii1 %}
+
+                            <h3>2. Signature du supérieur hiérarchique direct ayant conduit l'entretien</h3>
+                            {% block viii2 %}
+                            {% endblock viii2 %}
+
+                            <h3>3. Visa et observations éventuelles de l'agent</h3>
+                            {% block viii3 %}
+                            {% endblock viii3 %}
+
+                            <h3>4. Visa de l'autorité hiérarchique</h3>
+                            {% block viii4 %}
+                            {% endblock viii4 %}
+
+                            <h3>5. Signature de l'agent</h3>
+                            {% block viii5 %}
+                            {% endblock viii5 %}
+
+                            <br>
+
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                <i>
+                				<span>
+                	            	<strong>- Destinataire:</strong> dossier individuel de l’agent.<br>
+									<strong>- Copies: </strong> agent, supérieur hiérarchique direct et chef de service.
+	                	         </span>
+                                </i>
+                            </p>
+
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                <i>
+                                    <span align="center"><b> <i class="fa fa-info-circle" aria-hidden="true"></i> RECOURS EVENTUELS DE L’AGENT:  </b></span>
+                                    <br/>
+                                    <span>
+                				- L’agent peut saisir l’autorité hiérarchique d’une demande de révision de tout ou partie du
+                				compte rendu de l’entretien professionnel, dans un délai de {{ crep.agent.campagnePnc.ministere.delaiVisa }}
+                                        jours francs suivant la
+                				notifcation du présent document.<br>
+
+								- L’autorité hiérarchique dispose d’un délai de {{ crep.agent.campagnePnc.ministere.delaiVisa }}
+                                        jours à compter de la saisine pour lui répondre.
+								L’exercice de ce recours hiérarchique est un préalable obligatoire à la saisine de la CAP
+								compétente, dans un délai d’un mois à compter de la réponse de l’autorité hiérarchique.<br>
+
+								- L’agent dispose également des voies et délais de recours de droit commun pour contester son
+								compte rendu de l’entretien professionnel.
+                				</span><br/><br/>
+                                    <span>
+                				<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <strong>La signature de l’agent vaut notification du présent document (et non approbation de son contenu).</strong>
+                	            </span>
+                                </i>
+                            </p>
+
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                <span class="text-center"><b>Mention droits d'accès aux fichiers et libertés</b></span>
+                                <br/>
+                                <span>« Les informations ci-dessus font l’objet d’une saisie informatique et d’un traitement automatisé de données à
+                                            caractère personnel. Conformément à la loi n° 78-17 du 6 janvier 1978 modifiée relative à l’informatique,
+                                            aux fichiers et aux libertés, ce traitement a été déclaré à la commission nationale de l’informatique et des
+                                            libertés. Les droits d’accès et de rectification prévus aux articles 39 et 40 de la loi précitée s’exercent
+                                            auprès du directeur du centre ministériel de gestion ou du sous-directeur de la gestion des personnels relevant
+                                            de l’administration centrale. »
+                                        </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock javascripts %}

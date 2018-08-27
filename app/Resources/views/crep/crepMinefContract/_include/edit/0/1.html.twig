@@ -1,0 +1,27 @@
+{% form_theme form 'crep/crepMinefContract/Form/collections.form.html.twig' %}
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.nomUsage, { 'label': "Nom" }) }}
+    </div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.prenom, { 'label': "Prénom" }) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.dateNaissance, { 'label': "Date de naissance"}) }}
+	</div>
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		{{ form_row(form.categorieAgent, { 'label': "Catégorie d'emploi" }) }}
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-6 col-xs-12">
+        {{ form_row(form.directionAffectation, { 'label': "Direction ou service d'affectation" }) }}
+    </div>
+</div>
+
+<br/>

@@ -1,0 +1,98 @@
+{% form_theme form with ['crep/crepMinefContract/Form/collections.form.html.twig', _self] %}
+
+{% if crep.statut == constant('AppBundle\\EnumTypes\\EnumStatutCrep::SIGNE_SHD') %}
+	{% set class = 'champMisEnEvidence' %}
+{% else %}
+	{% set class = '' %}
+{% endif %}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-5 col-sm-5 col-xs-12" style="text-align:left;">Souhaitez-vous apporter des précisions à la description faite de vos fonctions ?</label>
+	    <div class="col-md-7 col-sm-7 col-xs-12">
+	        {{ form_row(form.precisionsFonctionsAgent, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.commentaireFonctionAgent, {'label': false, 'id' : "commentaire_fonction_agent", 'attr':{'placeholder': 'Détails', 'maxlength': '4096', 'class': class} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-5 col-sm-5 col-xs-12" style="text-align:left;">Estimez-vous que vos fonctions correspondent à vos aptitudes ?</label>
+	    <div class="col-md-7 col-sm-7 col-xs-12">
+	        {{ form_row(form.fonctionLienAptitudeAgent, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.commAptitudesAgent, {'label': false, 'id' : "comm_aptitudes_agent", 'attr':{'placeholder': 'Sinon, pourquoi ?', 'maxlength': '4096', 'class': class} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-5 col-sm-5 col-xs-12" style="text-align:left;">Partagez-vous l’appréciation faite de vos résultats ?</label>
+	    <div class="col-md-7 col-sm-7 col-xs-12">
+	        {{ form_row(form.appreciationResultatsAgent, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.commentaireResultatsAgent, {'label': false, 'id' : "commentaire_resultats_agent", 'attr':{'placeholder': 'Sinon, pourquoi ?', 'maxlength': '4096', 'class': class} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-5 col-sm-5 col-xs-12" style="text-align:left;">Vous sentez-vous à l’aise dans votre service ?</label>
+	    <div class="col-md-7 col-sm-7 col-xs-12">
+	        {{ form_row(form.alaiseDansServiceAgent, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.commServiceAgent, {'label': false, 'id' : "comm_service_agent", 'attr':{'placeholder': 'Sinon, pourquoi ?', 'maxlength': '4096', 'class': class} }) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<label class="control-label col-md-5 col-sm-5 col-xs-12" style="text-align:left;">Souhaitez-vous exercer d’autres fonctions ?</label>
+	    <div class="col-md-7 col-sm-7 col-xs-12">
+	        {{ form_row(form.souhaitAutreFonctionAgent, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'} }) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<br/>
+    <div class="col-md-11 col-md-offset-1 col-sm-12 col-xs-12">
+        {{ form_row(form.commSouhaitFonctionAgent, {'label': false, 'id' : "comm_souhait_fonction_agent", 'attr':{'placeholder': 'Lesquelles ?', 'maxlength': '4096', 'class': class} }) }}
+    </div>
+</div>
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <dl class="dl-horizontal m-t-md">
+            <p class="title">- Autres observations : </p>
+            {{ form_row(form.autresObservationsAgent,{'label':false,'attr': {'maxlength': '4096', 'class': class}}) }}
+        </dl>
+    </div>
+</div>
+
+<br/>

@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">COMPÉTENCES PROFESSIONNELLES</th>
+                <th class="text-center">Excellent</th>
+                <th class="text-center">Très bon</th>
+                <th class="text-center">Bon</th>
+                <th class="text-center">Moyen</th>
+                <th class="text-center">Insuffisant</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for competenceTransverse in crep.competencesTransverses %}
+
+                {% if competenceTransverse.typeCompetence == 'Générale' %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+
+                            <td class="text-center">{{ competenceTransverse.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            <tr>
+                <td colspan="6"><strong>Agents chargés de fonctions d’encadrement :</strong></td>
+            </tr>
+
+            {% for competenceTransverse in crep.competencesTransverses %}
+                {% if competenceTransverse.typeCompetence == "Fonction d'encadrement" %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+                            <td class="text-center">{{ competenceTransverse.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            <tr>
+                <td colspan="6"><strong>Toutes catégories d’agents :</strong></td>
+            </tr>
+
+            {% for competenceTransverse in crep.competencesTransverses %}
+                {% if competenceTransverse.typeCompetence == "Catégories d'agents" %}
+                    <tr>
+                        <td>
+                            {{ competenceTransverse.libelle }}
+                        </td>
+                        {% for index in 0..4 %}
+                            <td class="text-center">{{ competenceTransverse.niveauAcquis|iconCheck(loop.index0)|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>

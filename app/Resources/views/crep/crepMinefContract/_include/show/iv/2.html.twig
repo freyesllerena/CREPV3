@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center"></th>
+                    <th style="width: 7%" class="text-center">Appréciation de l'agent</th>
+                    <th style="width: 50%" class="text-center">Commentaires</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<tr>
+            		<td><strong>Souhaite apporter des précisions à la description qui a été faite de ses fonctions</strong></td>
+            		<td class="text-center">{{ crep.precisionsFonctionsAgent | ouiNon }}</td>
+            		<td>
+            			{% if crep.precisionsFonctionsAgent %}
+                			{{ crep.commentaireFonctionAgent|nl2br }}
+                		{% endif %}
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><strong>Estime que les fonctions correspondent à ses apptitudes</strong></td>
+            		<td class="text-center">{{ crep.fonctionLienAptitudeAgent | ouiNon }}</td>
+            		<td>
+                		{% if crep.fonctionLienAptitudeAgent == false %}
+                		    {{ crep.commAptitudesAgent|nl2br }}
+                		{% endif %} 
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><strong>Partage l'appréciation faite de ses résultats</strong></td>
+            		<td class="text-center">{{ crep.appreciationResultatsAgent | ouiNon }}</td>
+            		<td>
+            			{% if crep.appreciationResultatsAgent == false %}
+                			{{ crep.commentaireResultatsAgent|nl2br }}
+                		{% endif %} 
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><strong>Se sent à l'aise dans son service </strong></td>
+            		<td class="text-center">{{ crep.alaiseDansServiceAgent | ouiNon }}</td>
+            		<td>
+            			{% if crep.alaiseDansServiceAgent == false %}
+                			{{ crep.commServiceAgent|nl2br }}
+                		{% endif %}
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><strong>Souhaite exercer d'autres fonctions</strong></td>
+            		<td class="text-center">{{ crep.souhaitAutreFonctionAgent | ouiNon }}</td>
+            		<td>
+            			{% if crep.souhaitAutreFonctionAgent %}
+                			{{ crep.commSouhaitFonctionAgent|nl2br }}
+                		{% endif %}
+            		</td>
+            	</tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row project_detail">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+    	<p class="title">Autres observations </p>
+		<p class="well well-xs">{{ crep.autresObservationsAgent|nl2br }}</p>
+	</div>
+</div>
+
+{% if not crep.agent.sansAh %}
+    <br/>
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Nom</dt>
+                <dd>
+                	{% if crep.dateRefusVisa or crep.dateVisaAgent %}
+                        {{ crep.agent.civilite|capitalize }} {{ crep.prenom|title }} {{ crep.nomUsage|capitalize }}
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <dl class="dl-horizontal m-t-md">
+                <dt>Date</dt>
+                <dd>
+                    {% if crep.dateRefusVisa %}
+    					Refus de visa du CREP acté le {{ crep.dateRefusVisa|date('d/m/Y à H:i') }}
+                    {% elseif crep.dateVisaAgent %}
+                    	{{ crep.dateVisaAgent|date('d/m/Y H:i') }}
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+    </div>
+{% endif %}

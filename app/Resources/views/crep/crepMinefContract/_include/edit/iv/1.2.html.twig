@@ -1,0 +1,18 @@
+{% form_theme form 'crep/crepMinefContract/Form/App_form_crep_minef_contract_12.html.twig' %}
+
+<div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-7 col-sm-7 col-xs-12">Le compte-rendu d’entretien professionnel a-t-il fait l’objet d’une demande facultative de révision gracieuse<sup>1</sup> ? </label>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+                {{ form_widget(form.revisionGracieuse, {'label': false }) }}
+            </div>
+        </div>
+    <br/>
+</div>
+
+<div class="row">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align:right;">Communication de la réponse le :</label>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            {{ form_row(form.dateCommunicationReponse, {'label_attr': {'class' : 'radio-inline', 'style':'text-align:left;'}}) }}
+        </div>
+</div>

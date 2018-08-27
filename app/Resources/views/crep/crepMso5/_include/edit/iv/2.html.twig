@@ -1,0 +1,30 @@
+{% form_theme form 'crep/crepMso5/Form/App_form_crepMso5_12.html.twig' %}
+
+<div class="row">
+    {{ form_row(form.evolutionsPro, { 'label': "Évolutions professionnelles envisagées par l’agent  (mobilité interne, mobilité externe,…)" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.echeanceEvolutionsPro, { 'label': "Échéance évolutions professionnelles" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.observationsEvolutionsPro, { 'label': "Observations et propositions d’évolution faites par l’évaluateur" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.echeanceObservationsEvolutionsPro, { 'label': "Échéance observations évolutions professionnelles" }) }}
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label  class="pull-left">Avis circonstancié pour certains fonctionnaires éligibles à un avancement de grade
+         <br><i> (Appréciation particulière sur les perspectives d’accès au grade supérieur des agents concernés par
+            le décret n°2017-722 du 2 mai 2017)</i>
+        </label>
+    </div>
+    {{ form_row(form.avisShdAvancementGrade, {'label':false }) }}
+</div>
+
+
+

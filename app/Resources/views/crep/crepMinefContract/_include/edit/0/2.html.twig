@@ -1,0 +1,24 @@
+{% form_theme form 'crep/crepMinefContract/Form/App_form_crep_minef_contract_6.html.twig' %}
+
+
+<div class="row  form-group">
+    {{ form_row(form.dateEntretien, { 'label': "Date de l'entretien professionnel" }) }}
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group pull-left">
+            <label class="control-label col-md-11 col-sm-11 col-xs-12 pull-left">L'entretien professionnel avec l'agent
+                n'a pas eu lieu</label>
+            <div class="col-md-1 col-sm-1 col-xs-12">
+                {{ form_row(form.refusEntretienProfessionnel, {'label': false }) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {{ form_row(form.motifRefusEntretien, {'label': 'Motif'}) }}
+</div>
+
+<br>

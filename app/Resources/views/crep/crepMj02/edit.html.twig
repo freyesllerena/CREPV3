@@ -136,7 +136,7 @@
     {{ parent() }}
     {# 	<!-- chained -->#}
     <script src="{{ asset('js/chained.js') }}"></script>
-
+    
     <script type="text/javascript">
 
         // Evenements motifs Absences:
@@ -151,7 +151,7 @@
         var isAbsence = $("#crep_mj02_refusEntretienProfessionnel");
 
         $(document).ready(function() {
-            
+
             // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
             // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
             var crepCollections = new Crep.Collections();
@@ -215,7 +215,7 @@
                 crep_mj02_nbAgentsEncadresB.val('');
                 crep_mj02_nbAgentsEncadresC.val('');
             });
-            
+
             //Fonction permettant de cacher ou non un bloc selon un choix de button radio
             function isCacheBloc(id1, id2 = false, isHide = true){
                 var label1 = id1.parent().parent().find('label');
@@ -266,7 +266,7 @@
                 isAbsenceDiv.removeClass('checked');
                 isAbsenceDiv.addClass('checked');
             }
-            
+
             // Formation suivie Oui/Non après saisie en base de données
             var formationAnneeEcoulee = $("#formationsAnneeEcouleeCollection").find('table').find('tr');
 
@@ -280,7 +280,7 @@
                         $("#crep_mj02_formationsAnneeEcoulee_" + i + "_motifNonSuivie").show();
                     }
                 }
-                
+
                 if ($("#crep_mj02_formationsAnneeEcoulee_"+i+"_suivie_1")) {
                     if ( $("#crep_mj02_formationsAnneeEcoulee_"+i+"_suivie_1").attr('checked')) {
                         $("#crep_mj02_formationsAnneeEcoulee_"+i+"_motifNonSuivie").parent().parent().find('label').show();
@@ -402,7 +402,7 @@
                 }
             });
 
-            
+
             // Format date mois
             $('#crep_mj02_dateEntreePosteOccupe').datetimepicker({
                 viewMode: 'years',
@@ -410,8 +410,8 @@
                 locale: 'fr'
             });
         });
-        
-        
+
+
         /** absence de l'agent * */
         isAbsence.on('ifChanged', function(){
             statusCheckbox = isAbsence.parent().prevObject[0].checked;
@@ -505,7 +505,7 @@
         radioUnchecked(nonActivite);
         radioUnchecked(conges);
         radioUncheckedAutres(autres);
-        
+
         /**
          * Permet de décocher des composants Radio - Bootstrap - Autres
          *
@@ -696,7 +696,7 @@
         autoCompleteFormation();
 
         function autoCompleteFormation(){
-
+            console.log('add completion');
             $('.formation-autocomplete').autocomplete({
                 serviceUrl: urlAjax,
                 minChars: 3,

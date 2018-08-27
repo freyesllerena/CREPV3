@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 50%" class="text-center">Objectifs futurs d’ordre individuel</th>
+                <th style="width: 50%" class="text-center">Commentaires (résultats attendus, nature de l’objectif,
+                    moyens et appui nécessaires, échéance…)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.objectifsFutursIndividuels is not empty %}
+                {% for objectif in crep.objectifsFutursIndividuels %}
+                    <tr>
+                        <td>{{ objectif.libelle|nl2br }}</td>
+                        <td>{{ objectif.resultat|nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 50%" class="text-center">Objectifs futurs d’ordre collectif</th>
+                <th style="width: 50%" class="text-center">Commentaires (résultats attendus, nature de l’objectif,
+                    moyens et appui nécessaires, échéance…)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.objectifsFutursCollectifs is not empty %}
+
+                {% for objectif in crep.objectifsFutursCollectifs %}
+                    <tr>
+                        <td>{{ objectif.libelle|nl2br }}</td>
+                        <td>{{ objectif.resultat|nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 50%" class="text-center">Autres Objectifs futurs</th>
+                <th style="width: 50%" class="text-center">Commentaires (résultats attendus, nature de l’objectif,
+                    moyens et appui nécessaires, échéance…)
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if crep.autresObjectifsFuturs is not empty %}
+                {% for autreObjectif in crep.autresObjectifsFuturs %}
+                    <tr>
+                        <td>{{ autreObjectif.libelle|nl2br }}</td>
+                        <td>{{ autreObjectif.resultat|nl2br }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for i in 1..2 %}
+                    <tr>
+                        <td><br></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

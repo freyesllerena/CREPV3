@@ -1,4 +1,5 @@
-{% use "Form/App_bootstrap_3_horizontal_layout.html.twig" %}
+{% use "Form/App_bootstrap_3_vertical_collection_layout.html.twig" %}
+{#{% use "Form/App_bootstrap_3_horizontal_layout.html.twig" %}#}
 
 {% block _crep_mj02_objectifsEvalues_entry_widget %}
     <tr>
@@ -89,10 +90,19 @@
             <div class="text-right">
                 <button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
             </div>
-            <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_libelle">Intitulé ou thématique de la formation<span style="color:red;"> *</span></label>
-                {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
-            </div>
+                <div class="form-group">
+                    {% if errors|length == 0 -%}
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_libelle">Intitulé ou thématique de la formation<span style="color:red;"> *</span></label>
+                        {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                    {% else %}
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_libelle">Intitulé ou thématique de la formation<span style="color:red;"> *</span></label>
+                        {%- for error in errors -%}
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+                            </div>
+                        {%- endfor -%}
+                    {% endif %}
+                </div>
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_objectif">Objet de la formation</label>
                 {{ form_row(form.objectif, {'label': false}) }}
@@ -102,13 +112,14 @@
                 {{ form_row(form.duree, {'label': false}) }}
             </div>
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_cpf">Mobilisation du DIF (Oui/Non)</label>
-                {{ form_row(form.cpf, {'label': false, 'label_attr': {'class' : 'radio-inline',
-                        'style':'text-align:left;'} }) }}
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_typologie">Cadre de la formation T1, T2 ou T3</label>
+                {#{{ form_row(form.typologie, {'label': false}) }}#}
+                {{ form_row(form.typologie, {'label':false, 'attr': {'class': 'fieldCollection eligible-cpf'} }) }}
             </div>
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_typologie">Cadre de la formation T1, T2 ou T3</label>
-                {{ form_row(form.typologie, {'label': false}) }}
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_cpf">Mobilisation du DIF (Oui/Non)</label>
+                {#{{ form_row(form.cpf, {'label': false, 'label_attr': {'class' : 'radio-inline','style':'text-align:left;'} }) }}#}
+                {{ form_row(form.cpf, {'label':false, 'attr': {'class': 'fieldCollection iCheckCollection cpf'}}) }}
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_suivie">Suivies (oui/non) motifs</label>
@@ -136,6 +147,19 @@
                 {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
             </div>
             <div class="form-group">
+                {% if errors|length == 0 -%}
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_libelle">Intitulé ou thématique de la formation<span style="color:red;"> *</span></label>
+                    {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                {% else %}
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_libelle">Intitulé ou thématique de la formation<span style="color:red;"> *</span></label>
+                    {%- for error in errors -%}
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+                        </div>
+                    {%- endfor -%}
+                {% endif %}
+            </div>
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_objectif">Objet de la formation</label>
                 {{ form_row(form.objectif, {'label': false}) }}
             </div>
@@ -144,13 +168,13 @@
                 {{ form_row(form.duree, {'label': false}) }}
             </div>
             <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_typologie">Cadre de la formation T1, T2 ou T3</label>
+                {{ form_row(form.typologie, {'label': false}) }}
+            </div>
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_cpf">Mobilisation du DIF (Oui/Non)</label>
                 {{ form_row(form.cpf, {'label': false, 'label_attr': {'class' : 'radio-inline',
                     'style':'text-align:left;'} }) }}
-            </div>
-            <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_typologie">Cadre de la formation T1, T2 ou T3</label>
-                {{ form_row(form.typologie, {'label': false}) }}
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -162,17 +186,3 @@
 {% endblock %}
 
 {# Fin collecions #}
-
-{# Redéfinition du bloc from_errors aligner à gauche les erreurs de validation, en ajoutant style="text-align: left;"   #}
-{% block form_errors -%}
-    {% if errors|length > 0 -%}
-        <div class="has-error">
-            {%- for error in errors -%}
-                <div class="col-md-12">
-                    <label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
-                </div>
-            {%- endfor -%}
-        </div>
-
-    {%- endif %}
-{%- endblock form_errors %}

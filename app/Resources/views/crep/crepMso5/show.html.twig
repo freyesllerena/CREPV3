@@ -1,0 +1,138 @@
+{% extends "crep/crepMso5/mso5.base.html.twig" %}
+{% block accueil %} {% endblock %}
+{% block campagne %} active {% endblock %}
+
+{% block content %}
+
+    {{ block('alertErreurValidationFormulaireCrep') }}
+    {{ block('alertAhNonIdentifie') }}
+    {{ block('alertDebutEntretien') }}
+    {{ block('alertRefusVisa') }}
+    {{ block('alertRecours') }}
+    {{ block('alertRefusNotification') }}
+    {{ block('renvoyerAh') }}
+    {{ block('renvoyerAgent') }}
+
+    <div class="form-horizontal">
+        {{ parent() }}
+    </div>
+    {{ block('boutons_actions') }}
+{% endblock content %}
+
+{% block i1 %}
+    {% include 'crep/crepMso5/_include/show/i/1.html.twig' %}
+{% endblock i1 %}
+
+{% block i2 %}
+    {% include 'crep/crepMso5/_include/show/i/2.html.twig' %}
+{% endblock i2 %}
+
+{% block ii1 %}
+    {% include 'crep/crepMso5/_include/show/ii/1.html.twig' %}
+{% endblock ii1 %}
+
+{% block ii2 %}
+    {% include 'crep/crepMso5/_include/show/ii/2.html.twig' %}
+{% endblock ii2 %}
+
+{% block ii3 %}
+    {% include 'crep/crepMso5/_include/show/ii/3.html.twig' %}
+{% endblock ii3 %}
+
+{% block iii1 %}
+    {% include 'crep/crepMso5/_include/show/iii/1.html.twig' %}
+{% endblock iii1 %}
+
+{% block iii2_1 %}
+    {% include 'crep/crepMso5/_include/show/iii/2_1.html.twig' %}
+{% endblock iii2_1 %}
+
+{% block iii2_2 %}
+    {% include 'crep/crepMso5/_include/show/iii/2_2.html.twig' %}
+{% endblock iii2_2 %}
+
+{% block iii2_3 %}
+    {% include 'crep/crepMso5/_include/show/iii/2_3.html.twig' %}
+{% endblock iii2_3 %}
+
+{% block iii3 %}
+    {% include 'crep/crepMso5/_include/show/iii/3.html.twig' %}
+{% endblock iii3 %}
+
+{% block iv1 %}
+    {% include 'crep/crepMso5/_include/show/iv/1.html.twig' %}
+{% endblock iv1 %}
+
+{% block iv2 %}
+    {% include 'crep/crepMso5/_include/show/iv/2.html.twig' %}
+{% endblock iv2 %}
+
+{% block iv3 %}
+    {% include 'crep/crepMso5/_include/show/iv/3.html.twig' %}
+{% endblock iv3 %}
+
+{% block v1 %}
+    {% include 'crep/crepMso5/_include/show/v/1.html.twig' %}
+{% endblock v1 %}
+
+{% block v2_1 %}
+    {% include 'crep/crepMso5/_include/show/v/2_1.html.twig' %}
+{% endblock v2_1 %}
+
+{% block v2_2 %}
+    {% include 'crep/crepMso5/_include/show/v/2_2.html.twig' %}
+{% endblock v2_2 %}
+
+{% block v2_3 %}
+    {% include 'crep/crepMso5/_include/show/v/2_3.html.twig' %}
+{% endblock v2_3 %}
+
+{% block v2_4 %}
+    {% include 'crep/crepMso5/_include/show/v/2_4.html.twig' %}
+{% endblock v2_4 %}
+
+{% block v2_5 %}
+    {% include 'crep/crepMso5/_include/show/v/2_5.html.twig' %}
+{% endblock v2_5 %}
+
+{% block vi1 %}
+    {% include 'crep/crepMso5/_include/show/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+    {% include 'crep/crepMso5/_include/show/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vii1 %}
+    {% include 'crep/crepMso5/_include/show/vii/1.html.twig' %}
+{% endblock vii1 %}
+
+{% block vii2 %}
+    {% include 'crep/crepMso5/_include/show/vii/2.html.twig' %}
+{% endblock vii2 %}
+
+{% block viii1 %}
+    {% include 'crep/crepMso5/_include/show/viii/1.html.twig' %}
+{% endblock viii1 %}
+
+{% block viii2 %}
+    {% include 'crep/crepMso5/_include/show/viii/2.html.twig' %}
+{% endblock viii2 %}
+
+{% block viii3 %}
+    {% include 'crep/crepMso5/_include/show/viii/3.html.twig' %}
+{% endblock viii3 %}
+
+{% block viii4 %}
+    {% include 'crep/crepMso5/_include/show/viii/4.html.twig' %}
+{% endblock viii4 %}
+
+{% block viii5 %}
+    {% include 'crep/crepMso5/_include/show/viii/5.html.twig' %}
+{% endblock viii5 %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- chained -->
+    <script src="{{ asset('js/chained.js') }}"></script>
+{% endblock javascripts %}

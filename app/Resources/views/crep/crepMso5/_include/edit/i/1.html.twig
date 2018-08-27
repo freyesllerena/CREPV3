@@ -1,0 +1,28 @@
+{% form_theme form 'crep/crepMso5/Form/App_form_crepMso5_6.html.twig' %}
+
+<div class="row">
+    {{ form_row(form.nomUsage, { 'label': "Nom" }) }}
+    {{ form_row(form.prenom, { 'label': "Prénom" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.dateNaissance, { 'label': "Date de naissance" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.categorie, { 'label': "Catégorie" }) }}
+    {{ form_row(form.corps, { 'label': "Corps" }) }}
+</div>
+
+
+<div class="row">
+    {{ form_row(form.grade, { 'label': "Grade" }) }}
+    {{ form_row(form.echelon, { 'label': "Échelon" }) }}
+</div>
+
+<div class="row">
+    {{ form_row(form.directionAffectation, { 'label': "Affectation : (direction, service, sous direction, bureau,…)" }) }}
+    {{ form_row(form.datePriseFonctions, { 'label': "Date de prise de fonctions"}) }}
+</div>
+
+<br>
