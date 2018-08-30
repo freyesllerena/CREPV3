@@ -1,38 +1,34 @@
 <div class="row form-group">
 	<div class="col-md-12 col-sm-12 col-xs-12">
+		<label><u>Par le supérieur hiérarchique</u></label>
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<label>Quels sont les réalisations et les résultats obtenus par
+			l'agent ?</label>
+	</div>
+	<div class="row form-group">
 		<div class="col-md-12 col-sm-12 col-xs-12">
-			<label><u>Par le supérieur hiérarchique</u></label>
+			<p class="well well-xs">{{ crep.resultatsObtenusParAgent|nl2br }}</p>
 		</div>
-		<div class="row form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<label>Quels sont les réalisations et les résultats obtenus par
-					l'agent ?</label>
-			</div>
-			<div class="row form-group">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<p class="well well-xs">{{ crep.resultatsObtenusParAgent|nl2br }}</p>
-				</div>
-			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<label>Y a-t-il des dossiers marquants non définis initialement
-					(dans les objectifs de l'année écoulée et/ou dans la fiche de
-					poste) dans lesquels l'agent s'est investi ?</label>
-			</div>
-			<div class="row form-group">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<p class="well well-xs">{{ crep.resultatAutresActivites|nl2br }}</p>
-				</div>
-			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<label>Difficultés particulières (éventuelles)</label>
-			</div>
-			<div class="row form-group">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<p class="well well-xs">{{ crep.obsShdObjectifsEvalues|nl2br }}</p>
-				</div>
-			</div>
+	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<label>Y a-t-il des dossiers marquants non définis initialement
+			(dans les objectifs de l'année écoulée et/ou dans la fiche de
+			poste) dans lesquels l'agent s'est investi ?</label>
+	</div>
+	<div class="row form-group">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<p class="well well-xs">{{ crep.resultatAutresActivites|nl2br }}</p>
+		</div>
+	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<label>Difficultés particulières (éventuelles)</label>
+	</div>
+	<div class="row form-group">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<p class="well well-xs">{{ crep.obsShdObjectifsEvalues|nl2br }}</p>
 		</div>
 	</div>
 </div>
-
-

@@ -954,7 +954,7 @@ class CrepDgac extends Crep
 	 */
 	public function setElementsObsCompShd($elementsObsCompShd)
 	{
-		$this->$elementsObsCompShd = $elementsObsCompShd;
+		$this->elementsObsCompShd = $elementsObsCompShd;
 	
 		return $this;
 	}	

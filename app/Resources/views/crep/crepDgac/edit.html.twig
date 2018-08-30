@@ -57,7 +57,8 @@ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':
 {% endblock iv1 %}
 
 {% block iv2 %}
-    {% include 'crep/crepDgac/_include/edit/iv/2.html.twig' %}
+    {% include 'crep/crepDgac/_include/edit/iv/2.1.html.twig' %}
+    {% include 'crep/crepDgac/_include/edit/iv/2.2.html.twig' %}
 {% endblock iv2 %}
 
 {% block v1 %}
@@ -72,9 +73,9 @@ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':
     {% include 'crep/crepDgac/_include/edit/v/3.html.twig' %}
 {% endblock v3 %}
 
- {% block v4 %}
-     {% include 'crep/crepDgac/_include/edit/v/4.html.twig' %}
- {% endblock v4 %}
+{% block v4 %}
+ {% include 'crep/crepDgac/_include/edit/v/4.html.twig' %}
+{% endblock v4 %}
 
 {% block v5 %}
     {% include 'crep/crepDgac/_include/edit/v/5.html.twig' %}
@@ -84,8 +85,18 @@ form_start(form, {'attr': {'novalidate': 'novalidate', 'class':
  {% include 'crep/crepDgac/_include/edit/v/6.html.twig' %}
 {% endblock v6 %}
 
-{# {% block v7 %} {% include#}
-{# 'crep/crepDgac/_include/edit/v/7.html.twig' %} {% endblock v7 %}#}
+{% block vi1 %}
+ {% include 'crep/crepDgac/_include/edit/vi/1.html.twig' %}
+{% endblock vi1 %}
+
+{% block vi2 %}
+    {% include 'crep/crepDgac/_include/edit/vi/2.html.twig' %}
+{% endblock vi2 %}
+
+{% block vi3 %}
+    {% include 'crep/crepDgac/_include/edit/vi/3.html.twig' %}
+{% endblock vi3 %}
+
 {# {% block vi1 %} {% include#}
 {# 'crep/crepDgac/_include/edit/vi/1.html.twig' %} {% endblock vi1 %}#}
 {# {% block vi2 %} {% include#}
