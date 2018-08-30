@@ -3,30 +3,26 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th style="width: 30%">Autres competences du poste</th>
-					<th style="width: 15%" class="text-center">A DEVELOPPER</th>
-					<th style="width: 15%" class="text-center">MAITRISEE</th>
+					<th style="width: 30%"></th>
+					<th style="width: 7.5%" class="text-center">FAIBLE</th>
+					<th style="width: 7.5%" class="text-center">MOYEN</th>
+					<th style="width: 7.5%" class="text-center">FORT</th>
+					<th style="width: 7.5%" class="text-center">EXCELLENT</th>
 					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% if (crep.autresCompetencesManageriales is empty) %} {% for index in	0..1 %}
+				{% for competenceSynthese in crep.competencesSyntheses %}
 				<tr>
-					<td><br></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				{% endfor %} {% else %} {% for autreCompetenceManageriale in crep.autresCompetencesManageriales %}
-				<tr>
-					<td>{{ autreCompetenceManageriale.libelle }}</td> {% for index in 0..2 %}
+					<td>{{ competenceSynthese.libelle }}</td> {% for index in 0..3 %}
 					<td class="text-center">{{
-						autreCompetenceManageriale.niveauRequis|iconCheck(loop.index0)|raw }}</td>
-					{% endfor %}
-					<td>{{ autreCompetenceManageriale.appreciation|nl2br }}</td>
+						competenceSynthese.niveauRequis|iconCheck(loop.index0)|raw }}</td> {%
+					endfor %}
+					<td>{{ competenceSynthese.appreciation|nl2br }}</td>
 				</tr>
-				{% endfor %} {% endif %}
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
 </div>
+

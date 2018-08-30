@@ -1,10 +1,19 @@
-{% use "Form/App_bootstrap_3_layout.html.twig" %} {# Pour que le champ
-de saisie prenne toute la ligne#} {% block form_row -%}
-<div class="col-md-12 col-sm-12 col-xs-12">{{- parent() -}}</div>
-{%- endblock form_row %} {# Pour aligner le label à gauche#} {% block
-form_label -%} {%- set label_attr = label_attr|merge({style:
+{% use "Form/App_bootstrap_3_layout.html.twig" %}
+{# Pour que le champ de saisie prenne toute la ligne#}
+{% block form_row -%}
+<div class="col-md-12 col-sm-12 col-xs-12">
+    {{- parent() -}}
+</div>
+{%- endblock form_row %}
+{# Pour aligner le label à gauche#}
+{% block form_label -%}
+    {%- set label_attr = label_attr|merge({style:
 (label_attr.class|default('') ~ ' text-align: left; padding-left:
-0px')|trim}) -%} {{- parent() -}} {%- endblock form_label %} {# Pour
-avoir le label sur toute la ligne#} {%- block form_label_class2
--%}control-label col-md-12 col-sm-12 col-xs-12{%- endblock
-form_label_class2 -%}
+0px')|trim}) -%}
+
+    {{- parent() -}}
+{%- endblock form_label %}
+{# Pour avoir le label sur toute la ligne#}
+{%- block form_label_class2 -%}
+    control-label col-md-12 col-sm-12 col-xs-12
+{%- endblock form_label_class2 -%}

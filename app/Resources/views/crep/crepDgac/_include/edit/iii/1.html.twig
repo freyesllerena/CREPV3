@@ -1,28 +1,19 @@
-{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig'
-%}
-<div class="row form-group">
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="col-md-12 col-sm-12 col-xs-12">
-{# 			<label>La fiche de poste reflète-t-elle cette réalité ? Le contenu du#}
-{# 				poste a-t-il subi des modifications depuis le dernier entretien ?#}
-{# 				Contraintes liées au poste, à l’organisation, etc.</label>#}
-		</div>
-		<div class="row form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<label>Objectifs permanents</label>
-				<div class="col-md-12 col-sm-12 col-xs-12">{{ 	
-				form_widget(form.elementsPermanents,{'attr': {'maxlength':
-				'4096'}}) }}</div>
-			</div>
-		</div>
+{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig' %}
 
-		<div class="row form-group">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<label>Objectifs particuliers</label>
-				<div class="col-md-12 col-sm-12 col-xs-12">{{ 	
-				form_widget(form.elementsParticuliers,{'attr': {'maxlength':
-				'4096'}}) }}</div>
-			</div>
+<div class="row form-group">
+	<div class="row form-group">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<label>Objectifs permanents</label>
+				{{ form_widget(form.elementsPermanents,{'attr': {'maxlength':
+			'4096'}}) }}
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<label>Objectifs particuliers</label>
+				{{ form_widget(form.elementsParticuliers,{'attr': {'maxlength':
+			'4096'}}) }}
 		</div>
 	</div>
 </div>

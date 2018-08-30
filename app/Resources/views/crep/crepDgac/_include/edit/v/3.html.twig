@@ -14,8 +14,8 @@
 			<tbody>
 				{% for competenceManageriale in form.competencesManageriales %}
 				<tr>
-					<td>{{ crep.competencesManageriales[loop.index0].libelle }}</td> {{
-					form_widget(competenceManageriale) }}
+					<td>{{ crep.competencesManageriales[loop.index0].libelle }}</td>
+					{{ form_widget(competenceManageriale) }}
 				</tr>
 				{% endfor %}
 			</tbody>

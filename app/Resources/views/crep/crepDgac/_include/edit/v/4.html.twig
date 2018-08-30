@@ -1,31 +1,27 @@
 {% form_theme form 'crep/crepDgac/Form/collections.form.html.twig' %}
 
-<div class="row" id="autresCompetencesProfessionnellesCollection"
-	data-prototype="{{ form_widget(form.autresCompetencesManageriales.vars.prototype)|e('html_attr') }}">
+<div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th style="width: 30%">Autres composantes du poste</th>
-					<th style="width: 15%" class="text-center">A DEVELOPPER</th>
-					<th style="width: 15%" class="text-center">MAITRISEE</th>
-					<th style="width: 35%" class="text-center">OBSERVATIONS</th>
-					<th style="width: 5%" class="text-center"></th>
-
+					<th style="width: 30%"></th>
+					<th style="width: 7.5%" class="text-center">FAIBLE</th>
+					<th style="width: 7.5%" class="text-center">MOYEN</th>
+					<th style="width: 7.5%" class="text-center">FORT</th>
+					<th style="width: 7.5%" class="text-center">EXCELLENT</th>
+					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
 				</tr>
 			</thead>
-			<tbody>{% for autreCompetenceManageriale in form.autresCompetencesManageriales %}
-				{{ form_row(autreCompetenceManageriale) }} {% endfor %}
+			<tbody>
+				{% for competenceSynthese in form.competencesSyntheses %}
+				<tr>
+					<td>{{ crep.competencesSyntheses[loop.index0].libelle }}</td> {{
+					form_widget(competenceSynthese) }}
+				</tr>
+				{% endfor %}
 			</tbody>
-		</table>
-	</div>
-</div>
 
-<div class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		<button
-			class="btn btn-primary add_collection_link autresCompetencesManageriales pull-right">
-			<i class="fa fa-plus"></i> Ajouter
-		</button>
+		</table>
 	</div>
 </div>

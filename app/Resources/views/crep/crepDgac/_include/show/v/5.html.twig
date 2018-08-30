@@ -3,26 +3,40 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th style="width: 30%"></th>
+					<th style="width: 30%">Autres qualités à mettre en évidence: citer</th>
 					<th style="width: 7.5%" class="text-center">FAIBLE</th>
 					<th style="width: 7.5%" class="text-center">MOYEN</th>
 					<th style="width: 7.5%" class="text-center">FORT</th>
 					<th style="width: 7.5%" class="text-center">EXCELLENT</th>
 					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
+					
 				</tr>
 			</thead>
 			<tbody>
-				{% for competenceSynthese in crep.competencesSyntheses %}
-				<tr>
-					<td>{{ competenceSynthese.libelle }}</td> {% for index in 0..3 %}
-					<td class="text-center">{{
-						competenceSynthese.niveauRequis|iconCheck(loop.index0)|raw }}</td> {%
-					endfor %}
-					<td>{{ competenceSynthese.appreciation|nl2br }}</td>
-				</tr>
-				{% endfor %}
+				{% if (crep.autresCompetencesSyntheses is empty) %}
+					{% for index in	0..1 %}
+						<tr>
+							<td><br></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					{% endfor %}
+				{% else %}
+					{% for autreCompetenceSynthese in crep.autresCompetencesSyntheses %}
+						<tr>
+							<td>{{ autreCompetenceSynthese.libelle }}</td>
+							{% for index in 0..3 %}
+								<td class="text-center">{{
+								autreCompetenceSynthese.niveauRequis|iconCheck(loop.index0)|raw }}</td>
+							{% endfor %}
+							<td>{{ autreCompetenceSynthese.appreciation|nl2br }}</td>
+						</tr>
+					{% endfor %}
+				{% endif %}
 			</tbody>
 		</table>
 	</div>
 </div>
-

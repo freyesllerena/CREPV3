@@ -1,36 +1,10 @@
-<div class="row">
+<div class="row form-group">
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th style="width: 30% class="text-center">Autres competences du poste</th>
-					<th style="width: 7.5%" class="text-center">FAIBLE</th>
-					<th style="width: 7.5%" class="text-center">MOYEN</th>
-					<th style="width: 7.5%" class="text-center">FORT</th>
-					<th style="width: 7.5%" class="text-center">EXCELLENT</th>
-					<th style="width: 40%" class="text-center">OBSERVATIONS</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% if (crep.autresCompetencesSyntheses is empty) %} {% for index in	0..1 %}
-				<tr>
-					<td><br></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				{% endfor %} {% else %} {% for autreCompetenceSynthese in crep.autresCompetencesSyntheses %}
-				<tr>
-					<td>{{ autreCompetenceSynthese.libelle }}</td> {% for index in 0..5 %}
-					<td class="text-center">{{
-						autreCompetenceSynthese.niveauRequis|iconCheck(loop.index0)|raw }}</td>
-					{% endfor %}
-					<td>{{ autreCompetenceSynthese.appreciation|nl2br }}</td>
-				</tr>
-				{% endfor %} {% endif %}
-			</tbody>
-		</table>
+		<div class="row form-group">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+
+				<p class="well well-xs">{{ crep.appreciationGenerale|nl2br }}</p>
+			</div>
+		</div>
 	</div>
 </div>
