@@ -1,16 +1,12 @@
-{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig'
-%}
+{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig' %}
 
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="col-md-12 col-sm-12 col-xs-12">
-			<label>Politique, environnement, organisation, moyens, coopération
-				interne ou externe, etc </label>
-		</div>
-		<div class="col-md-12 col-sm-12 col-xs-12">{{
-			form_widget(form.contexteAnneeEcoulee,{'attr': {'maxlength':
-			'4096'}}) }}</div>
+		<label>Politique, environnement, organisation, moyens, coopération
+			interne ou externe, etc </label>
+	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		{{ form_widget(form.contexteAnneeEcoulee,{'attr': {'maxlength': '4096'}}) }}
 	</div>
 </div>
 
-<br />
