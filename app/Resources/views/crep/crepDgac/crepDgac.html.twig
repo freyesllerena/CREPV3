@@ -18,11 +18,11 @@
     }
 
     table {
-        border: 1px solid black;
+        border: 1px #000000 solid;
     }
 
     th {
-        border: 1px solid black;
+        border: 1px #000000 solid;
         font-size: 10px;
     }
 
@@ -251,13 +251,13 @@
 
 <div style="page-break-before:always;"></div>
 
-<font size="+2">
-    <table>
-        <tr>
-            <th><i>B - CONTRIBUTIONS AUX COMPETENCES COLLECTIVES ET AU FONCTIONNEMENT DU SERVICE</i></th>
-        </tr>
-    </table>
-</font><br><br>
+<table>
+    <tr>
+        <th><i style="font-size: 10px">B - CONTRIBUTIONS AUX COMPETENCES COLLECTIVES ET AU FONCTIONNEMENT DU SERVICE</i>
+        </th>
+    </tr>
+</table>
+<br><br>
 <font size="-2">
     Formation reçue/donnée, participation au développement des compétences et connaissances, capacité à créer une
     dynamique de groupe, capacité à s’insérer dans un groupe
@@ -274,7 +274,7 @@
         <td><u>Par le supérieur hiérarchique :</u><br>{{ crep.elementsObsCompShd|nl2br }}<br><br></td>
     </tr>
     <tr>
-        <td height="0%"></td>
+        <td height="0%" class="bordered-right"></td>
         <td><u>Par l'agent :</u>{{ crep.elementsObsCompAgent|nl2br }}<br><br></td>
     </tr>
 </table><br><br>
@@ -820,17 +820,14 @@ Perspectives :<br>
     </tr>
 </table>
 
-<!-- page 7 -->
-
-<div style="page-break-before:always;"></div>
-
 <font size="+1">
     <div class="text-center">
         <strong>OBSERVATIONS ET SIGNATURES</strong>
     </div>
 </font>
 
-(*l'agent dispose d'un délai de 10 jours à partir de la notification de ce compte rendu pour mettre ses observations et le signer)<br><br>
+(*l'agent dispose d'un délai de 10 jours à partir de la notification de ce compte rendu pour mettre ses observations et le signer)
+<br><br>
 
 <table>
     <tr>
@@ -838,10 +835,145 @@ Perspectives :<br>
             <strong>Observations de l'agent</strong>
         </th>
     </tr>
+</table><br><br>
+
+<table>
     <tr>
-        <td></td>
+        <th><br><br><br></th>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th><strong>Signatures</strong></th>
+    </tr>
+</table><br><br>
+
+Date : <br>
+Agent<br><br>
+
+Date : <br>
+Supérieur hiérarchique direct (N+1)<br><br>
+
+Date : <br>
+Autorité hiérarchique<br><br>
+
+
+<!-- page 7 -->
+
+<div style="page-break-before:always;"></div>
+
+<strong style="font-size: 10px">L'Agent</strong><br><br>
+
+<table>
+    <tr>
+        <td>
+            Nom : <br>
+            Corps : <br>
+            Affectation : <br>
+        </td>
+    </tr>
+</table><br><br>
+
+<strong style="font-size: 10px">Le Supérieur Hiérarchique</strong><br><br>
+
+<table>
+    <tr>
+        <td>NOM et Prénom : <br></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th class="text-center"><strong>ÉVALUATION DES FORMATIONS LORS DE L'ANNÉE ÉCOULÉE</strong></th>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th class="text-center"><strong>Intitulé du stage</strong></th>
+        <th class="text-center"><strong>Indice de satisfaction </strong>(de 1 à 5*)</th>
+        <th class="text-center"><strong>Avez-vous utilisé cete formation ?</strong>(oui/non)</th>
+        <th class="text-center"><strong>Commentaires de l'agent</strong></th>
+        <th class="text-center"><strong>Avez-vous utilisé la documentation ?</strong></th>
+        <th class="text-center"><strong>Foramtions complémentaires à prévoir</strong></th>
+        <th class="text-center"><strong>Avis du supérieur hiérarchique sur l'efficacité de la formation</strong></th>
     </tr>
     <tr>
         <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
     </tr>
-</table>
+    <tr>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+    </tr>
+    <tr>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+        <td><br><br></td>
+    </tr>
+</table><br>
+<strong><i>* Indice 5 correspong à excellent</i></strong>
+<br>
+
+<!-- page 8 -->
+
+<div style="page-break-before:always;"></div>
+
+<strong class="text-center" style="font-size: 12px">BESOINS EN FORMATION DE L'ANNÉE 2018</strong><br><br>
+
+<table>
+    <tr>
+        <th>CONNAISSANCES TECHNIQUES À ACQUÉRIR :</th>
+    </tr>
+    <tr>
+        <td>- À la demande de l'agent :<br><br><br></td>
+    </tr>
+    <tr>
+        <td>- À la demande de la hiérarchie :<br><br><br></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th>COMPÉTENCES PROFESSIONNELLES À DÉVELOPPER :</th>
+    </tr>
+    <tr>
+        <td>- À la demande de l'agent :<br><br><br></td>
+    </tr>
+    <tr>
+        <td>- À la demande de la hiérarchie :<br><br><br></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th>PRÉPARATION AUX EXAMENTS ET CONCOURS POUR L'ANNÉE À VENIR :</th>
+    </tr>
+    <tr>
+        <td><br><br><br><br><br><br></td>
+    </tr>
+</table><br><br>
+
+<table>
+    <tr>
+        <th>SOUHAITS DE FORMATIONS POUR LE DÉVELOPPEMENT PERSONNEL :</th>
+    </tr>
+    <tr>
+        <td><br><br><br><br><br><br></td>
+    </tr>
+</table><br><br>

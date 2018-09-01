@@ -443,7 +443,15 @@ class CrepDgac extends Crep
 	 * @Assert\Valid
 	 */
 	protected $crepDgacFormationsSuivies;
-	
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    protected $souhaitMobilite;
+
+
 	//##########################################################################################
 	
 	public function __construct(){
@@ -1224,8 +1232,9 @@ class CrepDgac extends Crep
 	public function confidentialisationChampsShd ()
 	{
 		$this->setContexteAnneeEcoulee(null)
-		->setDescriptionPosteMission(null)
-		->setElementsObservesShd(null)
+            ->setDescriptionPosteMission(null)
+            ->setElementsObservesShd(null)
+            ->setSouhaitMobilite(null);
 		;
 		
 		/** @var $contraintesPoste CrepEddContraintePoste  */
@@ -1567,6 +1576,25 @@ class CrepDgac extends Crep
 	{
 		return $this->crepDgacFormationsSuivies;
 	}
+
+    /**
+     * @return bool
+     */
+    public function getSouhaitMobilite()
+    {
+        return $this->souhaitMobilite;
+    }
+
+    /**
+     * @param $souhaitMobilite
+     * @return $this
+     */
+    public function setSouhaitMobilite($souhaitMobilite)
+    {
+        $this->souhaitMobilite = $souhaitMobilite;
+
+        return $this;
+    }
 
     /**
      * Validations CrepDgac

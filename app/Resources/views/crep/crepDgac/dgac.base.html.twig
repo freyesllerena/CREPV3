@@ -181,29 +181,47 @@
 					</div>
 				</div>
 			</div>
-	
-			<div class="row">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="x_panel panel_green">
-						<div class="x_title collapse-link" style="cursor: pointer">
-							<h2>VII – ÉVALUATION DES FORMATIONS SUIVIES LORS DE L'ANNÉE ECOULÉE</h2>
-							<ul class="nav navbar-right panel_toolbox">
-								<li><a><i class="fa fa-chevron-up"></i></a></li>
-							</ul>
-						</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel panel_green">
+					<div class="x_title collapse-link" style="cursor: pointer">
+						<h2>VII – ÉVALUATION DES FORMATIONS SUIVIES LORS DE L'ANNÉE ECOULÉE</h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a><i class="fa fa-chevron-up"></i></a></li>
+						</ul>
 						<div class="clearfix"></div>
 					</div>
-	
+					
 					<div class="x_content row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
-	{# 					{% block ii1 %} {%#}
-	{# 						endblock ii1 %} {% block ii2 %} {% endblock ii2 %}#}
+							<h3></h3>
+							{% block vii1 %} {% endblock vii1 %}
+							
+							
+							<div class="x_content row">
+								<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+									<span class="text-center"><b>Mention droits d'accès aux fichiers et libertés</b></span>
+									<br/>
+									<span>« Les informations ci-dessus font l’objet d’une saisie informatique et d’un traitement automatisé de données à
+                                            caractère personnel. Conformément à la loi n° 78-17 du 6 janvier 1978 modifiée relative à l’informatique,
+                                            aux fichiers et aux libertés, ce traitement a été déclaré à la commission nationale de l’informatique et des
+                                            libertés. Les droits d’accès et de rectification prévus aux articles 39 et 40 de la loi précitée s’exercent
+                                            auprès du directeur du centre ministériel de gestion ou du sous-directeur de la gestion des personnels relevant
+                                            de l’administration centrale. »
+                                        </span>
+								</p>
+							</div>
+							
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 {% endblock content %}
 
 {% block javascripts %}

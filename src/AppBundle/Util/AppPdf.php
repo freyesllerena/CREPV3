@@ -43,7 +43,7 @@ class AppPdf extends TCPDF
             $this->footer = '<table>
             		  <tr>
             		      <td style="width:33%"></td>
-            		      <td style="width:34%" align="center">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+            		      <td style="width:34%" align="center">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
             		      <td style="width:33%; font-size: 10px;" align="right"><b><u>à parapher par l\'agent évalué</u></b></td>
             		  </tr>
             	  </table>';
@@ -51,7 +51,7 @@ class AppPdf extends TCPDF
             $this->footer = '<table>
             		  <tr>
             		      <td style="width:33%"></td>
-            		      <td style="width:34%" align="center">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+            		      <td style="width:34%" align="center">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
             		      <td style="width:33%; font-size: 10px;" align="right"><b>Paraphe : </b></td>
             		  </tr>
             	  </table>';
@@ -61,49 +61,49 @@ class AppPdf extends TCPDF
 						<td style="width:20%; border:1px #000000 solid;">FO-RH-17</td>
 						<td style="width:15%; border:1px #000000 solid;" align="center">version 02</td>
         				<td style="width:30%; border:1px #000000 solid;" align="center">Date d\'application : 01-08-2014</td>
-            		    <td style="width:15%; border:1px #000000 solid;" align="center">page : '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+            		    <td style="width:15%; border:1px #000000 solid;" align="center">page : ' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
             		    <td style="width:20%; border:1px #000000 solid;" align="center">Référence : IN-RH-07</td>
             		  </tr>
             	  </table>';
-        } elseif ($crep instanceof CrepScl02 ) { // CrepScl02
+        } elseif ($crep instanceof CrepScl02) { // CrepScl02
 
             $this->footer = '<table>
             		  <tr>
-            		    <td style="width:100%;" align="center">Page '.$this->getAliasNumPage().' sur '.$this->getAliasNbPages().'</td>
+            		    <td style="width:100%;" align="center">Page ' . $this->getAliasNumPage() . ' sur ' . $this->getAliasNbPages() . '</td>
             		  </tr>
             	  </table>';
         } elseif ($crep instanceof CrepMinefAbc) { // CrepMinefAbc
             $this->footer = '<table>
                         		  <tr>
-                        		      <td style="width:100%" align="right">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+                        		      <td style="width:100%" align="right">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
                         		  </tr>
                 	         </table>';
         } elseif ($crep instanceof CrepMinefContract) { // CrepMinefContract
             $this->footer = '<table>
                         		  <tr>
-                        		      <td style="width:100%" align="right">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+                        		      <td style="width:100%" align="right">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
                         		  </tr>
                 	         </table>';
         } elseif ($crep instanceof CrepAc) {
             $this->footer = '<table>
                     		  <tr>
-                    		      <td style="width:100%" align="right">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+                    		      <td style="width:100%" align="right">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
                     		  </tr>
             	         </table>';
         } elseif ($crep instanceof CrepMso3) {
             $this->footer = '<table>
                     		  <tr>
-                    		      <td style="width:100%" align="right">'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+                    		      <td style="width:100%" align="right">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
                     		  </tr>
             	         </table>';
         } elseif ($crep instanceof CrepMj01) {
             $this->footer = '	<small>
     								<table>
 	                    		  		<tr>
-	    						  			<td style="width:20%">NOM : '.$crep->getNomUsage().'</td>
-	    						  			<td style="width:20%">PRÉNOM : '.$crep->getPrenom().'</td>
-	    						  			<td style="width:40%">CORPS : '.$crep->getCorps().'</td>
-	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+	    						  			<td style="width:20%">NOM : ' . $crep->getNomUsage() . '</td>
+	    						  			<td style="width:20%">PRÉNOM : ' . $crep->getPrenom() . '</td>
+	    						  			<td style="width:40%">CORPS : ' . $crep->getCorps() . '</td>
+	    									<td style="width:20%" align="right">PAGE ' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
 	                    		  		</tr>
             	         			</table>
 	    						</small>';
@@ -126,7 +126,7 @@ class AppPdf extends TCPDF
             $this->footer = '
     								<table>
 	                    		  		<tr>
-	    									<td align="right" style="font-size: large">'.$this->getAliasNumPage().'</td>
+	    									<td align="right" style="font-size: large">' . $this->getAliasNumPage() . '</td>
 	                    		  		</tr>
             	         			</table>
 	    						';
@@ -134,7 +134,7 @@ class AppPdf extends TCPDF
             $this->footer = '	<small>
     								<table>
 	                    		  		<tr>
-	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+	    									<td style="width:20%" align="right">PAGE ' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
 	                    		  		</tr>
             	         			</table>
 	    						</small>';
@@ -142,7 +142,7 @@ class AppPdf extends TCPDF
             $this->footer = '
     								<table>
 	                    		  		<tr>
-	    									<td align="right" style="font-size: large">'.$this->getAliasNumPage().'</td>
+	    									<td align="right" style="font-size: large">' . $this->getAliasNumPage() . '</td>
 	                    		  		</tr>
             	         			</table>
 	    						';
@@ -150,7 +150,7 @@ class AppPdf extends TCPDF
             $this->footer = '
     								<table>
 	                    		  		<tr>
-	    									<td align="right" style="font-size: large">'.$this->getAliasNumPage().'</td>
+	    									<td align="right" style="font-size: large">' . $this->getAliasNumPage() . '</td>
 	                    		  		</tr>
             	         			</table>
 	    						';
@@ -173,12 +173,12 @@ class AppPdf extends TCPDF
         } elseif ($crep instanceof CrepMcc) {
             $this->header = '';
         } elseif ($crep instanceof CrepScl) { // CrepScl
-            $logo = dirname(__FILE__).'/../../../web/images/scl.jpg';
+            $logo = dirname(__FILE__) . '/../../../web/images/scl.jpg';
 
             $htmlHeader = '<table style="border:1px #000000 solid;padding:2px">
 							<tr>
 								<td width="18%" style="border:1px #000000 solid;text-align: center;" >
-									<img src="'.$logo.'" alt="SCL" width="100">
+									<img src="' . $logo . '" alt="SCL" width="100">
 								</td>
 								<td align="center" width="64%" style="border:1px #000000 solid;">
 									<div style="font-size:5pt">&nbsp;</div>
@@ -197,7 +197,7 @@ class AppPdf extends TCPDF
 						</table>';
 
             $this->header = $htmlHeader;
-        } elseif ($crep instanceof CrepScl02 ) { // CrepScl02
+        } elseif ($crep instanceof CrepScl02) { // CrepScl02
 
             $htmlHeader = '<table cellpadding="5" style="border:1px #000000 solid;padding:2px;font-size: 11.0pt;">
 							<tr>
@@ -228,7 +228,7 @@ class AppPdf extends TCPDF
         } elseif ($crep instanceof CrepMj01) {
             $this->header = '<strong>ANNEXE 2</strong> 
         						 &nbsp;&nbsp;&nbsp;
-								 <small>APPRECIATION DE LA VALEUR PROFESSIONNELLE '.$crep->getAgent()->getCampagnePnc()->getAnneeEvaluee().'</small>';
+        						 <small>APPRECIATION DE LA VALEUR PROFESSIONNELLE ' . $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee() . '</small>';
         } elseif ($crep instanceof CrepMcc02) {
             $this->header = '';
         } elseif ($crep instanceof CrepEdd) {
@@ -236,22 +236,25 @@ class AppPdf extends TCPDF
         } elseif ($crep instanceof CrepMj02) {
             $this->header = '';
         } elseif ($crep instanceof CrepDgac) {
-            $htmlHeader = '<small>
-    								<table>
-	                    		  		<tr>
-	    						  			<td style="width:20%">Nom : '.$crep->getNomUsage().'</td>
-	    						  			<td style="width:20%">Prénom : '.$crep->getPrenom().'</td>
-	    						  			<td style="width:40%">Corps : '.$crep->getCorps().'</td>
- 	    									<td style="width:20%" align="right">PAGE '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
-	                    		  		</tr>
-            	         			</table>
-	    						</small>';
-
+            $logo1 = dirname(__FILE__) . '/../../../web/images/dgac.png';
+            $logo2 = dirname(__FILE__) . '/../../../web/images/dgac2.png';
+            $htmlHeader = '<table style="border: black 1px solid">
+                                <tr>
+                                    <td rowspan="2" width="8%"><div><img src="' . $logo2 . '" alt="DGAC" width="20px"></div></td>
+                                    <td width="5%"></td>
+                                    <td width="83%" height="22px" style="font-size: 10px; border-left: black 2px solid; border-bottom: black 2px solid">ENTRETIEN PROFESSIONNEL - PARTIE FORMATION - ANNÉE ' . $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee() . '</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="' . $logo1 . '" alt="DGAC" width="50px" style="text-align : right"></td>
+                                    <td width="83%" height="25px" style="font-size: 12px; border-left: black 2px solid">FICHE D\'ÉVALUATION DES FORMATIONS MÉTIER SUIVIES EN ' . $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee() . '</td>
+                                </tr>
+                            </table>'
+                            ;
             $this->header = $htmlHeader;
         } elseif ($crep instanceof CrepMso5) {
             $this->header = '<table>
             		  <tr align="right">
-            		      <td>'.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+            		      <td>' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
             		  </tr>
             	  </table>';
         } else {
@@ -313,7 +316,7 @@ class AppPdf extends TCPDF
             $byte_range[1] = strpos($pdfdoc, TCPDF_STATIC::$byterange_string) + $byterange_string_len + 10;
             $byte_range[2] = $byte_range[1] + $this->signature_max_length + 2;
             $byte_range[3] = strlen($pdfdoc) - $byte_range[2];
-            $pdfdoc = substr($pdfdoc, 0, $byte_range[1]).substr($pdfdoc, $byte_range[2]);
+            $pdfdoc = substr($pdfdoc, 0, $byte_range[1]) . substr($pdfdoc, $byte_range[2]);
             // replace the ByteRange
             $byterange = sprintf('/ByteRange[0 %u %u %u]', $byte_range[1], $byte_range[2], $byte_range[3]);
             $byterange .= str_repeat(' ', ($byterange_string_len - strlen($byterange)));
@@ -322,7 +325,7 @@ class AppPdf extends TCPDF
             $tempdoc = TCPDF_STATIC::getObjFilename('doc', $this->file_id);
             $f = TCPDF_STATIC::fopenLocal($tempdoc, 'wb');
             if (!$f) {
-                $this->Error('Unable to create temporary file: '.$tempdoc);
+                $this->Error('Unable to create temporary file: ' . $tempdoc);
             }
             $pdfdoc_length = strlen($pdfdoc);
             fwrite($f, $pdfdoc, $pdfdoc_length);
@@ -349,7 +352,7 @@ class AppPdf extends TCPDF
             $signature = current(unpack('H*', $signature));
             $signature = str_pad($signature, $this->signature_max_length, '0');
             // Add signature to the document
-            $this->buffer = substr($pdfdoc, 0, $byte_range[1]).'<'.$signature.'>'.substr($pdfdoc, $byte_range[1]);
+            $this->buffer = substr($pdfdoc, 0, $byte_range[1]) . '<' . $signature . '>' . substr($pdfdoc, $byte_range[1]);
             $this->bufferlen = strlen($this->buffer);
         }
         switch ($dest) {
@@ -368,8 +371,8 @@ class AppPdf extends TCPDF
                     //header('Cache-Control: public, must-revalidate, max-age=0'); // HTTP/1.1
                     header('Pragma: public');
                     header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-                    header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-                    header('Content-Disposition: inline; filename="'.basename($name).'"');
+                    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+                    header('Content-Disposition: inline; filename="' . basename($name) . '"');
                     TCPDF_STATIC::sendOutputData($this->getBuffer(), $this->bufferlen);
                 } else {
                     echo $this->getBuffer();
@@ -389,7 +392,7 @@ class AppPdf extends TCPDF
                 //header('Cache-Control: public, must-revalidate, max-age=0'); // HTTP/1.1
                 header('Pragma: public');
                 header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-                header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+                header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
                 // force download dialog
                 if (false === strpos(php_sapi_name(), 'cgi')) {
                     header('Content-Type: application/force-download');
@@ -400,7 +403,7 @@ class AppPdf extends TCPDF
                     header('Content-Type: application/pdf');
                 }
                 // use the Content-Disposition header to supply a recommended filename
-                header('Content-Disposition: attachment; filename="'.basename($name).'"');
+                header('Content-Disposition: attachment; filename="' . basename($name) . '"');
                 header('Content-Transfer-Encoding: binary');
                 TCPDF_STATIC::sendOutputData($this->getBuffer(), $this->bufferlen);
                 break;
@@ -411,7 +414,7 @@ class AppPdf extends TCPDF
                 // save PDF to a local file
                 $f = TCPDF_STATIC::fopenLocal($name, 'wb');
                 if (!$f) {
-                    $this->Error('Unable to create output file: '.$name);
+                    $this->Error('Unable to create output file: ' . $name);
                 }
                 fwrite($f, $this->getBuffer(), $this->bufferlen);
                 fclose($f);
@@ -422,8 +425,8 @@ class AppPdf extends TCPDF
                     //header('Cache-Control: public, must-revalidate, max-age=0'); // HTTP/1.1
                     header('Pragma: public');
                     header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-                    header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
-                    header('Content-Disposition: inline; filename="'.basename($name).'"');
+                    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+                    header('Content-Disposition: inline; filename="' . basename($name) . '"');
                     TCPDF_STATIC::sendOutputData(file_get_contents($name), filesize($name));
                 } elseif ('FD' == $dest) {
                     // send headers to browser
@@ -437,7 +440,7 @@ class AppPdf extends TCPDF
                     header('Cache-Control: private, must-revalidate, post-check=0, pre-check=0, max-age=1');
                     header('Pragma: public');
                     header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-                    header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+                    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
                     // force download dialog
                     if (false === strpos(php_sapi_name(), 'cgi')) {
                         header('Content-Type: application/force-download');
@@ -448,7 +451,7 @@ class AppPdf extends TCPDF
                         header('Content-Type: application/pdf');
                     }
                     // use the Content-Disposition header to supply a recommended filename
-                    header('Content-Disposition: attachment; filename="'.basename($name).'"');
+                    header('Content-Disposition: attachment; filename="' . basename($name) . '"');
                     header('Content-Transfer-Encoding: binary');
                     TCPDF_STATIC::sendOutputData(file_get_contents($name), filesize($name));
                 }
@@ -456,11 +459,11 @@ class AppPdf extends TCPDF
 
             case 'E':
                 // return PDF as base64 mime multi-part email attachment (RFC 2045)
-                $retval = 'Content-Type: application/pdf;'."\r\n";
-                $retval .= ' name="'.$name.'"'."\r\n";
-                $retval .= 'Content-Transfer-Encoding: base64'."\r\n";
-                $retval .= 'Content-Disposition: attachment;'."\r\n";
-                $retval .= ' filename="'.$name.'"'."\r\n\r\n";
+                $retval = 'Content-Type: application/pdf;' . "\r\n";
+                $retval .= ' name="' . $name . '"' . "\r\n";
+                $retval .= 'Content-Transfer-Encoding: base64' . "\r\n";
+                $retval .= 'Content-Disposition: attachment;' . "\r\n";
+                $retval .= ' filename="' . $name . '"' . "\r\n\r\n";
                 $retval .= chunk_split(base64_encode($this->getBuffer()), 76, "\r\n");
 
                 return $retval;
@@ -470,7 +473,7 @@ class AppPdf extends TCPDF
                 return $this->getBuffer();
 
             default:
-                $this->Error('Incorrect output destination: '.$dest);
+                $this->Error('Incorrect output destination: ' . $dest);
         }
 
         return '';

@@ -1,0 +1,13 @@
+{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig' %}
+
+{#<div class="row form-group">#}
+    {#<label>Mobilité souhaitée par l’agent :</label>#}
+    {#{{ form_widget(form.contextePrevisibleAnnee,{'attr': {'maxlength':#}
+        {#'4096'}}) }}#}
+{#</div>#}
+
+<div class="row">
+    {{ form_row(form.souhaitMobilite, {'label': "Mobilité souhaitée par l’agent :", 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
+</div>
+
+<br>

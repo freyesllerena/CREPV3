@@ -158,7 +158,8 @@ class CrepDgacType extends CrepType
             				'allow_delete' => true,
             				'by_reference' => false,
             		]
-            )            
+            )
+            ->add('souhaitMobilite', null, ['required' => false])
         ;
     }
 
