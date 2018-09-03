@@ -153,6 +153,7 @@ class CrepManager
             'CrepMj01' => $this->crepMj01Manager,
             'CrepMcc02' => $this->crepMcc02Manager,
             'CrepEdd' => $this->crepEddManager,
+            'CrepEddMindef' => $this->crepEddManager,
             'CrepScl02' => $this->crepScl02Manager,
             'CrepMj02' => $this->crepMj02Manager,
         ];

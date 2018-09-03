@@ -153,6 +153,63 @@ block javascripts %} {{ parent() }}
             // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
             // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
             var crepCollections = new Crep.Collections();
+
+
+
+            // Titulaire
+            var demarrageMobilite = $("#demarrage-mobilite-souhaitee");
+            var mobilitePoste01 = $("#mobilite-poste-01");
+            var asouhitMobilite = $("#crep_dgac_asouhitMobilite");
+            // var titulaireNon = $("#crep_mj02_titulaire_1");
+            
+            
+            if (asouhitMobilite) {
+                console.log(asouhitMobilite);
+            //     if (asouhitMobilite.attr('checked')) {
+            //         isCacheBloc(demarrageMobilite, mobilitePoste01, false);
+            //     } else {
+            //         isCacheBloc(demarrageMobilite, mobilitePoste01);
+            //     }
+            }
+            //
+            // asouhitMobilite.on('ifChanged', function(){
+            //     isCacheBloc(demarrageMobilite, mobilitePoste01, false);
+            // });
+
+
+
+            asouhitMobilite.on('ifChanged', function(){
+                // isCacheBloc(demarrageMobilite, mobilitePoste01);
+                // demarrageMobilite.val('');
+                // mobilitePoste01.val('');
+            });
+
+
+
+            //Fonction permettant de cacher ou non un bloc selon un choix de button radio
+            function isCacheBloc(id1, id2 = false, isHide = true){
+                var label1 = id1.parent().parent().find('label');
+                if (id2) {
+                    var label2 = id2.parent().parent().find('label');
+                }
+
+                if (isHide) {
+                    label1.hide();
+                    id1.hide();
+                    if (id2) {
+                        label2.hide();
+                        id2.hide();
+                    }
+                }else {
+                    label1.show();
+                    id1.show();
+                    if (id2) {
+                        label2.show();
+                        id2.show();
+                    }
+                }
+            }
+            
         });
     </script>
 

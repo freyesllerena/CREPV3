@@ -525,9 +525,9 @@ class CrepMindef01 extends Crep
     ];
 
     public static $selectTypologieFormation = [
-                        'Formation continue liée à l\'adaptation au poste de travail actuel' => 0,
-                        'Formation continue liée à l\'évolution prévisible des métiers' => 1,
-                        'Formation liée au développement des qualifications et à l\'acquisition de compétences' => 2,
+        'Formation continue liée à l\'adaptation au poste de travail actuel' => 0,
+        'Formation continue liée à l\'évolution prévisible des métiers' => 1,
+        'Formation liée au développement des qualifications et à l\'acquisition de compétences' => 2,
                         'Préparation aux concours, examens et essais professionnels' => 3,
     ];
 
@@ -544,6 +544,15 @@ class CrepMindef01 extends Crep
         
         // Reprise des données du CREP N-1
         if($dernierCrep && $dernierCrep instanceof $this){
+            
+            foreach ($dernierCrep->getObjectifsFuturs() as $objectif){
+                $objectifsEvalue = new ObjectifEvalue();
+                
+                $objectifsEvalue
+                    ->setLibelle($objectif->getLibelle())
+                    ->setResultatObtenu($this::$echelleObjectifEvalue['Atteint']);
+                $this->addObjectifsEvalue($objectifsEvalue);
+            }
 
         	foreach ($dernierCrep->getFormationsAVenir() as $formation){
         		$formationSuivie = new FormationSuivie();

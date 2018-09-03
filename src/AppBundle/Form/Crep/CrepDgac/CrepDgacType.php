@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Crep\CrepDgac;
 
+use AppBundle\Form\Crep\CrepDgac\CrepDgacMobilitePosteType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -160,6 +161,23 @@ class CrepDgacType extends CrepType
             		]
             )
             ->add('souhaitMobilite', null, ['required' => false])
+
+
+
+
+            ->add('demarrageMobiliteSouhaitee', ChoiceType::class, [
+                'choices' => [
+                    'Dès que possible' => 0,
+                    'Dans 1 an' => 1,
+                    'Dans 2 ans' => 2,
+                    'Dans 3 ans ou +' => 3,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+            ])
+            ->add('mobilitePoste', CrepDgacMobilitePosteType::class, [
+                'required' => false,
+            ])
         ;
     }
 

@@ -451,6 +451,24 @@ class CrepDgac extends Crep
      */
     protected $souhaitMobilite;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     *
+     */
+    protected $demarrageMobiliteSouhaitee;
+
+    /**
+     * @ORM\OneToOne(targetEntity="CrepDgacMobilitePoste", orphanRemoval=true, cascade={"persist", "remove"},
+     *     fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @Assert\Valid
+     */
+    protected $mobilitePoste;
+
+
 
 	//##########################################################################################
 	
@@ -1234,7 +1252,8 @@ class CrepDgac extends Crep
 		$this->setContexteAnneeEcoulee(null)
             ->setDescriptionPosteMission(null)
             ->setElementsObservesShd(null)
-            ->setSouhaitMobilite(null);
+            ->setSouhaitMobilite(null)
+		    ->setDemarrageMobiliteSouhaitee(null);
 		;
 		
 		/** @var $contraintesPoste CrepEddContraintePoste  */
@@ -1595,6 +1614,49 @@ class CrepDgac extends Crep
 
         return $this;
     }
+
+
+
+    /**
+     * Get demarrageMobiliteSouhaitee
+     *
+     * @return int
+     */
+    public function getDemarrageMobiliteSouhaitee()
+    {
+        return $this->demarrageMobiliteSouhaitee;
+    }
+
+    /**
+     * Set demarrageMobiliteSouhaitee
+     *
+     * @param $demarrageMobiliteSouhaitee
+     * @return $this
+     */
+    public function setDemarrageMobiliteSouhaitee($demarrageMobiliteSouhaitee)
+    {
+        $this->demarrageMobiliteSouhaitee = $demarrageMobiliteSouhaitee;
+        return $this;
+    }
+
+    /**
+     * @return CrepDgacMobilitePoste
+     */
+    public function getMobilitePoste()
+    {
+        return $this->mobilitePoste;
+    }
+
+    /**
+     * @param $mobilitePoste
+     * @return $this
+     */
+    public function setMobilitePoste($mobilitePoste)
+    {
+        $this->mobilitePoste = $mobilitePoste;
+        return $this;
+    }
+
 
     /**
      * Validations CrepDgac
