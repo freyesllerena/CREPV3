@@ -68,8 +68,12 @@ class CrepController extends Controller
 
             // Ici nous utilisons le service d'anomysation du crep en fonction du statut du crep
             $crepConfidentialisationManager->confidentialisation($crep, $this->getUser());
-
-            $signerShdForm = $this->creerSignerShdForm($crep);
+            
+            $signerShdForm = $this->createEditForm($crep, [
+                'action' => $this->generateUrl('crep_signer_shd', ['id' => $crep->getId()]),
+                'validation_groups' => ['registration']
+            ]);
+            
             $refuserVisaForm = $this->creerRefuserVisaForm($crep);
             $refuserNotificationForm = $this->creerRefuserNotificationForm($crep);
             $viserAgentForm = $this->creerViserAgentForm($crep);
@@ -149,14 +153,18 @@ class CrepController extends Controller
      */
     public function editAction(Request $request, Crep $crep)
     {
-//     	dump($crep);die;
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::EDIT, $crep);
         $role = $this->get('session')->get('selectedRole');
         $role = strtolower(str_replace('ROLE_', '', $role));
-        $editForm = $this->createEditForm($crep);
+        
+        $editForm = $this->createEditForm($crep, [
+            'action' => $this->generateUrl('crep_edit', ['id' => $crep->getId()])
+        ]);
+        
         $editForm->handleRequest($request);
-      
+        
+        
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
@@ -180,6 +188,7 @@ class CrepController extends Controller
         return $this->render('crep/'.$repertoireVuesCrep.'/'.$role.'/edit.html.twig', array(
                 'crep' => $crep,
                 'form' => $editForm->createView(),
+                'action' => 'EDIT',
                 'errors' => $formErrors,
         ));
     }
@@ -194,18 +203,42 @@ class CrepController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function signerShdAction(Crep $crep, CrepManager $crepManager)
+    public function signerShdAction(Request $request, Crep $crep, CrepManager $crepManager)
     {
         //Voter
         $this->denyAccessUnlessGranted(CrepVoter::SIGNER_SHD, $crep);
-        $crepManager->signerShd($crep);
-        $this
-                ->get('session')
-                ->getFlashBag()
-                ->set('notice', "CREP signé et transmis à l'agent !")
-        ;
+        
+        $editForm = $this->createEditForm($crep, [
+            'action' => $this->generateUrl('crep_edit', ['id' => $crep->getId()]),
+            'validation_groups' => ['SignatureShd', 'Default']
+        ]);
+        
+        
+        $editForm->handleRequest($request);
+        
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $crepManager->signerShd($crep);
+            $this
+            ->get('session')
+            ->getFlashBag()
+            ->set('notice', "CREP signé et transmis à l'agent !")
+            ;
+            
+            return $this->redirectToRoute('campagne_shd_show', array('id' => $crep->getAgent()->getCampagneBrhp()->getId()));
+        }
+        
+        $role = $this->get('session')->get('selectedRole');
+        $role = strtolower(str_replace('ROLE_', '', $role));
+        $formErrors = $editForm->getErrors(true);
+        $repertoireVuesCrep = lcfirst(Util::getClassName($crep));
+        
+        return $this->render('crep/'.$repertoireVuesCrep.'/'.$role.'/edit.html.twig', array(
+            'crep' => $crep,
+            'form' => $editForm->createView(),
+            'action' => 'SIGNER_SHD',
+            'errors' => $formErrors,
+        ));
 
-        return $this->redirectToRoute('campagne_shd_show', array('id' => $crep->getAgent()->getCampagneBrhp()->getId()));
     }
 
     /**
@@ -420,24 +453,6 @@ class CrepController extends Controller
         ));
     }
 
-    /**
-     * Génére le formulaire de signature du SHD.
-     *
-     * @param Crep $crep
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function creerSignerShdForm(Crep $crep)
-    {
-        return $this
-                        ->createFormBuilder()
-                        ->setAction($this->generateUrl('crep_signer_shd', array(
-                                    'id' => $crep->getId(),
-                        )))
-                        ->setMethod('PUT')
-                        ->getForm()
-        ;
-    }
 
     /**
      * Génére le formulaire de refus de visa de l'agent.
@@ -603,18 +618,18 @@ class CrepController extends Controller
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function createEditForm(Crep $crep)
+    private function createEditForm(Crep $crep, $options=[])
     {
         $classeCrep = Util::getClassName($crep);
 
         $role = $this->get('session')->get('selectedRole');
-
+        
         if($role === 'ROLE_SHD'){
-            $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'Type', $crep);
+            $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'Type', $crep, $options);
         }elseif ($role === 'ROLE_AGENT'){
-            $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'AgentType', $crep);
+            $editForm = $this->createForm('AppBundle\Form\Crep\\'.$classeCrep.'\\'.$classeCrep.'AgentType', $crep, $options);
         }elseif ($role === 'ROLE_AH') {
-            $editForm = $this->createForm('AppBundle\Form\Crep\\' . $classeCrep . '\\' . $classeCrep . 'AhType', $crep);
+            $editForm = $this->createForm('AppBundle\Form\Crep\\' . $classeCrep . '\\' . $classeCrep . 'AhType', $crep, $options);
         }else{
             throw new \Exception("Le role de l'utilisarteur doit être ROLE_SHD, ROLE_AGENT ou ROLE_AH");
         }

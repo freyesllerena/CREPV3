@@ -33,7 +33,7 @@ class CrepMcc02Formation extends GenericEntity
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $commentaires;
 

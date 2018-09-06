@@ -18,10 +18,10 @@ class CrepMso3Formation extends GenericEntity
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true, length=255)
-     * @Assert\NotBlank(message = "Champ obligatoire", groups={"EnregistrementShd"})
+     * @Assert\NotBlank(message = "Champ obligatoire")
      * @Assert\Length(
      *    max = 255,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $libelle;
 
@@ -31,7 +31,7 @@ class CrepMso3Formation extends GenericEntity
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $commentaires;
 

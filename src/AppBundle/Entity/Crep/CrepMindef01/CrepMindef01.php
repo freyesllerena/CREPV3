@@ -41,7 +41,7 @@ class CrepMindef01 extends Crep
 
     /**
      * @var string @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Nom de famille obligatoire")
+     * @Assert\NotBlank(message = "Nom de famille obligatoire", groups={"SignatureShd"})
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -58,7 +58,7 @@ class CrepMindef01 extends Crep
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Prénom obligatoire")
+     * @Assert\NotBlank(message = "Prénom obligatoire", groups={"SignatureShd"})
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -124,7 +124,7 @@ class CrepMindef01 extends Crep
 
     /**
      * @var string @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Nom de famille obligatoire")
+     * @Assert\NotBlank(message = "Nom de famille obligatoire", groups={"SignatureShd"})
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -142,7 +142,7 @@ class CrepMindef01 extends Crep
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Prénom obligatoire")
+     * @Assert\NotBlank(message = "Prénom obligatoire", groups={"SignatureShd"})
      * @Assert\Length(
      *    min = 2,
      *    max = 50,

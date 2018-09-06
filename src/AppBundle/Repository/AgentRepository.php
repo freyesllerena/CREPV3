@@ -17,6 +17,7 @@ use AppBundle\EnumTypes\EnumStatutValidationAgent;
 use AppBundle\Entity\Utilisateur;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Ministere;
 
 
 /**
@@ -817,6 +818,50 @@ class AgentRepository extends EntityRepository
 
         return !empty($result);
     }
+    
+    /*
+     * retourne l'utilisateur $shd est N+1 sur le ministere $ministere
+     */
+    public function isShdByMinistere(Utilisateur $shd, Ministere $ministere)
+    {
+        $qb = $this->createQueryBuilder('agent');
+        
+        $qb->innerJoin('agent.shd', 'shd')
+        ->innerJoin('agent.campagnePnc', 'campagnePnc')
+        ->select('shd.id')
+        ->where('campagnePnc.ministere = :MINISTERE')
+        ->andWhere('shd.utilisateur = :SHD')
+        ->setParameter('MINISTERE', $ministere)
+        ->setParameter('SHD', $shd)
+        ->setMaxResults(1);
+        
+        $result = $qb->getQuery()->getScalarResult();
+        
+        return !empty($result);
+    }
+    
+    
+    /*
+     * retourne l'utilisateur $ah est N+2 sur le ministere $ministere
+     */
+    public function isAhByMinistere(Utilisateur $ah, Ministere $ministere)
+    {
+        $qb = $this->createQueryBuilder('agent');
+        
+        $qb->innerJoin('agent.ah', 'ah')
+        ->innerJoin('agent.campagnePnc', 'campagnePnc')
+        ->select('ah.id')
+        ->where('campagnePnc.ministere = :MINISTERE')
+        ->andWhere('ah.utilisateur = :AH')
+        ->setParameter('MINISTERE', $ministere)
+        ->setParameter('AH', $ah)
+        ->setMaxResults(1);
+        
+        $result = $qb->getQuery()->getScalarResult();
+        
+        return !empty($result);
+    }
+    
 
     public function detacherAgentsDunBrhp($uoEnMoins)
     {

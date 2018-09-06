@@ -117,7 +117,7 @@ class CampagneShdController extends Controller
         $template = 'campagneShd/show.html.twig';
 
         /* @var $ministere Ministere */
-        $ministere = $this->getUser()->getMinistere();
+        $ministere = $campagneShd->getMinistere();
 
         /* @var $modeleCrepRepository ModeleCrepRepository */
         $modeleCrepRepository = $em->getRepository('AppBundle:ModeleCrep');

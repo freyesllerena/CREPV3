@@ -3,17 +3,6 @@
 <div class="row" id="formationsDemandeesAgentCollection" data-prototype="{{ form_widget(form.formationsDemandeesAgent.vars.prototype)|e('html_attr') }}">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Typologie</th>
-            	<th>Libellé de la formation</th>
-            	<th>Code de la formation</th>
-                <th nowrap class="text-center" width="9%">Priorité</th>
-                <th nowrap width="180px" class="text-center">Niveau SAME</th>
-                <th class="text-center">CPF</th>
-                <th width="85px" class="text-center"></th>
-            </tr>
-            </thead>
             <tbody>
             {% for formation in form.formationsDemandeesAgent %}
                 {{ form_widget(formation, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}

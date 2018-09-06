@@ -59,7 +59,7 @@ class CrepMcc02 extends Crep
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Nom obligatoire")
+     * @Assert\NotBlank(message = "Nom obligatoire", groups={"SignatureShd"})
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -71,7 +71,7 @@ class CrepMcc02 extends Crep
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message = "Prénom obligatoire")
+     * @Assert\NotBlank(message = "Prénom obligatoire", groups={"SignatureShd"})
      * @Assert\Length(
      *    min = 2,
      *    max = 50,
@@ -368,7 +368,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $fonctionsExercees;
 
@@ -385,7 +385,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="string")
      * @Assert\Length(
      *    max = 255,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $libelleEmploiFonctionnel;
 
@@ -394,7 +394,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="string")
      * @Assert\Length(
      *    max = 255,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $groupeEmploiFonctionnel;
 
@@ -404,7 +404,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="string")
      * @Assert\Length(
      *    max = 255,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $groupeFonctions;
 
@@ -446,7 +446,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $contexteAnneeEcoulee;
 
@@ -456,7 +456,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $natureDossiersTravaux;
 
@@ -466,7 +466,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $resultatsObtenusParAgent;
 
@@ -476,7 +476,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $contexteResultats;
 
@@ -498,7 +498,7 @@ class CrepMcc02 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $pointsActualisesFichePoste;
 

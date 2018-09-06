@@ -19,12 +19,12 @@ class CrepMso3Competence extends GenericEntity
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true, length=255)
-     * @Assert\NotBlank(message = "Champ obligatoire", groups={"EnregistrementShd"})
+     * @Assert\NotBlank(message = "Champ obligatoire")
      * @Assert\Length(
      *    min = 2,
      *    max = 255,
      *    minMessage = "Le champ doit faire au moins {{ limit }} caractères",
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $libelle;
 
@@ -41,7 +41,7 @@ class CrepMso3Competence extends GenericEntity
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $appreciation;
 
@@ -123,7 +123,7 @@ class CrepMso3Competence extends GenericEntity
     }
 
     /**
-     * @Assert\Callback(groups={"EnregistrementShd"})
+     * @Assert\Callback()
      */
     public function validateCrepMso3CompetenceNiveau(ExecutionContextInterface $context)
     {

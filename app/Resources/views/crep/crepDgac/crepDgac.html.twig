@@ -64,7 +64,7 @@
 
 
 <!-- page 1 -->
-
+<br><br><br>
 <table>
     <tr>
         <th colspan="2">AGENT</th>
@@ -102,122 +102,102 @@
     </tr>
 </table><br><br>
 
-<font size="+2">
-    <div class="text-center">
+
+    <div style="font-size: 18px" class="text-center">
         <strong>
             DIRECTION GENERALE DE L'AVIATION CIVILE<br>
         </strong>
         <br>
         <strong>
             COMPTE-RENDU DE L’ENTRETIEN PROFESSIONNEL<br>
-            REGARDS SUR L'ANNEE EVALUEE<br>
-            ANNEE : {{ crep.agent.campagnePnc.anneeEvaluee }}
+            REGARDS SUR L'ANNÉE ÉVALUÉE
         </strong>
+        <div style="font-size: 14px">ANNEE : {{ crep.agent.campagnePnc.anneeEvaluee }}</div>
     </div>
-</font><br><br>
+<br><br>
 
 <div class="col-md-6 col-sm-6 col-xs-12">
     Date de l'entretien :{% if crep.dateEntretien %}{{ crep.dateEntretien | date('d/m/Y') }}{% endif %}<br><br>
-    Nom du Service : {{ crep.service }}<br>
-    Intitulé du poste : {{ crep.posteOccupe }}<br>
+    <strong style="font-size: 10px">Nom du Service :</strong> {{ crep.service }}<br>
+    <strong style="font-size: 10px">Intitulé du poste :</strong> {{ crep.posteOccupe }}<br>
 </div>
 
-<font size="-2">
-    <table>
-        <strong>LE CONTEXTE</strong> <i>(politique, environnement, organisation, moyens, coopération interne ou externe,
-            etc...)</i><br>
-        {{ crep.contexteAnneeEcoulee|nl2br }}<br><br><br><br>
-    </table>
-    <br><br>
 
-    <table>
-        <tr>
-            <th class="text-center"><strong>MISSIONS ET ACTIVITÉS</strong></th>
-            <th class="text-center"><strong>ÉLÉMENTS OBSERVÉS</strong></th>
-        </tr>
-        <tr>
-            <td class="bordered-right">➔ Quelles sont les principales contributions attendues sur le poste ?<br>
-                {{ crep.descriptionPosteMission|nl2br }}</td>
-            <td><u>Par le supérieur hiérarchique :</u><br>
-                <i>La fiche de poste reflète-t-elle cette réalité ? Le contenu du poste a-t-il subi des modifications
-                    depuis le dernier entretien ? Contraintes liées au poste, à l'organisation, etc...</i><br>
-                {{ crep.elementsObservesShd|nl2br }}<br><br><u>Par l'agent :</u><br><i>La fiche de poste reflète-t-elle
-                    cette réalité ? Le contenu du poste a-t-il
-                    subi des modifications depuis le dernier entretien ? Contraintes liées au poste, à l'organisation,
-                    etc...</i><br>
-                {{ crep.elementsObservesAgent|nl2br }}</td>
-            <br><br>
-        </tr>
-    </table>
-</font><br><br>
+<table>
+    <tr>
+        <td><strong style="font-size: 12px">LE CONTEXTE</strong><i>(politique, environnement, organisation, moyens, coopération interne ou
+                externe,
+                etc...)</i></td>
+    </tr>
+    <tr>
+        <td>{{ crep.contexteAnneeEcoulee|nl2br }}<br><br><br><br></td>
+    </tr>
+</table>
+<br><br>
+
+<table>
+    <tr>
+        <th class="text-center"><strong>MISSIONS ET ACTIVITÉS</strong></th>
+        <th class="text-center"><strong>ÉLÉMENTS OBSERVÉS</strong></th>
+    </tr>
+    <tr>
+        <td class="bordered-right">➔ Quelles sont les principales contributions attendues sur le poste ?<br>
+            {{ crep.descriptionPosteMission|nl2br }}</td>
+        <td><u>Par le supérieur hiérarchique :</u><br>
+            <i>La fiche de poste reflète-t-elle cette réalité ? Le contenu du poste a-t-il subi des modifications
+                depuis le dernier entretien ? Contraintes liées au poste, à l'organisation, etc...</i><br>
+            {{ crep.elementsObservesShd|nl2br }}<br><br><u>Par l'agent :</u><br><i>La fiche de poste reflète-t-elle
+                cette réalité ? Le contenu du poste a-t-il
+                subi des modifications depuis le dernier entretien ? Contraintes liées au poste, à l'organisation,
+                etc...</i><br>
+            {{ crep.elementsObservesAgent|nl2br }}</td>
+        <br><br>
+    </tr>
+</table>
+<br><br>
 
 {#<font size="+1">#}
 <u><strong>COMPOSANTES DU POSTE :</strong></u>
 {#</font>#}
 <br><br>
 
-<font size="-2">
-    <table>
+<table cellpadding="5">
+    <tr>
+        <th class="text-center" width="25%"><strong>COMPOSANTES</strong></th>
+        <th class="text-center" width="15%"><strong>COMPOSANTE FAIBLE</strong></th>
+        <th class="text-center" width="15%"><strong>COMPOSANTE MOYENNE</strong></th>
+        <th class="text-center" width="15%"><strong>COMPOSANTE DOMINANTE</strong></th>
+        <th class="text-center" width="30%"><strong>OBSERVATIONS</strong></th>
+    </tr>
+
+    {% for index, composantePoste in crep.composantesPostes %}
         <tr>
-            <th class="text-center" width="25%"><strong>COMPOSANTES</strong></th>
-            <th class="text-center" width="15%"><strong>COMPOSANTE FAIBLE</strong></th>
-            <th class="text-center" width="15%"><strong>COMPOSANTE MOYENNE</strong></th>
-            <th class="text-center" width="15%"><strong>COMPOSANTE DOMINANTE</strong></th>
-            <th class="text-center" width="30%"><strong>OBSERVATIONS</strong></th>
+            <td style="border: 1px #000000 solid;">{{ composantePoste.libelle }}</td> {% for index in 0..2 %}
+                <td style="border: 1px #000000 solid;" class="text-center">
+                    {% if composantePoste.niveauRequis == index %} X {% else %} {% endif %}</td>
+            {% endfor %}
+            <td style="border: 1px #000000 solid;">{{ composantePoste.appreciation|nl2br }}</td>
         </tr>
+    {% endfor %}
+
+    {% for index, autreComposantePoste in crep.autresComposantesPostes %}
         <tr>
-            <td style="border: 1px solid black;">Activités ou compétences énoncées dans la fiche
-                de poste : détailler<br></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
+            <td style="border: 1px #000000 solid;">{{ autreComposantePoste.libelle }}</td> {% for index in 0..2 %}
+                <td style="border: 1px #000000 solid;" class="text-center">
+                    {% if autreComposantePoste.niveauRequis == index %} X {% else %} {% endif %}</td>
+            {% endfor %}
+            <td style="border: 1px #000000 solid;">{{ autreComposantePoste.appreciation|nl2br }}</td>
         </tr>
-        <tr>
-            <td style="border: 1px solid black;">Organisationnelle (du travail, de l'activité,
-                de réunion, d'agendas...)<br></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">Travail en équipe<br></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">Management<br></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">Conduite de projet<br></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">Autres...<br></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-            <td style="border: 1px solid black;"></td>
-        </tr>
-    </table>
-</font><br>
+    {% endfor %}
+</table>
 
 <!-- page 2 -->
 
 <div style="page-break-before:always;"></div>
+
 <table>
     <tr>
-        <th><i>A - ATTEINTE DES OBJECTIFS ET ACTIONS CONDUITES</i></th>
+        <th style="font-size: 14px"><i>A - ATTEINTE DES OBJECTIFS ET ACTIONS CONDUITES</i></th>
     </tr>
 </table><br><br>
 
@@ -230,14 +210,15 @@
         <td height="100%" class="bordered-right"><strong>Objectifs
                 permanents</strong><br><br>{{ crep.elementsPermanents|nl2br }}
             <br><br><strong>Objectifs particuliers</strong><br><br>{{ crep.elementsParticuliers|nl2br }}</td>
-        <td><u>Par le supérieur hiérarchique :</u><br>Quels sont les réalisations et les résultats obtenus par l'agent ?<br>{{ crep.resultatsObtenusParAgent|nl2br }}
+        <td class="bordered-bottom"><u>Par le supérieur hiérarchique :</u><br>Quels sont les réalisations et les
+            résultats obtenus par l'agent ?<br>{{ crep.resultatsObtenusParAgent|nl2br }}
             <br><br>Y a-t-il des dossiers marquants non définis initialement (dans les objectifs de l'année écoulée
             et/ou dans
             la fiche de poste) dans lesquels l'agent s'est investi ?<br>{{ crep.resultatAutresActivites|nl2br }}<br><br><i>Difficultés
                 particulières (éventuelles)</i><br>{{ crep.obsShdObjectifsEvalues|nl2br }}<br><br></td>
     </tr>
     <tr>
-        <td height="0%"></td>
+        <td height="0%" class="bordered-right"></td>
         <td><u>Par l'agent :</u><br>Quels sont les réalisations et les résultats obtenus par l'agent
             ?<br>{{ crep.resultatsObtenusParAgent|nl2br }}
             <br><br>Y a-t-il des dossiers marquants non définis initialement (dans les objectifs de l'année écoulée
@@ -253,17 +234,18 @@
 
 <table>
     <tr>
-        <th><i style="font-size: 10px">B - CONTRIBUTIONS AUX COMPETENCES COLLECTIVES ET AU FONCTIONNEMENT DU SERVICE</i>
+        <th style="font-size: 14px"><i>B - CONTRIBUTIONS AUX COMPETENCES COLLECTIVES ET AU FONCTIONNEMENT DU SERVICE</i>
         </th>
     </tr>
-</table>
-<br><br>
-<font size="-2">
-    Formation reçue/donnée, participation au développement des compétences et connaissances, capacité à créer une
+</table><br>
+
+<div style="font-size: 9px">Formation reçue/donnée, participation au développement des compétences et connaissances,
+    capacité à créer une
     dynamique de groupe, capacité à s’insérer dans un groupe
     (cf. guides de l’évalué ou du compte rendu) , force de proposition, communication, participation à des groupes de
     travail stratégiques, vie sociale, intérim…
-</font><br><br>
+</div>
+<br><br>
 <table>
     <tr>
         <th class="text-center"><strong>ÉLÉMENTS PRÉVUS</strong></th>
@@ -286,17 +268,15 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
 
 <div style="page-break-before:always;"></div>
 
-<font size="+3">
-    <table>
-        <tr>
-            <th><i>C – APPRÉCIATION DES CONNAISSANCES ET COMPÉTENCES PROFESSIONNELLES</i></th>
-        </tr>
-    </table>
-</font><br><br>
+<table>
+    <tr>
+        <th style="font-size: 14px"><i>C – APPRÉCIATION DES CONNAISSANCES ET COMPÉTENCES PROFESSIONNELLES</i></th>
+    </tr>
+</table><br><br>
 
 <u>Degré d'acquisitions au regard des besoins sur le poste :</u><br><br>
 
-<table>
+<table cellpadding="5">
     <tr>
         <th class="text-center" width="25%"><strong>COMPOSANTES</strong></th>
         <th class="text-center" width="15%"><strong>À DÉVELOPPER</strong></th>
@@ -304,50 +284,27 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
         <th class="text-center" width="15%"><strong>MAITRISÉE</strong></th>
         <th class="text-center" width="30%"><strong>OBSERVATIONS</strong></th>
     </tr>
-    <tr>
-        <td style="border: 1px solid black;">Activités ou compétences énoncées dans la fiche
-            de poste : détailler<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Organisationnelle (du travail, de l'activité,
-            de réunion, d'agendas...)<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Travail en équipe<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Management<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Conduite de projet<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Autres...<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
+
+    {% for index, competenceProfessionnelle in crep.competencesProfessionnelles %}
+        <tr>
+            <td style="border: 1px #000000 solid;">{{ competenceProfessionnelle.libelle }}</td>
+            {% for index in 0..2 %}
+                <td style="border: 1px #000000 solid;" class="text-center">
+                    {% if competenceProfessionnelle.niveauRequis == index %} X {% else %} {% endif %}</td>
+            {% endfor %}
+            <td style="border: 1px #000000 solid;"> {{ competenceProfessionnelle.appreciation|nl2br }} </td>
+        </tr>
+    {% endfor %}
+
+    {% for index, autreCompetenceProfessionnelle in crep.autresCompetencesProfessionnelles %}
+        <tr>
+            <td style="border: 1px #000000 solid;">{{ autreCompetenceProfessionnelle.libelle }}</td> {% for index in 0..2 %}
+                <td style="border: 1px #000000 solid;" class="text-center">
+                    {% if autreCompetenceProfessionnelle.niveauRequis == index %} X {% else %} {% endif %}</td>
+            {% endfor %}
+            <td style="border: 1px #000000 solid;">{{ autreCompetenceProfessionnelle.appreciation|nl2br }}</td>
+        </tr>
+    {% endfor %}
 </table><br><br>
 
 <u>Pour les agents en situation de management :</u><br><br>
@@ -359,116 +316,49 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
         <th class="text-center" width="21%">MAÎTRISÉ</th>
         <th class="text-center" width="33%">OBSERVATIONS</th>
     </tr>
-    <tr>
-        <td style="border: 1px solid black;">Sens du travail en équipe<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Capacité à encadrer, déléguer, assurer le suivi des dossiers<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Aptitude à former des collaborateurs<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Aptitude aux responsabilités/prise de décision<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Sens de l'organisation<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Aptitude à la communication interne et externe<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Aptitude à la négociation/la médiation<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Sens des relations humaines<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
+    {% for index, competenceManageriale in crep.competencesManageriales %}
+        <tr>
+            <td style="border: 1px #000000 solid;">{{ competenceManageriale.libelle }}</td>
+            {% for index in 0..1 %}
+                <td style="border: 1px #000000 solid;" class="text-center">
+                    {% if competenceManageriale.niveauRequis == index %} X {% else %} {% endif %}</td>
+            {% endfor %}
+            <td style="border: 1px #000000 solid;"> {{ competenceManageriale.appreciation|nl2br }} </td>
+        </tr>
+    {% endfor %}
 </table><br><br>
 
 <u>Synthèse sur la manière de servir :</u><br><br>
 
 <table>
     <tr>
-        <th></th>
+        <th class="text-center" width="14%"></th>
         <th class="text-center" width="14%"><strong>FAIBLE</strong></th>
         <th class="text-center" width="14%"><strong>MOYEN</strong></th>
         <th class="text-center" width="14%"><strong>FORT</strong></th>
         <th class="text-center" width="14%"><strong>EXCELLENT</strong></th>
         <th class="text-center" width="30%"><strong>OBSERVATIONS</strong></th>
     </tr>
-    <tr>
-        <td style="border: 1px solid black;">Maîtrise des techniques, des dossiers<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Efficacité<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Respect des délais<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Adaptation aux situations nouvelles<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Esprit d'initiative<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Implication<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
-    <tr>
-        <td style="border: 1px solid black;">Autres qualités à mettre en évidence : citer<br></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-        <td style="border: 1px solid black;"></td>
-    </tr>
+    {% for index, competenceSynthese in crep.competencesSyntheses %}
+        <tr>
+            <td style="border: 1px #000000 solid;">{{ competenceSynthese.libelle }}</td>
+            {% for index in 0..3 %}
+                <td style="border: 1px #000000 solid;" class="text-center">
+                    {% if competenceSynthese.niveauRequis == index %} X {% else %} {% endif %}</td>
+            {% endfor %}
+            <td style="border: 1px #000000 solid;"> {{ competenceSynthese.appreciation|nl2br }} </td>
+        </tr>
+    {% endfor %}
+
+    {% for index, autreCompetenceSynthese in crep.autresCompetencesSyntheses %}
+        <tr>
+            <td style="border: 1px #000000 solid;">{{ autreCompetenceSynthese.libelle }}</td> {% for index in 0..2 %}
+                <td style="border: 1px #000000 solid;" class="text-center">
+                    {% if autreCompetenceSynthese.niveauRequis == index %} X {% else %} {% endif %}</td>
+            {% endfor %}
+            <td style="border: 1px #000000 solid;">{{ autreCompetenceSynthese.appreciation|nl2br }}</td>
+        </tr>
+    {% endfor %}
 </table><br><br>
 
 <table>
@@ -519,7 +409,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
 <div style="page-break-before:always;"></div>
 
 <font size="+2" class="text-center">
-    ENTRETIEN PROFESSIONNEL ANNEE 2017<br>
+    ENTRETIEN PROFESSIONNEL ANNEE {{ crep.agent.campagnePnc.anneeEvaluee }}<br>
     <strong>POUR L’ANNEE SUIVANTE 2018</strong>
 </font><br><br>
 
@@ -542,7 +432,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
 
 <table>
     <tr>
-        <th><i>A - OBJECTIFS</i></th>
+        <th style="font-size: 14px"><i>A - OBJECTIFS</i></th>
     </tr>
 </table><br><br>
 
@@ -551,7 +441,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
         <th class="text-center">RÉSULTATS ATTENDUS</th>
     </tr>
     <tr>
-        <td>Objectifs permanents :<br><br>{{ crep.objectifsPermanentsAvenir|nl2br }}<br></td>
+        <td class="bordered-bottom">Objectifs permanents :<br><br>{{ crep.objectifsPermanentsAvenir|nl2br }}<br></td>
     </tr>
     <tr>
         <td>Objectifs particuliers :<br><br>{{ crep.objectifsParticuliersAvenir|nl2br }}<br></td>
@@ -564,7 +454,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
 
 <table>
     <tr>
-        <th><i>B - CONTRIBUTIONS AUX COMPÉTENCES COLLECTIVES</i></th>
+        <th style="font-size: 14px"><i>B - CONTRIBUTIONS AUX COMPÉTENCES COLLECTIVES</i></th>
     </tr>
 </table><br>
 
@@ -587,16 +477,17 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
     <tr>
         <td class="bordered-right"><strong>Avis du supérieur hiérarchique sur les perspectives d'évolution<br><br><u>Mobilité
                     professionnelle
-                    et/ou géographique :</u><br>{{ crep.mobilite|nl2br }}<br><br><u>Aptitude constatée à exercer des
-                    responsabilités supérieures :</u><br>{{ crep.priseDeResponsabilites|nl2br }}<br><br></strong></td>
-        <td><strong>Souhaits de l'agent sur les perspectives d'évolution<br>{{ crep.typeEvolutionCarriere|nl2br }}
-            </strong></td>
+                    et/ou géographique :</u></strong><br>{{ crep.mobilite|nl2br }}<br><br><strong><u>Aptitude constatée
+                    à exercer des
+                    responsabilités supérieures :</u></strong><br>{{ crep.priseDeResponsabilites|nl2br }}<br><br></td>
+        <td><strong>Souhaits de l'agent sur les perspectives
+                d'évolution</strong><br>{{ crep.typeEvolutionCarriere|nl2br }}</td>
     </tr>
 </table><br><br>
 
 <table>
     <tr>
-        <th colspan="13">Mobilité souhaitée par l'agent <font color="red">(boutons radios)</font></th>
+        <th colspan="13">Mobilité souhaitée par l'agent</th>
     </tr>
     <tr>
         <td width="3%"></td>
@@ -615,22 +506,22 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
     </tr>
     <tr>
         <td width="3%"></td>
-        <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+        <td width="3%" style="font-size: 8px" class="fullbordered"><span
+                    style="font-size: 8px" class="text-center"></span>{% if crep.souhaitMobilite == true %} X{% endif %}</td>
         <td width="6%" class="bordered-right">&nbsp;Oui</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 0 %} X{% endif %}</span></td>
         <td width="15%">&nbsp;Dès que possible</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 2 %} X{% endif %}</span></td>
         <td width="14%" class="bordered-right">&nbsp;Dans 2 ans</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.memeService %} X{% endif %}</span></td>
         <td width="16%">&nbsp;Au sein du service</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.dansLeDepartement %} X{% endif %}</span></td>
         <td width="25%" class="bordered-right">&nbsp;Dans le département (DDE, SN…)</td>
     </tr>
     <tr>
@@ -651,21 +542,21 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
     <tr>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.souhaitMobilite  == false %} X{% endif %}</span></td>
         <td width="6%" class="bordered-right">&nbsp;Non</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 1 %} X{% endif %}</span></td>
         <td width="15%">&nbsp;Dans 1 an</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 3 %} X{% endif %}</span></td>
         <td width="14%" class="bordered-right">&nbsp;Dans 3 ans ou +</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.horsInterRegion %} X{% endif %}</span></td>
         <td width="16%">&nbsp;Hors inter région</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.dansInterRegion %} X{% endif %}</span></td>
         <td width="25%" class="bordered-right">&nbsp;Dans inter région (CIFP…)</td>
     </tr>
     <tr>
@@ -694,16 +585,16 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
         <td width="26.6%" class="bordered-right"></td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.region %} X{% endif %}</span></td>
         <td width="16%">&nbsp;Région</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.international %} X{% endif %}</span></td>
         <td width="25%" class="bordered-right">&nbsp;International</td>
     </tr>
     <tr>
         <td width="3%"></td>
         <td width="3%"></td>
-        <td width="6%"></td>
+        <td width="6%" class="bordered-right"></td>
         <td width="3%"></td>
         <td width="3%"></td>
         <td width="15"></td>
@@ -891,43 +782,45 @@ Autorité hiérarchique<br><br>
 
 <table>
     <tr>
-        <th class="text-center"><strong>Intitulé du stage</strong></th>
-        <th class="text-center"><strong>Indice de satisfaction </strong>(de 1 à 5*)</th>
-        <th class="text-center"><strong>Avez-vous utilisé cete formation ?</strong>(oui/non)</th>
-        <th class="text-center"><strong>Commentaires de l'agent</strong></th>
-        <th class="text-center"><strong>Avez-vous utilisé la documentation ?</strong></th>
-        <th class="text-center"><strong>Foramtions complémentaires à prévoir</strong></th>
-        <th class="text-center"><strong>Avis du supérieur hiérarchique sur l'efficacité de la formation</strong></th>
+        <td class="text-center fullbordered" width="14%">Intitulé du stage</td>
+        <td class="text-center fullbordered" width="9%">Indice de satisfaction (de 1 à 5*)</td>
+        <td class="text-center fullbordered" width="9%">Avez-vous utilisé cette formation (oui/non)</td>
+        <td class="text-center fullbordered" width="18%">Commentaires de l'agent</td>
+        <td class="text-center fullbordered" width="12%">&nbsp;Avez-vous utilisé la documentation ?</td>
+        <td class="text-center fullbordered" width="13%">Formations complémentaires à prévoir</td>
+        <td class="text-center fullbordered" width="25%">Avis du supérieur hiérarchique sur l'efficacité de la
+            formation
+        </td>
     </tr>
     <tr>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
     </tr>
     <tr>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
     </tr>
     <tr>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
-        <td><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
+        <td class="bordered-bottom bordered-right"><br><br></td>
     </tr>
 </table><br>
-<strong><i>* Indice 5 correspong à excellent</i></strong>
+<strong><i>* Indice 5 correspond à excellent</i></strong>
 <br>
 
 <!-- page 8 -->

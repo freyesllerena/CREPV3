@@ -48,43 +48,10 @@ class CrepMindef01Type extends CrepType
                     )
                 )
             ->add('corps', null, ['required' => false])
-            ->add(
-                'dateEntreeCorps',
-                DateType::class,
-                array(
-                    'label' => false,
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => 'dd/MM/yyyy',
-                    'required' => false,
-                    )
-                )
             ->add('grade', null, ['required' => false])
-            ->add(
-                'dateEntreeGrade',
-                DateType::class,
-                array(
-                    'label' => false,
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => 'dd/MM/yyyy',
-                    'required' => false,
-                    )
-                )
             ->add('echelon', null, ['required' => false])
-            ->add(
-                'dateEntreeEchelon',
-                DateType::class,
-                array(
-                    'label' => false,
-                    'widget' => 'single_text',
-                    'input' => 'datetime',
-                    'format' => 'dd/MM/yyyy',
-                    'required' => false,
-                    )
-                )
-             ->add('categorieAgent', null, ['required' => false])
-             ->add('categorieShd', null, ['required' => false])
+            ->add('categorieAgent', null, ['required' => false])
+            ->add('categorieShd', null, ['required' => false])
             ->add('codePosteAlliance', null, ['required' => false])
             ->add('nomNaissanceShd')
             ->add('nomUsageShd', null, ['required' => false])
@@ -155,9 +122,6 @@ class CrepMindef01Type extends CrepType
                         'multiple' => false,
                     ]
             )
-            ->add('capitalDif', TextType::class)
-            ->add('capitalDifMobilisable', TextType::class)
-            ->add('capitalDifEstimation', TextType::class)
             ->add(
                 'evaluationGlobale',
                 ChoiceType::class,

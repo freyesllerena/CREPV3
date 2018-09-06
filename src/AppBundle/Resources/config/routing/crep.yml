@@ -15,14 +15,14 @@ crep_edit:
 crep_signer_shd:
     path:     /{id}/signer-shd
     defaults: { _controller: "AppBundle:Crep:signerShd" }
-    methods:  [PUT]
+    methods:  [POST]
     requirements:
         id: '\d+'
         
 crep_viser_agent:
     path:     /{id}/viser-agent
     defaults: { _controller: "AppBundle:Crep:viserAgent" }
-    methods:  [PUT] 
+    methods:  PUT
     requirements:
         id: '\d+'
             

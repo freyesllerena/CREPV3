@@ -49,7 +49,7 @@ class CrepMso3AptitudeManagementAgent extends CrepMso3Competence
     }
 
     /**
-     * @Assert\Callback(groups={"EnregistrementShd"})
+     * @Assert\Callback()
      */
     public function validateCrepMso3CompetenceNiveau(ExecutionContextInterface $context)
     {

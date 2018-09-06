@@ -113,9 +113,9 @@ class CampagneBrhpVoter extends Voter
             return false;
         }
 
-        if ($utilisateur->getMinistere()->getId() != $campagneBrhp->getMinistere()->getId()) {
-            return false;
-        }
+//         if ($utilisateur->getMinistere()->getId() != $campagneBrhp->getMinistere()->getId()) {
+//             return false;
+//         }
 
         switch ($attribute) {
             case self::MODIFIER:
@@ -244,11 +244,9 @@ class CampagneBrhpVoter extends Voter
 
     private function peutShdVoir(CampagneBrhp $campagneBrhp, Utilisateur $utilisateur)
     {
-        // FIXME : les ah sont selectionnés en se basant sur leur adresse email ce qui est une erreur
-        // Il faudrait se baser sur leur compte utilisateur
         /* @var $agentRepository AgentRepository */
         $agentRepository = $this->em->getRepository('AppBundle:Agent');
-
+        
         if ($agentRepository->isShd($utilisateur, $campagneBrhp)) {
             return true;
         }

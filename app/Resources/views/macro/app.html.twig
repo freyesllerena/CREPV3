@@ -34,10 +34,13 @@
                 </div>
             </div>
 			<div class="modal-footer">
-				{{ form_start(form) }}
+				{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 				<button type="button" class="btn btn-default pull-left col-md-2" data-dismiss="modal">Annuler</button>
 				<button type="submit" id="{{ idModal }}_submit" class="btn btn-{{ class }} pull-right col-md-2"  onclick="this.disabled=true;submit();">Oui</button>
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<div class="x_content" style="display: none;">
+					{{ form_rest(form) }}
+				</div>
 				{{ form_end(form) }}
 			</div>
 		</div>

@@ -8,15 +8,7 @@
 {% endblock iii3 %}
 
 {% block content %}
-    {% if errors| length > 0 %}
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-            <strong>Le formulaire de CREP n'est pas valide.</strong><br>
-            Veuillez rectifier votre saisie.
-        </div>
-    {% endif %}
+    {{ block('alertErreurValidationFormulaireCrep') }}
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
     {{ parent() }}

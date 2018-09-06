@@ -54,7 +54,7 @@ class CampagneAhController extends Controller
         $template = 'campagneAh/show.html.twig';
 
         /* @var $ministere Ministere */
-        $ministere = $this->getUser()->getMinistere();
+        $ministere = $campagneAh->getMinistere();
 
         /* @var $modeleCrepRepository  ModeleCrepRepository */
         $modeleCrepRepository = $em->getRepository('AppBundle:ModeleCrep');

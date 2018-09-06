@@ -85,8 +85,7 @@ class CrepMso3AgentType extends CrepType
             'echelleNiveauSame' => null,
             'selectTypologieFormation' => null,
             'ministere' => null,
-               'anneeEvaluation' => null,
-            'validation_groups' => array('Default', 'EnregistrementShd'),
+            'anneeEvaluation' => null,
         ));
     }
 }

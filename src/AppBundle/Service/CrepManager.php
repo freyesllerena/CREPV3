@@ -408,7 +408,7 @@ class CrepManager
      */
     public function genererCrepPdf(Crep $crep, $dest = 'I')
     {
-        $pdf = $this->tcpdf->create(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = $this->tcpdf->create(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false, true);
 
         $repertoireVuesCrep = lcfirst(Util::getClassName($crep));
         $vueCrep = $repertoireVuesCrep.'.html.twig';

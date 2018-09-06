@@ -137,9 +137,9 @@ class AgentVoter extends Voter
         }
 
         // Si l'utilisateur n'est pas ADMIN et n'est pas du même ministere que l'agent
-        if (!$utilisateur->hasRole('ROLE_ADMIN') && $utilisateur->getMinistere()->getId() != $agent->getCampagnePnc()->getMinistere()->getId()) {
-            return false;
-        }
+//         if (!$utilisateur->hasRole('ROLE_ADMIN') && $utilisateur->getMinistere()->getId() != $agent->getCampagnePnc()->getMinistere()->getId()) {
+//             return false;
+//         }
 
         switch ($attribute) {
             case self::MODIFIER:

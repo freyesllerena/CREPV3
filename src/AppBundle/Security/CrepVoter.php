@@ -135,9 +135,9 @@ class CrepVoter extends Voter
         }
 
         // Si l'utilisateur n'est pas du même ministere que l'agent (ayant le Crep)
-        if ($utilisateur->getMinistere()->getId() != $crep->getAgent()->getCampagnePnc()->getMinistere()->getId()) {
-            return false;
-        }
+//         if ($utilisateur->getMinistere()->getId() != $crep->getAgent()->getCampagnePnc()->getMinistere()->getId()) {
+//             return false;
+//         }
 
         if (!in_array($attribute, array(self::VOIR, self::EXPORTER_PDF))
             && $crep->getAgent()->getCampagneBrhp()

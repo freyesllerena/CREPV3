@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use AppBundle\Entity\ModeleCrep;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use AppBundle\Repository\AgentRepository;
 
 class ModeleCrepVoter extends Voter
 {
@@ -71,11 +72,24 @@ class ModeleCrepVoter extends Voter
 
     private function peutExporterModeleVierge(ModeleCrep $modeleCrep, Utilisateur $utilisateur)
     {
-        // Un utilisateur ne peux exporter que le modèle vierge de son ministère
+        // Un utilisateur peut exporter les modèles vierges de son ministère
         if ($modeleCrep->getMinistere() === $utilisateur->getMinistere()) {
             return true;
         }
+        
+        /* @var $agentRepository AgentRepository */
+        $agentRepository = $this->em->getRepository('AppBundle:Agent');
+        
+        if ($agentRepository->isShdByMinistere($utilisateur, $modeleCrep->getMinistere())) {
+            return true;
+        }
+        
+        if ($agentRepository->isAhByMinistere($utilisateur, $modeleCrep->getMinistere())) {
+            return true;
+        }
+        
 
+        
         // Dans tous les autres cas, on refuse l'accès
         return false;
     }

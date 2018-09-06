@@ -132,10 +132,6 @@
 				<td class="noBorder">{{ crep.corps }}</td>
 			</tr>
 			<tr>
-				<td class="noBorder">Date corps :</td>
-				<td class="noBorder"> {% if crep.dateEntreeCorps %}{{ crep.dateEntreeCorps | date('d/m/Y') }}{% endif %}</td>
-			</tr>
-			<tr>
 				<td class="noBorder">&nbsp;</td>
 				<td class="noBorder">&nbsp;</td>
 			</tr>
@@ -144,10 +140,6 @@
 				<td class="noBorder">{{ crep.grade }}</td>
 			</tr>
 			<tr>
-				<td class="noBorder">Depuis le :</td>
-				<td class="noBorder">{% if crep.dateEntreeGrade %}{{ crep.dateEntreeGrade | date('d/m/Y') }}{% endif %}</td>
-			</tr>	
-			<tr>
 				<td class="noBorder">&nbsp;</td>
 				<td class="noBorder">&nbsp;</td>
 			</tr>											
@@ -155,10 +147,6 @@
 				<td class="noBorder">Echelon :</td>
 				<td class="noBorder">{{ crep.echelon }}</td>
 			</tr>
-			<tr>
-				<td class="noBorder">Depuis le :</td>
-				<td class="noBorder">{% if crep.dateEntreeEchelon %}{{ crep.dateEntreeEchelon | date('d/m/Y') }}{% endif %}</td>
-			</tr>		
 			<tr>
 				<td class="noBorder">&nbsp;</td>
 				<td class="noBorder">&nbsp;</td>
@@ -718,8 +706,8 @@
 				<td class="noBorderFormation">Corps :</td>
 				<td class="noBorderFormation">{{ crep.corps }}</td>
 				<td class="noBorderFormation"></td>
-				<td class="noBorderFormation">Depuis le :</td>
-				<td class="noBorderFormation">{% if crep.dateEntreeCorps %}{{ crep.dateEntreeCorps | date('d/m/Y') }}{% endif %}</td>
+				<td class="noBorderFormation"></td>
+				<td class="noBorderFormation"></td>
 			</tr>					
 			<tr>
 				<td class="noBorderFormation">Catégorie :</td>
@@ -738,8 +726,8 @@
 				<td class="noBorderFormation">Grade :</td>
 				<td class="noBorderFormation">{{ crep.grade }}</td>
 				<td class="noBorderFormation"></td>
-				<td class="noBorderFormation">Depuis le :</td>
-				<td class="noBorderFormation">{% if crep.dateEntreeGrade %}{{ crep.dateEntreeGrade | date('d/m/Y') }}{% endif %}</td>
+				<td class="noBorderFormation"></td>
+				<td class="noBorderFormation"></td>
 			</tr>
 			<tr>
 				<td class="noBorderFormation">Affectation (clair) :</td>
@@ -1078,8 +1066,8 @@
 				<td class="noBorderFormation">Corps :</td>
 				<td class="noBorderFormation">{{ crep.corps }}</td>
 				<td class="noBorderFormation"></td>
-				<td class="noBorderFormation">Depuis le :</td>
-				<td class="noBorderFormation">{% if crep.dateEntreeCorps %}{{ crep.dateEntreeCorps | date('d/m/Y') }}{% endif %}</td>
+				<td class="noBorderFormation"></td>
+				<td class="noBorderFormation"></td>
 			</tr>					
 			<tr>
 				<td class="noBorderFormation">Catégorie :</td>
@@ -1098,8 +1086,8 @@
 				<td class="noBorderFormation">Grade :</td>
 				<td class="noBorderFormation">{{ crep.grade }}</td>
 				<td class="noBorderFormation"></td>
-				<td class="noBorderFormation">Depuis le :</td>
-				<td class="noBorderFormation">{% if crep.dateEntreeGrade %}{{ crep.dateEntreeGrade | date('d/m/Y') }}{% endif %}</td>
+				<td class="noBorderFormation"></td>
+				<td class="noBorderFormation"></td>
 			</tr>
 			<tr>
 				<td class="noBorderFormation">Affectation (clair) :</td>
@@ -1292,27 +1280,12 @@
 	        {% endif %}
 		</table> 
 	
-		<h3>7 - Suivi du compte personnel de formation</h3>
+		<h3>7 - État du compte personnel de formation</h3>
 		
 		<div></div>
 		
-		<table>		
-			<tr>
-				<th style="width:49%">Capital CPF au 01.01 de l'année de l'entretien (en h)</th>
-				<td style="width:51%">{{ crep.capitalDif }}</td>
-			</tr>
-			
-			<tr>
-				<th>Capital CPF monopolisable (anticipation) (en h)</th>
-				<td>{{ crep.capitalDifMobilisable }}</td>
-			</tr>
-			
-			<tr>
-				<td style="white-space: nowrap">Estimation de la durée des formations pour lesquelles le CPF sera utilisé (en h)</td>
-				<td>{{ crep.capitalDifEstimation }}</td>
-			</tr>
-							
-		</table>
+		    	Tous vos droits CPF sont consultables sur votre compte personnel CPA depuis cette adresse :<br>
+		<a href='https://www.moncompteactivite.gouv.fr/cpa-public/mes-droits-formation'>https://www.moncompteactivite.gouv.fr/cpa-public/mes-droits-formation</a>
 		
 		<div></div> 
 		<div></div>	

@@ -153,65 +153,77 @@ block javascripts %} {{ parent() }}
             // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
             // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
             var crepCollections = new Crep.Collections();
-
-
-
-            // Titulaire
-            var demarrageMobilite = $("#demarrage-mobilite-souhaitee");
-            var mobilitePoste01 = $("#mobilite-poste-01");
-            var asouhitMobilite = $("#crep_dgac_asouhitMobilite");
-            // var titulaireNon = $("#crep_mj02_titulaire_1");
             
+
+            // VII Formations suivies lors de l'année écoulée
+            var demarrageMobilite = $("#crep_dgac_demarrageMobiliteSouhaitee");
+            var asouhitMobilite = $("#crep_dgac_souhaitMobilite");
+            var mobilitePoste01 = $("#mobilite-poste-01");
+            var mobilitePoste02 = $("#mobilite-poste-02");
             
             if (asouhitMobilite) {
-                console.log(asouhitMobilite);
-            //     if (asouhitMobilite.attr('checked')) {
-            //         isCacheBloc(demarrageMobilite, mobilitePoste01, false);
-            //     } else {
-            //         isCacheBloc(demarrageMobilite, mobilitePoste01);
-            //     }
-            }
-            //
-            // asouhitMobilite.on('ifChanged', function(){
-            //     isCacheBloc(demarrageMobilite, mobilitePoste01, false);
-            // });
-
-
-
-            asouhitMobilite.on('ifChanged', function(){
-                // isCacheBloc(demarrageMobilite, mobilitePoste01);
-                // demarrageMobilite.val('');
-                // mobilitePoste01.val('');
-            });
-
-
-
-            //Fonction permettant de cacher ou non un bloc selon un choix de button radio
-            function isCacheBloc(id1, id2 = false, isHide = true){
-                var label1 = id1.parent().parent().find('label');
-                if (id2) {
-                    var label2 = id2.parent().parent().find('label');
-                }
-
-                if (isHide) {
-                    label1.hide();
-                    id1.hide();
-                    if (id2) {
-                        label2.hide();
-                        id2.hide();
-                    }
-                }else {
-                    label1.show();
-                    id1.show();
-                    if (id2) {
-                        label2.show();
-                        id2.show();
-                    }
+                if ($(asouhitMobilite).attr('checked')) {
+                    demarrageMobilite.show();
+                    mobilitePoste01.show();
+                    mobilitePoste02.show();
+                } else {
+                    demarrageMobilite.hide();
+                    mobilitePoste01.hide();
+                    mobilitePoste02.hide();
                 }
             }
             
+            //
+            asouhitMobilite.on('ifChanged', function(){
+                var div1 = asouhitMobilite.parent();
+                
+                if (div1.prevObject[0].checked == true) {
+                    demarrageMobilite.show();
+                    mobilitePoste01.show();
+                    mobilitePoste02.show();
+                } else {
+                    demarrageMobilite.hide();
+                    mobilitePoste01.hide();
+                    mobilitePoste02.hide();
+                    // démarrage
+                    var allItems = jQuery(demarrageMobilite).find('div').find('div').find(':radio');
+                    var idsRadio = [];
+
+                    $.each( allItems, function( key, value ) {
+                        idsRadio[key] = value.id;
+                    });
+
+                    for (var i = 0; i < idsRadio.length; i++) {
+                        $( "#"+idsRadio[i] ).removeAttr('checked');
+                        $( "#"+idsRadio[i] ).parent().removeClass('checked');
+                    }
+                    // mobilitePoste01
+                    var allItems01 = jQuery(mobilitePoste01).find('div').find('div').find(':checkbox');
+                    var idsCheckbox01 = [];
+
+                    $.each( allItems01, function( key, value ) {
+                        idsCheckbox01[key] = value.id;
+                    });
+
+                    for (var i = 0; i < idsCheckbox01.length; i++) {
+                        $( "#"+idsCheckbox01[i] ).removeAttr('checked');
+                        $( "#"+idsCheckbox01[i] ).parent().removeClass('checked');
+                    }
+                    // mobilitePoste02
+                    var allItems02 = jQuery(mobilitePoste02).find('div').find('div').find(':checkbox');
+                    var idsCheckbox02 = [];
+
+                    $.each( allItems02, function( key, value ) {
+                        idsCheckbox02[key] = value.id;
+                    });
+
+                    for (var i = 0; i < idsCheckbox02.length; i++) {
+                        $( "#"+idsCheckbox02[i] ).removeAttr('checked');
+                        $( "#"+idsCheckbox02[i] ).parent().removeClass('checked');
+                    }
+                }
+            });
         });
     </script>
 
 {% endblock javascripts %}
-

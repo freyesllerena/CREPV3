@@ -12,8 +12,14 @@
 		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		        <span aria-hidden="true">×</span>
 		    </button>
-		    <strong>Le formulaire de CREP n'est pas valide.</strong><br>
-			Veuillez rectifier votre saisie.
+		    
+		    {% if action == 'SIGNER_SHD' %}
+    			<strong>Le CREP ne peut être signé en l'état.</strong><br>
+				Veuillez compléter les champs manquants.
+	        {% else %}
+    			<strong>Le formulaire de CREP n'est pas valide.</strong><br>
+				Veuillez rectifier votre saisie.	
+	        {% endif %}
 		</div>
 	{% endif %}
 {% endblock alertErreurValidationFormulaireCrep %}

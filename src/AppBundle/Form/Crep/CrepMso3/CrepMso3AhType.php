@@ -33,8 +33,7 @@ class CrepMso3AhType extends CrepType
             'echelleNiveauSame' => null,
             'selectTypologieFormation' => null,
             'ministere' => null,
-               'anneeEvaluation' => null,
-            'validation_groups' => array('Default', 'EnregistrementShd'),
+            'anneeEvaluation' => null,
         ));
     }
 }

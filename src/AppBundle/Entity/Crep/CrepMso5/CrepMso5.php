@@ -77,7 +77,7 @@ class CrepMso5 extends Crep
      * @ORM\Column(type="string", nullable=true, length=255)
      * @Assert\Length(
      *    max = 255,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $categorie;
 
@@ -186,7 +186,7 @@ class CrepMso5 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $fonctionsExercees;
 
@@ -196,7 +196,7 @@ class CrepMso5 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $postionDansStructure;
 
@@ -241,7 +241,7 @@ class CrepMso5 extends Crep
      * @ORM\Column(name="obs_agent_sur_son_activite",type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $observationsAgentSurSonActivite;
 
@@ -518,7 +518,7 @@ class CrepMso5 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $appreciationShd;
 
@@ -528,7 +528,7 @@ class CrepMso5 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $appreciationAh;
 
@@ -538,7 +538,7 @@ class CrepMso5 extends Crep
      * @ORM\Column(type="text", nullable=true, length=4096)
      * @Assert\Length(
      *    max = 4096,
-     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères", groups={"EnregistrementShd"})
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     protected $propositionPromotion;
 

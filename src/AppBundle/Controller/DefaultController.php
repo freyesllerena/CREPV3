@@ -80,7 +80,7 @@ class DefaultController extends Controller
         ));
 
         // set default header data
-        //$pdf->SetHeaderData("/../../../../../app/Resources/views/crep/crepMindef/logo.png", PDF_HEADER_LOGO_WIDTH, 'COMPTE RENDU D\'ENTRETIEN PROFESSIONNEL', "rÃ©alisÃ© au titre de l'annÃ©e 2016");
+        //$pdf->SetHeaderData("/../../../../../app/Resources/views/crep/crepMindef/logo.png", PDF_HEADER_LOGO_WIDTH, 'COMPTE RENDU D\'ENTRETIEN PROFESSIONNEL', "réalisé au titre de l'année 2016");
         $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 061', PDF_HEADER_STRING);
 
         // set header and footer fonts
@@ -163,7 +163,7 @@ class DefaultController extends Controller
                         'encoding' => 'UTF-8',
                         'images' => true,
                         'footer-right'=>'[page] / [topage]',
-                        'footer-left'=>"ministÃ¨re",
+                        'footer-left'=>"ministère",
                     )),
                     200,
                     array(

@@ -40,11 +40,18 @@ class AppPdf extends TCPDF
     public function initFooter(Crep $crep, $anneeEvaluation)
     {
         if ($crep instanceof CrepMindef01) {
+            
+            $signatureAgent = '';
+            
+            if($crep->getDateNotification()){
+                $signatureAgent = 'Signé par l\'agent le '. $crep->getDateNotification()->format('d/m/Y H:i:s');
+            }
+            
             $this->footer = '<table>
             		  <tr>
             		      <td style="width:33%"></td>
             		      <td style="width:34%" align="center">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
-            		      <td style="width:33%; font-size: 10px;" align="right"><b><u>à parapher par l\'agent évalué</u></b></td>
+            		      <td style="width:33%; font-size: 10px;" align="right"><b><i>'.$signatureAgent.'</i></b></td>
             		  </tr>
             	  </table>';
         } elseif ($crep instanceof CrepMcc) {

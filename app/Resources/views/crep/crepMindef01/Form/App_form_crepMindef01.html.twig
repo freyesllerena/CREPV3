@@ -52,24 +52,37 @@
 {% block _crep_mindef01_formationsDemandeesAdministration_entry_widget %}
     <tr>
     	<td>
-            {{ form_widget(form.typologie) }}
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    {{ form_row(form.typologie, { 'label': "Typologie" }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    {{ form_row(form.libelle, {'label': "Libellé de la formation", 'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.code, { 'label': "Code de la formation" }) }}
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.priorite, { 'label': "Priorité" }) }}
+                </div>
+            </div>  
+			<div class="row">            
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.niveauSame, { 'label': "Niveau SAME" }) }}
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.lienAvecObjectifs, {'label':'Nécessaire à l\'atteinte d\'objectifs(*)', 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}
+                </div>                                              
+            </div>                                            
         </td>
-        <td>
-           	{{ form_row(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
-        </td>
-        <td>
-            {{ form_row(form.code , {'label':false}) }}
-        </td>
-        <td>
-            {{ form_widget(form.priorite) }}
-        </td>
-        <td>
-            {{ form_widget(form.niveauSame) }}
-        </td>
-		 <td class="text-center">
-            {{ form_widget(form.lienAvecObjectifs, {'label':false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}
-        </td>
-        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+		<td class="text-center">
+			<button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+		</td>
+        
     </tr>
 {% endblock %}
 
@@ -92,25 +105,37 @@
 
 {% block _crep_mindef01_formationsDemandeesAgent_entry_widget %}
     <tr>
-		<td>
-            {{ form_row(form.typologie, {'label':false}) }}
-        </td>
-        <td>
-			{{ form_widget(form.libelle, {'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
-        </td>
-        <td>
-            {{ form_row(form.code, {'label':false}) }}
-        </td>
-        <td>
-            {{ form_row(form.priorite, {'label':false}) }}
-        </td>
-        <td>
-            {{ form_row(form.niveauSame, {'label':false}) }}
+    	<td>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    {{ form_row(form.typologie, { 'label': "Typologie" }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    {{ form_row(form.libelle, {'label': "Libellé de la formation", 'attr': {'class': 'fieldCollection formation-autocomplete'}}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.code, { 'label': "Code de la formation" }) }}
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.priorite, { 'label': "Priorité" }) }}
+                </div>
+            </div>  
+			<div class="row">            
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.niveauSame, { 'label': "Niveau SAME" }) }}
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    {{ form_row(form.dif, {'label':'CPF', 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}
+                </div>                                              
+            </div>                                            
         </td>
 		<td class="text-center">
-            {{ form_row(form.dif, {'label':false, 'attr': {'class': 'fieldCollection iCheckCollection '}}) }}
-        </td>
-        <td class="text-center"><button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button></td>
+			<button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+		</td>
     </tr>
 {% endblock %}
 
