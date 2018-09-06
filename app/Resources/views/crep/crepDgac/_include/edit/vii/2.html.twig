@@ -1,0 +1,22 @@
+{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig' %}
+
+<br>
+<div class="row form-group">
+    <label>Perpectives :</label>
+</div>
+<div class="row form-group">
+    <div class="col-md-4 col-sm-4 col-xs-12" id="mobilite-poste-01">
+        {{ form_row(form.perspectives.tempsPartiel) }}
+        {{ form_row(form.perspectives.congesFormation) }}
+        {{ form_row(form.perspectives.retraite) }}
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12" id="mobilite-poste-02">
+        {{ form_row(form.perspectives.disponibilite) }}
+        {{ form_row(form.perspectives.concours) }}
+        {{ form_row(form.perspectives.autres) }}
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12" id="mobilite-poste-02">
+        {{ form_row(form.perspectives.detachement) }}
+        {{ form_row(form.perspectives.cpa) }}
+    </div>
+</div>

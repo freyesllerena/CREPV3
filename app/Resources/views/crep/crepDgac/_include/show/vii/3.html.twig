@@ -1,0 +1,13 @@
+<br>
+<div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <label>Compte rendu notifié* à l’agent le :</label>
+        <span>
+            {% if crep.dateRefusNotification %}
+                <span style="color: red">Refus de signature du CREP notifié acté le {{ crep.dateRefusNotification | date('d/m/Y à H:i') }} </span>
+            {% elseif crep.dateNotification %}
+                {{ crep.dateNotification | date('d/m/Y H:i') }}
+            {% endif %}
+        </span>
+    </div>
+</div>

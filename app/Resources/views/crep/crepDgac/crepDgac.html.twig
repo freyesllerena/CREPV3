@@ -103,17 +103,17 @@
 </table><br><br>
 
 
-    <div style="font-size: 18px" class="text-center">
-        <strong>
-            DIRECTION GENERALE DE L'AVIATION CIVILE<br>
-        </strong>
-        <br>
-        <strong>
-            COMPTE-RENDU DE L’ENTRETIEN PROFESSIONNEL<br>
-            REGARDS SUR L'ANNÉE ÉVALUÉE
-        </strong>
-        <div style="font-size: 14px">ANNEE : {{ crep.agent.campagnePnc.anneeEvaluee }}</div>
-    </div>
+<div style="font-size: 18px" class="text-center">
+    <strong>
+        DIRECTION GENERALE DE L'AVIATION CIVILE<br>
+    </strong>
+    <br>
+    <strong>
+        COMPTE-RENDU DE L’ENTRETIEN PROFESSIONNEL<br>
+        REGARDS SUR L'ANNÉE ÉVALUÉE
+    </strong>
+    <div style="font-size: 14px">ANNEE : {{ crep.agent.campagnePnc.anneeEvaluee }}</div>
+</div>
 <br><br>
 
 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -125,7 +125,8 @@
 
 <table>
     <tr>
-        <td><strong style="font-size: 12px">LE CONTEXTE</strong><i>(politique, environnement, organisation, moyens, coopération interne ou
+        <td><strong style="font-size: 12px">LE CONTEXTE</strong><i>(politique, environnement, organisation, moyens,
+                coopération interne ou
                 externe,
                 etc...)</i></td>
     </tr>
@@ -174,7 +175,7 @@
         <tr>
             <td style="border: 1px #000000 solid;">{{ composantePoste.libelle }}</td> {% for index in 0..2 %}
                 <td style="border: 1px #000000 solid;" class="text-center">
-                    {% if composantePoste.niveauRequis == index %} X {% else %} {% endif %}</td>
+                    {% if composantePoste.niveauRequis is not null and composantePoste.niveauRequis == index %} X {% else %} {% endif %}</td>
             {% endfor %}
             <td style="border: 1px #000000 solid;">{{ composantePoste.appreciation|nl2br }}</td>
         </tr>
@@ -184,7 +185,7 @@
         <tr>
             <td style="border: 1px #000000 solid;">{{ autreComposantePoste.libelle }}</td> {% for index in 0..2 %}
                 <td style="border: 1px #000000 solid;" class="text-center">
-                    {% if autreComposantePoste.niveauRequis == index %} X {% else %} {% endif %}</td>
+                    {% if autreComposantePoste.niveauRequis is not null and autreComposantePoste.niveauRequis == index %} X {% else %} {% endif %}</td>
             {% endfor %}
             <td style="border: 1px #000000 solid;">{{ autreComposantePoste.appreciation|nl2br }}</td>
         </tr>
@@ -290,7 +291,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
             <td style="border: 1px #000000 solid;">{{ competenceProfessionnelle.libelle }}</td>
             {% for index in 0..2 %}
                 <td style="border: 1px #000000 solid;" class="text-center">
-                    {% if competenceProfessionnelle.niveauRequis == index %} X {% else %} {% endif %}</td>
+                    {% if competenceProfessionnelle.niveauRequis is not null and competenceProfessionnelle.niveauRequis == index %} X {% else %} {% endif %}</td>
             {% endfor %}
             <td style="border: 1px #000000 solid;"> {{ competenceProfessionnelle.appreciation|nl2br }} </td>
         </tr>
@@ -300,7 +301,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
         <tr>
             <td style="border: 1px #000000 solid;">{{ autreCompetenceProfessionnelle.libelle }}</td> {% for index in 0..2 %}
                 <td style="border: 1px #000000 solid;" class="text-center">
-                    {% if autreCompetenceProfessionnelle.niveauRequis == index %} X {% else %} {% endif %}</td>
+                    {% if autreCompetenceProfessionnelle.niveauRequis is not null and autreCompetenceProfessionnelle.niveauRequis == index %} X {% else %} {% endif %}</td>
             {% endfor %}
             <td style="border: 1px #000000 solid;">{{ autreCompetenceProfessionnelle.appreciation|nl2br }}</td>
         </tr>
@@ -309,7 +310,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
 
 <u>Pour les agents en situation de management :</u><br><br>
 
-<table>
+<table cellpadding="5">
     <tr>
         <th width="25%"></th>
         <th class="text-center" width="21%">À DÉVELOPPER</th>
@@ -321,7 +322,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
             <td style="border: 1px #000000 solid;">{{ competenceManageriale.libelle }}</td>
             {% for index in 0..1 %}
                 <td style="border: 1px #000000 solid;" class="text-center">
-                    {% if competenceManageriale.niveauRequis == index %} X {% else %} {% endif %}</td>
+                    {% if competenceManageriale.niveauRequis is not null and competenceManageriale.niveauRequis == index %} X {% else %} {% endif %}</td>
             {% endfor %}
             <td style="border: 1px #000000 solid;"> {{ competenceManageriale.appreciation|nl2br }} </td>
         </tr>
@@ -330,7 +331,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
 
 <u>Synthèse sur la manière de servir :</u><br><br>
 
-<table>
+<table cellpadding="5">
     <tr>
         <th class="text-center" width="14%"></th>
         <th class="text-center" width="14%"><strong>FAIBLE</strong></th>
@@ -344,7 +345,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
             <td style="border: 1px #000000 solid;">{{ competenceSynthese.libelle }}</td>
             {% for index in 0..3 %}
                 <td style="border: 1px #000000 solid;" class="text-center">
-                    {% if competenceSynthese.niveauRequis == index %} X {% else %} {% endif %}</td>
+                    {% if competenceSynthese.niveauRequis is not null and competenceSynthese.niveauRequis == index %} X {% else %} {% endif %}</td>
             {% endfor %}
             <td style="border: 1px #000000 solid;"> {{ competenceSynthese.appreciation|nl2br }} </td>
         </tr>
@@ -354,7 +355,7 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
         <tr>
             <td style="border: 1px #000000 solid;">{{ autreCompetenceSynthese.libelle }}</td> {% for index in 0..2 %}
                 <td style="border: 1px #000000 solid;" class="text-center">
-                    {% if autreCompetenceSynthese.niveauRequis == index %} X {% else %} {% endif %}</td>
+                    {% if autreCompetenceSynthese.niveauRequis is not null and autreCompetenceSynthese.niveauRequis == index %} X {% else %} {% endif %}</td>
             {% endfor %}
             <td style="border: 1px #000000 solid;">{{ autreCompetenceSynthese.appreciation|nl2br }}</td>
         </tr>
@@ -507,21 +508,31 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
     <tr>
         <td width="3%"></td>
         <td width="3%" style="font-size: 8px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"></span>{% if crep.souhaitMobilite == true %} X{% endif %}</td>
+                    style="font-size: 8px"
+                    class="text-center"></span>{% if crep.souhaitMobilite is not null and crep.souhaitMobilite == true %} X{% endif %}
+        </td>
         <td width="6%" class="bordered-right">&nbsp;Oui</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 0 %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.demarrageMobiliteSouhaitee is not null and crep.demarrageMobiliteSouhaitee == 0 %} X{% endif %}</span>
+        </td>
         <td width="15%">&nbsp;Dès que possible</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 2 %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.demarrageMobiliteSouhaitee is not null and crep.demarrageMobiliteSouhaitee == 2 %} X{% endif %}</span>
+        </td>
         <td width="14%" class="bordered-right">&nbsp;Dans 2 ans</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.memeService %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.mobilitePoste is not null and crep.mobilitePoste.memeService %} X{% endif %}</span>
+        </td>
         <td width="16%">&nbsp;Au sein du service</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.dansLeDepartement %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.mobilitePoste is not null and crep.mobilitePoste.dansLeDepartement %} X{% endif %}</span>
+        </td>
         <td width="25%" class="bordered-right">&nbsp;Dans le département (DDE, SN…)</td>
     </tr>
     <tr>
@@ -542,21 +553,31 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
     <tr>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.souhaitMobilite  == false %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.souhaitMobilite is not null and crep.souhaitMobilite  == false %} X{% endif %}</span>
+        </td>
         <td width="6%" class="bordered-right">&nbsp;Non</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 1 %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.demarrageMobiliteSouhaitee is not null and crep.demarrageMobiliteSouhaitee == 1 %} X{% endif %}</span>
+        </td>
         <td width="15%">&nbsp;Dans 1 an</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.demarrageMobiliteSouhaitee == 3 %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.demarrageMobiliteSouhaitee is not null and crep.demarrageMobiliteSouhaitee == 3 %} X{% endif %}</span>
+        </td>
         <td width="14%" class="bordered-right">&nbsp;Dans 3 ans ou +</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.horsInterRegion %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.mobilitePoste is not null and crep.mobilitePoste.horsInterRegion %} X{% endif %}</span>
+        </td>
         <td width="16%">&nbsp;Hors inter région</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.dansInterRegion %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.mobilitePoste is not null and crep.mobilitePoste.dansInterRegion %} X{% endif %}</span>
+        </td>
         <td width="25%" class="bordered-right">&nbsp;Dans inter région (CIFP…)</td>
     </tr>
     <tr>
@@ -585,10 +606,14 @@ Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
         <td width="26.6%" class="bordered-right"></td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.region %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.mobilitePoste is not null and crep.mobilitePoste.region %} X{% endif %}</span>
+        </td>
         <td width="16%">&nbsp;Région</td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center">{% if crep.mobilitePoste.international %} X{% endif %}</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.mobilitePoste is not null and crep.mobilitePoste.international %} X{% endif %}</span>
+        </td>
         <td width="25%" class="bordered-right">&nbsp;International</td>
     </tr>
     <tr>

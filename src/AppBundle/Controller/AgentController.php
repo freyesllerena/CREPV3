@@ -722,7 +722,7 @@ class AgentController extends Controller
 
         // Si l'agent ne possède pas encore un CREP
         /* @var $ministere Ministere */
-        $ministere = $this->getUser()->getMinistere();
+        $ministere = $agent->getCampagnePnc()->getMinistere();
 
         /* @var $modeleCrepRepository  ModeleCrepRepository */
         $modeleCrepRepository = $em->getRepository('AppBundle:ModeleCrep');

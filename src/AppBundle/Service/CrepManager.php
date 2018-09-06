@@ -456,7 +456,9 @@ class CrepManager
 
         // add a page
         $pdf->AddPage();
-
+        if ($crep instanceof Crep\CrepDgac\CrepDgac) {
+            $pdf->SetMargins(PDF_MARGIN_LEFT, 27, PDF_MARGIN_RIGHT);
+        }
         $content = $this->templating->render($template, array(
             'crep' => $crep,
             'anneeEvaluee' => $anneeEvaluation,

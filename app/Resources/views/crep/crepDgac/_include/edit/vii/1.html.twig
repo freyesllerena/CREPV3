@@ -1,6 +1,9 @@
 {% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig' %}
 
 <div class="row form-group">
+    <label>Mobilité :</label>
+</div>
+<div class="row form-group">
     <div class="col-md-3 col-sm-3 col-xs-12">
         {{ form_row(form.souhaitMobilite, {'label': "Mobilité souhaitée par l’agent :", 'label_attr': {'class' : 'radio-inline', 'style':'text-align:rigth;'}}) }}
     </div>
@@ -17,4 +20,10 @@
         {{ form_row(form.mobilitePoste.dansInterRegion) }}
         {{ form_row(form.mobilitePoste.international) }}
     </div>
+</div>
+
+<div class="row form-group">
+    NB : <em>Il est rappelé que les agents qui le souhaitent peuvent évoquer ces questions en rencontrant un conseiller
+             mobilité carrière.
+        (Plus d’informations sur Bravo Victor/vie pratique/mobilité)</em>
 </div>

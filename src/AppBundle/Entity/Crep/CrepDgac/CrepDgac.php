@@ -468,6 +468,14 @@ class CrepDgac extends Crep
      */
     protected $mobilitePoste;
 
+    /**
+     * @ORM\OneToOne(targetEntity="CrepDgacPerspectives", orphanRemoval=true, cascade={"persist", "remove"},
+     *     fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
+     *
+     * @Assert\Valid
+     */
+    protected $perspectives;
 
 
 	//##########################################################################################
@@ -1654,6 +1662,31 @@ class CrepDgac extends Crep
     public function setMobilitePoste($mobilitePoste)
     {
         $this->mobilitePoste = $mobilitePoste;
+        return $this;
+    }
+
+
+
+
+
+
+
+
+    /**
+     * @return CrepDgacPerspectives
+     */
+    public function getPerspectives()
+    {
+        return $this->perspectives;
+    }
+
+    /**
+     * @param $perspectives
+     * @return $this
+     */
+    public function setPerspectives($perspectives)
+    {
+        $this->perspectives = $perspectives;
         return $this;
     }
 

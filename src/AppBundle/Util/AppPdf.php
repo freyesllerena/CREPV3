@@ -252,7 +252,7 @@ class AppPdf extends TCPDF
                                     <td width="83%" height="22px" style="font-size: 10px; border-left: black 2px solid; border-bottom: black 2px solid">ENTRETIEN PROFESSIONNEL - PARTIE FORMATION - ANNÉE ' . $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee() . '</td>
                                 </tr>
                                 <tr>
-                                    <td><img src="' . $logo1 . '" alt="DGAC" width="50px" style="text-align : right"></td>
+                                    <td width="5%"><img src="' . $logo1 . '" alt="DGAC" width="50px" style="text-align : right"></td>
                                     <td width="83%" height="25px" style="font-size: 12px; border-left: black 2px solid">FICHE D\'ÉVALUATION DES FORMATIONS MÉTIER SUIVIES EN ' . $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee() . '</td>
                                 </tr>
                             </table>'

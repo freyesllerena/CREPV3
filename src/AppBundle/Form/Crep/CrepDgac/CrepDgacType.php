@@ -178,6 +178,9 @@ class CrepDgacType extends CrepType
             ->add('mobilitePoste', CrepDgacMobilitePosteType::class, [
                 'required' => false,
             ])
+            ->add('perspectives', CrepDgacPerspectivesType::class, [
+                'required' => false,
+            ])
         ;
     }
 
