@@ -145,7 +145,11 @@ class CrepDgacType extends CrepType
             ->add('typeEvolutionCarriere', null, ['required' => false])
             ->add('mobilite', null, ['required' => false])
             ->add('priseDeResponsabilites', null, ['required' => false])
-            ->add('observationsNotifAgent', null, ['required' => false])
+            ->add('observationsNotifAgent', null, [
+                'attr' => ['maxlength' => '4096'],
+                'required' => false,
+                'disabled' => false,
+            ])
             ->add('contributionsCompPrevues', null, ['required' => false])
             ->add('objectifsPermanentsAvenir', null, ['required' => false])
             ->add('objectifsParticuliersAvenir', null, ['required' => false])

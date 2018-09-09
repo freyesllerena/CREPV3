@@ -1,0 +1,19 @@
+<div class="row form-group">
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Date</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.dateVisaShd %}
+                {{ crep.dateVisaShd | date('d/m/Y à H:i') }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Nom</label>
+        <div class="col-md-9 col-sm-9 col-xs-12 well well-xs">
+            {% if crep.shdSignataire %}
+                {{ crep.shdSignataire | identite }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<br>

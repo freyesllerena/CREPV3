@@ -1275,6 +1275,8 @@ class CrepDgac extends Crep
 	public function confidentialisationChampsAgent ()
 	{
 		$this->setElementsObservesAgent(null);
+        $this->setDateVisaAgent(null);
+        $this->setDateRefusVisa(null);
 	}
 
 	public function confidentialisationChampsAgentAvantNotification ()
