@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Crep\CrepDgac;
 
+use AppBundle\Entity\Crep\CrepDgac\CrepDgac;
 use AppBundle\Form\Crep\CrepDgac\CrepDgacMobilitePosteType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -153,17 +154,17 @@ class CrepDgacType extends CrepType
             ->add('contributionsCompPrevues', null, ['required' => false])
             ->add('objectifsPermanentsAvenir', null, ['required' => false])
             ->add('objectifsParticuliersAvenir', null, ['required' => false])
-            ->add(
-            		'formationsSuivies',
-            		CollectionType::class,
-            		[
-            				'label' => false,
-            				'entry_type' => CrepDgacFormationSuivieType::class,
-            				'allow_add' => true,
-            				'allow_delete' => true,
-            				'by_reference' => false,
-            		]
-            )
+//            ->add(
+//            		'formationsSuivies',
+//            		CollectionType::class,
+//            		[
+//            				'label' => false,
+//            				'entry_type' => CrepDgacFormationSuivieType::class,
+//            				'allow_add' => true,
+//            				'allow_delete' => true,
+//            				'by_reference' => false,
+//            		]
+//            )
             ->add('souhaitMobilite', null, ['required' => false])
 
 
@@ -185,6 +186,17 @@ class CrepDgacType extends CrepType
             ->add('perspectives', CrepDgacPerspectivesType::class, [
                 'required' => false,
             ])
+            ->add('affectation', null, ['required' => false])
+
+            ->add(
+                'crepDgacFormationsSuivies',
+                CollectionType::class,
+                [
+                    'entry_type' => CrepDgacFormationSuivieType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                ])
         ;
     }
 

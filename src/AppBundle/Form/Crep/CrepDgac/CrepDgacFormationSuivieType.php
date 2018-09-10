@@ -66,8 +66,8 @@ class CrepDgacFormationSuivieType extends AbstractType
 	    	)
     	    ->add('formationComplementaire', null, [
     	    	'required' => false, ])  
-    	    ->add('commentaireShd', null, [
-    	    	'required' => false, ])
+//    	    ->add('commentaireShd', null, [
+//    	    	'required' => false, ])
 ;
         
     }

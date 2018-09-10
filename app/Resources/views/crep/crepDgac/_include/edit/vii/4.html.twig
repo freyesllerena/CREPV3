@@ -1,0 +1,20 @@
+{% form_theme form 'crep/crepDgac/Form/collections.form.html.twig' %}
+
+<div class="row" id="crepDgacFormationsSuivies"
+     data-prototype="{{ form_widget(form.crepDgacFormationsSuivies.vars.prototype)|e('html_attr') }}">
+    
+    <table class="table table-bordered">
+        <tbody>
+        {% for formation in form.crepDgacFormationsSuivies %}
+            {{ form_widget(formation) }}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button class="btn btn-primary add_collection_dgac_link crepDgacFormationsSuivies pull-right">
+            <i class="fa fa-plus"></i> Ajouter
+        </button>
+    </div>
+</div>

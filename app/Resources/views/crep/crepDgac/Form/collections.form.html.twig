@@ -94,72 +94,57 @@
     </tr>
 {% endblock %}
 
-{# {% block
-_crep_dgac_autresCompetencesProfessionnellesManagements_entry_widget
-%}#} {# <tr>#} {# <td>{{ form_row(form.libelle, {'label':false}) }}</td>
-#} {# {% for child in form.niveauRequis.children %}#} {# <td
-class="text-center">#} {# {{ form_row(child, {'label': false, 'attr':
-{'class': 'fieldCollection iCheckCollection'}}) }}#} {# </td> #} {# {%
-endfor %}#} {# <td>{{ form_row(form.appreciation, {'label':false})
-}}</td>#} {# <td class="text-center">#} {# <button class="btn btn-danger
-btn-xs remove-from-collection">#} {# <i class="fa fa-close"></i>#} {#
-</button>#} {# </td>#} {# </tr>#} {# {% endblock %}#} {# {% block
-_crep_mj01_objectifsEvalues_entry_widget %}#} {# <tr>#} {# <td>{{
-form_row(form.libelle, {'label': false, 'attr': {'class':
-'fieldCollection'}}) }}</td>#} {# <td>{{ form_row(form.indicateurs,
-{'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>#} {#
-<td>{{ form_row(form.resultatObtenu, {'label': false, 'attr': {'class':
-'fieldCollection'}}) }}</td>#} {# <td>{{ form_row(form.resultat,
-{'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>#} {# <td
-class="text-center"><button class="btn btn-danger btn-xs
-remove-from-collection"><i class="fa fa-close"></i></button></td>#} {#
-</tr>#} {# {% endblock %}#} {# {% block
-_crep_mj01_competencesProfessionnelles_entry_widget %}#} {# {% for child
-in form.niveau.children %}#} {# <td class="text-center">{{
-form_row(child, {'label': false, 'attr': {'class': 'fieldCollection
-iCheckCollection'}}) }}</td>#} {# {% endfor %}#} {# {% endblock %}#} {#
-{% block _crep_mj01_aptitudesProfessionnelles_entry_widget %}#} {# {%
-for child in form.niveau.children %}#} {# <td class="text-center">{{
-form_row(child, {'label': false, 'attr': {'class': 'fieldCollection
-iCheckCollection'}}) }}</td>#} {# {% endfor %}#} {# {% endblock %}#} {#
-{% block _crep_mj01_qualitesProfessionnelles_entry_widget %}#} {# {% for
-child in form.niveau.children %}#} {# <td class="text-center">{{
-form_row(child, {'label': false, 'attr': {'class': 'fieldCollection
-iCheckCollection'}}) }}</td>#} {# {% endfor %}#} {# {% endblock %}#} {#
-{% block _crep_mj01_capacitesEncadrements_entry_widget %}#} {# {% for
-child in form.niveau.children %}#} {# <td class="text-center">{{
-form_row(child, {'label': false, 'attr': {'class': 'fieldCollection
-iCheckCollection'}}) }}</td>#} {# {% endfor %}#} {# {% endblock %}#} {#
-{% block _crep_mj01_objectifsFuturs_entry_widget %}#} {# <tr>#} {#
-<td>{{ form_row(form.libelle, {'label': false, 'attr': {'class':
-'fieldCollection'}}) }}</td>#} {# <td>{{ form_row(form.indicateurs,
-{'label': false, 'attr': {'class': 'fieldCollection'}}) }}</td>#} {# <td
-class="text-center"><button class="btn btn-danger btn-xs
-remove-from-collection"><i class="fa fa-close"></i></button></td>#} {#
-</tr>#} {# {% endblock %}#} {# {% block
-_crep_mj01_crepMj01FormationsSuivies_entry_widget %}#} {# <tr>#} {#
-<td>{{ form_row(form.libelle, {'label': false, 'attr': {'class':
-'fieldCollection formation-autocomplete'}}) }}</td>#} {# <td
-width="160px">{{ form_row(form.duree, {'label': false, 'attr': {'class':
-'fieldCollection'}}) }}</td>#} {# <td class="text-center"><button
-class="btn btn-danger btn-xs remove-from-collection"><i class="fa
-fa-close"></i></button></td>#} {# </tr>#} {# {% endblock %}#} {# {%
-block _crep_mj01_formationsSollicitees_entry_widget %}#} {# <tr>#} {#
-<td>{{ form_row(form.libelle, {'label': false, 'attr': {'class':
-'fieldCollection formation-autocomplete'}}) }}</td>#} {# <td
-width="280px">{{ form_row(form.origine, {'label': false, 'attr':
-{'class': 'fieldCollection'}}) }}</td>#} {# <td
-class="text-center"><button class="btn btn-danger btn-xs
-remove-from-collection"><i class="fa fa-close"></i></button></td>#} {#
-</tr>#} {# {% endblock %}#} {# {% block
-_crep_mj01_formationsEnvisagees_entry_widget %}#} {# <tr>#} {# <td>{{
-form_row(form.libelle, {'label': false, 'attr': {'class':
-'fieldCollection formation-autocomplete'}}) }}</td>#} {# <td
-width="280px">{{ form_row(form.origine, {'label': false, 'attr':
-{'class': 'fieldCollection'}}) }}</td>#} {# <td
-class="text-center"><button class="btn btn-danger btn-xs
-remove-from-collection"><i class="fa fa-close"></i></button></td>#} {#
-</tr>#} {# {% endblock %}#}
+{% block _crep_dgac_crepDgacFormationsSuivies_entry_widget %}
+	<tr>
+		<td>
+			<div class="text-right">
+				<button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+			</div>
+			<div class="form-group">
+                {% if errors|length == 0 -%}
+					<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_libelle">Intitulé du stage<span style="color:red;"> *</span></label>
+                    {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+                {% else %}
+					<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_libelle">Intitulé du stage<span style="color:red;"> *</span></label>
+                    {%- for error in errors -%}
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+						</div>
+                    {%- endfor -%}
+                {% endif %}
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_satisfaction">Indice de
+					satisfaction</label>(de 1 à 5*)
+                {{ form_row(form.satisfaction, {'label': false}) }}
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Avez-vous utilisé cette
+					formation</label>(oui/non)
+                {{ form_row(form.utilisationFormation, {'label': false}) }}
+			</div>
+			<div class="form-group">
+				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_commentaireAgent">Commentaires de l’agent</label>
+                {{ form_row(form.commentaireAgent, {'label': false}) }}
+			</div>
+			{#<div class="form-group">#}
+				{#<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_cpf">Mobilisation du DIF (Oui/Non)</label>#}
+                {#{{ form_row(form.cpf, {'label': false, 'label_attr': {'class' : 'radio-inline','style':'text-align:left;'} }) }}#}
+                {#{{ form_row(form.cpf, {'label':false, 'attr': {'class': 'fieldCollection iCheckCollection cpf'}}) }}#}
+			{#</div>#}
+			{#<div class="form-group">#}
+				{#<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_mj02_suivie">Suivies (oui/non) motifs</label>#}
+                {#{{ form_row(form.suivie, {'label': false, 'label_attr': {'class' : 'radio-inline',#}
+                    {#'style':'text-align:left;'} }) }}#}
+			{#</div>#}
+			{#<div class="form-group">#}
+				{#<label class="control-label col-md-3 col-sm-3 col-xs-12"#}
+					   {#for="crep_mj02_motifNonSuivie"></label>#}
+                {#{{ form_row(form.motifNonSuivie, {'label': false, 'attr': {'id': 'motifNonSuivie'}}) }}#}
+			{#</div>#}
+		</td>
+	</tr>
+{% endblock %}
 
 {% block form_group_class -%}
 	{% if label == false %}

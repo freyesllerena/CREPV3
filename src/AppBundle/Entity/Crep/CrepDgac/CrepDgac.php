@@ -435,14 +435,23 @@ class CrepDgac extends Crep
 	 *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
 	 */
 	protected $contributionsCompPrevues;
-	
-	
-	/**
-	 * @ORM\OneToMany(targetEntity="CrepDgacFormationSuivie", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
-	 * @ORM\OrderBy({"id" = "ASC"})
-	 * @Assert\Valid
-	 */
-	protected $crepDgacFormationsSuivies;
+
+//	/**
+//	 * @ORM\OneToMany(targetEntity="CrepDgacFormationSuivie", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
+//	 * @ORM\OrderBy({"id" = "ASC"})
+//	 * @Assert\Valid
+//	 */
+//	protected $crepDgacFormationsSuivies;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepDgac\CrepDgacFormationSuivie", mappedBy="crep",
+     *     orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
+     * @Assert\Valid
+     */
+    protected $crepDgacFormationsSuivies;
+
 
     /**
      * @var bool
@@ -477,20 +486,33 @@ class CrepDgac extends Crep
      */
     protected $perspectives;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     *
+     */
+    protected $affectation;
+
 
 	//##########################################################################################
 	
 	public function __construct(){
 		parent::init();
 		
-		$this->composantesPostes = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->autresComposantesPostes = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->competencesProfessionnelles = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->autresCompetencesProfessionnelles = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->competencesManageriales = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->autresCompetencesManageriales = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->competencesSyntheses = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->autresCompetencesSyntheses = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->composantesPostes = new ArrayCollection();
+		$this->autresComposantesPostes = new ArrayCollection();
+		$this->competencesProfessionnelles = new ArrayCollection();
+		$this->autresCompetencesProfessionnelles = new ArrayCollection();
+		$this->competencesManageriales = new ArrayCollection();
+		$this->autresCompetencesManageriales = new ArrayCollection();
+		$this->competencesSyntheses = new ArrayCollection();
+		$this->autresCompetencesSyntheses = new ArrayCollection();
+		$this->crepDgacFormationsSuivies = new ArrayCollection();
 	}
 	
 	/**
@@ -1200,16 +1222,16 @@ class CrepDgac extends Crep
 	    $this->initialiserParent($agent, $em);
 
         $this->setNomUsage($agent->getNom())
-        ->setPrenom($agent->getPrenom())
-        ->setCorps($agent->getCorps())
-        ->setGrade($agent->getGrade())
-        ->setMatricule($agent->getMatricule())
-        ->setService($agent->getAffectationClairAgent())
-        ->setPosteOccupe($agent->getPosteOccupe())
-        ->setNomUsageShd($agent->getShd()->getNom())
-        ->setPrenomShd($agent->getShd()->getPrenom())
-        ->setFonctionExerceeShd($agent->getShd()->getPosteOccupe())
-;
+            ->setPrenom($agent->getPrenom())
+            ->setCorps($agent->getCorps())
+            ->setGrade($agent->getGrade())
+            ->setMatricule($agent->getMatricule())
+            ->setService($agent->getAffectationClairAgent())
+            ->setPosteOccupe($agent->getPosteOccupe())
+            ->setNomUsageShd($agent->getShd()->getNom())
+            ->setPrenomShd($agent->getShd()->getPrenom())
+            ->setFonctionExerceeShd($agent->getShd()->getPosteOccupe())
+            ->setAffectation($agent->getAffectation());
         
         // Initialisation du référentiel composante poste
 	       $this->addComposantesPoste(new CrepDgacComposantePoste('Activités  ou compétences énoncées dans la fiche de poste : détailler'));
@@ -1261,7 +1283,8 @@ class CrepDgac extends Crep
             ->setDescriptionPosteMission(null)
             ->setElementsObservesShd(null)
             ->setSouhaitMobilite(null)
-		    ->setDemarrageMobiliteSouhaitee(null);
+		    ->setDemarrageMobiliteSouhaitee(null)
+            ->setAffectation(null)
 		;
 		
 		/** @var $contraintesPoste CrepEddContraintePoste  */
@@ -1559,7 +1582,9 @@ class CrepDgac extends Crep
 	{
 		$this->autresCompetencesSyntheses->removeElement($autresCompetencesSynthese);
 	}
-	
+
+
+
 	/**
 	 * Get autresCompetencesSyntheses.
 	 *
@@ -1568,8 +1593,20 @@ class CrepDgac extends Crep
 	public function getAutresCompetencesSyntheses()
 	{
 		return $this->autresCompetencesSyntheses;
-	}	
-	
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/**
 	 * Add crepDgacFormationsSuivy
 	 *
@@ -1581,10 +1618,10 @@ class CrepDgac extends Crep
 	{
 		$this->crepDgacFormationsSuivies[] = $formation;
 		$formation->setCrep($this);
-	
+
 		return $this;
 	}
-	
+
 	/**
 	 * Remove crepDgacFormationsSuivy
 	 *
@@ -1595,7 +1632,7 @@ class CrepDgac extends Crep
 		$this->crepDgacFormationsSuivies->removeElement($formation);
 		$formation->setCrep(null);
 	}
-	
+
 	/**
 	 * Get crepDgacFormationsSuivies
 	 *
@@ -1667,7 +1704,23 @@ class CrepDgac extends Crep
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getAffectation()
+    {
+        return $this->affectation;
+    }
 
+    /**
+     * @param $affectation
+     * @return $this
+     */
+    public function setAffectation($affectation)
+    {
+        $this->affectation = $affectation;
+        return $this;
+    }
 
 
 
