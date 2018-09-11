@@ -3,6 +3,7 @@
 namespace AppBundle\Form\Crep\CrepDgac;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,53 +23,58 @@ class CrepDgacFormationSuivieType extends AbstractType
 	        				'maxlength' => '4096', ],
 	        		'required' => false,
 	        ])
-        ->add('satisfaction', ChoiceType::class, [
-        		'choices' => [
-        				'instatisfait' => 0,
-        				'peu satisfait' => 1,
-        				'moyennement satisfait' => 2,
-	    				'satisfait' => 3,
-				    	'très satisfait' => 4,
-        		],
-        		'expanded' => true,
-        		'multiple' => false,
-        		'attr' => ['class' => 'fieldCollection'],
-        ])
-	    	->add(
-	    			'utilisationFormation',
+            ->add('satisfaction', ChoiceType::class, [
+                'choices' => [
+                    'instatisfait' => 0,
+                    'peu satisfait' => 1,
+                    'moyennement satisfait' => 2,
+                    'satisfait' => 3,
+                    'très satisfait' => 4,
+                ],
+                'expanded' => false,
+                'multiple' => false,
+                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px; width: 20%'],
+                'placeholder' => ''
+            ])
+            ->add('utilisationFormation', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => 0,
+                    'Non' => 1,
+                ],
+                'expanded' => false,
+                'multiple' => false,
+                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px; width: 20%'],
+                'placeholder' => ''
+            ])
+            ->add('commentaireAgent', TextareaType::class, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+	    	->add('utilisationDocumentation',
 	    			ChoiceType::class,
 	    			[
-	    					'choices' => [
-	    							'Oui' => true,
-	    							'Non' => false,
-	    					],
-	    					'expanded' => true,
-	    					'placeholder' => null,
-	    					'required' => false,
-	    					'multiple' => false,
+                        'choices' => [
+                                'Oui' => true,
+                                'Non' => false,
+                        ],
+                        'expanded' => false,
+                        'multiple' => false,
+                        'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px; width: 20%'],
+                        'placeholder' => ''
 	    			]
 	    	)
-        ->add('commentaireAgent', null, [
-        		'required' => false, ])
-	    	->add(
-	    			'utilisationDocumentation',
-	    			ChoiceType::class,
-	    			[
-	    					'choices' => [
-	    							'Oui' => true,
-	    							'Non' => false,
-	    					],
-	    					'expanded' => true,
-	    					'placeholder' => null,
-	    					'required' => false,
-	    					'multiple' => false,
-	    			]
-	    	)
-    	    ->add('formationComplementaire', null, [
-    	    	'required' => false, ])  
-//    	    ->add('commentaireShd', null, [
-//    	    	'required' => false, ])
-;
+            ->add('formationComplementaire', TextareaType::class, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+            ->add('commentaires', TextareaType::class, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+        ;
         
     }
 
