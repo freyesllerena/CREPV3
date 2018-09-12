@@ -654,15 +654,21 @@ Perspectives :<br>
     <tr>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.perspectives is not null and crep.perspectives.tempsPartiel %} X{% endif %}</span>
+        </td>
         <td width="21%">&nbsp;Temps partiel</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center"> {% if crep.perspectives is not null and crep.perspectives.disponibilite %} X{% endif %}</span>
+        </td>
         <td width="20%">&nbsp;Disponibilité</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.perspectives is not null and crep.perspectives.detachement %} X{% endif %}</span>
+        </td>
         <td width="20%">&nbsp;Détachement</td>
     </tr>
     <tr>
@@ -681,15 +687,21 @@ Perspectives :<br>
     <tr>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.perspectives is not null and crep.perspectives.congesFormation %} X{% endif %}</span>
+        </td>
         <td width="21%">&nbsp;Congés de formation</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.perspectives is not null and crep.perspectives.concours %} X{% endif %}</span>
+        </td>
         <td width="20%">&nbsp;Concours</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.perspectives is not null and crep.perspectives.cpa %} X{% endif %}</span>
+        </td>
         <td width="20%">&nbsp;CPA</td>
     </tr>
     <tr>
@@ -708,11 +720,15 @@ Perspectives :<br>
     <tr>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.perspectives is not null and crep.perspectives.retraite %} X{% endif %}</span>
+        </td>
         <td width="21%">&nbsp;Retraite</td>
         <td width="3%"></td>
         <td width="3%" style="font-size: 4px" class="fullbordered"><span
-                    style="font-size: 8px" class="text-center"> X</span></td>
+                    style="font-size: 8px"
+                    class="text-center">{% if crep.perspectives is not null and crep.perspectives.autres %} X{% endif %}</span>
+        </td>
         <td width="20%">&nbsp;Autres</td>
     </tr>
     <tr>
@@ -732,61 +748,78 @@ Perspectives :<br>
 
 <table>
     <tr>
-        <td style="font-size: 10px">Compte rendu notifié* à l'agent le :</td>
+        <td style="font-size: 10px">Compte rendu notifié* à l'agent le
+            : {{ crep.dateNotification | date('d/m/Y H:i') }}</td>
     </tr>
-</table>
+</table><br><br>
 
-<font size="+1">
-    <div class="text-center">
-        <strong>OBSERVATIONS ET SIGNATURES</strong>
-    </div>
-</font>
-
-(*l'agent dispose d'un délai de 10 jours à partir de la notification de ce compte rendu pour mettre ses observations et le signer)
+<div class="text-center" style="font-size: 14px">
+    <strong>OBSERVATIONS ET SIGNATURES</strong>
+</div>
+<div style="font-size: 8px">(*l'agent dispose d'un délai de 10 jours à partir de la notification de ce compte rendu pour
+    mettre ses observations et le signer)
+</div>
 <br><br>
 
 <table>
     <tr>
-        <th>
-            <strong>Observations de l'agent</strong>
-        </th>
+        <th style="font-size: 11px"><strong>Observations de l'agent</strong></th>
     </tr>
 </table><br><br>
 
 <table>
     <tr>
-        <th><br><br><br></th>
+        <th>{{ crep.observationsNotifAgent|nl2br }}</th>
     </tr>
 </table><br><br>
 
 <table>
     <tr>
-        <th><strong>Signatures</strong></th>
+        <th style="font-size: 11px"><strong>Signatures</strong></th>
     </tr>
 </table><br><br>
 
-Date : <br>
-Agent<br><br>
+Date : {{ crep.dateVisaAgent|date('d/m/Y H:i') }}<br>
+Agent : {{ crep.agent.civilite|capitalize }} {{ crep.prenom|title }} {{ crep.nomUsage|capitalize }}<br><br>
 
-Date : <br>
-Supérieur hiérarchique direct (N+1)<br><br>
-
-Date : <br>
-Autorité hiérarchique<br><br>
-
+Date : {{ crep.dateVisaShd | date('d/m/Y à H:i') }}<br>
+Supérieur hiérarchique direct (N+1) :{% if crep.shdSignataire is not null %} {{ crep.shdSignataire | identite }} {% endif %}
+<br><br>_____________________________________________________________________________________________________
+Date : {{ crep.dateVisaAh|date('d/m/Y H:i') }}<br>
+Autorité hiérarchique :{% if crep.ahSignataire is not null %} {{ crep.ahSignataire | identite }} {% endif %}<br><br>
 
 <!-- page 7 -->
 
-<div style="page-break-before:always;"></div>
+<div style="page-break-before:always">
+    <table style="border: black 1px solid" width="100%">
+        <tr>
+            <td rowspan="2" width="8%">
+                <div><img src="{{ asset('images/dgac2.png') }}" width="18px"></div>
+            </td>
+            <td width="5%"></td>
+            <td width="87%" height="22px"
+                style="font-size: 10px; border-left: black 2px solid; border-bottom: black 2px solid">ENTRETIEN
+                PROFESSIONNEL - PARTIE FORMATION - ANNÉE {{ crep.agent.campagnePnc.anneeEvaluee }}
+            </td>
+        </tr>
+        <tr>
+            <td width="5%"><img src="{{ asset('images/dgac.png') }}" alt="DGAC" width="50px"
+                                style="text-align : right"></td>
+            <td width="87%" height="25px" style="font-size: 12px; border-left: black 2px solid">FICHE D'ÉVALUATION DES
+                FORMATIONS MÉTIER SUIVIES EN {{ crep.agent.campagnePnc.anneeEvaluee }}
+            </td>
+        </tr>
+    </table>
+</div>
 
 <strong style="font-size: 10px">L'Agent</strong><br><br>
 
 <table>
     <tr>
         <td>
-            Nom : <br>
-            Corps : <br>
-            Affectation : <br>
+            Nom : {{ crep.nomUsage | upper }}<br>
+            Corps : {{ crep.corps | title }}<br>
+            Affectation : {{ crep.affectation | title }}<br>
         </td>
     </tr>
 </table><br><br>
@@ -795,7 +828,8 @@ Autorité hiérarchique<br><br>
 
 <table>
     <tr>
-        <td>NOM et Prénom : <br></td>
+        <td>NOM et Prénom : {% if crep.ahSignataire is not null %} {{ crep.ahSignataire | identite }} {% endif %}<br>
+        </td>
     </tr>
 </table><br><br>
 
@@ -808,8 +842,8 @@ Autorité hiérarchique<br><br>
 <table>
     <tr>
         <td class="text-center fullbordered" width="14%">Intitulé du stage</td>
-        <td class="text-center fullbordered" width="9%">Indice de satisfaction (de 1 à 5*)</td>
-        <td class="text-center fullbordered" width="9%">Avez-vous utilisé cette formation (oui/non)</td>
+        <td class="text-center fullbordered" width="9%">Indice de satisfaction (de 1 à 5)</td>
+        <td class="text-center fullbordered" width="9%">Avez-vous utilisé cette formation (Oui/Non)</td>
         <td class="text-center fullbordered" width="18%">Commentaires de l'agent</td>
         <td class="text-center fullbordered" width="12%">&nbsp;Avez-vous utilisé la documentation ?</td>
         <td class="text-center fullbordered" width="13%">Formations complémentaires à prévoir</td>
@@ -817,46 +851,72 @@ Autorité hiérarchique<br><br>
             formation
         </td>
     </tr>
-    <tr>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-    </tr>
-    <tr>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-    </tr>
-    <tr>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-        <td class="bordered-bottom bordered-right"><br><br></td>
-    </tr>
+    {% if (crep.crepDgacFormationsSuivies is empty) %}
+        {% for index in    0..1 %}
+            <tr>
+                <td class="text-center fullbordered"><br></td>
+                <td class="text-center fullbordered"></td>
+                <td class="text-center fullbordered"></td>
+                <td class="text-center fullbordered"></td>
+                <td class="text-center fullbordered"></td>
+                <td class="text-center fullbordered"></td>
+                <td class="text-center fullbordered"></td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        {% for crepDgacFormationsSuivies in crep.crepDgacFormationsSuivies %}
+            <tr>
+                <td class="text-center fullbordered">{% if crep.crepDgacFormationsSuivies is not null %} {{ crepDgacFormationsSuivies.libelle }} {% endif %}</td>
+                <td class="text-center fullbordered">{% if crep.crepDgacFormationsSuivies is not null %} {{ crepDgacFormationsSuivies.satisfaction }} {% endif %}</td>
+                <td class="text-center fullbordered">
+                    {% if crepDgacFormationsSuivies.utilisationFormation == 0 %} Oui
+                    {% elseif crepDgacFormationsSuivies.utilisationFormation == 1 %} Non
+                    {% endif %}
+                </td>
+                <td class="text-center fullbordered">{% if crep.crepDgacFormationsSuivies is not null %} {{ crepDgacFormationsSuivies.commentaireAgent|nl2br }} {% endif %}</td>
+                <td class="text-center fullbordered">
+                    {% if crepDgacFormationsSuivies.utilisationDocumentation == 0 %} Oui
+                    {% elseif crepDgacFormationsSuivies.utilisationDocumentation == 1 %} Non
+                    {% endif %}
+                </td>
+                <td class="text-center fullbordered">{% if crep.crepDgacFormationsSuivies is not null %} {{ crepDgacFormationsSuivies.formationComplementaire|nl2br }} {% endif %}</td>
+                <td class="text-center fullbordered">{% if crep.crepDgacFormationsSuivies is not null %} {{ crepDgacFormationsSuivies.commentaires|nl2br }} {% endif %}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
 </table><br>
 <strong><i>* Indice 5 correspond à excellent</i></strong>
 <br>
 
 <!-- page 8 -->
 
-<div style="page-break-before:always;"></div>
+<div style="page-break-before:always">
+    <table style="border: black 1px solid" width="100%">
+        <tr>
+            <td rowspan="2" width="8%">
+                <div><img src="{{ asset('images/dgac2.png') }}" width="18px"></div>
+            </td>
+            <td width="5%"></td>
+            <td width="87%" height="22px"
+                style="font-size: 10px; border-left: black 2px solid; border-bottom: black 2px solid">ENTRETIEN
+                PROFESSIONNEL - PARTIE FORMATION - ANNÉE {{ crep.agent.campagnePnc.anneeEvaluee }}
+            </td>
+        </tr>
+        <tr>
+            <td width="5%"><img src="{{ asset('images/dgac.png') }}" alt="DGAC" width="50px"
+                                style="text-align : right"></td>
+            <td width="87%" height="25px" style="font-size: 12px; border-left: black 2px solid">FICHE D'ÉVALUATION DES
+                FORMATIONS MÉTIER SUIVIES EN {{ crep.agent.campagnePnc.anneeEvaluee }}
+            </td>
+        </tr>
+    </table>
+</div>
 
 <strong class="text-center" style="font-size: 12px">BESOINS EN FORMATION DE L'ANNÉE 2018</strong><br><br>
 
 <table>
     <tr>
-        <th>CONNAISSANCES TECHNIQUES À ACQUÉRIR :</th>
+        <th>CONNAISSANCES TECHNIQUES À ACQUÉRIR</th>
     </tr>
     <tr>
         <td>- À la demande de l'agent :<br><br><br></td>
@@ -868,7 +928,7 @@ Autorité hiérarchique<br><br>
 
 <table>
     <tr>
-        <th>COMPÉTENCES PROFESSIONNELLES À DÉVELOPPER :</th>
+        <th>COMPÉTENCES PROFESSIONNELLES À DÉVELOPPER</th>
     </tr>
     <tr>
         <td>- À la demande de l'agent :<br><br><br></td>
@@ -880,7 +940,7 @@ Autorité hiérarchique<br><br>
 
 <table>
     <tr>
-        <th>PRÉPARATION AUX EXAMENTS ET CONCOURS POUR L'ANNÉE À VENIR :</th>
+        <th>PRÉPARATION AUX EXAMENTS ET CONCOURS POUR L'ANNÉE À VENIR</th>
     </tr>
     <tr>
         <td><br><br><br><br><br><br></td>
@@ -889,7 +949,7 @@ Autorité hiérarchique<br><br>
 
 <table>
     <tr>
-        <th>SOUHAITS DE FORMATIONS POUR LE DÉVELOPPEMENT PERSONNEL :</th>
+        <th>SOUHAITS DE FORMATIONS POUR LE DÉVELOPPEMENT PERSONNEL</th>
     </tr>
     <tr>
         <td><br><br><br><br><br><br></td>

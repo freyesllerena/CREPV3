@@ -1,4 +1,5 @@
 @@HTTP_REP_EXPLOIT_FT@@/logs/error_log
+@@HTTP_REP_EXPLOIT_FT@@/logs/hc_log
 @@HTTP_REP_EXPLOIT_FT@@/logs/access_log {
     missingok
     notifempty

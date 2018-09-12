@@ -97,58 +97,78 @@
 {% block _crep_dgac_crepDgacFormationsSuivies_entry_widget %}
 	<tr>
 		<td>
-			<div class="text-right">
-				<button class="btn btn-danger btn-xs remove-from-collection"><i class="fa fa-close"></i></button>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+					<button class="btn btn-danger btn-xs remove-from-collection_dgac">
+						<i class="fa fa-close"></i>
+					</button>
+				</div>
 			</div>
-			<div class="form-group">
-                {% if errors|length == 0 -%}
-					<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_libelle">Intitulé du stage<span style="color:red;"> *</span></label>
-                {% else %}
-					<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_libelle">Intitulé du stage<span style="color:red;"> *</span></label>
-                    {%- for error in errors -%}
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+                        {% if errors|length == 0 -%}
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_libelle">Intitulé du stage<span style="color:red;"> *</span></label>
+                        {% else %}
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_libelle">Intitulé du stage<span style="color:red;"> *</span></label>
+                            {%- for error in errors -%}
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<label class="control-label has-error" style="text-align: left;" for="inputError"><i class="fa fa-times-circle"></i> {{ error.message }}</label>
+								</div>
+                            {%- endfor -%}
+                        {% endif %}
+						<div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
 						</div>
-                    {%- endfor -%}
-                {% endif %}
-				<div class="col-md-9 col-sm-9 col-xs-12">
-                    {{ form_row(form.libelle, {'label': false, 'attr': {'class': 'formation-autocomplete'}}) }}
+					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_satisfaction">Indice de satisfaction (de 1 à 5 *)</label>
-				<div class="col-md-9 col-sm-9 col-xs-12">
-                	{{ form_row(form.satisfaction, {'label': false}) }}
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_satisfaction">Indice de satisfaction (de 1 à 5)</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.satisfaction, {'label': false}) }}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Avez-vous utilisé cette formation (oui/non)</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.utilisationFormation, {'label': false}) }}
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Avez-vous utilisé cette formation (oui/non)</label>
-				<div class="col-md-9 col-sm-9 col-xs-12">
-                	{{ form_row(form.utilisationFormation, {'label': false}) }}
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_commentaireAgent">Commentaires de l’agent</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.commentaireAgent, {'label': false}) }}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Avez-vous utilisé la documentation ?</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.utilisationDocumentation, {'label': false}) }}
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_commentaireAgent">Commentaires de l’agent</label>
-				<div class="col-md-9 col-sm-9 col-xs-12">
-                	{{ form_row(form.commentaireAgent, {'label': false}) }}
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Avez-vous utilisé la documentation ?</label>
-				<div class="col-md-9 col-sm-9 col-xs-12">
-                    {{ form_row(form.utilisationDocumentation, {'label': false}) }}
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Formations complémentaires à prévoir</label>
-				<div class="col-md-9 col-sm-9 col-xs-12">
-                    {{ form_row(form.formationComplementaire, {'label': false}) }}
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Avis du supérieur hiérarchique sur l’efficacité de la formation</label>
-				<div class="col-md-9 col-sm-9 col-xs-12">
-                    {{ form_row(form.commentaires, {'label': false}) }}
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Formations complémentaires à prévoir</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.formationComplementaire, {'label': false}) }}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="crep_dgac_utilisationFormation">Avis du supérieur hiérarchique sur l’efficacité de la formation</label>
+						<div class="col-md-9 col-sm-9 col-xs-12">
+                            {{ form_row(form.commentaires, {'label': false}) }}
+						</div>
+					</div>
 				</div>
 			</div>
 		</td>

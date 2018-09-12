@@ -4,7 +4,7 @@ namespace AppBundle\Entity\Crep\CrepDgac;;
 
 use AppBundle\Entity\DemandeFormation;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class CrepDgacFormationSuivie
@@ -113,6 +113,9 @@ class CrepDgacFormationSuivie extends DemandeFormation
 
     /**
      * @return string
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     public function getCommentaireAgent()
     {
@@ -145,6 +148,9 @@ class CrepDgacFormationSuivie extends DemandeFormation
 
     /**
      * @return string
+     * @Assert\Length(
+     *    max = 255,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
      */
     public function getFormationComplementaire()
     {

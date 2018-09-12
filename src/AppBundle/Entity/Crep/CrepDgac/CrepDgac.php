@@ -436,14 +436,6 @@ class CrepDgac extends Crep
 	 */
 	protected $contributionsCompPrevues;
 
-//	/**
-//	 * @ORM\OneToMany(targetEntity="CrepDgacFormationSuivie", mappedBy="crep", orphanRemoval=true, cascade={"persist"})
-//	 * @ORM\OrderBy({"id" = "ASC"})
-//	 * @Assert\Valid
-//	 */
-//	protected $crepDgacFormationsSuivies;
-
-
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Crep\CrepDgac\CrepDgacFormationSuivie", mappedBy="crep",
      *     orphanRemoval=true, cascade={"persist", "remove"})
@@ -451,7 +443,6 @@ class CrepDgac extends Crep
      * @Assert\Valid
      */
     protected $crepDgacFormationsSuivies;
-
 
     /**
      * @var bool
@@ -498,8 +489,68 @@ class CrepDgac extends Crep
      */
     protected $affectation;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true, length=4096)
+     * @Assert\Length(
+     *    max = 4096,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
+     */
+    protected $formationDemandeAgent;
 
-	//##########################################################################################
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true, length=4096)
+     * @Assert\Length(
+     *    max = 4096,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
+     */
+    protected $formationDemandeShd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true, length=4096)
+     * @Assert\Length(
+     *    max = 4096,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
+     */
+    protected $competenceDemandeAgent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true, length=4096)
+     * @Assert\Length(
+     *    max = 4096,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
+     */
+    protected $competenceDemandeShd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true, length=4096)
+     * @Assert\Length(
+     *    max = 4096,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
+     */
+    protected $preparationConcours;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true, length=4096)
+     * @Assert\Length(
+     *    max = 4096,
+     *    maxMessage = "Le champ ne doit pas faire plus de {{ limit }} caractères")
+     */
+    protected $formationPersonnel;
+
+
+    //##########################################################################################
 	
 	public function __construct(){
 		parent::init();
@@ -1722,11 +1773,6 @@ class CrepDgac extends Crep
         return $this;
     }
 
-
-
-
-
-
     /**
      * @return CrepDgacPerspectives
      */
@@ -1744,6 +1790,104 @@ class CrepDgac extends Crep
         $this->perspectives = $perspectives;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getFormationDemandeAgent()
+    {
+        return $this->formationDemandeAgent;
+    }
+
+    /**
+     * @param string $formationDemandeAgent
+     */
+    public function setFormationDemandeAgent($formationDemandeAgent)
+    {
+        $this->formationDemandeAgent = $formationDemandeAgent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormationDemandeShd()
+    {
+        return $this->formationDemandeShd;
+    }
+
+    /**
+     * @param string $formationDemandeShd
+     */
+    public function setFormationDemandeShd($formationDemandeShd)
+    {
+        $this->formationDemandeShd = $formationDemandeShd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompetenceDemandeAgent()
+    {
+        return $this->competenceDemandeAgent;
+    }
+
+    /**
+     * @param string $competenceDemandeAgent
+     */
+    public function setCompetenceDemandeAgent($competenceDemandeAgent)
+    {
+        $this->competenceDemandeAgent = $competenceDemandeAgent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompetenceDemandeShd()
+    {
+        return $this->competenceDemandeShd;
+    }
+
+    /**
+     * @param string $competenceDemandeShd
+     */
+    public function setCompetenceDemandeShd($competenceDemandeShd)
+    {
+        $this->competenceDemandeShd = $competenceDemandeShd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreparationConcours()
+    {
+        return $this->preparationConcours;
+    }
+
+    /**
+     * @param string $preparationConcours
+     */
+    public function setPreparationConcours($preparationConcours)
+    {
+        $this->preparationConcours = $preparationConcours;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormationPersonnel()
+    {
+        return $this->formationPersonnel;
+    }
+
+    /**
+     * @param string $formationPersonnel
+     */
+    public function setFormationPersonnel($formationPersonnel)
+    {
+        $this->formationPersonnel = $formationPersonnel;
+    }
+
+
 
 
     /**

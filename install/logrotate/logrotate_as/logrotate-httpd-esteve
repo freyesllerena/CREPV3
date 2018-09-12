@@ -5,6 +5,7 @@
 @@HTTP_REP_EXPLOIT_AS@@/logs/sendmail.log
 @@HTTP_REP_EXPLOIT_AS@@/logs/sendmail.err
 @@HTTP_REP_EXPLOIT_AS@@/logs/commandes.log
+@@HTTP_REP_EXPLOIT_AS@@/logs/redis.log
 @@HTTP_REP_EXPLOIT_AS@@/logs/access_log {
     missingok
     notifempty

@@ -1,5 +1,4 @@
 {% extends "crep/crepDgac/dgac.base.html.twig" %}
-{# {% form_theme form 'crep/crepMj01/Form/App_form_crepMj01.html.twig' %}#}
 
 {% block accueil %}
 {% endblock %}
@@ -112,6 +111,18 @@
     {% include 'crep/crepDgac/_include/edit/vii/4.html.twig' %}
 {% endblock vii4 %}
 
+{% block vii5 %}
+    {% include 'crep/crepDgac/_include/edit/vii/5.html.twig' %}
+{% endblock vii5 %}
+
+{% block vii6 %}
+    {% include 'crep/crepDgac/_include/edit/vii/6.html.twig' %}
+{% endblock vii6 %}
+
+{% block vii7 %}
+    {% include 'crep/crepDgac/_include/edit/vii/7.html.twig' %}
+{% endblock vii7 %}
+
 {% block viii1 %}
     {% include 'crep/crepDgac/_include/edit/viii/1.html.twig' %}
 {% endblock viii1 %}
@@ -136,10 +147,8 @@ block javascripts %} {{ parent() }}
 <script type="text/javascript">
 
         $(document).ready(function () {
-            // Cette ligne sert à initialiser les collections, et doit nécessairement être en début du ready.
-            // Dans le cas contraire, une erreur dans le JS empêcherait les collections de fonctionner
-            var crepCollections = new Crep.Collections();
             
+            var crepCollections = new Crep.Collections();
 
             // VII Formations suivies lors de l'année écoulée
             var demarrageMobilite = $("#crep_dgac_demarrageMobiliteSouhaitee");
@@ -159,7 +168,7 @@ block javascripts %} {{ parent() }}
                 }
             }
             
-            //
+            // Mobilité
             asouhitMobilite.on('ifChanged', function(){
                 var div1 = asouhitMobilite.parent();
                 
@@ -211,17 +220,12 @@ block javascripts %} {{ parent() }}
             });
         });
 
-
-
-
-
-
         // crud composants entité
         // prototype fonction CREP
         /**
          * Permet de recupérer le button ajouter associé au prototype
          *
-         *  "<button class="btn btn-primary add_collection_mcc02_link competencesPostes pull-right">"
+         *  "<button class="btn btn-primary add_collection_dgac_link competencesPostes pull-right">"
          *  "       <i class="fa fa-plus"></i> Ajouter
          *  "</button>"
          *
@@ -231,13 +235,12 @@ block javascripts %} {{ parent() }}
         function findAddButton(container) {
             var btn = $(container)
                 .next()
-                .find("button.add_collection_mcc02_link");
+                .find("button.add_collection_dgac_link");
 
             return (btn.length > 0) ? btn : null;
         }
 
-        /**  Autres evenements **/
-
+        /**  Evenements Dgac **/
         var Crep = Crep || {};
         Crep.CollectionsDgac = CollectionsDgac;
 
@@ -254,10 +257,10 @@ block javascripts %} {{ parent() }}
          * @param {String} containerCollection est votre balise ou id qui contient le data-prototype
          */
         function CollectionsDgac () {
+
             var collectionsPrototypes = $('div.row[data-prototype]');
             var collectionCount = collectionsPrototypes.length, i;
-
-            $('.btn.remove-from-collection_dgac').on('click', function (e) {
+            $('.btn.remove-from-collection_dgac').on('click', function(e) {
                 e.preventDefault();
                 remove(this);
                 $('#btnAddObjectifsPasses').show();
@@ -306,7 +309,7 @@ block javascripts %} {{ parent() }}
                 divElement = $(element).parent().parent().parent().parent().parent().parent().closest('tr');
                 //Mettre à jour l'ensemble des id et name des éléments du prototype
                 miseAjourIndex(divElement, tbody);
-                elementCollectionPrototype.on('click', '.btn.remove-from-collection_mcc02', function(e) {
+                elementCollectionPrototype.on('click', '.btn.remove-from-collection_dgac', function(e) {
                     e.preventDefault();
                     remove(this, tbody);
                 });
@@ -314,9 +317,12 @@ block javascripts %} {{ parent() }}
         }
 
         function remove(element, tbody) {
-            //Récupérer la div (collection) à supprimer
+            //Récupérer le tr à supprimer
+            tr = $(element).closest('tr');
+            tbody = tr.parent();
+            tr.remove();
             divElement = $(element).parent().parent().parent().parent().parent().parent().closest('tr');
-            divElement.remove();
+
             miseAjourIndex(divElement, tbody);
         }
 
@@ -364,54 +370,6 @@ block javascripts %} {{ parent() }}
             });
         }
 
-
-        // crud composants entité
-        // prototype fonction CREP
-        /**
-         * Permet de recupérer le button ajouter associé au prototype
-         *
-         *  "<button class="btn btn-primary add_collection_mcc02_link competencesPostes pull-right">"
-         *  "       <i class="fa fa-plus"></i> Ajouter
-         *  "</button>"
-         *
-         * @param {HTMLDivElement} container la div containant le container
-         * @return {HTMLDivElement}  retourne le bouton
-         */
-        function findAddButton(container) {
-            var btn = $(container)
-                .next()
-                .find("button.add_collection_dgac_link");
-
-            return (btn.length > 0) ? btn : null;
-        }
-
-        //Mcc02 autocomplete pour formation suivie - voir version globale : \app\Resources\views\crep\crep.base.html.twig
-        urlAjax = "{{ path('formation_ajax_search', {'ministere': crep.agent.campagnePnc.ministere.id}) }}";
-        // AutoComplete
-        autoCompleteFormation();
-
-        function autoCompleteFormation(){
-
-            $('.formation-autocomplete').autocomplete({
-                serviceUrl: urlAjax,
-                minChars: 3,
-                onSelect: function (suggestion) {
-                    var idLibelle = $(this).context.id;
-                    var result = idLibelle.split('_');
-                    var idDuree = result[0] + '_' + result[1] + '_' + result[2] + '_' + result[3] + '_duree';
-                    $("#"+idDuree).val(suggestion.duree);
-                }
-            });
-
-            $('.formation-autocomplete').change(function(){
-                if (!$(this).val()) {
-                    var idLibelle = $(this).context.id;
-                    var result = idLibelle.split('_');
-                    var idDuree = result[0] + '_' + result[1] + '_' + result[2] + '_' + result[3] + '_duree';
-                    $("#"+idDuree).val('');
-                }
-            });
-        }
     </script>
 
 {% endblock javascripts %}

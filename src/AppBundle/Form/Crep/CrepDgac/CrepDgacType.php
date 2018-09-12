@@ -154,22 +154,7 @@ class CrepDgacType extends CrepType
             ->add('contributionsCompPrevues', null, ['required' => false])
             ->add('objectifsPermanentsAvenir', null, ['required' => false])
             ->add('objectifsParticuliersAvenir', null, ['required' => false])
-//            ->add(
-//            		'formationsSuivies',
-//            		CollectionType::class,
-//            		[
-//            				'label' => false,
-//            				'entry_type' => CrepDgacFormationSuivieType::class,
-//            				'allow_add' => true,
-//            				'allow_delete' => true,
-//            				'by_reference' => false,
-//            		]
-//            )
             ->add('souhaitMobilite', null, ['required' => false])
-
-
-
-
             ->add('demarrageMobiliteSouhaitee', ChoiceType::class, [
                 'choices' => [
                     'Dès que possible' => 0,
@@ -197,6 +182,36 @@ class CrepDgacType extends CrepType
                     'allow_delete' => true,
                     'by_reference' => false,
                 ])
+            ->add('formationDemandeAgent', null, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+            ->add('formationDemandeShd', null, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+            ->add('competenceDemandeAgent', null, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+            ->add('competenceDemandeShd', null, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+            ->add('preparationConcours', null, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+            ->add('formationPersonnel', null, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
         ;
     }
 

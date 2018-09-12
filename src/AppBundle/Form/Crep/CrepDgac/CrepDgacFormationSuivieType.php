@@ -25,25 +25,25 @@ class CrepDgacFormationSuivieType extends AbstractType
 	        ])
             ->add('satisfaction', ChoiceType::class, [
                 'choices' => [
-                    'instatisfait' => 0,
-                    'peu satisfait' => 1,
-                    'moyennement satisfait' => 2,
-                    'satisfait' => 3,
-                    'très satisfait' => 4,
+                    'Instatisfait (1)' => 1,
+                    'Peu satisfait (2)' => 2,
+                    'Moyennement satisfait (3)' => 3,
+                    'Satisfait (4)' => 4,
+                    'Excellent (5)' => 5,
                 ],
                 'expanded' => false,
                 'multiple' => false,
-                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px; width: 20%'],
+                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 100px; width: 25%'],
                 'placeholder' => ''
             ])
             ->add('utilisationFormation', ChoiceType::class, [
                 'choices' => [
-                    'Oui' => 0,
-                    'Non' => 1,
+                    'Oui' => true,
+                    'Non' => false,
                 ],
                 'expanded' => false,
                 'multiple' => false,
-                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px; width: 20%'],
+                'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 100px; width: 25%'],
                 'placeholder' => ''
             ])
             ->add('commentaireAgent', TextareaType::class, [
@@ -60,7 +60,7 @@ class CrepDgacFormationSuivieType extends AbstractType
                         ],
                         'expanded' => false,
                         'multiple' => false,
-                        'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 80px; width: 20%'],
+                        'attr' => ['class' => 'fieldCollection', 'style' => 'min-width: 100px; width: 25%'],
                         'placeholder' => ''
 	    			]
 	    	)

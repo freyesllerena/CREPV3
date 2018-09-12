@@ -1,18 +1,22 @@
+<br>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <table class="table table-bordered">
             <thead>
-            <tr>
-                <th style="width: 30%">Intitulé du stage</th>
-                <th style="width: 10%" class="text-center">Indice de satisfaction (de 1 à 5*)</th>
-                <th style="width: 10%" class="text-center">Commentaires de l’agent</th>
-                <th style="width: 10%" class="text-center">Avez-vous utilisé la documentation ? </th>
-                <th style="width: 20%" class="text-center">Formations complémentaires à prévoir</th>
-                <th style="width: 20%" class="text-center">Avis du supérieur hiérarchique sur l’efficacité de la formation </th>
-            </tr>
+                <tr>
+                    <th style="width: 30%" class="text-center">Intitulé du stage</th>
+                    <th style="width: 7%" class="text-center">Indice de satisfaction<br>(de 1 à 5 *)</th>
+                    <th style="width: 8%" class="text-center">Avez-vous<br>utilisé cette<br>formation<br>(oui/non)</th>
+                    <th style="width: 16%" class="text-center">Commentaires de l’agent</th>
+                    <th style="width: 10%" class="text-center">Avez-vous<br>utilisé la<br>documentation ? </th>
+                    <th style="width: 10%" class="text-center">Formations complémentaires à prévoir</th>
+                    <th style="width: 29%" class="text-center">Avis du supérieur hiérarchique sur l’efficacité de la
+                        formation </th>
+                </tr>
             </thead>
             <tbody>
-            {% if (crep.crepDgacFormationsSuivies is empty) %} {% for index in	0..1 %}
+            {% if (crep.crepDgacFormationsSuivies is empty) %}
+                {% for index in	0..1 %}
                 <tr>
                     <td><br></td>
                     <td></td>
@@ -20,18 +24,39 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                 </tr>
-            {% endfor %} {% else %} {% for crepDgacFormationsSuivies in crep.crepDgacFormationsSuivies %}
+                {% endfor %}
+            {% else %}
+                {% for crepDgacFormationsSuivies in crep.crepDgacFormationsSuivies %}
                 <tr>
                     <td>{{ crepDgacFormationsSuivies.libelle }}</td>
-                    <td>{{ crepDgacFormationsSuivies.utilisationFormation|nl2br }}</td>
+                    <td class="text-center">
+                        {{ crepDgacFormationsSuivies.satisfaction|nl2br }}
+                    </td>
+                    <td class="text-center">
+                        {% if (crepDgacFormationsSuivies.utilisationFormation is not empty and crepDgacFormationsSuivies.utilisationFormation) %}
+                            Oui
+                        {% else %}
+                            Non
+                        {% endif %}
+                    </td>
                     <td>{{ crepDgacFormationsSuivies.commentaireAgent|nl2br }}</td>
-                    <td>{{ crepDgacFormationsSuivies.utilisationDocumentation|nl2br }}</td>
+                    <td class="text-center">
+                        {% if (crepDgacFormationsSuivies.utilisationDocumentation is not empty and crepDgacFormationsSuivies.utilisationDocumentation) %}
+                            Oui
+                        {% else %}
+                            Non
+                        {% endif %}
+                    </td>
                     <td>{{ crepDgacFormationsSuivies.formationComplementaire|nl2br }}</td>
                     <td>{{ crepDgacFormationsSuivies.commentaires|nl2br }}</td>
                 </tr>
-            {% endfor %} {% endif %}
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
+        <span>* Indice 5 correspond à excellent</span>
     </div>
 </div>
+<br>

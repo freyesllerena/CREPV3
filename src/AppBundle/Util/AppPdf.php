@@ -154,13 +154,11 @@ class AppPdf extends TCPDF
             	         			</table>
 	    						';
         } elseif ($crep instanceof CrepDgac) {
-            $this->footer = '
-    								<table>
-	                    		  		<tr>
-	    									<td align="right" style="font-size: large">' . $this->getAliasNumPage() . '</td>
-	                    		  		</tr>
-            	         			</table>
-	    						';
+            $this->footer = '<table>
+                        		  <tr>
+                        		      <td style="width:100%" align="right">' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages() . '</td>
+                        		  </tr>
+                	         </table>';
         } elseif ($crep instanceof CrepMso5) {
             $this->footer = '';
         } else {
@@ -243,21 +241,7 @@ class AppPdf extends TCPDF
         } elseif ($crep instanceof CrepMj02) {
             $this->header = '';
         } elseif ($crep instanceof CrepDgac) {
-            $logo1 = dirname(__FILE__) . '/../../../web/images/dgac.png';
-            $logo2 = dirname(__FILE__) . '/../../../web/images/dgac2.png';
-            $htmlHeader = '<table style="border: black 1px solid">
-                                <tr>
-                                    <td rowspan="2" width="8%"><div><img src="' . $logo2 . '" alt="DGAC" width="20px"></div></td>
-                                    <td width="5%"></td>
-                                    <td width="83%" height="22px" style="font-size: 10px; border-left: black 2px solid; border-bottom: black 2px solid">ENTRETIEN PROFESSIONNEL - PARTIE FORMATION - ANNÉE ' . $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee() . '</td>
-                                </tr>
-                                <tr>
-                                    <td width="5%"><img src="' . $logo1 . '" alt="DGAC" width="50px" style="text-align : right"></td>
-                                    <td width="83%" height="25px" style="font-size: 12px; border-left: black 2px solid">FICHE D\'ÉVALUATION DES FORMATIONS MÉTIER SUIVIES EN ' . $crep->getAgent()->getCampagnePnc()->getAnneeEvaluee() . '</td>
-                                </tr>
-                            </table>'
-                            ;
-            $this->header = $htmlHeader;
+            $this->header = '';
         } elseif ($crep instanceof CrepMso5) {
             $this->header = '<table>
             		  <tr align="right">

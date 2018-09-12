@@ -1,0 +1,25 @@
+{% form_theme form 'crep/crepDgac/Form/App_form_crepDgac_12.html.twig' %}
+
+<br>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label>Préparation aux examens et concours pour l’année a venir</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_row(form.preparationConcours,{'label': false, 'attr': {'maxlength':
+            '4096'}}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <label>Souhaits de formations pour le développement personnel</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        {{ form_row(form.formationPersonnel,{'label': false, 'attr': {'maxlength': '4096'}}) }}
+    </div>
+</div>
