@@ -9,8 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class CrepDgacFormationSuivie
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepDgacRepository
- * \CrepDgacFormationSuivieRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CrepRepository\CrepDgacRepository\CrepDgacFormationSuivieRepository")
  * @package AppBundle\Entity\Crep\CrepDgac
  */
 class CrepDgacFormationSuivie extends DemandeFormation

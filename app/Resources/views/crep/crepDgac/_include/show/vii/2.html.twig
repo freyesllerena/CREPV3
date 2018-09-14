@@ -1,3 +1,4 @@
+{# https://fontawesome.bootstrapcheatsheets.com/ #}
 <br>
 <div class="row form-group">
 	<label>Perpectives :</label>
@@ -5,32 +6,78 @@
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		
-		<table class="table table-bordered">
+		<table>
 			<tbody>
 				<tr>
 					<td width="3%">
 						{% if crep.perspectives is not null and crep.perspectives.tempsPartiel %}
-							<i class="fa fa-check"></i>{% endif %}
+							<i class="btn btn-default fa fa-check"></i>
+						{% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
 					</td>
 					<td width="30%">Temps partiel</td>
-					<td width="3%">{% if crep.perspectives is not null and crep.perspectives.disponibilite %}<i class="fa fa-check"></i>{% endif %}</td>
+					<td width="3%">
+						{% if crep.perspectives is not null and crep.perspectives.disponibilite %}
+							<i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+					</td>
 					<td width="30%">Disponibilité</td>
-					<td width="3%">{% if crep.perspectives is not null and crep.perspectives.detachement %}<i class="fa fa-check"></i>{% endif %}</td>
+					<td width="3%">
+						{% if crep.perspectives is not null and crep.perspectives.detachement %}
+							<i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+					</td>
 					<td width="31%">Détachement</td>
 				</tr>
 				<tr>
-					<td>{% if crep.perspectives is not null and crep.perspectives.congesFormation %}<i class="fa fa-check"></i>{% endif %}</td>
+					<td>
+						{% if crep.perspectives is not null and crep.perspectives.congesFormation %}
+							<i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+					</td>
 					<td>Congés de formation</td>
-					<td>{% if crep.perspectives is not null and crep.perspectives.concours %}<i class="fa fa-check"></i>{% endif %}</td>
+					<td>
+						{% if crep.perspectives is not null and crep.perspectives.concours %}
+							<i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+					</td>
 					<td>Concours</td>
-					<td>{% if crep.perspectives is not null and crep.perspectives.cpa %}<i class="fa fa-check"></i>{% endif %}</td>
+					<td>
+						{% if crep.perspectives is not null and crep.perspectives.cpa %}
+							<i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+					</td>
 					<td>CPA</td>
 				</tr>
 				<tr>
-					<td>{% if crep.perspectives is not null and crep.perspectives.retraite %}<i class="fa fa-check"></i>{% endif %}</td>
+					<td>
+						{% if crep.perspectives is not null and crep.perspectives.retraite %}
+							<i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+					</td>
 					<td>Retraite</td>
-					<td>{% if crep.perspectives is not null and crep.perspectives.autres %}<i class="fa fa-check"></i>{% endif %}</td>
+					<td>
+						{% if crep.perspectives is not null and crep.perspectives.autres %}
+							<i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+							<i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+					</td>
 					<td>Autres</td>
+					<td></td>
 					<td></td>
 				</tr>
 			</tbody>

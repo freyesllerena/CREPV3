@@ -129,6 +129,7 @@ class CrepManager
         $this->kernelRootDir = $constanteManager->getKernelRootDir();
         $this->crepMindef01Manager = $crepMindef01Manager;
         $this->crepAcManager = $crepAcManager;
+        $this->crepDgacManager = $crepDgacManager;
         $this->crepMccManager = $crepMccManager;
         $this->crepMinefAbcManager = $crepMinefAbcManager;
         $this->crepMinefContractManager = $crepMinefContractManager;
@@ -156,6 +157,7 @@ class CrepManager
             'CrepEddMindef' => $this->crepEddManager,
             'CrepScl02' => $this->crepScl02Manager,
             'CrepMj02' => $this->crepMj02Manager,
+            'CrepDgac' => $this->crepDgacManager,
         ];
     }
 

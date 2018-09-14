@@ -1,54 +1,118 @@
+{# https://fontawesome.bootstrapcheatsheets.com/ #}
 <div class="row form-group">
     <label>Mobilité souhaitée par l'agent :</label>
 </div>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         
-        <table class="table table-bordered">
+        <table>
             <tbody>
                 <tr>
                     <td class="text-center" width="3%">
-                        {% if crep.souhaitMobilite is not null and crep.souhaitMobilite == true %}<i class="fa fa-check"></i>{% endif %}
+                        {% if crep.souhaitMobilite is not null and crep.souhaitMobilite == true %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
                     </td>
                     <td width="15%">Oui</td>
-                    <td width="3%">{% if crep.demarrageMobiliteSouhaitee is not null and crep.demarrageMobiliteSouhaitee == 0 %}<i
-                                class="fa fa-check"></i>{% endif %}
+                    <td width="3%">
+                        {% if crep.demarrageMobiliteSouhaitee is not null and crep.demarrageMobiliteSouhaitee == 0 %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
                     </td>
                     <td width="23%">Dès que possible</td>
                     <td width="3%">
                         {% if crep.mobilitePoste is not null and crep.mobilitePoste.memeService %}
-                            <i class="fa fa-check"></i>{% endif %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
                     </td>
                     <td width="25%">Au sein du service</td>
-                    <td width="3%">{% if crep.mobilitePoste is not null and crep.mobilitePoste.dansLeDepartement %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td width="3%">
+                        {% if crep.mobilitePoste is not null and crep.mobilitePoste.dansLeDepartement %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td width="25%">Dans le département (DDE, SN…)</td>
                 </tr>
                 <tr>
                     <td class="text-center">
-                        {% if crep.souhaitMobilite is not null and crep.souhaitMobilite == false %}<i class="fa fa-check"></i>{% endif %}
+                        {% if crep.souhaitMobilite is not null and crep.souhaitMobilite == false %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
                     </td>
                     <td>Non</td>
-                    <td>{% if crep.demarrageMobiliteSouhaitee == 1 %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td>
+                        {% if crep.demarrageMobiliteSouhaitee == 1 %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td>Dans 1 an</td>
-                    <td>{% if crep.mobilitePoste is not null and crep.mobilitePoste.horsInterRegion %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td>
+                        {% if crep.mobilitePoste is not null and crep.mobilitePoste.horsInterRegion %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td>Hors inter région</td>
-                    <td>{% if crep.mobilitePoste is not null and crep.mobilitePoste.dansInterRegion %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td>
+                        {% if crep.mobilitePoste is not null and crep.mobilitePoste.dansInterRegion %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td>Dans inter région (CIFP…)</td>
                 </tr>
                 <tr>
                     <td class="text-center"></td>
                     <td class="text-left"></td>
-                    <td>{% if crep.demarrageMobiliteSouhaitee == 2 %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td>
+                        {% if crep.demarrageMobiliteSouhaitee == 2 %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td>Dans 2 ans</td>
-                    <td>{% if crep.mobilitePoste is not null and crep.mobilitePoste.region %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td>
+                        {% if crep.mobilitePoste is not null and crep.mobilitePoste.region %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td>Région</td>
-                    <td>{% if crep.mobilitePoste is not null and crep.mobilitePoste.international %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td>
+                        {% if crep.mobilitePoste is not null and crep.mobilitePoste.international %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td>International</td>
                 </tr>
                 <tr>
                     <td class="text-center"></td>
                     <td class="text-left"></td>
-                    <td>{% if crep.demarrageMobiliteSouhaitee == 3 %}<i class="fa fa-check"></i>{% endif %}</td>
+                    <td>
+                        {% if crep.demarrageMobiliteSouhaitee == 3 %}
+                            <i class="btn btn-default fa fa-check"></i>
+                        {% else %}
+                            <i class="btn btn-default fa fa-square-o"></i>
+                        {% endif %}
+                    </td>
                     <td>Dans 3 ans ou +</td>
                     <td></td>
                     <td></td>

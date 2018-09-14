@@ -74,7 +74,7 @@ class CrepMinefAbc extends Crep
     protected $directionAffectation;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -86,7 +86,7 @@ class CrepMinefAbc extends Crep
     protected $motifRefusEntretien;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -105,7 +105,7 @@ class CrepMinefAbc extends Crep
     protected $datePriseFonctions;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -117,7 +117,7 @@ class CrepMinefAbc extends Crep
     protected $acquisExperiencePro;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -129,7 +129,7 @@ class CrepMinefAbc extends Crep
     protected $capaciteOrganiserAnimer;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -148,7 +148,7 @@ class CrepMinefAbc extends Crep
     protected $souhaitEvolutionCarriere;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -167,7 +167,7 @@ class CrepMinefAbc extends Crep
     protected $souhaitMobilite;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -193,7 +193,7 @@ class CrepMinefAbc extends Crep
     protected $typeEntretienCarriere;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -205,7 +205,7 @@ class CrepMinefAbc extends Crep
     protected $commAgentEvolutionPro;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -217,7 +217,7 @@ class CrepMinefAbc extends Crep
     protected $autresBesoinsFormation;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -229,7 +229,7 @@ class CrepMinefAbc extends Crep
     protected $commentaireAgentFormation;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -241,7 +241,7 @@ class CrepMinefAbc extends Crep
     protected $autresPointsAbordesShd;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -253,7 +253,7 @@ class CrepMinefAbc extends Crep
     protected $autresPointsAbordesAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -272,7 +272,7 @@ class CrepMinefAbc extends Crep
     protected $precisionsFonctionsAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -291,7 +291,7 @@ class CrepMinefAbc extends Crep
     protected $fonctionLienAptitudeAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -310,7 +310,7 @@ class CrepMinefAbc extends Crep
     protected $appreciationResultatsAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -329,7 +329,7 @@ class CrepMinefAbc extends Crep
     protected $alaiseDansServiceAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -348,7 +348,7 @@ class CrepMinefAbc extends Crep
     protected $souhaitAutreFonctionAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -360,7 +360,7 @@ class CrepMinefAbc extends Crep
     protected $commSouhaitFonctionAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -372,7 +372,7 @@ class CrepMinefAbc extends Crep
     protected $autresObservationsAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      *
@@ -384,7 +384,7 @@ class CrepMinefAbc extends Crep
     protected $observationsNotifAgent;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(type="text")
      *
@@ -494,7 +494,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getNomUsage()
     {
@@ -513,7 +513,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the unknown_type
+     * @return String
      */
     public function getPrenom()
     {
@@ -521,7 +521,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @param unknown_type $prenom
+     * @param string $prenom
      */
     public function setPrenom($prenom)
     {
@@ -531,7 +531,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDateNaissance()
     {
@@ -549,7 +549,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getMatricule()
     {
@@ -568,7 +568,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getGrade()
     {
@@ -587,7 +587,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getEchelon()
     {
@@ -606,7 +606,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getDirectionAffectation()
     {
@@ -625,7 +625,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getMotifRefusEntretien()
     {
@@ -644,7 +644,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getDescriptionFonctions()
     {
@@ -663,7 +663,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the DateTime
+     * @return \DateTime
      */
     public function getDatePriseFonctions()
     {
@@ -681,7 +681,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getAcquisExperiencePro()
     {
@@ -700,7 +700,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getCapaciteOrganiserAnimer()
     {
@@ -719,7 +719,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getCapaciteDefinirObjectifs()
     {
@@ -738,9 +738,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getSouhaitEvolutionCarriere()
+    public function getSouhaitEvolutionCarriere(): ?bool
     {
         return $this->souhaitEvolutionCarriere;
     }
@@ -757,7 +757,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getTypeEvolutionCarriere()
     {
@@ -776,9 +776,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getSouhaitMobilite()
+    public function getSouhaitMobilite(): ?bool
     {
         return $this->souhaitMobilite;
     }
@@ -795,7 +795,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getTypeMobilite()
     {
@@ -814,9 +814,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getSouhaitEntretienCarriere()
+    public function getSouhaitEntretienCarriere(): ?bool
     {
         return $this->souhaitEntretienCarriere;
     }
@@ -833,7 +833,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getTypeEntretienCarriere()
     {
@@ -852,7 +852,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getCommAgentEvolutionPro()
     {
@@ -871,7 +871,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getAutresBesoinsFormation()
     {
@@ -890,7 +890,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getCommentaireAgentFormation()
     {
@@ -909,7 +909,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getAutresPointsAbordesShd()
     {
@@ -928,7 +928,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getAutresPointsAbordesAgent()
     {
@@ -947,7 +947,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getAppreciationLitteraleShd()
     {
@@ -966,9 +966,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getPrecisionsFonctionsAgent()
+    public function getPrecisionsFonctionsAgent(): ?bool
     {
         return $this->precisionsFonctionsAgent;
     }
@@ -985,7 +985,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCommentaireFonctionAgent()
     {
@@ -1004,9 +1004,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getFonctionLienAptitudeAgent()
+    public function getFonctionLienAptitudeAgent(): ?bool
     {
         return $this->fonctionLienAptitudeAgent;
     }
@@ -1023,7 +1023,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCommAptitudesAgent()
     {
@@ -1042,9 +1042,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getAppreciationResultatsAgent()
+    public function getAppreciationResultatsAgent(): ?bool
     {
         return $this->appreciationResultatsAgent;
     }
@@ -1061,7 +1061,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCommentaireResultatsAgent()
     {
@@ -1080,9 +1080,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getAlaiseDansServiceAgent()
+    public function getAlaiseDansServiceAgent(): ?bool
     {
         return $this->alaiseDansServiceAgent;
     }
@@ -1099,7 +1099,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCommServiceAgent()
     {
@@ -1118,9 +1118,9 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the boolean
+     * @return boolean
      */
-    public function getSouhaitAutreFonctionAgent()
+    public function getSouhaitAutreFonctionAgent(): ?bool
     {
         return $this->souhaitAutreFonctionAgent;
     }
@@ -1137,7 +1137,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getCommSouhaitFonctionAgent()
     {
@@ -1156,7 +1156,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return string
      */
     public function getAutresObservationsAgent()
     {
@@ -1175,7 +1175,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return string
      */
     public function getObservationsNotifAgent()
     {
@@ -1194,7 +1194,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the text
+     * @return String
      */
     public function getCoordonneesEntretien()
     {
@@ -1261,7 +1261,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return String
      */
     public function getQualiteShd()
     {
@@ -1280,7 +1280,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the string
+     * @return String
      */
     public function getQualiteAh()
     {
@@ -1299,7 +1299,7 @@ class CrepMinefAbc extends Crep
     }
 
     /**
-     * @return the integer
+     * @return integer
      */
     public function getTypeCadenceAvancement()
     {
@@ -1390,7 +1390,7 @@ class CrepMinefAbc extends Crep
         // Ce modèle de CREP ne contient pas de champs liés au N+1
     }
 
-    public function getRevisionGracieuse()
+    public function getRevisionGracieuse(): ?bool
     {
         return $this->revisionGracieuse;
     }

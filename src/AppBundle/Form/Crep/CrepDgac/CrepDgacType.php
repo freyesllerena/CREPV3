@@ -212,6 +212,16 @@ class CrepDgacType extends CrepType
                     'maxlength' => '4096', ],
                 'required' => false,
             ])
+            ->add('commServiceAgent', TextareaType::class, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
+            ->add('observationsShd', TextareaType::class, [
+                'attr' => ['class' => 'fieldCollection',
+                    'maxlength' => '4096', ],
+                'required' => false,
+            ])
         ;
     }
 

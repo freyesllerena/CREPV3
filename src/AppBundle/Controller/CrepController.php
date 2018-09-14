@@ -71,7 +71,7 @@ class CrepController extends Controller
             
             $signerShdForm = $this->createEditForm($crep, [
                 'action' => $this->generateUrl('crep_signer_shd', ['id' => $crep->getId()]),
-                'validation_groups' => ['registration']
+                'validation_groups' => ['SignatureShd']
             ]);
             
             $refuserVisaForm = $this->creerRefuserVisaForm($crep);

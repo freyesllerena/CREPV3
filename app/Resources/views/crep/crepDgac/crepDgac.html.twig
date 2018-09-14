@@ -1,4 +1,4 @@
-<style>
+ <style>
     .text-center {
         text-align: center;
     }
@@ -64,7 +64,7 @@
 
 
 <!-- page 1 -->
-<br><br><br>
+
 <table>
     <tr>
         <th colspan="2">AGENT</th>
@@ -157,9 +157,7 @@
 </table>
 <br><br>
 
-{#<font size="+1">#}
 <u><strong>COMPOSANTES DU POSTE :</strong></u>
-{#</font>#}
 <br><br>
 
 <table cellpadding="5">
@@ -258,11 +256,11 @@
     </tr>
     <tr>
         <td height="0%" class="bordered-right"></td>
-        <td><u>Par l'agent :</u>{{ crep.elementsObsCompAgent|nl2br }}<br><br></td>
+        <td><u>Par l'agent :</u>{{ crep.elementsObsCompAgent|nl2br }}<br><br><br></td>
     </tr>
 </table><br><br>
 
-Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br>
+Commentaires éventuels de l'agent et/ou du supérieur hiérarchique :<br><u>L'agent :</u><br>{% if crep.commServiceAgent is not null %}{{ crep.commServiceAgent|nl2br }} {% else %} <br><br><br><br> {% endif %}<br><u>Le supérieur hiérarchique :</u><br>{% if crep.observationsShd is not null %}{{ crep.observationsShd|nl2br }} {% else %} <br><br><br><br> {% endif %}<br>
 
 
 <!-- page 4 -->
@@ -919,10 +917,10 @@ Autorité hiérarchique :{% if crep.ahSignataire is not null %} {{ crep.ahSignat
         <th>CONNAISSANCES TECHNIQUES À ACQUÉRIR</th>
     </tr>
     <tr>
-        <td>- À la demande de l'agent :<br><br><br></td>
+        <td>- À la demande de l'agent :<br>{% if crep.formationDemandeAgent is not null %}{{ crep.formationDemandeAgent|nl2br }} {% else %} <br><br><br><br> {% endif %}<br></td>
     </tr>
     <tr>
-        <td>- À la demande de la hiérarchie :<br><br><br></td>
+        <td>- À la demande de la hiérarchie :<br>{% if crep.formationDemandeShd is not null %}{{ crep.formationDemandeShd|nl2br }} {% else %} <br><br><br><br> {% endif %}</td>
     </tr>
 </table><br><br>
 
@@ -931,10 +929,10 @@ Autorité hiérarchique :{% if crep.ahSignataire is not null %} {{ crep.ahSignat
         <th>COMPÉTENCES PROFESSIONNELLES À DÉVELOPPER</th>
     </tr>
     <tr>
-        <td>- À la demande de l'agent :<br><br><br></td>
+        <td>- À la demande de l'agent :<br>{% if crep.competenceDemandeAgent is not null %}{{ crep.competenceDemandeAgent|nl2br }} {% else %} <br><br><br><br> {% endif %}<br></td>
     </tr>
     <tr>
-        <td>- À la demande de la hiérarchie :<br><br><br></td>
+        <td>- À la demande de la hiérarchie :<br>{% if crep.competenceDemandeShd is not null %}{{ crep.competenceDemandeShd|nl2br }} {% else %} <br><br><br><br> {% endif %}</td>
     </tr>
 </table><br><br>
 
@@ -943,7 +941,7 @@ Autorité hiérarchique :{% if crep.ahSignataire is not null %} {{ crep.ahSignat
         <th>PRÉPARATION AUX EXAMENTS ET CONCOURS POUR L'ANNÉE À VENIR</th>
     </tr>
     <tr>
-        <td><br><br><br><br><br><br></td>
+        <td><br>{% if crep.preparationConcours is not null %}{{ crep.preparationConcours|nl2br }} {% else %} <br><br><br><br> {% endif %}<br></td>
     </tr>
 </table><br><br>
 
@@ -952,6 +950,6 @@ Autorité hiérarchique :{% if crep.ahSignataire is not null %} {{ crep.ahSignat
         <th>SOUHAITS DE FORMATIONS POUR LE DÉVELOPPEMENT PERSONNEL</th>
     </tr>
     <tr>
-        <td><br><br><br><br><br><br></td>
+        <td><br>{% if crep.formationPersonnel is not null %}{{ crep.formationPersonnel|nl2br }} {% else %} <br><br><br><br> {% endif %}</td>
     </tr>
 </table><br><br>

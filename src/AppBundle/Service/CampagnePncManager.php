@@ -178,7 +178,11 @@ class CampagnePncManager extends CampagneManager
 
     protected function getUser()
     {
-        return $this->tokenStorage->getToken()->getUser();
+        if($this->tokenStorage->getToken()){
+            return $this->tokenStorage->getToken()->getUser();
+        }
+        
+        return null;
     }
 
     public function diffuser(CampagnePnc $campagnePnc)

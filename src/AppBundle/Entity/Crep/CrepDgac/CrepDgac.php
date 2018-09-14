@@ -549,6 +549,29 @@ class CrepDgac extends Crep
      */
     protected $formationPersonnel;
 
+    /**
+     * @var text
+     *
+     * @ORM\Column(type="text")
+     *
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )     *
+     */
+    protected $commServiceAgent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     * @Assert\Length(
+     *      max = 4096,
+     *      maxMessage = "Ce champ ne doit pas dépasser {{ limit }} caractères"
+     * )
+     */
+    protected $observationsShd;
+
 
     //##########################################################################################
 	
@@ -711,18 +734,16 @@ class CrepDgac extends Crep
 	{
 		return $this->nomUsageShd;
 	}
-	
-	/**
-	 * @param string $nomUsageShd
-	 *
-	 * @return CrepDgac
-	 */
-	public function setNomUsageShd($nomUsageShd)
-	{
-		$this->nomUsageShd = Util::twig_upper($nomUsageShd);
-	
-		return $this;
-	}
+
+    /**
+     * @param $nomUsageShd
+     * @return $this
+     */
+    public function setNomUsageShd($nomUsageShd)
+    {
+        $this->nomUsageShd = $nomUsageShd;
+        return $this;
+    }
 	
 	/**
 	 * @return string
@@ -1279,10 +1300,18 @@ class CrepDgac extends Crep
             ->setMatricule($agent->getMatricule())
             ->setService($agent->getAffectationClairAgent())
             ->setPosteOccupe($agent->getPosteOccupe())
-            ->setNomUsageShd($agent->getShd()->getNom())
-            ->setPrenomShd($agent->getShd()->getPrenom())
-            ->setFonctionExerceeShd($agent->getShd()->getPosteOccupe())
+//            ->setNomUsageShd($agent->getShd()->getNom())
+//            ->setPrenomShd($agent->getShd()->getPrenom())
+//            ->setFonctionExerceeShd($agent->getShd()->getPosteOccupe())
             ->setAffectation($agent->getAffectation());
+
+
+        if ($agent->getShd()) {
+            $this->setPrenomShd($agent->getShd()->getPrenom());
+            $defaultNomShd = ($agent->getShd()->getNom())?  $agent->getShd()->getNom() : $agent->getShd()->getNomNaissance();
+            $this->setNomUsageShd($defaultNomShd);
+        }
+
         
         // Initialisation du référentiel composante poste
 	       $this->addComposantesPoste(new CrepDgacComposantePoste('Activités  ou compétences énoncées dans la fiche de poste : détailler'));
@@ -1324,7 +1353,19 @@ class CrepDgac extends Crep
 	*/
 	public function actualiserDonneesShd()
 	{
-		
+        $shd = $this->getAgent()->getShd();
+
+        if ($shd) {
+            $this
+                ->setNomUsageShd($shd->getNom())
+                ->setPrenomShd($shd->getPrenom())
+            ;
+        } else {
+            $this
+                ->setNomUsageShd(null)
+                ->setPrenomShd(null)
+            ;
+        }
 	}
 
 	//Fonctions de confidentialisation d'un CREP
@@ -1886,6 +1927,39 @@ class CrepDgac extends Crep
     {
         $this->formationPersonnel = $formationPersonnel;
     }
+
+    /**
+     * @return text
+     */
+    public function getCommServiceAgent()
+    {
+        return $this->commServiceAgent;
+    }
+
+    /**
+     * @param text $commServiceAgent
+     */
+    public function setCommServiceAgent($commServiceAgent)
+    {
+        $this->commServiceAgent = $commServiceAgent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObservationsShd()
+    {
+        return $this->observationsShd;
+    }
+
+    /**
+     * @param string $observationsShd
+     */
+    public function setObservationsShd($observationsShd)
+    {
+        $this->observationsShd = $observationsShd;
+    }
+
 
 
 

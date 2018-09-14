@@ -1023,9 +1023,9 @@ class CrepAc extends Crep
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function getEmploiFonctionnel()
+    public function getEmploiFonctionnel(): ?bool
     {
         return $this->emploiFonctionnel;
     }
@@ -1288,7 +1288,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getPresenceAdjoints()
+    public function getPresenceAdjoints(): ?bool
     {
         return $this->presenceAdjoints;
     }
@@ -1345,7 +1345,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getDocAnnexeBilan()
+    public function getDocAnnexeBilan(): ?bool
     {
         return $this->docAnnexeBilan;
     }
@@ -1402,7 +1402,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getDocAnnexeObjectifsAvenir()
+    public function getDocAnnexeObjectifsAvenir(): ?bool
     {
         return $this->docAnnexeObjectifsAvenir;
     }
@@ -1477,7 +1477,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getSouhaitEvolutionCarriere()
+    public function getSouhaitEvolutionCarriere(): ?bool
     {
         return $this->souhaitEvolutionCarriere;
     }
@@ -1515,7 +1515,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getSouhaitMobilite()
+    public function getSouhaitMobilite(): ?bool
     {
         return $this->souhaitMobilite;
     }
@@ -1553,7 +1553,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getSouhaitEntretienCarriere()
+    public function getSouhaitEntretienCarriere(): ?bool
     {
         return $this->souhaitEntretienCarriere;
     }
@@ -1572,7 +1572,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getApptitudeNiveauSup()
+    public function getApptitudeNiveauSup(): ?bool
     {
         return $this->apptitudeNiveauSup;
     }
@@ -1686,7 +1686,7 @@ class CrepAc extends Crep
     /**
      * @return boolean
      */
-    public function getDocAnnexeBesoinsFormation()
+    public function getDocAnnexeBesoinsFormation(): ?bool
     {
         return $this->docAnnexeBesoinsFormation;
     }

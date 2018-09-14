@@ -49,6 +49,7 @@ class CrepDgacManager
     private function exportFormationsSuivies(CampagneBrhp $campagneBrhp)
     {
         // Repository des formations suivies N-1
+        // AppBundle\Repository\CrepRepository\CrepDgacRepository
         $formationSuivieRepository = $this->em->getRepository("AppBundle:Crep\CrepDgac\CrepDgacFormationSuivie");
 
         $formationsSuivies = $formationSuivieRepository->exportFormations($campagneBrhp, $this->modeleCrep);
